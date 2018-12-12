@@ -1,0 +1,8 @@
+4.- composer install
+5.- npm install
+7.- npm run dev
+9.- crear archivo .env
+10.- php artisan key:generate
+11.- php artisan serve
+
+Demo del proyecto http://preview.themeforest.net/item/clean-admin-template/full_screen_preview/19430162
