@@ -23,7 +23,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <h2 class="text-center">
-                            <img src="{{asset('assets/img/logos/logo_trans.png')}}" alt="Logo">
+                            <img src="{{asset('assets/img/logo_blue.png')}}" alt="Logo">
                         </h2>
                     </div>
                 </div>
