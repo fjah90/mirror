@@ -3,14 +3,12 @@
 <head>
   <title>Intercorp</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="icon" href="{{ URL::asset('assets/img/logos/icono.png') }}" sizes="32x32">
-	<link rel="apple-touch-icon-precomposed" href="{{ URL::asset('assets/img/logos/icono.png') }}">
+  <link rel="icon" href="{{ URL::asset('images/favicon.ico') }}" sizes="32x32">
+	<link rel="apple-touch-icon-precomposed" href="{{ URL::asset('images/favicon.ico') }}">
   <!-- global css -->
-  <link href="{{asset('assets/vendors/iCheck/css/all.css')}}" rel="stylesheet">
+  <link href="{{ mix('css/vendor.css') }}" rel="stylesheet" type="text/css">
   <!-- end of global css -->
   <!-- page level css -->
-  <link href="{{asset('assets/vendors/bootstrapvalidator/css/bootstrapValidator.min.css')}}" rel="stylesheet"/>
-  <link href="{{ mix('css/vendor.css') }}" rel="stylesheet" type="text/css">
   <link href="{{asset('assets/css/pages/login_register.css')}}" rel="stylesheet">
   <!-- end of page level css-->
 </head>
@@ -23,7 +21,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <h2 class="text-center">
-                            <img src="{{asset('assets/img/logo_blue.png')}}" alt="Logo">
+                            <img src="{{asset('images/logo.jpg')}}" alt="Logo">
                         </h2>
                     </div>
                 </div>
@@ -74,13 +72,8 @@
     </div>
 </div>
 <!-- global js -->
-<script src="{{asset('assets/js/jquery.min.js')}}" type="text/javascript"></script>
-<script src="{{asset('assets/js/bootstrap.min.js')}}" type="text/javascript"></script>
 <!-- end of global js -->
 <!-- begining of page level js -->
-<script src="{{asset('assets/vendors/iCheck/js/icheck.js')}}"></script>
-<script src="{{asset('assets/vendors/bootstrapvalidator/js/bootstrapValidator.min.js')}}" type="text/javascript"></script>
-<script src="{{asset('assets/js/pages/login_register.js')}}"></script>
 <!-- end of page level js -->
 </body>
 

@@ -8,8 +8,8 @@
     @show
   </title>
   <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
-  <link rel="shortcut icon" href="{{asset('assets/img/favicon.ico')}}"/>
-  <link rel="apple-touch-icon-precomposed" href="{{ URL::asset('assets/img/logos/icono.png') }}">
+  <link rel="shortcut icon" href="{{asset('images/favicon.ico')}}"/>
+  <link rel="apple-touch-icon-precomposed" href="{{ URL::asset('images/favicon.ico') }}">
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -28,7 +28,7 @@
 <header class="header">
   <nav class="navbar navbar-static-top" role="navigation">
     <a href="/dashboard" class="logo">
-      <img src="{{asset('assets/img/logo_blue.png')}}" alt="logo" style="width:100%; height:100%;" />
+      <img src="{{asset('images/logo.jpg')}}" alt="logo" style="width:100%; height:100%;" />
     </a>
     <div>
       <a href="javascript:void(0)" class="navbar-btn sidebar-toggle" data-toggle="offcanvas" role="button">
@@ -204,12 +204,14 @@
 
 <!-- ./wrapper -->
 <!-- global js -->
-<!-- <script src="{{asset('assets/js/app.js')}}" type="text/javascript"></script> -->
 <script src="{{ mix('js/manifest.js') }}"></script>
 <script src="{{ mix('js/vendor.js') }}"></script>
 <script src="{{ mix('js/app.js') }}"></script>
 <script type="text/javascript">
 $(function () {
+  $('#logout-anchor').on('click', function(){
+    $('#logout-form').submit();
+  });
   $('[data-toggle="tooltip"]').tooltip()
 });
 </script>
