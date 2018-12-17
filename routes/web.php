@@ -31,4 +31,7 @@ Route::middleware('auth')->group(function () {
   Route::resource('/subproyectos', 'SubProyectosController');
   Route::resource('/materiales', 'MaterialesController', ['parameters'=>['materiales'=>'material']]);
   Route::resource('/productos', 'ProductosController');
+
+  //Prospectos
+  Route::resource('/prospectos', 'ProspectosController');
 });
