@@ -220,14 +220,11 @@
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@0.4.0/dist/chartjs-plugin-datalabels.min.js"></script>
 <script src="{{ mix('js/app.js') }}"></script>
 <script>
-$(function () {
+$(function() {
   $('#logout-anchor').on('click', function(){
     $('#logout-form').submit();
   });
-  $('[data-toggle="tooltip"]').tooltip()
-});
-$('#logout-anchor').on('click', function(){
-  $('#logout-form').submit();
+  $('[data-toggle="tooltip"]').tooltip();
 });
 var localeES = {
   uiv: {

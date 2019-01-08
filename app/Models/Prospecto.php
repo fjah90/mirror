@@ -25,6 +25,10 @@ class Prospecto extends Model
       return $this->hasMany('App\Models\ProspectoActividad', 'prospecto_id', 'id');
     }
 
+    public function cotizaciones(){
+      return $this->hasMany('App\Models\ProspectoCotizacion', 'prospecto_id', 'id');
+    }
+
     public function ultima_actividad(){
       return $this->hasOne('App\Models\ProspectoActividad', 'prospecto_id', 'id')
         ->where('realizada', 1)->orderBy('id', 'desc');

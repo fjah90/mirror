@@ -60,6 +60,10 @@
                       :href="'/prospectos/'+prospecto.id+'/editar'">
                       <i class="far fa-edit"></i>
                     </a>
+                    <a class="btn btn-warning" data-toggle="tooltip" title="Cotizar"
+                      :href="'/prospectos/'+prospecto.id+'/cotizar'">
+                      <i class="fas fa-balance-scale"></i>
+                    </a>
                     <button class="btn btn-danger" data-toggle="tooltip" title="Borrar"
                       @click="borrar(prospecto, index)">
                       <i class="fas fa-times"></i>

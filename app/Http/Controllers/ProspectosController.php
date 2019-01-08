@@ -2,13 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use Validator;
 use Illuminate\Http\Request;
 use App\Models\Cliente;
 use App\Models\Producto;
 use App\Models\Prospecto;
 use App\Models\ProspectoActividad;
 use App\Models\ProspectoTipoActividad;
+use App\Models\ProspectoCotizacion;
+use App\Models\ProspectoCotizacionEntrada;
+use Validator;
+use PDF;
+use Mail;
 
 class ProspectosController extends Controller
 {
@@ -202,4 +206,107 @@ class ProspectosController extends Controller
       $prospecto->delete();
       return response()->json(['success' => true, "error" => false], 200);
     }
+
+    /**
+     * Agrear cotizacion.
+     *
+     * @param  \App\Models\Prospecto  $prospecto
+     * @return \Illuminate\Http\Response
+     */
+    public function cotizar(Prospecto $prospecto)
+    {
+      $prospecto->load('cliente','cotizaciones.entradas.producto');
+      $productos = Producto::with('material','proveedor')->get();
+
+      return view('prospectos.cotizar', compact('prospecto', 'productos'));
+    }
+
+    /**
+     * Guardar cotizacion.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Prospecto  $prospecto
+     * @return \Illuminate\Http\Response
+     */
+    public function cotizacion(Request $request, Prospecto $prospecto)
+    {
+      $validator = Validator::make($request->all(), [
+        'prospecto_id' => 'required',
+        'entradas' => 'required',
+        'subtotal' => 'required',
+        'iva' => 'required',
+        'total' => 'required'
+      ]);
+
+      if ($validator->fails()) {
+        $errors = $validator->errors()->all();
+        return response()->json([
+          "success" => false, "error" => true, "message" => $errors[0]
+        ], 422);
+      }
+
+      $create = $request->all();
+      $create['fecha'] = date('Y-m-d');
+      $cotizacion = ProspectoCotizacion::create($create);
+
+      //guardar entradas
+      foreach ($request->entradas as $entrada) {
+        $entrada['cotizacion_id'] = $cotizacion->id;
+        $entrada['producto_id'] = $entrada['producto']['id'];
+        ProspectoCotizacionEntrada::create($entrada);
+      }
+
+      $cotizacion->load('prospecto.cliente', 'entradas.producto.material');
+
+      //crear pdf de cotizacion
+      $url = '/cotizaciones/cotizacion_'.$cotizacion->id.'.pdf';
+      $meses = ['ENERO','FEBRERO','MARZO','ABRIL','MAYO','JUNIO','JULIO',
+      'AGOSTO','SEPTIEMBRE','OCTUBRE','NOVIEMBRE','DICIEMBRE'];
+      list($ano,$mes,$dia) = explode('-', $cotizacion->fecha);
+      $mes = $meses[+$mes-1];
+      $cotizacion->fechaPDF = "$mes $dia, $ano";
+
+      $cotizacionPDF = PDF::loadView('prospectos.cotizacionPDF', compact('cotizacion'));
+      file_put_contents(public_path(). $url, $cotizacionPDF->output());
+
+      unset($cotizacion->fechaPDF);
+      $cotizacion->update(['archivo'=>$url]);
+
+      return response()->json(['success'=>true,'error'=>false,'cotizacion'=>$cotizacion], 200);
+    }
+
+    /**
+     * Enviar cotizacion por email.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function enviarCotizacion(Request $request)
+    {
+      $validator = Validator::make($request->all(), [
+        'cotizacion_id' => 'required',
+        'email' => 'required|email|max:255',
+        'mensaje' => 'required',
+      ]);
+
+      if ($validator->fails()) {
+        $errors = $validator->errors()->all();
+        return response()->json([
+          "success" => false, "error" => true, "message" => $errors[0]
+        ], 422);
+      }
+
+      $cotizacion = ProspectoCotizacion::findOrFail($request->cotizacion_id);
+      $cotizacion_id = $cotizacion->id;
+      $email = $request->email;
+      $pdf = file_get_contents(public_path().$cotizacion->archivo);
+
+      Mail::send('prospectos.enviarCotizacion', ['mensaje' => $request->mensaje], function ($message) use ($cotizacion_id, $email, $pdf){
+        $message->to($email)->subject('Cotización Intercorp');
+        $message->attachData($pdf, 'Cotizacion '.$cotizacion_id.'.pdf');
+      });
+
+      return response()->json(['success'=>true, 'error'=>false], 200);
+    }
+
 }

@@ -33,5 +33,8 @@ Route::middleware('auth')->group(function () {
   Route::resource('/productos', 'ProductosController');
 
   //Prospectos
+  Route::get('/prospectos/{prospecto}/cotizar', 'ProspectosController@cotizar')->name('prospectos.cotizar');
+  Route::post('/prospectos/{prospecto}/cotizacion', 'ProspectosController@cotizacion');
+  Route::post('/prospectos/{prospecto}/enviarCotizacion', 'ProspectosController@enviarCotizacion');
   Route::resource('/prospectos', 'ProspectosController');
 });
