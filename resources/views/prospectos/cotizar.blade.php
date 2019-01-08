@@ -281,7 +281,7 @@
       </table>
     </div>
     </modal>
-  <!-- /.Catalogo Productos Modal -->
+    <!-- /.Catalogo Productos Modal -->
 
     <!-- Enviar Modal -->
     <modal v-model="openEnviar" :title="'Enviar Cotizacion '+enviar.cotizacion_id" :footer="false">
@@ -357,19 +357,6 @@ const app = new Vue({
         swal({
           title: "Error",
           text: "Debe seleccionar un producto",
-          type: "error"
-        });
-        return false;
-      }
-
-      //verificar que producto no este ya en cotizacion
-      var index = this.cotizacion.entradas.findIndex(function(entrada){
-        return this.id == entrada.producto.id;
-      }, this.entrada.producto);
-      if(index!=-1){
-        swal({
-          title: "Error",
-          text: "Este producto ya esta en la cotización, seleccione otro",
           type: "error"
         });
         return false;
