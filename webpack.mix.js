@@ -1,9 +1,3 @@
-var fs   = require('fs');
-let isIllusion = process.cwd() !== fs.realpathSync(process.cwd());
-if(isIllusion){
-    process.chdir(fs.realpathSync(process.cwd()));
-}
-
 let mix = require('laravel-mix');
 
 /*
@@ -16,8 +10,6 @@ let mix = require('laravel-mix');
  | file for the application as well as bundling up all the JS files.
  |
  */
-
- // mix.options({ publicPath: './public' });
 
 mix.js('resources/assets/js/app.js', 'public/js')
    .extract([
