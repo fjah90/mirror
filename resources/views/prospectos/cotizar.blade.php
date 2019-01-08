@@ -70,7 +70,7 @@
                         <td>@{{cotizacion.fecha_formated}}</td>
                         <td>
                           <template v-for="(entrada, index) in cotizacion.entradas">
-                            <span>@{{index}}.- @{{entrada.producto.composicion}}</span><br />
+                            <span>@{{index+1}}.- @{{entrada.producto.composicion}}</span><br />
                           </template>
                         </td>
                         <td>@{{cotizacion.total | formatoMoneda}}</td>
