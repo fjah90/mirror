@@ -47,6 +47,7 @@ class ClientesController extends Controller
         'telefono' => 'required',
         'email' => 'required',
         'rfc' => 'required',
+        'razon_social' => 'required',
       ]);
 
       if ($validator->fails()) {
@@ -106,6 +107,7 @@ class ClientesController extends Controller
         'telefono' => 'required',
         'email' => 'required',
         'rfc' => 'required',
+        'razon_social' => 'required',
       ]);
 
       if ($validator->fails()) {

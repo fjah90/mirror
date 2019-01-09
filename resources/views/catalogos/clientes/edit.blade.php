@@ -49,6 +49,14 @@
                 </div>
               </div>
               <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label class="control-label">Razon Social</label>
+                    <input type="text" class="form-control" name="razon_social" v-model="cliente.razon_social" required />
+                  </div>
+                </div>
+              </div>
+              <div class="row">
                 <div class="col-md-4">
                   <div class="form-group">
                     <label class="control-label">Telefono</label>
