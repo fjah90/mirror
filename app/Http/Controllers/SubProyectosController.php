@@ -28,7 +28,7 @@ class SubProyectosController extends Controller
      */
     public function create()
     {
-      $subproyectos = Proyecto::all();
+      $proyectos = Proyecto::all();
       return view('catalogos.subproyectos.create', compact('proyectos'));
     }
 
