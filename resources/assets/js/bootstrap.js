@@ -13,10 +13,15 @@ require( 'datatables.net-buttons/js/buttons.flash.js' );
 require( 'datatables.net-buttons/js/buttons.html5.js' );
 require( 'datatables.net-buttons/js/buttons.print.js' );
 require( 'datatables.net-responsive-dt' );
+window.objectToFormData = require('object-to-formdata');
+require( 'tinymce' );
+require( 'tinymce/themes/modern/theme' );
+require('tinymce/plugins/lists');
 
 import axios from 'axios';
 import Vue from 'vue';
 import * as uiv from 'uiv';
+import Editor from '@tinymce/tinymce-vue';
 
 window.Vue = Vue;
 window.axios = axios;
@@ -29,6 +34,7 @@ window.axios.defaults.headers.common = {
 // };
 
 Vue.use(uiv);
+Vue.component('tinymce-editor', Editor);
 
 $.extend($.fn.dataTable.defaults, {
   responsive: true,

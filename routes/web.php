@@ -19,6 +19,7 @@ Auth::routes();
 
 Route::middleware('auth')->group(function () {
 
+  // Route::get('/pruebas', 'ProspectosController@pruebas');
   Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
 
   //Catalogos

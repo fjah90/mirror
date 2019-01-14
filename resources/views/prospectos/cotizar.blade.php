@@ -7,11 +7,22 @@
 
 @section('header_styles')
 <style>
-.btn-xxs {
-  padding: 0 4px;
-  font-size: 10px;
-  cursor: pointer;
-}
+  .kv-avatar .krajee-default.file-preview-frame,.kv-avatar .krajee-default.file-preview-frame:hover {
+    margin: 0;
+    padding: 0;
+    border: none;
+    box-shadow: none;
+    text-align: center;
+  }
+  .kv-avatar { display: inline-block; }
+  .kv-avatar img {width: 100%;}
+  .kv-avatar .file-input { display: table-cell; width: 100%; }
+  .kv-reqd { color: red; font-family: monospace; font-weight: normal; }
+  .btn-xxs {
+    padding: 0 4px;
+    font-size: 10px;
+    cursor: pointer;
+  }
 </style>
 @stop
 
@@ -101,6 +112,31 @@
               <div class="row">
                 <div class="col-md-4">
                   <div class="form-group">
+                    <label class="control-label">Entrega</label>
+                    <input type="text" name="entrega" class="form-control"
+                      v-model="cotizacion.entrega" required />
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label class="control-label">Condiciones</label>
+                    <input type="text" name="condiciones" class="form-control"
+                      v-model="cotizacion.condiciones" required />
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label class="control-label">Precios</label>
+                    <select class="form-control" name="precios" v-model="cotizacion.precios">
+                      <option value="Dorales">Dolares USD</option>
+                      <option value="Pesos">Pesos MXN</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="form-group">
                     <label class="control-label">Producto</label>
                     <div class="input-group">
                       <input type="text" class="form-control" placeholder="Producto"
@@ -160,8 +196,18 @@
                 </div>
               </div>
               <div class="row">
-                <div class="col-md-12 text-right">
+                <div class="col-md-4">
                   <div class="form-group">
+                    <label class="control-label" style="display:block;">Foto</label>
+                    <div class="kv-avatar">
+                      <div class="file-loading">
+                        <input id="foto" name="foto" type="file" ref="foto" @change="fijarFoto()" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-offset-4 col-md-4 text-right">
+                  <div class="form-group" style="margin-top:25px;">
                     <button type="submit" class="btn btn-info">
                       <i class="fas fa-plus"></i>
                       Agregar Producto
@@ -229,8 +275,10 @@
               <div class="col-md-12">
                 <div class="form-group">
                   <label class="control-label">Observaciónes</label>
-                  <textarea name="name" rows="3" cols="80" v-model="cotizacion.observaciones" class="form-control">
-                  </textarea>
+                  <tinymce-editor name="name" v-model="cotizacion.observaciones"
+                    v-model="texto" :init="init"
+                  >
+                  </tinymce-editor>
                 </div>
               </div>
             </div>
@@ -313,10 +361,20 @@ const app = new Vue({
   el: '#content',
   data: {
     locale: localeES,
+    init: {
+      language: 'es_MX',
+      branding: false,
+      menubar: false,
+      plugins: "lists",
+      toolbar: "undo, redo | cut, copy, paste | bold, italic | alignleft, aligncenter, alignright, alignjustify | numlist bullist | indent, outdent | styleselect"
+    },
     prospecto: {!! json_encode($prospecto) !!},
     productos: {!! json_encode($productos) !!},
     cotizacion: {
       prospecto_id: {{$prospecto->id}},
+      entrega: '',
+      condiciones: '',
+      precios: '',
       entradas: [],
       subtotal: 0,
       iva: 0,
@@ -331,7 +389,9 @@ const app = new Vue({
       cantidad: 0,
       precio: 0,
       importe: 0,
-      observacion: ""
+      observacion: "",
+      foto: "",
+      foto_src: ""
     },
     enviar: {
       cotizacion_id: 0,
@@ -347,7 +407,26 @@ const app = new Vue({
       return accounting.formatMoney(numero, "$", 2);
     },
   },
+  mounted(){
+    $("#foto").fileinput({
+      overwriteInitial: true,
+      maxFileSize: 5000,
+      showClose: false,
+      showCaption: false,
+      showBrowse: false,
+      browseOnZoneClick: true,
+      removeLabel: '',
+      removeIcon: '<i class="glyphicon glyphicon-remove"></i>',
+      removeTitle: 'Quitar Foto',
+      defaultPreviewContent: '<img src="{{asset('images/camara.png')}}" alt="foto"><h6 class="text-muted">Click para seleccionar</h6>',
+      layoutTemplates: {main2: '{preview} {remove} {browse}'},
+      allowedFileExtensions: ["jpg", "jpeg", "png"]
+    });
+  },
   methods: {
+    fijarFoto(){
+      this.entrada.foto = this.$refs['foto'].files[0];
+    },
     seleccionarProduco(prod){
       this.entrada.producto = prod;
       this.openCatalogo = false;
@@ -362,6 +441,8 @@ const app = new Vue({
         return false;
       }
 
+      var fotoPrev = $("img.file-preview-image");
+      if(fotoPrev[0]) this.entrada.foto_src = fotoPrev[0].src;
       this.entrada.importe = this.entrada.cantidad * this.entrada.precio;
       this.cotizacion.subtotal+= this.entrada.importe;
       this.cotizacion.iva = this.cotizacion.subtotal * 0.16;
@@ -369,11 +450,17 @@ const app = new Vue({
       this.cotizacion.entradas.push(this.entrada);
       this.entrada = {
         producto: {},
+        coleccion: "",
+        diseno: "",
+        color: "",
         cantidad: 0,
         precio: 0,
         importe: 0,
-        observacion: ""
+        observacion: "",
+        foto: "",
+        foto_src: ""
       };
+      $("#foto").siblings('button').click();
     },
     editarEntrada(entrada, index){
       this.cotizacion.subtotal-= entrada.importe;
@@ -381,12 +468,17 @@ const app = new Vue({
       this.cotizacion.total = this.cotizacion.subtotal * 1.16;
       this.cotizacion.entradas.splice(index, 1);
       this.entrada = entrada;
+
+      $("#foto").siblings('button').click();
+      if(this.entrada.foto_src!="")
+        $("div.file-default-preview img")[0].src = this.entrada.foto_src;
     },
     removerEntrada(entrada, index){
       this.cotizacion.subtotal-= entrada.importe;
       this.cotizacion.iva = this.cotizacion.subtotal * 0.16;
       this.cotizacion.total = this.cotizacion.subtotal * 1.16;
       this.cotizacion.entradas.splice(index, 1);
+      $("#foto").siblings('button').click();
     },
     enviarCotizacion(){
       this.cargando = true;
@@ -416,12 +508,26 @@ const app = new Vue({
       });
     },//fin enviarCotizacion
     guardar(){
+      var cotizacion = $.extend(true, {}, this.cotizacion);
+      cotizacion.entradas.forEach(function(entrada){
+        entrada.producto_id = entrada.producto.id;
+        delete entrada.producto;
+        if(entrada.foto_src=="") delete entrada.foto;
+        delete entrada.foto_src;
+      });
+      var formData = objectToFormData(cotizacion, {indices:true});
+
       this.cargando = true;
-      axios.post('/prospectos/{{$prospecto->id}}/cotizacion', this.cotizacion)
+      axios.post('/prospectos/{{$prospecto->id}}/cotizacion', formData, {
+        headers: { 'Content-Type': 'multipart/form-data'}
+      })
       .then(({data}) => {
         this.prospecto.cotizaciones.push(data.cotizacion);
         this.cotizacion = {
           prospecto_id: {{$prospecto->id}},
+          entrega: '',
+          condiciones: '',
+          precios: '',
           entradas: [],
           subtotal: 0,
           iva: 0,

@@ -320,7 +320,7 @@
                   </a>
                 </p>
               </td>
-              <td class="bordered"></td>
+              <td class="bordered">{{$cotizacion->prospecto->cliente->razon_social}}</td>
             </tr>
             <tr>
               <td class="bordered" style="padding:0;">
@@ -331,7 +331,7 @@
                   </tr>
                   <tr>
                     <td>ENTREGA:</td>
-                    <td>6 - 8 SEMANAS</td>
+                    <td>{{$cotizacion->entrega}}</td>
                   </tr>
                   <tr>
                     <td>FLETES:</td>
@@ -339,15 +339,19 @@
                   </tr>
                   <tr>
                     <td>PRECIOS:</td>
-                    <td>DOLARES AMERICANOS</td>
+                    <td>{{$cotizacion->precios}}</td>
                   </tr>
                   <tr>
                     <td>CONDICIONES:</td>
-                    <td>50% CON EL PEDIDO, 50% PARA EMBARCAR Y PODER ENTREGAR EL PEDIDO</td>
+                    <td>{{$cotizacion->condiciones}}</td>
                   </tr>
                 </table>
               </td>
-              <td class="text-center font-small bordered"><strong>ENVIAR A:</strong></td>
+              <td class="bordered">
+                <p class="text-center font-small "><strong>ENVIAR A:</strong></p>
+                <p>{{$cotizacion->prospecto->cliente->nombre}}</p>
+                <p>{{$cotizacion->prospecto->cliente->direccion}}</p>
+              </td>
             </tr>
           </tbody>
         </table>
@@ -360,7 +364,7 @@
           <thead style="background-color:#000; color:#fff;">
             <tr>
               <th class="text-center" style="width:10%; padding:3px 0 1px;">CANTIDAD</th>
-              <th class="text-center" style="width:60%; padding:3px 0 1px;">DESCRIPCION</th>
+              <th class="text-center" style="width:70%; padding:3px 0 1px;">DESCRIPCION</th>
               <th class="text-center" style="width:20%; padding:3px 0 1px;">PRECIO UNITARIO</th>
               <th class="text-center" style="width:10%; padding:3px 0 1px;">TOTAL</th>
             </tr>
@@ -370,12 +374,23 @@
             <tr>
               <td class="text-center">@format_number($entrada->cantidad) M<sup>2</sup></td>
               <td>
-                <p>{{$entrada->producto->material->nombre}}</p>
-                <p>{{$entrada->producto->composicion}}</p>
-                <p>COLECTION: {{$entrada->coleccion}}</p>
-                <p>DESIGN: {{$entrada->diseno}}</p>
-                <p>COLOR: {{$entrada->color}}</p>
-                @if($entrada->observacion)<p>*{{$entrada->observacion}}</p>@endif
+                <table style="width:100%;">
+                  <tr>
+                    <td>
+                      <p>{{$entrada->producto->material->nombre}}</p>
+                      <p>{{$entrada->producto->composicion}}</p>
+                      <p>COLECTION: {{$entrada->coleccion}}</p>
+                      <p>DESIGN: {{$entrada->diseno}}</p>
+                      <p>COLOR: {{$entrada->color}}</p>
+                      @if($entrada->observacion)<p>*{{$entrada->observacion}}</p>@endif
+                    </td>
+                    <td style="width:100px;">
+                      @if($entrada->foto)
+                      <img src="{{$entrada->foto}}" alt="foto" style="width:100px;" />
+                      @endif
+                    </td>
+                  </tr>
+                </table>
               </td>
               <td class="text-right">@format_money($entrada->precio)</td>
               <td class="text-right">@format_money($entrada->importe)</td>
@@ -406,7 +421,7 @@
           <tr class="font-small">
             <td style="width:70%; text-transform: none;">
               <p><strong>OBSERVACIONES:</strong></p>
-              <p>{{$cotizacion->observaciones}}</p>
+              <p>{!! $cotizacion->observaciones !!}</p>
             </td>
             <td class="text-center" style="width:30%; text-transform: none;">
               <p style="margin-top:2em;">Carla Aguilar</p>
