@@ -25,7 +25,13 @@ mix.js('resources/assets/js/app.js', 'public/js')
      'datatables.net-buttons/js/buttons.html5.js',
      'datatables.net-buttons/js/buttons.print.js',
      'datatables.net-responsive-dt',
-     'uiv'
+     'uiv',
+     'bootstrap-fileinput',
+     'bootstrap-fileinput/themes/fa/theme.js',
+     'bootstrap-fileinput/js/locales/es.js',
+     'object-to-formdata',
+     'tinymce',
+     '@tinymce/tinymce-vue'
    ])
    .autoload({
      jquery: ['$', 'window.jQuery', 'jQuery', 'jquery'],
