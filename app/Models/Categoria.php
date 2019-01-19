@@ -5,9 +5,9 @@ namespace App\Models;
 use App\Model;
 use Carbon\Carbon;
 
-class Material extends Model
+class Categoria extends Model
 {
-    protected $table = 'materiales';
+    protected $table = 'categorias';
 
     protected $fillable = ['nombre'];
 

@@ -36,7 +36,7 @@
                 <tr>
                   <th>ID</th>
                   <th>Proveedor</th>
-                  <th>Material</th>
+                  <th>Categoria</th>
                   <th>Composicón</th>
                   <th></th>
                 </tr>
@@ -45,7 +45,7 @@
                 <tr v-for="(producto, index) in productos">
                   <td>@{{producto.id}}</td>
                   <td>@{{producto.proveedor.empresa}}</td>
-                  <td>@{{producto.material.nombre}}</td>
+                  <td>@{{producto.categoria.nombre}}</td>
                   <td>@{{producto.composicion}}</td>
                   <td class="text-right">
                     <a class="btn btn-info" data-toggle="tooltip" title="Ver"

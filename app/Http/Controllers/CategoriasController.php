@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use Validator;
 use Illuminate\Http\Request;
-use App\Models\Material;
+use App\Models\Categoria;
 
-class MaterialesController extends Controller
+class CategoriasController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,9 +15,9 @@ class MaterialesController extends Controller
      */
     public function index()
     {
-      $materiales = Material::all();
+      $categorias = Categoria::all();
 
-      return view('catalogos.materiales.index', compact('materiales'));
+      return view('catalogos.categorias.index', compact('categorias'));
     }
 
     /**
@@ -27,7 +27,7 @@ class MaterialesController extends Controller
      */
     public function create()
     {
-      return view('catalogos.materiales.create');
+      return view('catalogos.categorias.create');
     }
 
     /**
@@ -49,7 +49,7 @@ class MaterialesController extends Controller
         ], 422);
       }
 
-      Material::create($request->all());
+      Categoria::create($request->all());
 
       return response()->json(['success' => true, "error" => false], 200);
     }
@@ -57,33 +57,33 @@ class MaterialesController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Material  $material
+     * @param  \App\Models\Categoria  $categoria
      * @return \Illuminate\Http\Response
      */
-    public function show(Material $material)
+    public function show(Categoria $categoria)
     {
-      return view('catalogos.materiales.show', compact('material'));
+      return view('catalogos.categorias.show', compact('categoria'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Material  $material
+     * @param  \App\Models\Categoria  $categoria
      * @return \Illuminate\Http\Response
      */
-    public function edit(Material $material)
+    public function edit(Categoria $categoria)
     {
-      return view('catalogos.materiales.edit', compact('material'));
+      return view('catalogos.categorias.edit', compact('categoria'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Material  $material
+     * @param  \App\Models\Categoria  $categoria
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Material $material)
+    public function update(Request $request, Categoria $categoria)
     {
       $validator = Validator::make($request->all(), [
         'nombre' => 'required',
@@ -96,7 +96,7 @@ class MaterialesController extends Controller
         ], 422);
       }
 
-      $material->update($request->all());
+      $categoria->update($request->all());
 
       return response()->json(['success' => true, "error" => false],200);
     }
@@ -104,12 +104,12 @@ class MaterialesController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Material  $materialCliente
+     * @param  \App\Models\Categoria  $categoria
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Material $material)
+    public function destroy(Categoria $categoria)
     {
-      $material->delete();
+      $categoria->delete();
 
       return response()->json(['success' => true, "error" => false],200);
     }

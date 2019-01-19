@@ -9,7 +9,7 @@ class Producto extends Model
 {
     protected $table = 'productos';
 
-    protected $fillable = ['proveedor_id','material_id','composicion'];
+    protected $fillable = ['proveedor_id','categoria_id','composicion'];
 
     /**
      * ---------------------------------------------------------------------------
@@ -27,8 +27,8 @@ class Producto extends Model
       return $this->belongsTo('App\Models\Proveedor', 'proveedor_id', 'id');
     }
 
-    public function material(){
-      return $this->belongsTo('App\Models\Material', 'material_id', 'id');
+    public function categoria(){
+      return $this->belongsTo('App\Models\Categoria', 'categoria_id', 'id');
     }
 
 }

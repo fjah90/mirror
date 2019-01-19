@@ -30,7 +30,7 @@ Route::middleware('auth')->group(function () {
   Route::resource('/proveedores', 'ProveedoresController', ['parameters'=>['proveedores'=>'proveedor']]);
   Route::resource('/proyectos', 'ProyectosController');
   Route::resource('/subproyectos', 'SubProyectosController');
-  Route::resource('/materiales', 'MaterialesController', ['parameters'=>['materiales'=>'material']]);
+  Route::resource('/categorias', 'CategoriasController');
   Route::resource('/productos', 'ProductosController');
 
   //Prospectos

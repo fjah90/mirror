@@ -122,7 +122,7 @@
                     Request::is('proveedores*') ||
                     Request::is('proyectos*') ||
                     Request::is('subproyectos*') ||
-                    Request::is('materiales*') ||
+                    Request::is('categorias*') ||
                     Request::is('productos*')
                   ? 'class="active"' : '') !!}>
             <a href="javascript:;">
@@ -156,9 +156,9 @@
                   <i class="far fa-folder-open "></i> Sub Proyectos
                 </a>
               </li>
-              <li {!! (Request::is('materiales*') ? 'class="active"' : '') !!}>
-                <a href="{{ URL::to('materiales') }}">
-                  <i class="fas fa-atom "></i> Materiales
+              <li {!! (Request::is('categorias*') ? 'class="active"' : '') !!}>
+                <a href="{{ URL::to('categorias') }}">
+                  <i class="fas fa-cubes "></i> Categorias Productos
                 </a>
               </li>
               <li {!! (Request::is('productos*') ? 'class="active"' : '') !!}>

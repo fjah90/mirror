@@ -37,10 +37,10 @@
                 </div>
                 <div class="col-md-4">
                   <div class="form-group">
-                    <label class="control-label">Material</label>
-                    <select class="form-control" name="material_id" v-model='producto.material_id' required>
-                      @foreach($materiales as $material)
-                        <option value="{{$material->id}}">{{$material->nombre}}</option>
+                    <label class="control-label">Categoria</label>
+                    <select class="form-control" name="categoria_id" v-model='producto.categoria_id' required>
+                      @foreach($categorias as $categoria)
+                        <option value="{{$categoria->id}}">{{$categoria->nombre}}</option>
                       @endforeach
                     </select>
                   </div>
@@ -79,7 +79,7 @@ const app = new Vue({
     data: {
       producto: {
         proveedor_id: '{{$producto->proveedor_id}}',
-        material_id: '{{$producto->material_id}}',
+        categoria_id: '{{$producto->categoria_id}}',
         composicion: '{{$producto->composicion}}',
       },
       cargando: false,

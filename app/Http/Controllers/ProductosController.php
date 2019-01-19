@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Validator;
 use Illuminate\Http\Request;
 use App\Models\Proveedor;
-use App\Models\Material;
+use App\Models\Categoria;
 use App\Models\Producto;
 
 class ProductosController extends Controller
@@ -17,7 +17,7 @@ class ProductosController extends Controller
      */
     public function index()
     {
-      $productos = Producto::with('proveedor','material')->get();
+      $productos = Producto::with('proveedor','categoria')->get();
 
       return view('catalogos.productos.index', compact('productos'));
     }
@@ -30,8 +30,8 @@ class ProductosController extends Controller
     public function create()
     {
       $proveedores = Proveedor::all();
-      $materiales = Material::all();
-      return view('catalogos.productos.create', compact('proveedores','materiales'));
+      $categorias = Categoria::all();
+      return view('catalogos.productos.create', compact('proveedores','categorias'));
     }
 
     /**
@@ -44,7 +44,7 @@ class ProductosController extends Controller
     {
       $validator = Validator::make($request->all(), [
         'proveedor_id' => 'required',
-        'material_id' => 'required',
+        'categoria_id' => 'required',
         'composicion' => 'required',
       ]);
 
@@ -68,7 +68,7 @@ class ProductosController extends Controller
      */
     public function show(Producto $producto)
     {
-      $producto->load('proveedor', 'material');
+      $producto->load('proveedor', 'categoria');
       return view('catalogos.productos.show', compact('producto'));
     }
 
@@ -81,9 +81,9 @@ class ProductosController extends Controller
     public function edit(Producto $producto)
     {
       $proveedores = Proveedor::all();
-      $materiales = Material::all();
-      $producto->load('proveedor', 'material');
-      return view('catalogos.productos.edit', compact('producto','proveedores','materiales'));
+      $categorias = Categoria::all();
+      $producto->load('proveedor', 'categoria');
+      return view('catalogos.productos.edit', compact('producto','proveedores','categorias'));
     }
 
     /**
@@ -97,7 +97,7 @@ class ProductosController extends Controller
     {
       $validator = Validator::make($request->all(), [
         'proveedor_id' => 'required',
-        'material_id' => 'required',
+        'categoria_id' => 'required',
         'composicion' => 'required',
       ]);
 

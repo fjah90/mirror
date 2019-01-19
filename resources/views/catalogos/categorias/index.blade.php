@@ -2,7 +2,7 @@
 
 {{-- Page title --}}
 @section('title')
-  Materiales | @parent
+  Categorias Porductos | @parent
 @stop
 
 @section('header_styles')
@@ -14,7 +14,7 @@
 @section('content')
 <!-- Content Header (Page header) -->
 <section class="content-header">
-    <h1>Materiales</h1>
+    <h1>Categorias Productos</h1>
 </section>
 <!-- Main content -->
 <section class="content" id="content">
@@ -23,9 +23,9 @@
       <div class="panel">
         <div class="panel-heading">
           <h3 class="panel-title text-right">
-            <span class="pull-left p-10">Lista de Materiales</span>
-            <a href="{{route('materiales.create')}}" class="btn btn-primary" style="color: #fff;">
-              <i class="fa fa-plus"></i> Nuevo Material
+            <span class="pull-left p-10">Lista de Categorias</span>
+            <a href="{{route('categorias.create')}}" class="btn btn-primary" style="color: #fff;">
+              <i class="fa fa-plus"></i> Nueva Categoria
             </a>
           </h3>
         </div>
@@ -40,20 +40,20 @@
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="(material, index) in materiales">
-                  <td>@{{material.id}}</td>
-                  <td>@{{material.nombre}}</td>
+                <tr v-for="(categoria, index) in categorias">
+                  <td>@{{categoria.id}}</td>
+                  <td>@{{categoria.nombre}}</td>
                   <td class="text-right">
                     <a class="btn btn-info" data-toggle="tooltip" title="Ver"
-                      :href="'/materiales/'+material.id">
+                      :href="'/categorias/'+categoria.id">
                       <i class="far fa-eye"></i>
                     </a>
                     <a class="btn btn-success" data-toggle="tooltip" title="Editar"
-                      :href="'/materiales/'+material.id+'/editar'">
+                      :href="'/categorias/'+categoria.id+'/editar'">
                       <i class="far fa-edit"></i>
                     </a>
                     <button class="btn btn-danger" data-toggle="tooltip" title="Borrar"
-                      @click="borrar(material, index)">
+                      @click="borrar(categoria, index)">
                       <i class="fas fa-times"></i>
                     </button>
                   </td>
@@ -75,13 +75,13 @@
 const app = new Vue({
     el: '#content',
     data: {
-      materiales: {!! json_encode($materiales) !!},
+      categorias: {!! json_encode($categorias) !!},
     },
     methods: {
-      borrar(material, index){
+      borrar(categoria, index){
         swal({
           title: 'Cuidado',
-          text: "Borrar Material "+material.nombre+"?",
+          text: "Borrar Categoria "+categoria.nombre+"?",
           type: 'warning',
           showCancelButton: true,
           confirmButtonColor: '#3085d6',
@@ -90,12 +90,12 @@ const app = new Vue({
           cancelButtonText: 'No, Cancelar',
         }).then((result) => {
           if (result.value) {
-            axios.delete('/materiales/'+material.id, {})
+            axios.delete('/categorias/'+categoria.id, {})
             .then(({data}) => {
-              this.materiales.splice(index, 1);
+              this.categorias.splice(index, 1);
               swal({
                 title: "Exito",
-                text: "El material ha sido borrado",
+                text: "La categoria ha sido borrado",
                 type: "success"
               });
             })

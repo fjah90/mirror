@@ -32,8 +32,8 @@
               </div>
               <div class="col-md-4">
                 <div class="form-group">
-                  <label class="control-label">Material</label>
-                  <span class="form-control">{{$producto->material->nombre}}</span>
+                  <label class="control-label">Categoria</label>
+                  <span class="form-control">{{$producto->categoria->nombre}}</span>
                 </div>
               </div>
               <div class="col-md-4">

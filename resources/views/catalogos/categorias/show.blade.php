@@ -2,7 +2,7 @@
 
 {{-- Page title --}}
 @section('title')
-    Ver Material | @parent
+    Ver Categoria | @parent
 @stop
 
 @section('header_styles')
@@ -12,7 +12,7 @@
 @section('content')
   <!-- Content Header (Page header) -->
   <section class="content-header">
-    <h1>Materiales</h1>
+    <h1>Categorias Productos</h1>
   </section>
   <!-- Main content -->
   <section class="content" id="content">
@@ -20,20 +20,20 @@
       <div class="col-lg-12">
         <div class="panel ">
           <div class="panel-heading">
-            <h3 class="panel-title">Material {{$material->nombre}}</h3>
+            <h3 class="panel-title">Categoria {{$categoria->nombre}}</h3>
           </div>
           <div class="panel-body">
             <div class="row">
               <div class="col-md-12">
                 <div class="form-group">
                   <label class="control-label">Nombre</label>
-                  <span class="form-control">{{$material->nombre}}</span>
+                  <span class="form-control">{{$categoria->nombre}}</span>
                 </div>
               </div>
             </div>
             <div class="row">
               <div class="col-md-12 text-right">
-                <a class="btn btn-info" href="{{route('materiales.index')}}">
+                <a class="btn btn-info" href="{{route('categorias.index')}}">
                   Regresar
                 </a>
               </div>
