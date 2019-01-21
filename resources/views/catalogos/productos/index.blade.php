@@ -47,6 +47,8 @@
                   <td>@{{producto.proveedor.empresa}}</td>
                   <td>@{{producto.categoria.nombre}}</td>
                   <td>@{{producto.composicion}}</td>
+                  <td>@{{producto.diseño}}</td>
+                  <td>@{{producto.coleccion}}</td>
                   <td class="text-right">
                     <a class="btn btn-info" data-toggle="tooltip" title="Ver"
                       :href="'/productos/'+producto.id">

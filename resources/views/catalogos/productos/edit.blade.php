@@ -53,7 +53,71 @@
                 </div>
               </div>
               <div class="row">
-                <div class="col-md-12 text-right">
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label class="control-label">Diseño</label>
+                    <input type="text" class="form-control" name="diseño" v-model="producto.diseño" required />
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label class="control-label">Coleccion</label>
+                    <input type="text" class="form-control" name="coleccion" v-model="producto.coleccion" />
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label class="control-label">Descripción 1</label>
+                    <input type="text" class="form-control" name="descripcion1" v-model="producto.descripcion1" />
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label class="control-label">Descripción 2</label>
+                    <input type="text" class="form-control" name="descripcion2" v-model="producto.descripcion2" />
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label class="control-label">Descripción 3</label>
+                    <input type="text" class="form-control" name="descripcion3" v-model="producto.descripcion3" />
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label class="control-label">Descripción 4</label>
+                    <input type="text" class="form-control" name="descripcion4" v-model="producto.descripcion4" />
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label class="control-label">Descripción 5</label>
+                    <input type="text" class="form-control" name="descripcion5" v-model="producto.descripcion5" />
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label class="control-label">Descripción 6</label>
+                    <input type="text" class="form-control" name="descripcion6" v-model="producto.descripcion6" />
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label class="control-label" style="display:block;">Foto</label>
+                    <div class="kv-avatar">
+                      <div class="file-loading">
+                        <input id="foto" name="foto" type="file" ref="foto" @change="fijarFoto()" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4 col-md-offset-4 text-right">
                   <button style="margin-top:25px;" type="submit" class="btn btn-success" :disabled="cargando">
                     <i class="fas fa-save"></i>
                     Actualizar Producto
@@ -81,13 +145,53 @@ const app = new Vue({
         proveedor_id: '{{$producto->proveedor_id}}',
         categoria_id: '{{$producto->categoria_id}}',
         composicion: '{{$producto->composicion}}',
+        diseño: '{{$producto->diseño}}',
+        coleccion: '{{$producto->coleccion}}',
+        descripcion1: '{{$producto->descripcion1}}',
+        descripcion2: '{{$producto->descripcion2}}',
+        descripcion3: '{{$producto->descripcion3}}',
+        descripcion4: '{{$producto->descripcion4}}',
+        descripcion5: '{{$producto->descripcion5}}',
+        descripcion6: '{{$producto->descripcion6}}',
+        foto_ori: '{{$producto->foto}}',
+        foto:''
       },
       cargando: false,
     },
+    mounted(){
+      if(this.producto.foto_ori){
+        var preview = '<img src="'+this.producto.foto_ori+'" alt="logo"><h6 class="text-muted">Click para seleccionar</h6>';
+      }
+      else{
+        var preview = '<img src="{{asset('images/camara.png')}}" alt="foto"><h6 class="text-muted">Click para seleccionar</h6>';
+      }
+
+      $("#foto").fileinput({
+        overwriteInitial: true,
+        maxFileSize: 5000,
+        showClose: false,
+        showCaption: false,
+        showBrowse: false,
+        browseOnZoneClick: true,
+        removeLabel: '',
+        removeIcon: '<i class="glyphicon glyphicon-remove"></i>',
+        removeTitle: 'Quitar Foto',
+        defaultPreviewContent: preview,
+        layoutTemplates: {main2: '{preview} {remove} {browse}'},
+        allowedFileExtensions: ["jpg", "jpeg", "png"]
+      });
+    },
     methods: {
+      fijarFoto(){
+        this.producto.foto = this.$refs['foto'].files[0];
+      },
       guardar(){
+        var formData = objectToFormData(this.producto);
+
         this.cargando = true;
-        axios.put('/productos/{{$producto->id}}', this.producto)
+        axios.post('/productos/{{$producto->id}}', formData, {
+          headers: { 'Content-Type': 'multipart/form-data'}
+        })
         .then(({data}) => {
           this.cargando = false;
           swal({

@@ -6,24 +6,8 @@
 @stop
 
 @section('header_styles')
-<style>
-  .kv-avatar .krajee-default.file-preview-frame,.kv-avatar .krajee-default.file-preview-frame:hover {
-    margin: 0;
-    padding: 0;
-    border: none;
-    box-shadow: none;
-    text-align: center;
-  }
-  .kv-avatar { display: inline-block; }
-  .kv-avatar img {width: 100%;}
-  .kv-avatar .file-input { display: table-cell; width: 100%; }
-  .kv-reqd { color: red; font-family: monospace; font-weight: normal; }
-  .btn-xxs {
-    padding: 0 4px;
-    font-size: 10px;
-    cursor: pointer;
-  }
-</style>
+<!-- <style>  
+</style> -->
 @stop
 
 {{-- Page content --}}

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Validator;
+use Storage;
 use Illuminate\Http\Request;
 use App\Models\Proveedor;
 use App\Models\Categoria;
@@ -46,6 +47,7 @@ class ProductosController extends Controller
         'proveedor_id' => 'required',
         'categoria_id' => 'required',
         'composicion' => 'required',
+        'diseño' => 'required',
       ]);
 
       if ($validator->fails()) {
@@ -55,9 +57,14 @@ class ProductosController extends Controller
         ], 422);
       }
 
-      Producto::create($request->all());
+      $create = $request->except('foto');
+      if(isset($request->foto)){
+        $create['foto'] = Storage::putFile('public/productos', $request->file('foto'));
+        $create['foto'] = str_replace('public/', '', $create['foto']);
+      }
+      Producto::create($create);
 
-      return response()->json(['success' => true, "error" => false],200);
+      return response()->json(['success' => true, "error" => false], 200);
     }
 
     /**
@@ -69,6 +76,7 @@ class ProductosController extends Controller
     public function show(Producto $producto)
     {
       $producto->load('proveedor', 'categoria');
+      if($producto->foto) $producto->foto = asset('storage/'.$producto->foto);
       return view('catalogos.productos.show', compact('producto'));
     }
 
@@ -83,6 +91,7 @@ class ProductosController extends Controller
       $proveedores = Proveedor::all();
       $categorias = Categoria::all();
       $producto->load('proveedor', 'categoria');
+      if($producto->foto) $producto->foto = asset('storage/'.$producto->foto);
       return view('catalogos.productos.edit', compact('producto','proveedores','categorias'));
     }
 
@@ -99,6 +108,7 @@ class ProductosController extends Controller
         'proveedor_id' => 'required',
         'categoria_id' => 'required',
         'composicion' => 'required',
+        'diseño' => 'required'
       ]);
 
       if ($validator->fails()) {
@@ -108,7 +118,13 @@ class ProductosController extends Controller
         ], 422);
       }
 
-      $producto->update($request->all());
+      $update = $request->except('foto_ori','foto');
+      if(!is_null($request->foto)) {
+        Storage::delete('public/'.$producto->foto);
+        $update['foto'] = Storage::putFile('public/productos', $request->file('foto'));
+        $update['foto'] = str_replace('public/', '', $update['foto']);
+      }
+      $producto->update($update);
 
       return response()->json(['success' => true, "error" => false], 200);
     }
@@ -121,6 +137,7 @@ class ProductosController extends Controller
      */
     public function destroy(Producto $producto)
     {
+      Storage::delete('public/'.$producto->foto);
       $producto->delete();
       return response()->json(['success' => true, "error" => false], 200);
     }
