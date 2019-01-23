@@ -247,7 +247,7 @@ class ProspectosController extends Controller
         'moneda' => 'required',
         'condicion' => 'required',
         'iva' => 'required',
-        'entradas' => 'required',
+        'entradas' => 'required|min:1',
         'entradas.foto' => 'image',
         'subtotal' => 'required',
         'total' => 'required'
@@ -257,6 +257,11 @@ class ProspectosController extends Controller
         $errors = $validator->errors()->all();
         return response()->json([
           "success" => false, "error" => true, "message" => $errors[0]
+        ], 422);
+      }
+      if (is_null($request->entradas[0])) {
+        return response()->json([
+          "success" => false, "error" => true, "message" => "Debe Agregar al menos 1 producto"
         ], 422);
       }
 
