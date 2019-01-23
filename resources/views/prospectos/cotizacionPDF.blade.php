@@ -339,18 +339,18 @@
                   </tr>
                   <tr>
                     <td>PRECIOS:</td>
-                    <td>{{$cotizacion->precios}}</td>
+                    <td>{{$cotizacion->moneda}}</td>
                   </tr>
                   <tr>
                     <td>CONDICIONES:</td>
-                    <td>{{$cotizacion->condiciones}}</td>
+                    <td>{{$cotizacion->condiciones->nombre}}</td>
                   </tr>
                 </table>
               </td>
               <td class="bordered">
                 <p class="text-center font-small "><strong>ENVIAR A:</strong></p>
                 <p>{{$cotizacion->prospecto->cliente->nombre}}</p>
-                <p>{{$cotizacion->prospecto->cliente->direccion}}</p>
+                <p>{{$cotizacion->lugar}}</p>
               </td>
             </tr>
           </tbody>
@@ -372,12 +372,12 @@
           <tbody>
             @foreach($cotizacion->entradas as $entrada)
             <tr>
-              <td class="text-center">@format_number($entrada->cantidad) M<sup>2</sup></td>
+              <td class="text-center">@format_number($entrada->cantidad) {{$entrada->medida}}</td>
               <td>
                 <table style="width:100%;">
                   <tr>
                     <td>
-                      <p>{{$entrada->producto->material->nombre}}</p>
+                      <p>{{$entrada->producto->categoria->nombre}}</p>
                       <p>{{$entrada->producto->composicion}}</p>
                       <p>COLECTION: {{$entrada->coleccion}}</p>
                       <p>DESIGN: {{$entrada->diseno}}</p>
@@ -407,7 +407,7 @@
               <td class="text-right">@format_money($cotizacion->iva)</td>
             </tr>
             <tr>
-              <td colspan="3" class="text-right"><strong>TOTAL DOLARES:</strong></td>
+              <td colspan="3" class="text-right"><strong>TOTAL {{$cotizacion->moneda}}:</strong></td>
               <td class="text-right">@format_money($cotizacion->total)</td>
             </tr>
           </tfoot>

@@ -10,6 +10,7 @@ use App\Models\ProspectoActividad;
 use App\Models\ProspectoTipoActividad;
 use App\Models\ProspectoCotizacion;
 use App\Models\ProspectoCotizacionEntrada;
+use App\Models\CondicionCotizacion;
 use Validator;
 use PDF;
 use Mail;
@@ -217,9 +218,17 @@ class ProspectosController extends Controller
     public function cotizar(Prospecto $prospecto)
     {
       $prospecto->load('cliente','cotizaciones.entradas.producto');
-      $productos = Producto::with('material','proveedor')->get();
+      $productos = Producto::with('categoria','proveedor')->get();
+      $condiciones = CondicionCotizacion::all();
 
-      return view('prospectos.cotizar', compact('prospecto', 'productos'));
+      foreach ($prospecto->cotizaciones as $cotizacion) {
+        if($cotizacion->archivo) $cotizacion->archivo = asset('storage/'.$cotizacion->archivo);
+      }
+      foreach ($productos as $producto) {
+        if($producto->foto) $producto->foto = asset('storage/'.$producto->foto);
+      }
+
+      return view('prospectos.cotizar', compact('prospecto', 'productos', 'condiciones'));
     }
 
     /**
@@ -234,12 +243,13 @@ class ProspectosController extends Controller
       $validator = Validator::make($request->all(), [
         'prospecto_id' => 'required',
         'entrega' => 'required',
-        'condiciones' => 'required',
-        'precios' => 'required',
+        'lugar' => 'required',
+        'moneda' => 'required',
+        'condicion' => 'required',
+        'iva' => 'required',
         'entradas' => 'required',
         'entradas.foto' => 'image',
         'subtotal' => 'required',
-        'iva' => 'required',
         'total' => 'required'
       ]);
 
@@ -250,32 +260,53 @@ class ProspectosController extends Controller
         ], 422);
       }
 
-      $create = $request->except('entradas');
+      $create = $request->except('entradas', 'condicion');
       $create['fecha'] = date('Y-m-d');
+      if($request->condicion['id']==0){//nueva condicion, dar de alta
+        $condicion = CondicionCotizacion::create(['nombre'=>$request->condicion['nombre']]);
+        $create['condicion_id'] = $condicion->id;
+      }
+      else $create['condicion_id'] = $request->condicion['id'];
+      if($request->iva=="1"){
+        $create['iva'] = bcmul($create['subtotal'], 0.16, 2);
+        $create['total'] = bcmul($create['subtotal'], 1.16, 2);
+      }
+      else {
+        $create['total'] = $create['subtotal'];
+      }
+
       $cotizacion = ProspectoCotizacion::create($create);
 
       //guardar entradas
       foreach ($request->entradas as $index => $entrada) {
-        if(isset($entrada['foto'])){
+        $producto = Producto::find($entrada['producto_id']);
+
+        if(isset($entrada['foto']) && $entrada['foto']){
           $foto = Storage::putFileAs(
             'public/cotizaciones/'.$cotizacion->id,
             $entrada['foto'],
-            'entrada '.($index+1).'.'.$entrada['foto']->guessExtension()
+            'entrada_'.($index+1).'.'.$entrada['foto']->guessExtension()
           );
           $foto = str_replace('public/', '', $foto);
           $entrada['foto'] = $foto;
+        }
+        else if($producto->foto){
+          $extencion = pathinfo(asset($producto->foto), PATHINFO_EXTENSION);
+          $path = "cotizaciones/".$cotizacion->id."/entrada_".($index+1).".".$extencion;
+          Storage::copy("public/".$producto->foto, "public/$path");
+          $entrada['foto'] = $path;
         }
         $entrada['cotizacion_id'] = $cotizacion->id;
         ProspectoCotizacionEntrada::create($entrada);
       }
 
-      $cotizacion->load('prospecto.cliente', 'entradas.producto.material');
+      $cotizacion->load('prospecto.cliente', 'condiciones', 'entradas.producto.categoria');
       foreach ($cotizacion->entradas as $entrada) {
         if($entrada->foto) $entrada->foto = asset('storage/'.$entrada->foto);
       }
 
       //crear pdf de cotizacion
-      $url = '/cotizaciones/cotizacion_'.$cotizacion->id.'.pdf';
+      $url = 'cotizaciones/'.$cotizacion->id.'/cotizacion_'.$cotizacion->id.'.pdf';
       $meses = ['ENERO','FEBRERO','MARZO','ABRIL','MAYO','JUNIO','JULIO',
       'AGOSTO','SEPTIEMBRE','OCTUBRE','NOVIEMBRE','DICIEMBRE'];
       list($ano,$mes,$dia) = explode('-', $cotizacion->fecha);
@@ -283,10 +314,11 @@ class ProspectosController extends Controller
       $cotizacion->fechaPDF = "$mes $dia, $ano";
 
       $cotizacionPDF = PDF::loadView('prospectos.cotizacionPDF', compact('cotizacion'));
-      file_put_contents(public_path(). $url, $cotizacionPDF->output());
+      Storage::disk('public')->put($url, $cotizacionPDF->output());
 
       unset($cotizacion->fechaPDF);
       $cotizacion->update(['archivo'=>$url]);
+      $cotizacion->archivo = asset('storage/'.$cotizacion->archivo);
 
       return response()->json(['success'=>true,'error'=>false,'cotizacion'=>$cotizacion], 200);
     }
@@ -315,7 +347,7 @@ class ProspectosController extends Controller
       $cotizacion = ProspectoCotizacion::findOrFail($request->cotizacion_id);
       $cotizacion_id = $cotizacion->id;
       $email = $request->email;
-      $pdf = file_get_contents(public_path().$cotizacion->archivo);
+      $pdf = file_get_contents(asset('storage/'.$cotizacion->archivo));
 
       Mail::send('prospectos.enviarCotizacion', ['mensaje' => $request->mensaje], function ($message) use ($cotizacion_id, $email, $pdf){
         $message->to($email)->subject('Cotización Intercorp');
@@ -326,8 +358,8 @@ class ProspectosController extends Controller
     }
 
     public function pruebas(){
-      $cotizacion = ProspectoCotizacion::with('prospecto.cliente', 'entradas.producto.material')
-      ->find(10);
+      $cotizacion = ProspectoCotizacion::with('prospecto.cliente', 'condiciones', 'entradas.producto.categoria')
+      ->find(1);
 
       $meses = ['ENERO','FEBRERO','MARZO','ABRIL','MAYO','JUNIO','JULIO',
       'AGOSTO','SEPTIEMBRE','OCTUBRE','NOVIEMBRE','DICIEMBRE'];

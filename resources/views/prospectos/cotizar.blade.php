@@ -6,7 +6,7 @@
 @stop
 
 @section('header_styles')
-<!-- <style>  
+<!-- <style>
 </style> -->
 @stop
 
@@ -96,28 +96,57 @@
               <div class="row">
                 <div class="col-md-4">
                   <div class="form-group">
-                    <label class="control-label">Entrega</label>
+                    <label class="control-label">Tiempo de Entrega</label>
                     <input type="text" name="entrega" class="form-control"
                       v-model="cotizacion.entrega" required />
                   </div>
                 </div>
                 <div class="col-md-4">
                   <div class="form-group">
-                    <label class="control-label">Condiciones</label>
-                    <input type="text" name="condiciones" class="form-control"
-                      v-model="cotizacion.condiciones" required />
+                    <label class="control-label">Lugar de Entrega</label>
+                    <input type="text" name="lugar" class="form-control"
+                      v-model="cotizacion.lugar" required />
                   </div>
                 </div>
                 <div class="col-md-4">
                   <div class="form-group">
-                    <label class="control-label">Precios</label>
-                    <select class="form-control" name="precios" v-model="cotizacion.precios">
+                    <label class="control-label">Moneda</label>
+                    <select class="form-control" name="moneda" v-model="cotizacion.moneda" required>
                       <option value="Dorales">Dolares USD</option>
                       <option value="Pesos">Pesos MXN</option>
                     </select>
                   </div>
                 </div>
               </div>
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label class="control-label">Condiciones De Pago</label>
+                    <select class="form-control" name="condiciones" v-model='cotizacion.condicion.id' required>
+                      <option v-for="condicion in condiciones" :value="condicion.id">@{{condicion.nombre}}</option>
+                      <option value="0">Otra</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-4" v-if="cotizacion.condicion.id==0">
+                  <div class="form-group">
+                    <label class="control-label">Especifique</label>
+                    <input class="form-control" type="text" name="condiciones"
+                      v-model="cotizacion.condicion.nombre" required />
+                  </div>
+                </div>
+                <div class="col-md-4" v-else></div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label class="control-label">IVA</label>
+                    <select class="form-control" name="iva" v-model="cotizacion.iva" required>
+                      <option value="0">No</option>
+                      <option value="1">Si</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <hr />
               <div class="row">
                 <div class="col-md-4">
                   <div class="form-group">
@@ -135,11 +164,23 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-2">
                   <div class="form-group">
                     <label class="control-label">Cantidad</label>
                     <input type="number" step="0.01" min="0.01" name="cantidad" class="form-control"
                       v-model="entrada.cantidad" required />
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="form-group">
+                    <label class="control-label">Unidad Medida</label>
+                    <select class="form-control" name="medida" v-model="entrada.medida" required>
+                      <option value="M">M</option>
+                      <option value="M2">M2</option>
+                      <option value="M3">M3</option>
+                      <option value="Yarda">Yarda</option>
+                      <option value="Pies">Pies</option>
+                    </select>
                   </div>
                 </div>
                 <div class="col-md-4">
@@ -216,7 +257,7 @@
                     <tbody>
                       <tr v-for="(entrada, index) in cotizacion.entradas">
                         <td>@{{entrada.producto.composicion}}</td>
-                        <td>@{{entrada.cantidad}}</td>
+                        <td>@{{entrada.cantidad}} @{{entrada.medida}}</td>
                         <td>@{{entrada.precio | formatoMoneda}}</td>
                         <td>@{{entrada.importe | formatoMoneda}}</td>
                         <td class="text-right">
@@ -241,17 +282,32 @@
                       <tr>
                         <td colspan="2"></td>
                         <td class="text-right"><strong>IVA</strong></td>
-                        <td>@{{cotizacion.iva | formatoMoneda}}</td>
+                        <td v-if="cotizacion.iva=='0'">$0.00</td>
+                        <td v-else>@{{cotizacion.subtotal * 0.16 | formatoMoneda}}</td>
                         <td></td>
                       </tr>
                       <tr>
                         <td colspan="2"></td>
-                        <td class="text-right"><strong>Total</strong></td>
-                        <td>@{{cotizacion.total | formatoMoneda}}</td>
+                        <td class="text-right">
+                          <strong>Total
+                            <span v-if="cotizacion.moneda=='Dolares'"> (USD)</span>
+                            <span v-else> (MXN)</span>
+                          </strong>
+                        </td>
+                        <td v-if="cotizacion.iva=='0'">@{{cotizacion.subtotal | formatoMoneda}}</td>
+                        <td v-else>@{{cotizacion.subtotal * 1.16 | formatoMoneda}}</td>
                         <td></td>
                       </tr>
                     </tfoot>
                   </table>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label class="control-label text-danger">Notas</label>
+                  <textarea class="form-control" name="notas" rows="3" cols="80" v-model="cotizacion.notas"></textarea>
                 </div>
               </div>
             </div>
@@ -291,7 +347,7 @@
             <tr>
               <th>ID</th>
               <th>Proveedor</th>
-              <th>Material</th>
+              <th>Categoria</th>
               <th>Composicón</th>
               <th></th>
             </tr>
@@ -300,7 +356,7 @@
             <tr v-for="(prod, index) in productos">
               <td>@{{prod.id}}</td>
               <td>@{{prod.proveedor.empresa}}</td>
-              <td>@{{prod.material.nombre}}</td>
+              <td>@{{prod.categoria.nombre}}</td>
               <td>@{{prod.composicion}}</td>
               <td class="text-right">
                 <button class="btn btn-primary" title="Seleccionar"
@@ -354,15 +410,21 @@ const app = new Vue({
     },
     prospecto: {!! json_encode($prospecto) !!},
     productos: {!! json_encode($productos) !!},
+    condiciones: {!! json_encode($condiciones) !!},
     cotizacion: {
       prospecto_id: {{$prospecto->id}},
+      condicion: {
+        id: 0,
+        nombre: ''
+      },
       entrega: '',
-      condiciones: '',
-      precios: '',
+      lugar: '',
+      moneda: '',
       entradas: [],
       subtotal: 0,
       iva: 0,
       total: 0,
+      notas: "",
       observaciones: ""
     },
     entrada: {
@@ -371,6 +433,7 @@ const app = new Vue({
       diseno: "",
       color: "",
       cantidad: 0,
+      medida: "",
       precio: 0,
       importe: 0,
       observacion: "",
@@ -413,6 +476,15 @@ const app = new Vue({
     },
     seleccionarProduco(prod){
       this.entrada.producto = prod;
+      this.entrada.coleccion = prod.coleccion;
+      this.entrada.diseno = prod.diseño;
+
+      if(prod.foto){
+        $("#foto").siblings('button').click();
+        this.entrada.foto_src = prod.foto;
+        $("div.file-default-preview img")[0].src = this.entrada.foto_src;
+      }
+
       this.openCatalogo = false;
     },
     agregarEntrada(){
@@ -429,8 +501,6 @@ const app = new Vue({
       if(fotoPrev[0]) this.entrada.foto_src = fotoPrev[0].src;
       this.entrada.importe = this.entrada.cantidad * this.entrada.precio;
       this.cotizacion.subtotal+= this.entrada.importe;
-      this.cotizacion.iva = this.cotizacion.subtotal * 0.16;
-      this.cotizacion.total = this.cotizacion.subtotal * 1.16;
       this.cotizacion.entradas.push(this.entrada);
       this.entrada = {
         producto: {},
@@ -438,6 +508,7 @@ const app = new Vue({
         diseno: "",
         color: "",
         cantidad: 0,
+        medida: "",
         precio: 0,
         importe: 0,
         observacion: "",
@@ -448,8 +519,6 @@ const app = new Vue({
     },
     editarEntrada(entrada, index){
       this.cotizacion.subtotal-= entrada.importe;
-      this.cotizacion.iva = this.cotizacion.subtotal * 0.16;
-      this.cotizacion.total = this.cotizacion.subtotal * 1.16;
       this.cotizacion.entradas.splice(index, 1);
       this.entrada = entrada;
 
@@ -459,11 +528,58 @@ const app = new Vue({
     },
     removerEntrada(entrada, index){
       this.cotizacion.subtotal-= entrada.importe;
-      this.cotizacion.iva = this.cotizacion.subtotal * 0.16;
-      this.cotizacion.total = this.cotizacion.subtotal * 1.16;
       this.cotizacion.entradas.splice(index, 1);
       $("#foto").siblings('button').click();
     },
+    guardar(){
+      var cotizacion = $.extend(true, {}, this.cotizacion);
+      cotizacion.entradas.forEach(function(entrada){
+        entrada.producto_id = entrada.producto.id;
+        delete entrada.producto;
+        if(entrada.foto_src=="") delete entrada.foto;
+        delete entrada.foto_src;
+      });
+      var formData = objectToFormData(cotizacion, {indices:true});
+
+      this.cargando = true;
+      axios.post('/prospectos/{{$prospecto->id}}/cotizacion', formData, {
+        headers: { 'Content-Type': 'multipart/form-data'}
+      })
+      .then(({data}) => {
+        this.prospecto.cotizaciones.push(data.cotizacion);
+        this.cotizacion = {
+          prospecto_id: {{$prospecto->id}},
+          condicion: {
+            id: 0,
+            nombre: ''
+          },
+          entrega: '',
+          lugar: '',
+          moneda: '',
+          entradas: [],
+          subtotal: 0,
+          iva: 0,
+          total: 0,
+          notas: "",
+          observaciones: ""
+        };
+        this.cargando = false;
+        swal({
+          title: "Cotizacion Guardada",
+          text: "",
+          type: "success"
+        });
+      })
+      .catch(({response}) => {
+        console.error(response);
+        this.cargando = false;
+        swal({
+          title: "Error",
+          text: response.data.message || "Ocurrio un error inesperado, intente mas tarde",
+          type: "error"
+        });
+      });
+    },//fin guardar
     enviarCotizacion(){
       this.cargando = true;
       axios.post('/prospectos/{{$prospecto->id}}/enviarCotizacion', this.enviar)
@@ -491,50 +607,6 @@ const app = new Vue({
         });
       });
     },//fin enviarCotizacion
-    guardar(){
-      var cotizacion = $.extend(true, {}, this.cotizacion);
-      cotizacion.entradas.forEach(function(entrada){
-        entrada.producto_id = entrada.producto.id;
-        delete entrada.producto;
-        if(entrada.foto_src=="") delete entrada.foto;
-        delete entrada.foto_src;
-      });
-      var formData = objectToFormData(cotizacion, {indices:true});
-
-      this.cargando = true;
-      axios.post('/prospectos/{{$prospecto->id}}/cotizacion', formData, {
-        headers: { 'Content-Type': 'multipart/form-data'}
-      })
-      .then(({data}) => {
-        this.prospecto.cotizaciones.push(data.cotizacion);
-        this.cotizacion = {
-          prospecto_id: {{$prospecto->id}},
-          entrega: '',
-          condiciones: '',
-          precios: '',
-          entradas: [],
-          subtotal: 0,
-          iva: 0,
-          total: 0,
-          observaciones: ""
-        };
-        this.cargando = false;
-        swal({
-          title: "Cotizacion Guardada",
-          text: "",
-          type: "success"
-        });
-      })
-      .catch(({response}) => {
-        console.error(response);
-        this.cargando = false;
-        swal({
-          title: "Error",
-          text: response.data.message || "Ocurrio un error inesperado, intente mas tarde",
-          type: "error"
-        });
-      });
-    },//fin guardar
   }
 });
 </script>
