@@ -242,6 +242,7 @@ class ProspectosController extends Controller
     {
       $validator = Validator::make($request->all(), [
         'prospecto_id' => 'required',
+        'facturar' => 'required',
         'entrega' => 'required',
         'lugar' => 'required',
         'moneda' => 'required',
@@ -265,7 +266,10 @@ class ProspectosController extends Controller
         ], 422);
       }
 
-      $create = $request->except('entradas', 'condicion');
+      $user = auth()->user();
+
+      $create = $request->except('entradas', 'condicion', 'observaciones');
+      $create['user_id'] = $user->id;
       $create['fecha'] = date('Y-m-d');
       if($request->condicion['id']==0){//nueva condicion, dar de alta
         $condicion = CondicionCotizacion::create(['nombre'=>$request->condicion['nombre']]);
@@ -279,6 +283,12 @@ class ProspectosController extends Controller
       else {
         $create['total'] = $create['subtotal'];
       }
+      $observaciones = "<ul>";
+      foreach ($request->observaciones as $obs) {
+        $observaciones.="<li>$obs</li>";
+      }
+      $observaciones.= "</ul>";
+      $create['observaciones'] = $observaciones;
 
       $cotizacion = ProspectoCotizacion::create($create);
 
@@ -305,7 +315,8 @@ class ProspectosController extends Controller
         ProspectoCotizacionEntrada::create($entrada);
       }
 
-      $cotizacion->load('prospecto.cliente', 'condiciones', 'entradas.producto.categoria');
+      $cotizacion->load('prospecto.cliente', 'condiciones', 'entradas.producto.categoria',
+      'entradas.producto.proveedor', 'user');
       foreach ($cotizacion->entradas as $entrada) {
         if($entrada->foto) $entrada->foto = asset('storage/'.$entrada->foto);
       }
@@ -363,8 +374,9 @@ class ProspectosController extends Controller
     }
 
     public function pruebas(){
-      $cotizacion = ProspectoCotizacion::with('prospecto.cliente', 'condiciones', 'entradas.producto.categoria')
-      ->find(1);
+      $cotizacion = ProspectoCotizacion::with('prospecto.cliente', 'condiciones',
+      'entradas.producto.categoria', 'entradas.producto.proveedor', 'user')
+      ->find(2);
 
       $meses = ['ENERO','FEBRERO','MARZO','ABRIL','MAYO','JUNIO','JULIO',
       'AGOSTO','SEPTIEMBRE','OCTUBRE','NOVIEMBRE','DICIEMBRE'];

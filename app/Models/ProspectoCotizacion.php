@@ -10,7 +10,7 @@ class ProspectoCotizacion extends Model
     protected $table = 'prospectos_cotizaciones';
 
     protected $fillable = ['prospecto_id','condicion_id','fecha','subtotal','iva','total',
-    'observaciones','notas','archivo','entrega','lugar','moneda'];
+    'observaciones','notas','archivo','entrega','lugar','moneda','facturar','user_id'];
 
     protected $casts = [
       'subtotal' => 'float',
@@ -38,6 +38,10 @@ class ProspectoCotizacion extends Model
 
     public function condiciones(){
       return $this->belongsTo('App\Models\CondicionCotizacion', 'condicion_id', 'id');
+    }
+
+    public function user(){
+      return $this->belongsTo('App\User', 'user_id', 'id');
     }
 
     public function entradas(){

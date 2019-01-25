@@ -94,6 +94,15 @@
                 </div>
               </div>
               <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label class="control-label">Facturar A</label>
+                    <input type="text" name="facturar" class="form-control"
+                    v-model="cotizacion.facturar" required />
+                  </div>
+                </div>
+              </div>
+              <div class="row">
                 <div class="col-md-4">
                   <div class="form-group">
                     <label class="control-label">Tiempo de Entrega</label>
@@ -112,7 +121,7 @@
                   <div class="form-group">
                     <label class="control-label">Moneda</label>
                     <select class="form-control" name="moneda" v-model="cotizacion.moneda" required>
-                      <option value="Dorales">Dolares USD</option>
+                      <option value="Dolares">Dolares USD</option>
                       <option value="Pesos">Pesos MXN</option>
                     </select>
                   </div>
@@ -212,6 +221,46 @@
                 </div>
               </div>
               <div class="row">
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label class="control-label">Descripción 1</label>
+                    <input type="text" class="form-control" name="descripcion1" v-model="entrada.descripcion1" />
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label class="control-label">Descripción 2</label>
+                    <input type="text" class="form-control" name="descripcion2" v-model="entrada.descripcion2" />
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label class="control-label">Descripción 3</label>
+                    <input type="text" class="form-control" name="descripcion3" v-model="entrada.descripcion3" />
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label class="control-label">Descripción 4</label>
+                    <input type="text" class="form-control" name="descripcion4" v-model="entrada.descripcion4" />
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label class="control-label">Descripción 5</label>
+                    <input type="text" class="form-control" name="descripcion5" v-model="entrada.descripcion5" />
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label class="control-label">Descripción 6</label>
+                    <input type="text" class="form-control" name="descripcion6" v-model="entrada.descripcion6" />
+                  </div>
+                </div>
+              </div>
+              <div class="row">
                 <div class="col-md-12">
                   <div class="form-group">
                     <label class="control-label">Observación</label>
@@ -290,8 +339,8 @@
                         <td colspan="2"></td>
                         <td class="text-right">
                           <strong>Total
-                            <span v-if="cotizacion.moneda=='Dolares'"> (USD)</span>
-                            <span v-else> (MXN)</span>
+                            <span v-if="cotizacion.moneda=='Dolares'"> Dolares</span>
+                            <span v-else> Pesos</span>
                           </strong>
                         </td>
                         <td v-if="cotizacion.iva=='0'">@{{cotizacion.subtotal | formatoMoneda}}</td>
@@ -315,10 +364,19 @@
               <div class="col-md-12">
                 <div class="form-group">
                   <label class="control-label">Observaciónes</label>
-                  <tinymce-editor name="name" v-model="cotizacion.observaciones"
-                    v-model="texto" :init="init"
-                  >
-                  </tinymce-editor>
+                  <p v-for="observacion in observaciones">
+                    <i class="glyphicon glyphicon-check" v-if="observacion.activa" @click="quitarObservacion(observacion)"></i>
+                    <i class="glyphicon glyphicon-unchecked" v-else @click="agregarObservacion(observacion)"></i>
+                    @{{observacion.texto}}
+                  </p>
+                  <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Nueva Observación" v-model="nuevaObservacion" />
+                    <span class="input-group-btn">
+                      <button class="btn btn-default" type="button" @click="crearObservacion()">
+                        <i class="fas fa-plus"></i>
+                      </button>
+                    </span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -411,12 +469,22 @@ const app = new Vue({
     prospecto: {!! json_encode($prospecto) !!},
     productos: {!! json_encode($productos) !!},
     condiciones: {!! json_encode($condiciones) !!},
+    observaciones: [
+      {activa:false, texto:'Cotización válida por 30 días.'},
+      {activa:false, texto:'Los pagos son en dólares, o en pesos al tipo de cambio bancario a la venta en Banorte del día de pago, previamente acordado entre el cliente e Intercorp.'},
+      {activa:false, texto:'Se requiere de pisos púlidos y nivelados para una apropiada instalación.'},
+      {activa:false, texto:'Si la cantidad de metros solicitados cambia antes de confirmar el pedido, el precio puede cambiar.'},
+      {activa:false, texto:'Se consideran maniobras de descarga, a nivel de primer piso.'},
+      {activa:false, texto:'No se consideran fianzas; de requerirlas séran con cargo al cliente.'},
+    ],
+    nuevaObservacion: "",
     cotizacion: {
       prospecto_id: {{$prospecto->id}},
       condicion: {
         id: 0,
         nombre: ''
       },
+      facturar: '{{$prospecto->cliente->razon_social}}',
       entrega: '',
       lugar: '',
       moneda: '',
@@ -425,13 +493,19 @@ const app = new Vue({
       iva: 0,
       total: 0,
       notas: "",
-      observaciones: ""
+      observaciones: []
     },
     entrada: {
       producto: {},
       coleccion: "",
       diseno: "",
       color: "",
+      descripcion1: "",
+      descripcion2: "",
+      descripcion3: "",
+      descripcion4: "",
+      descripcion5: "",
+      descripcion6: "",
       cantidad: 0,
       medida: "",
       precio: 0,
@@ -474,10 +548,33 @@ const app = new Vue({
     fijarFoto(){
       this.entrada.foto = this.$refs['foto'].files[0];
     },
+    agregarObservacion(observacion){
+      this.cotizacion.observaciones.push(observacion.texto);
+      observacion.activa = true;
+    },
+    quitarObservacion(observacion){
+      var index = this.cotizacion.observaciones.findIndex(function(obs){
+        return observacion.texto == obs;
+      });
+      this.cotizacion.observaciones.splice(index, 1);
+      observacion.activa = false;
+    },
+    crearObservacion(){
+      if(this.nuevaObservacion=="") return false;
+      this.observaciones.push({activa:false, texto: this.nuevaObservacion});
+      this.agregarObservacion(this.observaciones[this.observaciones.length - 1]);
+      this.nuevaObservacion = "";
+    },
     seleccionarProduco(prod){
       this.entrada.producto = prod;
       this.entrada.coleccion = prod.coleccion;
       this.entrada.diseno = prod.diseño;
+      this.entrada.descripcion1 = prod.descripcion1;
+      this.entrada.descripcion2 = prod.descripcion2;
+      this.entrada.descripcion3 = prod.descripcion3;
+      this.entrada.descripcion4 = prod.descripcion4;
+      this.entrada.descripcion5 = prod.descripcion5;
+      this.entrada.descripcion6 = prod.descripcion6;
 
       if(prod.foto){
         $("#foto").siblings('button').click();
@@ -507,6 +604,12 @@ const app = new Vue({
         coleccion: "",
         diseno: "",
         color: "",
+        descripcion1: "",
+        descripcion2: "",
+        descripcion3: "",
+        descripcion4: "",
+        descripcion5: "",
+        descripcion6: "",
         cantidad: 0,
         medida: "",
         precio: 0,
@@ -553,6 +656,7 @@ const app = new Vue({
             id: 0,
             nombre: ''
           },
+          facturar: '{{$prospecto->cliente->razon_social}}',
           entrega: '',
           lugar: '',
           moneda: '',
@@ -561,13 +665,15 @@ const app = new Vue({
           iva: 0,
           total: 0,
           notas: "",
-          observaciones: ""
+          observaciones: []
         };
         this.cargando = false;
         swal({
           title: "Cotizacion Guardada",
           text: "",
           type: "success"
+        }).then(()=>{
+          $('a[download="cotizacion '+data.cotizacion.id+'.pdf"]')[0].click();
         });
       })
       .catch(({response}) => {

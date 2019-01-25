@@ -10,7 +10,8 @@ class ProspectoCotizacionEntrada extends Model
     protected $table = 'prospectos_cotizaciones_entradas';
 
     protected $fillable = ['cotizacion_id','producto_id','coleccion','diseno','color',
-    'cantidad','precio','importe','observacion','foto','medida'];
+    'cantidad','precio','importe','observacion','foto','medida','descripcion1',
+    'descripcion2','descripcion3','descripcion4','descripcion5','descripcion6'];
 
     protected $casts = [
       'cantidad' => 'float',
