@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Validator;
 use Illuminate\Http\Request;
 use App\Models\Categoria;
+use App\Models\CategoriaDescripcion;
 
 class CategoriasController extends Controller
 {
@@ -42,14 +43,25 @@ class CategoriasController extends Controller
         'nombre' => 'required',
       ]);
 
-      if ($validator->fails()) {
+      if($validator->fails()) {
         $errors = $validator->errors()->all();
         return response()->json([
           "success" => false, "error" => true, "message" => $errors[0]
         ], 422);
       }
 
-      Categoria::create($request->all());
+      $create = $request->except('descripciones');
+      if(!isset($create['name'])) $create['name'] = $create['nombre'];
+      $categoria = Categoria::create($create);
+
+      if(isset($request->descripciones)){
+        foreach($request->descripciones as $descripcion) {
+          if(!empty($descripcion['nombre']) || !empty($descripcion['name'])){
+            $descripcion['categoria_id'] = $categoria->id;
+            CategoriaDescripcion::create($descripcion);
+          }
+        }
+      }
 
       return response()->json(['success' => true, "error" => false], 200);
     }
@@ -62,6 +74,8 @@ class CategoriasController extends Controller
      */
     public function show(Categoria $categoria)
     {
+      $categoria->load('descripciones');
+
       return view('catalogos.categorias.show', compact('categoria'));
     }
 
@@ -73,6 +87,8 @@ class CategoriasController extends Controller
      */
     public function edit(Categoria $categoria)
     {
+      $categoria->load('descripciones');
+
       return view('catalogos.categorias.edit', compact('categoria'));
     }
 
@@ -96,7 +112,19 @@ class CategoriasController extends Controller
         ], 422);
       }
 
-      $categoria->update($request->all());
+      $categoria->update($request->except('descripciones'));
+      foreach ($request->descripciones as $descripcion) {
+        if(isset($descripcion['borrar'])){
+          CategoriaDescripcion::find($descripcion['id'])->delete();
+        }
+        else if(isset($descripcion['actualizar'])){
+          CategoriaDescripcion::find($descripcion['id'])->update($descripcion);
+        }
+        else if(!isset($descripcion['id'])){
+          $descripcion['categoria_id'] = $categoria->id;
+          CategoriaDescripcion::create($descripcion);
+        }
+      }
 
       return response()->json(['success' => true, "error" => false],200);
     }

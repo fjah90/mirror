@@ -5,11 +5,11 @@ namespace App\Models;
 use App\Model;
 use Carbon\Carbon;
 
-class Categoria extends Model
+class CategoriaDescripcion extends Model
 {
-    protected $table = 'categorias';
+    protected $table = 'categorias_descripciones';
 
-    protected $fillable = ['nombre','name'];
+    protected $fillable = ['categoria_id','nombre','name'];
 
     /**
      * ---------------------------------------------------------------------------
@@ -17,8 +17,8 @@ class Categoria extends Model
      * ---------------------------------------------------------------------------
      */
 
-    public function descripciones(){
-      return $this->hasMany('App\\Models\\CategoriaDescripcion', 'categoria_id');
+    public function categoria(){
+      return $this->belognsTo('App\\Models\\Categoria', 'categoria_id');
     }
 
 }

@@ -32,6 +32,42 @@
               </div>
             </div>
             <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label class="control-label">Name</label>
+                  <span class="form-control">{{$categoria->name}}</span>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <h4>Descripciones</h4>
+                <hr />
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="table-responsive">
+                  <table class="table table-bordred">
+                    <thead>
+                      <tr>
+                        <th>Nombre</th>
+                        <th>Name</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      @foreach($categoria->descripciones as $descripcion)
+                      <tr>
+                        <td>{{$descripcion->nombre}}</td>
+                        <td>{{$descripcion->name}}</td>
+                      </tr>
+                      @endforeach
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <div class="row">
               <div class="col-md-12 text-right">
                 <a class="btn btn-info" href="{{route('categorias.index')}}">
                   Regresar
