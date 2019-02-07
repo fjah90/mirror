@@ -24,76 +24,61 @@
           </div>
           <div class="panel-body">
             <div class="row">
-              <div class="col-md-4">
+              <div class="col-md-12">
                 <div class="form-group">
                   <label class="control-label">Proveedor</label>
                   <span class="form-control">{{$producto->proveedor->empresa}}</span>
                 </div>
               </div>
-              <div class="col-md-4">
+            </div>
+            <div class="row">
+              <div class="col-md-12">
                 <div class="form-group">
                   <label class="control-label">Categoria</label>
                   <span class="form-control">{{$producto->categoria->nombre}}</span>
                 </div>
               </div>
-              <div class="col-md-4">
+            </div>
+            <div class="row">
+              <div class="col-md-12">
                 <div class="form-group">
-                  <label class="control-label">Composición</label>
-                  <span class="form-control">{{$producto->composicion}}</span>
+                  <label class="control-label">Nombre</label>
+                  <span class="form-control">{{$producto->nombre}}</span>
                 </div>
               </div>
             </div>
             <div class="row">
-              <div class="col-md-4">
+              <div class="col-md-12">
                 <div class="form-group">
-                  <label class="control-label">Diseño</label>
-                  <span class="form-control">{{$producto->diseño}}</span>
-                </div>
-              </div>
-              <div class="col-md-4">
-                <div class="form-group">
-                  <label class="control-label">Coleccion</label>
-                  <span class="form-control">{{$producto->coleccion}}</span>
+                  <label class="control-label">Name</label>
+                  <span class="form-control">{{$producto->name}}</span>
                 </div>
               </div>
             </div>
             <div class="row">
-              <div class="col-md-4">
-                <div class="form-group">
-                  <label class="control-label">Descripción 1</label>
-                  <span class="form-control">{{$producto->descripcion1}}</span>
-                </div>
-              </div>
-              <div class="col-md-4">
-                <div class="form-group">
-                  <label class="control-label">Descripción 2</label>
-                  <span class="form-control">{{$producto->descripcion2}}</span>
-                </div>
-              </div>
-              <div class="col-md-4">
-                <div class="form-group">
-                  <label class="control-label">Descripción 3</label>
-                  <span class="form-control">{{$producto->descripcion3}}</span>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-4">
-                <div class="form-group">
-                  <label class="control-label">Descripción 4</label>
-                  <span class="form-control">{{$producto->descripcion4}}</span>
-                </div>
-              </div>
-              <div class="col-md-4">
-                <div class="form-group">
-                  <label class="control-label">Descripción 5</label>
-                  <span class="form-control">{{$producto->descripcion5}}</span>
-                </div>
-              </div>
-              <div class="col-md-4">
-                <div class="form-group">
-                  <label class="control-label">Descripción 6</label>
-                  <span class="form-control">{{$producto->descripcion6}}</span>
+              <div class="col-md-12">
+                <div class="table-responsive">
+                  <table class="table table-bordred">
+                    <thead>
+                      <tr>
+                        <th colspan="3">Descripciones</th>
+                      </tr>
+                      <tr>
+                        <th>Nombre</th>
+                        <th>Name</th>
+                        <th>Valor</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      @foreach($producto->descripciones as $descripcion)
+                      <tr>
+                        <td>{{$descripcion->descripcionNombre->nombre}}</td>
+                        <td>{{$descripcion->descripcionNombre->name}}</td>
+                        <td>{{$descripcion->valor}}</td>
+                      </tr>
+                      @endforeach
+                    </tbody>
+                  </table>
                 </div>
               </div>
             </div>

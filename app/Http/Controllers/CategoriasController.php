@@ -6,6 +6,7 @@ use Validator;
 use Illuminate\Http\Request;
 use App\Models\Categoria;
 use App\Models\CategoriaDescripcion;
+use App\Models\ProductoDescripcion;
 
 class CategoriasController extends Controller
 {
@@ -115,7 +116,9 @@ class CategoriasController extends Controller
       $categoria->update($request->except('descripciones'));
       foreach ($request->descripciones as $descripcion) {
         if(isset($descripcion['borrar'])){
-          CategoriaDescripcion::find($descripcion['id'])->delete();
+          CategoriaDescripcion::destroy($descripcion['id']);
+          ProductoDescripcion::where('categoria_descripcion_id', $descripcion['id'])
+          ->delete();
         }
         else if(isset($descripcion['actualizar'])){
           CategoriaDescripcion::find($descripcion['id'])->update($descripcion);

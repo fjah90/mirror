@@ -25,7 +25,7 @@
           <div class="panel-body">
             <form class="" @submit.prevent="guardar()">
               <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-12">
                   <div class="form-group">
                     <label class="control-label">Proveedor</label>
                     <select class="form-control" name="proveedor_id" v-model='producto.proveedor_id' required>
@@ -35,74 +35,60 @@
                     </select>
                   </div>
                 </div>
-                <div class="col-md-4">
+              </div>
+              <div class="row">
+                <div class="col-md-12">
                   <div class="form-group">
                     <label class="control-label">Categoria</label>
-                    <select class="form-control" name="categoria_id" v-model='producto.categoria_id' required>
+                    <select class="form-control" name="categoria_id" v-model='producto.categoria_id'
+                    @change="cambiarDescripciones()" required>
                       @foreach($categorias as $categoria)
                         <option value="{{$categoria->id}}">{{$categoria->nombre}}</option>
                       @endforeach
                     </select>
                   </div>
                 </div>
-                <div class="col-md-4">
+              </div>
+              <div class="row">
+                <div class="col-md-12">
                   <div class="form-group">
-                    <label class="control-label">Composicón</label>
-                    <input type="text" class="form-control" name="composicion" v-model="producto.composicion" required />
+                    <label class="control-label">Nombre</label>
+                    <input type="text" class="form-control" name="nombre" v-model="producto.nombre" required />
                   </div>
                 </div>
               </div>
               <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-12">
                   <div class="form-group">
-                    <label class="control-label">Diseño</label>
-                    <input type="text" class="form-control" name="diseño" v-model="producto.diseño" required />
-                  </div>
-                </div>
-                <div class="col-md-4">
-                  <div class="form-group">
-                    <label class="control-label">Coleccion</label>
-                    <input type="text" class="form-control" name="coleccion" v-model="producto.coleccion" />
+                    <label class="control-label">Name</label>
+                    <input type="text" class="form-control" name="name" v-model="producto.name" />
                   </div>
                 </div>
               </div>
               <div class="row">
-                <div class="col-md-4">
-                  <div class="form-group">
-                    <label class="control-label">Descripción 1</label>
-                    <input type="text" class="form-control" name="descripcion1" v-model="producto.descripcion1" />
-                  </div>
-                </div>
-                <div class="col-md-4">
-                  <div class="form-group">
-                    <label class="control-label">Descripción 2</label>
-                    <input type="text" class="form-control" name="descripcion2" v-model="producto.descripcion2" />
-                  </div>
-                </div>
-                <div class="col-md-4">
-                  <div class="form-group">
-                    <label class="control-label">Descripción 3</label>
-                    <input type="text" class="form-control" name="descripcion3" v-model="producto.descripcion3" />
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-4">
-                  <div class="form-group">
-                    <label class="control-label">Descripción 4</label>
-                    <input type="text" class="form-control" name="descripcion4" v-model="producto.descripcion4" />
-                  </div>
-                </div>
-                <div class="col-md-4">
-                  <div class="form-group">
-                    <label class="control-label">Descripción 5</label>
-                    <input type="text" class="form-control" name="descripcion5" v-model="producto.descripcion5" />
-                  </div>
-                </div>
-                <div class="col-md-4">
-                  <div class="form-group">
-                    <label class="control-label">Descripción 6</label>
-                    <input type="text" class="form-control" name="descripcion6" v-model="producto.descripcion6" />
+                <div class="col-md-12">
+                  <div class="table-responsive">
+                    <table class="table table-bordred">
+                      <thead>
+                        <tr>
+                          <th colspan="3">Descripciones</th>
+                        </tr>
+                        <tr>
+                          <th>Nombre</th>
+                          <th>Name</th>
+                          <th>Valor</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr v-for="(descripcion, index) in producto.descripciones">
+                          <td>@{{descripcion.nombre}}</td>
+                          <td>@{{descripcion.name}}</td>
+                          <td>
+                            <input type="text" class="form-control" v-model="descripcion.valor" />
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
                   </div>
                 </div>
               </div>
@@ -144,18 +130,13 @@ const app = new Vue({
       producto: {
         proveedor_id: '{{$producto->proveedor_id}}',
         categoria_id: '{{$producto->categoria_id}}',
-        composicion: '{{$producto->composicion}}',
-        diseño: '{{$producto->diseño}}',
-        coleccion: '{{$producto->coleccion}}',
-        descripcion1: '{{$producto->descripcion1}}',
-        descripcion2: '{{$producto->descripcion2}}',
-        descripcion3: '{{$producto->descripcion3}}',
-        descripcion4: '{{$producto->descripcion4}}',
-        descripcion5: '{{$producto->descripcion5}}',
-        descripcion6: '{{$producto->descripcion6}}',
+        nombre: '{{$producto->nombre}}',
+        name: '{{$producto->name}}',
+        descripciones: {!! $producto->descripciones !!},
         foto_ori: '{{$producto->foto}}',
         foto:''
       },
+      categorias: {!! $categorias !!},
       cargando: false,
     },
     mounted(){
@@ -185,8 +166,15 @@ const app = new Vue({
       fijarFoto(){
         this.producto.foto = this.$refs['foto'].files[0];
       },
+      cambiarDescripciones(){
+        this.categorias.some(function(categoria){
+          if(categoria.id == this.producto.categoria_id){
+            this.producto.descripciones = categoria.descripciones;
+          }
+        }, this);
+      },
       guardar(){
-        var formData = objectToFormData(this.producto);
+        var formData = objectToFormData(this.producto, {indices:true});
 
         this.cargando = true;
         axios.post('/productos/{{$producto->id}}', formData, {

@@ -9,13 +9,11 @@ class Producto extends Model
 {
     protected $table = 'productos';
 
-    protected $fillable = ['proveedor_id','categoria_id','composicion','diseño',
-    'coleccion','descripcion1','descripcion2','descripcion3','descripcion4',
-    'descripcion5','descripcion6','foto'];
+    protected $fillable = ['proveedor_id','categoria_id','nombre','name','foto'];
 
     /**
      * ---------------------------------------------------------------------------
-     *                             Relationships
+     *                             Agregates
      * ---------------------------------------------------------------------------
      */
 
@@ -31,6 +29,11 @@ class Producto extends Model
 
     public function categoria(){
       return $this->belongsTo('App\Models\Categoria', 'categoria_id', 'id');
+    }
+
+    public function descripciones(){
+      return $this->hasMany('App\Models\ProductoDescripcion', 'producto_id', 'id')
+        ->orderBy('categoria_descripcion_id', 'asc');
     }
 
 }

@@ -18,7 +18,7 @@ class CategoriaDescripcion extends Model
      */
 
     public function categoria(){
-      return $this->belognsTo('App\\Models\\Categoria', 'categoria_id');
+      return $this->belognsTo('App\Models\Categoria', 'categoria_id');
     }
 
 }
