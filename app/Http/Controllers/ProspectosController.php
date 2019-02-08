@@ -338,8 +338,9 @@ class ProspectosController extends Controller
       list($ano,$mes,$dia) = explode('-', $cotizacion->fecha);
       $mes = $meses[+$mes-1];
       $cotizacion->fechaPDF = "$mes $dia, $ano";
+      $nombre = ($cotizacion->idioma=='español')?"español":"name";
 
-      $cotizacionPDF = PDF::loadView('prospectos.cotizacionPDF', compact('cotizacion'));
+      $cotizacionPDF = PDF::loadView('prospectos.cotizacionPDF', compact('cotizacion', 'nombre'));
       Storage::disk('public')->put($url, $cotizacionPDF->output());
 
       unset($cotizacion->fechaPDF);
@@ -398,8 +399,10 @@ class ProspectosController extends Controller
         if($entrada->foto) $entrada->foto = asset('storage/'.$entrada->foto);
       }
 
+      $nombre = ($cotizacion->idioma=='español')?"español":"name";
+
       // return view('prospectos.cotizacionPDF', compact('cotizacion'));
-      $cotizacionPDF = PDF::loadView('prospectos.cotizacionPDF', compact('cotizacion'));
+      $cotizacionPDF = PDF::loadView('prospectos.cotizacionPDF', compact('cotizacion', 'nombre'));
       return $cotizacionPDF->download('cotizacion.pdf');
     }
 

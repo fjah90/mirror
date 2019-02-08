@@ -10,7 +10,7 @@ class ProspectoCotizacion extends Model
     protected $table = 'prospectos_cotizaciones';
 
     protected $fillable = ['prospecto_id','condicion_id','fecha','subtotal','iva','total',
-    'observaciones','notas','archivo','entrega','lugar','moneda','facturar','user_id'];
+    'observaciones','notas','archivo','entrega','lugar','moneda','facturar','user_id','idioma'];
 
     protected $casts = [
       'subtotal' => 'float',

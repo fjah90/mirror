@@ -103,20 +103,42 @@
                 </div>
               </div>
               <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-6">
                   <div class="form-group">
                     <label class="control-label">Tiempo de Entrega</label>
                     <input type="text" name="entrega" class="form-control"
                       v-model="cotizacion.entrega" required />
                   </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-6">
                   <div class="form-group">
                     <label class="control-label">Lugar de Entrega</label>
                     <input type="text" name="lugar" class="form-control"
                       v-model="cotizacion.lugar" required />
                   </div>
                 </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="control-label">Condiciones De Pago</label>
+                    <select class="form-control" name="condiciones" v-model='cotizacion.condicion.id' required>
+                      <option v-for="condicion in condiciones" :value="condicion.id">@{{condicion.nombre}}</option>
+                      <option value="0">Otra</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-6" v-if="">
+                  <div class="form-group">
+                    <label class="control-label">Especifique Otra</label>
+                    <input class="form-control" type="text" name="condiciones"
+                      v-model="cotizacion.condicion.nombre"
+                      :disabled="cotizacion.condicion.id!=0"
+                      :required="cotizacion.condicion.id==0" />
+                  </div>
+                </div>
+              </div>
+              <div class="row">
                 <div class="col-md-4">
                   <div class="form-group">
                     <label class="control-label">Moneda</label>
@@ -126,31 +148,21 @@
                     </select>
                   </div>
                 </div>
-              </div>
-              <div class="row">
-                <div class="col-md-4">
-                  <div class="form-group">
-                    <label class="control-label">Condiciones De Pago</label>
-                    <select class="form-control" name="condiciones" v-model='cotizacion.condicion.id' required>
-                      <option v-for="condicion in condiciones" :value="condicion.id">@{{condicion.nombre}}</option>
-                      <option value="0">Otra</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="col-md-4" v-if="cotizacion.condicion.id==0">
-                  <div class="form-group">
-                    <label class="control-label">Especifique</label>
-                    <input class="form-control" type="text" name="condiciones"
-                      v-model="cotizacion.condicion.nombre" required />
-                  </div>
-                </div>
-                <div class="col-md-4" v-else></div>
                 <div class="col-md-4">
                   <div class="form-group">
                     <label class="control-label">IVA</label>
                     <select class="form-control" name="iva" v-model="cotizacion.iva" required>
                       <option value="0">No</option>
                       <option value="1">Si</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label class="control-label">Idioma</label>
+                    <select class="form-control" name="idioma" v-model="cotizacion.idioma" required>
+                      <option value="español">Español</option>
+                      <option value="ingles">Ingles</option>
                     </select>
                   </div>
                 </div>
@@ -452,6 +464,7 @@ const app = new Vue({
       subtotal: 0,
       iva: 0,
       total: 0,
+      idioma: "",
       notas: "",
       observaciones: []
     },
@@ -609,6 +622,7 @@ const app = new Vue({
           iva: 0,
           total: 0,
           notas: "",
+          idioma: "",
           observaciones: []
         };
         this.observaciones.forEach(function(observacion){
