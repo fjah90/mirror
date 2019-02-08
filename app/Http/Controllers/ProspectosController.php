@@ -10,6 +10,7 @@ use App\Models\ProspectoActividad;
 use App\Models\ProspectoTipoActividad;
 use App\Models\ProspectoCotizacion;
 use App\Models\ProspectoCotizacionEntrada;
+use App\Models\ProspectoCotizacionEntradaDescripcion;
 use App\Models\CondicionCotizacion;
 use Validator;
 use PDF;
@@ -218,7 +219,7 @@ class ProspectosController extends Controller
     public function cotizar(Prospecto $prospecto)
     {
       $prospecto->load('cliente','cotizaciones.entradas.producto');
-      $productos = Producto::with('categoria','proveedor')->get();
+      $productos = Producto::with('categoria','proveedor','descripciones.descripcionNombre')->get();
       $condiciones = CondicionCotizacion::all();
 
       foreach ($prospecto->cotizaciones as $cotizacion) {
@@ -312,11 +313,20 @@ class ProspectosController extends Controller
           $entrada['foto'] = $path;
         }
         $entrada['cotizacion_id'] = $cotizacion->id;
-        ProspectoCotizacionEntrada::create($entrada);
+        $modelo_entrada = ProspectoCotizacionEntrada::create($entrada);
+
+        foreach ($entrada['descripciones'] as $descripcion) {
+          if(!is_null($descripcion['valor'])){
+            $descripcion['entrada_id'] = $modelo_entrada->id;
+            if(is_null($descripcion['nombre'])) $descripcion['nombre'] = $descripcion['name'];
+            if(is_null($descripcion['name'])) $descripcion['name'] = $descripcion['nombre'];
+            ProspectoCotizacionEntradaDescripcion::create($descripcion);
+          }
+        }
       }
 
       $cotizacion->load('prospecto.cliente', 'condiciones', 'entradas.producto.categoria',
-      'entradas.producto.proveedor', 'user');
+      'entradas.producto.proveedor', 'entradas.descripciones', 'user');
       foreach ($cotizacion->entradas as $entrada) {
         if($entrada->foto) $entrada->foto = asset('storage/'.$entrada->foto);
       }
@@ -375,8 +385,8 @@ class ProspectosController extends Controller
 
     public function pruebas(){
       $cotizacion = ProspectoCotizacion::with('prospecto.cliente', 'condiciones',
-      'entradas.producto.categoria', 'entradas.producto.proveedor', 'user')
-      ->find(2);
+      'entradas.producto.categoria', 'entradas.producto.proveedor',
+      'entradas.descripciones', 'user')->find(4);
 
       $meses = ['ENERO','FEBRERO','MARZO','ABRIL','MAYO','JUNIO','JULIO',
       'AGOSTO','SEPTIEMBRE','OCTUBRE','NOVIEMBRE','DICIEMBRE'];

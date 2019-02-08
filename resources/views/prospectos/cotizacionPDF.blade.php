@@ -390,17 +390,10 @@
                     <td>
                       <p>{{$entrada->producto->proveedor->empresa}}</p>
                       <p>{{$entrada->producto->categoria->nombre}}</p>
-                      <p>{{$entrada->producto->composicion}}</p>
-                      @if($entrada->coleccion)<p>COLECTION: {{$entrada->coleccion}}</p>@endif
-                      @if($entrada->diseno)<p>DESIGN: {{$entrada->diseno}}</p>@endif
-                      @if($entrada->color)<p>COLOR: {{$entrada->color}}</p>@endif
-                      @if($entrada->descripcion1)<p>{{$entrada->descripcion1}}</p>@endif
-                      @if($entrada->descripcion2)<p>{{$entrada->descripcion2}}</p>@endif
-                      @if($entrada->descripcion3)<p>{{$entrada->descripcion3}}</p>@endif
-                      @if($entrada->descripcion4)<p>{{$entrada->descripcion4}}</p>@endif
-                      @if($entrada->descripcion5)<p>{{$entrada->descripcion5}}</p>@endif
-                      @if($entrada->descripcion6)<p>{{$entrada->descripcion6}}</p>@endif
-                      @if($entrada->observacion)<p>*{{$entrada->observacion}}</p>@endif
+                      <p>{{$entrada->producto->nombre}}</p>
+                      @foreach($entrada->descripciones as $descripcion)
+                        <p>{{$descripcion->nombre}}: {{$descripcion->valor}}</p>
+                      @endforeach
                     </td>
                     <td style="width:100px;">
                       @if($entrada->foto)
@@ -416,6 +409,12 @@
             @endforeach
           </tbody>
         </table>
+      </div>
+    </div>
+
+    <!-- Espacio para que el footer no se sobreponga a la tabla -->
+    <div class="row">
+      <div class="col-lg-12" style="height:70px;">
       </div>
     </div>
 

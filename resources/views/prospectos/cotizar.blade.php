@@ -65,7 +65,7 @@
                         <td>@{{cotizacion.fecha_formated}}</td>
                         <td>
                           <template v-for="(entrada, index) in cotizacion.entradas">
-                            <span>@{{index+1}}.- @{{entrada.producto.composicion}}</span><br />
+                            <span>@{{index+1}}.- @{{entrada.producto.nombre}}</span><br />
                           </template>
                         </td>
                         <td>@{{cotizacion.total | formatoMoneda}}</td>
@@ -162,7 +162,7 @@
                     <label class="control-label">Producto</label>
                     <div class="input-group">
                       <input type="text" class="form-control" placeholder="Producto"
-                      v-model="entrada.producto.composicion" @click="openCatalogo=true"
+                      v-model="entrada.producto.nombre" @click="openCatalogo=true"
                       readonly required
                       />
                       <span class="input-group-btn">
@@ -201,62 +201,29 @@
                 </div>
               </div>
               <div class="row">
-                <div class="col-md-4">
-                  <div class="form-group">
-                    <label class="control-label">Colection</label>
-                    <input type="text" class="form-control" v-model="entrada.coleccion" />
-                  </div>
-                </div>
-                <div class="col-md-4">
-                  <div class="form-group">
-                    <label class="control-label">Desing</label>
-                    <input type="text" class="form-control" v-model="entrada.diseno" />
-                  </div>
-                </div>
-                <div class="col-md-4">
-                  <div class="form-group">
-                    <label class="control-label">Color</label>
-                    <input type="text" class="form-control" v-model="entrada.color" />
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-4">
-                  <div class="form-group">
-                    <label class="control-label">Descripción 1</label>
-                    <input type="text" class="form-control" name="descripcion1" v-model="entrada.descripcion1" />
-                  </div>
-                </div>
-                <div class="col-md-4">
-                  <div class="form-group">
-                    <label class="control-label">Descripción 2</label>
-                    <input type="text" class="form-control" name="descripcion2" v-model="entrada.descripcion2" />
-                  </div>
-                </div>
-                <div class="col-md-4">
-                  <div class="form-group">
-                    <label class="control-label">Descripción 3</label>
-                    <input type="text" class="form-control" name="descripcion3" v-model="entrada.descripcion3" />
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-4">
-                  <div class="form-group">
-                    <label class="control-label">Descripción 4</label>
-                    <input type="text" class="form-control" name="descripcion4" v-model="entrada.descripcion4" />
-                  </div>
-                </div>
-                <div class="col-md-4">
-                  <div class="form-group">
-                    <label class="control-label">Descripción 5</label>
-                    <input type="text" class="form-control" name="descripcion5" v-model="entrada.descripcion5" />
-                  </div>
-                </div>
-                <div class="col-md-4">
-                  <div class="form-group">
-                    <label class="control-label">Descripción 6</label>
-                    <input type="text" class="form-control" name="descripcion6" v-model="entrada.descripcion6" />
+                <div class="col-md-12">
+                  <div class="table-responsive">
+                    <table class="table table-bordred">
+                      <thead>
+                        <tr>
+                          <th colspan="3">Descripciones</th>
+                        </tr>
+                        <tr>
+                          <th>Nombre</th>
+                          <th>Name</th>
+                          <th>Valor</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr v-for="(descripcion, index) in entrada.descripciones">
+                          <td>@{{descripcion.nombre}}</td>
+                          <td>@{{descripcion.name}}</td>
+                          <td>
+                            <input type="text" class="form-control" v-model="descripcion.valor" />
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
                   </div>
                 </div>
               </div>
@@ -305,7 +272,7 @@
                     </thead>
                     <tbody>
                       <tr v-for="(entrada, index) in cotizacion.entradas">
-                        <td>@{{entrada.producto.composicion}}</td>
+                        <td>@{{entrada.producto.nombre}}</td>
                         <td>@{{entrada.cantidad}} @{{entrada.medida}}</td>
                         <td>@{{entrada.precio | formatoMoneda}}</td>
                         <td>@{{entrada.importe | formatoMoneda}}</td>
@@ -406,7 +373,7 @@
               <th>ID</th>
               <th>Proveedor</th>
               <th>Categoria</th>
-              <th>Composicón</th>
+              <th>Nombre</th>
               <th></th>
             </tr>
           </thead>
@@ -415,7 +382,7 @@
               <td>@{{prod.id}}</td>
               <td>@{{prod.proveedor.empresa}}</td>
               <td>@{{prod.categoria.nombre}}</td>
-              <td>@{{prod.composicion}}</td>
+              <td>@{{prod.nombre}}</td>
               <td class="text-right">
                 <button class="btn btn-primary" title="Seleccionar"
                 @click="seleccionarProduco(prod, index)">
@@ -459,13 +426,6 @@ const app = new Vue({
   el: '#content',
   data: {
     locale: localeES,
-    init: {
-      language: 'es_MX',
-      branding: false,
-      menubar: false,
-      plugins: "lists",
-      toolbar: "undo, redo | cut, copy, paste | bold, italic | alignleft, aligncenter, alignright, alignjustify | numlist bullist | indent, outdent | styleselect"
-    },
     prospecto: {!! json_encode($prospecto) !!},
     productos: {!! json_encode($productos) !!},
     condiciones: {!! json_encode($condiciones) !!},
@@ -497,19 +457,11 @@ const app = new Vue({
     },
     entrada: {
       producto: {},
-      coleccion: "",
-      diseno: "",
-      color: "",
-      descripcion1: "",
-      descripcion2: "",
-      descripcion3: "",
-      descripcion4: "",
-      descripcion5: "",
-      descripcion6: "",
       cantidad: 0,
       medida: "",
       precio: 0,
       importe: 0,
+      descripciones: [],
       observacion: "",
       foto: "",
       foto_src: ""
@@ -567,14 +519,14 @@ const app = new Vue({
     },
     seleccionarProduco(prod){
       this.entrada.producto = prod;
-      this.entrada.coleccion = prod.coleccion;
-      this.entrada.diseno = prod.diseño;
-      this.entrada.descripcion1 = prod.descripcion1;
-      this.entrada.descripcion2 = prod.descripcion2;
-      this.entrada.descripcion3 = prod.descripcion3;
-      this.entrada.descripcion4 = prod.descripcion4;
-      this.entrada.descripcion5 = prod.descripcion5;
-      this.entrada.descripcion6 = prod.descripcion6;
+      this.entrada.descripciones = [];
+      prod.descripciones.forEach(function(desc){
+        this.entrada.descripciones.push({
+          nombre: desc.descripcion_nombre.nombre,
+          name: desc.descripcion_nombre.name,
+          valor: desc.valor,
+        });
+      }, this);
 
       if(prod.foto){
         $("#foto").siblings('button').click();
@@ -601,19 +553,11 @@ const app = new Vue({
       this.cotizacion.entradas.push(this.entrada);
       this.entrada = {
         producto: {},
-        coleccion: "",
-        diseno: "",
-        color: "",
-        descripcion1: "",
-        descripcion2: "",
-        descripcion3: "",
-        descripcion4: "",
-        descripcion5: "",
-        descripcion6: "",
         cantidad: 0,
         medida: "",
         precio: 0,
         importe: 0,
+        descripciones: [],
         observacion: "",
         foto: "",
         foto_src: ""
@@ -667,6 +611,9 @@ const app = new Vue({
           notas: "",
           observaciones: []
         };
+        this.observaciones.forEach(function(observacion){
+          observacion.activa = false;
+        });
         this.cargando = false;
         swal({
           title: "Cotizacion Guardada",
