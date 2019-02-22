@@ -34,6 +34,14 @@
             <div class="row">
               <div class="col-md-12">
                 <div class="form-group">
+                  <label class="control-label">Nombre</label>
+                  <span class="form-control">{{$prospecto->nombre}}</span>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
                   <label class="control-label">Descripción</label>
                   <span class="form-control" style="min-height:68px;">{{$prospecto->descripcion}}</span>
                 </div>
@@ -63,7 +71,7 @@
                         <td>{{$actividad->tipo->nombre}}</td>
                         <td>
                           @foreach($actividad->productos_ofrecidos as $index => $ofrecido)
-                          <span>{{$index}}.- {{$ofrecido->composicion}}</span><br />
+                          <span>{{$index+1}}.- {{$ofrecido->nombre}}</span><br />
                           @endforeach
                         </td>
                         <td>{{$actividad->descripcion}}</td>

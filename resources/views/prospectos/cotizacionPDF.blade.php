@@ -332,7 +332,7 @@
                 <table style="margin:0;">
                   <tr>
                     <td>PROYECTO:</td>
-                    <td><strong>{{$cotizacion->prospecto->descripcion}}</strong></td>
+                    <td><strong>{{$cotizacion->prospecto->nombre}}</strong></td>
                   </tr>
                   <tr>
                     <td>ENTREGA:</td>

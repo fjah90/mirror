@@ -36,6 +36,7 @@
                 <tr>
                   <th>ID</th>
                   <th>Cliente</th>
+                  <th>Nombre</th>
                   <th>Ultima Actividad</th>
                   <th>Tipo</th>
                   <th>Próxima Actividad</th>
@@ -46,6 +47,7 @@
               <tbody>
                 <tr v-for="(prospecto, index) in prospectos">
                   <td>@{{prospecto.id}}</td>
+                  <td>@{{prospecto.nombre}}</td>
                   <td>@{{prospecto.cliente.nombre}}</td>
                   <td>@{{prospecto.ultima_actividad.fecha_formated}}</td>
                   <td>@{{prospecto.ultima_actividad.tipo.nombre}}</td>
@@ -93,7 +95,7 @@ const app = new Vue({
       borrar(prospecto, index){
         swal({
           title: 'Cuidado',
-          text: "Borrar el Prospecto "+prospecto.id+"?",
+          text: "Borrar el Prospecto "+prospecto.nombre+"?",
           type: 'warning',
           showCancelButton: true,
           confirmButtonColor: '#3085d6',

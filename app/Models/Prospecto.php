@@ -9,7 +9,7 @@ class Prospecto extends Model
 {
     protected $table = 'prospectos';
 
-    protected $fillable = ['cliente_id','descripcion'];
+    protected $fillable = ['cliente_id','nombre','descripcion'];
 
     /**
      * ---------------------------------------------------------------------------

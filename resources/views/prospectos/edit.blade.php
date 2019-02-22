@@ -41,6 +41,14 @@
             <div class="row">
               <div class="col-md-12">
                 <div class="form-group">
+                  <label class="control-label">Nombre</label>
+                  <span class="form-control">{{$prospecto->nombre}}</span>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
                   <label class="control-label">Descripción</label>
                   <span class="form-control" style="min-height:68px;">{{$prospecto->descripcion}}</span>
                 </div>
@@ -69,7 +77,7 @@
                         <td>@{{actividad.tipo.nombre}}</td>
                         <td>
                           <template v-for="(ofrecido, index) in actividad.productos_ofrecidos">
-                            <span>@{{index}}.- @{{ofrecido.composicion}}</span><br />
+                            <span>@{{index+1}}.- @{{ofrecido.nombre}}</span><br />
                           </template>
                         </td>
                         <td>@{{actividad.descripcion}}</td>
@@ -107,7 +115,7 @@
                     <div class="col-md-10">
                       <label class="control-label">Productos Ofrecidos</label>
                       <select class="form-control" name="producto" v-model='ofrecido'>
-                        <option v-for="producto in productos" :value="producto.id">@{{producto.id}}: @{{producto.composicion}}</option>
+                        <option v-for="producto in productos" :value="producto.id">@{{producto.id}}: @{{producto.nombre}}</option>
                       </select>
                     </div>
                     <div class="col-md-2" style="padding-top: 25px;">
@@ -123,7 +131,7 @@
                           <button type="button" class="btn btn-xxs btn-danger" @click="removerProducto(index, ofrecido)">
                             <i class="fas fa-times"></i>
                           </button>
-                          @{{ofrecido.id}}: @{{ofrecido.composicion}}
+                          @{{ofrecido.id}}: @{{ofrecido.nombre}}
                         </li>
                       </ul>
                     </div>

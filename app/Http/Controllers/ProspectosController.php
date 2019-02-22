@@ -54,6 +54,7 @@ class ProspectosController extends Controller
     {
       $validator = Validator::make($request->all(), [
         'cliente_id' => 'required',
+        'nombre' => 'required',
         'descripcion' => 'required',
         'ultima_actividad.tipo_id' => 'required',
         'ultima_actividad.fecha' => 'required|date_format:d/m/Y',
@@ -71,6 +72,7 @@ class ProspectosController extends Controller
 
       $prospecto = Prospecto::create([
         'cliente_id' => $request->cliente_id,
+        'nombre' => $request->nombre,
         'descripcion' => $request->descripcion
       ]);
 

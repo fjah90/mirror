@@ -44,8 +44,16 @@
                 </div>
                 <div class="col-md-8">
                   <div class="form-group">
+                    <label class="control-label">Nombre</label>
+                    <input name="nombre" class="form-control" v-model="prospecto.nombre" required />
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
                     <label class="control-label">Descripción</label>
-                    <textarea name="descripcion" rows="5" cols="80" class="form-control" v-model="prospecto.descripcion" required></textarea>
+                    <textarea name="descripcion" rows="3" cols="80" class="form-control" v-model="prospecto.descripcion" required></textarea>
                   </div>
                 </div>
               </div>
@@ -104,7 +112,7 @@
                     <div class="col-md-10">
                       <label class="control-label">Productos Ofrecidos</label>
                       <select class="form-control" name="producto" v-model='ofrecido'>
-                        <option v-for="producto in productos" :value="producto.id">@{{producto.id}}: @{{producto.composicion}}</option>
+                        <option v-for="producto in productos" :value="producto.id">@{{producto.id}}: @{{producto.nombre}}</option>
                       </select>
                     </div>
                     <div class="col-md-2" style="padding-top: 25px;">
@@ -120,7 +128,7 @@
                           <button type="button" class="btn btn-xxs btn-danger" @click="removerProducto(index, ofrecido)">
                             <i class="fas fa-times"></i>
                           </button>
-                          @{{ofrecido.id}}: @{{ofrecido.composicion}}
+                          @{{ofrecido.id}}: @{{ofrecido.nombre}}
                         </li>
                       </ul>
                     </div>
@@ -208,6 +216,7 @@ const app = new Vue({
       locale: localeES,
       prospecto: {
         cliente_id: '',
+        nombre: '',
         descripcion: '',
         ultima_actividad: {
           fecha: '',
