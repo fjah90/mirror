@@ -389,7 +389,6 @@
                   <tr>
                     <td>
                       <p>{{$entrada->producto->proveedor->empresa}}</p>
-                      <p>{{ $entrada->producto->categoria->{$nombre} }}</p>
                       <p>{{ $entrada->producto->{$nombre} }}</p>
                       @foreach($entrada->descripciones as $descripcion)
                         <p>{{ $descripcion->{$nombre} }}: {{$descripcion->valor}}</p>
