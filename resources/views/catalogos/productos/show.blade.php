@@ -49,14 +49,6 @@
             </div>
             <div class="row">
               <div class="col-md-12">
-                <div class="form-group">
-                  <label class="control-label">Name</label>
-                  <span class="form-control">{{$producto->name}}</span>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-12">
                 <div class="table-responsive">
                   <table class="table table-bordred">
                     <thead>

@@ -59,14 +59,6 @@
               </div>
               <div class="row">
                 <div class="col-md-12">
-                  <div class="form-group">
-                    <label class="control-label">Name</label>
-                    <input type="text" class="form-control" name="name" v-model="producto.name" />
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-12">
                   <div class="table-responsive">
                     <table class="table table-bordred">
                       <thead>
@@ -131,7 +123,6 @@ const app = new Vue({
         proveedor_id: '{{$producto->proveedor_id}}',
         categoria_id: '{{$producto->categoria_id}}',
         nombre: '{{$producto->nombre}}',
-        name: '{{$producto->name}}',
         descripciones: {!! $producto->descripciones !!},
         foto_ori: '{{$producto->foto}}',
         foto:''

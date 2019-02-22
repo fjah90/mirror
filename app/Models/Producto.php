@@ -9,7 +9,7 @@ class Producto extends Model
 {
     protected $table = 'productos';
 
-    protected $fillable = ['proveedor_id','categoria_id','nombre','name','foto'];
+    protected $fillable = ['proveedor_id','categoria_id','nombre','foto'];
 
     /**
      * ---------------------------------------------------------------------------
