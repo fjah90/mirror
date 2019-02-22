@@ -404,7 +404,7 @@ class ProspectosController extends Controller
 
       $nombre = ($cotizacion->idioma=='español')?"nombre":"name";
 
-      // return view('prospectos.cotizacionPDF', compact('cotizacion'));
+      // return view('prospectos.cotizacionPDF', compact('cotizacion', 'nombre'));
       $cotizacionPDF = PDF::loadView('prospectos.cotizacionPDF', compact('cotizacion', 'nombre'));
       Storage::disk('public')->put($url, $cotizacionPDF->output());
       return $cotizacionPDF->download('cotizacion.pdf');

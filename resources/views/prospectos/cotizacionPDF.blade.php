@@ -296,7 +296,7 @@
 
     <div class="row margTop10">
       <div class="col-lg-12">
-        <table class="table" style="border-collapse: separate; border-spacing: 0 5px;">
+        <table class="table" style="border-collapse: separate; border-spacing: 0 5px; margin:0px;">
           <thead style="background-color:#000; color:#fff;">
             <tr>
               <th class="text-center" style="width:50%; padding:3px 0;">
@@ -369,9 +369,9 @@
       </div>
     </div>
 
-    <div class="row margTop10">
+    <div class="row">
       <div class="col-lg-12">
-        <table class="table table-cotizacion" style="margin-bottom:0;">
+        <table class="table table-cotizacion" style="margin:-5px 0px 0px;">
           <thead style="background-color:#000; color:#fff;">
             <tr>
               <th class="text-center" style="width:10%; padding:3px 0 1px;">CANTIDAD</th>
