@@ -441,7 +441,7 @@
         <table style="margin: 0px; width:100%;">
           <tr class="font-small">
             <td style="width:70%; text-transform: none;">
-              <p style="margin-top:-10px;"><strong>OBSERVACIONES:</strong></p>
+              <p><strong>OBSERVACIONES:</strong></p>
               {!! $cotizacion->observaciones !!}
             </td>
             <td class="text-center" style="width:30%; text-transform: none;">

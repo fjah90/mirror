@@ -19,7 +19,6 @@ Auth::routes();
 
 Route::middleware('auth')->group(function () {
 
-  // Route::get('/pruebas', 'ProspectosController@pruebas');
   Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
 
   //Catalogos
@@ -35,6 +34,7 @@ Route::middleware('auth')->group(function () {
   Route::resource('/productos', 'ProductosController');
 
   //Prospectos
+  Route::get('prospectos/regeneratePDF', 'ProspectosController@regeneratePDF');
   Route::get('/prospectos/{prospecto}/cotizar', 'ProspectosController@cotizar')->name('prospectos.cotizar');
   Route::post('/prospectos/{prospecto}/cotizacion', 'ProspectosController@cotizacion');
   Route::post('/prospectos/{prospecto}/enviarCotizacion', 'ProspectosController@enviarCotizacion');
