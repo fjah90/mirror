@@ -47,8 +47,8 @@
               <tbody>
                 <tr v-for="(prospecto, index) in prospectos">
                   <td>@{{prospecto.id}}</td>
-                  <td>@{{prospecto.nombre}}</td>
                   <td>@{{prospecto.cliente.nombre}}</td>
+                  <td>@{{prospecto.nombre}}</td>
                   <td>@{{prospecto.ultima_actividad.fecha_formated}}</td>
                   <td>@{{prospecto.ultima_actividad.tipo.nombre}}</td>
                   <td>@{{prospecto.proxima_actividad.fecha_formated}}</td>
