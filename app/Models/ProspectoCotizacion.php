@@ -9,13 +9,16 @@ class ProspectoCotizacion extends Model
 {
     protected $table = 'prospectos_cotizaciones';
 
-    protected $fillable = ['prospecto_id','condicion_id','fecha','subtotal','iva','total',
-    'observaciones','notas','archivo','entrega','lugar','moneda','facturar','user_id','idioma'];
+    protected $fillable = ['prospecto_id','condicion_id','fecha','subtotal','iva',
+      'total','observaciones','notas','archivo','entrega','lugar','moneda','facturar',
+      'user_id','idioma','aceptada'
+    ];
 
     protected $casts = [
       'subtotal' => 'float',
       'iva' => 'float',
-      'total' => 'float'
+      'total' => 'float',
+      'aceptada' => 'boolean'
     ];
 
     protected $appends = [

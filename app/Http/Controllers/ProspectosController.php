@@ -12,6 +12,7 @@ use App\Models\ProspectoCotizacion;
 use App\Models\ProspectoCotizacionEntrada;
 use App\Models\ProspectoCotizacionEntradaDescripcion;
 use App\Models\CondicionCotizacion;
+use App\Models\CuentaCobrar;
 use Validator;
 use PDF;
 use Mail;
@@ -382,6 +383,55 @@ class ProspectosController extends Controller
         $message->to($email)->subject('Cotización Intercorp');
         $message->attachData($pdf, 'Cotizacion '.$cotizacion_id.'.pdf');
       });
+
+      return response()->json(['success'=>true, 'error'=>false], 200);
+    }
+
+    /**
+     * Marca cotizacion como aceptada por el cliente y genera cuenta por cobrar.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Prospecto  $prospecto
+     * @return \Illuminate\Http\Response
+     */
+    public function aceptarCotizacion(Request $request, Prospecto $prospecto)
+    {
+      $validator = Validator::make($request->all(), [
+        'cotizacion_id' => 'required',
+        'comprobante' => 'required|file|mimes:jpeg,jpg,png,pdf',
+      ]);
+
+      if ($validator->fails()) {
+        $errors = $validator->errors()->all();
+        return response()->json([
+          "success" => false, "error" => true, "message" => $errors[0]
+        ], 422);
+      }
+
+      $cotizacion = ProspectoCotizacion::with('condiciones')->findOrFail($request->cotizacion_id);
+      $prospecto->load('cliente');
+
+      $create = [
+        'cliente_id' => $prospecto->cliente_id,
+        'cotizacion_id' => $cotizacion->id,
+        'cliente' => $prospecto->cliente->nombre,
+        'proyecto' => $prospecto->nombre,
+        'condiciones' => $cotizacion->condiciones->nombre,
+        'total' => $cotizacion->total,
+        'pendiente' => $cotizacion->total,
+        'comprobante_confirmacion' => ''
+      ];
+
+      $comprobante = Storage::putFileAs(
+        'public/cotizaciones/'.$cotizacion->id,
+        $request->comprobante,
+        'comprobante_confirmacion.'.$request->comprobante->guessExtension()
+      );
+      $comprobante = str_replace('public/', '', $comprobante);
+      $create['comprobante_confirmacion'] = $comprobante;
+
+      CuentaCobrar::create($create);
+      $cotizacion->update(['aceptada'=>true]);
 
       return response()->json(['success'=>true, 'error'=>false], 200);
     }

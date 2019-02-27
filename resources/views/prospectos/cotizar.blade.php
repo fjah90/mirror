@@ -78,13 +78,20 @@
                         </td>
                         <td>@{{cotizacion.total | formatoMoneda}}</td>
                         <td class="text-right">
-                          <a class="btn btn-success" title="PDF" :href="cotizacion.archivo"
+                          <a class="btn btn-warning" title="PDF" :href="cotizacion.archivo"
                             :download="'cotizacion '+cotizacion.id+'.pdf'">
                             <i class="far fa-file-pdf"></i>
                           </a>
                           <button class="btn btn-info" title="Enviar"
                             @click="enviar.cotizacion_id=cotizacion.id; openEnviar=true;">
                             <i class="far fa-envelope"></i>
+                          </button>
+                          <button v-if="!cotizacion.aceptada" class="btn btn-success" title="Aceptar"
+                            @click="aceptar.cotizacion_id=cotizacion.id; openAceptar=true;">
+                            <i class="fas fa-user-check"></i>
+                          </button>
+                          <button v-else class="btn text-primary" title="Aceptada">
+                            <i class="fas fa-user-check"></i>
                           </button>
                         </td>
                       </tr>
@@ -265,6 +272,7 @@
                         <input id="foto" name="foto" type="file" ref="foto" @change="fijarFoto()" />
                       </div>
                     </div>
+                    <div id="foto-file-errors"></div>
                   </div>
                 </div>
                 <div class="col-md-offset-4 col-md-4 text-right">
@@ -434,6 +442,29 @@
       </form>
     </modal>
   <!-- /.Enviar Modal -->
+
+    <!-- Aceptar Modal -->
+    <modal v-model="openAceptar" :title="'Aceptar Cotizacion '+aceptar.cotizacion_id" :footer="false">
+      <form class="" @submit.prevent="aceptarCotizacion()">
+        <div class="form-group">
+          <label class="control-label">Comprobante Confirmacion</label>
+          <div class="file-loading">
+            <input id="comprobante" name="comprobante" type="file" ref="comprobante"
+              @change="fijarComprobante()" required />
+          </div>
+          <div id="comprobante-file-errors"></div>
+        </div>
+        <div class="form-group text-right">
+          <button type="submit" class="btn btn-primary">Aceptar</button>
+          <button type="button" class="btn btn-default"
+            @click="aceptar.cotizacion_id=0; openAceptar=false;">
+            Cancelar
+          </button>
+        </div>
+      </form>
+    </modal>
+  <!-- /.Aceptar Modal -->
+
   </section>
   <!-- /.content -->
 
@@ -492,8 +523,13 @@ const app = new Vue({
       email: "{{$prospecto->cliente->email}}",
       mensaje: "Buen día.\n\nLe envió cotización para su consideración.\n\nCarla Aguilar.\nAtención del Cliente\nIntercorp Contract Resources"
     },
+    aceptar: {
+      cotizacion_id: 0,
+      comprobante: ""
+    },
     openCatalogo: false,
     openEnviar: false,
+    openAceptar: false,
     cargando: false
   },
   filters:{
@@ -508,18 +544,29 @@ const app = new Vue({
       showClose: false,
       showCaption: false,
       showBrowse: false,
-      browseOnZoneClick: true,
       removeLabel: '',
       removeIcon: '<i class="glyphicon glyphicon-remove"></i>',
       removeTitle: 'Quitar Foto',
       defaultPreviewContent: '<img src="{{asset('images/camara.png')}}" alt="foto"><h6 class="text-muted">Click para seleccionar</h6>',
       layoutTemplates: {main2: '{preview} {remove} {browse}'},
-      allowedFileExtensions: ["jpg", "jpeg", "png"]
+      allowedFileExtensions: ["jpg", "jpeg", "png"],
+      elErrorContainer: '#foto-file-errors'
+    });
+    $("#comprobante").fileinput({
+      language: 'es',
+      showPreview: false,
+      showUpload: false,
+      showRemove: false,
+      allowedFileExtensions: ["jpg", "jpeg", "png", "pdf"],
+      elErrorContainer: '#comprobante-file-errors',
     });
   },
   methods: {
     fijarFoto(){
       this.entrada.foto = this.$refs['foto'].files[0];
+    },
+    fijarComprobante(){
+      this.aceptar.comprobante = this.$refs['comprobante'].files[0];
     },
     agregarObservacion(observacion){
       this.cotizacion.observaciones.push(observacion.texto);
@@ -682,6 +729,43 @@ const app = new Vue({
         });
       });
     },//fin enviarCotizacion
+    aceptarCotizacion(){
+      var formData = objectToFormData(this.aceptar, {indices:true});
+
+      this.cargando = true;
+      axios.post('/prospectos/{{$prospecto->id}}/aceptarCotizacion', formData, {
+        headers: { 'Content-Type': 'multipart/form-data'}
+      })
+      .then(({data}) => {
+        this.prospecto.cotizaciones.find(function(cotizacion){
+          if(this.aceptar.cotizacion_id == cotizacion.id){
+            cotizacion.aceptada = true;
+            return true;
+          }
+        }, this);
+
+        this.aceptar = {
+          cotizacion_id: 0,
+          comprobante: ""
+        };
+        this.openAceptar = false;
+        this.cargando = false;
+        swal({
+          title: "Cotizacion Aceptada",
+          text: "La cotización ha sido aceptada y se ha generado una cuenta por cobrar",
+          type: "success"
+        });
+      })
+      .catch(({response}) => {
+        console.error(response);
+        this.cargando = false;
+        swal({
+          title: "Error",
+          text: response.data.message || "Ocurrio un error inesperado, intente mas tarde",
+          type: "error"
+        });
+      });
+    },//fin aceptarCotizacion
   }
 });
 </script>

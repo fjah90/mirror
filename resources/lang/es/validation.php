@@ -36,6 +36,7 @@ return [
     'digits_between'       => 'El :attribute debe tener entre :min y :max digitos.',
     'email'                => 'El :attribute debe ser una dirección email valida.',
     'exists'               => 'El :attribute seleccionado es invalido.',
+    'file'                 => 'El :attribute debe ser un archivo.',
     'filled'               => 'El campo :attribute es requerido.',
     'image'                => 'El :attribute debe ser una imagen.',
     'in'                   => 'El :attribute seleccionado es invalido.',
@@ -75,6 +76,7 @@ return [
     'string'               => 'El :attribute debe ser una cadena de texto.',
     'timezone'             => 'El :attribute debe ser una zona horaria valida.',
     'unique'               => 'El :attribute ya ha sido usado.',
+    'uploaded'             => 'El :attribute no se pudo subir.',
     'url'                  => 'El formato de :attribute es invalido.',
 
     /*
