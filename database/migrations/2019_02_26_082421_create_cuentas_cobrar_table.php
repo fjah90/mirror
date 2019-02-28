@@ -26,6 +26,7 @@ class CreateCuentasCobrarTable extends Migration
           $table->decimal('pagado',12,2)->default(0);
           $table->decimal('pendiente',12,2);
           $table->string('comprobante_confirmacion');
+          $table->boolean('pagada')->default(0);
 
           $table->foreign('cliente_id')->references('id')->on('clientes')->onDelete('cascade');
           $table->foreign('cotizacion_id')->references('id')->on('prospectos_cotizaciones')

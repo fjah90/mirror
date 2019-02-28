@@ -10,14 +10,16 @@ class CuentaCobrar extends Model
     protected $table = 'cuentas_cobrar';
 
     protected $fillable = ['cliente_id','cotizacion_id','cliente','proyecto',
-      'condiciones','total','facturado','pagado','pendiente','comprobante_confirmacion'
+      'condiciones','total','facturado','pagado','pendiente','pagada',
+      'comprobante_confirmacion'
     ];
 
     protected $casts = [
       'total' => 'float',
       'facturado' => 'float',
       'pagado' => 'float',
-      'pendiente' => 'float'
+      'pendiente' => 'float',
+      'pagada' => 'boolean'
     ];
 
     /**
@@ -32,6 +34,10 @@ class CuentaCobrar extends Model
 
     public function cotizacion(){
       return $this->belongsTo('App\Models\ProspectoCotizacion', 'cotizacion_id', 'id');
+    }
+
+    public function facturas(){
+      return $this->hasMany('App\Models\Factura', 'cuenta_id', 'id');
     }
 
 }

@@ -177,6 +177,14 @@
             </a>
           </li>
 
+          <!-- Cuentas Cobrar -->
+          <li {!! (Request::is('cuentas-cobrar*') ? 'clas="active"' : '') !!} >
+            <a href="{{ URL::to('cuentas-cobrar') }}">
+              <i class="menu-icon fas fa-hand-holding-usd"></i>
+              <span>Cuentas por Cobrar</span>
+            </a>
+          </li>
+
         </ul>
         <!-- / .navigation -->
       </div>

@@ -40,4 +40,13 @@ Route::middleware('auth')->group(function () {
   Route::post('/prospectos/{prospecto}/enviarCotizacion', 'ProspectosController@enviarCotizacion');
   Route::post('/prospectos/{prospecto}/aceptarCotizacion', 'ProspectosController@aceptarCotizacion');
   Route::resource('/prospectos', 'ProspectosController');
+
+  //Cuentas cobrar
+  Route::post('/cuentas-cobrar/{cuenta}/facturar', 'CuentasCobrarController@facturar');
+  Route::post('/cuentas-cobrar/{cuenta}/pagar', 'CuentasCobrarController@pagar');
+  Route::resource('/cuentas-cobrar', 'CuentasCobrarController', [
+    'only'=>['index','show','edit'],
+    'parameters'=>['cuentas-cobrar'=>'cuenta']
+  ]);
+
 });

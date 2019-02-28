@@ -441,7 +441,7 @@
         </div>
       </form>
     </modal>
-  <!-- /.Enviar Modal -->
+    <!-- /.Enviar Modal -->
 
     <!-- Aceptar Modal -->
     <modal v-model="openAceptar" :title="'Aceptar Cotizacion '+aceptar.cotizacion_id" :footer="false">
@@ -463,7 +463,7 @@
         </div>
       </form>
     </modal>
-  <!-- /.Aceptar Modal -->
+    <!-- /.Aceptar Modal -->
 
   </section>
   <!-- /.content -->
@@ -748,6 +748,7 @@ const app = new Vue({
           cotizacion_id: 0,
           comprobante: ""
         };
+        $("#comprobante").fileinput('clear');
         this.openAceptar = false;
         this.cargando = false;
         swal({
