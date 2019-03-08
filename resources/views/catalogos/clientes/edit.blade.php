@@ -221,6 +221,7 @@ const app = new Vue({
         tipo_id: '{{$cliente->tipo_id}}',
         nombre: '{{$cliente->nombre}}',
         rfc: '{{$cliente->rfc}}',
+        razon_social: '{{$cliente->razon_social}}',
         telefono: '{{$cliente->telefono}}',
         email: '{{$cliente->email}}',
         calle: '{{$cliente->calle}}',
