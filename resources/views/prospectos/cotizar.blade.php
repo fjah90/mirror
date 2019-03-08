@@ -544,6 +544,7 @@ const app = new Vue({
       showClose: false,
       showCaption: false,
       showBrowse: false,
+      browseOnZoneClick: true,
       removeLabel: '',
       removeIcon: '<i class="glyphicon glyphicon-remove"></i>',
       removeTitle: 'Quitar Foto',
