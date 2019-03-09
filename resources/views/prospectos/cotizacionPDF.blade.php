@@ -43,7 +43,6 @@
       border-collapse: collapse;
       background-color: transparent;
       margin:5px 0 10px;
-      text-transform: uppercase;
     }
     th { text-align: left; }
     table col[class*="col-"] {
@@ -300,24 +299,24 @@
           <thead style="background-color:#000; color:#fff;">
             <tr>
               <th class="text-center" style="width:50%; padding:3px 0;">
-                CLIENTE:
+                Cliente:
               </th>
               <th class="text-center" style="width:50%; padding:3px 0;">
-                FACTURAR A:
+                Facturar a:
               </th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <td class="bordered">
-                <p>{{$cotizacion->prospecto->cliente->nombre}}</p>
-                <p>
+                <p class="text-uppercase">{{$cotizacion->prospecto->cliente->nombre}}</p>
+                <p class="text-uppercase">
                   {{$cotizacion->prospecto->cliente->calle}}
                   {{$cotizacion->prospecto->cliente->numero}}
                 </p>
-                <p>{{$cotizacion->prospecto->cliente->colonia}}</p>
-                <p>T. {{$cotizacion->prospecto->cliente->telefono}}</p>
-                <p>ATN: {{$cotizacion->prospecto->cliente->nombre}}</p>
+                <p class="text-uppercase">{{$cotizacion->prospecto->cliente->colonia}}</p>
+                <p class="text-uppercase">T. {{$cotizacion->prospecto->cliente->telefono}}</p>
+                <p class="text-uppercase">ATN: {{$cotizacion->prospecto->cliente->nombre}}</p>
                 <p>
                   email:
                   <a href="mailto:{{$cotizacion->prospecto->cliente->email}}">
@@ -325,43 +324,43 @@
                   </a>
                 </p>
               </td>
-              <td class="bordered">{{$cotizacion->facturar}}</td>
+              <td class="bordered text-uppercase">{{$cotizacion->facturar}}</td>
             </tr>
             <tr>
               <td class="bordered" style="padding:0;">
                 <table style="margin:0;">
                   <tr>
-                    <td>PROYECTO:</td>
-                    <td><strong>{{$cotizacion->prospecto->nombre}}</strong></td>
+                    <td>Proyecto:</td>
+                    <td class="text-uppercase"><strong>{{$cotizacion->prospecto->nombre}}</strong></td>
                   </tr>
                   <tr>
-                    <td>ENTREGA:</td>
-                    <td>{{$cotizacion->entrega}}</td>
+                    <td>Entrega:</td>
+                    <td class="text-uppercase">{{$cotizacion->entrega}}</td>
                   </tr>
                   <tr>
-                    <td>FLETES:</td>
+                    <td>Fletes:</td>
                     <td>INCLUIDOS A LA CD. DE MÉXICO</td>
                   </tr>
                   <tr>
-                    <td>PRECIOS:</td>
-                    <td>{{$cotizacion->moneda}}</td>
+                    <td>Precios:</td>
+                    <td class="text-uppercase">{{$cotizacion->moneda}}</td>
                   </tr>
                   <tr>
-                    <td>CONDICIONES:</td>
-                    <td>{{$cotizacion->condiciones->nombre}}</td>
+                    <td>Condiciones:</td>
+                    <td class="text-uppercase">{{$cotizacion->condiciones->nombre}}</td>
                   </tr>
                 </table>
               </td>
               <td class="bordered">
-                <p class="text-center font-small "><strong>ENVIAR A:</strong></p>
-                <p>{{$cotizacion->prospecto->cliente->nombre}}</p>
-                <p>{{$cotizacion->lugar}}</p>
+                <p class="text-center font-small "><strong>Enviar a:</strong></p>
+                <p class="text-uppercase">{{$cotizacion->prospecto->cliente->nombre}}</p>
+                <p class="text-uppercase">{{$cotizacion->lugar}}</p>
               </td>
             </tr>
             <tr>
               <td colspan="2" class="bordered">
                 <p class="text-danger"><strong>Notas</strong></p>
-                <p>{{$cotizacion->notas}}</p>
+                <p class="text-uppercase">{{$cotizacion->notas}}</p>
               </td>
             </tr>
           </tbody>
@@ -374,10 +373,10 @@
         <table class="table table-cotizacion" style="margin:-5px 0px 0px;">
           <thead style="background-color:#000; color:#fff;">
             <tr>
-              <th class="text-center" style="width:10%; padding:3px 0 1px;">CANTIDAD</th>
-              <th class="text-center" style="width:70%; padding:3px 0 1px;">DESCRIPCION</th>
-              <th class="text-center" style="width:20%; padding:3px 0 1px;">PRECIO UNITARIO</th>
-              <th class="text-center" style="width:10%; padding:3px 0 1px;">TOTAL</th>
+              <th class="text-center" style="width:10%; padding:3px 0 1px;">Cantidad</th>
+              <th class="text-center" style="width:70%; padding:3px 0 1px;">Descripciones</th>
+              <th class="text-center" style="width:15%; padding:3px 0 1px;">Precio Unitario</th>
+              <th class="text-center" style="width:15%; padding:3px 0 1px;">Total</th>
             </tr>
           </thead>
           <tbody style="border-bottom: 1px solid #000;">
@@ -388,10 +387,13 @@
                 <table style="width:100%; margin:0;">
                   <tr>
                     <td>
-                      <p>{{$entrada->producto->proveedor->empresa}}</p>
-                      <p>{{ $entrada->producto->{$nombre} }}</p>
+                      <p class="text-uppercase">{{$entrada->producto->proveedor->empresa}}</p>
+                      <p class="text-uppercase">{{ $entrada->producto->{$nombre} }}</p>
                       @foreach($entrada->descripciones as $descripcion)
-                        <p>{{ $descripcion->{$nombre} }}: {{$descripcion->valor}}</p>
+                        <p>
+                          <span style="text-transform: lowercase">{{ $descripcion->{$nombre} }}: </span>
+                          <span class="text-uppercase">{{$descripcion->valor}}</span>
+                        </p>
                       @endforeach
                     </td>
                     <td style="width:100px;">
@@ -421,7 +423,7 @@
       <div class="col-lg-12 bordered" style="padding: 0px; margin-left:15px;">
         <table class="" style="margin-bottom:0; width:100%;">
           <tr>
-            <td class="text-right" style="width:90%;"><strong>SUBTOTAL:</strong></td>
+            <td class="text-right" style="width:90%;"><strong>Subtotal:</strong></td>
             <td class="text-right" style="width:10%;">@format_money($cotizacion->subtotal)</td>
           </tr>
           <tr>
@@ -429,7 +431,7 @@
             <td class="text-right" style="width:10%;">@format_money($cotizacion->iva)</td>
           </tr>
           <tr>
-            <td class="text-right" style="width:90%;"><strong>TOTAL {{$cotizacion->moneda}}:</strong></td>
+            <td class="text-right" style="width:90%;"><strong>Total {{$cotizacion->moneda}}:</strong></td>
             <td class="text-right" style="width:10%;">@format_money($cotizacion->total)</td>
           </tr>
         </table>
@@ -440,7 +442,7 @@
         <table style="margin: 0px; width:100%;">
           <tr class="font-small">
             <td style="width:70%; text-transform: none;">
-              <p><strong>OBSERVACIONES:</strong></p>
+              <p><strong>Observaciones:</strong></p>
               {!! $cotizacion->observaciones !!}
             </td>
             <td class="text-center" style="width:30%; text-transform: none;">
