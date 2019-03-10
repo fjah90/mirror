@@ -35,6 +35,7 @@ window.axios.defaults.headers.common = {
 
 Vue.use(uiv);
 Vue.component('tinymce-editor', Editor);
+Vue.component('select2multags', require('./components/select2multags.vue'));
 
 $.extend($.fn.dataTable.defaults, {
   responsive: true,

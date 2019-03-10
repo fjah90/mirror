@@ -31,7 +31,8 @@ mix.js('resources/assets/js/app.js', 'public/js')
      'bootstrap-fileinput/js/locales/es.js',
      'object-to-formdata',
      'tinymce',
-     '@tinymce/tinymce-vue'
+     '@tinymce/tinymce-vue',
+     'select2'
    ])
    .autoload({
      jquery: ['$', 'window.jQuery', 'jQuery', 'jquery'],

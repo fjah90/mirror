@@ -33,6 +33,7 @@
   },
   "dependencies": {
     "imagemin": "^6.0.0",
-    "object-to-formdata": "^1.6.2"
+    "object-to-formdata": "^1.6.2",
+    "select2": "^4.0.6-rc.1"
   }
 }
