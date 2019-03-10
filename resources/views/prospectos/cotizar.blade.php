@@ -428,8 +428,9 @@
     <modal v-model="openEnviar" :title="'Enviar Cotizacion '+enviar.cotizacion_id" :footer="false">
       <form class="" @submit.prevent="enviarCotizacion()">
         <div class="form-group">
-          <label class="control-label">Email</label>
-          <input type="text" class="form-control" name="email" v-model="enviar.email" required />
+          <label class="control-label">Email(s)</label>
+          <select2multags :options="enviar.emailOpciones" v-model="enviar.email" style="width:100%;" required>
+          </select2multags>
         </div>
         <div class="form-group">
           <label class="control-label">Mensaje</label>
@@ -437,7 +438,7 @@
           </textarea>
         </div>
         <div class="form-group text-right">
-          <button type="submit" class="btn btn-primary">Enviar</button>
+          <button type="submit" class="btn btn-primary" :disabled="cargando">Enviar</button>
         </div>
       </form>
     </modal>
@@ -455,7 +456,7 @@
           <div id="comprobante-file-errors"></div>
         </div>
         <div class="form-group text-right">
-          <button type="submit" class="btn btn-primary">Aceptar</button>
+          <button type="submit" class="btn btn-primary" :disabled="cargando">Aceptar</button>
           <button type="button" class="btn btn-default"
             @click="aceptar.cotizacion_id=0; openAceptar=false;">
             Cancelar
@@ -520,7 +521,10 @@ const app = new Vue({
     },
     enviar: {
       cotizacion_id: 0,
-      email: "{{$prospecto->cliente->email}}",
+      email: ["{{$prospecto->cliente->email}}"],
+      emailOpciones: [
+        {id: "{{$prospecto->cliente->email}}", text:"{{$prospecto->cliente->email}}"}
+      ],
       mensaje: "Buen día.\n\nLe envió cotización para su consideración.\n\nCarla Aguilar.\nAtención del Cliente\nIntercorp Contract Resources"
     },
     aceptar: {
@@ -709,7 +713,10 @@ const app = new Vue({
       .then(({data}) => {
         this.enviar = {
           cotizacion_id: 0,
-          email: "{{$prospecto->cliente->email}}",
+          email: ["{{$prospecto->cliente->email}}"],
+          emailOpciones: [
+            {id: "{{$prospecto->cliente->email}}", text:"{{$prospecto->cliente->email}}"}
+          ],
           mensaje: "Buen día.\n\nLe envió cotización para su consideración.\n\nCarla Aguilar.\nAtención del Cliente\nIntercorp Contract Resources"
         };
         this.openEnviar = false;

@@ -363,7 +363,8 @@ class ProspectosController extends Controller
     {
       $validator = Validator::make($request->all(), [
         'cotizacion_id' => 'required',
-        'email' => 'required|email|max:255',
+        'email' => 'required|array',
+        'email.*' => 'email|max:255',
         'mensaje' => 'required',
       ]);
 
@@ -378,9 +379,14 @@ class ProspectosController extends Controller
       $cotizacion_id = $cotizacion->id;
       $email = $request->email;
       $pdf = file_get_contents(asset('storage/'.$cotizacion->archivo));
+      $user = auth()->user();
 
-      Mail::send('prospectos.enviarCotizacion', ['mensaje' => $request->mensaje], function ($message) use ($cotizacion_id, $email, $pdf){
-        $message->to($email)->subject('Cotización Intercorp');
+      Mail::send('prospectos.enviarCotizacion', ['mensaje' => $request->mensaje], function ($message)
+      use ($cotizacion_id, $email, $pdf, $user){
+        $message->to($email)
+                ->cc('abraham@intercorp.mx')
+                ->replyTo($user->email, $user->name)
+                ->subject('Cotización Intercorp');
         $message->attachData($pdf, 'Cotizacion '.$cotizacion_id.'.pdf');
       });
 
