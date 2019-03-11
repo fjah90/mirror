@@ -92,7 +92,12 @@
                         <td>@{{factura.monto | formatoMoneda}}</td>
                         <td>
                           <template v-for="(pago, index) in factura.pagos">
-                            <span>@{{index+1}}.- @{{pago.monto | formatoMoneda}}</span><br />
+                            <span>@{{index+1}}.- @{{pago.monto | formatoMoneda}}</span>
+                            <a v-if="pago.comprobante" class="btn btn-xs btn-info"
+                              target="_blank" :href="pago.comprobante">
+                              <i class="far fa-eye"></i>
+                            </a>
+                            <br />
                           </template>
                           <span>Total: @{{factura.pagado | formatoMoneda}}</span><br />
                         </td>

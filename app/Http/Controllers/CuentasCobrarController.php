@@ -169,6 +169,9 @@ class CuentasCobrarController extends Controller
       }
 
       $pago = Pago::create($create);
+      if($pago->comprobante){
+        $pago->comprobante = asset('storage/'.$pago->comprobante);
+      }
       $factura->pagado+= $pago->monto;
       $factura->pendiente-= $pago->monto;
       if($factura->pendiente<=0) $factura->pagada = true;

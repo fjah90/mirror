@@ -93,7 +93,13 @@
                         <td>@format_money($factura->monto)</td>
                         <td>
                           @foreach($factura->pagos as $index => $pago)
-                            <span>{{$index+1}}.- @format_money($pago->monto)</span><br />
+                            <span>{{$index+1}}.- @format_money($pago->monto)</span>
+                            @if($pago->comprobante)
+                            <a class="btn btn-xs btn-info" target="_blank" href="{{$pago->comprobante}}">
+                              <i class="far fa-eye"></i>
+                            </a>
+                            @endif
+                            <br />
                           @endforeach
                           <span>Total: @format_money($factura->pagado)</span><br />
                         </td>
