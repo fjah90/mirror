@@ -170,7 +170,7 @@
           </li>
 
           <!-- Prospectos -->
-          <li {!! (Request::is('prospectos*') ? 'clas="active"' : '') !!} >
+          <li {!! (Request::is('prospectos*') ? 'class="active"' : '') !!} >
             <a href="{{ URL::to('prospectos') }}">
               <i class="menu-icon fas fa-comments-dollar"></i>
               <span>Prospectos</span>
@@ -178,7 +178,7 @@
           </li>
 
           <!-- Cuentas Cobrar -->
-          <li {!! (Request::is('cuentas-cobrar*') ? 'clas="active"' : '') !!} >
+          <li {!! (Request::is('cuentas-cobrar*') ? 'class="active"' : '') !!} >
             <a href="{{ URL::to('cuentas-cobrar') }}">
               <i class="menu-icon fas fa-hand-holding-usd"></i>
               <span>Cuentas por Cobrar</span>
