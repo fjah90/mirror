@@ -375,7 +375,7 @@ class ProspectosController extends Controller
         ], 422);
       }
 
-      $cotizacion = ProspectoCotizacion::findOrFail($request->cotizacion_id);
+      $cotizacion = ProspectoCotizacion::with('entradas')->findOrFail($request->cotizacion_id);
       $cotizacion_id = $cotizacion->id;
       $email = $request->email;
       $pdf = file_get_contents(asset('storage/'.$cotizacion->archivo));
@@ -389,6 +389,35 @@ class ProspectosController extends Controller
                 ->subject('Cotización Intercorp');
         $message->attachData($pdf, 'Cotizacion '.$cotizacion_id.'.pdf');
       });
+
+      //generar actividad de envio de cotizacion
+      $prospecto = Prospecto::with('proxima_actividad')->find($cotizacion->prospecto_id);
+      if($prospecto->proxima_actividad->tipo_id == 4){//Mandar Cotizacion
+        $nueva = 3; //Email (Seguimiento)
+      }
+      else $nueva = $prospecto->proxima_actividad->tipo_id;
+
+      $descripcion = "Enviada Cotización ".$cotizacion->id." a ".(implode(', ',$email));
+
+      //actualizar proxima actividad
+      $prospecto->proxima_actividad->update([
+        'tipo_id' => 4,
+        'descripcion' => $descripcion,
+        'realizada' => 1
+      ]);
+
+      //ingresar productos ofrecidos
+      foreach ($cotizacion->entradas as $entrada) {
+        $prospecto->proxima_actividad->productos_ofrecidos()->attach($entrada->producto_id);
+      }
+
+      //crear nueva proxima actividad
+      $create = [
+        'prospecto_id' => $prospecto->id,
+        'tipo_id' => $nueva,
+        'fecha' => date('d/m/Y'),
+      ];
+      ProspectoActividad::create($create);
 
       return response()->json(['success'=>true, 'error'=>false], 200);
     }
