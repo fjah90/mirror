@@ -288,7 +288,7 @@
       </div>
       <div class="col-lg-6">
         <p class="text-uppercase text-right">Intercorp Contract Resources, s.a. de c.v.</p>
-        <p class="text-uppercase text-right">Moliere 61, Col. Polanco, Mexico, DF 11560, Mexico</p>
+        <p class="text-uppercase text-right">Av. Moliere 61, Col. Polanco III Sección, CDMX, 11540, Mexico</p>
         <p class="text-right font-small">T. +52 (55) 5557-5214 intercorp.com.mx</p>
       </div>
     </div>
