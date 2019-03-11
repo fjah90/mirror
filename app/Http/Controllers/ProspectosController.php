@@ -472,6 +472,33 @@ class ProspectosController extends Controller
       return response()->json(['success'=>true, 'error'=>false], 200);
     }
 
+    /**
+     * Actualizar notas (internas) de cotizacion.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Prospecto  $prospecto
+     * @return \Illuminate\Http\Response
+     */
+    public function notasCotizacion(Request $request, Prospecto $prospecto)
+    {
+      $validator = Validator::make($request->all(), [
+        'cotizacion_id' => 'required',
+        'mensaje' => 'present',
+      ]);
+
+      if ($validator->fails()) {
+        $errors = $validator->errors()->all();
+        return response()->json([
+          "success" => false, "error" => true, "message" => $errors[0]
+        ], 422);
+      }
+
+      $cotizacion = ProspectoCotizacion::findOrFail($request->cotizacion_id);
+      $cotizacion->update(['notas2'=>$request->mensaje]);
+
+      return response()->json(['success'=>true, 'error'=>false], 200);
+    }
+
     public function regeneratePDF(Request $request){
       $cotizacion = ProspectoCotizacion::with('prospecto.cliente', 'condiciones',
       'entradas.producto.categoria', 'entradas.producto.proveedor',

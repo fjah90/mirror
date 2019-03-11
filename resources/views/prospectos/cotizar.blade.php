@@ -78,6 +78,13 @@
                         </td>
                         <td>@{{cotizacion.total | formatoMoneda}}</td>
                         <td class="text-right">
+                          <button class="btn btn-default" title="Notas"
+                            @click="notas.cotizacion_id=cotizacion.id;
+                              notas.mensaje=cotizacion.notas2;
+                              openNotas=true;"
+                            >
+                            <i class="far fa-sticky-note"></i>
+                          </button>
                           <a class="btn btn-warning" title="PDF" :href="cotizacion.archivo"
                             :download="'cotizacion '+cotizacion.id+'.pdf'">
                             <i class="far fa-file-pdf"></i>
@@ -425,6 +432,25 @@
     <!-- /.Catalogo Productos Modal -->
 
     <!-- Enviar Modal -->
+    <modal v-model="openNotas" :title="'Notas Cotización '+notas.cotizacion_id" :footer="false">
+      <form class="" @submit.prevent="notasCotizacion()">
+        <div class="form-group">
+          <label class="control-label">Notas</label>
+          <textarea name="mensaje" class="form-control" v-model="notas.mensaje" rows="8" cols="80">
+          </textarea>
+        </div>
+        <div class="form-group text-right">
+          <button type="submit" class="btn btn-primary" :disabled="cargando">Guardar</button>
+          <button type="button" class="btn btn-default"
+            @click="notas.cotizacion_id=0; notas.mensaje=''; openNotas=false;">
+            Cancelar
+          </button>
+        </div>
+      </form>
+    </modal>
+    <!-- /.Enviar Modal -->
+
+    <!-- Enviar Modal -->
     <modal v-model="openEnviar" :title="'Enviar Cotizacion '+enviar.cotizacion_id" :footer="false">
       <form class="" @submit.prevent="enviarCotizacion()">
         <div class="form-group">
@@ -531,9 +557,14 @@ const app = new Vue({
       cotizacion_id: 0,
       comprobante: ""
     },
+    notas: {
+      cotizacion_id: 0,
+      mensaje: ""
+    },
     openCatalogo: false,
     openEnviar: false,
     openAceptar: false,
+    openNotas: false,
     cargando: false
   },
   filters:{
@@ -775,6 +806,40 @@ const app = new Vue({
         });
       });
     },//fin aceptarCotizacion
+    notasCotizacion(){
+      this.cargando = true;
+      axios.post('/prospectos/{{$prospecto->id}}/notasCotizacion', this.notas)
+      .then(({data}) => {
+        this.prospecto.cotizaciones.find(function(cotizacion){
+          if(this.notas.cotizacion_id == cotizacion.id){
+            cotizacion.notas2 = this.notas.mensaje;
+            return true;
+          }
+        }, this);
+
+        this.notas = {
+          cotizacion_id: 0,
+          mensaje: ""
+        };
+        $("#comprobante").fileinput('clear');
+        this.openNotas = false;
+        this.cargando = false;
+        swal({
+          title: "Notas Guardadas",
+          text: "La notas de la cotización se han guardado correctamente",
+          type: "success"
+        });
+      })
+      .catch(({response}) => {
+        console.error(response);
+        this.cargando = false;
+        swal({
+          title: "Error",
+          text: response.data.message || "Ocurrio un error inesperado, intente mas tarde",
+          type: "error"
+        });
+      });
+    },//fin notasCotizacion
   }
 });
 </script>

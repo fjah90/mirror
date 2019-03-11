@@ -15,6 +15,7 @@ class AddAceptadaFieldToProspectosCotizaciones extends Migration
     {
         Schema::table('prospectos_cotizaciones', function (Blueprint $table) {
           $table->boolean('aceptada')->default(0);
+          $table->text('notas2')->nullable();
         });
     }
 

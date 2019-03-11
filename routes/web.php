@@ -39,6 +39,7 @@ Route::middleware('auth')->group(function () {
   Route::post('/prospectos/{prospecto}/cotizacion', 'ProspectosController@cotizacion');
   Route::post('/prospectos/{prospecto}/enviarCotizacion', 'ProspectosController@enviarCotizacion');
   Route::post('/prospectos/{prospecto}/aceptarCotizacion', 'ProspectosController@aceptarCotizacion');
+  Route::post('/prospectos/{prospecto}/notasCotizacion', 'ProspectosController@notasCotizacion');
   Route::resource('/prospectos', 'ProspectosController');
 
   //Cuentas cobrar
