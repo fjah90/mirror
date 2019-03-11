@@ -452,6 +452,7 @@ class ProspectosController extends Controller
         'cliente' => $prospecto->cliente->nombre,
         'proyecto' => $prospecto->nombre,
         'condiciones' => $cotizacion->condiciones->nombre,
+        'moneda' => $cotizacion->moneda,
         'total' => $cotizacion->total,
         'pendiente' => $cotizacion->total,
         'comprobante_confirmacion' => ''

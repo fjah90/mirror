@@ -44,7 +44,7 @@
             <div class="row">
               <div class="col-md-3">
                 <div class="form-group">
-                  <label class="control-label">Monto Total</label>
+                  <label class="control-label">Monto Total {{$cuenta->moneda}}</label>
                   <span class="form-control">@format_money($cuenta->total)</span>
                 </div>
               </div>

@@ -35,6 +35,7 @@
                   <th>Cliente</th>
                   <th>Proyecto</th>
                   <th>Condiciones Pago</th>
+                  <th>Moneda</th>
                   <th>Total</th>
                   <th>Facturado</th>
                   <th>Pagado</th>
@@ -48,6 +49,7 @@
                   <td>@{{cuenta.cliente}}</td>
                   <td>@{{cuenta.proyecto}}</td>
                   <td>@{{cuenta.condiciones}}</td>
+                  <td>@{{cuenta.moneda}}</td>
                   <td>@{{cuenta.total | formatoMoneda}}</td>
                   <td>@{{cuenta.facturado | formatoMoneda}}</td>
                   <td>@{{cuenta.pagado | formatoMoneda}}</td>

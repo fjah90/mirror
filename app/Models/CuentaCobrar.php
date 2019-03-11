@@ -10,7 +10,7 @@ class CuentaCobrar extends Model
     protected $table = 'cuentas_cobrar';
 
     protected $fillable = ['cliente_id','cotizacion_id','cliente','proyecto',
-      'condiciones','total','facturado','pagado','pendiente','pagada',
+      'moneda','condiciones','total','facturado','pagado','pendiente','pagada',
       'comprobante_confirmacion'
     ];
 

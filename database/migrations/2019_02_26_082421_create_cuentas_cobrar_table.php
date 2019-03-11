@@ -21,6 +21,7 @@ class CreateCuentasCobrarTable extends Migration
           $table->string('cliente');
           $table->string('proyecto');
           $table->string('condiciones');
+          $table->string('moneda');
           $table->decimal('total',12,2);
           $table->decimal('facturado',12,2)->default(0);
           $table->decimal('pagado',12,2)->default(0);
