@@ -10,7 +10,13 @@ class Proveedor extends Model
     protected $table = 'proveedores';
 
     protected $fillable = ['empresa','telefono','email','rfc','banco','numero_cuenta',
-    'clave_interbancaria','calle','numero','colonia','cp','ciudad','estado'];
+      'clave_interbancaria','calle','numero','colonia','cp','ciudad','estado','moneda',
+      'dias_credito'
+    ];
+
+    protected $casts = [
+      'dias_credito' => 'integer'
+    ];
 
     protected $appends = ['direccion'];
 

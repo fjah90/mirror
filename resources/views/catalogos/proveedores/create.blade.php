@@ -73,6 +73,23 @@
                 </div>
                 <div class="col-md-4">
                   <div class="form-group">
+                    <label class="control-label">Moneda</label>
+                    <select class="form-control" name="moneda" v-model="proveedor.moneda">
+                      <option value="Pesos">Pesos</option>
+                      <option value="Dolares">Dolares</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label class="control-label">Dias Credito</label>
+                    <input type="number" min="0" step="1" class="form-control" name="dias_credito" v-model="proveedor.dias_credito" />
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="form-group">
                     <label class="control-label">Calle</label>
                     <input type="text" class="form-control" name="calle" v-model="proveedor.calle" />
                   </div>
@@ -83,14 +100,14 @@
                     <input type="text" class="form-control" name="numero" v-model="proveedor.numero" />
                   </div>
                 </div>
-              </div>
-              <div class="row">
                 <div class="col-md-4">
                   <div class="form-group">
                     <label class="control-label">Colonia</label>
                     <input type="text" class="form-control" name="colonia" v-model="proveedor.colonia" />
                   </div>
                 </div>
+              </div>
+              <div class="row">
                 <div class="col-md-4">
                   <div class="form-group">
                     <label class="control-label">C. Postal</label>
@@ -103,15 +120,15 @@
                     <input type="text" class="form-control" name="ciudad" v-model="proveedor.ciudad" />
                   </div>
                 </div>
-              </div>
-              <div class="row">
                 <div class="col-md-4">
                   <div class="form-group">
                     <label class="control-label">Estado</label>
                     <input type="text" class="form-control" name="estado" v-model="proveedor.estado" />
                   </div>
                 </div>
-                <div class="col-md-8 text-right">
+              </div>
+              <div class="row">
+                <div class="col-md-12 text-right">
                   <button style="margin-top:25px;" type="submit" class="btn btn-primary" :disabled="cargando">
                     <i class="fas fa-save"></i>
                     Guardar Proveedor
@@ -225,6 +242,8 @@ const app = new Vue({
         banco: '',
         numero_cuenta: '',
         clave_interbancaria: '',
+        moneda: '',
+        dias_credito: '',
         calle: '',
         numero: '',
         colonia: '',

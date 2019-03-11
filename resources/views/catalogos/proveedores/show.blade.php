@@ -70,7 +70,21 @@
                   <span class="form-control">{{$proveedor->clave_interbancaria}}</span>
                 </div>
               </div>
-              <div class="col-md-8">
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label class="control-label">Moneda</label>
+                  <span class="form-control">{{$proveedor->moneda}}</span>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label class="control-label">Dias Credito</label>
+                  <span class="form-control">{{$proveedor->dias_credito}}</span>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
                 <div class="form-group">
                   <label class="control-label">Dirección</label>
                   <span class="form-control">{{$proveedor->direccion}}</span>
