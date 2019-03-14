@@ -21,6 +21,10 @@ Route::middleware('auth')->group(function () {
 
   Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
 
+  //Administracion
+  Route::post('/usuarios/{usuario}', 'UsuariosController@update');
+  Route::resource('/usuarios', 'UsuariosController');
+
   //Catalogos
   Route::resource('/tiposClientes', 'TiposClientesController', ['parameters' => [
     'tiposClientes' => 'tipo'

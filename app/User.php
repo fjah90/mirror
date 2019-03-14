@@ -17,7 +17,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'firma'
     ];
 
     /**
@@ -28,4 +28,12 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    protected $appends = ['tipo'];
+
+    public function getTipoAttribute(){
+      $roles = $this->getRoleNames();
+      if(count($roles)) return $roles[0];
+      else return "";
+    }
 }

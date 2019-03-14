@@ -116,6 +116,23 @@
             </a>
           </li>
 
+          <!-- Administracion -->
+          <li  {!! (Request::is('usuarios*')
+                  ? 'class="active"' : '') !!}>
+            <a href="javascript:;">
+              <i class="menu-icon fas fa-laptop"></i>
+              <span>Administracion</span>
+              <span class="fa arrow"></span>
+            </a>
+            <ul class="sub-menu">
+              <li {!! (Request::is('usuarios*') ? 'class="active"' : '') !!}>
+                <a href="{{ URL::to('usuarios') }}">
+                  <i class="fas fa-user"></i> Usuarios
+                </a>
+              </li>
+            </ul>
+          </li>
+
           <!-- Catalogos -->
           <li  {!! (Request::is('tiposClientes*') ||
                     Request::is('clientes*') ||
