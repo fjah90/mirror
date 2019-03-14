@@ -448,11 +448,11 @@
             <td class="text-center" style="width:30%; text-transform: none;">
               <p style="margin-top:1em;">{{$cotizacion->user->name}}</p>
               <p style="margin-bottom:1.5em;">Intercorp Contract Resources</p>
-              <img style="width:200px; height:auto;" src="{{public_path().'/images/firma '}}{{$cotizacion->user->name}}.png" alt=" " />
-              @if($cotizacion->user->name=="Abraham Shveid")
+              <img style="width:200px; height:auto;" src="{{$cotizacion->user->firma}}" alt=" " />
+              @if($cotizacion->user->id==2) <!-- "Abraham Shveid" -->
               <hr style="border:1px solid #000; width:70%; margin-top:-15px; margin-bottom:0px;" />
               <p style="font-size:10px; position:relative; top:-10px;">ATENCIÓN DEL CLIENTE</p>
-              @elseif($cotizacion->user->name=="Elena Salido")
+              @elseif($cotizacion->user->id==5) <!-- "Elena Salido" -->
               <hr style="border:1px solid #000; width:70%; margin-top:-10px; margin-bottom:0px;" />
               <p style="font-size:10px; position:relative; top:-5px;">ATENCIÓN DEL CLIENTE</p>
               @else

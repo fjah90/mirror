@@ -333,6 +333,8 @@ class ProspectosController extends Controller
       foreach ($cotizacion->entradas as $entrada) {
         if($entrada->foto) $entrada->foto = asset('storage/'.$entrada->foto);
       }
+      if($cotizacion->user->firma) $cotizacion->user->firma = storage_path('app/public/'.$cotizacion->user->firma);
+      else $cotizacion->user->firma = public_path('images/firma_vacia.png');
 
       //crear pdf de cotizacion
       $url = 'cotizaciones/'.$cotizacion->id.'/cotizacion_'.$cotizacion->id.'.pdf';
@@ -503,6 +505,8 @@ class ProspectosController extends Controller
       $cotizacion = ProspectoCotizacion::with('prospecto.cliente', 'condiciones',
       'entradas.producto.categoria', 'entradas.producto.proveedor',
       'entradas.descripciones', 'user')->find($request->cotizacion_id);
+      if($cotizacion->user->firma) $cotizacion->user->firma = storage_path('app/public/'.$cotizacion->user->firma);
+      else $cotizacion->user->firma = public_path('images/firma_vacia.png');
 
       $url = 'cotizaciones/'.$cotizacion->id.'/cotizacion_'.$cotizacion->id.'.pdf';
       $meses = ['ENERO','FEBRERO','MARZO','ABRIL','MAYO','JUNIO','JULIO',
