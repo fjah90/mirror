@@ -20,24 +20,23 @@
             <div class="error_content">
                 <div class="text-center">
                     <h2>
-                        <img src="{{asset('assets/img/logo_blue.png')}}" alt="Logo">
+                        <img src="{{asset('images/logo.jpg')}}" alt="Logo">
                     </h2>
                 </div>
                 <div class="text-center">
                     <div class="error">
                         <span class="folded-corner"></span>
                         <p class="type">500</p>
-                        <p class="type-text">Internal Server Down</p>
-                        <p class="message">Hold on! ,Something went wrong at our end. Mean while try <a href="index" >Home</a>.</p>
+                        <p class="type-text">Error en el Servidor</p>
+                        <p class="message">
+                          Se produjo un error en el servidor que impidio procesar tu peticion, intenta ir a
+                          <a href="/dashboard">Dashboard</a>.
+                        </p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<!-- global js -->
-<script src="{{asset('assets/js/jquery.min.js')}}" type="text/javascript"></script>
-<script src="{{asset('assets/js/bootstrap.min.js')}}" type="text/javascript"></script>
-<!-- end of global js -->
 </body>
 </html>

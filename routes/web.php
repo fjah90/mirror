@@ -12,18 +12,25 @@
 */
 
 Route::get('/', function () {
-  return view('auth.login');
+  $user = Auth::user();
+  if(is_null($user)) return view('auth.login');
+  return redirect('/dashboard');
 });
 
 Auth::routes();
 
 Route::middleware('auth')->group(function () {
+  Route::get('/500', function(){ return view('500'); });
+  Route::get('/denied', function(){ return view('access_denied'); });
 
+  //Dashboard
   Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
 
   //Administracion
-  Route::post('/usuarios/{usuario}', 'UsuariosController@update');
-  Route::resource('/usuarios', 'UsuariosController');
+  Route::middleware('role:Administrador')->group(function(){
+    Route::post('/usuarios/{usuario}', 'UsuariosController@update');
+    Route::resource('/usuarios', 'UsuariosController');
+  });
 
   //Catalogos
   Route::resource('/tiposClientes', 'TiposClientesController', ['parameters' => [

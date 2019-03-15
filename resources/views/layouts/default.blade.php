@@ -117,6 +117,7 @@
           </li>
 
           <!-- Administracion -->
+          @hasanyrole('Administrador')
           <li  {!! (Request::is('usuarios*')
                   ? 'class="active"' : '') !!}>
             <a href="javascript:;">
@@ -132,6 +133,7 @@
               </li>
             </ul>
           </li>
+          @endhasanyrole
 
           <!-- Catalogos -->
           <li  {!! (Request::is('tiposClientes*') ||
