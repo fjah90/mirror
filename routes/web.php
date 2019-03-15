@@ -26,6 +26,10 @@ Route::middleware('auth')->group(function () {
   //Dashboard
   Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
 
+  //Mi Cuenta
+  Route::get('/mi_cuenta', 'MiCuentaController@index')->name('mi_cuenta');
+  Route::post('/mi_cuenta', 'MiCuentaController@update');
+
   //Administracion
   Route::middleware('role:Administrador')->group(function(){
     Route::post('/usuarios/{usuario}', 'UsuariosController@update');

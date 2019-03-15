@@ -62,12 +62,13 @@
               <span>{{auth()->user()->name}}</span>
             </li>
             <!-- Menu Body -->
-            <!-- <li class="p-t-3">
-                <a href="user_profile">
-                    Profile<i class="fa fa-fw fa-user pull-right"></i>
-                </a>
+            <li class="p-t-3">
+              <a href="{{ URL::to('mi_cuenta') }}">
+                Mi Cuenta
+                <i class="far fa-user-circle pull-right" style="font-size:16px; margin-top:3px;"></i>
+              </a>
             </li>
-            <li>
+            <!-- <li>
                 <a href="edit_user">
                     Settings <i class="fa fa-fw fa-cog pull-right"></i>
                 </a>
@@ -79,7 +80,7 @@
             </li> -->
             <li>
               <a id="logout-anchor" href="javascript:void(0)">
-                Logout <i class="fas fa-sign-out-alt pull-right"></i>
+                Salir <i class="fas fa-sign-out-alt pull-right"></i>
               </a>
             </li>
           </ul>
