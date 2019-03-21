@@ -57,6 +57,14 @@ Route::middleware('auth')->group(function () {
   Route::post('/prospectos/{prospecto}/notasCotizacion', 'ProspectosController@notasCotizacion');
   Route::resource('/prospectos', 'ProspectosController');
 
+  //Proyectos Aprobados
+  // Route::get('/proyectos-aprobados/{proyecto}/generarOrdenes', 'ProyectosAprobadosController@generarOrdenes');
+  Route::get('/proyectos-aprobados/{proyecto}/ordenescompra', 'ProyectosAprobadosController@edit');
+  Route::resource('/proyectos-aprobados', 'ProyectosAprobadosController', [
+    // 'only'=>['index','show','edit'],
+    'parameters'=>['proyectos-aprobados'=>'proyecto']
+  ]);
+
   //Cuentas cobrar
   Route::post('/cuentas-cobrar/{cuenta}/facturar', 'CuentasCobrarController@facturar');
   Route::post('/cuentas-cobrar/{cuenta}/pagar', 'CuentasCobrarController@pagar');

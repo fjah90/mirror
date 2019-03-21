@@ -8,6 +8,9 @@ use Illuminate\Support\Facades\Blade;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Facades\Route;
 
+use App\Models\ProyectoAprobado;
+use App\Observers\ProyectoAprobadoObserver;
+
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -31,6 +34,9 @@ class AppServiceProvider extends ServiceProvider
         'create' => 'crear',
         'edit' => 'editar',
       ]);
+
+      //Observadores
+      ProyectoAprobado::observe(ProyectoAprobadoObserver::class);
     }
 
     /**

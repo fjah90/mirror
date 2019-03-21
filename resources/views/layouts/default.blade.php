@@ -197,6 +197,14 @@
             </a>
           </li>
 
+          <!-- Proyectos Aprobados -->
+          <li {!! (Request::is('proyectos-aprobados*') ? 'class="active"' : '') !!} >
+            <a href="{{ URL::to('proyectos-aprobados') }}">
+              <i class="menu-icon fas fa-file-signature"></i>
+              <span>Proyectos Aprobados</span>
+            </a>
+          </li>
+
           <!-- Cuentas Cobrar -->
           <li {!! (Request::is('cuentas-cobrar*') ? 'class="active"' : '') !!} >
             <a href="{{ URL::to('cuentas-cobrar') }}">

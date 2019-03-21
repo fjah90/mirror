@@ -13,6 +13,7 @@ use App\Models\ProspectoCotizacionEntrada;
 use App\Models\ProspectoCotizacionEntradaDescripcion;
 use App\Models\CondicionCotizacion;
 use App\Models\CuentaCobrar;
+use App\Models\ProyectoAprobado;
 use Validator;
 use PDF;
 use Mail;
@@ -445,9 +446,26 @@ class ProspectosController extends Controller
         ], 422);
       }
 
-      $cotizacion = ProspectoCotizacion::with('condiciones')->findOrFail($request->cotizacion_id);
+      $cotizacion = ProspectoCotizacion::with('condiciones', 'entradas.producto.proveedor')->findOrFail($request->cotizacion_id);
       $prospecto->load('cliente');
 
+      //generar proyecto aprobado
+      $proveedores = $cotizacion->entradas->groupBy(function($entrada){
+        return $entrada->producto->proveedor->empresa;
+      })->keys()->all();
+      $proveedores = implode(",", $proveedores);
+      
+      $create = [
+        'cliente_id' => $prospecto->cliente_id,
+        'cotizacion_id' => $cotizacion->id,
+        'cliente' => $prospecto->cliente->nombre,
+        'proyecto' => $prospecto->nombre,
+        'moneda' => $cotizacion->moneda,
+        'proveedores' => $proveedores
+      ];
+      ProyectoAprobado::create($create);
+
+      //generar cuenta por cobrar
       $create = [
         'cliente_id' => $prospecto->cliente_id,
         'cotizacion_id' => $cotizacion->id,
