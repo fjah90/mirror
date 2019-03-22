@@ -3,6 +3,7 @@ namespace App\Observers;
 
 use App\Models\ProyectoAprobado;
 use App\Models\OrdenCompra;
+use App\Models\OrdenCompraEntrada;
 
 class ProyectoAprobadoObserver
 {

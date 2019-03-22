@@ -29,6 +29,7 @@ class CreateOrdenesCompraTable extends Migration
           $table->decimal('subtotal', 12, 2)->default(0);
           $table->decimal('iva', 12, 2)->default(0);
           $table->decimal('total', 12, 2)->default(0);
+          $table->text('motivo_rechazo')->nullable();
 
           $table->foreign('cliente_id')->references('id')->on('clientes')->onDelete('cascade');
           $table->foreign('proyecto_id')->references('id')->on('proyectos_aprobados')

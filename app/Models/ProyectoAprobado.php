@@ -38,4 +38,8 @@ class ProyectoAprobado extends Model
       return $this->belongsTo('App\Models\ProspectoCotizacion', 'cotizacion_id', 'id');
     }
 
+    public function ordenes(){
+      return $this->hasMany('App\Models\OrdenCompra', 'proyecto_id', 'id');
+    }
+
 }

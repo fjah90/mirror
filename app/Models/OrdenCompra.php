@@ -11,7 +11,8 @@ class OrdenCompra extends Model
 
     protected $fillable = ['cliente_id','proyecto_id','proveedor_id',
       'orden_proceso_id','cliente_nombre','proyecto_nombre','proveedor_empresa',
-      'status','orden_proceso_status','moneda','subtotal','iva','total'
+      'status','orden_proceso_status','moneda','subtotal','iva','total',
+      'motivo_rechazo'
     ];
 
     protected $casts = [
@@ -36,6 +37,10 @@ class OrdenCompra extends Model
 
     public function proveedor(){
       return $this->belongsTo('App\Models\Proveedor', 'proveedor_id', 'id');
+    }
+
+    public function entradas(){
+      return $this->hasMany('App\Models\OrdenCompraEntrada', 'orden_id', 'id');
     }
 
 }

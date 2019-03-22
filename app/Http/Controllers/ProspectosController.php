@@ -454,11 +454,11 @@ class ProspectosController extends Controller
         return $entrada->producto->proveedor->empresa;
       })->keys()->all();
       $proveedores = implode(",", $proveedores);
-      
+
       $create = [
         'cliente_id' => $prospecto->cliente_id,
         'cotizacion_id' => $cotizacion->id,
-        'cliente' => $prospecto->cliente->nombre,
+        'cliente_nombre' => $prospecto->cliente->nombre,
         'proyecto' => $prospecto->nombre,
         'moneda' => $cotizacion->moneda,
         'proveedores' => $proveedores

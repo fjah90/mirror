@@ -41,7 +41,7 @@
               <tbody>
                 <tr v-for="proyecto in proyectos">
                   <td>@{{proyecto.id}}</td>
-                  <td>@{{proyecto.cliente}}</td>
+                  <td>@{{proyecto.cliente_nombre}}</td>
                   <td>@{{proyecto.proyecto}}</td>
                   <td>
                     <span v-for="(proveedor, index) in proyecto.proveedores">
@@ -49,12 +49,12 @@
                     </span>
                   </td>
                   <td class="text-right">
-                    <a class="btn btn-info" data-toggle="tooltip" title="Ver Cotización"
+                    <a class="btn btn-info" title="Ver Cotización"
                       target="_blank" :href="proyecto.cotizacion.archivo">
                       <i class="far fa-eye"></i>
                     </a>
-                    <a class="btn btn-success" data-toggle="tooltip" title="Ordenes Compra"
-                      :href="'/proyectos-aprobados/'+proyecto.id+'/ordenescompra'"
+                    <a class="btn btn-success" title="Ordenes Compra"
+                      :href="'/proyectos-aprobados/'+proyecto.id+'/ordenes-compra'"
                       style="font-size:20px; padding:2px 12px;">
                       <i class="fas fa-file-invoice-dollar"></i>
                     </a>

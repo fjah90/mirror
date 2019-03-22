@@ -58,11 +58,13 @@ Route::middleware('auth')->group(function () {
   Route::resource('/prospectos', 'ProspectosController');
 
   //Proyectos Aprobados
+  Route::get('/proyectos-aprobados', 'ProyectosAprobadosController@index');
   // Route::get('/proyectos-aprobados/{proyecto}/generarOrdenes', 'ProyectosAprobadosController@generarOrdenes');
-  Route::get('/proyectos-aprobados/{proyecto}/ordenescompra', 'ProyectosAprobadosController@edit');
-  Route::resource('/proyectos-aprobados', 'ProyectosAprobadosController', [
-    // 'only'=>['index','show','edit'],
-    'parameters'=>['proyectos-aprobados'=>'proyecto']
+
+  //Ordenes de Compra
+  Route::get('/proyectos-aprobados/{proyecto}/ordenes-compra/{orden}/comprar', 'OrdenesCompraController@comprar');
+  Route::resource('/proyectos-aprobados.ordenes-compra', 'OrdenesCompraController', [
+    'parameters' => ['proyectos-aprobados'=>'proyecto', 'ordenes-compra'=>'orden']
   ]);
 
   //Cuentas cobrar
