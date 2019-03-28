@@ -63,6 +63,8 @@ Route::middleware('auth')->group(function () {
 
   //Ordenes de Compra
   Route::get('/proyectos-aprobados/{proyecto}/ordenes-compra/{orden}/comprar', 'OrdenesCompraController@comprar');
+  Route::post('/proyectos-aprobados/{proyecto}/ordenes-compra/{orden}/rechazar', 'OrdenesCompraController@rechazar');
+  Route::get('/proyectos-aprobados/{proyecto}/ordenes-compra/{orden}/aprobar', 'OrdenesCompraController@aprobar');
   Route::resource('/proyectos-aprobados.ordenes-compra', 'OrdenesCompraController', [
     'parameters' => ['proyectos-aprobados'=>'proyecto', 'ordenes-compra'=>'orden']
   ]);

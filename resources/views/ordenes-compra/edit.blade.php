@@ -25,6 +25,17 @@
             <h3 class="panel-title">Editar Orden Proyecto {{$proyecto->proyecto}}</h3>
           </div>
           <div class="panel-body">
+            @if($orden->status=='Rechazada')
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label class="control-label text-danger" style="font-weight:bold">Orden Rechazada</label>
+                  <textarea class="form-control" disabled style="border:1px solid #FF7A7A;">{{$orden->motivo_rechazo}}
+                  </textarea>
+                </div>
+              </div>
+            </div>
+            @endif
             <div class="row">
               <div class="col-md-4">
                 <div class="form-group">

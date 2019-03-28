@@ -9,6 +9,8 @@ use App\Models\OrdenCompra;
 use App\Models\OrdenCompraEntrada;
 use App\Models\Proveedor;
 use App\Models\Producto;
+use App\Models\OrdenProceso;
+use App\Models\CuentaPagar;
 
 class OrdenesCompraController extends Controller
 {
@@ -176,6 +178,9 @@ class OrdenesCompraController extends Controller
         $update['iva'] = 0;
         $update['total'] = $update['subtotal'];
       }
+      if($orden->status=='Rechazada'){
+        $update['status'] = 'Por Autorizar';
+      }
 
       $orden->update($update);
 
@@ -210,13 +215,91 @@ class OrdenesCompraController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Producto  $producto
+     * @param  \App\Models\ProyectoAprobado  $proyecto
+     * @param  \App\Models\OrdenCompra  $orden
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Producto $producto)
+    public function destroy(ProyectoAprobado $proyecto, OrdenCompra $orden)
     {
-      Storage::delete('public/'.$producto->foto);
-      $producto->delete();
+      if($orden->status=='Aprobada'){
+        return response()->json(['success' => false, "error" => true,
+          'message'=>'No se puede cancelar la orden porque ya esta Aprobada'
+        ], 400);
+      }
+      $orden->update(['status'=>'Cancelada']);
+
       return response()->json(['success' => true, "error" => false], 200);
     }
+
+    /**
+     * Cambia status a Aprobada.
+     *
+     * @param  \App\Models\ProyectoAprobado  $proyecto
+     * @param  \App\Models\OrdenCompra  $orden
+     * @return \Illuminate\Http\Response
+     */
+    public function aprobar(ProyectoAprobado $proyecto, OrdenCompra $orden)
+    {
+      if($orden->status!='Por Autorizar'){
+        return response()->json(['success' => false, "error" => true,
+          'message'=>'La orden debe estar en estatus "Por Autorizar" para poder ser rechazada'
+        ], 400);
+      }
+
+      //generar numero de orden (proceso)
+      $numero = OrdenProceso::create(['orden_compra_id'=>$orden->id]);
+
+      //generar cuenta por pagar
+      $create = [
+        'proveedor_id' => $orden->proveedor_id,
+        'orden_compra_id' => $orden->id,
+        'proveedor_empresa' => $orden->proveedor_empresa,
+        'proyecto_nombre' => $orden->proyecto_nombre,
+        'moneda' => $orden->moneda,
+        'dias_credito' => $orden->proveedor->dias_credito,
+        'total' => $orden->total,
+        'pendiente' => $orden->total,
+      ];
+      CuentaPagar::create($create);
+
+      //actualizar orden
+      $orden->update([
+        'status'=>'Aprobada',
+        'orden_proceso_id'=>$numero->id
+      ]);
+
+      return response()->json(['success' => true, "error" => false], 200);
+    }
+
+    /**
+     * Cambia status a Rechazada.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\ProyectoAprobado  $proyecto
+     * @param  \App\Models\OrdenCompra  $orden
+     * @return \Illuminate\Http\Response
+     */
+    public function rechazar(Request $request, ProyectoAprobado $proyecto, OrdenCompra $orden)
+    {
+      $validator = Validator::make($request->all(), ['motivo' => 'required']);
+      if ($validator->fails()) {
+        $errors = $validator->errors()->all();
+        return response()->json([
+          "success" => false, "error" => true, "message" => $errors[0]
+        ], 422);
+      }
+
+      if($orden->status!='Por Autorizar'){
+        return response()->json(['success' => false, "error" => true,
+          'message'=>'La orden debe estar en estatus "Por Autorizar" para poder ser rechazada'
+        ], 400);
+      }
+      $orden->update([
+        'status'=>'Rechazada',
+        'motivo_rechazo'=>$request->motivo
+      ]);
+
+      return response()->json(['success' => true, "error" => false], 200);
+    }
+
 }

@@ -77,20 +77,20 @@
                       :href="'/proyectos-aprobados/'+orden.proyecto_id+'/ordenes-compra/'+orden.id+'/editar'">
                       <i class="fas fa-edit"></i>
                     </a>
-                    @role('Inventado')
+                    @role('Administrador')
                     <button v-if="orden.status=='Por Autorizar'" class="btn btn-primary"
-                      title="Aprobar" @click="aprobar.orden_id=orden.id; openAprobar=true;">
+                      title="Aprobar" @click="aprobarOrden(orden)">
                       <i class="far fa-thumbs-up"></i>
                     </button>
                     <button v-if="orden.status=='Por Autorizar'" class="btn btn-danger"
                       title="Rechazar" @click="rechazar.orden_id=orden.id; openRechazar=true;">
                       <i class="far fa-thumbs-down"></i>
                     </button>
+                    @endrole
                     <button v-if="orden.status!='Aprobada' && orden.status!='Cancelada'" class="btn btn-danger"
-                      title="Cancelar" @click="cancelar(orden)">
+                      title="Cancelar" @click="cancelarOrden(orden)">
                       <i class="fas fa-times"></i>
                     </button>
-                    @endrole
                   </td>
                 </tr>
               </tbody>
@@ -100,7 +100,28 @@
       </div>
     </div>
   </div>
+
+  <!-- Rechazar Modal -->
+  <modal v-model="openRechazar" :title="'Rechazar orden '+rechazar.orden_id" :footer="false">
+    <form class="" @submit.prevent="rechazarOrden()">
+      <div class="form-group">
+        <label class="control-label">Motivo de rechazo</label>
+        <textarea name="motivo" class="form-control" v-model="rechazar.motivo" rows="5" cols="80" required/>
+        </textarea>
+      </div>
+      <div class="form-group text-right">
+        <button type="submit" class="btn btn-primary" :disabled="cargando">Rechazar</button>
+        <button type="button" class="btn btn-default"
+          @click="rechazar.orden_id=0; rechazar.motivo=''; openRechazar=false;">
+          Cancelar
+        </button>
+      </div>
+    </form>
+  </modal>
+  <!-- /.Enviar Modal -->
+
 </section>
+
 <!-- /.content -->
 @stop
 
@@ -119,8 +140,105 @@ const app = new Vue({
         motivo:''
       },
       openAceptar: false,
-      openRechazar: false
+      openRechazar: false,
+      cargando: false
     },
+    methods: {
+      rechazarOrden(){
+        this.cargando = true;
+        axios.post(
+        '/proyectos-aprobados/'+this.ordenes[0].proyecto_id+'/ordenes-compra/'+this.rechazar.orden_id+'/rechazar',
+        this.rechazar).then(({data}) => {
+          this.ordenes.find(function(orden){
+            if(this.rechazar.orden_id == orden.id){
+              orden.status = 'Rechazada';
+              orden.motivo_rechazo = this.rechazar.motivo;
+              return true;
+            }
+          },this);
+          this.rechazar = {orden_id: 0, motivo:''};
+          this.openRechazar = false;
+          swal({
+            title: "Orden Rechazada",
+            text: "La orden ha sido rechazada",
+            type: "success"
+          });
+        })
+        .catch(({response}) => {
+          console.error(response);
+          this.cargando = false;
+          swal({
+            title: "Error",
+            text: response.data.message || "Ocurrio un error inesperado, intente mas tarde",
+            type: "error"
+          });
+        });
+      },//fin rechazar
+      aprobarOrden(orden){
+        swal({
+          title: 'Atención',
+          text: "Aceptar la orden "+orden.id+"?",
+          type: 'info',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Si, Aceptar',
+          cancelButtonText: 'No, dejar sin aceptar',
+        }).then((result) => {
+          if (result.value) {
+            axios.get('/proyectos-aprobados/'+orden.proyecto_id+'/ordenes-compra/'+orden.id+'/aprobar', {})
+            .then(({data}) => {
+              orden.status = 'Aprobada';
+              swal({
+                title: "Exito",
+                text: "La orden ha sido aprobada",
+                type: "success"
+              });
+            })
+            .catch(({response}) => {
+              console.error(response);
+              swal({
+                title: "Error",
+                text: response.data.message || "Ocurrio un error inesperado, intente mas tarde",
+                type: "error"
+              });
+            });
+          } //if confirmacion
+        });
+      },//aceptar
+      cancelarOrden(orden){
+        swal({
+          title: 'Cuidado',
+          text: "Cancelar la orden "+orden.id+"?",
+          type: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Si, Cancelar',
+          cancelButtonText: 'No, dejar sin cancelar',
+        }).then((result) => {
+          if (result.value) {
+            axios.delete('/proyectos-aprobados/'+orden.proyecto_id+'/ordenes-compra/'+orden.id, {})
+            .then(({data}) => {
+              orden.status = 'Cancelada';
+              swal({
+                title: "Exito",
+                text: "La orden se ha cancelado",
+                type: "success"
+              });
+            })
+            .catch(({response}) => {
+              console.error(response);
+              swal({
+                title: "Error",
+                text: response.data.message || "Ocurrio un error inesperado, intente mas tarde",
+                type: "error"
+              });
+            });
+          } //if confirmacion
+        });
+      },//cancelar
+    }
 });
 </script>
 @stop
