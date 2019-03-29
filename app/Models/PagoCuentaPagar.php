@@ -5,7 +5,7 @@ namespace App\Models;
 use App\Model;
 use Carbon\Carbon;
 
-class Pago extends Model
+class PagoCuentaPagar extends Model
 {
     protected $table = 'pagos_cuentas_pagar';
 

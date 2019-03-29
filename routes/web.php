@@ -77,4 +77,12 @@ Route::middleware('auth')->group(function () {
     'parameters'=>['cuentas-cobrar'=>'cuenta']
   ]);
 
+  //Cuentas pagar
+  Route::post('/cuentas-pagar/{cuenta}/facturar', 'CuentasPagarController@facturar');
+  Route::post('/cuentas-pagar/{cuenta}/pagar', 'CuentasPagarController@pagar');
+  Route::resource('/cuentas-pagar', 'CuentasPagarController', [
+    'only'=>['index','show','edit'],
+    'parameters'=>['cuentas-pagar'=>'cuenta']
+  ]);
+
 });

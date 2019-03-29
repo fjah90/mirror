@@ -213,6 +213,14 @@
             </a>
           </li>
 
+          <!-- Cuentas Pagar -->
+          <li {!! (Request::is('cuentas-pagar*') ? 'class="active"' : '') !!} >
+            <a href="{{ URL::to('cuentas-pagar') }}">
+              <i class="menu-icon fas fa-receipt"></i>
+              <span>Cuentas por Pagar</span>
+            </a>
+          </li>
+
         </ul>
         <!-- / .navigation -->
       </div>
