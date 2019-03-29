@@ -140,7 +140,8 @@
           <li  {!! (Request::is('tiposClientes*') ||
                     Request::is('clientes*') ||
                     Request::is('proveedores*') ||
-                    Request::is('proyectos*') ||
+                    Request::is('proyectos') ||
+                    Request::is('proyectos/*') ||
                     Request::is('subproyectos*') ||
                     Request::is('categorias*') ||
                     Request::is('productos*')

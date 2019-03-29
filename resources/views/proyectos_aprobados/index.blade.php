@@ -22,7 +22,7 @@
     <div class="col-lg-12">
       <div class="panel">
         <div class="panel-heading">
-          <h3 class="panel-title text-right">
+          <h3 class="panel-title">
             <span class="p-10">Lista de Proyectos</span>
           </h3>
         </div>
