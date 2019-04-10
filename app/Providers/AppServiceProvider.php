@@ -30,6 +30,10 @@ class AppServiceProvider extends ServiceProvider
           return "<?php echo number_format($expression, 2); ?>";
       });
 
+      Blade::directive('text_capitalize', function ($expression) {
+          return "<?php echo ucfirst(mb_strtolower($expression, 'UTF-8')); ?>";
+      });
+
       Route::resourceVerbs([
         'create' => 'crear',
         'edit' => 'editar',

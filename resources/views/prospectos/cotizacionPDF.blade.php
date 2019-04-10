@@ -282,11 +282,11 @@
     </div>
 
     <div class="row margTop10">
-      <div class="col-lg-6">
+      <div class="col-lg-5">
         <p>Cotizacion # {{$cotizacion->id}}</p>
         <p>Fecha: {{$cotizacion->fechaPDF}}</p>
       </div>
-      <div class="col-lg-6">
+      <div class="col-lg-7">
         <p class="text-uppercase text-right">Intercorp Contract Resources, s.a. de c.v.</p>
         <p class="text-uppercase text-right">Av. Moliere 61, Col. Polanco III Sección, CDMX, 11540, Mexico</p>
         <p class="text-right font-small">T. +52 (55) 5557-5214 intercorp.com.mx</p>
@@ -346,7 +346,7 @@
                     <td class="text-uppercase">{{$cotizacion->moneda}}</td>
                   </tr>
                   <tr>
-                    <td>Condiciones:</td>
+                    <td style="vertical-align:top;">Condiciones:</td>
                     <td class="text-uppercase">{{$cotizacion->condiciones->nombre}}</td>
                   </tr>
                 </table>
@@ -387,14 +387,18 @@
                 <table style="width:100%; margin:0;">
                   <tr>
                     <td>
-                      <p class="text-uppercase">{{$entrada->producto->proveedor->empresa}}</p>
-                      <p class="text-uppercase">{{ $entrada->producto->{$nombre} }}</p>
                       @foreach($entrada->descripciones as $descripcion)
                         <p>
-                          <span style="text-transform: lowercase">{{ $descripcion->{$nombre} }}: </span>
+                          <span>@text_capitalize($descripcion->{$nombre}): </span>
                           <span class="text-uppercase">{{$descripcion->valor}}</span>
                         </p>
                       @endforeach
+                      @if($entrada->observacion)
+                        <p>
+                          <span>@if($nombre=='nombre') Observaciones: @else Remarks: @endif</span>
+                          <span class="text-uppercase">{{$entrada->observacion}}</span>
+                        </p>
+                      @endif
                     </td>
                     <td style="width:100px;">
                       @if($entrada->foto)
@@ -446,19 +450,18 @@
               {!! $cotizacion->observaciones !!}
             </td>
             <td class="text-center" style="width:30%; text-transform: none;">
-              <p style="margin-top:1em;">{{$cotizacion->user->name}}</p>
-              <p style="margin-bottom:1.5em;">Intercorp Contract Resources</p>
-              <img style="width:200px; height:auto;" src="{{$cotizacion->user->firma}}" alt=" " />
               @if($cotizacion->user->id==2) <!-- "Abraham Shveid" -->
-              <hr style="border:1px solid #000; width:70%; margin-top:-15px; margin-bottom:0px;" />
-              <p style="font-size:10px; position:relative; top:-10px;">ATENCIÓN DEL CLIENTE</p>
+              <img style="margin-top:1em; width:200px; height:auto;" src="{{$cotizacion->user->firma}}" alt=" " />
+              <hr style="border:0.5px solid #000; width:70%; margin-top:-5px; margin-bottom:0px;" />
               @elseif($cotizacion->user->id==5) <!-- "Elena Salido" -->
-              <hr style="border:1px solid #000; width:70%; margin-top:-10px; margin-bottom:0px;" />
-              <p style="font-size:10px; position:relative; top:-5px;">ATENCIÓN DEL CLIENTE</p>
+              <img style="margin-top:0.5em; width:200px; height:auto;" src="{{$cotizacion->user->firma}}" alt=" " />
+              <hr style="border:0.5px solid #000; width:70%; margin-top:-5px; margin-bottom:0px;" />
               @else
-              <hr style="border:1px solid #000; width:70%; margin-top:-25px; margin-bottom:0px;" />
-              <p style="font-size:10px; position:relative; top:-20px;">ATENCIÓN DEL CLIENTE</p>
+              <img style="margin-top:1.5em; width:200px; height:auto;" src="{{$cotizacion->user->firma}}" alt=" " />
+              <hr style="border:0.5px solid #000; width:70%; margin-top:-10px; margin-bottom:0px;" />
               @endif
+              <p style="">{{$cotizacion->user->name}}</p>
+              <p style="">Intercorp Contract Resources</p>
             </td>
           </tr>
         </table>

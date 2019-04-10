@@ -523,7 +523,8 @@ class ProspectosController extends Controller
       $cotizacion = ProspectoCotizacion::with('prospecto.cliente', 'condiciones',
       'entradas.producto.categoria', 'entradas.producto.proveedor',
       'entradas.descripciones', 'user')->find($request->cotizacion_id);
-      if($cotizacion->user->firma) $cotizacion->user->firma = storage_path('app/public/'.$cotizacion->user->firma);
+      if($cotizacion->user->firma)
+        $cotizacion->user->firma = storage_path('app/public/'.$cotizacion->user->firma);
       else $cotizacion->user->firma = public_path('images/firma_vacia.png');
 
       $url = 'cotizaciones/'.$cotizacion->id.'/cotizacion_'.$cotizacion->id.'.pdf';

@@ -74,12 +74,14 @@ class UsuariosController extends Controller
       $usuario = User::create($create);
       $usuario->assignRole($rol);
 
-      $firma = Storage::putFileAs(
-        'public/usuarios/'.$usuario->id, $request->firma,
-        'firma.'.$request->firma->guessExtension()
-      );
-      $firma = str_replace('public/', '', $firma);
-      $usuario->update(['firma'=>$firma]);
+      if(!is_null($request->firma)){
+        $firma = Storage::putFileAs(
+          'public/usuarios/'.$usuario->id, $request->firma,
+          'firma.'.$request->firma->guessExtension()
+        );
+        $firma = str_replace('public/', '', $firma);
+        $usuario->update(['firma'=>$firma]);
+      }
 
       return response()->json(["success"=>true,"error"=>false], 200);
     }
