@@ -41,7 +41,7 @@
             <div class="row">
               <div class="col-md-12">
                 <div class="form-group">
-                  <label class="control-label">Nombre</label>
+                  <label class="control-label">Nombre de Proyecto</label>
                   <span class="form-control">{{$prospecto->nombre}}</span>
                 </div>
               </div>

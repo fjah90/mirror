@@ -44,7 +44,7 @@
                 </div>
                 <div class="col-md-8">
                   <div class="form-group">
-                    <label class="control-label">Nombre</label>
+                    <label class="control-label">Nombre de Proyecto</label>
                     <input name="nombre" class="form-control" v-model="prospecto.nombre" required />
                   </div>
                 </div>

@@ -36,7 +36,7 @@
                 <tr>
                   <th>ID</th>
                   <th>Cliente</th>
-                  <th>Nombre</th>
+                  <th>Nombre de Proyecto</th>
                   <th>Ultima Actividad</th>
                   <th>Tipo</th>
                   <th>Próxima Actividad</th>
