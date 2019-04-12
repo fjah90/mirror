@@ -74,7 +74,15 @@
                           <span>{{$index+1}}.- {{$ofrecido->nombre}}</span><br />
                           @endforeach
                         </td>
+                        @if($actividad->tipo->id==4) <!-- Cotización enviada -->
+                        <td>
+                          <a class="btn btn-warning" title="PDF" href="{{$actividad->descripcion}}" target="_blank">
+                            <i class="far fa-file-pdf"></i>
+                          </a>
+                        </td>
+                        @else
                         <td>{{$actividad->descripcion}}</td>
+                        @endif
                       </tr>
                       @endforeach
                     </tbody>

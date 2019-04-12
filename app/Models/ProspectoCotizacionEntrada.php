@@ -10,13 +10,24 @@ class ProspectoCotizacionEntrada extends Model
     protected $table = 'prospectos_cotizaciones_entradas';
 
     protected $fillable = ['cotizacion_id','producto_id','cantidad','medida',
-    'precio','importe','foto','observacion'];
+    'precio','importe','fotos','observaciones'];
 
     protected $casts = [
       'cantidad' => 'float',
       'precio' => 'float',
       'importe' => 'float'
     ];
+
+    public function getFotosAttribute($value)
+    {
+      if($value=="") return [];
+      $fotos = explode('|', $value);
+      foreach ($fotos as &$foto) {
+        $foto = asset('storage/'.$foto);
+      }
+
+      return $fotos;
+    }
 
     /**
      * ---------------------------------------------------------------------------

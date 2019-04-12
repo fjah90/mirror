@@ -254,7 +254,8 @@ class ProspectosController extends Controller
         'condicion' => 'required',
         'iva' => 'required',
         'entradas' => 'required|min:1',
-        'entradas.foto' => 'image',
+        'entradas.fotos' => 'array',
+        'entradas.fotos.*' => 'image|mimes:jpg,jpeg,png',
         'subtotal' => 'required',
         'total' => 'required'
       ]);
@@ -301,21 +302,26 @@ class ProspectosController extends Controller
       foreach ($request->entradas as $index => $entrada) {
         $producto = Producto::find($entrada['producto_id']);
 
-        if(isset($entrada['foto']) && $entrada['foto']){
-          $foto = Storage::putFileAs(
-            'public/cotizaciones/'.$cotizacion->id,
-            $entrada['foto'],
-            'entrada_'.($index+1).'.'.$entrada['foto']->guessExtension()
-          );
-          $foto = str_replace('public/', '', $foto);
-          $entrada['foto'] = $foto;
+        if(count($entrada['fotos'])){//hay fotos
+          $fotos = ""; $separador = "";
+          foreach ($entrada['fotos'] as $foto_index => $foto) {
+            $ruta = Storage::putFileAs(
+              'public/cotizaciones/'.$cotizacion->id, $foto,
+              'entrada_' .($index+1). '_foto_' .($foto_index+1). '.' .$foto->guessExtension()
+            );
+            $ruta = str_replace('public/', '', $ruta);
+            $fotos.= $separador.$ruta;
+            $separador = "|";
+          }
+          $entrada['fotos'] = $fotos;
         }
         else if($producto->foto){
           $extencion = pathinfo(asset($producto->foto), PATHINFO_EXTENSION);
-          $path = "cotizaciones/".$cotizacion->id."/entrada_".($index+1).".".$extencion;
-          Storage::copy("public/".$producto->foto, "public/$path");
-          $entrada['foto'] = $path;
+          $ruta = "cotizaciones/".$cotizacion->id."/entrada_".($index+1)."_foto_1.".$extencion;
+          Storage::copy("public/".$producto->foto, "public/$ruta");
+          $entrada['fotos'] = $ruta;
         }
+        else $entrada['fotos'] = "";
         $entrada['cotizacion_id'] = $cotizacion->id;
         $modelo_entrada = ProspectoCotizacionEntrada::create($entrada);
 
@@ -331,9 +337,6 @@ class ProspectosController extends Controller
 
       $cotizacion->load('prospecto.cliente', 'condiciones', 'entradas.producto.categoria',
       'entradas.producto.proveedor', 'entradas.descripciones', 'user');
-      foreach ($cotizacion->entradas as $entrada) {
-        if($entrada->foto) $entrada->foto = asset('storage/'.$entrada->foto);
-      }
       if($cotizacion->user->firma) $cotizacion->user->firma = storage_path('app/public/'.$cotizacion->user->firma);
       else $cotizacion->user->firma = public_path('images/firma_vacia.png');
 
@@ -381,7 +384,8 @@ class ProspectosController extends Controller
       $cotizacion = ProspectoCotizacion::with('entradas')->findOrFail($request->cotizacion_id);
       $cotizacion_id = $cotizacion->id;
       $email = $request->email;
-      $pdf = file_get_contents(asset('storage/'.$cotizacion->archivo));
+      $pdf_link = asset('storage/'.$cotizacion->archivo);
+      $pdf = file_get_contents($pdf_link);
       $user = auth()->user();
 
       Mail::send('prospectos.enviarCotizacion', ['mensaje' => $request->mensaje], function ($message)
@@ -395,16 +399,17 @@ class ProspectosController extends Controller
 
       //generar actividad de envio de cotizacion
       $prospecto = Prospecto::with('proxima_actividad')->find($cotizacion->prospecto_id);
-      if($prospecto->proxima_actividad->tipo_id == 4){//Mandar Cotizacion
+      if($prospecto->proxima_actividad->tipo_id == 4){//Cotización enviada
         $nueva = 3; //Email (Seguimiento)
       }
       else $nueva = $prospecto->proxima_actividad->tipo_id;
 
-      $descripcion = "Enviada Cotización ".$cotizacion->id." a ".(implode(', ',$email));
+      $descripcion = $pdf_link;
 
       //actualizar proxima actividad
       $prospecto->proxima_actividad->update([
         'tipo_id' => 4,
+        'fecha' => date('d/m/Y'),
         'descripcion' => $descripcion,
         'realizada' => 1
       ]);
@@ -533,10 +538,6 @@ class ProspectosController extends Controller
       list($ano,$mes,$dia) = explode('-', $cotizacion->fecha);
       $mes = $meses[+$mes-1];
       $cotizacion->fechaPDF = "$mes $dia, $ano";
-
-      foreach ($cotizacion->entradas as $entrada) {
-        if($entrada->foto) $entrada->foto = asset('storage/'.$entrada->foto);
-      }
 
       $nombre = ($cotizacion->idioma=='español')?"nombre":"name";
 

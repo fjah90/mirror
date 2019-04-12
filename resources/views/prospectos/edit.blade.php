@@ -80,7 +80,12 @@
                             <span>@{{index+1}}.- @{{ofrecido.nombre}}</span><br />
                           </template>
                         </td>
-                        <td>@{{actividad.descripcion}}</td>
+                        <td v-if="actividad.tipo.id==4"><!-- Cotización enviada -->
+                          <a class="btn btn-warning" title="PDF" :href="actividad.descripcion" target="_blank">
+                            <i class="far fa-file-pdf"></i>
+                          </a>
+                        </td>
+                        <td v-else>@{{actividad.descripcion}}</td>
                       </tr>
                     </tbody>
                   </table>

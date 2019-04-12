@@ -386,7 +386,7 @@
               <td>
                 <table style="width:100%; margin:0;">
                   <tr>
-                    <td>
+                    <td style="vertical-align: top;">
                       @foreach($entrada->descripciones as $descripcion)
                         <p>
                           <span>@text_capitalize($descripcion->{$nombre}): </span>
@@ -401,9 +401,10 @@
                       @endif
                     </td>
                     <td style="width:100px;">
-                      @if($entrada->foto)
-                      <img src="{{$entrada->foto}}" alt="foto" style="width:100px;" />
-                      @endif
+                      @foreach($entrada->fotos as $foto)
+                      <img src="{{$foto}}" alt="foto" style="width:100px; height:100px;" />
+                      <br />
+                      @endforeach
                     </td>
                   </tr>
                 </table>

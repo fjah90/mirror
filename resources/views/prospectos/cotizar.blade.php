@@ -271,18 +271,18 @@
                 </div>
               </div>
               <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-12">
                   <div class="form-group">
                     <label class="control-label" style="display:block;">Foto</label>
-                    <div class="kv-avatar">
-                      <div class="file-loading">
-                        <input id="foto" name="foto" type="file" ref="foto" @change="fijarFoto()" />
-                      </div>
+                    <div class="file-loading">
+                      <input id="fotos" name="fotos[]" type="file" ref="fotos" multiple />
                     </div>
-                    <div id="foto-file-errors"></div>
+                    <div id="fotos-file-errors"></div>
                   </div>
                 </div>
-                <div class="col-md-offset-4 col-md-4 text-right">
+              </div>
+              <div class="row">
+                <div class="col-md-4">
                   <div class="form-group" style="margin-top:25px;">
                     <button type="submit" class="btn btn-info">
                       <i class="fas fa-plus"></i>
@@ -387,7 +387,8 @@
                 <div class="form-group">
                   <button type="button" class="btn btn-primary"
                   @click="guardar()" :disabled="cargando">
-                  <i class="fas fa-save"></i>
+                  <i v-if="!cargando" class="fas fa-save"></i>
+                  <i v-else class="fas fa-refresh animation-rotate"></i>
                   Guardar Cotización
                 </button>
                 </div>
@@ -500,6 +501,14 @@
 {{-- footer_scripts --}}
 @section('footer_scripts')
 <script type="text/javascript">
+// Used for creating a new FileList in a round-about way
+function FileListItem(a) {
+  a = [].slice.call(Array.isArray(a) ? a : arguments)
+  for (var c, b = c = a.length, d = !0; b-- && d;) d = a[b] instanceof File
+  if (!d) throw new TypeError("expected argument to FileList is File or array of File objects")
+  for (b = (new ClipboardEvent("")).clipboardData || new DataTransfer; c--;) b.items.add(a[c])
+  return b.files
+}
 const app = new Vue({
   el: '#content',
   data: {
@@ -542,8 +551,7 @@ const app = new Vue({
       importe: 0,
       descripciones: [],
       observacion: "",
-      foto: "",
-      foto_src: ""
+      fotos: [],
     },
     enviar: {
       cotizacion_id: 0,
@@ -551,7 +559,7 @@ const app = new Vue({
       emailOpciones: [
         {id: "{{$prospecto->cliente->email}}", text:"{{$prospecto->cliente->email}}"}
       ],
-      mensaje: "Buen día.\n\nLe envió cotización para su consideración.\n\nCarla Aguilar.\nAtención del Cliente\nIntercorp Contract Resources"
+      mensaje: "Buen día.\n\nLe envió cotización para su consideración.\n\n{{auth()->user()->name}}.\nAtención del Cliente\nIntercorp Contract Resources"
     },
     aceptar: {
       cotizacion_id: 0,
@@ -573,20 +581,18 @@ const app = new Vue({
     },
   },
   mounted(){
-    $("#foto").fileinput({
+    $("#fotos").fileinput({
+      language: 'es',
       overwriteInitial: true,
       maxFileSize: 5000,
-      showClose: false,
       showCaption: false,
       showBrowse: false,
+      showRemove: false,
+      showUpload: false,
       browseOnZoneClick: true,
-      removeLabel: '',
-      removeIcon: '<i class="glyphicon glyphicon-remove"></i>',
-      removeTitle: 'Quitar Foto',
-      defaultPreviewContent: '<img src="{{asset('images/camara.png')}}" alt="foto"><h6 class="text-muted">Click para seleccionar</h6>',
-      layoutTemplates: {main2: '{preview} {remove} {browse}'},
-      allowedFileExtensions: ["jpg", "jpeg", "png"],
-      elErrorContainer: '#foto-file-errors'
+      defaultPreviewContent: '<img src="{{asset('images/camara.png')}}" style="width:200px; height:auto;" alt="foto"><h6>Click para seleccionar</h6>',
+      // allowedFileExtensions: ["jpg", "jpeg", "png"],
+      elErrorContainer: '#fotos-file-errors'
     });
     $("#comprobante").fileinput({
       language: 'es',
@@ -598,9 +604,6 @@ const app = new Vue({
     });
   },
   methods: {
-    fijarFoto(){
-      this.entrada.foto = this.$refs['foto'].files[0];
-    },
     fijarComprobante(){
       this.aceptar.comprobante = this.$refs['comprobante'].files[0];
     },
@@ -633,8 +636,7 @@ const app = new Vue({
       }, this);
 
       if(prod.foto){
-        $("#foto").siblings('button').click();
-        this.entrada.foto_src = prod.foto;
+        $("button.fileinput-remove").click();
         $("div.file-default-preview img")[0].src = this.entrada.foto_src;
       }
 
@@ -650,8 +652,12 @@ const app = new Vue({
         return false;
       }
 
-      var fotoPrev = $("img.file-preview-image");
-      if(fotoPrev[0]) this.entrada.foto_src = fotoPrev[0].src;
+      if(this.$refs['fotos'].files.length){//hay fotos
+        this.entrada.fotos = [];
+        for (var i=0; i<this.$refs['fotos'].files.length; i++)
+        this.entrada.fotos.push(this.$refs['fotos'].files[i]);
+      }
+
       this.entrada.importe = this.entrada.cantidad * this.entrada.precio;
       this.cotizacion.subtotal+= this.entrada.importe;
       this.cotizacion.entradas.push(this.entrada);
@@ -663,24 +669,25 @@ const app = new Vue({
         importe: 0,
         descripciones: [],
         observacion: "",
-        foto: "",
-        foto_src: ""
+        fotos: []
       };
-      $("#foto").siblings('button').click();
+      $("button.fileinput-remove").click();
     },
     editarEntrada(entrada, index){
       this.cotizacion.subtotal-= entrada.importe;
       this.cotizacion.entradas.splice(index, 1);
       this.entrada = entrada;
 
-      $("#foto").siblings('button').click();
-      if(this.entrada.foto_src!="")
-        $("div.file-default-preview img")[0].src = this.entrada.foto_src;
+      $("button.fileinput-remove").click();
+      if(this.entrada.fotos.length){//hay fotos
+        this.$refs['fotos'].files =  FileListItem(this.entrada.fotos);
+        this.$refs['fotos'].dispatchEvent(new Event('change', { 'bubbles': true }));
+      }
     },
     removerEntrada(entrada, index){
       this.cotizacion.subtotal-= entrada.importe;
       this.cotizacion.entradas.splice(index, 1);
-      $("#foto").siblings('button').click();
+      $("button.fileinput-remove").click();
     },
     guardar(){
       var cotizacion = $.extend(true, {}, this.cotizacion);
