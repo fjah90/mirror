@@ -132,7 +132,7 @@
                 </div>
               </div>
               <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-3">
                   <div class="form-group">
                     <label class="control-label">Numero Documento</label>
                     <input type="text" name="documento" class="form-control"
@@ -140,7 +140,16 @@
                      />
                   </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label class="control-label">Porcentaje Factura</label>
+                    <input type="number" name="porcentaje" class="form-control"
+                      min="0.01" max="100" step="0.01" v-model="factura.porcentaje"
+                      @change="fijarMontoFactura()"
+                     />
+                  </div>
+                </div>
+                <div class="col-md-3">
                   <div class="form-group">
                     <label class="control-label">Monto Factura</label>
                     <input type="number" name="monto" class="form-control"
@@ -148,7 +157,7 @@
                      />
                   </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-3">
                   <div class="form-group">
                     <label class="control-label">Fecha Vencimiento</label>
                     <br />
@@ -291,6 +300,7 @@ const app = new Vue({
     factura: {
       cuenta_id: {{$cuenta->id}},
       documento: '',
+      porcentaje: '',
       monto: '',
       vencimiento: '',
       pdf: '',
@@ -347,6 +357,9 @@ const app = new Vue({
     fijarArchivo(campo){
       if(campo=='comprobante') this.pago.comprobante = this.$refs['comprobante'].files[0];
       else this.factura[campo] = this.$refs[campo].files[0];
+    },
+    fijarMontoFactura(){
+      this.factura.monto = this.cuenta.total * (this.factura.porcentaje/100);
     },
     agregarFactura(){
       var formData = objectToFormData(this.factura, {indices:true});
