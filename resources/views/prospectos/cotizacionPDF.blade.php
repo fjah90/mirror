@@ -393,10 +393,10 @@
                           <span class="text-uppercase">{{$descripcion->valor}}</span>
                         </p>
                       @endforeach
-                      @if($entrada->observacion)
+                      @if($entrada->observaciones)
                         <p>
                           <span>@if($nombre=='nombre') Observaciones: @else Remarks: @endif</span>
-                          <span class="text-uppercase">{{$entrada->observacion}}</span>
+                          {!! $entrada->observaciones !!}
                         </p>
                       @endif
                     </td>
@@ -447,7 +447,7 @@
         <table style="margin: 0px; width:100%;">
           <tr class="font-small">
             <td style="width:70%; text-transform: none;">
-              <p><strong>Observaciones:</strong></p>
+              <p><strong>@if($nombre=='nombre') Observaciones: @else Remarks: @endif</strong></p>
               {!! $cotizacion->observaciones !!}
             </td>
             <td class="text-center" style="width:30%; text-transform: none;">

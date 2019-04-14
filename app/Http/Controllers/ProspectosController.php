@@ -302,7 +302,7 @@ class ProspectosController extends Controller
       foreach ($request->entradas as $index => $entrada) {
         $producto = Producto::find($entrada['producto_id']);
 
-        if(count($entrada['fotos'])){//hay fotos
+        if(!is_null($entrada['fotos'][0])){//hay fotos
           $fotos = ""; $separador = "";
           foreach ($entrada['fotos'] as $foto_index => $foto) {
             $ruta = Storage::putFileAs(
@@ -323,6 +323,12 @@ class ProspectosController extends Controller
         }
         else $entrada['fotos'] = "";
         $entrada['cotizacion_id'] = $cotizacion->id;
+        $observaciones = "<ul>";
+        foreach ($entrada['observaciones'] as $obs) {
+          $observaciones.="<li>$obs</li>";
+        }
+        $observaciones.= "</ul>";
+        $entrada['observaciones'] = ($observaciones=="<ul><li></li></ul>")?"":$observaciones;
         $modelo_entrada = ProspectoCotizacionEntrada::create($entrada);
 
         foreach ($entrada['descripciones'] as $descripcion) {

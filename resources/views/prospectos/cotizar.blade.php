@@ -264,9 +264,20 @@
               <div class="row">
                 <div class="col-md-12">
                   <div class="form-group">
-                    <label class="control-label">Observación</label>
-                    <textarea name="name" rows="1" cols="80" v-model="entrada.observacion" class="form-control">
-                    </textarea>
+                    <label class="control-label">Observaciónes Producto</label>
+                    <p v-for="observacion in observaciones_productos">
+                      <i v-if="observacion.activa" class="glyphicon glyphicon-check" @click="quitarObservacionProducto(observacion)"></i>
+                      <i v-else class="glyphicon glyphicon-unchecked" @click="agregarObservacionProducto(observacion)"></i>
+                      @{{observacion.texto}}
+                    </p>
+                    <div class="input-group">
+                      <input type="text" class="form-control" placeholder="Nueva Observación" v-model="nuevaObservacionProducto" />
+                      <span class="input-group-btn">
+                        <button class="btn btn-default" type="button" @click="crearObservacionProducto()">
+                          <i class="fas fa-plus"></i>
+                        </button>
+                      </span>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -365,7 +376,7 @@
             <div class="row">
               <div class="col-md-12">
                 <div class="form-group">
-                  <label class="control-label">Observaciónes</label>
+                  <label class="control-label">Observaciónes Cotización</label>
                   <p v-for="observacion in observaciones">
                     <i class="glyphicon glyphicon-check" v-if="observacion.activa" @click="quitarObservacion(observacion)"></i>
                     <i class="glyphicon glyphicon-unchecked" v-else @click="agregarObservacion(observacion)"></i>
@@ -525,6 +536,8 @@ const app = new Vue({
       {activa:false, texto:'No se consideran fianzas; de requerirlas séran con cargo al cliente.'},
     ],
     nuevaObservacion: "",
+    observaciones_productos: [],
+    nuevaObservacionProducto: "",
     cotizacion: {
       prospecto_id: {{$prospecto->id}},
       condicion: {
@@ -550,7 +563,7 @@ const app = new Vue({
       precio: 0,
       importe: 0,
       descripciones: [],
-      observacion: "",
+      observaciones: [],
       fotos: [],
     },
     enviar: {
@@ -624,6 +637,23 @@ const app = new Vue({
       this.agregarObservacion(this.observaciones[this.observaciones.length - 1]);
       this.nuevaObservacion = "";
     },
+    agregarObservacionProducto(observacion){
+      this.entrada.observaciones.push(observacion.texto);
+      observacion.activa = true;
+    },
+    quitarObservacionProducto(observacion){
+      var index = this.entrada.observaciones.findIndex(function(obs){
+        return observacion.texto == obs;
+      });
+      this.entrada.observaciones.splice(index, 1);
+      observacion.activa = false;
+    },
+    crearObservacionProducto(){
+      if(this.nuevaObservacionProducto=="") return false;
+      this.observaciones_productos.push({activa:false, texto: this.nuevaObservacionProducto});
+      this.agregarObservacionProducto(this.observaciones_productos[this.observaciones_productos.length - 1]);
+      this.nuevaObservacionProducto = "";
+    },
     seleccionarProduco(prod){
       this.entrada.producto = prod;
       this.entrada.descripciones = [];
@@ -668,10 +698,13 @@ const app = new Vue({
         precio: 0,
         importe: 0,
         descripciones: [],
-        observacion: "",
+        observaciones: [],
         fotos: []
       };
       $("button.fileinput-remove").click();
+      this.observaciones_productos.forEach(function(observacion){
+        observacion.activa = false;
+      });
     },
     editarEntrada(entrada, index){
       this.cotizacion.subtotal-= entrada.importe;
@@ -683,6 +716,14 @@ const app = new Vue({
         this.$refs['fotos'].files =  FileListItem(this.entrada.fotos);
         this.$refs['fotos'].dispatchEvent(new Event('change', { 'bubbles': true }));
       }
+
+      this.observaciones_productos.forEach(function(observacion){
+        var index = this.entrada.observaciones.findIndex(function(obs){
+          return observacion.texto == obs;
+        });
+        if(index==-1) observacion.activa = false;
+        else observacion.activa = true;
+      }, this);
     },
     removerEntrada(entrada, index){
       this.cotizacion.subtotal-= entrada.importe;
@@ -694,8 +735,6 @@ const app = new Vue({
       cotizacion.entradas.forEach(function(entrada){
         entrada.producto_id = entrada.producto.id;
         delete entrada.producto;
-        if(entrada.foto_src=="") delete entrada.foto;
-        delete entrada.foto_src;
       });
       var formData = objectToFormData(cotizacion, {indices:true});
 
