@@ -102,11 +102,11 @@
                         <td>@{{factura.pendiente | formatoMoneda}}</td>
                         <td>@{{factura.vencimiento_formated}}</td>
                         <td class="text-right">
-                          <a class="btn btn-warning" title="PDF" :href="factura.pdf"
+                          <a v-if="factura.pdf" class="btn btn-warning" title="PDF" :href="factura.pdf"
                             :download="'factura '+factura.documento+'.pdf'">
                             <i class="far fa-file-pdf"></i>
                           </a>
-                          <a class="btn btn-default" title="XML" :href="factura.xml"
+                          <a v-if="factura.xml" class="btn btn-default" title="XML" :href="factura.xml"
                             :download="'factura '+factura.documento+'.xml'">
                             <i class="far fa-file-excel"></i>
                           </a>
@@ -130,7 +130,7 @@
                 </div>
               </div>
               <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-3">
                   <div class="form-group">
                     <label class="control-label">Numero Documento</label>
                     <input type="text" name="documento" class="form-control"
@@ -138,7 +138,7 @@
                      />
                   </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-3">
                   <div class="form-group">
                     <label class="control-label">Monto Factura</label>
                     <input type="number" name="monto" class="form-control"
@@ -146,7 +146,32 @@
                      />
                   </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label class="control-label">Fecha Inicio</label>
+                    <br />
+                    <dropdown style="width:100%;">
+                      <div class="input-group" >
+                        <div class="input-group-btn">
+                          <btn class="dropdown-toggle" style="background-color:#fff;">
+                            <i class="fas fa-calendar"></i>
+                          </btn>
+                        </div>
+                        <input class="form-control" type="text" name="inicio"
+                          v-model="factura.inicio" placeholder="DD/MM/YYYY"
+                          readonly
+                        />
+                      </div>
+                      <template slot="dropdown">
+                        <li>
+                          <date-picker :locale="locale" :today-btn="false" :clear-btn="false"
+                          format="dd/MM/yyyy" :date-parser="dateParser" v-model="factura.inicio"/>
+                        </li>
+                      </template>
+                    </dropdown>
+                  </div>
+                </div>
+                <div class="col-md-3">
                   <div class="form-group">
                     <label class="control-label">Fecha Vencimiento</label>
                     <span class="form-control">@{{factura.vencimiento}}</span>
@@ -158,7 +183,7 @@
                   <div class="form-group">
                     <label class="control-label">Factura PDF</label>
                     <div class="file-loading">
-                      <input id="pdf" name="pdf" type="file" ref="pdf" @change="fijarArchivo('pdf')" required />
+                      <input id="pdf" name="pdf" type="file" ref="pdf" @change="fijarArchivo('pdf')" />
                     </div>
                     <div id="pdf-file-errors"></div>
                   </div>
@@ -167,7 +192,7 @@
                   <div class="form-group">
                     <label class="control-label">Factura XML</label>
                     <div class="file-loading">
-                      <input id="xml" name="xml" type="file" ref="xml" @change="fijarArchivo('xml')" required />
+                      <input id="xml" name="xml" type="file" ref="xml" @change="fijarArchivo('xml')" />
                     </div>
                     <div id="xml-file-errors"></div>
                   </div>
@@ -271,6 +296,7 @@ const app = new Vue({
       cuenta_id: {{$cuenta->id}},
       documento: '',
       monto: '',
+      inicio: moment().format('DD/MM/YYYY'),
       vencimiento: moment().add({{$cuenta->dias_credito}}, 'days').format('DD/MM/YYYY'),
       pdf: '',
       xml: ''
@@ -319,6 +345,11 @@ const app = new Vue({
       elErrorContainer: '#comprobante-file-errors',
     });
   },
+  watch: {
+    'factura.inicio': function(newVal, oldVal){
+      this.factura.vencimiento = moment(this.factura.inicio, 'DD/MM/YYYY').add({{$cuenta->dias_credito}}, 'days').format('DD/MM/YYYY');
+		}
+  },
   methods: {
     dateParser(value){
 			return moment(value, 'DD/MM/YYYY').toDate().getTime();
@@ -341,6 +372,7 @@ const app = new Vue({
           cuenta_id: {{$cuenta->id}},
           documento: '',
           monto: '',
+          inicio: moment().format('DD/MM/YYYY'),
           vencimiento: moment().add({{$cuenta->dias_credito}}, 'days').format('DD/MM/YYYY'),
           pdf: '',
           xml: ''

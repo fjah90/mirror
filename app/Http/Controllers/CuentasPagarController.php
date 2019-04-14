@@ -54,8 +54,8 @@ class CuentasPagarController extends Controller
     {
       $cuenta->load('facturas.pagos');
       foreach ($cuenta->facturas as $factura) {
-        $factura->pdf = asset('storage/'.$factura->pdf);
-        $factura->xml = asset('storage/'.$factura->xml);
+        $factura->pdf = ($factura->pdf)?asset('storage/'.$factura->pdf):"";
+        $factura->xml = ($factura->xml)?asset('storage/'.$factura->xml):"";
 
         foreach ($factura->pagos as $pago) {
           if($pago->comprobante) $pago->comprobante = asset('storage/'.$pago->comprobante);
@@ -79,8 +79,8 @@ class CuentasPagarController extends Controller
         'documento' => 'required',
         'monto' => 'required|numeric',
         'vencimiento' => 'required|date_format:d/m/Y',
-        'pdf' => 'required|file|mimes:pdf',
-        'xml' => 'required|file|mimes:xml',
+        'pdf' => 'nullable|file|mimes:pdf',
+        'xml' => 'nullable|file|mimes:xml',
       ]);
 
       if ($validator->fails()) {
@@ -99,25 +99,25 @@ class CuentasPagarController extends Controller
 
       $create = $request->except(['pdf','xml']);
       $create['pendiente'] = $create['monto'];
-      $pdf = Storage::putFileAs(
-        'public/cuentas-pagar/'.$cuenta->id,
-        $request->pdf,
-        $request->documento.'.pdf'
-      );
-      $pdf = str_replace('public/', '', $pdf);
-      $create['pdf'] = $pdf;
-      $xml = Storage::putFileAs(
-        'public/cuentas-pagar/'.$cuenta->id,
-        $request->xml,
-        $request->documento.'.xml'
-      );
-      $xml = str_replace('public/', '', $xml);
-      $create['xml'] = $xml;
+      if(!is_null($request->pdf)){
+        $pdf = Storage::putFileAs('public/cuentas-pagar/'.$cuenta->id,
+          $request->pdf, $request->documento.'.pdf'
+        );
+        $pdf = str_replace('public/', '', $pdf);
+        $create['pdf'] = $pdf;
+      }
+      if(!is_null($request->xml)){
+        $xml = Storage::putFileAs('public/cuentas-pagar/'.$cuenta->id,
+          $request->xml, $request->documento.'.xml'
+        );
+        $xml = str_replace('public/', '', $xml);
+        $create['xml'] = $xml;
+      }
 
       $factura = FacturaCuentaPagar::create($create);
       $factura->pagos = [];
-      $factura->pdf = asset('storage/'.$factura->pdf);
-      $factura->xml = asset('storage/'.$factura->xml);
+      $factura->pdf = ($factura->pdf)?asset('storage/'.$factura->pdf):"";
+      $factura->xml = ($factura->xml)?asset('storage/'.$factura->xml):"";
       $cuenta->facturado = bcadd($cuenta->facturado, $factura->monto, 2);
       $cuenta->save();
 
