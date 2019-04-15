@@ -394,7 +394,7 @@ class ProspectosController extends Controller
       $pdf = file_get_contents($pdf_link);
       $user = auth()->user();
 
-      Mail::send('prospectos.enviarCotizacion', ['mensaje' => $request->mensaje], function ($message)
+      Mail::send('email', ['mensaje' => $request->mensaje], function ($message)
       use ($cotizacion_id, $email, $pdf, $user){
         $message->to($email)
                 ->cc('abraham@intercorp.mx')

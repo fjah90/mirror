@@ -11,6 +11,7 @@ use App\Models\Proveedor;
 use App\Models\Producto;
 use App\Models\OrdenProceso;
 use App\Models\CuentaPagar;
+use Mail;
 
 class OrdenesCompraController extends Controller
 {
@@ -123,6 +124,8 @@ class OrdenesCompraController extends Controller
       }
       $orden->update(['status'=>'Por Autorizar']);
 
+      $this->avisarOrdenPorAprobar($orden);
+
       return response()->json(['success' => true, "error" => false], 200);
     }
 
@@ -207,6 +210,10 @@ class OrdenesCompraController extends Controller
         //crear nueva entrada
         $entrada['orden_id'] = $orden->id;
         OrdenCompraEntrada::create($entrada);
+      }
+
+      if($orden->status=='Rechazada'){
+        $this->avisarOrdenPorAprobar($orden);
       }
 
       return response()->json(['success' => true, "error" => false], 200);
@@ -299,7 +306,37 @@ class OrdenesCompraController extends Controller
         'motivo_rechazo'=>$request->motivo
       ]);
 
+      $this->avisarOrdenRechazada($orden);
+
       return response()->json(['success' => true, "error" => false], 200);
+    }
+
+    /*
+     * Envia mensaje de aviso de nueva orden por aprobar por correo a
+     * abraham@intercorp.m<x
+     * @param  \App\Models\OrdenCompra  $orden
+     */
+    public function avisarOrdenPorAprobar($orden){
+      $mensaje = "Hay una nueva orden por autorizar de parte del usuario: ".auth()->user()->name;
+      $mensaje.= ", para el proyecto ".$orden->proyecto_nombre;
+      Mail::send('email', ['mensaje'=>$mensaje], function ($message){
+        $message->to('abraham@intercorp.mx')
+                ->subject('Nueva orden por autorizar');
+      });
+    }
+
+    /*
+     * Envia mensaje de aviso de orden rechazada por correo a usuario dueño del proyecto
+     * @param  \App\Models\OrdenCompra  $orden
+     */
+    public function avisarOrdenRechazada($orden){
+      $mensaje = "Abraham ha rechazado su orden para el proyecto ".$orden->proyecto_nombre;
+      $mensaje.= "<br />Motivo: ".$orden->motivo_rechazo;
+      $email = $orden->proyecto->cotizacion->user->email;
+      Mail::send('email', ['mensaje'=>$mensaje], function ($message) use ($email){
+        $message->to($email)
+                ->subject('Su orden ha sido rechazada');
+      });
     }
 
 }
