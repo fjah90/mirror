@@ -88,12 +88,14 @@
                   <div class="form-group">
                     <label class="control-label">Unidad Medida</label>
                     <select class="form-control" name="medida" v-model="entrada.medida" required
-                      @change="convertirCantidad()">
+                      @change="reiniciarConversion()">
                       <option value="M">M</option>
                       <option value="M2">M2</option>
                       <option value="M3">M3</option>
                       <option value="Yarda">Yarda</option>
+                      <option value="Yarda2">Yarda2</option>
                       <option value="Pies">Pies</option>
+                      <option value="Pies2">Pies2</option>
                     </select>
                   </div>
                 </div>
@@ -102,13 +104,13 @@
                 <div class="col-md-4">
                   <div class="form-group">
                     <label class="control-label">Conversión</label>
-                    <select class="form-control" name="medida" v-model="entrada.conversion"
+                    <select class="form-control" name="conversion" v-model="entrada.conversion"
                       @change="convertirCantidad()">
-                      <option value="M">M</option>
-                      <option value="M2">M2</option>
-                      <option value="M3">M3</option>
-                      <option value="Yarda">Yarda</option>
-                      <option value="Pies">Pies</option>
+                      <option value="" disabled>Seleccionar</option>
+                      <option v-for="(multiplo, unidad) in conversiones[entrada.medida]"
+                        :value="unidad">
+                        @{{unidad}}
+                      </option>
                     </select>
                   </div>
                 </div>
@@ -271,6 +273,14 @@ const app = new Vue({
       precio: 0,
       importe: 0
     },
+    conversiones:{
+      'M': {'Yarda':1.0936, 'Pies':3.2808},
+      'Yarda': {'M':0.9144, 'Pies':3},
+      'Pies': {'M':0.3048, 'Yarda':0.3333},
+      'M2': {'Yarda2':1.196, 'Pies2':10.7584},
+      'Yarda2': {'M2':0.8361, 'Pies2':9},
+      'Pies2': {'M2':0.0929, 'Yarda2':0.1110},
+    },
     openCatalogo: false,
     cargando: false
   },
@@ -284,22 +294,14 @@ const app = new Vue({
       this.entrada.producto = prod;
       this.openCatalogo = false;
     },
+    reiniciarConversion(){
+      this.entrada.conversion = "";
+      this.entrada.cantidad_convertida = "";
+    },
     convertirCantidad(){
-      if(this.entrada.conversion=="") this.entrada.cantidad_convertida="";
-      else if(this.entrada.medida==this.entrada.conversion) this.entrada.cantidad_convertida="";
-      else if(this.entrada.medida=='M'||this.entrada.medida=='M2'||this.entrada.medida=='M3'){
-        if(this.entrada.conversion=='Yarda') this.entrada.cantidad_convertida = this.entrada.cantidad*1.0936;
-        else if(this.entrada.conversion=='Pies') this.entrada.cantidad_convertida = this.entrada.cantidad*3.2808;
-        else this.entrada.cantidad_convertida = "";
-      }
-      else if(this.entrada.medida=='Yarda'){
-        if(this.entrada.medida=='Pies') this.entrada.cantidad_convertida = this.entrada.cantidad*3;
-        else this.entrada.cantidad_convertida = this.entrada.cantidad*0.9144;
-      }
-      else{//Pies
-        if(this.entrada.medida=='Yarda') this.entrada.cantidad_convertida = this.entrada.cantidad*0.3333;
-        else this.entrada.cantidad_convertida = this.entrada.cantidad*0.3048;
-      }
+      this.entrada.cantidad_convertida =
+        (this.entrada.cantidad * this.conversiones[this.entrada.medida][this.entrada.conversion])
+        .toFixed(2);
     },
     agregarEntrada(){
       if(this.entrada.producto.id==undefined){
@@ -329,6 +331,10 @@ const app = new Vue({
     editarEntrada(entrada, index){
       this.orden.subtotal-= entrada.importe;
       this.orden.entradas.splice(index, 1);
+      if(entrada.conversion==undefined){
+        entrada.conversion = "";
+        entrada.cantidad_convertida = "";
+      }
       this.entrada = entrada;
     },
     removerEntrada(entrada, index){
