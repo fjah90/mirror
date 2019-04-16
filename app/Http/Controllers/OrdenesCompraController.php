@@ -11,7 +11,10 @@ use App\Models\Proveedor;
 use App\Models\Producto;
 use App\Models\OrdenProceso;
 use App\Models\CuentaPagar;
+use App\User;
 use Mail;
+use PDF;
+use Storage;
 
 class OrdenesCompraController extends Controller
 {
@@ -26,6 +29,10 @@ class OrdenesCompraController extends Controller
       $ordenes = OrdenCompra::with('entradas.producto')
         ->where('proyecto_id',$proyecto)
         ->get();
+
+      foreach ($ordenes as $orden) {
+        if($orden->archivo) $orden->archivo = asset('storage/'.$orden->archivo);
+      }
 
       return view('ordenes-compra.index', compact('ordenes'));
     }
@@ -122,9 +129,33 @@ class OrdenesCompraController extends Controller
           'message'=>'La orden debe estar en estatus "Pendiente" para poder ser comprada'
         ], 400);
       }
-      $orden->update(['status'=>'Por Autorizar']);
 
-      $this->avisarOrdenPorAprobar($orden);
+      // $this->avisarOrdenPorAprobar($orden);
+
+      //generar PDF de orden
+      $orden->load('proveedor.contactos', 'proyecto.cotizacion',
+      'proyecto.cliente', 'entradas.producto.descripciones.descripcionNombre');
+      $firmaAbraham = User::select('firma')->where('id',2)->first()->firma;
+      if($firmaAbraham) $firmaAbraham = storage_path('app/public/'.$firmaAbraham);
+      else $firmaAbraham = public_path('images/firma_vacia.png');
+      $orden->firmaAbraham = $firmaAbraham;
+
+      $url = 'ordenes_compra/'.$orden->id.'/orden_'.$orden->id.'.pdf';
+      $meses = ['ENERO','FEBRERO','MARZO','ABRIL','MAYO','JUNIO','JULIO',
+      'AGOSTO','SEPTIEMBRE','OCTUBRE','NOVIEMBRE','DICIEMBRE'];
+      list($ano,$mes,$dia) = explode('-', date('Y-m-d'));
+      $mes = $meses[+$mes-1];
+      $orden->fechaPDF = "$dia DE $mes DEL $ano";
+
+      foreach ($orden->entradas as $entrada) {
+        if($entrada->producto->foto) $entrada->producto->foto = asset('storage/'.$entrada->producto->foto);
+      }
+
+      $ordenPDF = PDF::loadView('ordenes-compra.ordenPDF', compact('orden'));
+      Storage::disk('public')->put($url, $ordenPDF->output());
+      unset($orden->fechaPDF);
+      unset($orden->firmaAbraham);
+      $orden->update(['status'=>'Por Autorizar', 'archivo'=>$url]);
 
       return response()->json(['success' => true, "error" => false], 200);
     }
@@ -337,6 +368,38 @@ class OrdenesCompraController extends Controller
         $message->to($email)
                 ->subject('Su orden ha sido rechazada');
       });
+    }
+
+    /**
+     * Para crear pdf de una orden a voluntad.
+     *
+     */
+    public function regeneratePDF(Request $request)
+    {
+      $orden = OrdenCompra::with('proveedor.contactos', 'proyecto.cotizacion',
+      'proyecto.cliente', 'entradas.producto.descripciones.descripcionNombre')
+      ->where('id', $request->orden_id)->first();
+      $firmaAbraham = User::select('firma')->where('id',2)->first()->firma;
+      if($firmaAbraham) $firmaAbraham = storage_path('app/public/'.$firmaAbraham);
+      else $firmaAbraham = public_path('images/firma_vacia.png');
+      $orden->firmaAbraham = $firmaAbraham;
+
+      $url = 'ordenes_compra/'.$orden->id.'/orden_'.$orden->id.'.pdf';
+      $meses = ['ENERO','FEBRERO','MARZO','ABRIL','MAYO','JUNIO','JULIO',
+      'AGOSTO','SEPTIEMBRE','OCTUBRE','NOVIEMBRE','DICIEMBRE'];
+      list($ano,$mes,$dia) = explode('-', date('Y-m-d'));
+      $mes = $meses[+$mes-1];
+      $orden->fechaPDF = "$dia DE $mes DEL $ano";
+
+      foreach ($orden->entradas as $entrada) {
+        if($entrada->producto->foto) $entrada->producto->foto = asset('storage/'.$entrada->producto->foto);
+      }
+
+      $ordenPDF = PDF::loadView('ordenes-compra.ordenPDF', compact('orden'));
+      Storage::disk('public')->put($url, $ordenPDF->output());
+      $orden->update(['archivo'=>$url]);
+
+      return $ordenPDF->download('orden.pdf');
     }
 
 }

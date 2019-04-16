@@ -62,11 +62,16 @@
                   </td>
                   <td>@{{orden.status}}</td>
                   <td class="text-right">
-                    <a v-if="orden.status!='Pendiente' && orden.status!='Cancelada'"
-                      class="btn btn-info" title="Ver"
-                      :href="'/proyectos-aprobados/'+orden.proyecto_id+'/ordenes-compra/'+orden.id">
-                      <i class="far fa-eye"></i>
-                    </a>
+                    <template v-if="orden.status!='Pendiente' && orden.status!='Cancelada'">
+                      <a class="btn btn-info" title="Ver"
+                        :href="'/proyectos-aprobados/'+orden.proyecto_id+'/ordenes-compra/'+orden.id">
+                        <i class="far fa-eye"></i>
+                      </a>
+                      <a v-if="orden.archivo" class="btn btn-warning" title="PDF" :href="orden.archivo"
+                        :download="'orden-compra '+orden.id+'.pdf'">
+                        <i class="far fa-file-pdf"></i>
+                      </a>
+                    </template>
                     <a v-if="orden.status=='Pendiente'"
                       class="btn btn-warning" title="Comprar"
                       :href="'/proyectos-aprobados/'+orden.proyecto_id+'/ordenes-compra/'+orden.id">
