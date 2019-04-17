@@ -28,7 +28,8 @@ class ProspectosController extends Controller
      */
     public function index()
     {
-      $prospectos = Prospecto::with('cliente', 'ultima_actividad.tipo', 'proxima_actividad.tipo')->get();
+      $prospectos = Prospecto::with('cliente', 'ultima_actividad.tipo', 'proxima_actividad.tipo')
+      ->whereHas('cliente')->get();
 
       return view('prospectos.index', compact('prospectos'));
     }
