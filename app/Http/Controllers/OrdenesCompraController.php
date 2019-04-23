@@ -124,9 +124,11 @@ class OrdenesCompraController extends Controller
      */
     public function comprar(ProyectoAprobado $proyecto, OrdenCompra $orden)
     {
-      if($orden->status!='Pendiente'){
+      if($orden->status!=OrdenCompra::STATUS_PENDIENTE){
         return response()->json(['success' => false, "error" => true,
-          'message'=>'La orden debe estar en estatus "Pendiente" para poder ser comprada'
+          'message'=>'La orden debe estar en estatus '.
+            OrdenCompra::STATUS_PENDIENTE.
+            ' para poder ser comprada'
         ], 400);
       }
 
@@ -212,8 +214,8 @@ class OrdenesCompraController extends Controller
         $update['iva'] = 0;
         $update['total'] = $update['subtotal'];
       }
-      if($orden->status=='Rechazada'){
-        $update['status'] = 'Por Autorizar';
+      if($orden->status==OrdenCompra::STATUS_RECHAZADA){
+        $update['status'] = OrdenCompra::STATUS_POR_AUTORIZAR;
       }
 
       $orden->update($update);
@@ -243,7 +245,7 @@ class OrdenesCompraController extends Controller
         OrdenCompraEntrada::create($entrada);
       }
 
-      if($orden->status=='Rechazada'){
+      if($orden->status==OrdenCompra::STATUS_RECHAZADA){
         $this->avisarOrdenPorAprobar($orden);
       }
 
@@ -259,12 +261,13 @@ class OrdenesCompraController extends Controller
      */
     public function destroy(ProyectoAprobado $proyecto, OrdenCompra $orden)
     {
-      if($orden->status=='Aprobada'){
+      if($orden->status==OrdenCompra::STATUS_APROBADA){
         return response()->json(['success' => false, "error" => true,
-          'message'=>'No se puede cancelar la orden porque ya esta Aprobada'
+          'message'=>'No se puede cancelar la orden porque esta en estatus '
+            .OrdenCompra::STATUS_APROBADA
         ], 400);
       }
-      $orden->update(['status'=>'Cancelada']);
+      $orden->update(['status'=>OrdenCompra::STATUS_CANCELADA]);
 
       return response()->json(['success' => true, "error" => false], 200);
     }
@@ -278,9 +281,11 @@ class OrdenesCompraController extends Controller
      */
     public function aprobar(ProyectoAprobado $proyecto, OrdenCompra $orden)
     {
-      if($orden->status!='Por Autorizar'){
+      if($orden->status!=OrdenCompra::STATUS_POR_AUTORIZAR){
         return response()->json(['success' => false, "error" => true,
-          'message'=>'La orden debe estar en estatus "Por Autorizar" para poder ser rechazada'
+          'message'=>'La orden debe estar en estatus '
+            .OrdenCompra::STATUS_POR_AUTORIZAR
+            .' para poder ser rechazada'
         ], 400);
       }
 
@@ -302,7 +307,7 @@ class OrdenesCompraController extends Controller
 
       //actualizar orden
       $orden->update([
-        'status'=>'Aprobada',
+        'status'=>OrdenCompra::STATUS_APROBADA,
         'orden_proceso_id'=>$numero->id
       ]);
 
@@ -327,13 +332,15 @@ class OrdenesCompraController extends Controller
         ], 422);
       }
 
-      if($orden->status!='Por Autorizar'){
+      if($orden->status!=OrdenCompra::STATUS_POR_AUTORIZAR){
         return response()->json(['success' => false, "error" => true,
-          'message'=>'La orden debe estar en estatus "Por Autorizar" para poder ser rechazada'
+          'message'=>'La orden debe estar en estatus '
+            .OrdenCompra::STATUS_POR_AUTORIZAR
+            .' para poder ser rechazada'
         ], 400);
       }
       $orden->update([
-        'status'=>'Rechazada',
+        'status'=>OrdenCompra::STATUS_RECHAZADA,
         'motivo_rechazo'=>$request->motivo
       ]);
 

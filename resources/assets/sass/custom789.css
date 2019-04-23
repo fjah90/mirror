@@ -43,6 +43,38 @@ footer {
 	font-size: 10px;
 	cursor: pointer;
 }
+.btn-brown {
+	background-color: #795548 !important;
+	color: #fff;
+}
+.btn-brown:hover {
+	background-color: #896052 !important;
+	color: #fff;
+}
+.btn-unique:hover {
+	background-color: #9f105c !important;
+	color: #fff;
+}
+.btn-unique {
+	background-color: #880e4f !important;
+	color: #fff;
+}
+.btn-elegant:hover {
+	background-color: #3b3b3b !important;
+	color: #fff;
+}
+.btn-elegant {
+	background-color: #2e2e2e !important;
+	color: #fff;
+}
+.btn-purple:hover {
+	background-color: #a028bf !important;
+	color: #fff;
+}
+.btn-purple {
+	background-color: #8e24aa !important;
+	color: #fff;
+}
 
 /******** Utils *********/
 #content {overflow: visible;}

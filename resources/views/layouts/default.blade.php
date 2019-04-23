@@ -222,6 +222,14 @@
             </a>
           </li>
 
+          <!-- Ordenes en Proceso -->
+          <li {!! (Request::is('ordenes-proceso*') ? 'class="active"' : '') !!} >
+            <a href="{{ URL::to('ordenes-proceso') }}">
+              <i class="menu-icon fas fa-clipboard-list"></i>
+              <span>Ordenes Proceso</span>
+            </a>
+          </li>
+
         </ul>
         <!-- / .navigation -->
       </div>

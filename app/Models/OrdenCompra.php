@@ -9,9 +9,15 @@ class OrdenCompra extends Model
 {
     protected $table = 'ordenes_compra';
 
+    const STATUS_PENDIENTE              = "Pendiente";
+    const STATUS_POR_AUTORIZAR          = "Por Autorizar";
+    const STATUS_APROBADA               = "Aprobada";
+    const STATUS_RECHAZADA              = "Rechazada";
+    const STATUS_CANCELADA              = "Cancelada";
+
     protected $fillable = ['cliente_id','proyecto_id','proveedor_id',
       'orden_proceso_id','cliente_nombre','proyecto_nombre','proveedor_empresa',
-      'status','orden_proceso_status','moneda','subtotal','iva','total',
+      'status','moneda','subtotal','iva','total',
       'motivo_rechazo','archivo'
     ];
 
@@ -41,6 +47,10 @@ class OrdenCompra extends Model
 
     public function entradas(){
       return $this->hasMany('App\Models\OrdenCompraEntrada', 'orden_id', 'id');
+    }
+
+    public function ordenProceso(){
+      return $this->hasOne('App\Models\OrdenProceso', 'orden_compra_id', 'id');
     }
 
 }
