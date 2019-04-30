@@ -6,6 +6,11 @@
 @stop
 
 @section('header_styles')
+<style>
+  table td:first-child span.fa-grip-vertical:hover {
+    cursor: move;
+  }
+</style>
 @stop
 
 {{-- Page content --}}
@@ -84,16 +89,21 @@
             <div class="row">
               <div class="col-md-12">
                 <div class="table-responsive">
-                  <table class="table table-bordred">
+                  <table id="tabla" class="table table-bordred">
                     <thead>
                       <tr>
+                        <th>Orden</th>
                         <th>Nombre</th>
                         <th>Name</th>
                         <th></th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr v-for="(descripcion, index) in categoria.descripciones" v-if="descripcion.borrar!=true">
+                      {{-- <tr v-for="(descripcion, index) in categoria.descripciones" v-if="descripcion.borrar!=true">
+                        <td>
+                          <span class="fas fa-grip-vertical"></span>
+                          @{{descripcion.ordenamiento}}
+                        </td>
                         <td>@{{descripcion.nombre}}</td>
                         <td>@{{descripcion.name}}</td>
                         <td class="text-right">
@@ -106,7 +116,7 @@
                             <i class="fas fa-times"></i>
                           </button>
                         </td>
-                      </tr>
+                      </tr> --}}
                     </tbody>
                   </table>
                 </div>
@@ -128,13 +138,90 @@ const app = new Vue({
     el: '#content',
     data: {
       categoria: {!! json_encode($categoria) !!},
-      descripcion:{
-        nombre: '',
-        name: ''
-      },
+      descripcion:{ nombre: '', name: '', ordenamiento: 0 },
+      dataTable: {},
       cargando: false,
     },
+    mounted(){
+      this.dataTable = $("#tabla").DataTable({
+        data: [],
+        searching: false,
+        info: false,
+        columnDefs: [
+          { "orderable": true, "targets": 0 },
+          { "orderable": false, "targets": '_all' }
+        ],
+        processing: false,
+        paging: false,
+        lengthChange: false,
+        rowReorder: {
+          selector: 'td:first-child span.fa-grip-vertical',
+          snapX: true
+        }
+      });
+
+      var vueInstance = this;
+      //handler para reordenamiento
+      this.dataTable.on( 'row-reorder', function ( e, diff, edit ) {
+        // console.log(diff);
+        // console.log(edit);
+        var i = 0, j = diff.length;
+        var nuevo_ordenamiento = 0;
+        var indice_descripcion
+        for (; i<j; i++) {
+          nuevo_ordenamiento = diff[i].newPosition + 1; //+1 Por que empieza en 1
+          //console.log(edit.nodes[i].cells[3].childNodes[0]); //Boton
+          indice_descripcion = $(edit.nodes[i].cells[3].childNodes[0]).data('index');
+          vueInstance.categoria.descripciones[indice_descripcion].actualizar = true;
+          vueInstance.categoria.descripciones[indice_descripcion].ordenamiento = nuevo_ordenamiento;
+        }
+      });
+
+      //handler para botones de editar y borrar
+      $("#tabla")
+        .on('click', 'tr button.btn-success', function(){
+          var index = $(this).data('index');
+          vueInstance.editarDescripcion(vueInstance.categoria.descripciones[index], index);
+        })
+        .on('click', 'button.btn-danger', function(){
+          var index = $(this).data('index');
+          vueInstance.borrarDescripcion(vueInstance.categoria.descripciones[index], index);
+        });
+
+      this.resetDataTables();
+    },
     methods: {
+      resetDataTables(){
+        var rows = [], row = [];
+        this.categoria.descripciones.forEach(function(descripcion, index){
+          if(descripcion.borrar==true) return true;
+          row = [
+            '<span class="fas fa-grip-vertical"></span> '+descripcion.ordenamiento,
+            descripcion.nombre,
+            descripcion.name
+          ];
+          row.push([
+            '<button class="btn btn-success" title="Editar" data-index="'+index+'">',
+              '<i class="fas fa-edit"></i>',
+            '</button>',
+            '<button class="btn btn-danger" title="Borrar" data-index="'+index+'">',
+              '<i class="fas fa-times"></i>',
+            '</button>'
+          ].join(''));
+          rows.push(row);
+        });
+
+        this.dataTable.clear();
+        this.dataTable.rows.add(rows);
+        this.dataTable.draw();
+      },
+      cuentaDescripcionesNoBorradas(){
+        var i = 0;
+        this.categoria.descripciones.forEach(function(descripcion){
+          if(descripcion.borrar!=true) i++;
+        });
+        return i;
+      },
       agregarDescripcion(){
         if(this.descripcion.nombre=="" && this.descripcion.name==""){
           swal({
@@ -145,20 +232,34 @@ const app = new Vue({
           return false;
         }
 
+        if(this.descripcion.ordenamiento==0)
+          this.descripcion.ordenamiento = this.cuentaDescripcionesNoBorradas()+1;
+
         this.categoria.descripciones.push(this.descripcion);
-        this.descripcion = {nombre: '', name: ''};
+        this.resetDataTables();
+        this.descripcion = {nombre: '', name: '', ordenamiento:0};
       },
       editarDescripcion(descripcion, index){
         descripcion.actualizar = true;
         this.descripcion = descripcion;
         this.categoria.descripciones.splice(index, 1);
+        this.resetDataTables();
       },
-      borrarDescripcion(descripcion, index){
-        this.categoria.descripciones.splice(index, 1);
-        if(descripcion.id) {
-          descripcion.borrar = true;
-          this.categoria.descripciones.push(descripcion);
-        }
+      borrarDescripcion(descripcion, index, undefined){
+        if(descripcion.id==undefined) this.categoria.descripciones.splice(index, 1);
+        else descripcion.borrar = true;
+
+        //restar 1 al ordenamiento de todas las descripciones con ordenamiento mayor
+        //al de la descripcion borrada
+        var ordenamiento = descripcion.ordenamiento;
+        this.categoria.descripciones.forEach(function(descripcion){
+          if(descripcion.ordenamiento>ordenamiento && descripcion.borrar==undefined){
+            descripcion.actualizar = true;
+            descripcion.ordenamiento--;
+          }
+        });
+
+        this.resetDataTables();
       },
       guardar(){
         this.cargando = true;

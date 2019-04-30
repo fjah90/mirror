@@ -102,29 +102,27 @@ class ProductosController extends Controller
       $categorias = Categoria::with('descripciones')->get();
       $producto->load('proveedor', 'categoria.descripciones', 'descripciones.descripcionNombre');
 
+      $producto_descripciones = $producto->descripciones->count();
+      $categoria_descripciones = $producto->categoria->descripciones->count();
+      // dd($producto_descripciones, $categoria_descripciones);
+      if($producto_descripciones < $categoria_descripciones){
+        //hay descripciones nuevas en categoria
+        $nuevas = $producto->categoria->descripciones->sortBy('id')
+                  ->splice($producto_descripciones);
+        foreach ($nuevas as $nueva) {
+          ProductoDescripcion::create([
+            'producto_id' => $producto->id,
+            'categoria_descripcion_id' => $nueva->id
+          ]);
+        }
+
+        $producto->load('descripciones.descripcionNombre');
+      }
+
       foreach ($producto->descripciones as $descripcion){
         $descripcion->nombre = $descripcion->descripcionNombre->nombre;
         $descripcion->name = $descripcion->descripcionNombre->name;
         unset($descripcion->descripcionNombre);
-      }
-
-      $producto_descripciones = $producto->descripciones->count();
-      $categoria_descripciones = $producto->categoria->descripciones->count();
-      // dd($producto_descripciones, $categoria_descripciones);
-
-      if($producto_descripciones < $categoria_descripciones){
-        //hay descripciones nuevas en categoria
-        $nuevas = $producto->categoria->descripciones->splice($producto_descripciones);
-        foreach ($nuevas as $nueva) {
-          $descripcion = ProductoDescripcion::create([
-            'producto_id' => $producto->id,
-            'categoria_descripcion_id' => $nueva->id
-          ]);
-          $descripcion->nombre = $nueva->nombre;
-          $descripcion->name = $nueva->name;
-          $descripcion->valor = null;
-          $producto->descripciones->push($descripcion);
-        }
       }
 
       if($producto->foto) $producto->foto = asset('storage/'.$producto->foto);

@@ -120,7 +120,7 @@ class CategoriasController extends Controller
           ProductoDescripcion::where('categoria_descripcion_id', $descripcion['id'])
           ->delete();
         }
-        else if(isset($descripcion['actualizar'])){
+        else if(isset($descripcion['actualizar']) && isset($descripcion['id'])){
           CategoriaDescripcion::find($descripcion['id'])->update($descripcion);
         }
         else if(!isset($descripcion['id'])){

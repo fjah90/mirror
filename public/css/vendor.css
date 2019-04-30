@@ -9330,6 +9330,29 @@ a.dt-button.processing:after {
   -moz-animation: dtb-spinner 1500ms infinite linear;
 }
 
+table.dt-rowReorder-float {
+  position: absolute !important;
+  opacity: 0.8;
+  table-layout: fixed;
+  outline: 2px solid #888888;
+  outline-offset: -2px;
+  z-index: 2001;
+}
+
+tr.dt-rowReorder-moving {
+  outline: 2px solid #555555;
+  outline-offset: -2px;
+}
+
+body.dt-rowReorder-noOverflow {
+  overflow-x: hidden;
+}
+
+table.dataTable td.reorder {
+  text-align: center;
+  cursor: move;
+}
+
 /*!
  * Font Awesome Free 5.6.0 by @fontawesome - https://fontawesome.com
  * License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)

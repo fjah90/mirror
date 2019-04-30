@@ -13,7 +13,10 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        //
+      //Corrida Unica, para hacer algun ajuste de datos
+      \App\Console\Commands\ordenarDescripcionesDeCategorias::class
+
+
     ];
 
     /**

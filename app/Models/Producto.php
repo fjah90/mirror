@@ -19,6 +19,12 @@ class Producto extends Model
 
     /**
      * ---------------------------------------------------------------------------
+     *                          Private Methods
+     * ---------------------------------------------------------------------------
+     */
+
+    /**
+     * ---------------------------------------------------------------------------
      *                             Relationships
      * ---------------------------------------------------------------------------
      */
@@ -31,9 +37,17 @@ class Producto extends Model
       return $this->belongsTo('App\Models\Categoria', 'categoria_id', 'id');
     }
 
+    // Modelo duplicado, esta aqui para recordarme que laravel re-llama los metodos
+    // de relaciones cuando parsea de eloquent a json
+    // public function descripciones(){
+    //   return $this->hasMany('App\Models\ProductoDescripcion', 'producto_id', 'id');
+    // }
+
     public function descripciones(){
       return $this->hasMany('App\Models\ProductoDescripcion', 'producto_id', 'id')
-        ->orderBy('categoria_descripcion_id', 'asc');
+      ->join('categorias_descripciones',
+        'productos_descripciones.categoria_descripcion_id', '=', 'categorias_descripciones.id')
+      ->orderBy('categorias_descripciones.ordenamiento','asc');
     }
 
 }

@@ -25,6 +25,7 @@ mix.js('resources/assets/js/app.js', 'public/js')
      'datatables.net-buttons/js/buttons.html5.js',
      'datatables.net-buttons/js/buttons.print.js',
      'datatables.net-responsive-dt',
+     'datatables.net-rowreorder-dt',
      'uiv',
      'bootstrap-fileinput',
      'bootstrap-fileinput/themes/fa/theme.js',

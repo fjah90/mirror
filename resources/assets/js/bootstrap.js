@@ -13,6 +13,7 @@ require( 'datatables.net-buttons/js/buttons.flash.js' );
 require( 'datatables.net-buttons/js/buttons.html5.js' );
 require( 'datatables.net-buttons/js/buttons.print.js' );
 require( 'datatables.net-responsive-dt' );
+require( 'datatables.net-rowreorder-dt' );
 window.objectToFormData = require('object-to-formdata');
 require( 'tinymce' );
 require( 'tinymce/themes/modern/theme' );
@@ -38,7 +39,7 @@ Vue.component('tinymce-editor', Editor);
 Vue.component('select2multags', require('./components/select2multags.vue'));
 
 $.extend($.fn.dataTable.defaults, {
-  responsive: true,
+  responsive: false,
   lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "Todo"]],
   language: {
     "decimal": "",

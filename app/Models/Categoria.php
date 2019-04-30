@@ -19,7 +19,7 @@ class Categoria extends Model
 
     public function descripciones(){
       return $this->hasMany('App\Models\CategoriaDescripcion', 'categoria_id')
-        ->orderBy('id', 'asc');
+        ->orderBy('ordenamiento', 'asc');
     }
 
 }
