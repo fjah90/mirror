@@ -86,7 +86,7 @@
                             <i class="far fa-sticky-note"></i>
                           </button>
                           <a class="btn btn-warning" title="PDF" :href="cotizacion.archivo"
-                            :download="'cotizacion '+cotizacion.id+'.pdf'">
+                            :download="'Cotizacion '+cotizacion.id+' Intercorp '+prospecto.nombre+'.pdf'">
                             <i class="far fa-file-pdf"></i>
                           </a>
                           <button class="btn btn-info" title="Enviar"
@@ -604,7 +604,7 @@ const app = new Vue({
       showUpload: false,
       browseOnZoneClick: true,
       defaultPreviewContent: '<img src="{{asset('images/camara.png')}}" style="width:200px; height:auto;" alt="foto"><h6>Click para seleccionar</h6>',
-      // allowedFileExtensions: ["jpg", "jpeg", "png"],
+      allowedFileExtensions: ["jpg", "jpeg", "png"],
       elErrorContainer: '#fotos-file-errors'
     });
     $("#comprobante").fileinput({
@@ -771,7 +771,7 @@ const app = new Vue({
           text: "",
           type: "success"
         }).then(()=>{
-          $('a[download="cotizacion '+data.cotizacion.id+'.pdf"]')[0].click();
+          $('a[download="Cotizacion '+data.cotizacion.id+' Intercorp '+this.prospecto.nombre+'.pdf"]')[0].click();
         });
       })
       .catch(({response}) => {

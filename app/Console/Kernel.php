@@ -14,7 +14,8 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
       //Corrida Unica, para hacer algun ajuste de datos
-      \App\Console\Commands\ordenarDescripcionesDeCategorias::class
+      \App\Console\Commands\ordenarDescripcionesDeCategorias::class,
+      \App\Console\Commands\cambiaNombreDePDFsCotizaciones::class
 
 
     ];
