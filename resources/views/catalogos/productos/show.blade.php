@@ -42,6 +42,14 @@
             <div class="row">
               <div class="col-md-12">
                 <div class="form-group">
+                  <label class="control-label">Subcategoria</label>
+                  <span class="form-control">{{$producto->subcategoria->nombre}}</span>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
                   <label class="control-label">Nombre</label>
                   <span class="form-control">{{$producto->nombre}}</span>
                 </div>

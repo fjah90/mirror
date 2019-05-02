@@ -52,6 +52,28 @@
               <div class="row">
                 <div class="col-md-12">
                   <div class="form-group">
+                    <label class="control-label">Subcategoria</label>
+                    <select class="form-control" name="subcategoria_id" v-model='producto.subcategoria_id'>
+                        <option value=""></option>
+                      @foreach($subcategorias as $subcategoria)
+                        <option value="{{$subcategoria->id}}">{{$subcategoria->nombre}}</option>
+                      @endforeach
+                        <option value="otra">Otra</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="row" v-if="producto.subcategoria_id=='otra'">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label class="control-label">Especifique nueva subcategoria</label>
+                    <input type="text" class="form-control" name="subcategoria" v-model="producto.subcategoria" required />
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
                     <label class="control-label">Nombre</label>
                     <input type="text" class="form-control" name="nombre" v-model="producto.nombre" required />
                   </div>
@@ -122,6 +144,8 @@ const app = new Vue({
       producto: {
         proveedor_id: '{{$producto->proveedor_id}}',
         categoria_id: '{{$producto->categoria_id}}',
+        subcategoria_id: '{{$producto->subcategoria->id}}',
+        subcategoria: '{{$producto->subcategoria->nombre}}',
         nombre: '{{$producto->nombre}}',
         descripciones: {!! $producto->descripciones !!},
         foto_ori: '{{$producto->foto}}',

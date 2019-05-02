@@ -7,6 +7,7 @@ use Storage;
 use Illuminate\Http\Request;
 use App\Models\Proveedor;
 use App\Models\Categoria;
+use App\Models\Subcategoria;
 use App\Models\Producto;
 use App\Models\ProductoDescripcion;
 
@@ -33,7 +34,8 @@ class ProductosController extends Controller
     {
       $proveedores = Proveedor::all();
       $categorias = Categoria::with('descripciones')->get();
-      return view('catalogos.productos.create', compact('proveedores','categorias'));
+      $subcategorias = Subcategoria::all();
+      return view('catalogos.productos.create', compact('proveedores','categorias','subcategorias'));
     }
 
     /**
@@ -58,10 +60,20 @@ class ProductosController extends Controller
         ], 422);
       }
 
-      $create = $request->except('foto','descripciones');
+      $create = $request->only('proveedor_id','categoria_id','nombre');
       if(isset($request->foto)){
         $create['foto'] = Storage::putFile('public/productos', $request->file('foto'));
         $create['foto'] = str_replace('public/', '', $create['foto']);
+      }
+      if(isset($request->subcategoria_id)){
+        if($request->subcategoria_id=='otra'){
+          $subcategoria = Subcategoria::create([
+            'nombre'=>$request->subcategoria,
+            'name'=>$request->subcategoria
+          ]);
+          $create['subcategoria_id'] = $subcategoria->id;
+        }
+        else $create['subcategoria_id'] = $request->subcategoria_id;
       }
       $producto = Producto::create($create);
 
@@ -85,7 +97,7 @@ class ProductosController extends Controller
      */
     public function show(Producto $producto)
     {
-      $producto->load('proveedor', 'categoria', 'descripciones.descripcionNombre');
+      $producto->load('proveedor','categoria','subcategoria','descripciones.descripcionNombre');
       if($producto->foto) $producto->foto = asset('storage/'.$producto->foto);
       return view('catalogos.productos.show', compact('producto'));
     }
@@ -100,7 +112,8 @@ class ProductosController extends Controller
     {
       $proveedores = Proveedor::all();
       $categorias = Categoria::with('descripciones')->get();
-      $producto->load('proveedor', 'categoria.descripciones', 'descripciones.descripcionNombre');
+      $subcategorias = Subcategoria::all();
+      $producto->load('proveedor','categoria.descripciones','subcategoria','descripciones.descripcionNombre');
 
       $producto_descripciones = $producto->descripciones->count();
       $categoria_descripciones = $producto->categoria->descripciones->count();
@@ -126,7 +139,7 @@ class ProductosController extends Controller
       }
 
       if($producto->foto) $producto->foto = asset('storage/'.$producto->foto);
-      return view('catalogos.productos.edit', compact('producto','proveedores','categorias'));
+      return view('catalogos.productos.edit', compact('producto','proveedores','categorias','subcategorias'));
     }
 
     /**
@@ -152,12 +165,21 @@ class ProductosController extends Controller
         ], 422);
       }
 
-      $update = $request->except('foto_ori','foto','descripciones');
+      $update = $request->only('proveedor_id','categoria_id','nombre');
       if(!is_null($request->foto)) {
         Storage::delete('public/'.$producto->foto);
         $update['foto'] = Storage::putFile('public/productos', $request->file('foto'));
         $update['foto'] = str_replace('public/', '', $update['foto']);
       }
+      if(is_null($request->subcategoria_id)) $update['subcategoria_id'] = null;
+      else if($request->subcategoria_id=='otra'){
+        $subcategoria = Subcategoria::create([
+          'nombre'=>$request->subcategoria,
+          'name'=>$request->subcategoria
+        ]);
+        $update['subcategoria_id'] = $subcategoria->id;
+      }
+      else $update['subcategoria_id'] = $request->subcategoria_id;
       $producto->update($update);
 
       //actualizar descripciones nuevas que ya existan en descripciones actuales

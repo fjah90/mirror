@@ -9,7 +9,7 @@ class Producto extends Model
 {
     protected $table = 'productos';
 
-    protected $fillable = ['proveedor_id','categoria_id','nombre','foto'];
+    protected $fillable = ['proveedor_id','categoria_id','nombre','foto','subcategoria_id'];
 
     /**
      * ---------------------------------------------------------------------------
@@ -35,6 +35,11 @@ class Producto extends Model
 
     public function categoria(){
       return $this->belongsTo('App\Models\Categoria', 'categoria_id', 'id');
+    }
+
+    public function subcategoria(){
+      return $this->belongsTo('App\Models\Subcategoria', 'subcategoria_id', 'id')
+      ->withDefault(['id' => 0, 'nombre' => '', 'name' => '']);
     }
 
     // Modelo duplicado, esta aqui para recordarme que laravel re-llama los metodos
