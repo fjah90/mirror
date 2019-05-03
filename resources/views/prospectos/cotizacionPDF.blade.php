@@ -11,7 +11,7 @@
     body {
       margin: 25px;
       font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-      font-size: 12px;
+      font-size: 10px;
       line-height: 1.1;
       color: #333;
       background-color: #fff;
@@ -178,8 +178,8 @@
     .text-right {text-align: right;}
     .text-danger {color: #FF7A7A;}
     /* fuentes */
-    .font-small{font-size: 11px;}
-    .font-big{font-size: 14px;}
+    .font-small{font-size: 9px;}
+    .font-big{font-size: 12px;}
   </style>
   <style>
     @page {
@@ -201,7 +201,7 @@
       float: left;
     }
     .bordered{
-      border: 1px solid #000;
+      border: 0.5px solid #000;
     }
     .clearfix:after {
       content: "";
@@ -225,10 +225,6 @@
       width: 100%;
       position: absolute;
     }
-    .footer .corte {
-      border-top: 2px dashed #000;
-      margin: -5px -50px 0;
-    }
     .header {
       top: 0px;
     }
@@ -248,6 +244,13 @@
   </style>
   <style>
     /* custom */
+    .table-cotizacion { margin:-5px 0px 0px; }
+    .table-cotizacion > thead{
+      background-color:#000; color:#fff;
+    }
+    .table-cotizacion > tbody{
+      border-bottom: 0.5px solid #000;
+    }
     .table-cotizacion > tbody > tr > th,
     .table-cotizacion > tbody > tr > td,
     .table-cotizacion > tfoot > tr > th,
@@ -256,13 +259,13 @@
     }
     .table-cotizacion > tbody > tr > th,
     .table-cotizacion > tbody > tr > td{
-      border-left: 1px solid #000;
+      border-left: 0.5px solid #000;
     }
     .table-cotizacion > tbody > tr > th:last-child,
     .table-cotizacion > tbody > tr > td:last-child{
-      border-right: 1px solid #000;
+      border-right: 0.5px solid #000;
     }
-    .table-cotizacion > tfoot {border: 1px solid #000;}
+    .table-cotizacion > tfoot {border: 0.5px solid #000;}
   </style>
 </head>
 <body>
@@ -370,8 +373,8 @@
 
     <div class="row">
       <div class="col-lg-12">
-        <table class="table table-cotizacion" style="margin:-5px 0px 0px;">
-          <thead style="background-color:#000; color:#fff;">
+        <table class="table table-cotizacion">
+          <thead>
             <tr>
               <th class="text-center" style="width:10%; padding:3px 0 1px;">Cantidad</th>
               <th class="text-center" style="width:70%; padding:3px 0 1px;">Descripciones</th>
@@ -379,10 +382,10 @@
               <th class="text-center" style="width:15%; padding:3px 0 1px;">Total</th>
             </tr>
           </thead>
-          <tbody style="border-bottom: 1px solid #000;">
+          <tbody>
             @foreach($cotizacion->entradas as $entrada)
             <tr>
-              <td class="text-center">@format_number($entrada->cantidad) {{$entrada->medida}}</td>
+              <td class="text-center">@format_number($entrada->cantidad) <br /> {{$entrada->medida}}</td>
               <td>
                 <table style="width:100%; margin:0;">
                   <tr>
@@ -418,13 +421,7 @@
       </div>
     </div>
 
-    <!-- Espacio para que el footer no se sobreponga a la tabla -->
-    <div class="row">
-      <div class="col-lg-12" style="height:70px;">
-      </div>
-    </div>
-
-    <div class="row footer">
+    <div class="row" style="page-break-inside: avoid;">
       <div class="col-lg-12 bordered" style="padding: 0px; margin-left:15px;">
         <table class="" style="margin-bottom:0; width:100%;">
           <tr>
@@ -441,28 +438,42 @@
           </tr>
         </table>
       </div>
-      <div class="clearfix">
+    </div>
+
+    <!-- Espacio para que el footer no se sobreponga a la tabla -->
+    <div class="row">
+      <div class="col-lg-12" style="height:150px;">
       </div>
+    </div>
+
+    <div class="row footer">
       <div class="col-lg-12 bordered" style="padding: 0px; margin-left:15px;">
         <table style="margin: 0px; width:100%;">
           <tr class="font-small">
-            <td style="width:70%; text-transform: none;">
-              <p><strong>@if($nombre=='nombre') Observaciones: @else Remarks: @endif</strong></p>
+            <td style="width:70%; text-transform: none; vertical-align: top;">
+              <p class="margTop10" style="margin-left:10px;">
+                <strong>@if($nombre=='nombre') Observaciones: @else Remarks: @endif</strong>
+              </p>
               {!! $cotizacion->observaciones !!}
             </td>
             <td class="text-center" style="width:30%; text-transform: none;">
               @if($cotizacion->user->id==2) <!-- "Abraham Shveid" -->
-              <img style="margin-top:1em; width:200px; height:auto;" src="{{$cotizacion->user->firma}}" alt=" " />
+              <img style="margin-top:10px; width:200px; height:auto;" src="{{$cotizacion->user->firma}}" alt=" " />
+              {{-- <img style="margin-top:10px; width:200px; height:auto;" src="F:\wamp64\www\intercorp\storage\app/public/usuarios/2/firma.png" alt=" " /> --}}
               <hr style="border:0.5px solid #000; width:70%; margin-top:-5px; margin-bottom:0px;" />
-              @elseif($cotizacion->user->id==5) <!-- "Elena Salido" -->
-              <img style="margin-top:0.5em; width:200px; height:auto;" src="{{$cotizacion->user->firma}}" alt=" " />
-              <hr style="border:0.5px solid #000; width:70%; margin-top:-5px; margin-bottom:0px;" />
+            @elseif($cotizacion->user->id==5) <!-- "Elena Salido" -->
+              <img style="margin-top:10px; width:200px; height:auto;" src="{{$cotizacion->user->firma}}" alt=" " />
+              {{-- <img style="margin-top:10px; width:200px; height:auto;" src="F:\wamp64\www\intercorp\storage\app/public/usuarios/5/firma.png" alt=" " /> --}}
+              <hr style="border:0.5px solid #000; width:70%; margin-top:0px; margin-bottom:0px;" />
               @else
-              <img style="margin-top:1.5em; width:200px; height:auto;" src="{{$cotizacion->user->firma}}" alt=" " />
-              <hr style="border:0.5px solid #000; width:70%; margin-top:-10px; margin-bottom:0px;" />
+              <img style="margin-top:10px; width:200px; height:auto;" src="{{$cotizacion->user->firma}}" alt=" " />
+              {{-- <img style="margin-top:10px; width:200px; height:auto;" src="F:\wamp64\www\intercorp\storage\app/public/usuarios/4/firma.png" alt=" " /> --}}
+              <hr style="border:0.5px solid #000; width:70%; margin-top:-15px; margin-bottom:0px;" />
               @endif
               <p style="">{{$cotizacion->user->name}}</p>
               <p style="">Intercorp Contract Resources</p>
+              <hr style="border:0.5px solid #000; width:70%; margin-top:60px; margin-bottom:0px;" />
+              <p style="margin: 5px 0 10px;">APROBACIÓN DEL CLIENTE</p>
             </td>
           </tr>
         </table>
