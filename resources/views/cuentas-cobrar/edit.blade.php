@@ -402,6 +402,7 @@ const app = new Vue({
     agregarPago(factura){
       this.pago.factura_id = factura.id;
       this.pago.documento = factura.documento;
+      this.pago.monto = factura.pendiente;
       this.pago.maximo = factura.pendiente;
       this.openPagar = true;
     },

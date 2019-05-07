@@ -389,19 +389,22 @@ class ProspectosController extends Controller
       }
 
       $cotizacion = ProspectoCotizacion::with('entradas')->findOrFail($request->cotizacion_id);
-      $cotizacion_id = $cotizacion->id;
       $email = $request->email;
       $pdf_link = asset('storage/'.$cotizacion->archivo);
-      $pdf = file_get_contents($pdf_link);
+      $pdf_name = explode('/',$cotizacion->archivo);
+      $pdf_name = end($pdf_name);
+      $pdf = Storage::disk('public')->get($cotizacion->archivo);
       $user = auth()->user();
 
       Mail::send('email', ['mensaje' => $request->mensaje], function ($message)
-      use ($cotizacion_id, $email, $pdf, $user){
+      use ($email, $pdf, $pdf_name, $user){
         $message->to($email)
                 ->cc('abraham@intercorp.mx')
+                ->cc('omar.herrera@tigears.com')
+                ->cc('simonc@789.mx')
                 ->replyTo($user->email, $user->name)
                 ->subject('Cotización Intercorp');
-        $message->attachData($pdf, 'Cotizacion '.$cotizacion_id.'.pdf');
+        $message->attachData($pdf, $pdf_name);
       });
 
       //generar actividad de envio de cotizacion
@@ -411,13 +414,11 @@ class ProspectosController extends Controller
       }
       else $nueva = $prospecto->proxima_actividad->tipo_id;
 
-      $descripcion = $pdf_link;
-
       //actualizar proxima actividad
       $prospecto->proxima_actividad->update([
         'tipo_id' => 4,
         'fecha' => date('d/m/Y'),
-        'descripcion' => $descripcion,
+        'descripcion' => $pdf_link,
         'realizada' => 1
       ]);
 

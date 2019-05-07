@@ -12,8 +12,6 @@ use App\Models\Producto;
 use App\Models\OrdenProceso;
 use App\Models\CuentaPagar;
 use App\User;
-use Mail;
-use PDF;
 use Storage;
 
 class OrdenesProcesoController extends Controller
@@ -46,6 +44,80 @@ class OrdenesProcesoController extends Controller
       return view('ordenes-proceso.index', compact('ordenes'));
     }
 
+
+    /**
+     * Actualiza status y fecha estimada de status.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\OrdenProceso  $orden
+     * @return \Illuminate\Http\Response
+     */
+    public function updateStatus(Request $request, OrdenProceso $orden)
+    {
+      $validator = Validator::make($request->all(), [
+        'fecha_estimada' => 'required|date_format:d/m/Y',
+      ]);
+
+      if ($validator->fails()) {
+        $errors = $validator->errors()->all();
+        return response()->json([
+          "success" => false, "error" => true, "message" => $errors[0]
+        ], 422);
+      }
+
+      if($orden->status == OrdenProceso::STATUS_FABRICACION){
+        $update = ['fecha_estimada_fabricacion'=>$request->fecha_estimada];
+      }
+      else if($orden->status == OrdenProceso::STATUS_ADUANA){
+        $update = [
+          'status' => OrdenProceso::STATUS_IMPORTACION,
+          'fecha_estimada_importacion'=>$request->fecha_estimada,
+          'fecha_real_aduana' => date('Y-m-d')
+        ];
+      }
+      else if($orden->status == OrdenProceso::STATUS_IMPORTACION){
+        $update = [
+          'status' => OrdenProceso::STATUS_LIBERADO_ADUANA,
+          'fecha_estimada_liberado_aduana'=>$request->fecha_estimada,
+          'fecha_real_importacion' => date('Y-m-d')
+        ];
+      }
+      else if($orden->status == OrdenProceso::STATUS_LIBERADO_ADUANA){
+        $update = [
+          'status' => OrdenProceso::STATUS_EMBARCADO_FINAL,
+          'fecha_estimada_embarque_final'=>$request->fecha_estimada,
+          'fecha_real_liberado_aduana' => date('Y-m-d')
+        ];
+      }
+      else if($orden->status == OrdenProceso::STATUS_EMBARCADO_FINAL){
+        $update = [
+          'status' => OrdenProceso::STATUS_DESCARGA,
+          'fecha_estimada_descarga'=>$request->fecha_estimada,
+          'fecha_real_embarque_final' => date('Y-m-d')
+        ];
+      }
+      else if($orden->status == OrdenProceso::STATUS_DESCARGA){
+        $update = [
+          'status' => OrdenProceso::STATUS_ENTREGADO,
+          'fecha_estimada_entrega'=>$request->fecha_estimada,
+          'fecha_real_descarga' => date('Y-m-d')
+        ];
+      }
+      else if($orden->status == OrdenProceso::STATUS_ENTREGADO){
+        $update = [
+          'fecha_estimada_instalacion'=>$request->fecha_estimada,
+          'fecha_real_entrega' => date('Y-m-d')
+        ];
+      }
+
+      //actualizar orden
+      $orden->update($update);
+
+      return response()->json([
+        'success' => true, "error" => false, "actualizados"=>$update
+      ], 200);
+    }
+
     /**
      * Cambia status a Embarcado.
      *
@@ -59,7 +131,7 @@ class OrdenesProcesoController extends Controller
         'factura' => 'required|file|mimes:jpeg,jpg,png,pdf',
         'packing' => 'required|file|mimes:jpeg,jpg,png,pdf',
         'bl' => 'required|file|mimes:jpeg,jpg,png,pdf',
-        'certificado' => 'required|file|mimes:jpeg,jpg,png,pdf',
+        'fecha_estimada' => 'required|date_format:d/m/Y',
       ]);
 
       if ($validator->fails()) {
@@ -76,7 +148,11 @@ class OrdenesProcesoController extends Controller
         ], 400);
       }
 
-      $update = ['status'=>OrdenProceso::STATUS_EMBARCADO];
+      $update = [
+        'status'=>OrdenProceso::STATUS_EMBARCADO,
+        'fecha_real_fabricacion' => date('Y-m-d'),
+        'fecha_estimada_embarque' => $request->fecha_estimada
+      ];
 
       $factura = Storage::putFileAs(
         'public/ordenes_proceso/'.$orden->id,
@@ -99,20 +175,22 @@ class OrdenesProcesoController extends Controller
       );
       $bl = str_replace('public/', '', $bl);
       $update['bl'] = $bl;
-      $certificado = Storage::putFileAs(
-        'public/ordenes_proceso/'.$orden->id,
-        $request->certificado,
-        'certificado.'.$request->certificado->guessExtension()
-      );
-      $certificado = str_replace('public/', '', $certificado);
-      $update['certificado'] = $certificado;
+      if($request->certificado){
+        $certificado = Storage::putFileAs(
+          'public/ordenes_proceso/'.$orden->id,
+          $request->certificado,
+          'certificado.'.$request->certificado->guessExtension()
+        );
+        $certificado = str_replace('public/', '', $certificado);
+        $update['certificado'] = $certificado;
+      }
 
       //actualizar orden
       $orden->update($update);
       $orden->factura = asset('storage/'.$orden->factura);
       $orden->packing = asset('storage/'.$orden->packing);
       $orden->bl = asset('storage/'.$orden->bl);
-      $orden->certificado = asset('storage/'.$orden->certificado);
+      if($orden->certificado) $orden->certificado = asset('storage/'.$orden->certificado);
 
       return response()->json([
         'success' => true, "error" => false, 'orden'=>$orden
@@ -131,6 +209,7 @@ class OrdenesProcesoController extends Controller
       $validator = Validator::make($request->all(), [
         'gastos' => 'required|file|mimes:jpeg,jpg,png,pdf',
         'pago' => 'required|file|mimes:jpeg,jpg,png,pdf',
+        'fecha_estimada' => 'required|date_format:d/m/Y',
       ]);
 
       if ($validator->fails()) {
@@ -147,7 +226,11 @@ class OrdenesProcesoController extends Controller
         ], 400);
       }
 
-      $update = ['status'=>OrdenProceso::STATUS_ADUANA];
+      $update = [
+        'status'=>OrdenProceso::STATUS_ADUANA,
+        'fecha_real_embarque' => date('Y-m-d'),
+        'fecha_estimada_aduana' => $request->fecha_estimada
+      ];
 
       $gastos = Storage::putFileAs(
         'public/ordenes_proceso/'.$orden->id,
@@ -174,120 +257,5 @@ class OrdenesProcesoController extends Controller
       ], 200);
     }
 
-    /**
-     * Cambia status a Proceso de Importacion.
-     *
-     * @param  \App\Models\OrdenProceso  $orden
-     * @return \Illuminate\Http\Response
-     */
-    public function importar(OrdenProceso $orden)
-    {
-      if($orden->status!=OrdenProceso::STATUS_ADUANA){
-        return response()->json(['success' => false, "error" => true,
-          'message'=>'La orden debe estar en estatus '
-            .OrdenProceso::STATUS_ADUANA
-        ], 400);
-      }
-
-      //actualizar orden
-      $orden->update(['status'=>OrdenProceso::STATUS_IMPORTACION]);
-
-      return response()->json([
-        'success' => true, "error" => false, 'orden'=>$orden
-      ], 200);
-    }
-
-    /**
-     * Cambia status a Liberado de Aduana.
-     *
-     * @param  \App\Models\OrdenProceso  $orden
-     * @return \Illuminate\Http\Response
-     */
-    public function liberar(OrdenProceso $orden)
-    {
-      if($orden->status!=OrdenProceso::STATUS_IMPORTACION){
-        return response()->json(['success' => false, "error" => true,
-          'message'=>'La orden debe estar en estatus '
-            .OrdenProceso::STATUS_IMPORTACION
-        ], 400);
-      }
-
-      //actualizar orden
-      $orden->update(['status'=>OrdenProceso::STATUS_LIBERADO_ADUANA]);
-
-      return response()->json([
-        'success' => true, "error" => false, 'orden'=>$orden
-      ], 200);
-    }
-
-    /**
-     * Cambia status a STATUS_EMBARCADO_FINAL.
-     *
-     * @param  \App\Models\OrdenProceso  $orden
-     * @return \Illuminate\Http\Response
-     */
-    public function embarqueFinal(OrdenProceso $orden)
-    {
-      if($orden->status!=OrdenProceso::STATUS_LIBERADO_ADUANA){
-        return response()->json(['success' => false, "error" => true,
-          'message'=>'La orden debe estar en estatus '
-            .OrdenProceso::STATUS_LIBERADO_ADUANA
-        ], 400);
-      }
-
-      //actualizar orden
-      $orden->update(['status'=>OrdenProceso::STATUS_EMBARCADO_FINAL]);
-
-      return response()->json([
-        'success' => true, "error" => false, 'orden'=>$orden
-      ], 200);
-    }
-
-    /**
-     * Cambia status a STATUS_DESCARGA.
-     *
-     * @param  \App\Models\OrdenProceso  $orden
-     * @return \Illuminate\Http\Response
-     */
-    public function descargar(OrdenProceso $orden)
-    {
-      if($orden->status!=OrdenProceso::STATUS_EMBARCADO_FINAL){
-        return response()->json(['success' => false, "error" => true,
-          'message'=>'La orden debe estar en estatus '
-            .OrdenProceso::STATUS_EMBARCADO_FINAL
-        ], 400);
-      }
-
-      //actualizar orden
-      $orden->update(['status'=>OrdenProceso::STATUS_DESCARGA]);
-
-      return response()->json([
-        'success' => true, "error" => false, 'orden'=>$orden
-      ], 200);
-    }
-
-    /**
-     * Cambia status a STATUS_ENTREGADO.
-     *
-     * @param  \App\Models\OrdenProceso  $orden
-     * @return \Illuminate\Http\Response
-     */
-    public function entregar(OrdenProceso $orden)
-    {
-      if($orden->status!=OrdenProceso::STATUS_DESCARGA){
-        return response()->json(['success' => false, "error" => true,
-          'message'=>'La orden debe estar en estatus '
-            .OrdenProceso::STATUS_DESCARGA
-        ], 400);
-      }
-
-      //actualizar orden
-      $orden->update(['status'=>OrdenProceso::STATUS_ENTREGADO]);
-
-      return response()->json([
-        'success' => true, "error" => false, 'orden'=>$orden
-      ], 200);
-    }
-
-
+    
 }

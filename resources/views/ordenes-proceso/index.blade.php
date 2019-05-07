@@ -51,6 +51,11 @@
                       :href="'/proyectos-aprobados/'+orden.proyecto_id+'/ordenes-compra/'+orden.id">
                       <i class="far fa-eye"></i>
                     </a> --}}
+                    <button class="btn btn-info"
+                      title="Historial" @click="ordenHistorial=orden; openHistorial=true;">
+                      <i class="fas fa-history"></i>
+                    </button>
+                    {{-- Descarga de archivos --}}
                     <a v-if="orden.orden_compra.archivo" class="btn btn-warning"
                       title="PDF" :href="orden.orden_compra.archivo"
                       :download="'orden-compra '+orden.orden_compra.id+'.pdf'">
@@ -72,7 +77,7 @@
                         :download="'BL orden proceso '+orden.id">
                         <i class="fas fa-file"></i>
                       </a>
-                      <a class="btn btn-info"
+                      <a v-if="orden.certificado" class="btn btn-info"
                         title="Certificado" :href="orden.certificado"
                         :download="'Certificado orden proceso '+orden.id">
                         <i class="fas fa-file-contract"></i>
@@ -90,8 +95,15 @@
                         <i class="fas fa-money-check-alt"></i>
                       </a>
                     </template>
-                    <button v-if="orden.status=='En fabricación'" class="btn btn-brown"
-                      title="Embarcar" @click="embarcar.orden_id=orden.id; openEmbarcar=true;">
+                    {{-- Botones de acciones --}}
+                    <button v-if="orden.status=='En fabricación' && !orden.fecha_estimada_fabricacion"
+                      class="btn btn-info" title="Fabricación"
+                      @click="updateStatus(orden)">
+                      <i class="fas fa-industry"></i>
+                    </button>
+                    <button v-if="orden.status=='En fabricación' && orden.fecha_estimada_fabricacion"
+                      class="btn btn-brown" title="Embarcar"
+                      @click="embarcar.orden_id=orden.id; openEmbarcar=true;">
                       <i class="fas fa-dolly-flatbed"></i>
                     </button>
                     <button v-if="orden.status=='Embarcado de fabrica'" class="btn btn-warning"
@@ -99,24 +111,29 @@
                       <i class="fas fa-warehouse"></i>
                     </button>
                     <button v-if="orden.status=='Aduana'" class="btn btn-unique"
-                      title="Importación" @click="importarOrden(orden)">
+                      title="Importación" @click="updateStatus(orden)">
                       <i class="fas fa-ship"></i>
                     </button>
                     <button v-if="orden.status=='Proceso de Importación'" class="btn btn-success"
-                      title="Liberadar Aduana" @click="liberarOrden(orden)">
+                      title="Liberadar Aduana" @click="updateStatus(orden)">
                       <i class="fas fa-lock-open"></i>
                     </button>
                     <button v-if="orden.status=='Liberado de Aduana'" class="btn btn-elegant"
-                      title="Embarque final" @click="embarqueFinal(orden)">
+                      title="Embarque final" @click="updateStatus(orden)">
                       <i class="fas fa-shipping-fast"></i>
                     </button>
                     <button v-if="orden.status=='Embarque al destino Final'" class="btn btn-purple"
-                      title="Descarga" @click="descargarOrden(orden)">
+                      title="Descarga" @click="updateStatus(orden)">
                       <i class="fas fa-dolly"></i>
                     </button>
                     <button v-if="orden.status=='Descarga'" class="btn btn-default"
-                      title="Entrega" @click="entregarOrden(orden)">
+                      title="Entrega" @click="updateStatus(orden)">
                       <i class="fas fa-box"></i>
+                    </button>
+                    <button v-if="orden.status=='Entregado' && !orden.fecha_estimada_instalacion"
+                      class="btn btn-info" title="Instalación"
+                      @click="updateStatus(orden)">
+                      <i class="fas fa-tools"></i>
                     </button>
                   </td>
                 </tr>
@@ -127,6 +144,104 @@
       </div>
     </div>
   </div>
+
+  <!-- Historial Modal -->
+  <modal v-model="openHistorial" title="Historial de cambios de status" :footer="false">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="table-responsive">
+          <table class="table table-bordred">
+            <thead>
+              <th>Status</th>
+              <th>Fecha estimada</th>
+              <th>Fecha real</th>
+            </thead>
+            <tbody>
+              <tr>
+                <td>En fabricación</td>
+                <td>@{{ ordenHistorial.fecha_estimada_fabricacion }}</td>
+                <td>@{{ ordenHistorial.fecha_real_fabricacion }}</td>
+              </tr>
+              <tr>
+                <td>Embarcado de fabrica</td>
+                <td>@{{ ordenHistorial.fecha_estimada_embarque }}</td>
+                <td>@{{ ordenHistorial.fecha_real_embarque }}</td>
+              </tr>
+              <tr>
+                <td>Aduana</td>
+                <td>@{{ ordenHistorial.fecha_estimada_aduana }}</td>
+                <td>@{{ ordenHistorial.fecha_real_aduana }}</td>
+              </tr>
+              <tr>
+                <td>Proceso de Importación</td>
+                <td>@{{ ordenHistorial.fecha_estimada_importacion }}</td>
+                <td>@{{ ordenHistorial.fecha_real_importacion }}</td>
+              </tr>
+              <tr>
+                <td>Liberado de Aduana</td>
+                <td>@{{ ordenHistorial.fecha_estimada_liberado_aduana }}</td>
+                <td>@{{ ordenHistorial.fecha_real_liberado_aduana }}</td>
+              </tr>
+              <tr>
+                <td>Embarque al destino Final</td>
+                <td>@{{ ordenHistorial.fecha_estimada_embarque_final }}</td>
+                <td>@{{ ordenHistorial.fecha_real_embarque_final }}</td>
+              </tr>
+              <tr>
+                <td>Descarga</td>
+                <td>@{{ ordenHistorial.fecha_estimada_descarga }}</td>
+                <td>@{{ ordenHistorial.fecha_real_descarga }}</td>
+              </tr>
+              <tr>
+                <td>Entregado</td>
+                <td>@{{ ordenHistorial.fecha_estimada_entrega }}</td>
+                <td>@{{ ordenHistorial.fecha_real_entrega }}</td>
+              </tr>
+              <tr>
+                <td>Instalacion</td>
+                <td>@{{ ordenHistorial.fecha_estimada_instalacion }}</td>
+                <td>@{{ ordenHistorial.fecha_real_instalacion }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="form-group text-right">
+      <button type="button" class="btn btn-default" @click="openHistorial=false;">Aceptar</button>
+    </div>
+  </modal>
+  <!-- /.Historial Modal -->
+
+  <!-- Estimados Modal -->
+  <modal v-model="openEstimados" :header="false" :footer="false" :backdrop="false"
+    :keyboard="false" size="sm">
+    <h4 class="text-center">
+      Seleccione la fecha estimada para completar la
+      <span v-show="estimados.status=='En fabricación'">Fabricación</span>
+      <span v-show="estimados.status=='Aduana'">Importación</span>
+      <span v-show="estimados.status=='Proceso de Importación'">Liberacion de Aduana</span>
+      <span v-show="estimados.status=='Liberado de Aduana'">Embarcación Final</span>
+      <span v-show="estimados.status=='Embarque al destino Final'">Descarga</span>
+      <span v-show="estimados.status=='Descarga'">Entrega</span>
+      <span v-show="estimados.status=='Entrega'">Instalacion</span>
+    </h4>
+    <div class="form-group">
+      <date-picker :locale="locale" :today-btn="false" :clear-btn="false"
+        format="dd/MM/yyyy" :date-parser="dateParser"
+        v-model="estimados.fecha_estimada"
+      />
+    </div>
+    <div class="text-right">
+      <button id="aceptarEstimado" type="button" class="btn btn-primary" :disabled="cargando">
+        Aceptar
+      </button>
+      <button id="cancelarEstimado" type="button" class="btn btn-default">
+        Cancelar
+      </button>
+    </div>
+  </modal>
+  <!-- /.Estimados Modal -->
 
   <!-- Embarcar Modal -->
   <modal v-model="openEmbarcar" :title="'Embarcar Orden '+embarcar.orden_id" :footer="false">
@@ -170,9 +285,36 @@
             <label class="control-label">Certificado de Origen</label>
             <div class="file-loading">
               <input id="certificado" name="certificado" type="file" ref="certificado"
-              @change="fijarDocumentoEmbarque('certificado')" required />
+              @change="fijarDocumentoEmbarque('certificado')" />
             </div>
             <div id="certificado-file-errors"></div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="control-label">Feche estimada para completar embarque</label>
+            <br />
+            <dropdown>
+              <div class="input-group">
+                <div class="input-group-btn">
+                  <btn class="dropdown-toggle" style="background-color:#fff;">
+                    <i class="fas fa-calendar"></i>
+                  </btn>
+                </div>
+                <input class="form-control" type="text" name="fecha"
+                  v-model="embarcar.fecha_estimada" placeholder="DD/MM/YYYY"
+                  readonly
+                />
+              </div>
+              <template slot="dropdown">
+                <li>
+                  <date-picker :locale="locale" :today-btn="false" :clear-btn="false"
+                  format="dd/MM/yyyy" :date-parser="dateParser" v-model="embarcar.fecha_estimada"/>
+                </li>
+              </template>
+            </dropdown>
           </div>
         </div>
       </div>
@@ -187,7 +329,7 @@
   </modal>
   <!-- /.Embarcar Modal -->
 
-  <!-- Embarcar Modal -->
+  <!-- Aduana Modal -->
   <modal v-model="openAduana" :title="'Mandar orden '+aduana.orden_id+' a Aduana'" :footer="false">
     <h4>Por favor proporcione los siguientes documentos:</h4>
     <form class="" @submit.prevent="aduanaOrden">
@@ -213,6 +355,33 @@
           </div>
         </div>
       </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="control-label">Feche estimada para completar aduana</label>
+            <br />
+            <dropdown>
+              <div class="input-group">
+                <div class="input-group-btn">
+                  <btn class="dropdown-toggle" style="background-color:#fff;">
+                    <i class="fas fa-calendar"></i>
+                  </btn>
+                </div>
+                <input class="form-control" type="text" name="fecha"
+                  v-model="aduana.fecha_estimada" placeholder="DD/MM/YYYY"
+                  readonly
+                />
+              </div>
+              <template slot="dropdown">
+                <li>
+                  <date-picker :locale="locale" :today-btn="false" :clear-btn="false"
+                  format="dd/MM/yyyy" :date-parser="dateParser" v-model="aduana.fecha_estimada"/>
+                </li>
+              </template>
+            </dropdown>
+          </div>
+        </div>
+      </div>
       <div class="form-group text-right">
         <button type="submit" class="btn btn-primary" :disabled="cargando">Aceptar</button>
         <button type="button" class="btn btn-default"
@@ -222,7 +391,7 @@
       </div>
     </form>
   </modal>
-  <!-- /.Embarcar Modal -->
+  <!-- /.Aduana Modal -->
 
 </section>
 <!-- /.content -->
@@ -235,20 +404,30 @@
 const app = new Vue({
     el: '#content',
     data: {
+      locale: localeES,
       ordenes: {!! json_encode($ordenes) !!},
+      ordenHistorial: {},
+      estimados: {
+        status: '',
+        fecha_estimada: ''
+      },
       embarcar: {
         orden_id: 0,
         factura: '',
         packing: '',
         bl: '',
-        certificado: ''
+        certificado: '',
+        fecha_estimada: ''
       },
       aduana: {
         orden_id: 0,
         gastos: '',
         pago: '',
+        fecha_estimada: ''
       },
       cargando: false,
+      openHistorial: false,
+      openEstimados: false,
       openEmbarcar: false,
       openAduana: false
     },
@@ -309,11 +488,81 @@ const app = new Vue({
       });
     },
     methods:{
+      dateParser(value){
+  			return moment(value, 'DD/MM/YYYY').toDate().getTime();
+  		},
       fijarDocumentoEmbarque(documento){
         this.embarcar[documento] = this.$refs[documento].files[0];
       },
       fijarDocumentoAduana(documento){
         this.aduana[documento] = this.$refs[documento].files[0];
+      },
+      lanzarModalEstimados(orden){
+        this.estimados.orden_id = orden.id;
+        this.estimados.status = orden.status;
+        this.openEstimados = true;
+
+        var promise = new Promise(function(resolve, reject) {
+          $("#aceptarEstimado").one('click', function(){ resolve();});
+          $("#cancelarEstimado").one('click', function(){ reject();});
+        });
+
+        return promise;
+      },
+      updateStatus(orden){
+        this.lanzarModalEstimados(orden).then(() => {
+          if(this.estimados.fecha_estimada){
+            this.cargando = true;
+            axios.post('/ordenes-proceso/'+this.estimados.orden_id+'/updateStatus',
+            this.estimados)
+            .then(({data}) => {
+              this.ordenes.find(function(orden){
+                if(this.estimados.orden_id == orden.id){
+                  for (propiedad in data.actualizados){
+                    orden[propiedad] = data.actualizados[propiedad];
+                  }
+                  return true;
+                }
+              }, this);
+
+              this.estimados = {
+                orden_id: 0,
+                status: '',
+                fecha_estimada: ''
+              };
+              this.openEstimados = false;
+              this.cargando = false;
+              swal({
+                title: "Orden Actualizada",
+                text: 'Se ha actualizado la orden',
+                type: "success"
+              });
+            })
+            .catch(({response}) => {
+              console.error(response);
+              this.estimados = {
+                orden_id: 0,
+                status: '',
+                fecha_estimada: ''
+              };
+              this.openEstimados = false;
+              this.cargando = false;
+              swal({
+                title: "Error",
+                text: response.data.message || "Ocurrio un error inesperado, intente mas tarde",
+                type: "error"
+              });
+            });
+          }
+        })
+        .catch(() => {
+          this.estimados = {
+            orden_id: 0,
+            status: '',
+            fecha_estimada: ''
+          };
+          this.openEstimados = false;
+        });
       },
       embarcarOrden(){
         var formData = objectToFormData(this.embarcar, {indices:true});
@@ -330,6 +579,8 @@ const app = new Vue({
               orden.packing = data.orden.packing;
               orden.bl = data.orden.bl;
               orden.certificado = data.orden.certificado;
+              orden.fecha_real_fabricacion = data.orden.fecha_real_fabricacion;
+              orden.fecha_estimada_embarque = data.orden.fecha_estimada_embarque;
               return true;
             }
           }, this);
@@ -339,7 +590,8 @@ const app = new Vue({
             factura: '',
             packing: '',
             bl: '',
-            certificado: ''
+            certificado: '',
+            fecha_estimada: ''
           };
           $("#factura").fileinput('clear');
           $("#packing").fileinput('clear');
@@ -376,6 +628,8 @@ const app = new Vue({
               orden.status = data.orden.status;
               orden.gastos = data.orden.gastos;
               orden.pago = data.orden.pago;
+              orden.fecha_real_embarque = data.orden.fecha_real_embarque;
+              orden.fecha_estimada_aduana = data.orden.fecha_estimada_aduana;
               return true;
             }
           }, this);
@@ -384,6 +638,7 @@ const app = new Vue({
             orden_id: 0,
             gastos: '',
             pago: '',
+            fecha_estimada: ''
           };
           $("#gastos").fileinput('clear');
           $("#pago").fileinput('clear');
@@ -405,167 +660,6 @@ const app = new Vue({
           });
         });
       },//fin aduanaOrden
-      importarOrden(orden){
-        swal({
-          title: 'Atención',
-          text: "Importar la orden "+orden.id+"?",
-          type: 'info',
-          showCancelButton: true,
-          confirmButtonColor: '#3085d6',
-          cancelButtonColor: '#d33',
-          confirmButtonText: 'Si, Importar',
-          cancelButtonText: 'No, dejar como esta',
-        }).then((result) => {
-          if (result.value) {
-            axios.post('/ordenes-proceso/'+orden.id+'/importar', {})
-            .then(({data}) => {
-              orden.status = data.orden.status;
-              swal({
-                title: "Exito",
-                text: "La orden se ha pasado a "+orden.status,
-                type: "success"
-              });
-            })
-            .catch(({response}) => {
-              console.error(response);
-              swal({
-                title: "Error",
-                text: response.data.message || "Ocurrio un error inesperado, intente mas tarde",
-                type: "error"
-              });
-            });
-          } //if confirmacion
-        });
-      },//importarOrden
-      liberarOrden(orden){
-        swal({
-          title: 'Atención',
-          text: "Liberar de aduana la orden "+orden.id+"?",
-          type: 'info',
-          showCancelButton: true,
-          confirmButtonColor: '#3085d6',
-          cancelButtonColor: '#d33',
-          confirmButtonText: 'Si, Liberar',
-          cancelButtonText: 'No, dejar como esta',
-        }).then((result) => {
-          if (result.value) {
-            axios.post('/ordenes-proceso/'+orden.id+'/liberar', {})
-            .then(({data}) => {
-              orden.status = data.orden.status;
-              swal({
-                title: "Exito",
-                text: "La orden se ha pasado a "+orden.status,
-                type: "success"
-              });
-            })
-            .catch(({response}) => {
-              console.error(response);
-              swal({
-                title: "Error",
-                text: response.data.message || "Ocurrio un error inesperado, intente mas tarde",
-                type: "error"
-              });
-            });
-          } //if confirmacion
-        });
-      },//liberarOrden
-      embarqueFinal(orden){
-        swal({
-          title: 'Atención',
-          text: "Embarcar a destino final la orden "+orden.id+"?",
-          type: 'info',
-          showCancelButton: true,
-          confirmButtonColor: '#3085d6',
-          cancelButtonColor: '#d33',
-          confirmButtonText: 'Si, Embarcar',
-          cancelButtonText: 'No, dejar como esta',
-        }).then((result) => {
-          if (result.value) {
-            axios.post('/ordenes-proceso/'+orden.id+'/embarqueFinal', {})
-            .then(({data}) => {
-              orden.status = data.orden.status;
-              swal({
-                title: "Exito",
-                text: "La orden se ha pasado a "+orden.status,
-                type: "success"
-              });
-            })
-            .catch(({response}) => {
-              console.error(response);
-              swal({
-                title: "Error",
-                text: response.data.message || "Ocurrio un error inesperado, intente mas tarde",
-                type: "error"
-              });
-            });
-          } //if confirmacion
-        });
-      },//embarqueFinal
-      descargarOrden(orden){
-        swal({
-          title: 'Atención',
-          text: "Descargar la orden "+orden.id+"?",
-          type: 'info',
-          showCancelButton: true,
-          confirmButtonColor: '#3085d6',
-          cancelButtonColor: '#d33',
-          confirmButtonText: 'Si, Descargar',
-          cancelButtonText: 'No, dejar como esta',
-        }).then((result) => {
-          if (result.value) {
-            axios.post('/ordenes-proceso/'+orden.id+'/descargar', {})
-            .then(({data}) => {
-              orden.status = data.orden.status;
-              swal({
-                title: "Exito",
-                text: "La orden se ha pasado a "+orden.status,
-                type: "success"
-              });
-            })
-            .catch(({response}) => {
-              console.error(response);
-              swal({
-                title: "Error",
-                text: response.data.message || "Ocurrio un error inesperado, intente mas tarde",
-                type: "error"
-              });
-            });
-          } //if confirmacion
-        });
-      },//descargarOrden
-      entregarOrden(orden){
-        swal({
-          title: 'Atención',
-          text: "Entregar la orden "+orden.id+"?",
-          type: 'info',
-          showCancelButton: true,
-          confirmButtonColor: '#3085d6',
-          cancelButtonColor: '#d33',
-          confirmButtonText: 'Si, Entregar',
-          cancelButtonText: 'No, dejar como esta',
-        }).then((result) => {
-          if (result.value) {
-            axios.post('/ordenes-proceso/'+orden.id+'/entregar', {})
-            .then(({data}) => {
-              orden.status = data.orden.status;
-              swal({
-                title: "Exito",
-                text: "La orden se ha pasado a "+orden.status,
-                type: "success"
-              });
-            })
-            .catch(({response}) => {
-              console.error(response);
-              swal({
-                title: "Error",
-                text: response.data.message || "Ocurrio un error inesperado, intente mas tarde",
-                type: "error"
-              });
-            });
-          } //if confirmacion
-        });
-      },//entregarOrden
-
     }
 
 });
