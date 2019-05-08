@@ -441,12 +441,13 @@
     </div>
 
     <!-- Espacio para que el footer no se sobreponga a la tabla -->
-    <div class="row">
+    {{-- <div class="row">
       <div class="col-lg-12" style="height:150px;">
       </div>
-    </div>
+    </div> --}}
 
-    <div class="row footer">
+    {{-- <div class="row footer"> --}}
+    <div class="row" style="page-break-inside: avoid;">
       <div class="col-lg-12 bordered" style="padding: 0px; margin-left:15px;">
         <table style="margin: 0px; width:100%;">
           <tr class="font-small">
