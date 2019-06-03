@@ -46,7 +46,7 @@ class OrdenesCompraController extends Controller
     public function create(ProyectoAprobado $proyecto)
     {
       $proveedores = Proveedor::all();
-      $productos = Producto::with('categoria')->get();
+      $productos = Producto::with('categoria')->has('categoria')->get();
 
       return view('ordenes-compra.create', compact('proyecto','proveedores','productos'));
     }
@@ -171,7 +171,7 @@ class OrdenesCompraController extends Controller
       */
      public function edit(ProyectoAprobado $proyecto, OrdenCompra $orden)
      {
-       $productos = Producto::with('categoria')->get();
+       $productos = Producto::with('categoria')->has('categoria')->get();
        $orden->load('proveedor', 'entradas.producto');
        if($orden->iva>0) $orden->iva = 1;
 

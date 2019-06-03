@@ -16,7 +16,7 @@ class SubProyectosController extends Controller
      */
     public function index()
     {
-      $subproyectos = SubProyecto::with('proyecto')->get();
+      $subproyectos = SubProyecto::with('proyecto')->has('proyecto')->get();
 
       return view('catalogos.subproyectos.index', compact('subproyectos'));
     }

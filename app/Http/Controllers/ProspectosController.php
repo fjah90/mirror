@@ -29,7 +29,7 @@ class ProspectosController extends Controller
     public function index()
     {
       $prospectos = Prospecto::with('cliente', 'ultima_actividad.tipo', 'proxima_actividad.tipo')
-      ->whereHas('cliente')->get();
+      ->has('cliente')->get();
 
       return view('prospectos.index', compact('prospectos'));
     }
@@ -224,7 +224,8 @@ class ProspectosController extends Controller
     public function cotizar(Prospecto $prospecto)
     {
       $prospecto->load('cliente','cotizaciones.entradas.producto');
-      $productos = Producto::with('categoria','proveedor','descripciones.descripcionNombre')->get();
+      $productos = Producto::with('categoria','proveedor','descripciones.descripcionNombre')
+      ->has('proveedor')->has('categoria')->get();
       $condiciones = CondicionCotizacion::all();
 
       foreach ($prospecto->cotizaciones as $cotizacion) {

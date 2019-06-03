@@ -20,7 +20,10 @@ class ProductosController extends Controller
      */
     public function index()
     {
-      $productos = Producto::with('proveedor','categoria')->get();
+      $productos = Producto::with('proveedor','categoria')
+      ->has('proveedor')
+      ->has('categoria')
+      ->get();
 
       return view('catalogos.productos.index', compact('productos'));
     }
