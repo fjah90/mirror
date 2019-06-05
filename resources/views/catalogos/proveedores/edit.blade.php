@@ -33,8 +33,15 @@
                 </div>
                 <div class="col-md-4">
                   <div class="form-group">
-                    <label class="control-label">RFC</label>
-                    <input type="text" class="form-control" name="rfc" v-model="proveedor.rfc" required />
+                    <label class="control-label">
+                      <span>Identidad Fiscal: </span>
+                      <span v-if="proveedor.identificacion_fiscal=='RFC'">RFC</span>
+                      <span v-else>EIN</span>
+                      <i class="fas fa-exchange-alt text-primary" style="cursor:pointer;"
+                        @click="proveedor.identificacion_fiscal=(proveedor.identificacion_fiscal=='RFC')?'EIN':'RFC'">
+                      </i>
+                    </label>
+                    <input type="text" class="form-control" name="identidad_fiscal" v-model="proveedor.identidad_fiscal" required />
                   </div>
                 </div>
                 <div class="col-md-4">
@@ -236,7 +243,8 @@ const app = new Vue({
     data: {
       proveedor: {
         empresa: '{{$proveedor->empresa}}',
-        rfc: '{{$proveedor->rfc}}',
+        identidad_fiscal: '{{$proveedor->identidad_fiscal}}',
+        identificacion_fiscal: '{{$proveedor->identificacion_fiscal}}',
         telefono: '{{$proveedor->telefono}}',
         email: '{{$proveedor->email}}',
         banco: '{{$proveedor->banco}}',

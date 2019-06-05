@@ -37,7 +37,7 @@
                   <th>Empresa</th>
                   <th>Teléfono</th>
                   <th>Email</th>
-                  <th>RFC</th>
+                  <th>RFC / EIN</th>
                   <th>Banco</th>
                   <th></th>
                 </tr>
@@ -48,7 +48,7 @@
                   <td>@{{proveedor.empresa}}</td>
                   <td>@{{proveedor.telefono}}</td>
                   <td>@{{proveedor.email}}</td>
-                  <td>@{{proveedor.rfc}}</td>
+                  <td>@{{proveedor.identidad_fiscal}}</td>
                   <td>@{{proveedor.banco}}</td>
                   <td class="text-right">
                     <a class="btn btn-info" data-toggle="tooltip" title="Ver"

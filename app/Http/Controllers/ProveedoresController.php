@@ -43,7 +43,7 @@ class ProveedoresController extends Controller
         'empresa' => 'required',
         'telefono' => 'required',
         'email' => 'required',
-        'rfc' => 'required',
+        'identidad_fiscal' => 'required',
       ]);
 
       if ($validator->fails()) {
@@ -100,7 +100,7 @@ class ProveedoresController extends Controller
         'empresa' => 'required',
         'telefono' => 'required',
         'email' => 'required',
-        'rfc' => 'required',
+        'identidad_fiscal' => 'required',
       ]);
 
       if ($validator->fails()) {

@@ -32,8 +32,8 @@
               </div>
               <div class="col-md-4">
                 <div class="form-group">
-                  <label class="control-label">RFC</label>
-                  <span class="form-control">{{$proveedor->rfc}}</span>
+                  <label class="control-label">{{ $proveedor->identificacion_fiscal }}</label>
+                  <span class="form-control">{{$proveedor->identidad_fiscal}}</span>
                 </div>
               </div>
               <div class="col-md-4">
