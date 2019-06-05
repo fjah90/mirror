@@ -15,6 +15,7 @@ class AddIdentificacionFieldToProveedoresTable extends Migration
     {
         Schema::table('proveedores', function (Blueprint $table) {
           $table->renameColumn('rfc','identidad_fiscal');
+          $table->string('razon_social')->nullable();
           $table->string('identificacion_fiscal')->default('RFC');
         });
     }

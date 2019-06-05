@@ -9,9 +9,10 @@ class Proveedor extends Model
 {
     protected $table = 'proveedores';
 
-    protected $fillable = ['empresa','telefono','email','identidad_fiscal',
-      'identificacion_fiscal','banco','numero_cuenta','clave_interbancaria',
-      'calle','numero','colonia','cp','ciudad','estado','moneda','dias_credito'
+    protected $fillable = ['empresa','razon_social','telefono','email',
+      'identidad_fiscal','identificacion_fiscal','banco','numero_cuenta',
+      'clave_interbancaria','calle','numero','colonia','cp','ciudad','estado',
+      'moneda','dias_credito'
     ];
 
     protected $casts = [

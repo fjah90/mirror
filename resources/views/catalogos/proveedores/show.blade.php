@@ -32,18 +32,24 @@
               </div>
               <div class="col-md-4">
                 <div class="form-group">
+                  <label class="control-label">Rason Social</label>
+                  <span class="form-control">{{$proveedor->razon_social}}</span>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
                   <label class="control-label">{{ $proveedor->identificacion_fiscal }}</label>
                   <span class="form-control">{{$proveedor->identidad_fiscal}}</span>
                 </div>
               </div>
+            </div>
+            <div class="row">
               <div class="col-md-4">
                 <div class="form-group">
                   <label class="control-label">Telefono</label>
                   <span class="form-control">{{$proveedor->telefono}}</span>
                 </div>
               </div>
-            </div>
-            <div class="row">
               <div class="col-md-4">
                 <div class="form-group">
                   <label class="control-label">Email</label>
@@ -56,14 +62,14 @@
                   <span class="form-control">{{$proveedor->banco}}</span>
                 </div>
               </div>
+            </div>
+            <div class="row">
               <div class="col-md-4">
                 <div class="form-group">
                   <label class="control-label">Numero Cuenta</label>
                   <span class="form-control">{{$proveedor->numero_cuenta}}</span>
                 </div>
               </div>
-            </div>
-            <div class="row">
               <div class="col-md-4">
                 <div class="form-group">
                   <label class="control-label">Clave Interbancaria</label>
@@ -76,6 +82,8 @@
                   <span class="form-control">{{$proveedor->moneda}}</span>
                 </div>
               </div>
+            </div>
+            <div class="row">
               <div class="col-md-4">
                 <div class="form-group">
                   <label class="control-label">Dias Credito</label>

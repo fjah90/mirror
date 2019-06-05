@@ -33,6 +33,12 @@
                 </div>
                 <div class="col-md-4">
                   <div class="form-group">
+                    <label class="control-label">Razon Social</label>
+                    <input type="text" class="form-control" name="razon_social" v-model="proveedor.razon_social" />
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
                     <label class="control-label">
                       <span>Identidad Fiscal: </span>
                       <span v-if="proveedor.identificacion_fiscal=='RFC'">RFC</span>
@@ -44,14 +50,14 @@
                     <input type="text" class="form-control" name="identidad_fiscal" v-model="proveedor.identidad_fiscal" required />
                   </div>
                 </div>
+              </div>
+              <div class="row">
                 <div class="col-md-4">
                   <div class="form-group">
                     <label class="control-label">Telefono</label>
                     <input type="text" class="form-control" name="telefono" v-model="proveedor.telefono" required />
                   </div>
                 </div>
-              </div>
-              <div class="row">
                 <div class="col-md-4">
                   <div class="form-group">
                     <label class="control-label">Email</label>
@@ -64,14 +70,14 @@
                     <input type="text" class="form-control" name="email" v-model="proveedor.banco" required />
                   </div>
                 </div>
+              </div>
+              <div class="row">
                 <div class="col-md-4">
                   <div class="form-group">
                     <label class="control-label">Número de Cuenta</label>
                     <input type="text" class="form-control" name="email" v-model="proveedor.numero_cuenta" />
                   </div>
                 </div>
-              </div>
-              <div class="row">
                 <div class="col-md-4">
                   <div class="form-group">
                     <label class="control-label">Clave Intervancaria</label>
@@ -87,6 +93,8 @@
                     </select>
                   </div>
                 </div>
+              </div>
+              <div class="row">
                 <div class="col-md-4">
                   <div class="form-group">
                     <label class="control-label">Dias Credito</label>
@@ -243,6 +251,7 @@ const app = new Vue({
     data: {
       proveedor: {
         empresa: '{{$proveedor->empresa}}',
+        razon_social: '{{$proveedor->razon_social}}',
         identidad_fiscal: '{{$proveedor->identidad_fiscal}}',
         identificacion_fiscal: '{{$proveedor->identificacion_fiscal}}',
         telefono: '{{$proveedor->telefono}}',
