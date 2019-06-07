@@ -52,6 +52,7 @@ Route::middleware('auth')->group(function () {
   Route::get('prospectos/regeneratePDF', 'ProspectosController@regeneratePDF');
   Route::get('/prospectos/{prospecto}/cotizar', 'ProspectosController@cotizar')->name('prospectos.cotizar');
   Route::post('/prospectos/{prospecto}/cotizacion', 'ProspectosController@cotizacion');
+  Route::post('/prospectos/{prospecto}/cotizacion/{cotizacion}', 'ProspectosController@cotizacionUpdate');
   Route::post('/prospectos/{prospecto}/enviarCotizacion', 'ProspectosController@enviarCotizacion');
   Route::post('/prospectos/{prospecto}/aceptarCotizacion', 'ProspectosController@aceptarCotizacion');
   Route::post('/prospectos/{prospecto}/notasCotizacion', 'ProspectosController@notasCotizacion');
@@ -91,5 +92,5 @@ Route::middleware('auth')->group(function () {
   Route::post('/ordenes-proceso/{orden}/updateStatus', 'OrdenesProcesoController@updateStatus');
   Route::post('/ordenes-proceso/{orden}/embarcar', 'OrdenesProcesoController@embarcar');
   Route::post('/ordenes-proceso/{orden}/aduana', 'OrdenesProcesoController@aduana');
-  
+
 });

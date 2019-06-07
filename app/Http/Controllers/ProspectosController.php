@@ -223,7 +223,7 @@ class ProspectosController extends Controller
      */
     public function cotizar(Prospecto $prospecto)
     {
-      $prospecto->load('cliente','cotizaciones.entradas.producto');
+      $prospecto->load('cliente','cotizaciones.entradas.producto','cotizaciones.entradas.descripciones');
       $productos = Producto::with('categoria','proveedor','descripciones.descripcionNombre')
       ->has('proveedor')->has('categoria')->get();
       $condiciones = CondicionCotizacion::all();
@@ -334,12 +334,10 @@ class ProspectosController extends Controller
         $modelo_entrada = ProspectoCotizacionEntrada::create($entrada);
 
         foreach ($entrada['descripciones'] as $descripcion) {
-          if(!is_null($descripcion['valor'])){
-            $descripcion['entrada_id'] = $modelo_entrada->id;
-            if(is_null($descripcion['nombre'])) $descripcion['nombre'] = $descripcion['name'];
-            if(is_null($descripcion['name'])) $descripcion['name'] = $descripcion['nombre'];
-            ProspectoCotizacionEntradaDescripcion::create($descripcion);
-          }
+          $descripcion['entrada_id'] = $modelo_entrada->id;
+          if(is_null($descripcion['nombre'])) $descripcion['nombre'] = $descripcion['name'];
+          if(is_null($descripcion['name'])) $descripcion['name'] = $descripcion['nombre'];
+          ProspectoCotizacionEntradaDescripcion::create($descripcion);
         }
       }
 
@@ -362,6 +360,186 @@ class ProspectosController extends Controller
 
       unset($cotizacion->fechaPDF);
       $cotizacion->update(['archivo'=>$url]);
+      $cotizacion->archivo = asset('storage/'.$cotizacion->archivo);
+
+      return response()->json(['success'=>true,'error'=>false,'cotizacion'=>$cotizacion], 200);
+    }
+
+    /**
+     * Editar cotizacion.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Prospecto  $prospecto
+     * @param  \App\Models\ProspectoCotizacion  $cotizacion
+     * @return \Illuminate\Http\Response
+     */
+    public function cotizacionUpdate(Request $request, Prospecto $prospecto, ProspectoCotizacion $cotizacion)
+    {
+      $validator = Validator::make($request->all(), [
+        'prospecto_id' => 'required',
+        'cotizacion_id' => 'required',
+        'facturar' => 'required',
+        'entrega' => 'required',
+        'lugar' => 'required',
+        'moneda' => 'required',
+        'condicion' => 'required',
+        'iva' => 'required',
+        'entradas' => 'required|min:1',
+        'entradas.fotos' => 'array',
+        'entradas.fotos.*' => 'image|mimes:jpg,jpeg,png',
+        'subtotal' => 'required',
+        'total' => 'required'
+      ]);
+
+      if ($validator->fails()) {
+        $errors = $validator->errors()->all();
+        return response()->json([
+          "success" => false, "error" => true, "message" => $errors[0]
+        ], 422);
+      }
+      if (is_null($request->entradas[0])) {
+        return response()->json([
+          "success" => false, "error" => true, "message" => "Debe Agregar al menos 1 producto"
+        ], 422);
+      }
+
+      $user = auth()->user();
+
+      $update = $request->except('entradas', 'condicion', 'observaciones','prospecto_id','cotizacion_id');
+      $update['user_id'] = $user->id;
+      $update['fecha'] = date('Y-m-d');
+      if($request->condicion['id']==0){//nueva condicion, dar de alta
+        $condicion = CondicionCotizacion::create(['nombre'=>$request->condicion['nombre']]);
+        $update['condicion_id'] = $condicion->id;
+      }
+      else $update['condicion_id'] = $request->condicion['id'];
+      if($request->iva=="1"){
+        $update['iva'] = bcmul($update['subtotal'], 0.16, 2);
+        $update['total'] = bcmul($update['subtotal'], 1.16, 2);
+      }
+      else {
+        $update['total'] = $update['subtotal'];
+      }
+      $observaciones = "<ul>";
+      foreach ($request->observaciones as $obs) {
+        $observaciones.="<li>$obs</li>";
+      }
+      $observaciones.= "</ul>";
+      $update['observaciones'] = $observaciones;
+
+      $cotizacion->update($update);
+      $cotizacion->load('entradas');
+
+      //guardar entradas
+      foreach ($request->entradas as $index => $entrada) {
+        if(isset($entrada['id'])){//actualizar entrada
+          //remover de las entradas ya en cotizacion
+          $cotizacion->entradas = $cotizacion->entradas->reject(function($ent) use ($entrada){
+            return $ent->id == $entrada['id'];
+          });
+
+          //recuperar entrada
+          $entradaGuardada = ProspectoCotizacionEntrada::find($entrada['id']);
+          unset($entrada['id']);
+        }
+        else $entradaGuardada = false;
+
+        $producto = Producto::find($entrada['producto_id']);
+        if(!is_null($entrada['fotos'][0]) && !is_string($entrada['fotos'][0])){//hay fotos
+          $fotos = ""; $separador = "";
+          foreach ($entrada['fotos'] as $foto_index => $foto) {
+            //borrar archivo actual, si existe
+            Storage::disk('public')->delete('cotizaciones/'.$cotizacion->id.'/entrada_' .($index+1). '_foto_' .($foto_index+1). '.' .$foto->guessExtension());
+            $ruta = Storage::putFileAs(
+              'public/cotizaciones/'.$cotizacion->id, $foto,
+              'entrada_' .($index+1). '_foto_' .($foto_index+1). '.' .$foto->guessExtension()
+            );
+            $ruta = str_replace('public/', '', $ruta);
+            $fotos.= $separador.$ruta;
+            $separador = "|";
+          }
+          $entrada['fotos'] = $fotos;
+        }
+        else if($entradaGuardada && $entradaGuardada->producto_id==$producto->id){
+          unset($entrada['fotos']); //no se actualzan fotos
+        }
+        else if($producto->foto){
+          $extencion = pathinfo(asset($producto->foto), PATHINFO_EXTENSION);
+          $ruta = "cotizaciones/".$cotizacion->id."/entrada_".($index+1)."_foto_1.".$extencion;
+          Storage::disk('public')->delete($ruta);//borrar archivo actual, si existe
+          Storage::copy("public/".$producto->foto, "public/$ruta");
+          $entrada['fotos'] = $ruta;
+        }
+        else $entrada['fotos'] = "";
+
+        $entrada['cotizacion_id'] = $cotizacion->id;
+        $observaciones = "<ul>";
+        foreach ($entrada['observaciones'] as $obs) {
+          $observaciones.="<li>$obs</li>";
+        }
+        $observaciones.= "</ul>";
+        $entrada['observaciones'] = ($observaciones=="<ul><li></li></ul>")?"":$observaciones;
+
+        if($entradaGuardada){
+          if($entradaGuardada->producto_id==$producto->id){
+            //mismo producto, solo actualizar descripciones
+            foreach ($entrada['descripciones'] as $descripcion) {
+              ProspectoCotizacionEntradaDescripcion::find($descripcion['id'])
+              ->update(['valor'=>$descripcion['valor']]);
+            }
+          }
+          else {
+            $entradaGuardada->load('descripciones');
+            foreach ($entradaGuardada->descripciones as $desc) {
+              $desc->delete();
+            }
+            unset($entradaGuardada->descripciones);
+
+            foreach ($entrada['descripciones'] as $descripcion) {
+              $descripcion['entrada_id'] = $entradaGuardada->id;
+              if(is_null($descripcion['nombre'])) $descripcion['nombre'] = $descripcion['name'];
+              if(is_null($descripcion['name'])) $descripcion['name'] = $descripcion['nombre'];
+              ProspectoCotizacionEntradaDescripcion::create($descripcion);
+            }
+          }
+          $entradaGuardada->update($entrada);
+        }
+        else {
+          $modelo_entrada = ProspectoCotizacionEntrada::create($entrada);
+          foreach ($entrada['descripciones'] as $descripcion) {
+            $descripcion['entrada_id'] = $modelo_entrada->id;
+            if(is_null($descripcion['nombre'])) $descripcion['nombre'] = $descripcion['name'];
+            if(is_null($descripcion['name'])) $descripcion['name'] = $descripcion['nombre'];
+            ProspectoCotizacionEntradaDescripcion::create($descripcion);
+          }
+        }
+      }//foreach $request->entradas
+
+      //remover entradas restantes en cotizacion, porque significa que se eliminaron
+      foreach ($cotizacion->entradas as $entrada) {
+        $entrada->delete();
+      }
+      unset($cotizacion->entradas);
+
+      $cotizacion->load('prospecto.cliente', 'condiciones', 'entradas.producto.categoria',
+      'entradas.producto.proveedor', 'entradas.descripciones', 'user');
+      if($cotizacion->user->firma) $cotizacion->user->firma = storage_path('app/public/'.$cotizacion->user->firma);
+      else $cotizacion->user->firma = public_path('images/firma_vacia.png');
+
+      //crear pdf de cotizacion
+      $url = 'cotizaciones/'.$cotizacion->id.'/Cotizacion '.$cotizacion->id.' Intercorp '.$prospecto->nombre.'.pdf';
+      $meses = ['ENERO','FEBRERO','MARZO','ABRIL','MAYO','JUNIO','JULIO',
+      'AGOSTO','SEPTIEMBRE','OCTUBRE','NOVIEMBRE','DICIEMBRE'];
+      list($ano,$mes,$dia) = explode('-', $cotizacion->fecha);
+      $mes = $meses[+$mes-1];
+      $cotizacion->fechaPDF = "$mes $dia, $ano";
+      $nombre = ($cotizacion->idioma=='español')?"nombre":"name";
+
+      $cotizacionPDF = PDF::loadView('prospectos.cotizacionPDF', compact('cotizacion', 'nombre'));
+      Storage::disk('public')->put($url, $cotizacionPDF->output());
+
+      unset($cotizacion->fechaPDF);
+      // $cotizacion->update(['archivo'=>$url]);
       $cotizacion->archivo = asset('storage/'.$cotizacion->archivo);
 
       return response()->json(['success'=>true,'error'=>false,'cotizacion'=>$cotizacion], 200);

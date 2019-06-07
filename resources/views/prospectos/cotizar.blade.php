@@ -68,7 +68,7 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr v-for="cotizacion in prospecto.cotizaciones">
+                      <tr v-for="(cotizacion, index) in prospecto.cotizaciones">
                         <td>@{{cotizacion.id}}</td>
                         <td>@{{cotizacion.fecha_formated}}</td>
                         <td>
@@ -93,13 +93,19 @@
                             @click="enviar.cotizacion_id=cotizacion.id; openEnviar=true;">
                             <i class="far fa-envelope"></i>
                           </button>
-                          <button v-if="!cotizacion.aceptada" class="btn btn-success" title="Aceptar"
-                            @click="aceptar.cotizacion_id=cotizacion.id; openAceptar=true;">
+                          <button v-if="cotizacion.aceptada" class="btn text-primary" title="Aceptada">
                             <i class="fas fa-user-check"></i>
                           </button>
-                          <button v-else class="btn text-primary" title="Aceptada">
-                            <i class="fas fa-user-check"></i>
-                          </button>
+                          <template v-else>
+                            <button class="btn btn-primary" title="Aceptar"
+                              @click="aceptar.cotizacion_id=cotizacion.id; openAceptar=true;">
+                              <i class="fas fa-user-check"></i>
+                            </button>
+                            <button class="btn btn-success" title="Editar"
+                              @click="editar(index, cotizacion)">
+                              <i class="far fa-edit"></i>
+                            </button>
+                          </template>
                         </td>
                       </tr>
                     </tbody>
@@ -150,7 +156,7 @@
                     </select>
                   </div>
                 </div>
-                <div class="col-md-6" v-if="">
+                <div class="col-md-6">
                   <div class="form-group">
                     <label class="control-label">Especifique Otra</label>
                     <input class="form-control" type="text" name="condiciones"
@@ -667,7 +673,7 @@ const app = new Vue({
 
       if(prod.foto){
         $("button.fileinput-remove").click();
-        $("div.file-default-preview img")[0].src = this.entrada.foto_src;
+        $("div.file-default-preview img")[0].src = prod.foto;
       }
 
       this.openCatalogo = false;
@@ -713,8 +719,21 @@ const app = new Vue({
 
       $("button.fileinput-remove").click();
       if(this.entrada.fotos.length){//hay fotos
-        this.$refs['fotos'].files =  FileListItem(this.entrada.fotos);
-        this.$refs['fotos'].dispatchEvent(new Event('change', { 'bubbles': true }));
+        if(typeof this.entrada.fotos[0] == "object"){
+          this.$refs['fotos'].files =  FileListItem(this.entrada.fotos);
+          this.$refs['fotos'].dispatchEvent(new Event('change', { 'bubbles': true }));
+        }
+        else if(typeof this.entrada.fotos[0] == "string"){
+          $("div.file-default-preview").empty();
+          this.entrada.fotos.forEach(function(foto){
+            $("div.file-default-preview")
+              .append('<img src="'+foto+'" style="width:200px; height:auto;" alt="foto">');
+          });
+          $("div.file-default-preview").append('<h6>Click para seleccionar</h6>');
+        }
+      }
+      else if(this.entrada.producto.foto){
+        $("div.file-default-preview img")[0].src = this.entrada.producto.foto;
       }
 
       this.observaciones_productos.forEach(function(observacion){
@@ -730,6 +749,71 @@ const app = new Vue({
       this.cotizacion.entradas.splice(index, 1);
       $("button.fileinput-remove").click();
     },
+    editar(index, cotizacion){
+      this.prospecto.cotizaciones.splice(index, 1);
+
+      //reiniciar observaciones
+      this.observaciones.forEach(function(observacion){
+        observacion.activa = false;
+      });
+
+      //vaciar datos de cotizacion
+      this.cotizacion = {
+        prospecto_id: {{$prospecto->id}},
+        cotizacion_id: cotizacion.id,
+        condicion: {
+          id: cotizacion.condicion_id,
+          nombre: ''
+        },
+        facturar: '{{$prospecto->cliente->razon_social}}',
+        entrega: cotizacion.entrega,
+        lugar: cotizacion.lugar,
+        moneda: cotizacion.moneda,
+        entradas: cotizacion.entradas,
+        subtotal: cotizacion.subtotal,
+        iva: (cotizacion.iva==0)?0:1,
+        total: cotizacion.total,
+        idioma: cotizacion.idioma,
+        notas: cotizacion.notas,
+        observaciones: []
+      };
+
+      //re-seleccionar observaciones
+      var observaciones = cotizacion.observaciones.match(/<li>([^<]+)+<\/li>+/g);
+      if(observaciones==null) observaciones = [];
+      var encontrada;
+      observaciones.forEach(function(observacion){
+        observacion = observacion.replace(/(<li>|<\/li>)/g, '');
+        encontrada = this.observaciones.findIndex(function(obs){
+          return observacion == obs.texto;
+        });
+
+        if(encontrada!=-1){
+          this.observaciones[encontrada].activa = true;
+        }
+        else { //observacion diferente de las predefinidas
+          this.observaciones.push({activa:true, texto: observacion});
+        }
+        this.cotizacion.observaciones.push(observacion);
+      }, this);
+
+      // agregar observaciones de entradas de productos
+      cotizacion.entradas.forEach(function(entrada){
+        observaciones = entrada.observaciones.match(/<li>([^<]+)+<\/li>+/g);
+        entrada.observaciones = [];
+        if(observaciones==null) return false;
+        encontrada;
+        observaciones.forEach(function(observacion){
+          observacion = observacion.replace(/(<li>|<\/li>)/g, '');
+          entrada.observaciones.push(observacion);
+
+          encontrada = this.observaciones_productos.findIndex(function(obs){
+            return observacion == obs.texto;
+          });
+          if(encontrada==-1)this.observaciones_productos.push({activa:false, texto: observacion});
+        }, this);
+      }, this);
+    },
     guardar(){
       var cotizacion = $.extend(true, {}, this.cotizacion);
       cotizacion.entradas.forEach(function(entrada){
@@ -737,9 +821,15 @@ const app = new Vue({
         delete entrada.producto;
       });
       var formData = objectToFormData(cotizacion, {indices:true});
+      var url = "";
+
+      if(this.cotizacion.cotizacion_id){
+        url = '/prospectos/{{$prospecto->id}}/cotizacion/'+this.cotizacion.cotizacion_id;
+      }
+      else url = '/prospectos/{{$prospecto->id}}/cotizacion';
 
       this.cargando = true;
-      axios.post('/prospectos/{{$prospecto->id}}/cotizacion', formData, {
+      axios.post(url, formData, {
         headers: { 'Content-Type': 'multipart/form-data'}
       })
       .then(({data}) => {

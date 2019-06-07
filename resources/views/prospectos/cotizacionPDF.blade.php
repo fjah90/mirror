@@ -391,10 +391,12 @@
                   <tr>
                     <td style="vertical-align: top;">
                       @foreach($entrada->descripciones as $descripcion)
+                        @if($descripcion->valor)
                         <p>
                           <span>@text_capitalize($descripcion->{$nombre}): </span>
                           <span class="text-uppercase">{{$descripcion->valor}}</span>
                         </p>
+                        @endif
                       @endforeach
                       @if($entrada->observaciones)
                         <p>
@@ -422,7 +424,7 @@
     </div>
 
     <div class="row" style="page-break-inside: avoid;">
-      <div class="col-lg-12 bordered" style="padding: 0px; margin-left:15px;">
+      <div class="bordered" style="margin:0 15px;">
         <table class="" style="margin-bottom:0; width:100%;">
           <tr>
             <td class="text-right" style="width:90%;"><strong>Subtotal:</strong></td>
@@ -448,7 +450,7 @@
 
     {{-- <div class="row footer"> --}}
     <div class="row" style="page-break-inside: avoid;">
-      <div class="col-lg-12 bordered" style="padding: 0px; margin-left:15px;">
+      <div class="bordered" style="margin:0 15px;">
         <table style="margin: 0px; width:100%;">
           <tr class="font-small">
             <td style="width:70%; text-transform: none; vertical-align: top;">
