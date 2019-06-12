@@ -44,10 +44,6 @@ class ClientesController extends Controller
       $validator = Validator::make($request->all(), [
         'tipo_id' => 'required',
         'nombre' => 'required',
-        'telefono' => 'required',
-        'email' => 'required',
-        'rfc' => 'required',
-        'razon_social' => 'required',
       ]);
 
       if ($validator->fails()) {
@@ -104,10 +100,6 @@ class ClientesController extends Controller
       $validator = Validator::make($request->all(), [
         'tipo_id' => 'required',
         'nombre' => 'required',
-        'telefono' => 'required',
-        'email' => 'required',
-        'rfc' => 'required',
-        'razon_social' => 'required',
       ]);
 
       if ($validator->fails()) {

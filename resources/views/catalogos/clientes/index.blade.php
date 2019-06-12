@@ -31,7 +31,7 @@
         </div>
         <div class="panel-body">
           <div class="table-responsive">
-            <table class="table table-bordred">
+            <table id="tabla" class="table table-bordred" style="width:100%;">
               <thead>
                 <tr>
                   <th>ID</th>
@@ -84,6 +84,11 @@ const app = new Vue({
     el: '#content',
     data: {
       clientes: {!! json_encode($clientes) !!},
+    },
+    mounted(){
+      $("#tabla").DataTable({
+        dom: 'lfrtip',
+      });
     },
     methods: {
       borrar(cliente, index){

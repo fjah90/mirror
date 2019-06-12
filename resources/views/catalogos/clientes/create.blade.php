@@ -44,7 +44,7 @@
                 <div class="col-md-4">
                   <div class="form-group">
                     <label class="control-label">RFC</label>
-                    <input type="text" class="form-control" name="rfc" v-model="cliente.rfc" required />
+                    <input type="text" class="form-control" name="rfc" v-model="cliente.rfc" />
                   </div>
                 </div>
               </div>
@@ -52,7 +52,7 @@
                 <div class="col-md-12">
                   <div class="form-group">
                     <label class="control-label">Razon Social</label>
-                    <input type="text" class="form-control" name="razon_social" v-model="cliente.razon_social" required />
+                    <input type="text" class="form-control" name="razon_social" v-model="cliente.razon_social" />
                   </div>
                 </div>
               </div>
@@ -60,13 +60,13 @@
                 <div class="col-md-4">
                   <div class="form-group">
                     <label class="control-label">Telefono</label>
-                    <input type="text" class="form-control" name="telefono" v-model="cliente.telefono" required />
+                    <input type="text" class="form-control" name="telefono" v-model="cliente.telefono" />
                   </div>
                 </div>
                 <div class="col-md-8">
                   <div class="form-group">
                     <label class="control-label">Email</label>
-                    <input type="text" class="form-control" name="email" v-model="cliente.email" required />
+                    <input type="text" class="form-control" name="email" v-model="cliente.email" />
                   </div>
                 </div>
               </div>
