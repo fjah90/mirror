@@ -66,7 +66,7 @@
               <div class="row">
                 <div class="col-md-4">
                   <div class="form-group">
-                    <label for="prospecto.ultima_actividad.fecha" class="control-label">Fecha</label>
+                    <label for="ultima_actividad.fecha" class="control-label">Fecha</label>
                     <br />
                     <dropdown>
                       <div class="input-group">
@@ -76,13 +76,13 @@
                           </btn>
                         </div>
                         <input class="form-control" type="text" name="fecha"
-                          v-model="prospecto.ultima_actividad.fecha" placeholder="DD/MM/YYYY" readonly
+                          v-model="ultima_actividad.fecha" placeholder="DD/MM/YYYY" readonly
                         />
                       </div>
                       <template slot="dropdown">
                         <li>
                           <date-picker :locale="locale" :today-btn="false" :clear-btn="false"
-                          format="dd/MM/yyyy" :date-parser="dateParser" v-model="prospecto.ultima_actividad.fecha"/>
+                          format="dd/MM/yyyy" :date-parser="dateParser" v-model="ultima_actividad.fecha"/>
                         </li>
                       </template>
                     </dropdown>
@@ -91,7 +91,7 @@
                 <div class="col-md-4">
                   <div class="form-group">
                     <label class="control-label">Tipo</label>
-                    <select class="form-control" name="tipo" v-model='prospecto.ultima_actividad.tipo_id' required>
+                    <select class="form-control" name="tipo" v-model='ultima_actividad.tipo_id' >
                       @foreach($tipos as $tipo)
                         <option value="{{$tipo->id}}">{{$tipo->nombre}}</option>
                       @endforeach
@@ -99,10 +99,10 @@
                     </select>
                   </div>
                 </div>
-                <div class="col-md-4" v-if="prospecto.ultima_actividad.tipo_id==0">
+                <div class="col-md-4" v-if="ultima_actividad.tipo_id==0">
                   <div class="form-group">
                     <label class="control-label">Especifique</label>
-                    <input class="form-control" type="text" name="tipo" v-model="prospecto.ultima_actividad.tipo" required />
+                    <input class="form-control" type="text" name="tipo" v-model="ultima_actividad.tipo"/>
                   </div>
                 </div>
               </div>
@@ -124,7 +124,7 @@
                   <div class="row">
                     <div class="col-md-12">
                       <ul style="list-style-type:none; padding:0;">
-                        <li style="margin-top:5px;" v-for="(ofrecido, index) in prospecto.ultima_actividad.ofrecidos">
+                        <li style="margin-top:5px;" v-for="(ofrecido, index) in ultima_actividad.ofrecidos">
                           <button type="button" class="btn btn-xxs btn-danger" @click="removerProducto(index, ofrecido)">
                             <i class="fas fa-times"></i>
                           </button>
@@ -136,7 +136,7 @@
                 </div>
                 <div class="col-md-8">
                   <label class="control-label">Descripción Actividad</label>
-                  <textarea name="descripcion" rows="5" cols="80" class="form-control" v-model="prospecto.ultima_actividad.descripcion" required></textarea>
+                  <textarea name="descripcion" rows="5" cols="80" class="form-control" v-model="ultima_actividad.descripcion"></textarea>
                 </div>
               </div>
               <div class="row">
@@ -148,7 +148,7 @@
               <div class="row">
                 <div class="col-md-4">
                   <div class="form-group">
-                    <label for="prospecto.proxima_actividad.fecha" class="control-label">Fecha</label>
+                    <label for="proxima_actividad.fecha" class="control-label">Fecha</label>
                     <br />
                     <dropdown>
                       <div class="input-group">
@@ -158,13 +158,13 @@
                           </btn>
                         </div>
                         <input class="form-control" type="text" name="fecha"
-                          v-model="prospecto.proxima_actividad.fecha" placeholder="DD/MM/YYYY" readonly
+                          v-model="proxima_actividad.fecha" placeholder="DD/MM/YYYY" readonly
                         />
                       </div>
                       <template slot="dropdown">
                         <li>
                           <date-picker :locale="locale" :today-btn="false" :clear-btn="false"
-                          format="dd/MM/yyyy" :date-parser="dateParser" v-model="prospecto.proxima_actividad.fecha"/>
+                          format="dd/MM/yyyy" :date-parser="dateParser" v-model="proxima_actividad.fecha"/>
                         </li>
                       </template>
                     </dropdown>
@@ -173,7 +173,7 @@
                 <div class="col-md-4">
                   <div class="form-group">
                     <label class="control-label">Tipo</label>
-                    <select class="form-control" name="tipo" v-model='prospecto.proxima_actividad.tipo_id' required>
+                    <select class="form-control" name="tipo" v-model='proxima_actividad.tipo_id'>
                       @foreach($tipos as $tipo)
                         <option value="{{$tipo->id}}">{{$tipo->nombre}}</option>
                       @endforeach
@@ -181,10 +181,10 @@
                     </select>
                   </div>
                 </div>
-                <div class="col-md-4" v-if="prospecto.proxima_actividad.tipo_id==0">
+                <div class="col-md-4" v-if="proxima_actividad.tipo_id==0">
                   <div class="form-group">
                     <label class="control-label">Especifique</label>
-                    <input class="form-control" type="text" name="tipo" v-model="prospecto.proxima_actividad.tipo" required />
+                    <input class="form-control" type="text" name="tipo" v-model="proxima_actividad.tipo"/>
                   </div>
                 </div>
               </div>
@@ -218,18 +218,18 @@ const app = new Vue({
         cliente_id: '',
         nombre: '',
         descripcion: '',
-        ultima_actividad: {
-          fecha: '',
-          tipo_id: 1,
-          tipo: '',
-          ofrecidos: [],
-          descripcion: ''
-        },
-        proxima_actividad: {
-          fecha: '',
-          tipo_id: 1,
-          tipo: '',
-        },
+      },
+      ultima_actividad: {
+        fecha: '',
+        tipo_id: 1,
+        tipo: '',
+        ofrecidos: [],
+        descripcion: ''
+      },
+      proxima_actividad: {
+        fecha: '',
+        tipo_id: 1,
+        tipo: '',
       },
       productos: {!! json_encode($productos) !!},
       ofrecido: '',
@@ -253,16 +253,29 @@ const app = new Vue({
         if(index==-1) return false;
 
         var producto = this.productos[index];
-        this.prospecto.ultima_actividad.ofrecidos.push(producto);
+        this.ultima_actividad.ofrecidos.push(producto);
         this.productos.splice(index, 1);
       },
       removerProducto(index, ofrecido){
-        this.prospecto.ultima_actividad.ofrecidos.splice(index, 1);
+        this.ultima_actividad.ofrecidos.splice(index, 1);
         this.productos.push(ofrecido);
       },
       guardar(){
+        var prospecto = $.extend(true, {}, this.prospecto);
+        if(this.ultima_actividad.fecha!="" ||
+           this.ultima_actividad.descripcion!="" ||
+           this.ultima_actividad.ofrecidos.length>0){
+          prospecto.ultima_actividad = this.ultima_actividad;
+
+          if(this.proxima_actividad.fecha!="")
+            prospecto.proxima_actividad = this.proxima_actividad;
+        }
+        else if(this.proxima_actividad.fecha!=""){
+          prospecto.ultima_actividad = this.proxima_actividad;
+        }
+
         this.cargando = true;
-        axios.post('/prospectos', this.prospecto)
+        axios.post('/prospectos', prospecto)
         .then(({data}) => {
           this.cargando = false;
           swal({

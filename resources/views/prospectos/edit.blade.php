@@ -94,59 +94,61 @@
             </div>
 
             <form class="" @submit.prevent="guardar()">
-              <div class="row">
-                <div class="col-sm-12">
-                  <h4>Próxima Actividad</h4>
-                  <hr />
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-4">
-                  <div class="form-group">
-                    <label class="control-label">Fecha</label>
-                    <span class="form-control">@{{prospecto.proxima_actividad.fecha_formated}}</span>
+              <template v-if="prospecto.proxima_actividad">
+                <div class="row">
+                  <div class="col-sm-12">
+                    <h4>Próxima Actividad</h4>
+                    <hr />
                   </div>
                 </div>
-                <div class="col-md-4">
-                  <div class="form-group">
-                    <label class="control-label">Tipo</label>
-                    <span class="form-control">@{{prospecto.proxima_actividad.tipo.nombre}}</span>
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-4">
-                  <div class="row">
-                    <div class="col-md-10">
-                      <label class="control-label">Productos Ofrecidos</label>
-                      <select class="form-control" name="producto" v-model='ofrecido'>
-                        <option v-for="producto in productos" :value="producto.id">@{{producto.id}}: @{{producto.nombre}}</option>
-                      </select>
-                    </div>
-                    <div class="col-md-2" style="padding-top: 25px;">
-                      <button type="button" class="btn btn-primary" @click="agregarProducto()">
-                        <i class="fas fa-plus"></i>
-                      </button>
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label class="control-label">Fecha</label>
+                      <span class="form-control">@{{prospecto.proxima_actividad.fecha_formated}}</span>
                     </div>
                   </div>
-                  <div class="row">
-                    <div class="col-md-12">
-                      <ul style="list-style-type:none; padding:0;">
-                        <li style="margin-top:5px;" v-for="(ofrecido, index) in prospecto.proxima_actividad.productos_ofrecidos">
-                          <button type="button" class="btn btn-xxs btn-danger" @click="removerProducto(index, ofrecido)">
-                            <i class="fas fa-times"></i>
-                          </button>
-                          @{{ofrecido.id}}: @{{ofrecido.nombre}}
-                        </li>
-                      </ul>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label class="control-label">Tipo</label>
+                      <span class="form-control">@{{prospecto.proxima_actividad.tipo.nombre}}</span>
                     </div>
                   </div>
                 </div>
-                <div class="col-md-8">
-                  <label class="control-label">Descripción Actividad</label>
-                  <textarea name="descripcion" rows="5" cols="80" class="form-control" v-model="prospecto.proxima_actividad.descripcion" required></textarea>
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="row">
+                      <div class="col-md-10">
+                        <label class="control-label">Productos Ofrecidos</label>
+                        <select class="form-control" name="producto" v-model='ofrecido'>
+                          <option v-for="producto in productos" :value="producto.id">@{{producto.id}}: @{{producto.nombre}}</option>
+                        </select>
+                      </div>
+                      <div class="col-md-2" style="padding-top: 25px;">
+                        <button type="button" class="btn btn-primary" @click="agregarProducto()">
+                          <i class="fas fa-plus"></i>
+                        </button>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <ul style="list-style-type:none; padding:0;">
+                          <li style="margin-top:5px;" v-for="(ofrecido, index) in prospecto.proxima_actividad.productos_ofrecidos">
+                            <button type="button" class="btn btn-xxs btn-danger" @click="removerProducto(index, ofrecido)">
+                              <i class="fas fa-times"></i>
+                            </button>
+                            @{{ofrecido.id}}: @{{ofrecido.nombre}}
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-8">
+                    <label class="control-label">Descripción Actividad</label>
+                    <textarea name="descripcion" rows="5" cols="80" class="form-control" v-model="prospecto.proxima_actividad.descripcion" required></textarea>
+                  </div>
                 </div>
-              </div>
+              </template>
               <div class="row">
                 <div class="col-sm-12">
                   <h4>Nueva Próxima Actividad</h4>
@@ -197,6 +199,9 @@
               </div>
               <div class="row">
                 <div class="col-md-12 text-right">
+                  <a href="{{route('prospectos.index')}}" style="margin-top:25px;" class="btn btn-info">
+                    Regresar
+                  </a>
                   <button style="margin-top:25px;" type="submit" class="btn btn-success" :disabled="cargando">
                     <i class="fas fa-save"></i>
                     Guardar Actividades
@@ -258,9 +263,8 @@ const app = new Vue({
         nueva: this.prospecto.nueva_proxima_actividad,
       })
       .then(({data}) => {
-        console.log(data);
         this.tipos = data.tipos;
-        this.prospecto.actividades.push(data.proxima);
+        if(data.proxima) this.prospecto.actividades.push(data.proxima);
         this.prospecto.proxima_actividad = data.nueva;
         this.prospecto.nueva_proxima_actividad = {
           fecha: '',
@@ -272,8 +276,6 @@ const app = new Vue({
           title: "Actividades Guardadas",
           text: "",
           type: "success"
-        }).then(()=>{
-          // window.location = "/prospectos";
         });
       })
       .catch(({response}) => {

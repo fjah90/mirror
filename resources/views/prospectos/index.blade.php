@@ -49,10 +49,22 @@
                   <td>@{{prospecto.id}}</td>
                   <td>@{{prospecto.cliente.nombre}}</td>
                   <td>@{{prospecto.nombre}}</td>
-                  <td>@{{prospecto.ultima_actividad.fecha_formated}}</td>
-                  <td>@{{prospecto.ultima_actividad.tipo.nombre}}</td>
-                  <td>@{{prospecto.proxima_actividad.fecha_formated}}</td>
-                  <td>@{{prospecto.proxima_actividad.tipo.nombre}}</td>
+                  <template v-if="prospecto.ultima_actividad">
+                    <td>@{{prospecto.ultima_actividad.fecha_formated}}</td>
+                    <td>@{{prospecto.ultima_actividad.tipo.nombre}}</td>
+                  </template>
+                  <template v-else>
+                    <td></td>
+                    <td></td>
+                  </template>
+                  <template v-if="prospecto.proxima_actividad">
+                    <td>@{{prospecto.proxima_actividad.fecha_formated}}</td>
+                    <td>@{{prospecto.proxima_actividad.tipo.nombre}}</td>
+                  </template>
+                  <template v-else>
+                    <td></td>
+                    <td></td>
+                  </template>
                   <td class="text-right">
                     <a class="btn btn-info" data-toggle="tooltip" title="Ver"
                       :href="'/prospectos/'+prospecto.id">

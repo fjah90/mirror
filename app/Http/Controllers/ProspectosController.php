@@ -59,11 +59,14 @@ class ProspectosController extends Controller
         'cliente_id' => 'required',
         'nombre' => 'required',
         'descripcion' => 'required',
-        'ultima_actividad.tipo_id' => 'required',
-        'ultima_actividad.fecha' => 'required|date_format:d/m/Y',
-        'ultima_actividad.descripcion' => 'required',
-        'proxima_actividad.tipo_id' => 'required',
-        'proxima_actividad.fecha' => 'required|date_format:d/m/Y',
+        'ultima_actividad.tipo_id' => 'required_with:ultima_actividad.fecha',
+        'ultima_actividad.tipo' => 'required_if:ultima_actividad.tipo_id,0',
+        'ultima_actividad.fecha' => 'required_with:ultima_actividad.tipo_id|date_format:d/m/Y',
+        'proxima_actividad.tipo_id' =>
+          'required_with_all:proxima_actividad.fecha,ultima_actividad.tipo_id,ultima_actividad.fecha',
+        'proxima_actividad.tipo' => 'required_if:proxima_actividad.tipo_id,0',
+        'proxima_actividad.fecha' =>
+          'required_with_all:proxima_actividad.tipo_id,ultima_actividad.tipo_id,ultima_actividad.fecha|date_format:d/m/Y',
       ]);
 
       if ($validator->fails()) {
@@ -80,35 +83,39 @@ class ProspectosController extends Controller
       ]);
 
       //ultima actividad
-      $create = [
-        'prospecto_id' => $prospecto->id,
-        'fecha' => $request->ultima_actividad['fecha'],
-        'descripcion' => $request->ultima_actividad['descripcion'],
-        'realizada' => 1
-      ];
-      if($request->ultima_actividad['tipo_id'] == 0){ //dar de alta nuevo tipo
-        $tipo = ProspectoTipoActividad::create(['nombre' => $request->ultima_actividad['tipo']]);
-        $create['tipo_id'] = $tipo->id;
-      }
-      else $create['tipo_id'] = $request->ultima_actividad['tipo_id'];
-      $actividad = ProspectoActividad::create($create);
+      if(isset($request->ultima_actividad)){
+        $create = [
+          'prospecto_id' => $prospecto->id,
+          'fecha' => $request->ultima_actividad['fecha'],
+          'descripcion' => $request->ultima_actividad['descripcion'],
+          'realizada' => 1
+        ];
+        if($request->ultima_actividad['tipo_id'] == 0){ //dar de alta nuevo tipo
+          $tipo = ProspectoTipoActividad::create(['nombre' => $request->ultima_actividad['tipo']]);
+          $create['tipo_id'] = $tipo->id;
+        }
+        else $create['tipo_id'] = $request->ultima_actividad['tipo_id'];
+        $actividad = ProspectoActividad::create($create);
 
-      //productos ofrecidos
-      foreach ($request->ultima_actividad['ofrecidos'] as $ofrecido) {
-        $actividad->productos_ofrecidos()->attach($ofrecido['id']);
-      }
+        //productos ofrecidos
+        foreach ($request->ultima_actividad['ofrecidos'] as $ofrecido) {
+          $actividad->productos_ofrecidos()->attach($ofrecido['id']);
+        }
 
-      //proxima actividad
-      $create = [
-        'prospecto_id' => $prospecto->id,
-        'fecha' => $request->proxima_actividad['fecha'],
-      ];
-      if($request->proxima_actividad['tipo_id'] == 0){ //dar de alta nuevo tipo
-        $tipo = ProspectoTipoActividad::create(['nombre' => $request->proxima_actividad['tipo']]);
-        $create['tipo_id'] = $tipo->id;
+        //proxima actividad
+        if(isset($request->proxima_actividad)){
+          $create = [
+            'prospecto_id' => $prospecto->id,
+            'fecha' => $request->proxima_actividad['fecha'],
+          ];
+          if($request->proxima_actividad['tipo_id'] == 0){ //dar de alta nuevo tipo
+            $tipo = ProspectoTipoActividad::create(['nombre' => $request->proxima_actividad['tipo']]);
+            $create['tipo_id'] = $tipo->id;
+          }
+          else $create['tipo_id'] = $request->proxima_actividad['tipo_id'];
+          $actividad2 = ProspectoActividad::create($create);
+        }
       }
-      else $create['tipo_id'] = $request->proxima_actividad['tipo_id'];
-      $actividad2 = ProspectoActividad::create($create);
 
       return response()->json(['success' => true, "error" => false], 200);
     }
@@ -135,6 +142,11 @@ class ProspectosController extends Controller
     {
       $prospecto->load(['cliente', 'actividades.tipo', 'actividades.productos_ofrecidos',
       'proxima_actividad.tipo', 'proxima_actividad.productos_ofrecidos']);
+
+      if(is_null($prospecto->proxima_actividad)){
+        $prospecto->proxima_actividad = false;
+      }
+
       $prospecto->nueva_proxima_actividad = (object)[
         'fecha'=>'',
         'tipo_id'=>1,
@@ -155,8 +167,7 @@ class ProspectosController extends Controller
     public function update(Request $request, Prospecto $prospecto)
     {
       $validator = Validator::make($request->all(), [
-        'proxima.descripcion' => 'required',
-        'proxima.productos_ofrecidos' => 'present',
+        'proxima' => 'present',
         'nueva.tipo_id' => 'required',
         'nueva.fecha' => 'required|date_format:d/m/Y',
       ]);
@@ -168,20 +179,23 @@ class ProspectosController extends Controller
         ], 422);
       }
 
-      $prospecto->load('proxima_actividad.tipo');
-      $proxima = $prospecto->proxima_actividad;
+      if(!is_null($request->proxima)){
+        $prospecto->load('proxima_actividad.tipo');
+        $proxima = $prospecto->proxima_actividad;
 
-      //actualizar proxima actividad
-      $proxima->update([
-        'descripcion' => $request->proxima['descripcion'],
-        'realizada' => 1
-      ]);
+        //actualizar proxima actividad
+        $proxima->update([
+          'descripcion' => $request->proxima['descripcion'],
+          'realizada' => 1
+        ]);
 
-      //ingresar productos ofrecidos
-      foreach ($request->proxima['productos_ofrecidos'] as $ofrecido) {
-        $proxima->productos_ofrecidos()->attach($ofrecido['id']);
+        //ingresar productos ofrecidos
+        foreach ($request->proxima['productos_ofrecidos'] as $ofrecido) {
+          $proxima->productos_ofrecidos()->attach($ofrecido['id']);
+        }
+        $proxima->load('productos_ofrecidos');
       }
-      $proxima->load('productos_ofrecidos');
+      else $proxima = false;
 
       //crear nueva proxima actividad
       $create = [
@@ -569,9 +583,7 @@ class ProspectosController extends Controller
 
       $cotizacion = ProspectoCotizacion::with('entradas')->findOrFail($request->cotizacion_id);
       $email = $request->email;
-      $pdf_link = asset('storage/'.$cotizacion->archivo);
-      $pdf_name = explode('/',$cotizacion->archivo);
-      $pdf_name = end($pdf_name);
+      $pdf_name = basename($cotizacion->archivo);
       $pdf = Storage::disk('public')->get($cotizacion->archivo);
       $user = auth()->user();
 
@@ -587,34 +599,57 @@ class ProspectosController extends Controller
       });
 
       //generar actividad de envio de cotizacion
-      $prospecto = Prospecto::with('proxima_actividad')->find($cotizacion->prospecto_id);
-      if($prospecto->proxima_actividad->tipo_id == 4){//Cotización enviada
-        $nueva = 3; //Email (Seguimiento)
-      }
-      else $nueva = $prospecto->proxima_actividad->tipo_id;
-
-      //actualizar proxima actividad
-      $prospecto->proxima_actividad->update([
-        'tipo_id' => 4,
-        'fecha' => date('d/m/Y'),
-        'descripcion' => $pdf_link,
-        'realizada' => 1
-      ]);
-
-      //ingresar productos ofrecidos
-      foreach ($cotizacion->entradas as $entrada) {
-        $prospecto->proxima_actividad->productos_ofrecidos()->attach($entrada->producto_id);
-      }
-
-      //crear nueva proxima actividad
-      $create = [
-        'prospecto_id' => $prospecto->id,
-        'tipo_id' => $nueva,
-        'fecha' => date('d/m/Y'),
-      ];
-      ProspectoActividad::create($create);
+      $this->registrarActividadDeCotizacionEnviada($cotizacion);
 
       return response()->json(['success'=>true, 'error'=>false], 200);
+    }
+
+    private function registrarActividadDeCotizacionEnviada($cotizacion){
+      $pdf_link = asset('storage/'.$cotizacion->archivo);
+      $prospecto = Prospecto::with('proxima_actividad')->find($cotizacion->prospecto_id);
+
+      if(!is_null($prospecto->proxima_actividad)){
+        if($prospecto->proxima_actividad->tipo_id == 4){//Cotización enviada
+          $nueva = 3; //Email (Seguimiento)
+        }
+        else $nueva = $prospecto->proxima_actividad->tipo_id;
+
+        //actualizar proxima actividad
+        $prospecto->proxima_actividad->update([
+          'tipo_id' => 4,
+          'fecha' => date('d/m/Y'),
+          'descripcion' => $pdf_link,
+          'realizada' => 1
+        ]);
+
+        //ingresar productos ofrecidos
+        foreach ($cotizacion->entradas as $entrada) {
+          $prospecto->proxima_actividad->productos_ofrecidos()->attach($entrada->producto_id);
+        }
+
+        //crear nueva proxima actividad
+        $create = [
+          'prospecto_id' => $prospecto->id,
+          'tipo_id' => $nueva,
+          'fecha' => date('d/m/Y'),
+        ];
+        ProspectoActividad::create($create);
+      }
+      else {
+        $create = [
+          'prospecto_id' => $prospecto->id,
+          'tipo_id' => 4,//Cotización enviada
+          'fecha' => date('d/m/Y'),
+          'descripcion' => $pdf_link,
+          'realizada' => 1
+        ];
+        $actividad = ProspectoActividad::create($create);
+
+        //ingresar productos ofrecidos
+        foreach ($cotizacion->entradas as $entrada) {
+          $actividad->productos_ofrecidos()->attach($entrada->producto_id);
+        }
+      }
     }
 
     /**
