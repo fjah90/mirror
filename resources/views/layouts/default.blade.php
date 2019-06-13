@@ -279,6 +279,12 @@ $(function() {
   });
   $('[data-toggle="tooltip"]').tooltip();
 });
+var translationsES = {
+  countrySelectorLabel: 'Codigo de Pais',
+  countrySelectorError: '',
+  phoneNumberLabel: '',
+  example: 'Ejemplo:'
+};
 var localeES = {
   uiv: {
     datePicker: {

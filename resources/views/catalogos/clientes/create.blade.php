@@ -57,13 +57,13 @@
                 </div>
               </div>
               <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-6">
                   <div class="form-group">
                     <label class="control-label">Telefono</label>
-                    <input type="text" class="form-control" name="telefono" v-model="cliente.telefono" />
+                    <vue-phone-number-input size="sm" :translations="translations" :no-validator-state="true" :only-countries="['MX']" v-model="cliente.telefono" />
                   </div>
                 </div>
-                <div class="col-md-8">
+                <div class="col-md-6">
                   <div class="form-group">
                     <label class="control-label">Email</label>
                     <input type="text" class="form-control" name="email" v-model="cliente.email" />
@@ -169,28 +169,30 @@
             <hr />
             <form class="" @submit.prevent="agregarContacto()">
               <div class="row">
-                <div class="col-md-3">
+                <div class="col-md-6">
                   <div class="form-group">
                     <label class="control-label">Nombre</label>
                     <input type="text" class="form-control" name="nombre" v-model="contacto.nombre" required />
                   </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-6">
                   <div class="form-group">
                     <label class="control-label">Cargo</label>
                     <input type="text" class="form-control" name="cargo" v-model="contacto.cargo" required />
                   </div>
                 </div>
-                <div class="col-md-3">
+              </div>
+              <div class="row">
+                <div class="col-md-6">
                   <div class="form-group">
                     <label class="control-label">Email</label>
                     <input type="text" class="form-control" name="email" v-model="contacto.email" />
                   </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-6">
                   <div class="form-group">
                     <label class="control-label">Telefono</label>
-                    <input type="text" class="form-control" name="telefono" v-model="contacto.telefono" />
+                    <vue-phone-number-input size="sm" :translations="translations" :no-validator-state="true" :only-countries="['MX']" v-model="contacto.telefono" />
                   </div>
                 </div>
               </div>
@@ -217,6 +219,7 @@
 const app = new Vue({
     el: '#content',
     data: {
+      translations: translationsES,
       cliente: {
         tipo_id: '',
         nombre: '',
