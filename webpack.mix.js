@@ -33,7 +33,8 @@ mix.js('resources/assets/js/app.js', 'public/js')
      'object-to-formdata',
      'tinymce',
      '@tinymce/tinymce-vue',
-     'select2'
+     'select2',
+     'vue-phone-number-input'
    ])
    .autoload({
      jquery: ['$', 'window.jQuery', 'jQuery', 'jquery'],

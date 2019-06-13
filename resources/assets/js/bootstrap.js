@@ -23,6 +23,8 @@ import axios from 'axios';
 import Vue from 'vue';
 import * as uiv from 'uiv';
 import Editor from '@tinymce/tinymce-vue';
+import VuePhoneNumberInput from 'vue-phone-number-input';
+// import 'vue-phone-number-input/dist/vue-phone-number-input.css';
 
 window.Vue = Vue;
 window.axios = axios;
@@ -37,6 +39,7 @@ window.axios.defaults.headers.common = {
 Vue.use(uiv);
 Vue.component('tinymce-editor', Editor);
 Vue.component('select2multags', require('./components/select2multags.vue'));
+Vue.component('vue-phone-number-input', VuePhoneNumberInput);
 
 $.extend($.fn.dataTable.defaults, {
   responsive: false,
