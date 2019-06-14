@@ -28,7 +28,12 @@ class ProveedoresController extends Controller
      */
     public function create()
     {
-      return view('catalogos.proveedores.create');
+      return view('catalogos.proveedores.create', ["nacional"=>true]);
+    }
+
+    public function createInter()
+    {
+      return view('catalogos.proveedores.create', ["nacional"=>false]);
     }
 
     /**
@@ -41,9 +46,7 @@ class ProveedoresController extends Controller
     {
       $validator = Validator::make($request->all(), [
         'empresa' => 'required',
-        'telefono' => 'required',
-        'email' => 'required',
-        'identidad_fiscal' => 'required',
+        'nacional' => 'required',
       ]);
 
       if ($validator->fails()) {
@@ -98,9 +101,7 @@ class ProveedoresController extends Controller
     {
       $validator = Validator::make($request->all(), [
         'empresa' => 'required',
-        'telefono' => 'required',
-        'email' => 'required',
-        'identidad_fiscal' => 'required',
+        'nacional' => 'required'
       ]);
 
       if ($validator->fails()) {

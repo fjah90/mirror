@@ -23,18 +23,22 @@
         <div class="panel-heading">
           <h3 class="panel-title text-right">
             <span class="pull-left p-10">Lista de Proveedores</span>
-            <a href="{{route('proveedores.create')}}" class="btn btn-primary" style="color: #fff;">
-              <i class="fas fa-plus"></i> Nuevo Proveedor
+            <a href="{{route('proveedores.createNacional')}}" class="btn btn-primary" style="color: #fff;">
+              <i class="fas fa-plus"></i> Proveedor Nacional
+            </a>
+            <a href="{{route('proveedores.createInternacional')}}" class="btn btn-brown" style="color: #fff;">
+              <i class="fas fa-plus"></i> Proveedor Internacional
             </a>
           </h3>
         </div>
         <div class="panel-body">
           <div class="table-responsive">
-            <table class="table table-bordred">
+            <table id="tabla" class="table table-bordred">
               <thead>
                 <tr>
                   <th>ID</th>
                   <th>Empresa</th>
+                  <th>Origen</th>
                   <th>Teléfono</th>
                   <th>Email</th>
                   <th>RFC / EIN</th>
@@ -46,6 +50,8 @@
                 <tr v-for="(proveedor, index) in proveedores">
                   <td>@{{proveedor.id}}</td>
                   <td>@{{proveedor.empresa}}</td>
+                  <td v-if="proveedor.nacional">Nacional</td>
+                  <td v-else>Internacional</td>
                   <td>@{{proveedor.telefono}}</td>
                   <td>@{{proveedor.email}}</td>
                   <td>@{{proveedor.identidad_fiscal}}</td>
@@ -83,6 +89,11 @@ const app = new Vue({
     el: '#content',
     data: {
       proveedores: {!! json_encode($proveedores) !!},
+    },
+    mounted(){
+      $("#tabla").DataTable({
+        dom: 'lfrtip',
+      });
     },
     methods: {
       borrar(proveedor, index){

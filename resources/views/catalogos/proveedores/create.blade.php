@@ -20,7 +20,7 @@
       <div class="col-lg-12">
         <div class="panel ">
           <div class="panel-heading">
-            <h3 class="panel-title">Nuevo Proveedor</h3>
+            <h3 class="panel-title">Nuevo Proveedor {{ ($nacional)?'Nacional':'Internacional' }}</h3>
           </div>
           <div class="panel-body">
             <form class="" @submit.prevent="guardar()">
@@ -39,39 +39,32 @@
                 </div>
                 <div class="col-md-4">
                   <div class="form-group">
-                    <label class="control-label">
-                      <span>Identidad Fiscal: </span>
-                      <span v-if="proveedor.identificacion_fiscal=='RFC'">RFC</span>
-                      <span v-else>EIN</span>
-                      <i class="fas fa-exchange-alt text-primary" style="cursor:pointer;"
-                        @click="proveedor.identificacion_fiscal=(proveedor.identificacion_fiscal=='RFC')?'EIN':'RFC'">
-                      </i>
-                    </label>
-                    <input type="text" class="form-control" name="identidad_fiscal" v-model="proveedor.identidad_fiscal" required />
+                    <label class="control-label">{{ ($nacional)?'RFC':'EIN' }}:</label>
+                    <input type="text" class="form-control" name="identidad_fiscal" v-model="proveedor.identidad_fiscal" />
                   </div>
                 </div>
               </div>
               <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-6">
                   <div class="form-group">
                     <label class="control-label">Telefono</label>
-                    <input type="text" class="form-control" name="telefono" v-model="proveedor.telefono" required />
+                    <vue-phone-number-input size="sm" :translations="translations" :no-validator-state="true" v-model="proveedor.telefono" />
                   </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-6">
                   <div class="form-group">
                     <label class="control-label">Email</label>
-                    <input type="text" class="form-control" name="email" v-model="proveedor.email" required />
+                    <input type="text" class="form-control" name="email" v-model="proveedor.email" />
                   </div>
                 </div>
+              </div>
+              <div class="row">
                 <div class="col-md-4">
                   <div class="form-group">
                     <label class="control-label">Banco</label>
-                    <input type="text" class="form-control" name="email" v-model="proveedor.banco" required />
+                    <input type="text" class="form-control" name="email" v-model="proveedor.banco" />
                   </div>
                 </div>
-              </div>
-              <div class="row">
                 <div class="col-md-4">
                   <div class="form-group">
                     <label class="control-label">Número de Cuenta</label>
@@ -80,10 +73,12 @@
                 </div>
                 <div class="col-md-4">
                   <div class="form-group">
-                    <label class="control-label">Clave Intervancaria</label>
+                    <label class="control-label">Clave Interbancaria</label>
                     <input type="text" class="form-control" name="calle" v-model="proveedor.clave_interbancaria" />
                   </div>
                 </div>
+              </div>
+              <div class="row">
                 <div class="col-md-4">
                   <div class="form-group">
                     <label class="control-label">Moneda</label>
@@ -93,8 +88,6 @@
                     </select>
                   </div>
                 </div>
-              </div>
-              <div class="row">
                 <div class="col-md-4">
                   <div class="form-group">
                     <label class="control-label">Dias Credito</label>
@@ -201,28 +194,30 @@
             <hr />
             <form class="" @submit.prevent="agregarContacto()">
               <div class="row">
-                <div class="col-md-3">
+                <div class="col-md-6">
                   <div class="form-group">
                     <label class="control-label">Nombre</label>
                     <input type="text" class="form-control" name="nombre" v-model="contacto.nombre" required />
                   </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-6">
                   <div class="form-group">
                     <label class="control-label">Cargo</label>
                     <input type="text" class="form-control" name="cargo" v-model="contacto.cargo" required />
                   </div>
                 </div>
-                <div class="col-md-3">
+              </div>
+              <div class="row">
+                <div class="col-md-6">
                   <div class="form-group">
                     <label class="control-label">Email</label>
                     <input type="text" class="form-control" name="email" v-model="contacto.email" />
                   </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-6">
                   <div class="form-group">
                     <label class="control-label">Telefono</label>
-                    <input type="text" class="form-control" name="telefono" v-model="contacto.telefono" />
+                    <vue-phone-number-input size="sm" :translations="translations" :no-validator-state="true" v-model="contacto.telefono" />
                   </div>
                 </div>
               </div>
@@ -249,10 +244,12 @@
 const app = new Vue({
     el: '#content',
     data: {
+      translations: translationsES,
       proveedor: {
         empresa: '',
+        nacional: {{ ($nacional)?"true":"false" }},
         razon_social: '',
-        identificacion_fiscal: 'RFC',
+        identificacion_fiscal: '{{ ($nacional)?"RFC":"EIN" }}',
         identidad_fiscal: '',
         telefono: '',
         email: '',

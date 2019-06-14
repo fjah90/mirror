@@ -40,38 +40,39 @@
                 <div class="col-md-4">
                   <div class="form-group">
                     <label class="control-label">
-                      <span>Identidad Fiscal: </span>
-                      <span v-if="proveedor.identificacion_fiscal=='RFC'">RFC</span>
+                      <span v-if="proveedor.nacional">RFC</span>
                       <span v-else>EIN</span>
-                      <i class="fas fa-exchange-alt text-primary" style="cursor:pointer;"
-                        @click="proveedor.identificacion_fiscal=(proveedor.identificacion_fiscal=='RFC')?'EIN':'RFC'">
-                      </i>
                     </label>
-                    <input type="text" class="form-control" name="identidad_fiscal" v-model="proveedor.identidad_fiscal" required />
+                    <input type="text" class="form-control" name="identidad_fiscal" v-model="proveedor.identidad_fiscal" />
                   </div>
                 </div>
               </div>
               <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-6">
                   <div class="form-group">
                     <label class="control-label">Telefono</label>
-                    <input type="text" class="form-control" name="telefono" v-model="proveedor.telefono" required />
+                    <vue-phone-number-input
+                      :default-country-code="proveedor.codigo_pais"
+                      no-use-browser-locale size="sm" :translations="translations"
+                      no-validator-state v-model="proveedor.telefono"
+                      @update="fijarCodigoPaisProveedor"
+                    />
                   </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-6">
                   <div class="form-group">
                     <label class="control-label">Email</label>
-                    <input type="text" class="form-control" name="email" v-model="proveedor.email" required />
+                    <input type="text" class="form-control" name="email" v-model="proveedor.email" />
                   </div>
                 </div>
+              </div>
+              <div class="row">
                 <div class="col-md-4">
                   <div class="form-group">
                     <label class="control-label">Banco</label>
-                    <input type="text" class="form-control" name="email" v-model="proveedor.banco" required />
+                    <input type="text" class="form-control" name="email" v-model="proveedor.banco" />
                   </div>
                 </div>
-              </div>
-              <div class="row">
                 <div class="col-md-4">
                   <div class="form-group">
                     <label class="control-label">Número de Cuenta</label>
@@ -84,6 +85,8 @@
                     <input type="text" class="form-control" name="calle" v-model="proveedor.clave_interbancaria" />
                   </div>
                 </div>
+              </div>
+              <div class="row">
                 <div class="col-md-4">
                   <div class="form-group">
                     <label class="control-label">Moneda</label>
@@ -93,8 +96,6 @@
                     </select>
                   </div>
                 </div>
-              </div>
-              <div class="row">
                 <div class="col-md-4">
                   <div class="form-group">
                     <label class="control-label">Dias Credito</label>
@@ -201,28 +202,36 @@
             <hr />
             <form class="" @submit.prevent="agregarContacto()">
               <div class="row">
-                <div class="col-md-3">
+                <div class="col-md-6">
                   <div class="form-group">
                     <label class="control-label">Nombre</label>
                     <input type="text" class="form-control" name="nombre" v-model="contacto.nombre" required />
                   </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-6">
                   <div class="form-group">
                     <label class="control-label">Cargo</label>
                     <input type="text" class="form-control" name="cargo" v-model="contacto.cargo" required />
                   </div>
                 </div>
-                <div class="col-md-3">
+              </div>
+              <div class="row">
+                <div class="col-md-6">
                   <div class="form-group">
                     <label class="control-label">Email</label>
                     <input type="text" class="form-control" name="email" v-model="contacto.email" />
                   </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-6">
                   <div class="form-group">
                     <label class="control-label">Telefono</label>
-                    <input type="text" class="form-control" name="telefono" v-model="contacto.telefono" />
+                    <vue-phone-number-input
+                      :default-country-code="contacto.codigo_pais"
+                      size="sm" :translations="translations"
+                      no-use-browser-locale no-validator-state
+                      v-model="contacto.telefono"
+                      @update="fijarCodigoPaisContacto"
+                    />
                   </div>
                 </div>
               </div>
@@ -249,12 +258,15 @@
 const app = new Vue({
     el: '#content',
     data: {
+      translations: translationsES,
       proveedor: {
         empresa: '{{$proveedor->empresa}}',
+        nacional: '{{($proveedor->nacional)?"true":"false"}}',
         razon_social: '{{$proveedor->razon_social}}',
         identidad_fiscal: '{{$proveedor->identidad_fiscal}}',
         identificacion_fiscal: '{{$proveedor->identificacion_fiscal}}',
         telefono: '{{$proveedor->telefono}}',
+        codigo_pais: '{{$proveedor->codigo_pais}}',
         email: '{{$proveedor->email}}',
         banco: '{{$proveedor->banco}}',
         numero_cuenta: '{{$proveedor->numero_cuenta}}',
@@ -273,11 +285,18 @@ const app = new Vue({
         nombre: '',
         cargo: '',
         telefono: '',
+        codigo_pais: '',
         email: '',
       },
       cargando: false,
     },
     methods: {
+      fijarCodigoPaisProveedor(payload) {
+        this.proveedor.codigo_pais = payload.countryCode;
+      },
+      fijarCodigoPaisContacto(payload) {
+        this.contacto.codigo_pais = payload.countryCode;
+      },
       agregarContacto(){
         if(this.contacto.nombre.trim()=="" || this.contacto.cargo.trim()==""){
           swal({
@@ -293,6 +312,7 @@ const app = new Vue({
           nombre: '',
           cargo: '',
           telefono: '',
+          codigo_pais: '',
           email: '',
         };
       },
