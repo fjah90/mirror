@@ -91,7 +91,20 @@
                   @endif
                 </div>
               </div>
-              <div class="col-md-4 col-md-offset-4 text-right">
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label class="control-label" style="display:block;">
+                    Ficha Técnica
+                    @if($producto->ficha_tecnica)
+                    <a href="{{ $producto->ficha_tecnica }}" target="_blank"
+                      class="btn btn-xs btn-info" style="cursor:pointer;">
+                      <i class="fas fa-eye"></i>
+                    </a>
+                    @endif
+                  </label>
+                </div>
+              </div>
+              <div class="col-md-4 text-right">
                 <a style="margin-top:25px;" class="btn btn-info" href="{{route('productos.index')}}">
                   Regresar
                 </a>

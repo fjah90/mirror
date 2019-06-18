@@ -68,6 +68,10 @@ class ProductosController extends Controller
         $create['foto'] = Storage::putFile('public/productos', $request->file('foto'));
         $create['foto'] = str_replace('public/', '', $create['foto']);
       }
+      if(isset($request->ficha_tecnica)){
+        $create['ficha_tecnica'] = Storage::putFile('public/productos', $request->file('ficha_tecnica'));
+        $create['ficha_tecnica'] = str_replace('public/', '', $create['ficha_tecnica']);
+      }
       if(isset($request->subcategoria_id)){
         if($request->subcategoria_id=='otra'){
           $subcategoria = Subcategoria::create([
@@ -102,6 +106,7 @@ class ProductosController extends Controller
     {
       $producto->load('proveedor','categoria','subcategoria','descripciones.descripcionNombre');
       if($producto->foto) $producto->foto = asset('storage/'.$producto->foto);
+      if($producto->ficha_tecnica) $producto->ficha_tecnica = asset('storage/'.$producto->ficha_tecnica);
       return view('catalogos.productos.show', compact('producto'));
     }
 
@@ -142,6 +147,7 @@ class ProductosController extends Controller
       }
 
       if($producto->foto) $producto->foto = asset('storage/'.$producto->foto);
+      if($producto->ficha_tecnica) $producto->ficha_tecnica = asset('storage/'.$producto->ficha_tecnica);
       return view('catalogos.productos.edit', compact('producto','proveedores','categorias','subcategorias'));
     }
 
@@ -173,6 +179,11 @@ class ProductosController extends Controller
         Storage::delete('public/'.$producto->foto);
         $update['foto'] = Storage::putFile('public/productos', $request->file('foto'));
         $update['foto'] = str_replace('public/', '', $update['foto']);
+      }
+      if(!is_null($request->ficha_tecnica)) {
+        Storage::delete('public/'.$producto->ficha_tecnica);
+        $update['ficha_tecnica'] = Storage::putFile('public/productos', $request->file('ficha_tecnica'));
+        $update['ficha_tecnica'] = str_replace('public/', '', $update['ficha_tecnica']);
       }
       if(is_null($request->subcategoria_id)) $update['subcategoria_id'] = null;
       else if($request->subcategoria_id=='otra'){

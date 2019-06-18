@@ -98,7 +98,9 @@
                           <td>@{{descripcion.nombre}}</td>
                           <td>@{{descripcion.name}}</td>
                           <td>
-                            <input type="text" class="form-control" v-model="descripcion.valor" />
+                            <input v-if="!descripcion.no_alta_productos"
+                              type="text" class="form-control" v-model="descripcion.valor"
+                            />
                           </td>
                         </tr>
                       </tbody>
@@ -112,12 +114,30 @@
                     <label class="control-label" style="display:block;">Foto</label>
                     <div class="kv-avatar">
                       <div class="file-loading">
-                        <input id="foto" name="foto" type="file" ref="foto" @change="fijarFoto()" />
+                        <input id="foto" name="foto" type="file" ref="foto" @change="fijarArchivo('foto')" />
                       </div>
                     </div>
                   </div>
                 </div>
-                <div class="col-md-4 col-md-offset-4 text-right">
+                <div class="col-md-8">
+                  <div class="form-group">
+                    <label class="control-label" style="display:block;">
+                      Ficha Técnica
+                      <a v-if="producto.ficha_ori" :href="producto.ficha_ori" target="_blank"
+                        class="btn btn-xs btn-info" style="cursor:pointer;">
+                        <i class="fas fa-eye"></i>
+                      </a>
+                    </label>
+                    <div class="file-loading">
+                      <input id="ficha_tecnica" name="ficha_tecnica" type="file" ref="ficha_tecnica"
+                        @change="fijarArchivo('ficha_tecnica')" />
+                    </div>
+                    <div id="ficha_tecnica-file-errors"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12 text-right">
                   <button style="margin-top:25px;" type="submit" class="btn btn-success" :disabled="cargando">
                     <i class="fas fa-save"></i>
                     Actualizar Producto
@@ -149,7 +169,9 @@ const app = new Vue({
         nombre: '{{$producto->nombre}}',
         descripciones: {!! $producto->descripciones !!},
         foto_ori: '{{$producto->foto}}',
-        foto:''
+        ficha_ori: '{{$producto->ficha_tecnica}}',
+        foto:'',
+        ficha_tecnica:''
       },
       categorias: {!! $categorias !!},
       cargando: false,
@@ -174,12 +196,21 @@ const app = new Vue({
         removeTitle: 'Quitar Foto',
         defaultPreviewContent: preview,
         layoutTemplates: {main2: '{preview} {remove} {browse}'},
-        allowedFileExtensions: ["jpg", "jpeg", "png"]
+        allowedFileExtensions: ["jpg", "jpeg", "png"],
+        elErrorContainer: '#foto-file-errors'
+      });
+      $("#ficha_tecnica").fileinput({
+        language: 'es',
+        showPreview: false,
+        showUpload: false,
+        showRemove: false,
+        allowedFileExtensions: ["pdf"],
+        elErrorContainer: '#ficha_tecnica-file-errors'
       });
     },
     methods: {
-      fijarFoto(){
-        this.producto.foto = this.$refs['foto'].files[0];
+      fijarArchivo(campo){
+        this.producto[campo] = this.$refs[campo].files[0];
       },
       cambiarDescripciones(){
         this.categorias.some(function(categoria){

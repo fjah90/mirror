@@ -73,6 +73,19 @@
                 </div>
               </div>
               <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label class="control-label" style="cursor:pointer;"
+                      @click="descripcion.no_alta_productos=!descripcion.no_alta_productos">
+                      <i class="text-info far"
+                        :class="(descripcion.no_alta_productos)?'fa-check-square':'fa-square'">
+                      </i>
+                      No Alta Productos
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
                 <div class="col-md-12 text-right">
                   <button style="margin-top:25px;" type="submit" class="btn btn-info">
                     <i class="fas fa-save"></i>
@@ -134,7 +147,8 @@ const app = new Vue({
       },
       descripcion:{
         nombre: '',
-        name: ''
+        name: '',
+        no_alta_productos:false
       },
       cargando: false,
     },
@@ -150,7 +164,7 @@ const app = new Vue({
         }
 
         this.categoria.descripciones.push(this.descripcion);
-        this.descripcion = {nombre: '', name: ''};
+        this.descripcion = {nombre: '', name: '', no_alta_productos:false};
       },
       editarDescripcion(descripcion, index){
         this.descripcion = descripcion;

@@ -78,6 +78,19 @@
                 </div>
               </div>
               <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label class="control-label" style="cursor:pointer;"
+                      @click="descripcion.no_alta_productos=!descripcion.no_alta_productos">
+                      <i class="text-info far"
+                        :class="(descripcion.no_alta_productos)?'fa-check-square':'fa-square'">
+                      </i>
+                      No Alta Productos
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
                 <div class="col-md-12 text-right">
                   <button style="margin-top:25px;" type="submit" class="btn btn-info">
                     <i class="fas fa-save"></i>
@@ -99,24 +112,6 @@
                       </tr>
                     </thead>
                     <tbody>
-                      {{-- <tr v-for="(descripcion, index) in categoria.descripciones" v-if="descripcion.borrar!=true">
-                        <td>
-                          <span class="fas fa-grip-vertical"></span>
-                          @{{descripcion.ordenamiento}}
-                        </td>
-                        <td>@{{descripcion.nombre}}</td>
-                        <td>@{{descripcion.name}}</td>
-                        <td class="text-right">
-                          <button class="btn btn-success" data-toggle="tooltip" title="Editar"
-                            @click="editarDescripcion(descripcion, index)">
-                            <i class="fas fa-edit"></i>
-                          </button>
-                          <button class="btn btn-danger" data-toggle="tooltip" title="Borrar"
-                            @click="borrarDescripcion(descripcion, index)">
-                            <i class="fas fa-times"></i>
-                          </button>
-                        </td>
-                      </tr> --}}
                     </tbody>
                   </table>
                 </div>
@@ -138,7 +133,12 @@ const app = new Vue({
     el: '#content',
     data: {
       categoria: {!! json_encode($categoria) !!},
-      descripcion:{ nombre: '', name: '', ordenamiento: 0 },
+      descripcion:{
+        nombre: '',
+        name: '',
+        ordenamiento: 0,
+        no_alta_productos: false
+      },
       dataTable: {},
       cargando: false,
     },
@@ -237,7 +237,7 @@ const app = new Vue({
 
         this.categoria.descripciones.push(this.descripcion);
         this.resetDataTables();
-        this.descripcion = {nombre: '', name: '', ordenamiento:0};
+        this.descripcion = {nombre: '', name: '', ordenamiento:0, no_alta_productos:false};
       },
       editarDescripcion(descripcion, index){
         descripcion.actualizar = true;
