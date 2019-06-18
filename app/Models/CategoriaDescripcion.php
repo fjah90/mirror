@@ -9,7 +9,11 @@ class CategoriaDescripcion extends Model
 {
     protected $table = 'categorias_descripciones';
 
-    protected $fillable = ['categoria_id','nombre','name','ordenamiento'];
+    protected $fillable = ['categoria_id','nombre','name','ordenamiento','no_alta_productos'];
+
+    protected $casts = [
+      'no_alta_productos' => 'boolean'
+    ];
 
     /**
      * ---------------------------------------------------------------------------

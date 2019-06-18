@@ -56,9 +56,10 @@ class CategoriasController extends Controller
       $categoria = Categoria::create($create);
 
       if(isset($request->descripciones)){
-        foreach($request->descripciones as $descripcion) {
+        foreach($request->descripciones as $index => $descripcion) {
           if(!empty($descripcion['nombre']) || !empty($descripcion['name'])){
             $descripcion['categoria_id'] = $categoria->id;
+            $descripcion['ordenamiento'] = $index+1;
             CategoriaDescripcion::create($descripcion);
           }
         }
