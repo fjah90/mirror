@@ -31,7 +31,7 @@
         </div>
         <div class="panel-body">
           <div class="table-responsive">
-            <table class="table table-bordred">
+            <table id="tabla" class="table table-bordred">
               <thead>
                 <tr>
                   <th>ID</th>
@@ -76,6 +76,9 @@ const app = new Vue({
     el: '#content',
     data: {
       categorias: {!! json_encode($categorias) !!},
+    },
+    mounted(){
+      $("#tabla").DataTable();
     },
     methods: {
       borrar(categoria, index){

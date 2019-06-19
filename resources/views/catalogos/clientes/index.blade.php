@@ -86,9 +86,7 @@ const app = new Vue({
       clientes: {!! json_encode($clientes) !!},
     },
     mounted(){
-      $("#tabla").DataTable({
-        dom: 'lfrtip',
-      });
+      $("#tabla").DataTable();
     },
     methods: {
       borrar(cliente, index){

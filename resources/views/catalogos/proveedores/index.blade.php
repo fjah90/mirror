@@ -91,9 +91,7 @@ const app = new Vue({
       proveedores: {!! json_encode($proveedores) !!},
     },
     mounted(){
-      $("#tabla").DataTable({
-        dom: 'lfrtip',
-      });
+      $("#tabla").DataTable();
     },
     methods: {
       borrar(proveedor, index){

@@ -277,7 +277,6 @@ $(function() {
   $('#logout-anchor').on('click', function(){
     $('#logout-form').submit();
   });
-  $('[data-toggle="tooltip"]').tooltip();
 });
 var translationsES = {
   countrySelectorLabel: 'Codigo de Pais',
