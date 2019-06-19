@@ -193,8 +193,8 @@
           <!-- Prospectos -->
           <li {!! (Request::is('prospectos*') ? 'class="active"' : '') !!} >
             <a href="{{ URL::to('prospectos') }}">
-              <i class="menu-icon fas fa-comments-dollar"></i>
-              <span>Prospectos</span>
+              <i class="menu-icon fas fa-folder-open "></i>
+              <span>Proyectos</span>
             </a>
           </li>
 

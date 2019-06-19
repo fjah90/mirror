@@ -2,7 +2,7 @@
 
 {{-- Page title --}}
 @section('title')
-    Ver Prospecto | @parent
+    Ver Proyecto | @parent
 @stop
 
 @section('header_styles')
@@ -12,7 +12,7 @@
 @section('content')
   <!-- Content Header (Page header) -->
   <section class="content-header">
-    <h1>Prospectos</h1>
+    <h1>Proyectos</h1>
   </section>
   <!-- Main content -->
   <section class="content" id="content">
@@ -20,7 +20,7 @@
       <div class="col-lg-12">
         <div class="panel ">
           <div class="panel-heading">
-            <h3 class="panel-title">Ver Prospecto</h3>
+            <h3 class="panel-title">Ver Proyecto</h3>
           </div>
           <div class="panel-body">
             <div class="row">

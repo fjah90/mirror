@@ -2,7 +2,7 @@
 
 {{-- Page title --}}
 @section('title')
-  Prospectos | @parent
+  Proyectos | @parent
 @stop
 
 @section('header_styles')
@@ -14,7 +14,7 @@
 @section('content')
 <!-- Content Header (Page header) -->
 <section class="content-header">
-  <h1>Prospectos</h1>
+  <h1>Proyectos</h1>
 </section>
 <!-- Main content -->
 <section class="content" id="content">
@@ -23,15 +23,15 @@
       <div class="panel">
         <div class="panel-heading">
           <h3 class="panel-title text-right">
-            <span class="pull-left p-10">Lista de Prospectos</span>
+            <span class="pull-left p-10">Lista de Proyectos</span>
             <a href="{{route('prospectos.create')}}" class="btn btn-primary" style="color: #fff;">
-              <i class="fas fa-plus"></i> Nuevo Prospecto
+              <i class="fas fa-plus"></i> Nuevo Proyecto
             </a>
           </h3>
         </div>
         <div class="panel-body">
           <div class="table-responsive">
-            <table class="table table-bordred">
+            <table id="tabla" class="table table-bordred">
               <thead>
                 <tr>
                   <th>ID</th>
@@ -103,11 +103,14 @@ const app = new Vue({
     data: {
       prospectos: {!! json_encode($prospectos) !!},
     },
+    mounted(){
+      $("#tabla").DataTable();
+    },
     methods: {
       borrar(prospecto, index){
         swal({
           title: 'Cuidado',
-          text: "Borrar el Prospecto "+prospecto.nombre+"?",
+          text: "Borrar el Proyecto "+prospecto.nombre+"?",
           type: 'warning',
           showCancelButton: true,
           confirmButtonColor: '#3085d6',
@@ -121,7 +124,7 @@ const app = new Vue({
               this.prospectos.splice(index, 1);
               swal({
                 title: "Exito",
-                text: "El prospecto ha sido borrado",
+                text: "El Proyecto ha sido borrado",
                 type: "success"
               });
             })

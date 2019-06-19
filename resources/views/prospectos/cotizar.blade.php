@@ -2,7 +2,7 @@
 
 {{-- Page title --}}
 @section('title')
-    Cotizar Prospecto | @parent
+    Cotizar Proyecto | @parent
 @stop
 
 @section('header_styles')
@@ -14,7 +14,7 @@
 @section('content')
   <!-- Content Header (Page header) -->
   <section class="content-header">
-    <h1>Prospectos</h1>
+    <h1>Proyectos</h1>
   </section>
   <!-- Main content -->
   <section class="content" id="content">
@@ -22,7 +22,7 @@
       <div class="col-lg-12">
         <div class="panel">
           <div class="panel-heading">
-            <h3 class="panel-title">Cotizar Prospecto</h3>
+            <h3 class="panel-title">Cotizar Proyecto</h3>
           </div>
           <div class="panel-body">
             <div class="row">
@@ -420,22 +420,22 @@
     <!-- Catalogo Productos Modal -->
     <modal v-model="openCatalogo" title="Productos" :footer="false">
       <div class="table-responsive">
-        <table class="table table-bordred">
+        <table id="tablaProductos" class="table table-bordred">
           <thead>
             <tr>
               <th>ID</th>
+              <th>Nombre</th>
               <th>Proveedor</th>
               <th>Categoria</th>
-              <th>Nombre</th>
               <th></th>
             </tr>
           </thead>
           <tbody>
             <tr v-for="(prod, index) in productos">
               <td>@{{prod.id}}</td>
+              <td>@{{prod.nombre}}</td>
               <td>@{{prod.proveedor.empresa}}</td>
               <td>@{{prod.categoria.nombre}}</td>
-              <td>@{{prod.nombre}}</td>
               <td class="text-right">
                 <button class="btn btn-primary" title="Seleccionar"
                 @click="seleccionarProduco(prod, index)">
@@ -621,6 +621,7 @@ const app = new Vue({
       allowedFileExtensions: ["jpg", "jpeg", "png", "pdf"],
       elErrorContainer: '#comprobante-file-errors',
     });
+    $("#tablaProductos").DataTable({dom: 'ft'});
   },
   methods: {
     fijarComprobante(){
