@@ -132,7 +132,7 @@ class OrdenesCompraController extends Controller
         ], 400);
       }
 
-      // $this->avisarOrdenPorAprobar($orden);
+      $this->avisarOrdenPorAprobar($orden);
 
       //generar PDF de orden
       $orden->load('proveedor.contactos', 'proyecto.cotizacion',
@@ -143,11 +143,14 @@ class OrdenesCompraController extends Controller
       $orden->firmaAbraham = $firmaAbraham;
 
       $url = 'ordenes_compra/'.$orden->id.'/orden_'.$orden->id.'.pdf';
-      $meses = ['ENERO','FEBRERO','MARZO','ABRIL','MAYO','JUNIO','JULIO',
-      'AGOSTO','SEPTIEMBRE','OCTUBRE','NOVIEMBRE','DICIEMBRE'];
+      // $meses = ['ENERO','FEBRERO','MARZO','ABRIL','MAYO','JUNIO','JULIO',
+      // 'AGOSTO','SEPTIEMBRE','OCTUBRE','NOVIEMBRE','DICIEMBRE'];
+      $meses = ['JANUARY','FEBRUARY','MARCH','APRIL','MAY','JUNE','JULY',
+      'AUGUST','SEPTEMBER','OCTOBER','NOVEMBER','DECEMBER'];
       list($ano,$mes,$dia) = explode('-', date('Y-m-d'));
       $mes = $meses[+$mes-1];
-      $orden->fechaPDF = "$dia DE $mes DEL $ano";
+      // $orden->fechaPDF = "$dia DE $mes DEL $ano";
+      $orden->fechaPDF = "$mes $dia, $ano";
 
       foreach ($orden->entradas as $entrada) {
         if($entrada->producto->foto) $entrada->producto->foto = asset('storage/'.$entrada->producto->foto);

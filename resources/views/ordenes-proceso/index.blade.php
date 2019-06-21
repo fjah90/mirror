@@ -51,7 +51,7 @@
                       :href="'/proyectos-aprobados/'+orden.proyecto_id+'/ordenes-compra/'+orden.id">
                       <i class="far fa-eye"></i>
                     </a> --}}
-                    <button class="btn btn-info"
+                    <button class="btn btn-unique"
                       title="Historial" @click="ordenHistorial=orden; openHistorial=true;">
                       <i class="fas fa-history"></i>
                     </button>
@@ -72,7 +72,7 @@
                         :download="'Packing list orden proceso '+orden.id">
                         <i class="fas fa-list-ol"></i>
                       </a>
-                      <a class="btn btn-info"
+                      <a v-if="orden.bl" class="btn btn-info"
                         title="BL" :href="orden.bl"
                         :download="'BL orden proceso '+orden.id">
                         <i class="fas fa-file"></i>
@@ -83,6 +83,11 @@
                         <i class="fas fa-file-contract"></i>
                       </a>
                     </template>
+                    <a v-if="orden.deposito_warehouse" class="btn btn-info"
+                      title="Deposito Warehouse" :href="orden.deposito_warehouse"
+                      :download="'Deposito Warehouse orden '+orden.id">
+                      <i class="far fa-file-word"></i>
+                    </a>
                     <template v-if="orden.gastos" >
                       <a class="btn btn-info"
                         title="Cuenta de gastos" :href="orden.gastos"
@@ -95,18 +100,22 @@
                         <i class="fas fa-money-check-alt"></i>
                       </a>
                     </template>
+                    <a v-if="orden.carta_entrega" class="btn btn-info"
+                      title="Carta de Entrega" :href="orden.carta_entrega"
+                      :download="'Carta de Entrega orden '+orden.id">
+                      <i class="fas fa-people-carry"></i>
+                    </a>
                     {{-- Botones de acciones --}}
-                    <button v-if="orden.status=='En fabricación' && !orden.fecha_estimada_fabricacion"
-                      class="btn btn-info" title="Fabricación"
-                      @click="updateStatus(orden)">
-                      <i class="fas fa-industry"></i>
-                    </button>
-                    <button v-if="orden.status=='En fabricación' && orden.fecha_estimada_fabricacion"
+                    <button v-if="orden.status=='En fabricación'"
                       class="btn btn-brown" title="Embarcar"
                       @click="embarcar.orden_id=orden.id; openEmbarcar=true;">
                       <i class="fas fa-dolly-flatbed"></i>
                     </button>
-                    <button v-if="orden.status=='Embarcado de fabrica'" class="btn btn-warning"
+                    <button v-if="orden.status=='Embarcado de fabrica'" class="btn btn-success"
+                      title="Frontera" @click="frontera.orden_id=orden.id; openFrontera=true;">
+                      <i class="fas fa-flag"></i>
+                    </button>
+                    <button v-if="orden.status=='En frontera'" class="btn btn-warning"
                       title="Aduana" @click="aduana.orden_id=orden.id; openAduana=true;">
                       <i class="fas fa-warehouse"></i>
                     </button>
@@ -127,10 +136,10 @@
                       <i class="fas fa-dolly"></i>
                     </button>
                     <button v-if="orden.status=='Descarga'" class="btn btn-default"
-                      title="Entrega" @click="updateStatus(orden)">
+                      title="Entrega" @click="entrega.orden_id=orden.id; openEntrega=true;">
                       <i class="fas fa-box"></i>
                     </button>
-                    <button v-if="orden.status=='Entregado' && !orden.fecha_estimada_instalacion"
+                    <button v-if="orden.status=='Entregado' && !orden.fecha_real_entrega"
                       class="btn btn-info" title="Instalación"
                       @click="updateStatus(orden)">
                       <i class="fas fa-tools"></i>
@@ -157,50 +166,32 @@
               <th>Fecha real</th>
             </thead>
             <tbody>
-              <tr>
-                <td>En fabricación</td>
-                <td>@{{ ordenHistorial.fecha_estimada_fabricacion }}</td>
-                <td>@{{ ordenHistorial.fecha_real_fabricacion }}</td>
-              </tr>
-              <tr>
-                <td>Embarcado de fabrica</td>
-                <td>@{{ ordenHistorial.fecha_estimada_embarque }}</td>
-                <td>@{{ ordenHistorial.fecha_real_embarque }}</td>
-              </tr>
-              <tr>
-                <td>Aduana</td>
-                <td>@{{ ordenHistorial.fecha_estimada_aduana }}</td>
-                <td>@{{ ordenHistorial.fecha_real_aduana }}</td>
-              </tr>
-              <tr>
-                <td>Proceso de Importación</td>
-                <td>@{{ ordenHistorial.fecha_estimada_importacion }}</td>
-                <td>@{{ ordenHistorial.fecha_real_importacion }}</td>
-              </tr>
-              <tr>
-                <td>Liberado de Aduana</td>
-                <td>@{{ ordenHistorial.fecha_estimada_liberado_aduana }}</td>
-                <td>@{{ ordenHistorial.fecha_real_liberado_aduana }}</td>
-              </tr>
-              <tr>
-                <td>Embarque al destino Final</td>
-                <td>@{{ ordenHistorial.fecha_estimada_embarque_final }}</td>
-                <td>@{{ ordenHistorial.fecha_real_embarque_final }}</td>
-              </tr>
-              <tr>
-                <td>Descarga</td>
-                <td>@{{ ordenHistorial.fecha_estimada_descarga }}</td>
-                <td>@{{ ordenHistorial.fecha_real_descarga }}</td>
-              </tr>
-              <tr>
-                <td>Entregado</td>
-                <td>@{{ ordenHistorial.fecha_estimada_entrega }}</td>
-                <td>@{{ ordenHistorial.fecha_real_entrega }}</td>
-              </tr>
-              <tr>
-                <td>Instalacion</td>
-                <td>@{{ ordenHistorial.fecha_estimada_instalacion }}</td>
-                <td>@{{ ordenHistorial.fecha_real_instalacion }}</td>
+              <tr v-for="status in statuses">
+                <td>@{{ status.status }}</td>
+                <td v-if="ordenHistorial[status.propiedad_estimada]">@{{ ordenHistorial[status.propiedad_estimada] }}</td>
+                <td v-else>
+                  <dropdown>
+                    <div class="input-group">
+                      <div class="input-group-btn">
+                        <btn class="dropdown-toggle" style="background-color:#fff;">
+                          <i class="fas fa-calendar"></i>
+                        </btn>
+                      </div>
+                      <input class="form-control" type="text" placeholder="DD/MM/YYYY"
+                        v-model="ordenHistorial[status.propiedad_estimada]" readonly
+                        style="width:120px;"
+                      />
+                    </div>
+                    <template slot="dropdown">
+                      <li>
+                        <date-picker :locale="locale" :today-btn="false" :clear-btn="false"
+                        format="dd/MM/yyyy" :date-parser="dateParser"
+                        v-model="ordenHistorial[status.propiedad_estimada]"/>
+                      </li>
+                    </template>
+                  </dropdown>
+                </td>
+                <td>@{{ ordenHistorial[status.propiedad_real] }}</td>
               </tr>
             </tbody>
           </table>
@@ -208,40 +199,11 @@
       </div>
     </div>
     <div class="form-group text-right">
+      <button type="button" class="btn btn-unique" @click="fijarFechasEstimadas()">Fijar fechas estimadas</button>
       <button type="button" class="btn btn-default" @click="openHistorial=false;">Aceptar</button>
     </div>
   </modal>
   <!-- /.Historial Modal -->
-
-  <!-- Estimados Modal -->
-  <modal v-model="openEstimados" :header="false" :footer="false" :backdrop="false"
-    :keyboard="false" size="sm">
-    <h4 class="text-center">
-      Seleccione la fecha estimada para completar la
-      <span v-show="estimados.status=='En fabricación'">Fabricación</span>
-      <span v-show="estimados.status=='Aduana'">Importación</span>
-      <span v-show="estimados.status=='Proceso de Importación'">Liberacion de Aduana</span>
-      <span v-show="estimados.status=='Liberado de Aduana'">Embarcación Final</span>
-      <span v-show="estimados.status=='Embarque al destino Final'">Descarga</span>
-      <span v-show="estimados.status=='Descarga'">Entrega</span>
-      <span v-show="estimados.status=='Entrega'">Instalacion</span>
-    </h4>
-    <div class="form-group">
-      <date-picker :locale="locale" :today-btn="false" :clear-btn="false"
-        format="dd/MM/yyyy" :date-parser="dateParser"
-        v-model="estimados.fecha_estimada"
-      />
-    </div>
-    <div class="text-right">
-      <button id="aceptarEstimado" type="button" class="btn btn-primary" :disabled="cargando">
-        Aceptar
-      </button>
-      <button id="cancelarEstimado" type="button" class="btn btn-default">
-        Cancelar
-      </button>
-    </div>
-  </modal>
-  <!-- /.Estimados Modal -->
 
   <!-- Embarcar Modal -->
   <modal v-model="openEmbarcar" :title="'Embarcar Orden '+embarcar.orden_id" :footer="false">
@@ -275,7 +237,7 @@
             <label class="control-label">BL</label>
             <div class="file-loading">
               <input id="bl" name="bl" type="file" ref="bl"
-              @change="fijarDocumentoEmbarque('bl')" required />
+              @change="fijarDocumentoEmbarque('bl')" />
             </div>
             <div id="bl-file-errors"></div>
           </div>
@@ -291,33 +253,6 @@
           </div>
         </div>
       </div>
-      <div class="row">
-        <div class="col-md-6">
-          <div class="form-group">
-            <label class="control-label">Feche estimada para completar embarque</label>
-            <br />
-            <dropdown>
-              <div class="input-group">
-                <div class="input-group-btn">
-                  <btn class="dropdown-toggle" style="background-color:#fff;">
-                    <i class="fas fa-calendar"></i>
-                  </btn>
-                </div>
-                <input class="form-control" type="text" name="fecha"
-                  v-model="embarcar.fecha_estimada" placeholder="DD/MM/YYYY"
-                  readonly
-                />
-              </div>
-              <template slot="dropdown">
-                <li>
-                  <date-picker :locale="locale" :today-btn="false" :clear-btn="false"
-                  format="dd/MM/yyyy" :date-parser="dateParser" v-model="embarcar.fecha_estimada"/>
-                </li>
-              </template>
-            </dropdown>
-          </div>
-        </div>
-      </div>
       <div class="form-group text-right">
         <button type="submit" class="btn btn-primary" :disabled="cargando">Aceptar</button>
         <button type="button" class="btn btn-default"
@@ -328,6 +263,34 @@
     </form>
   </modal>
   <!-- /.Embarcar Modal -->
+
+  <!-- Frontera Modal -->
+  <modal v-model="openFrontera" :title="'Poner orden '+frontera.orden_id+' en frontera'" :footer="false">
+    <h4>Por favor proporcione los siguientes documentos:</h4>
+    <form class="" @submit.prevent="fronteraOrden">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="control-label">Deposito de warehouse</label>
+            <div class="file-loading">
+              <input id="warehouse" name="deposito_warehouse" type="file"
+              ref="deposito_warehouse" @change="fijarDocumentoFrontera('deposito_warehouse')"
+              required />
+            </div>
+            <div id="warehouse-file-errors"></div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group text-right">
+        <button type="submit" class="btn btn-primary" :disabled="cargando">Aceptar</button>
+        <button type="button" class="btn btn-default"
+          @click="frontera.orden_id=0; openFrontera=false;">
+          Cancelar
+        </button>
+      </div>
+    </form>
+  </modal>
+  <!-- /.Frontera Modal -->
 
   <!-- Aduana Modal -->
   <modal v-model="openAduana" :title="'Mandar orden '+aduana.orden_id+' a Aduana'" :footer="false">
@@ -355,33 +318,6 @@
           </div>
         </div>
       </div>
-      <div class="row">
-        <div class="col-md-6">
-          <div class="form-group">
-            <label class="control-label">Feche estimada para completar aduana</label>
-            <br />
-            <dropdown>
-              <div class="input-group">
-                <div class="input-group-btn">
-                  <btn class="dropdown-toggle" style="background-color:#fff;">
-                    <i class="fas fa-calendar"></i>
-                  </btn>
-                </div>
-                <input class="form-control" type="text" name="fecha"
-                  v-model="aduana.fecha_estimada" placeholder="DD/MM/YYYY"
-                  readonly
-                />
-              </div>
-              <template slot="dropdown">
-                <li>
-                  <date-picker :locale="locale" :today-btn="false" :clear-btn="false"
-                  format="dd/MM/yyyy" :date-parser="dateParser" v-model="aduana.fecha_estimada"/>
-                </li>
-              </template>
-            </dropdown>
-          </div>
-        </div>
-      </div>
       <div class="form-group text-right">
         <button type="submit" class="btn btn-primary" :disabled="cargando">Aceptar</button>
         <button type="button" class="btn btn-default"
@@ -392,6 +328,34 @@
     </form>
   </modal>
   <!-- /.Aduana Modal -->
+
+  <!-- Frontera Modal -->
+  <modal v-model="openEntrega" :title="'Poner orden '+entrega.orden_id+' en entrega'" :footer="false">
+    <h4>Por favor proporcione los siguientes documentos:</h4>
+    <form class="" @submit.prevent="entregaOrden">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="control-label">Carta de entrega</label>
+            <div class="file-loading">
+              <input id="carta" name="carta_entrega" type="file"
+              ref="carta_entrega" @change="fijarDocumentoEntrega('carta_entrega')"
+              required />
+            </div>
+            <div id="carta-file-errors"></div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group text-right">
+        <button type="submit" class="btn btn-primary" :disabled="cargando">Aceptar</button>
+        <button type="button" class="btn btn-default"
+          @click="entrega.orden_id=0; openEntrega=false;">
+          Cancelar
+        </button>
+      </div>
+    </form>
+  </modal>
+  <!-- /.Frontera Modal -->
 
 </section>
 <!-- /.content -->
@@ -407,28 +371,87 @@ const app = new Vue({
       locale: localeES,
       ordenes: {!! json_encode($ordenes) !!},
       ordenHistorial: {},
-      estimados: {
-        status: '',
-        fecha_estimada: ''
-      },
+      statuses: [
+        {
+          status: 'En fabricación',
+          propiedad_estimada: 'fecha_estimada_fabricacion',
+          propiedad_real: 'fecha_real_fabricacion'
+        },
+        {
+          status: 'Embarcado de fabrica',
+          propiedad_estimada: 'fecha_estimada_embarque',
+          propiedad_real: 'fecha_real_embarque'
+        },
+        {
+          status: 'En frontera',
+          propiedad_estimada: 'fecha_estimada_frontera',
+          propiedad_real: 'fecha_real_frontera'
+        },
+        {
+          status: 'Aduana',
+          propiedad_estimada: 'fecha_estimada_aduana',
+          propiedad_real: 'fecha_real_aduana'
+        },
+        {
+          status: 'Proceso de Importación',
+          propiedad_estimada: 'fecha_estimada_importacion',
+          propiedad_real: 'fecha_real_importacion'
+        },
+        {
+          status: 'Liberado de Aduana',
+          propiedad_estimada: 'fecha_estimada_liberado_aduana',
+          propiedad_real: 'fecha_real_liberado_aduana'
+        },
+        {
+          status: 'Embarque al destino Final',
+          propiedad_estimada: 'fecha_estimada_embarque_final',
+          propiedad_real: 'fecha_real_embarque_final'
+        },
+        {
+          status: 'Descarga',
+          propiedad_estimada: 'fecha_estimada_descarga',
+          propiedad_real: 'fecha_real_descarga'
+        },
+        {
+          status: 'Entrega',
+          propiedad_estimada: 'fecha_estimada_entrega',
+          propiedad_real: 'fecha_real_entrega'
+        },
+        {
+          status: 'Instalacion',
+          propiedad_estimada: 'fecha_estimada_instalacion',
+          propiedad_real: 'fecha_real_instalacion'
+        },
+        {{-- {
+          status: '',
+          propiedad_estimada: fecha_estimada_,
+          propiedad_real: fecha_real_
+        }, --}}
+      ],
       embarcar: {
         orden_id: 0,
         factura: '',
         packing: '',
         bl: '',
-        certificado: '',
-        fecha_estimada: ''
+        certificado: ''
+      },
+      frontera: {
+        orden_id: 0,
+        deposito_warehouse: ''
       },
       aduana: {
         orden_id: 0,
         gastos: '',
-        pago: '',
-        fecha_estimada: ''
+        pago: ''
+      },
+      entrega: {
+        orden_id: 0,
+        carta_entrega: ''
       },
       cargando: false,
       openHistorial: false,
-      openEstimados: false,
       openEmbarcar: false,
+      openFrontera: false,
       openAduana: false
     },
     mounted(){
@@ -468,6 +491,15 @@ const app = new Vue({
         allowedFileExtensions: ["jpg", "jpeg", "png", "pdf"],
         elErrorContainer: '#certificado-file-errors',
       });
+      $("#warehouse").fileinput({
+        language: 'es',
+        showPreview: false,
+        showUpload: false,
+        showRemove: false,
+        browseLabel: '',
+        allowedFileExtensions: ["jpg", "jpeg", "png", "pdf"],
+        elErrorContainer: '#warehouse-file-errors',
+      });
       $("#gastos").fileinput({
         language: 'es',
         showPreview: false,
@@ -486,6 +518,15 @@ const app = new Vue({
         allowedFileExtensions: ["jpg", "jpeg", "png", "pdf"],
         elErrorContainer: '#certificado-file-errors',
       });
+      $("#carta").fileinput({
+        language: 'es',
+        showPreview: false,
+        showUpload: false,
+        showRemove: false,
+        browseLabel: '',
+        allowedFileExtensions: ["jpg", "jpeg", "png", "pdf"],
+        elErrorContainer: '#carta-file-errors',
+      });
     },
     methods:{
       dateParser(value){
@@ -494,76 +535,74 @@ const app = new Vue({
       fijarDocumentoEmbarque(documento){
         this.embarcar[documento] = this.$refs[documento].files[0];
       },
+      fijarDocumentoFrontera(documento){
+        this.frontera[documento] = this.$refs[documento].files[0];
+      },
       fijarDocumentoAduana(documento){
         this.aduana[documento] = this.$refs[documento].files[0];
       },
-      lanzarModalEstimados(orden){
-        this.estimados.orden_id = orden.id;
-        this.estimados.status = orden.status;
-        this.openEstimados = true;
-
-        var promise = new Promise(function(resolve, reject) {
-          $("#aceptarEstimado").one('click', function(){ resolve();});
-          $("#cancelarEstimado").one('click', function(){ reject();});
-        });
-
-        return promise;
+      fijarDocumentoEntrega(documento){
+        this.entrega[documento] = this.$refs[documento].files[0];
       },
       updateStatus(orden){
-        this.lanzarModalEstimados(orden).then(() => {
-          if(this.estimados.fecha_estimada){
-            this.cargando = true;
-            axios.post('/ordenes-proceso/'+this.estimados.orden_id+'/updateStatus',
-            this.estimados)
-            .then(({data}) => {
-              this.ordenes.find(function(orden){
-                if(this.estimados.orden_id == orden.id){
-                  for (propiedad in data.actualizados){
-                    orden[propiedad] = data.actualizados[propiedad];
-                  }
-                  return true;
-                }
-              }, this);
-
-              this.estimados = {
-                orden_id: 0,
-                status: '',
-                fecha_estimada: ''
-              };
-              this.openEstimados = false;
-              this.cargando = false;
-              swal({
-                title: "Orden Actualizada",
-                text: 'Se ha actualizado la orden',
-                type: "success"
-              });
-            })
-            .catch(({response}) => {
-              console.error(response);
-              this.estimados = {
-                orden_id: 0,
-                status: '',
-                fecha_estimada: ''
-              };
-              this.openEstimados = false;
-              this.cargando = false;
-              swal({
-                title: "Error",
-                text: response.data.message || "Ocurrio un error inesperado, intente mas tarde",
-                type: "error"
-              });
-            });
+        this.cargando = true;
+        axios.post('/ordenes-proceso/'+orden.id+'/updateStatus',{status:orden.status})
+        .then(({data}) => {
+          for (propiedad in data.actualizados){
+            orden[propiedad] = data.actualizados[propiedad];
           }
+
+          this.cargando = false;
+          swal({
+            title: "Orden Actualizada",
+            text: 'Se ha actualizado la orden',
+            type: "success"
+          });
         })
-        .catch(() => {
-          this.estimados = {
-            orden_id: 0,
-            status: '',
-            fecha_estimada: ''
-          };
-          this.openEstimados = false;
+        .catch(({response}) => {
+          console.error(response);
+          this.cargando = false;
+          swal({
+            title: "Error",
+            text: response.data.message || "Ocurrio un error inesperado, intente mas tarde",
+            type: "error"
+          });
         });
       },
+      fijarFechasEstimadas(){
+        this.cargando = true;
+        axios.post(
+          '/ordenes-proceso/'+this.ordenHistorial.id+'/fijarFechasEstimadas',
+          this.ordenHistorial
+        )
+        .then(({data}) => {
+          this.ordenes.find(function(orden){
+            if(this.ordenHistorial.id == orden.id){
+              for (propiedad in data.actualizados){
+                orden[propiedad] = data.actualizados[propiedad];
+              }
+              return true;
+            }
+          }, this);
+          this.cargando = false;
+          this.openHistorial = false;
+          this.ordenHistorial = {};
+          swal({
+            title: "Fechas Actualizadas",
+            text: 'Se han actualizado las fechas estimadas de la orden',
+            type: "success"
+          });
+        })
+        .catch(({response}) => {
+          console.error(response);
+          this.cargando = false;
+          swal({
+            title: "Error",
+            text: response.data.message || "Ocurrio un error inesperado, intente mas tarde",
+            type: "error"
+          });
+        });
+      },//fin fijarFechasEstimadas
       embarcarOrden(){
         var formData = objectToFormData(this.embarcar, {indices:true});
 
@@ -580,7 +619,6 @@ const app = new Vue({
               orden.bl = data.orden.bl;
               orden.certificado = data.orden.certificado;
               orden.fecha_real_fabricacion = data.orden.fecha_real_fabricacion;
-              orden.fecha_estimada_embarque = data.orden.fecha_estimada_embarque;
               return true;
             }
           }, this);
@@ -590,8 +628,7 @@ const app = new Vue({
             factura: '',
             packing: '',
             bl: '',
-            certificado: '',
-            fecha_estimada: ''
+            certificado: ''
           };
           $("#factura").fileinput('clear');
           $("#packing").fileinput('clear');
@@ -615,6 +652,46 @@ const app = new Vue({
           });
         });
       },//fin embarcarOrden
+      fronteraOrden(){
+        var formData = objectToFormData(this.frontera, {indices:true});
+
+        this.cargando = true;
+        axios.post('/ordenes-proceso/'+this.frontera.orden_id+'/frontera', formData, {
+          headers: { 'Content-Type': 'multipart/form-data'}
+        })
+        .then(({data}) => {
+          this.ordenes.find(function(orden){
+            if(this.frontera.orden_id == orden.id){
+              orden.status = data.orden.status;
+              orden.deposito_warehouse = data.orden.deposito_warehouse;
+              orden.fecha_real_embarque = data.orden.fecha_real_embarque;
+              return true;
+            }
+          }, this);
+
+          this.frontera = {
+            orden_id: 0,
+            deposito_warehouse: '',
+          };
+          $("#warehouse").fileinput('clear');
+          this.openFrontera = false;
+          this.cargando = false;
+          swal({
+            title: "Orden en frontera",
+            text: 'La orden ha pasado al status "En frontera"',
+            type: "success"
+          });
+        })
+        .catch(({response}) => {
+          console.error(response);
+          this.cargando = false;
+          swal({
+            title: "Error",
+            text: response.data.message || "Ocurrio un error inesperado, intente mas tarde",
+            type: "error"
+          });
+        });
+      },//fin fronteraOrden
       aduanaOrden(){
         var formData = objectToFormData(this.aduana, {indices:true});
 
@@ -628,8 +705,7 @@ const app = new Vue({
               orden.status = data.orden.status;
               orden.gastos = data.orden.gastos;
               orden.pago = data.orden.pago;
-              orden.fecha_real_embarque = data.orden.fecha_real_embarque;
-              orden.fecha_estimada_aduana = data.orden.fecha_estimada_aduana;
+              orden.fecha_real_frontera = data.orden.fecha_real_frontera;
               return true;
             }
           }, this);
@@ -638,7 +714,6 @@ const app = new Vue({
             orden_id: 0,
             gastos: '',
             pago: '',
-            fecha_estimada: ''
           };
           $("#gastos").fileinput('clear');
           $("#pago").fileinput('clear');
@@ -660,6 +735,46 @@ const app = new Vue({
           });
         });
       },//fin aduanaOrden
+      entregaOrden(){
+        var formData = objectToFormData(this.entrega, {indices:true});
+
+        this.cargando = true;
+        axios.post('/ordenes-proceso/'+this.entrega.orden_id+'/entrega', formData, {
+          headers: { 'Content-Type': 'multipart/form-data'}
+        })
+        .then(({data}) => {
+          this.ordenes.find(function(orden){
+            if(this.entrega.orden_id == orden.id){
+              orden.status = data.orden.status;
+              orden.carta_entrega = data.orden.carta_entrega;
+              orden.fecha_real_descarga = data.orden.fecha_real_descarga;
+              return true;
+            }
+          }, this);
+
+          this.entrega = {
+            orden_id: 0,
+            carta_entrega: '',
+          };
+          $("#carta").fileinput('clear');
+          this.openEntrega = false;
+          this.cargando = false;
+          swal({
+            title: "Orden Entregada",
+            text: 'La orden ha pasado al status "Entregado"',
+            type: "success"
+          });
+        })
+        .catch(({response}) => {
+          console.error(response);
+          this.cargando = false;
+          swal({
+            title: "Error",
+            text: response.data.message || "Ocurrio un error inesperado, intente mas tarde",
+            type: "error"
+          });
+        });
+      },//fin entregaOrden
     }
 
 });

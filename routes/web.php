@@ -92,7 +92,10 @@ Route::middleware('auth')->group(function () {
   //ordenes en proceso
   Route::get('/ordenes-proceso', 'OrdenesProcesoController@index');
   Route::post('/ordenes-proceso/{orden}/updateStatus', 'OrdenesProcesoController@updateStatus');
+  Route::post('/ordenes-proceso/{orden}/fijarFechasEstimadas', 'OrdenesProcesoController@fijarFechasEstimadas');
   Route::post('/ordenes-proceso/{orden}/embarcar', 'OrdenesProcesoController@embarcar');
+  Route::post('/ordenes-proceso/{orden}/frontera', 'OrdenesProcesoController@frontera');
   Route::post('/ordenes-proceso/{orden}/aduana', 'OrdenesProcesoController@aduana');
+  Route::post('/ordenes-proceso/{orden}/entrega', 'OrdenesProcesoController@entrega');
 
 });

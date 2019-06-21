@@ -96,6 +96,9 @@
                       <option value="Yarda2">Yarda2</option>
                       <option value="Pies">Pies</option>
                       <option value="Pies2">Pies2</option>
+                      <option value="Caja">Caja</option>
+                      <option value="Cubeta">Cubeta</option>
+                      <option value="Piezas">Piezas</option>
                     </select>
                   </div>
                 </div>

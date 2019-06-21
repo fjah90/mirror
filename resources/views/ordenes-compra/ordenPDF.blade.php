@@ -11,7 +11,7 @@
     body {
       margin: 25px;
       font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-      font-size: 12px;
+      font-size: 10px;
       line-height: 1.1;
       color: #333;
       background-color: #fff;
@@ -178,7 +178,7 @@
     .text-right {text-align: right;}
     .text-danger {color: #FF7A7A;}
     /* fuentes */
-    .font-small{font-size: 11px;}
+    .font-small{font-size: 9px;}
     .font-big{font-size: 14px;}
     .font-bold{font-weight: bold;}
   </style>

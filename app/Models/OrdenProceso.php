@@ -10,6 +10,7 @@ class OrdenProceso extends Model
 
     const STATUS_FABRICACION           = "En fabricación";
     const STATUS_EMBARCADO             = "Embarcado de fabrica";
+    const STATUS_FRONTERA              = "En frontera";
     const STATUS_ADUANA                = "Aduana";
     const STATUS_IMPORTACION           = "Proceso de Importación";
     const STATUS_LIBERADO_ADUANA       = "Liberado de Aduana";
@@ -17,10 +18,14 @@ class OrdenProceso extends Model
     const STATUS_DESCARGA              = "Descarga";
     const STATUS_ENTREGADO             = "Entregado";
 
-    protected $fillable = ['orden_compra_id','status','factura','packing','bl',
+    protected $fillable = [
+      'orden_compra_id',
+      'status','factura','packing','bl',
       'certificado','gastos','pago',
+      'deposito_warehouse','carta_entrega',
       'fecha_estimada_fabricacion',    'fecha_real_fabricacion',
       'fecha_estimada_embarque',       'fecha_real_embarque',
+      'fecha_estimada_frontera',       'fecha_real_frontera',
       'fecha_estimada_aduana',         'fecha_real_aduana',
       'fecha_estimada_importacion',    'fecha_real_importacion',
       'fecha_estimada_liberado_aduana','fecha_real_liberado_aduana',
@@ -44,6 +49,11 @@ class OrdenProceso extends Model
     {
         list($dia, $mes, $ano) = explode('/', $fecha);
         $this->attributes['fecha_estimada_embarque'] = "$ano-$mes-$dia";
+    }
+    public function setFechaEstimadaFronteraAttribute($fecha)
+    {
+        list($dia, $mes, $ano) = explode('/', $fecha);
+        $this->attributes['fecha_estimada_frontera'] = "$ano-$mes-$dia";
     }
     public function setFechaEstimadaAduanaAttribute($fecha)
     {
