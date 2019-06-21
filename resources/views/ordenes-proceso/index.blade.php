@@ -452,7 +452,8 @@ const app = new Vue({
       openHistorial: false,
       openEmbarcar: false,
       openFrontera: false,
-      openAduana: false
+      openAduana: false,
+      openEntrega: false
     },
     mounted(){
       $("#factura").fileinput({
