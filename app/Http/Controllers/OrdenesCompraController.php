@@ -293,7 +293,24 @@ class OrdenesCompraController extends Controller
       }
 
       //generar numero de orden (proceso)
-      $numero = OrdenProceso::create(['orden_compra_id'=>$orden->id]);
+      if($orden->proveedor->nacional){
+        $hoy = date('d/m/Y');
+        $hoy2 = date('Y-m-d');
+        $numero = OrdenProceso::create([
+          'orden_compra_id'=>$orden->id,
+          'status' => OrdenProceso::STATUS_DESCARGA,
+          'fecha_estimada_fabricacion' => $hoy, 'fecha_real_fabricacion' => $hoy2,
+          'fecha_estimada_embarque' => $hoy, 'fecha_real_embarque' => $hoy2,
+          'fecha_estimada_frontera' => $hoy, 'fecha_real_frontera' => $hoy2,
+          'fecha_estimada_aduana' => $hoy, 'fecha_real_aduana' => $hoy2,
+          'fecha_estimada_importacion' => $hoy, 'fecha_real_importacion' => $hoy2,
+          'fecha_estimada_liberado_aduana' => $hoy,'fecha_real_liberado_aduana' => $hoy2,
+          'fecha_estimada_embarque_final' => $hoy, 'fecha_real_embarque_final' => $hoy2,
+        ]);
+      }
+      else {
+        $numero = OrdenProceso::create(['orden_compra_id'=>$orden->id]);
+      }
 
       //generar cuenta por pagar
       $create = [
