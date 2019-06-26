@@ -5,7 +5,8 @@ Created by: Omar Herrera
 
 1.  General
 2.  Utils
-3.  Reportes Sicas
+3.  Override DataTables
+4.  Reportes Sicas
 
 */
 
@@ -42,12 +43,6 @@ footer {
 	padding: 0 4px;
 	font-size: 10px;
 	cursor: pointer;
-}
-.dataTables_wrapper .dataTables_length {
-	float: right;
-}
-.dataTables_wrapper .dataTables_filter {
-	float: left;
 }
 .btn-brown {
 	background-color: #795548 !important;
@@ -189,6 +184,15 @@ table.small .btn-small{
 }
 .stat-content.stat-content-small > h4 {
 	margin: 5px 0;
+}
+
+
+/******** Override Datatables *********/
+.dataTables_wrapper .dataTables_length {
+	float: right;
+}
+.dataTables_wrapper .dataTables_filter {
+	float: left;
 }
 
 
