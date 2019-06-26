@@ -64,14 +64,6 @@ class ProductosController extends Controller
       }
 
       $create = $request->only('proveedor_id','categoria_id','nombre');
-      if(isset($request->foto)){
-        $create['foto'] = Storage::putFile('public/productos', $request->file('foto'));
-        $create['foto'] = str_replace('public/', '', $create['foto']);
-      }
-      if(isset($request->ficha_tecnica)){
-        $create['ficha_tecnica'] = Storage::putFile('public/productos', $request->file('ficha_tecnica'));
-        $create['ficha_tecnica'] = str_replace('public/', '', $create['ficha_tecnica']);
-      }
       if(isset($request->subcategoria_id)){
         if($request->subcategoria_id=='otra'){
           $subcategoria = Subcategoria::create([
@@ -83,6 +75,22 @@ class ProductosController extends Controller
         else $create['subcategoria_id'] = $request->subcategoria_id;
       }
       $producto = Producto::create($create);
+
+      if(isset($request->foto)){
+        $foto = Storage::putFile('public/productos', $request->file('foto'));
+        $foto = str_replace('public/', '', $foto);
+        $producto->update(['foto'=>$foto]);
+      }
+      if(isset($request->ficha_tecnica)){
+        $nombre_temp = "temp".time().".pdf";
+        $nombre_bueno = "ficha_tecnica_producto_".$producto->id.".pdf";
+
+        Storage::putFileAs('public/productos', $request->file('ficha_tecnica'), $nombre_temp);
+        //comando para pasar pdf a version 1.4, para poderlo "mergear" a pdfs de cotizacion
+        $comando = "ps2pdf14 storage/productos/$nombre_temp storage/productos/$nombre_bueno";
+        exec_in_background($comando);
+        $producto->update(['ficha_tecnica'=>"productos/$nombre_bueno"]);
+      }
 
       foreach ($request->descripciones as $descripcion) {
         $create = array(
@@ -182,8 +190,16 @@ class ProductosController extends Controller
       }
       if(!is_null($request->ficha_tecnica)) {
         Storage::delete('public/'.$producto->ficha_tecnica);
-        $update['ficha_tecnica'] = Storage::putFile('public/productos', $request->file('ficha_tecnica'));
-        $update['ficha_tecnica'] = str_replace('public/', '', $update['ficha_tecnica']);
+        $nombre_temp = "temp".time().".pdf";
+        $nombre_bueno = "ficha_tecnica_producto_".$producto->id.".pdf";
+
+        Storage::putFileAs('public/productos', $request->file('ficha_tecnica'), $nombre_temp);
+
+        //comando para pasar pdf a version 1.4, para poderlo "mergear" a pdfs de cotizacion
+        $comando = "ps2pdf14 storage/productos/$nombre_temp storage/productos/$nombre_bueno";
+        exec_in_background($comando);
+
+        $update['ficha_tecnica'] = "productos/$nombre_bueno";
       }
       if(is_null($request->subcategoria_id)) $update['subcategoria_id'] = null;
       else if($request->subcategoria_id=='otra'){

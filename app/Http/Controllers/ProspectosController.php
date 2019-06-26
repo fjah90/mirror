@@ -16,6 +16,7 @@ use App\Models\CuentaCobrar;
 use App\Models\ProyectoAprobado;
 use Validator;
 use PDF;
+use PDFMerger;
 use Mail;
 use Storage;
 
@@ -315,8 +316,10 @@ class ProspectosController extends Controller
       $cotizacion = ProspectoCotizacion::create($create);
 
       //guardar entradas
+      $fichas = [];
       foreach ($request->entradas as $index => $entrada) {
         $producto = Producto::find($entrada['producto_id']);
+        if($producto->ficha_tecnica) $fichas[] = storage_path('app/public/'.$producto->ficha_tecnica);
 
         if(!is_null($entrada['fotos'][0])){//hay fotos
           $fotos = ""; $separador = "";
@@ -371,6 +374,11 @@ class ProspectosController extends Controller
 
       $cotizacionPDF = PDF::loadView('prospectos.cotizacionPDF', compact('cotizacion', 'nombre'));
       Storage::disk('public')->put($url, $cotizacionPDF->output());
+
+      $pdf = new PDFMerger();
+      $pdf->addPDF(storage_path("app/public/$url"), 'all');
+      foreach ($fichas as $ficha) $pdf->addPDF($ficha, 'all');
+      $pdf->merge('file', storage_path("app/public/$url"));
 
       unset($cotizacion->fechaPDF);
       $cotizacion->update(['archivo'=>$url]);
@@ -766,7 +774,19 @@ class ProspectosController extends Controller
       // return view('prospectos.cotizacionPDF', compact('cotizacion', 'nombre'));
       $cotizacionPDF = PDF::loadView('prospectos.cotizacionPDF', compact('cotizacion', 'nombre'));
       Storage::disk('public')->put($url, $cotizacionPDF->output());
-      return $cotizacionPDF->download('cotizacion.pdf');
+
+      $fichas = [];
+      foreach ($cotizacion->entradas as $entrada) {
+        if($entrada->producto->ficha_tecnica)
+          $fichas[] = storage_path('app/public/'.$entrada->producto->ficha_tecnica);
+      }
+
+      $pdf = new PDFMerger();
+      $pdf->addPDF(storage_path('app/public/'.$cotizacion->archivo), 'all');
+      foreach ($fichas as $ficha) $pdf->addPDF($ficha, 'all');
+
+      $pdf->merge('file', storage_path("app/public/$url"));
+      $pdf->merge('download', "cotizacion.pdf");
     }
 
 }
