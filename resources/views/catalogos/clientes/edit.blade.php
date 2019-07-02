@@ -219,6 +219,7 @@
 const app = new Vue({
     el: '#content',
     data: {
+      translations: translationsES,
       cliente: {
         tipo_id: '{{$cliente->tipo_id}}',
         nombre: '{{$cliente->nombre}}',
