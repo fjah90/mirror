@@ -141,6 +141,7 @@
                         <th>Cargo</th>
                         <th>Email</th>
                         <th>Teléfono</th>
+                        <th>Teléfono 2</th>
                         <th></th>
                       </tr>
                     </thead>
@@ -149,7 +150,8 @@
                         <td>@{{contacto.nombre}}</td>
                         <td>@{{contacto.cargo}}</td>
                         <td>@{{contacto.email}}</td>
-                        <td>@{{contacto.telefono}}</td>
+                        <td>@{{contacto.tipo_telefono}} @{{contacto.telefono}} Ext. @{{contacto.extencion_telefono}}</td>
+                        <td>@{{contacto.tipo_telefono2}} @{{contacto.telefono2}} Ext. @{{contacto.extencion_telefono2}}</td>
                         <td class="text-right">
                           <button class="btn btn-success" data-toggle="tooltip" title="Editar"
                             @click="editarContacto(contacto, index)">
@@ -189,10 +191,52 @@
                     <input type="text" class="form-control" name="email" v-model="contacto.email" />
                   </div>
                 </div>
-                <div class="col-md-6">
+              </div>
+              <div class="row">
+                <h4>Teléfono</h4>
+                <div class="col-md-4">
                   <div class="form-group">
-                    <label class="control-label">Telefono</label>
+                    <label class="control-label">Numero</label>
                     <vue-phone-number-input size="sm" :translations="translations" :no-validator-state="true" :only-countries="['MX']" v-model="contacto.telefono" />
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label class="control-label">Extención</label>
+                    <input type="text" class="form-control" v-model="contacto.extencion_telefono" />
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label class="control-label">Tipo</label>
+                    <select class="form-control" v-model="contacto.tipo_telefono">
+                      <option value="Oficina">Oficina</option>
+                      <option value="Celular">Celular</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <h4>Teléfono 2</h4>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label class="control-label">Numero</label>
+                    <vue-phone-number-input size="sm" :translations="translations" :no-validator-state="true" :only-countries="['MX']" v-model="contacto.telefono2" />
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label class="control-label">Extención</label>
+                    <input type="text" class="form-control" v-model="contacto.extencion_telefono2" />
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label class="control-label">Tipo</label>
+                    <select class="form-control" v-model="contacto.tipo_telefono2">
+                      <option value="Oficina">Oficina</option>
+                      <option value="Celular">Celular</option>
+                    </select>
                   </div>
                 </div>
               </div>
