@@ -174,6 +174,7 @@
                         <th>Cargo</th>
                         <th>Email</th>
                         <th>Teléfono</th>
+                        <th>Teléfono 2</th>
                         <th></th>
                       </tr>
                     </thead>
@@ -182,20 +183,21 @@
                         <td>@{{contacto.nombre}}</td>
                         <td>@{{contacto.cargo}}</td>
                         <td>@{{contacto.email}}</td>
-                        <td>@{{contacto.telefono}}</td>
+                        <td>@{{contacto.tipo_telefono}} @{{contacto.telefono}} Ext. @{{contacto.extencion_telefono}}</td>
+                        <td>@{{contacto.tipo_telefono2}} @{{contacto.telefono2}} Ext. @{{contacto.extencion_telefono2}}</td>
                         <td class="text-right">
                           <button class="btn btn-success" data-toggle="tooltip" title="Editar"
-                          @click="editarContacto(contacto, index)">
-                          <i class="fas fa-edit"></i>
-                        </button>
-                        <button class="btn btn-danger" data-toggle="tooltip" title="Borrar"
-                        @click="borrarContacto(index)">
-                        <i class="fas fa-times"></i>
-                      </button>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+                            @click="editarContacto(contacto, index)">
+                            <i class="fas fa-edit"></i>
+                          </button>
+                          <button class="btn btn-danger" data-toggle="tooltip" title="Borrar"
+                            @click="borrarContacto(index)">
+                            <i class="fas fa-times"></i>
+                          </button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
                 </div>
               </div>
             </div>
@@ -222,9 +224,12 @@
                     <input type="text" class="form-control" name="email" v-model="contacto.email" />
                   </div>
                 </div>
-                <div class="col-md-6">
+              </div>
+              <div class="row">
+                <h4>Teléfono</h4>
+                <div class="col-md-4">
                   <div class="form-group">
-                    <label class="control-label">Telefono</label>
+                    <label class="control-label">Numero</label>
                     <vue-phone-number-input
                       :default-country-code="contacto.codigo_pais"
                       size="sm" :translations="translations"
@@ -232,6 +237,51 @@
                       v-model="contacto.telefono"
                       @update="fijarCodigoPaisContacto"
                     />
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label class="control-label">Extención</label>
+                    <input type="text" class="form-control" v-model="contacto.extencion_telefono" />
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label class="control-label">Tipo</label>
+                    <select class="form-control" v-model="contacto.tipo_telefono">
+                      <option value="Oficina">Oficina</option>
+                      <option value="Celular">Celular</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <h4>Teléfono 2</h4>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label class="control-label">Numero</label>
+                    <vue-phone-number-input
+                      :default-country-code="contacto.codigo_pais2"
+                      size="sm" :translations="translations"
+                      no-use-browser-locale no-validator-state
+                      v-model="contacto.telefono2"
+                      @update="fijarCodigoPais2Contacto"
+                    />
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label class="control-label">Extención</label>
+                    <input type="text" class="form-control" v-model="contacto.extencion_telefono2" />
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label class="control-label">Tipo</label>
+                    <select class="form-control" v-model="contacto.tipo_telefono2">
+                      <option value="Oficina">Oficina</option>
+                      <option value="Celular">Celular</option>
+                    </select>
                   </div>
                 </div>
               </div>
@@ -285,7 +335,13 @@ const app = new Vue({
         nombre: '',
         cargo: '',
         telefono: '',
+        telefono2: '',
         codigo_pais: '',
+        codigo_pais2: '',
+        extencion_telefono: '',
+        extencion_telefono2: '',
+        tipo_telefono: '',
+        tipo_telefono2: '',
         email: '',
       },
       cargando: false,
@@ -296,6 +352,9 @@ const app = new Vue({
       },
       fijarCodigoPaisContacto(payload) {
         this.contacto.codigo_pais = payload.countryCode;
+      },
+      fijarCodigoPais2Contacto(payload) {
+        this.contacto.codigo_pais2 = payload.countryCode;
       },
       agregarContacto(){
         if(this.contacto.nombre.trim()=="" || this.contacto.cargo.trim()==""){
@@ -312,7 +371,13 @@ const app = new Vue({
           nombre: '',
           cargo: '',
           telefono: '',
+          telefono2: '',
           codigo_pais: '',
+          codigo_pais2: '',
+          extencion_telefono: '',
+          extencion_telefono2: '',
+          tipo_telefono: '',
+          tipo_telefono2: '',
           email: '',
         };
       },
