@@ -16,16 +16,20 @@ class ConvertArraysWithElementCeroNullToEmptyArrays
     public function handle($request, Closure $next)
     {
       $inputs = $request->all();
-      $replace = false;
+      $inputs = $this->convertArraysWithElementCeroNullToEmptyArrays($inputs);
+      $request->replace($inputs);
+
+      return $next($request);
+    }
+
+    private function convertArraysWithElementCeroNullToEmptyArrays($inputs){
       foreach ($inputs as $key => $input) {
-        if(is_array($input) && count($input)==1 && is_null($input[0])){
-          $inputs[$key] = array();
-          $replace = true;
+        if(is_array($input)){
+          if(count($input)==1 && is_null($input[0])) $inputs[$key] = array();
+          else $inputs[$key] = $this->convertArraysWithElementCeroNullToEmptyArrays($input);
         }
       }
 
-      if($replace) $request->replace($inputs);
-      
-      return $next($request);
+      return $inputs;
     }
 }

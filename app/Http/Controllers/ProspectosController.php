@@ -283,11 +283,6 @@ class ProspectosController extends Controller
           "success" => false, "error" => true, "message" => $errors[0]
         ], 422);
       }
-      if (is_null($request->entradas[0])) {
-        return response()->json([
-          "success" => false, "error" => true, "message" => "Debe Agregar al menos 1 producto"
-        ], 422);
-      }
 
       $user = auth()->user();
 
@@ -321,7 +316,7 @@ class ProspectosController extends Controller
         $producto = Producto::find($entrada['producto_id']);
         if($producto->ficha_tecnica) $fichas[] = storage_path('app/public/'.$producto->ficha_tecnica);
 
-        if(!is_null($entrada['fotos'][0])){//hay fotos
+        if($entrada['fotos']){//hay fotos
           $fotos = ""; $separador = "";
           foreach ($entrada['fotos'] as $foto_index => $foto) {
             $ruta = Storage::putFileAs(
@@ -419,11 +414,6 @@ class ProspectosController extends Controller
           "success" => false, "error" => true, "message" => $errors[0]
         ], 422);
       }
-      if (is_null($request->entradas[0])) {
-        return response()->json([
-          "success" => false, "error" => true, "message" => "Debe Agregar al menos 1 producto"
-        ], 422);
-      }
 
       $user = auth()->user();
 
@@ -467,7 +457,7 @@ class ProspectosController extends Controller
         else $entradaGuardada = false;
 
         $producto = Producto::find($entrada['producto_id']);
-        if(!is_null($entrada['fotos'][0]) && !is_string($entrada['fotos'][0])){//hay fotos
+        if($entrada['fotos'] && !is_string($entrada['fotos'][0])){//hay fotos
           $fotos = ""; $separador = "";
           foreach ($entrada['fotos'] as $foto_index => $foto) {
             //borrar archivo actual, si existe
@@ -500,7 +490,7 @@ class ProspectosController extends Controller
           $observaciones.="<li>$obs</li>";
         }
         $observaciones.= "</ul>";
-        $entrada['observaciones'] = ($observaciones=="<ul><li></li></ul>")?"":$observaciones;
+        $entrada['observaciones'] = ($observaciones=="<ul></ul>")?"":$observaciones;
 
         if($entradaGuardada){
           if($entradaGuardada->producto_id==$producto->id){
