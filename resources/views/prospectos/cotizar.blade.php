@@ -229,6 +229,9 @@
                       <option value="M3">M3</option>
                       <option value="Yarda">Yarda</option>
                       <option value="Pies">Pies</option>
+                      <option value="Caja">Caja</option>
+                      <option value="Cubeta">Cubeta</option>
+                      <option value="Piezas">Piezas</option>
                     </select>
                   </div>
                 </div>
