@@ -54,20 +54,11 @@
                   <div class="form-group">
                     <label class="control-label">Subcategoria</label>
                     <select class="form-control" name="subcategoria_id" v-model='producto.subcategoria_id'>
-                        <option value=""></option>
+                      <option value=""></option>
                       @foreach($subcategorias as $subcategoria)
-                        <option value="{{$subcategoria->id}}">{{$subcategoria->nombre}}</option>
+                      <option value="{{$subcategoria->id}}">{{$subcategoria->nombre}}</option>
                       @endforeach
-                        <option value="otra">Otra</option>
                     </select>
-                  </div>
-                </div>
-              </div>
-              <div class="row" v-if="producto.subcategoria_id=='otra'">
-                <div class="col-md-12">
-                  <div class="form-group">
-                    <label class="control-label">Especifique nueva subcategoria</label>
-                    <input type="text" class="form-control" name="subcategoria" v-model="producto.subcategoria" required />
                   </div>
                 </div>
               </div>
@@ -161,7 +152,6 @@ const app = new Vue({
         proveedor_id: '',
         categoria_id: '',
         subcategoria_id: '',
-        subcategoria: '',
         nombre: '',
         foto: '',
         ficha_tecnica: '',

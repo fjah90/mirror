@@ -47,6 +47,7 @@ Route::middleware('auth')->group(function () {
   Route::resource('/proyectos', 'ProyectosController');
   Route::resource('/subproyectos', 'SubProyectosController');
   Route::resource('/categorias', 'CategoriasController');
+  Route::resource('/subcategorias', 'SubcategoriasController');
   Route::post('/productos/{producto}', 'ProductosController@update');
   Route::resource('/productos', 'ProductosController');
 

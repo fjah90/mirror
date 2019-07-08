@@ -62,16 +62,11 @@ class ProductosController extends Controller
         ], 422);
       }
 
+      dd($request->all());
+
       $create = $request->only('proveedor_id','categoria_id','nombre');
-      if(isset($request->subcategoria_id)){
-        if($request->subcategoria_id=='otra'){
-          $subcategoria = Subcategoria::create([
-            'nombre'=>$request->subcategoria,
-            'name'=>$request->subcategoria
-          ]);
-          $create['subcategoria_id'] = $subcategoria->id;
-        }
-        else $create['subcategoria_id'] = $request->subcategoria_id;
+      if(!is_null($request->subcategoria_id)){
+        $create['subcategoria_id'] = $request->subcategoria_id;
       }
       $producto = Producto::create($create);
 
@@ -200,13 +195,6 @@ class ProductosController extends Controller
         $update['ficha_tecnica'] = "productos/$nombre_bueno";
       }
       if(is_null($request->subcategoria_id)) $update['subcategoria_id'] = null;
-      else if($request->subcategoria_id=='otra'){
-        $subcategoria = Subcategoria::create([
-          'nombre'=>$request->subcategoria,
-          'name'=>$request->subcategoria
-        ]);
-        $update['subcategoria_id'] = $subcategoria->id;
-      }
       else $update['subcategoria_id'] = $request->subcategoria_id;
       $producto->update($update);
 

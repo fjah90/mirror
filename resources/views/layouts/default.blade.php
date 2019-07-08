@@ -144,6 +144,7 @@
                     Request::is('proyectos/*') ||
                     Request::is('subproyectos*') ||
                     Request::is('categorias*') ||
+                    Request::is('subcategorias*') ||
                     Request::is('productos*')
                   ? 'class="active"' : '') !!}>
             <a href="javascript:;">
@@ -180,6 +181,11 @@
               <li {!! (Request::is('categorias*') ? 'class="active"' : '') !!}>
                 <a href="{{ URL::to('categorias') }}">
                   <i class="fas fa-cubes "></i> Categorias Productos
+                </a>
+              </li>
+              <li {!! (Request::is('subcategorias*') ? 'class="active"' : '') !!}>
+                <a href="{{ URL::to('subcategorias') }}">
+                  <i class="fas fa-cubes "></i> Subcategorias Productos
                 </a>
               </li>
               <li {!! (Request::is('productos*') ? 'class="active"' : '') !!}>

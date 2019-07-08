@@ -54,20 +54,11 @@
                   <div class="form-group">
                     <label class="control-label">Subcategoria</label>
                     <select class="form-control" name="subcategoria_id" v-model='producto.subcategoria_id'>
-                        <option value=""></option>
+                      <option value=""></option>
                       @foreach($subcategorias as $subcategoria)
-                        <option value="{{$subcategoria->id}}">{{$subcategoria->nombre}}</option>
+                      <option value="{{$subcategoria->id}}">{{$subcategoria->nombre}}</option>
                       @endforeach
-                        <option value="otra">Otra</option>
                     </select>
-                  </div>
-                </div>
-              </div>
-              <div class="row" v-if="producto.subcategoria_id=='otra'">
-                <div class="col-md-12">
-                  <div class="form-group">
-                    <label class="control-label">Especifique nueva subcategoria</label>
-                    <input type="text" class="form-control" name="subcategoria" v-model="producto.subcategoria" required />
                   </div>
                 </div>
               </div>
@@ -138,7 +129,8 @@
               </div>
               <div class="row">
                 <div class="col-md-12 text-right">
-                  <button style="margin-top:25px;" type="submit" class="btn btn-success" :disabled="cargando">
+                  <a class="btn btn-info" href="{{ route('productos.index') }}" >Regresar</a>
+                  <button type="submit" class="btn btn-success" :disabled="cargando">
                     <i class="fas fa-save"></i>
                     Actualizar Producto
                   </button>
@@ -165,7 +157,6 @@ const app = new Vue({
         proveedor_id: '{{$producto->proveedor_id}}',
         categoria_id: '{{$producto->categoria_id}}',
         subcategoria_id: '{{$producto->subcategoria->id}}',
-        subcategoria: '{{$producto->subcategoria->nombre}}',
         nombre: '{{$producto->nombre}}',
         descripciones: {!! $producto->descripciones !!},
         foto_ori: '{{$producto->foto}}',
