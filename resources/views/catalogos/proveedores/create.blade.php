@@ -45,18 +45,15 @@
                 </div>
               </div>
               <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-4">
                   <div class="form-group">
                     <label class="control-label">Telefono</label>
-                    <vue-phone-number-input
-                      :default-country-code="proveedor.codigo_pais"
-                      no-use-browser-locale size="sm" :translations="translations"
-                      no-validator-state v-model="proveedor.telefono"
-                      @update="fijarCodigoPaisProveedor"
+                    <input type="tel" class="form-control" v-mask="['(###) ###-####','+#(###)###-####']"
+                     v-model="proveedor.telefono"
                     />
                   </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-8">
                   <div class="form-group">
                     <label class="control-label">Email</label>
                     <input type="text" class="form-control" name="email" v-model="proveedor.email" />
@@ -223,16 +220,14 @@
                 </div>
               </div>
               <div class="row">
-                <h4>Teléfono</h4>
+                <div class="col-md-12">
+                  <h4>Teléfono</h4>
+                </div>
                 <div class="col-md-4">
                   <div class="form-group">
                     <label class="control-label">Numero</label>
-                    <vue-phone-number-input
-                      :default-country-code="contacto.codigo_pais"
-                      size="sm" :translations="translations"
-                      no-use-browser-locale no-validator-state
-                      v-model="contacto.telefono"
-                      @update="fijarCodigoPaisContacto"
+                    <input type="tel" class="form-control" v-mask="['(###) ###-####','+#(###)###-####']"
+                     v-model="contacto.telefono"
                     />
                   </div>
                 </div>
@@ -253,16 +248,14 @@
                 </div>
               </div>
               <div class="row">
-                <h4>Teléfono 2</h4>
+                <div class="col-md-12">
+                  <h4>Teléfono 2</h4>
+                </div>
                 <div class="col-md-4">
                   <div class="form-group">
                     <label class="control-label">Numero</label>
-                    <vue-phone-number-input
-                      :default-country-code="contacto.codigo_pais2"
-                      size="sm" :translations="translations"
-                      no-use-browser-locale no-validator-state
-                      v-model="contacto.telefono2"
-                      @update="fijarCodigoPais2Contacto"
+                    <input type="tel" class="form-control" v-mask="['(###) ###-####','+#(###)###-####']"
+                     v-model="contacto.telefono2"
                     />
                   </div>
                 </div>
@@ -313,7 +306,6 @@ const app = new Vue({
         identificacion_fiscal: '{{ ($nacional)?"RFC":"EIN" }}',
         identidad_fiscal: '',
         telefono: '',
-        codigo_pais: '',
         email: '',
         banco: '',
         numero_cuenta: '',
@@ -333,8 +325,6 @@ const app = new Vue({
         cargo: '',
         telefono: '',
         telefono2: '',
-        codigo_pais: '',
-        codigo_pais2: '',
         extencion_telefono: '',
         extencion_telefono2: '',
         tipo_telefono: '',
@@ -344,15 +334,6 @@ const app = new Vue({
       cargando: false,
     },
     methods: {
-      fijarCodigoPaisProveedor(payload) {
-        this.proveedor.codigo_pais = payload.countryCode;
-      },
-      fijarCodigoPaisContacto(payload) {
-        this.contacto.codigo_pais = payload.countryCode;
-      },
-      fijarCodigoPais2Contacto(payload) {
-        this.contacto.codigo_pais2 = payload.countryCode;
-      },
       agregarContacto(){
         if(this.contacto.nombre.trim()=="" || this.contacto.cargo.trim()==""){
           swal({

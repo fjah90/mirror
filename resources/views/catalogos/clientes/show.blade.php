@@ -95,6 +95,7 @@
                         <th>Cargo</th>
                         <th>Email</th>
                         <th>Teléfono</th>
+                        <th>Teléfono 2</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -103,7 +104,8 @@
                         <td>{{$contacto->nombre}}</td>
                         <td>{{$contacto->cargo}}</td>
                         <td>{{$contacto->email}}</td>
-                        <td>{{$contacto->telefono}}</td>
+                        <td>{{$contacto->tipo_telefono}} {{$contacto->telefono}} Ext. {{$contacto->extencion_telefono}}</td>
+                        <td>{{$contacto->tipo_telefono2}} {{$contacto->telefono2}} Ext. {{$contacto->extencion_telefono2}}</td>
                       </tr>
                       @endforeach
                     </tbody>

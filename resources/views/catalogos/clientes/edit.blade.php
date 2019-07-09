@@ -60,7 +60,9 @@
                 <div class="col-md-4">
                   <div class="form-group">
                     <label class="control-label">Telefono</label>
-                    <vue-phone-number-input size="sm" :translations="translations" :no-validator-state="true" :only-countries="['MX']" v-model="cliente.telefono" />
+                    <input type="tel" class="form-control" v-mask="['(###) ###-####','+#(###)###-####']"
+                     v-model="cliente.telefono"
+                    />
                   </div>
                 </div>
                 <div class="col-md-8">
@@ -193,11 +195,15 @@
                 </div>
               </div>
               <div class="row">
-                <h4>Teléfono</h4>
+                <div class="col-md-12">
+                  <h4>Teléfono</h4>
+                </div>
                 <div class="col-md-4">
                   <div class="form-group">
                     <label class="control-label">Numero</label>
-                    <vue-phone-number-input size="sm" :translations="translations" :no-validator-state="true" :only-countries="['MX']" v-model="contacto.telefono" />
+                    <input type="tel" class="form-control" v-mask="['(###) ###-####','+#(###)###-####']"
+                     v-model="contacto.telefono"
+                    />
                   </div>
                 </div>
                 <div class="col-md-4">
@@ -217,11 +223,15 @@
                 </div>
               </div>
               <div class="row">
-                <h4>Teléfono 2</h4>
+                <div class="col-md-12">
+                  <h4>Teléfono 2</h4>
+                </div>
                 <div class="col-md-4">
                   <div class="form-group">
                     <label class="control-label">Numero</label>
-                    <vue-phone-number-input size="sm" :translations="translations" :no-validator-state="true" :only-countries="['MX']" v-model="contacto.telefono2" />
+                    <input type="tel" class="form-control" v-mask="['(###) ###-####','+#(###)###-####']"
+                     v-model="contacto.telefono2"
+                    />
                   </div>
                 </div>
                 <div class="col-md-4">
@@ -283,9 +293,21 @@ const app = new Vue({
         nombre: '',
         cargo: '',
         telefono: '',
+        telefono2: '',
+        extencion_telefono: '',
+        extencion_telefono2: '',
+        tipo_telefono: '',
+        tipo_telefono2: '',
         email: '',
       },
       cargando: false,
+    },
+    computed:{
+      mascara_telefono_cliente(){
+        if(this.cliente.telefono.charAt(0)=='+')
+          return '+# (###) ###-####';
+        else return '(###) ###-####';
+      }
     },
     methods: {
       agregarContacto(){
@@ -303,6 +325,11 @@ const app = new Vue({
           nombre: '',
           cargo: '',
           telefono: '',
+          telefono2: '',
+          extencion_telefono: '',
+          extencion_telefono2: '',
+          tipo_telefono: '',
+          tipo_telefono2: '',
           email: '',
         };
       },

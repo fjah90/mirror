@@ -57,13 +57,15 @@
                 </div>
               </div>
               <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-4">
                   <div class="form-group">
                     <label class="control-label">Telefono</label>
-                    <vue-phone-number-input size="sm" :translations="translations" :no-validator-state="true" :only-countries="['MX']" v-model="cliente.telefono" />
+                    <input type="tel" class="form-control" v-mask="['(###) ###-####','+#(###)###-####']"
+                     v-model="cliente.telefono"
+                    />
                   </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-8">
                   <div class="form-group">
                     <label class="control-label">Email</label>
                     <input type="text" class="form-control" name="email" v-model="cliente.email" />
@@ -193,11 +195,15 @@
                 </div>
               </div>
               <div class="row">
-                <h4>Teléfono</h4>
+                <div class="col-md-12">
+                  <h4>Teléfono</h4>
+                </div>
                 <div class="col-md-4">
                   <div class="form-group">
                     <label class="control-label">Numero</label>
-                    <vue-phone-number-input size="sm" :translations="translations" :no-validator-state="true" :only-countries="['MX']" v-model="contacto.telefono" />
+                    <input type="tel" class="form-control" v-mask="['(###) ###-####','+#(###)###-####']"
+                     v-model="contacto.telefono"
+                    />
                   </div>
                 </div>
                 <div class="col-md-4">
@@ -217,11 +223,15 @@
                 </div>
               </div>
               <div class="row">
-                <h4>Teléfono 2</h4>
+                <div class="col-md-12">
+                  <h4>Teléfono 2</h4>
+                </div>
                 <div class="col-md-4">
                   <div class="form-group">
                     <label class="control-label">Numero</label>
-                    <vue-phone-number-input size="sm" :translations="translations" :no-validator-state="true" :only-countries="['MX']" v-model="contacto.telefono2" />
+                    <input type="tel" class="form-control" v-mask="['(###) ###-####','+#(###)###-####']"
+                     v-model="contacto.telefono2"
+                    />
                   </div>
                 </div>
                 <div class="col-md-4">
