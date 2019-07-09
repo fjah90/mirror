@@ -24,7 +24,7 @@ import Vue from 'vue';
 import * as uiv from 'uiv';
 import Editor from '@tinymce/tinymce-vue';
 import VuePhoneNumberInput from 'vue-phone-number-input';
-// import 'vue-phone-number-input/dist/vue-phone-number-input.css';
+import {mask} from 'vue-the-mask';
 
 window.Vue = Vue;
 window.axios = axios;
@@ -40,6 +40,7 @@ Vue.use(uiv);
 Vue.component('tinymce-editor', Editor);
 Vue.component('select2multags', require('./components/select2multags.vue'));
 Vue.component('vue-phone-number-input', VuePhoneNumberInput);
+Vue.directive('mask', mask);
 
 $.extend($.fn.dataTable.defaults, {
   responsive: false,

@@ -34,7 +34,8 @@ mix.js('resources/assets/js/app.js', 'public/js')
      'tinymce',
      '@tinymce/tinymce-vue',
      'select2',
-     'vue-phone-number-input'
+     'vue-phone-number-input',
+     'vue-the-mask'
    ])
    .autoload({
      jquery: ['$', 'window.jQuery', 'jQuery', 'jquery'],

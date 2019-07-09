@@ -31,7 +31,8 @@
     "uiv": "^0.25.1",
     "vue": "^2.5.17",
     "vue-phone-number-input": "^0.2.0",
-    "vue-template-compiler": "^2.5.17"
+    "vue-template-compiler": "^2.5.17",
+    "vue-the-mask": "^0.11.1"
   },
   "dependencies": {
     "imagemin": "^6.0.0",
