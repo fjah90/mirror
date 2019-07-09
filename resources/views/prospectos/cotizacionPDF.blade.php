@@ -423,7 +423,14 @@
       </div>
     </div>
 
-    <div class="row" style="page-break-inside: avoid;">
+    <!-- Espacio para que el footer no se sobreponga a la tabla -->
+    <div class="row">
+      <div class="col-lg-12" style="height:180px;">
+      </div>
+    </div>
+
+    {{-- <div class="row" style="page-break-inside: avoid;"> --}}
+    <div class="row footer" style="page-break-inside: avoid;">
       <div class="bordered" style="margin:0 15px;">
         <table class="" style="margin-bottom:0; width:100%;">
           <tr>
@@ -440,16 +447,7 @@
           </tr>
         </table>
       </div>
-    </div>
 
-    <!-- Espacio para que el footer no se sobreponga a la tabla -->
-    {{-- <div class="row">
-      <div class="col-lg-12" style="height:150px;">
-      </div>
-    </div> --}}
-
-    {{-- <div class="row footer"> --}}
-    <div class="row" style="page-break-inside: avoid;">
       <div class="bordered" style="margin:0 15px;">
         <table style="margin: 0px; width:100%;">
           <tr class="font-small">
