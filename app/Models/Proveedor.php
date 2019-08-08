@@ -12,7 +12,7 @@ class Proveedor extends Model
     protected $fillable = ['empresa','razon_social','telefono','email',
       'identidad_fiscal','identificacion_fiscal','banco','numero_cuenta',
       'clave_interbancaria','calle','numero','colonia','cp','ciudad','estado',
-      'moneda','dias_credito','nacional','codigo_pais'
+      'moneda','dias_credito','nacional','codigo_pais','pais'
     ];
 
     protected $casts = [
@@ -34,7 +34,8 @@ class Proveedor extends Model
      */
 
     public function getDireccionAttribute(){
-      return $this->calle." ".$this->numero." ".$this->colonia." ".$this->cp." ".$this->ciudad." ".$this->estado;
+      return $this->calle." ".$this->numero." ".$this->colonia." ".$this->cp." "
+        .$this->ciudad." ".$this->estado." ".$this->pais;
     }
 
     public function getInternacionalAttribute(){

@@ -113,20 +113,31 @@
                     <input type="text" class="form-control" name="numero" v-model="proveedor.numero" />
                   </div>
                 </div>
+                @if($proveedor->nacional)
                 <div class="col-md-4">
                   <div class="form-group">
                     <label class="control-label">Colonia</label>
                     <input type="text" class="form-control" name="colonia" v-model="proveedor.colonia" />
                   </div>
                 </div>
-              </div>
-              <div class="row">
+                @else
                 <div class="col-md-4">
                   <div class="form-group">
                     <label class="control-label">C. Postal</label>
                     <input type="text" class="form-control" name="cp" v-model="proveedor.cp" />
                   </div>
                 </div>
+                @endif
+              </div>
+              <div class="row">
+                @if($proveedor->nacional)
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label class="control-label">C. Postal</label>
+                    <input type="text" class="form-control" name="cp" v-model="proveedor.cp" />
+                  </div>
+                </div>
+                @endif
                 <div class="col-md-4">
                   <div class="form-group">
                     <label class="control-label">Ciudad</label>
@@ -139,6 +150,14 @@
                     <input type="text" class="form-control" name="estado" v-model="proveedor.estado" />
                   </div>
                 </div>
+                @if(!$proveedor->nacional)
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label class="control-label">Pais</label>
+                    <input type="text" class="form-control" name="pais" v-model="proveedor.pais" />
+                  </div>
+                </div>
+                @endif
               </div>
               <div class="row">
                 <div class="col-md-12 text-right">
@@ -321,6 +340,7 @@ const app = new Vue({
         cp: '{{$proveedor->cp}}',
         ciudad: '{{$proveedor->ciudad}}',
         estado: '{{$proveedor->estado}}',
+        pais: '{{$proveedor->pais}}',
         contactos: {!! json_encode($proveedor->contactos) !!}
       },
       contacto: {

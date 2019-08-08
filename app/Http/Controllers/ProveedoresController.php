@@ -47,6 +47,7 @@ class ProveedoresController extends Controller
       $validator = Validator::make($request->all(), [
         'empresa' => 'required',
         'nacional' => 'required',
+        'dias_credito' => 'required'
       ]);
 
       if ($validator->fails()) {
@@ -101,7 +102,8 @@ class ProveedoresController extends Controller
     {
       $validator = Validator::make($request->all(), [
         'empresa' => 'required',
-        'nacional' => 'required'
+        'nacional' => 'required',
+        'dias_credito' => 'required'
       ]);
 
       if ($validator->fails()) {
