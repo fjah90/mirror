@@ -40,6 +40,19 @@
                 <div class="col-md-12">
                   <div class="form-group">
                     <label class="control-label">Categoria</label>
+                    <select class="form-control" name="subcategoria_id" v-model='producto.subcategoria_id'>
+                      <option value=""></option>
+                      @foreach($subcategorias as $subcategoria)
+                        <option value="{{$subcategoria->id}}">{{$subcategoria->nombre}}</option>
+                      @endforeach
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label class="control-label">Tipo de Producto o Servicio</label>
                     <select class="form-control" name="categoria_id" v-model='producto.categoria_id'
                     @change="cambiarDescripciones()" required>
                       @foreach($categorias as $categoria)
@@ -52,20 +65,7 @@
               <div class="row">
                 <div class="col-md-12">
                   <div class="form-group">
-                    <label class="control-label">Subcategoria</label>
-                    <select class="form-control" name="subcategoria_id" v-model='producto.subcategoria_id'>
-                      <option value=""></option>
-                      @foreach($subcategorias as $subcategoria)
-                      <option value="{{$subcategoria->id}}">{{$subcategoria->nombre}}</option>
-                      @endforeach
-                    </select>
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-12">
-                  <div class="form-group">
-                    <label class="control-label">Nombre</label>
+                    <label class="control-label">Producto o Servicio</label>
                     <input type="text" class="form-control" name="nombre" v-model="producto.nombre" required />
                   </div>
                 </div>

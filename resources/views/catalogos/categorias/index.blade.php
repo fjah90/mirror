@@ -2,7 +2,7 @@
 
 {{-- Page title --}}
 @section('title')
-  Categorias Porductos | @parent
+  Tipos Porductos | @parent
 @stop
 
 @section('header_styles')
@@ -14,7 +14,7 @@
 @section('content')
 <!-- Content Header (Page header) -->
 <section class="content-header">
-    <h1>Categorias Productos</h1>
+    <h1>Tipos Productos</h1>
 </section>
 <!-- Main content -->
 <section class="content" id="content">
@@ -23,9 +23,9 @@
       <div class="panel">
         <div class="panel-heading">
           <h3 class="panel-title text-right">
-            <span class="pull-left p-10">Lista de Categorias</span>
+            <span class="pull-left p-10">Lista de Tipos</span>
             <a href="{{route('categorias.create')}}" class="btn btn-primary" style="color: #fff;">
-              <i class="fa fa-plus"></i> Nueva Categoria
+              <i class="fa fa-plus"></i> Nuevo Tipo
             </a>
           </h3>
         </div>
@@ -84,7 +84,7 @@ const app = new Vue({
       borrar(categoria, index){
         swal({
           title: 'Cuidado',
-          text: "Borrar Categoria "+categoria.nombre+"?",
+          text: "Borrar Tipo "+categoria.nombre+"?",
           type: 'warning',
           showCancelButton: true,
           confirmButtonColor: '#3085d6',

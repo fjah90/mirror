@@ -2,7 +2,7 @@
 
 {{-- Page title --}}
 @section('title')
-    Editar Subcategoria | @parent
+    Editar Categoria | @parent
 @stop
 
 @section('header_styles')
@@ -17,7 +17,7 @@
 @section('content')
   <!-- Content Header (Page header) -->
   <section class="content-header">
-    <h1>Subcategorias Productos</h1>
+    <h1>Categorias Productos</h1>
   </section>
   <!-- Main content -->
   <section class="content" id="content">
@@ -25,7 +25,7 @@
       <div class="col-lg-12">
         <div class="panel ">
           <div class="panel-heading">
-            <h3 class="panel-title">Editar Subcategoria</h3>
+            <h3 class="panel-title">Editar Categoria</h3>
           </div>
           <div class="panel-body">
             <form class="" @submit.prevent="guardar()">
@@ -79,7 +79,7 @@ const app = new Vue({
         .then(({data}) => {
           this.cargando = false;
           swal({
-            title: "Subcategoria Actualizada",
+            title: "Categoria Actualizada",
             text: "",
             type: "success"
           }).then(()=>{

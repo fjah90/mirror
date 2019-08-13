@@ -35,14 +35,6 @@
               <div class="col-md-12">
                 <div class="form-group">
                   <label class="control-label">Categoria</label>
-                  <span class="form-control">{{$producto->categoria->nombre}}</span>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-12">
-                <div class="form-group">
-                  <label class="control-label">Subcategoria</label>
                   <span class="form-control">{{$producto->subcategoria->nombre}}</span>
                 </div>
               </div>
@@ -50,7 +42,15 @@
             <div class="row">
               <div class="col-md-12">
                 <div class="form-group">
-                  <label class="control-label">Nombre</label>
+                  <label class="control-label">Tipo de Producto o Servicio</label>
+                  <span class="form-control">{{$producto->categoria->nombre}}</span>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label class="control-label">Producto o Servicio</label>
                   <span class="form-control">{{$producto->nombre}}</span>
                 </div>
               </div>

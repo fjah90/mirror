@@ -2,7 +2,7 @@
 
 {{-- Page title --}}
 @section('title')
-    Nueva Subcategoria | @parent
+    Nueva Categoria | @parent
 @stop
 
 @section('header_styles')
@@ -12,7 +12,7 @@
 @section('content')
   <!-- Content Header (Page header) -->
   <section class="content-header">
-    <h1>Subcategorias Productos</h1>
+    <h1>Categorias Productos</h1>
   </section>
   <!-- Main content -->
   <section class="content" id="content">
@@ -20,7 +20,7 @@
       <div class="col-lg-12">
         <div class="panel ">
           <div class="panel-heading">
-            <h3 class="panel-title">Nueva Subcategoria</h3>
+            <h3 class="panel-title">Nueva Categoria</h3>
           </div>
           <div class="panel-body">
             <form class="" @submit.prevent="guardar()">
@@ -44,7 +44,7 @@
                 <div class="col-md-12 text-right">
                   <button style="margin-top:25px;" type="submit" class="btn btn-primary" :disabled="cargando">
                     <i class="fas fa-save"></i>
-                    Guardar Subcategoria
+                    Guardar Categoria
                   </button>
                 </div>
               </div>
@@ -77,7 +77,7 @@ const app = new Vue({
         .then(({data}) => {
           this.cargando = false;
           swal({
-            title: "Subcategoria Guardada",
+            title: "Categoria Guardada",
             text: "",
             type: "success"
           }).then(()=>{
