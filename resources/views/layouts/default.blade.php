@@ -178,19 +178,19 @@
                   <i class="far fa-folder-open "></i> Sub Proyectos
                 </a>
               </li>
-              <li {!! (Request::is('categorias*') ? 'class="active"' : '') !!}>
-                <a href="{{ URL::to('categorias') }}">
-                  <i class="fas fa-cubes "></i> Tipos Productos
-                </a>
-              </li>
               <li {!! (Request::is('subcategorias*') ? 'class="active"' : '') !!}>
                 <a href="{{ URL::to('subcategorias') }}">
-                  <i class="fas fa-cubes "></i> Categorias Productos
+                  <i class="fas fa-cubes "></i> Categoría
+                </a>
+              </li>
+              <li {!! (Request::is('categorias*') ? 'class="active"' : '') !!}>
+                <a href="{{ URL::to('categorias') }}">
+                  <i class="fas fa-cubes "></i> Tipo de Producto o Servicio
                 </a>
               </li>
               <li {!! (Request::is('productos*') ? 'class="active"' : '') !!}>
                 <a href="{{ URL::to('productos') }}">
-                  <i class="fas fa-parking "></i> Productos
+                  <i class="fas fa-parking "></i> Producto
                 </a>
               </li>
             </ul>
