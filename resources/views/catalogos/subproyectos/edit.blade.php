@@ -2,7 +2,7 @@
 
 {{-- Page title --}}
 @section('title')
-    Editar Sub Proyecto | @parent
+    Editar Tipo Proyecto | @parent
 @stop
 
 @section('header_styles')
@@ -12,7 +12,7 @@
 @section('content')
   <!-- Content Header (Page header) -->
   <section class="content-header">
-    <h1>Sub Proyectos</h1>
+    <h1>Tipos Proyectos</h1>
   </section>
   <!-- Main content -->
   <section class="content" id="content">
@@ -20,14 +20,14 @@
       <div class="col-lg-12">
         <div class="panel ">
           <div class="panel-heading">
-            <h3 class="panel-title">Editar Sub Proyecto</h3>
+            <h3 class="panel-title">Editar Tipo Proyecto</h3>
           </div>
           <div class="panel-body">
             <form class="" @submit.prevent="guardar()">
               <div class="row">
                 <div class="col-md-4">
                   <div class="form-group">
-                    <label class="control-label">Proyecto</label>
+                    <label class="control-label">Categoría</label>
                     <select class="form-control" name="proyecto_id" v-model='subproyecto.proyecto_id' required>
                       @foreach($proyectos as $proyecto)
                         <option value="{{$proyecto->id}}">{{$proyecto->nombre}}</option>
@@ -46,7 +46,7 @@
                 <div class="col-md-12 text-right">
                   <button style="margin-top:25px;" type="submit" class="btn btn-success" :disabled="cargando">
                     <i class="fas fa-save"></i>
-                    Actualizar Sub Proyecto
+                    Actualizar Tipo
                   </button>
                 </div>
               </div>
@@ -80,7 +80,7 @@ const app = new Vue({
         .then(({data}) => {
           this.cargando = false;
           swal({
-            title: "Sub Proyecto Actualizado",
+            title: "Tipo Actualizado",
             text: "",
             type: "success"
           }).then(()=>{

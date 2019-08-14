@@ -24,8 +24,11 @@
         <div class="panel-heading">
           <h3 class="panel-title text-right">
             <span class="pull-left p-10">Lista de Clientes</span>
-            <a href="{{route('clientes.create')}}" class="btn btn-primary" style="color: #fff;">
-              <i class="fas fa-plus"></i> Nuevo Cliente
+            <a href="{{route('clientes.createNacional')}}" class="btn btn-primary" style="color: #fff;">
+              <i class="fas fa-plus"></i> Cliente Nacional
+            </a>
+            <a href="{{route('clientes.createInternacional')}}" class="btn btn-brown" style="color: #fff;">
+              <i class="fas fa-plus"></i> Cliente Internacional
             </a>
           </h3>
         </div>
@@ -36,6 +39,7 @@
                 <tr>
                   <th>ID</th>
                   <th>Tipo</th>
+                  <th>Origen</th>
                   <th>Nombre</th>
                   <th>Teléfono</th>
                   <th>Email</th>
@@ -47,6 +51,8 @@
                 <tr v-for="(cliente, index) in clientes">
                   <td>@{{cliente.id}}</td>
                   <td>@{{cliente.tipo.nombre}}</td>
+                  <td v-if="cliente.nacional">Nacional</td>
+                  <td v-else>Internacional</td>
                   <td>@{{cliente.nombre}}</td>
                   <td>@{{cliente.telefono}}</td>
                   <td>@{{cliente.email}}</td>

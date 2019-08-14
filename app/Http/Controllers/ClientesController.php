@@ -30,7 +30,15 @@ class ClientesController extends Controller
     public function create()
     {
       $tipos = TipoCliente::all();
-      return view('catalogos.clientes.create', compact('tipos'));
+      $nacional = true;
+      return view('catalogos.clientes.create', compact('tipos', 'nacional'));
+    }
+
+    public function createInter()
+    {
+      $tipos = TipoCliente::all();
+      $nacional = false;
+      return view('catalogos.clientes.create', compact('tipos', 'nacional'));
     }
 
     /**

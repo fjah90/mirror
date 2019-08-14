@@ -2,7 +2,7 @@
 
 {{-- Page title --}}
 @section('title')
-  Proyectos | @parent
+  Categorias Proyectos | @parent
 @stop
 
 @section('header_styles')
@@ -14,7 +14,7 @@
 @section('content')
 <!-- Content Header (Page header) -->
 <section class="content-header">
-    <h1>Proyectos</h1>
+    <h1>Categirias Proyectos</h1>
 </section>
 <!-- Main content -->
 <section class="content" id="content">
@@ -23,9 +23,9 @@
       <div class="panel">
         <div class="panel-heading">
           <h3 class="panel-title text-right">
-            <span class="pull-left p-10">Lista de Proyectos</span>
+            <span class="pull-left p-10">Lista de Categorias Proyectos</span>
             <a href="{{route('proyectos.create')}}" class="btn btn-primary" style="color: #fff;">
-              <i class="fa fa-plus"></i> Nuevo Proyecto
+              <i class="fa fa-plus"></i> Nueva Categoria
             </a>
           </h3>
         </div>

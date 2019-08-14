@@ -2,7 +2,7 @@
 
 {{-- Page title --}}
 @section('title')
-    Ver Sub Proyecto | @parent
+    Ver Tipo Proyecto | @parent
 @stop
 
 @section('header_styles')
@@ -12,7 +12,7 @@
 @section('content')
   <!-- Content Header (Page header) -->
   <section class="content-header">
-    <h1>Sub Proyectos</h1>
+    <h1>Tipos Proyectos</h1>
   </section>
   <!-- Main content -->
   <section class="content" id="content">
@@ -20,13 +20,13 @@
       <div class="col-lg-12">
         <div class="panel ">
           <div class="panel-heading">
-            <h3 class="panel-title">Ver Sub Proyecto {{$subproyecto->nombre}}</h3>
+            <h3 class="panel-title">Ver Tipo {{$subproyecto->nombre}}</h3>
           </div>
           <div class="panel-body">
             <div class="row">
               <div class="col-md-4">
                 <div class="form-group">
-                  <label class="control-label">Proyecto</label>
+                  <label class="control-label">Categoría</label>
                   <span class="form-control">{{$subproyecto->proyecto->nombre}}</span>
                 </div>
               </div>

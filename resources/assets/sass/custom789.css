@@ -76,6 +76,16 @@ footer {
 	background-color: #8e24aa !important;
 	color: #fff;
 }
+hr.divider-menu {
+  margin: 0;
+  border-top: 1px solid #ccc;
+}
+#menu li.sub > a {
+	padding-left: 34px;
+}
+#menu li.subsub > a {
+	padding-left: 57px;
+}
 
 /******** Utils *********/
 #content {overflow: visible;}

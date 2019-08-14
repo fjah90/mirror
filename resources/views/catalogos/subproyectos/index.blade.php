@@ -2,7 +2,7 @@
 
 {{-- Page title --}}
 @section('title')
-  Sub Proyectos | @parent
+  Tipos Proyectos | @parent
 @stop
 
 @section('header_styles')
@@ -14,7 +14,7 @@
 @section('content')
 <!-- Content Header (Page header) -->
 <section class="content-header">
-  <h1>Sub Proyectos</h1>
+  <h1>Tipos Proyectos</h1>
 </section>
 <!-- Main content -->
 <section class="content" id="content">
@@ -23,9 +23,9 @@
       <div class="panel">
         <div class="panel-heading">
           <h3 class="panel-title text-right">
-            <span class="pull-left p-10">Lista de Sub Proyectos</span>
+            <span class="pull-left p-10">Lista de Tipos Proyectos</span>
             <a href="{{route('subproyectos.create')}}" class="btn btn-primary" style="color: #fff;">
-              <i class="fas fa-plus"></i> Nuevo Sub Proyecto
+              <i class="fas fa-plus"></i> Nuevo Tipo Proyecto
             </a>
           </h3>
         </div>
@@ -35,7 +35,7 @@
               <thead>
                 <tr>
                   <th>ID</th>
-                  <th>Proyecto</th>
+                  <th>Categoría</th>
                   <th>Nombre</th>
                   <th></th>
                 </tr>
@@ -86,7 +86,7 @@ const app = new Vue({
       borrar(subproyecto, index){
         swal({
           title: 'Cuidado',
-          text: "Borrar el Sub Proyecto "+subproyecto.nombre+"?",
+          text: "Borrar el Tipo de Proyecto "+subproyecto.nombre+"?",
           type: 'warning',
           showCancelButton: true,
           confirmButtonColor: '#3085d6',

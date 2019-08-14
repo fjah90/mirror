@@ -2,7 +2,7 @@
 
 {{-- Page title --}}
 @section('title')
-    Editar Proyecto | @parent
+    Editar Categoría Proyecto | @parent
 @stop
 
 @section('header_styles')
@@ -12,7 +12,7 @@
 @section('content')
   <!-- Content Header (Page header) -->
   <section class="content-header">
-    <h1>Proyectos</h1>
+    <h1>Categorías Proyectos</h1>
   </section>
   <!-- Main content -->
   <section class="content" id="content">
@@ -20,7 +20,7 @@
       <div class="col-lg-12">
         <div class="panel ">
           <div class="panel-heading">
-            <h3 class="panel-title">Editar Proyecto</h3>
+            <h3 class="panel-title">Editar Categoría Proyecto</h3>
           </div>
           <div class="panel-body">
             <form class="" @submit.prevent="guardar()">
@@ -36,7 +36,7 @@
                 <div class="col-md-12 text-right">
                   <button style="margin-top:25px;" type="submit" class="btn btn-success" :disabled="cargando">
                     <i class="fas fa-save"></i>
-                    Actualizar Proyecto
+                    Actualizar Categoría
                   </button>
                 </div>
               </div>
@@ -68,7 +68,7 @@ const app = new Vue({
         .then(({data}) => {
           this.cargando = false;
           swal({
-            title: "Proyecto Actualizado",
+            title: "Categoría Actualizada",
             text: "",
             type: "success"
           }).then(()=>{

@@ -34,8 +34,8 @@ class Proveedor extends Model
      */
 
     public function getDireccionAttribute(){
-      return $this->calle." ".$this->numero." ".$this->colonia." ".$this->cp." "
-        .$this->ciudad." ".$this->estado." ".$this->pais;
+      return $this->calle." ".$this->numero." ".(($this->colonia)?$this->colonia." ":"")
+        .$this->cp." ".$this->ciudad." ".$this->estado." ".$this->pais;
     }
 
     public function getInternacionalAttribute(){

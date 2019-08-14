@@ -20,7 +20,7 @@
       <div class="col-lg-12">
         <div class="panel ">
           <div class="panel-heading">
-            <h3 class="panel-title">Nuevo Cliente</h3>
+            <h3 class="panel-title">Nuevo Cliente {{ ($nacional)?"Nacional":"Internacional" }}</h3>
           </div>
           <div class="panel-body">
             <form class="" @submit.prevent="guardar()">
@@ -81,24 +81,48 @@
                 </div>
                 <div class="col-md-4">
                   <div class="form-group">
-                    <label class="control-label">Numero</label>
+                    <label class="control-label">Numero Exterior</label>
                     <input type="text" class="form-control" name="numero" v-model="cliente.numero" />
                   </div>
                 </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label class="control-label">Numero Interior</label>
+                    <input type="text" class="form-control" name="ninterior" v-model="cliente.ninterior" />
+                  </div>
+                </div>
+              </div>
+              @if($nacional)
+              <div class="row">
                 <div class="col-md-4">
                   <div class="form-group">
                     <label class="control-label">Colonia</label>
                     <input type="text" class="form-control" name="colonia" v-model="cliente.colonia" />
                   </div>
                 </div>
-              </div>
-              <div class="row">
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label class="control-label">Delegacion</label>
+                    <input type="text" class="form-control" name="delagacion" v-model="cliente.delegacion" />
+                  </div>
+                </div>
                 <div class="col-md-4">
                   <div class="form-group">
                     <label class="control-label">C. Postal</label>
                     <input type="text" class="form-control" name="cp" v-model="cliente.cp" />
                   </div>
                 </div>
+              </div>
+              @endif
+              <div class="row">
+                @if(!$nacional)
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label class="control-label">C. Postal</label>
+                    <input type="text" class="form-control" name="cp" v-model="cliente.cp" />
+                  </div>
+                </div>
+                @endif
                 <div class="col-md-4">
                   <div class="form-group">
                     <label class="control-label">Ciudad</label>
@@ -112,6 +136,22 @@
                   </div>
                 </div>
               </div>
+              @if(!$nacional)
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label class="control-label">Pais</label>
+                    <input type="text" class="form-control" name="pais" v-model="cliente.pais" />
+                  </div>
+                </div>
+                <div class="col-md-8">
+                  <div class="form-group">
+                    <label class="control-label">Datos Adicionales</label>
+                    <input type="text" class="form-control" name="email" v-model="cliente.adicionales" />
+                  </div>
+                </div>
+              </div>
+              @endif
               <div class="row">
                 <div class="col-md-12 text-right">
                   <button style="margin-top:25px;" type="submit" class="btn btn-primary" :disabled="cargando">
@@ -282,10 +322,15 @@ const app = new Vue({
         email: '',
         calle: '',
         numero: '',
+        ninterior: '',
         colonia: '',
+        delegacion: '',
         cp: '',
         ciudad: '',
         estado: '',
+        pais: {{ (($nacional)?"México":"") }},
+        nacional: {{ (($nacional)?"true":"false") }},
+        adicionales: '',
         contactos: []
       },
       contacto: {
