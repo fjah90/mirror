@@ -151,10 +151,19 @@
                   </div>
                 </div>
               </div>
+              @else
+              <div class="row">
+                <div class="col-md-8">
+                  <div class="form-group">
+                    <label class="control-label">Datos Adicionales</label>
+                    <input type="text" class="form-control" name="email" v-model="cliente.adicionales" />
+                  </div>
+                </div>
+              </div>
               @endif
               <div class="row">
                 <div class="col-md-12 text-right">
-                  <button style="margin-top:25px;" type="submit" class="btn btn-success" :disabled="cargando">
+                  <button type="submit" class="btn btn-success" :disabled="cargando">
                     <i class="fas fa-save"></i>
                     Actualizar Cliente
                   </button>
