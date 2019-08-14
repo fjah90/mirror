@@ -328,7 +328,7 @@ const app = new Vue({
         cp: '',
         ciudad: '',
         estado: '',
-        pais: {{ (($nacional)?"México":"") }},
+        pais: '{{ (($nacional)?"México":"") }}',
         nacional: {{ (($nacional)?"true":"false") }},
         adicionales: '',
         contactos: []
