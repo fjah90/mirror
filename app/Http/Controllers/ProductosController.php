@@ -62,8 +62,6 @@ class ProductosController extends Controller
         ], 422);
       }
 
-      dd($request->all());
-
       $create = $request->only('proveedor_id','categoria_id','nombre');
       if(!is_null($request->subcategoria_id)){
         $create['subcategoria_id'] = $request->subcategoria_id;
