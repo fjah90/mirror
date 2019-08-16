@@ -52,6 +52,7 @@ class Producto extends Model
 
     public function descripciones(){
       return $this->hasMany('App\Models\ProductoDescripcion', 'producto_id', 'id')
+      ->select('productos_descripciones.*')
       ->join('categorias_descripciones',
         'productos_descripciones.categoria_descripcion_id', '=', 'categorias_descripciones.id')
       ->orderBy('categorias_descripciones.ordenamiento','asc');
