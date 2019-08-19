@@ -31,21 +31,21 @@
         </div>
         <div class="panel-body">
           <div class="table-responsive">
-            <table id="tabla" class="table table-bordred">
+            <table id="tabla" class="table table-bordred" style="width:100%;">
               <thead>
                 <tr>
-                  <th>ID</th>
                   <th>Producto</th>
                   <th>Proveedor</th>
                   <th>Categoria</th>
+                  <th>Tipo</th>
                   <th></th>
                 </tr>
               </thead>
               <tbody>
                 <tr v-for="(producto, index) in productos">
-                  <td>@{{producto.id}}</td>
                   <td>@{{producto.nombre}}</td>
                   <td>@{{producto.proveedor.empresa}}</td>
+                  <td>@{{producto.subcategoria.nombre}}</td>
                   <td>@{{producto.categoria.nombre}}</td>
                   <td class="text-right">
                     <a class="btn btn-info" data-toggle="tooltip" title="Ver"
@@ -82,7 +82,12 @@ const app = new Vue({
       productos: {!! json_encode($productos) !!},
     },
     mounted(){
-      $("#tabla").DataTable();
+      $("#tabla").DataTable({
+        "order": [[ 0, "asc" ]],
+        "columnDefs": [
+          { "width": "120px", "targets": 4 }
+        ]
+      });
     },
     methods: {
       borrar(producto, index){

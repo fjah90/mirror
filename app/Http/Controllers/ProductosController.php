@@ -20,7 +20,7 @@ class ProductosController extends Controller
      */
     public function index()
     {
-      $productos = Producto::with('proveedor','categoria')
+      $productos = Producto::with('proveedor','categoria','subcategoria')
       ->has('proveedor')
       ->has('categoria')
       ->get();

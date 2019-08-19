@@ -33,29 +33,25 @@
         </div>
         <div class="panel-body">
           <div class="table-responsive">
-            <table id="tabla" class="table table-bordred">
+            <table id="tabla" class="table table-bordred" style="width:100%;">
               <thead>
                 <tr>
-                  <th>ID</th>
                   <th>Empresa</th>
                   <th>Origen</th>
                   <th>Teléfono</th>
                   <th>Email</th>
                   <th>RFC / EIN</th>
-                  <th>Banco</th>
                   <th></th>
                 </tr>
               </thead>
               <tbody>
                 <tr v-for="(proveedor, index) in proveedores">
-                  <td>@{{proveedor.id}}</td>
                   <td>@{{proveedor.empresa}}</td>
                   <td v-if="proveedor.nacional">Nacional</td>
                   <td v-else>Internacional</td>
                   <td>@{{proveedor.telefono}}</td>
                   <td>@{{proveedor.email}}</td>
                   <td>@{{proveedor.identidad_fiscal}}</td>
-                  <td>@{{proveedor.banco}}</td>
                   <td class="text-right">
                     <a class="btn btn-info" data-toggle="tooltip" title="Ver"
                       :href="'/proveedores/'+proveedor.id">
@@ -91,7 +87,12 @@ const app = new Vue({
       proveedores: {!! json_encode($proveedores) !!},
     },
     mounted(){
-      $("#tabla").DataTable();
+      $("#tabla").DataTable({
+        "order": [[ 0, "asc" ]],
+        "columnDefs": [
+          { "width": "120px", "targets": 5 }
+        ]
+      });
     },
     methods: {
       borrar(proveedor, index){
