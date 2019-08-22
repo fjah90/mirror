@@ -23,7 +23,7 @@
       <div class="panel">
         <div class="panel-heading">
           <h3 class="panel-title text-right">
-            <span class="pull-left p-10">LISTA DE TIPOS DE PRODUCTOS Y SERVICIOS</span>
+            <span class="pull-left p-10">Lista de Tipos de Productos y Servicios</span>
             <a href="{{route('categorias.create')}}" class="btn btn-primary" style="color: #fff;">
               <i class="fa fa-plus"></i> Nuevo Tipo
             </a>
