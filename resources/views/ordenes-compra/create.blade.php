@@ -29,6 +29,15 @@
               <div class="row">
                 <div class="col-md-4">
                   <div class="form-group">
+                    <label class="control-label">Numero Orden</label>
+                    <input type="number" step="1" min="1" class="form-control" name="numero"
+                      v-model="orden.numero" required />
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="form-group">
                     <label class="control-label">Proveedor</label>
                     <select class="form-control" name="proveedor_id" v-model='orden.proveedor_id'
                       required :disabled="orden.entradas.length>0" @change="fijarProveedor()">
@@ -238,6 +247,7 @@ const app = new Vue({
       proyecto_id: {{$proyecto->id}},
       proveedor_id: 0,
       proveedor_empresa: '',
+      numero: '',
       moneda: '',
       entradas: [],
       subtotal: 0,

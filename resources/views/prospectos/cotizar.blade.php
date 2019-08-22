@@ -69,7 +69,7 @@
                     </thead>
                     <tbody>
                       <tr v-for="(cotizacion, index) in prospecto.cotizaciones">
-                        <td>@{{cotizacion.id}}</td>
+                        <td>@{{cotizacion.numero}}</td>
                         <td>@{{cotizacion.fecha_formated}}</td>
                         <td>
                           <template v-for="(entrada, index) in cotizacion.entradas">
@@ -86,7 +86,7 @@
                             <i class="far fa-sticky-note"></i>
                           </button>
                           <a class="btn btn-warning" title="PDF" :href="cotizacion.archivo"
-                            :download="'Cotizacion '+cotizacion.id+' Intercorp '+prospecto.nombre+'.pdf'">
+                            :download="'Cotizacion '+cotizacion.numero+' Intercorp '+prospecto.nombre+'.pdf'">
                             <i class="far fa-file-pdf"></i>
                           </a>
                           <button class="btn btn-info" title="Enviar"
@@ -119,6 +119,15 @@
                 <div class="col-sm-12">
                   <h4>Nueva Cotización</h4>
                   <hr />
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label class="control-label">Numero Cotización</label>
+                    <input type="number" step="1" min="1" name="numero" class="form-control"
+                    v-model="cotizacion.numero" />
+                  </div>
                 </div>
               </div>
               <div class="row">
@@ -551,6 +560,7 @@ const app = new Vue({
     nuevaObservacionProducto: "",
     cotizacion: {
       prospecto_id: {{$prospecto->id}},
+      numero: "",
       condicion: {
         id: 0,
         nombre: ''
@@ -767,6 +777,7 @@ const app = new Vue({
       this.cotizacion = {
         prospecto_id: {{$prospecto->id}},
         cotizacion_id: cotizacion.id,
+        numero: cotizacion.numero,
         condicion: {
           id: cotizacion.condicion_id,
           nombre: ''
@@ -842,6 +853,7 @@ const app = new Vue({
         this.prospecto.cotizaciones.push(data.cotizacion);
         this.cotizacion = {
           prospecto_id: {{$prospecto->id}},
+          numero: "",
           condicion: {
             id: 0,
             nombre: ''
@@ -867,7 +879,7 @@ const app = new Vue({
           text: "",
           type: "success"
         }).then(()=>{
-          $('a[download="Cotizacion '+data.cotizacion.id+' Intercorp '+this.prospecto.nombre+'.pdf"]')[0].click();
+          $('a[download="Cotizacion '+data.cotizacion.numero+' Intercorp '+this.prospecto.nombre+'.pdf"]')[0].click();
         });
       })
       .catch(({response}) => {

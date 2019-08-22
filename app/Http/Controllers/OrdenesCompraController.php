@@ -63,6 +63,7 @@ class OrdenesCompraController extends Controller
       $validator = Validator::make($request->all(), [
         'proyecto_id' => 'required',
         'proveedor_id' => 'required',
+        'numero' => 'required',
         'moneda' => 'required',
         'subtotal' => 'required',
         'iva' => 'required',
@@ -118,12 +119,22 @@ class OrdenesCompraController extends Controller
     /**
      * Cambia status a Por Autorizar.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\ProyectoAprobado  $proyecto
      * @param  \App\Models\OrdenCompra  $orden
      * @return \Illuminate\Http\Response
      */
-    public function comprar(ProyectoAprobado $proyecto, OrdenCompra $orden)
+    public function comprar(Request $request, ProyectoAprobado $proyecto, OrdenCompra $orden)
     {
+      $validator = Validator::make($request->all(), ['numero' => 'required']);
+
+      if ($validator->fails()) {
+        $errors = $validator->errors()->all();
+        return response()->json([
+          "success" => false, "error" => true, "message" => $errors[0]
+        ], 422);
+      }
+
       if($orden->status!=OrdenCompra::STATUS_PENDIENTE){
         return response()->json(['success' => false, "error" => true,
           'message'=>'La orden debe estar en estatus '.
@@ -135,6 +146,7 @@ class OrdenesCompraController extends Controller
       $this->avisarOrdenPorAprobar($orden);
 
       //generar PDF de orden
+      $orden->update(['numero'=>$request->numero]);
       $orden->load('proveedor.contactos', 'proyecto.cotizacion',
       'proyecto.cliente', 'entradas.producto.descripciones.descripcionNombre');
       $firmaAbraham = User::select('firma')->where('id',2)->first()->firma;
@@ -142,7 +154,7 @@ class OrdenesCompraController extends Controller
       else $firmaAbraham = public_path('images/firma_vacia.png');
       $orden->firmaAbraham = $firmaAbraham;
 
-      $url = 'ordenes_compra/'.$orden->id.'/orden_'.$orden->id.'.pdf';
+      $url = 'ordenes_compra/'.$orden->id.'/orden_'.$orden->numero.'.pdf';
       // $meses = ['ENERO','FEBRERO','MARZO','ABRIL','MAYO','JUNIO','JULIO',
       // 'AGOSTO','SEPTIEMBRE','OCTUBRE','NOVIEMBRE','DICIEMBRE'];
       $meses = ['JANUARY','FEBRUARY','MARCH','APRIL','MAY','JUNE','JULY',
@@ -194,6 +206,7 @@ class OrdenesCompraController extends Controller
       $validator = Validator::make($request->all(), [
         'proyecto_id' => 'required',
         'proveedor_id' => 'required',
+        'numero' => 'required',
         'moneda' => 'required',
         'subtotal' => 'required',
         'iva' => 'required',
@@ -208,7 +221,7 @@ class OrdenesCompraController extends Controller
         ], 422);
       }
 
-      $update = ['subtotal'=>$request->subtotal];
+      $update = ['numero'=>$request->numero, 'subtotal'=>$request->subtotal];
       if($request->iva=="1"){
         $update['iva'] = bcmul($update['subtotal'], 0.16, 2);
         $update['total'] = bcmul($update['subtotal'], 1.16, 2);
@@ -296,8 +309,9 @@ class OrdenesCompraController extends Controller
       if($orden->proveedor->nacional){
         $hoy = date('d/m/Y');
         $hoy2 = date('Y-m-d');
-        $numero = OrdenProceso::create([
+        $orden_proceso = OrdenProceso::create([
           'orden_compra_id'=>$orden->id,
+          'numero'=>$orden->numero,
           'status' => OrdenProceso::STATUS_DESCARGA,
           'fecha_estimada_fabricacion' => $hoy, 'fecha_real_fabricacion' => $hoy2,
           'fecha_estimada_embarque' => $hoy, 'fecha_real_embarque' => $hoy2,
@@ -309,7 +323,10 @@ class OrdenesCompraController extends Controller
         ]);
       }
       else {
-        $numero = OrdenProceso::create(['orden_compra_id'=>$orden->id]);
+        $orden_proceso = OrdenProceso::create([
+          'orden_compra_id'=>$orden->id,
+          'numero'=>$orden->numero,
+        ]);
       }
 
       //generar cuenta por pagar
@@ -328,7 +345,7 @@ class OrdenesCompraController extends Controller
       //actualizar orden
       $orden->update([
         'status'=>OrdenCompra::STATUS_APROBADA,
-        'orden_proceso_id'=>$numero->id
+        'orden_proceso_id'=>$orden_proceso->id
       ]);
 
       return response()->json(['success' => true, "error" => false], 200);

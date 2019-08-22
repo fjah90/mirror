@@ -44,7 +44,7 @@
                   <td>@{{orden.orden_compra.cliente_nombre}}</td>
                   <td>@{{orden.orden_compra.proyecto_nombre}}</td>
                   <td>@{{orden.orden_compra.proveedor_empresa}}</td>
-                  <td>@{{orden.id}}</td>
+                  <td>@{{orden.numero}}</td>
                   <td>@{{orden.status}}</td>
                   <td class="text-right">
                     {{-- <a class="btn btn-info" title="Ver"
@@ -58,65 +58,65 @@
                     {{-- Descarga de archivos --}}
                     <a v-if="orden.orden_compra.archivo" class="btn btn-warning"
                       title="PDF" :href="orden.orden_compra.archivo"
-                      :download="'orden-compra '+orden.orden_compra.id+'.pdf'">
+                      :download="'orden-compra '+orden.numero+'.pdf'">
                       <i class="far fa-file-pdf"></i>
                     </a>
                     <template v-if="orden.factura" >
                       <a class="btn btn-info"
                         title="Factura" :href="orden.factura"
-                        :download="'Factura orden proceso '+orden.id">
+                        :download="'Factura orden proceso '+orden.numero">
                         <i class="fas fa-file-invoice-dollar"></i>
                       </a>
                       <a class="btn btn-info"
                         title="Packing List" :href="orden.packing"
-                        :download="'Packing list orden proceso '+orden.id">
+                        :download="'Packing list orden proceso '+orden.numero">
                         <i class="fas fa-list-ol"></i>
                       </a>
                       <a v-if="orden.bl" class="btn btn-info"
                         title="BL" :href="orden.bl"
-                        :download="'BL orden proceso '+orden.id">
+                        :download="'BL orden proceso '+orden.numero">
                         <i class="fas fa-file"></i>
                       </a>
                       <a v-if="orden.certificado" class="btn btn-info"
                         title="Certificado" :href="orden.certificado"
-                        :download="'Certificado orden proceso '+orden.id">
+                        :download="'Certificado orden proceso '+orden.numero">
                         <i class="fas fa-file-contract"></i>
                       </a>
                     </template>
                     <a v-if="orden.deposito_warehouse" class="btn btn-info"
                       title="Deposito Warehouse" :href="orden.deposito_warehouse"
-                      :download="'Deposito Warehouse orden '+orden.id">
+                      :download="'Deposito Warehouse orden '+orden.numero">
                       <i class="far fa-file-word"></i>
                     </a>
                     <template v-if="orden.gastos" >
                       <a class="btn btn-info"
                         title="Cuenta de gastos" :href="orden.gastos"
-                        :download="'Cuenta gastos orden proceso '+orden.id">
+                        :download="'Cuenta gastos orden proceso '+orden.numero">
                         <i class="fas fa-file-invoice"></i>
                       </a>
                       <a class="btn btn-info"
                         title="Pago" :href="orden.pago"
-                        :download="'Pago orden proceso '+orden.id">
+                        :download="'Pago orden proceso '+orden.numero">
                         <i class="fas fa-money-check-alt"></i>
                       </a>
                     </template>
                     <a v-if="orden.carta_entrega" class="btn btn-info"
                       title="Carta de Entrega" :href="orden.carta_entrega"
-                      :download="'Carta de Entrega orden '+orden.id">
+                      :download="'Carta de Entrega orden '+orden.numero">
                       <i class="fas fa-people-carry"></i>
                     </a>
                     {{-- Botones de acciones --}}
                     <button v-if="orden.status=='En fabricación'"
                       class="btn btn-brown" title="Embarcar"
-                      @click="embarcar.orden_id=orden.id; openEmbarcar=true;">
+                      @click="embarcarModal(orden)">
                       <i class="fas fa-dolly-flatbed"></i>
                     </button>
                     <button v-if="orden.status=='Embarcado de fabrica'" class="btn btn-success"
-                      title="Frontera" @click="frontera.orden_id=orden.id; openFrontera=true;">
+                      title="Frontera" @click="fronteraModal(orden)">
                       <i class="fas fa-flag"></i>
                     </button>
                     <button v-if="orden.status=='En frontera'" class="btn btn-warning"
-                      title="Aduana" @click="aduana.orden_id=orden.id; openAduana=true;">
+                      title="Aduana" @click="aduanaModal(orden)">
                       <i class="fas fa-warehouse"></i>
                     </button>
                     <button v-if="orden.status=='Aduana'" class="btn btn-unique"
@@ -136,7 +136,7 @@
                       <i class="fas fa-dolly"></i>
                     </button>
                     <button v-if="orden.status=='Descarga'" class="btn btn-default"
-                      title="Entrega" @click="entrega.orden_id=orden.id; openEntrega=true;">
+                      title="Entrega" @click="entregaModal(orden)">
                       <i class="fas fa-box"></i>
                     </button>
                     <button v-if="orden.status=='Entregado' && !orden.fecha_real_entrega"
@@ -206,7 +206,7 @@
   <!-- /.Historial Modal -->
 
   <!-- Embarcar Modal -->
-  <modal v-model="openEmbarcar" :title="'Embarcar Orden '+embarcar.orden_id" :footer="false">
+  <modal v-model="openEmbarcar" :title="'Embarcar Orden '+embarcar.numero" :footer="false">
     <h4>Por favor proporcione los siguientes documentos:</h4>
     <form class="" @submit.prevent="embarcarOrden">
       <div class="row">
@@ -265,7 +265,7 @@
   <!-- /.Embarcar Modal -->
 
   <!-- Frontera Modal -->
-  <modal v-model="openFrontera" :title="'Poner orden '+frontera.orden_id+' en frontera'" :footer="false">
+  <modal v-model="openFrontera" :title="'Poner orden '+frontera.numero+' en frontera'" :footer="false">
     <h4>Por favor proporcione los siguientes documentos:</h4>
     <form class="" @submit.prevent="fronteraOrden">
       <div class="row">
@@ -293,7 +293,7 @@
   <!-- /.Frontera Modal -->
 
   <!-- Aduana Modal -->
-  <modal v-model="openAduana" :title="'Mandar orden '+aduana.orden_id+' a Aduana'" :footer="false">
+  <modal v-model="openAduana" :title="'Mandar orden '+aduana.numero+' a Aduana'" :footer="false">
     <h4>Por favor proporcione los siguientes documentos:</h4>
     <form class="" @submit.prevent="aduanaOrden">
       <div class="row">
@@ -330,7 +330,7 @@
   <!-- /.Aduana Modal -->
 
   <!-- Frontera Modal -->
-  <modal v-model="openEntrega" :title="'Poner orden '+entrega.orden_id+' en entrega'" :footer="false">
+  <modal v-model="openEntrega" :title="'Poner orden '+entrega.numero+' en entrega'" :footer="false">
     <h4>Por favor proporcione los siguientes documentos:</h4>
     <form class="" @submit.prevent="entregaOrden">
       <div class="row">
@@ -430,6 +430,7 @@ const app = new Vue({
       ],
       embarcar: {
         orden_id: 0,
+        numero: 0,
         factura: '',
         packing: '',
         bl: '',
@@ -437,15 +438,18 @@ const app = new Vue({
       },
       frontera: {
         orden_id: 0,
+        numero: 0,
         deposito_warehouse: ''
       },
       aduana: {
         orden_id: 0,
+        numero: 0,
         gastos: '',
         pago: ''
       },
       entrega: {
         orden_id: 0,
+        numero: 0,
         carta_entrega: ''
       },
       cargando: false,
@@ -533,6 +537,26 @@ const app = new Vue({
       dateParser(value){
   			return moment(value, 'DD/MM/YYYY').toDate().getTime();
   		},
+      embarcarModal(orden){
+        this.embarcar.orden_id=orden.id;
+        this.embarcar.numero=orden.numero;
+        this.openEmbarcar=true;
+      },
+      fronteraModal(orden){
+        this.frontera.orden_id=orden.id;
+        this.frontera.numero=orden.numero;
+        this.openFrontera=true;
+      },
+      aduanaModal(orden){
+        this.aduana.orden_id=orden.id;
+        this.aduana.numero=orden.numero;
+        this.openAduana=true;
+      },
+      entregaModal(orden){
+        this.entrega.orden_id=orden.id;
+        this.entrega.numero=orden.numero;
+        this.openEntrega=true;
+      },
       fijarDocumentoEmbarque(documento){
         this.embarcar[documento] = this.$refs[documento].files[0];
       },

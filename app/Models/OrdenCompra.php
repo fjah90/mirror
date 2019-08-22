@@ -18,7 +18,7 @@ class OrdenCompra extends Model
     protected $fillable = ['cliente_id','proyecto_id','proveedor_id',
       'orden_proceso_id','cliente_nombre','proyecto_nombre','proveedor_empresa',
       'status','moneda','subtotal','iva','total',
-      'motivo_rechazo','archivo'
+      'motivo_rechazo','archivo','numero'
     ];
 
     protected $casts = [

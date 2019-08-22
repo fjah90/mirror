@@ -39,6 +39,15 @@
             <div class="row">
               <div class="col-md-4">
                 <div class="form-group">
+                  <label class="control-label">Numero Orden</label>
+                  <input type="number" step="1" min="1" class="form-control" name="numero"
+                    v-model="orden.numero" required />
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-group">
                   <label class="control-label">Proveedor</label>
                   <span class="form-control">{{$orden->proveedor_empresa}}</span>
                 </div>

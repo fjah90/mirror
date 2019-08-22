@@ -285,7 +285,7 @@
     <div class="row margTop10">
       <div class="col-lg-5">
         <p class="font-bold">Purchase</p>
-        <p>Order: {{$orden->id}}</p>
+        <p>Order: {{$orden->numero}}</p>
         <p>Date: {{$orden->fechaPDF}}</p>
       </div>
       <div class="col-lg-7">

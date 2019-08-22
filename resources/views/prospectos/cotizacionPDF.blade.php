@@ -286,7 +286,7 @@
 
     <div class="row margTop10">
       <div class="col-lg-5">
-        <p>Cotizacion # {{$cotizacion->id}}</p>
+        <p>Cotizacion # {{$cotizacion->numero}}</p>
         <p>Fecha: {{$cotizacion->fechaPDF}}</p>
       </div>
       <div class="col-lg-7">

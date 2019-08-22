@@ -309,6 +309,7 @@ class ProspectosController extends Controller
       $create['observaciones'] = $observaciones;
 
       $cotizacion = ProspectoCotizacion::create($create);
+      if(!$cotizacion->numero) $cotizacion->numero = $cotizacion->id;
 
       //guardar entradas
       $fichas = [];
@@ -359,7 +360,7 @@ class ProspectosController extends Controller
       else $cotizacion->user->firma = public_path('images/firma_vacia.png');
 
       //crear pdf de cotizacion
-      $url = 'cotizaciones/'.$cotizacion->id.'/Cotizacion '.$cotizacion->id.' Intercorp '.$prospecto->nombre.'.pdf';
+      $url = 'cotizaciones/'.$cotizacion->id.'/Cotizacion '.$cotizacion->numero.' Intercorp '.$prospecto->nombre.'.pdf';
       $meses = ['ENERO','FEBRERO','MARZO','ABRIL','MAYO','JUNIO','JULIO',
       'AGOSTO','SEPTIEMBRE','OCTUBRE','NOVIEMBRE','DICIEMBRE'];
       list($ano,$mes,$dia) = explode('-', $cotizacion->fecha);
@@ -439,6 +440,7 @@ class ProspectosController extends Controller
       $observaciones.= "</ul>";
       $update['observaciones'] = $observaciones;
 
+      if(!$update['numero']) $update['numero'] = $cotizacion->id;
       $cotizacion->update($update);
       $cotizacion->load('entradas');
 
@@ -539,7 +541,7 @@ class ProspectosController extends Controller
       else $cotizacion->user->firma = public_path('images/firma_vacia.png');
 
       //crear pdf de cotizacion
-      $url = 'cotizaciones/'.$cotizacion->id.'/Cotizacion '.$cotizacion->id.' Intercorp '.$prospecto->nombre.'.pdf';
+      $url = 'cotizaciones/'.$cotizacion->id.'/Cotizacion '.$cotizacion->numero.' Intercorp '.$prospecto->nombre.'.pdf';
       $meses = ['ENERO','FEBRERO','MARZO','ABRIL','MAYO','JUNIO','JULIO',
       'AGOSTO','SEPTIEMBRE','OCTUBRE','NOVIEMBRE','DICIEMBRE'];
       list($ano,$mes,$dia) = explode('-', $cotizacion->fecha);
@@ -551,7 +553,7 @@ class ProspectosController extends Controller
       Storage::disk('public')->put($url, $cotizacionPDF->output());
 
       unset($cotizacion->fechaPDF);
-      // $cotizacion->update(['archivo'=>$url]);
+      $cotizacion->update(['archivo'=>$url]);
       $cotizacion->archivo = asset('storage/'.$cotizacion->archivo);
 
       return response()->json(['success'=>true,'error'=>false,'cotizacion'=>$cotizacion], 200);

@@ -37,6 +37,15 @@
             </div>
             @endif
             <div class="row">
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label class="control-label">Numero Orden</label>
+                  <input type="number" step="1" min="1" class="form-control" name="numero"
+                    v-model="numero" required />
+                </div>
+              </div>
+            </div>
+            <div class="row">
               <div class="col-md-12">
                 <div class="form-group">
                   <label class="control-label">Cliente</label>
@@ -173,12 +182,14 @@
 const app = new Vue({
   el: '#content',
   data: {
-    cargando: false
+    cargando: false,
+    numero: {{$orden->numero}}
   },
   methods: {
     comprar(){
       this.cargando = true;
-      axios.get('/proyectos-aprobados/{{$proyecto->id}}/ordenes-compra/{{$orden->id}}/comprar', {})
+      axios.post('/proyectos-aprobados/{{$proyecto->id}}/ordenes-compra/{{$orden->id}}/comprar',
+      {numero: this.numero})
       .then(({data}) => {
         swal({
           title: "Orden Comprada",

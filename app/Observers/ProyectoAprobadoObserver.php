@@ -31,6 +31,7 @@ class ProyectoAprobadoObserver
         ];
 
         $orden = OrdenCompra::create($create);
+        $orden->update(['numero'=>$orden->id]);
 
         foreach ($entradas as $entrada) {
           OrdenCompraEntrada::create([

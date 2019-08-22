@@ -35,7 +35,7 @@
             <table class="table table-bordred">
               <thead>
                 <tr>
-                  <th>ID</th>
+                  <th>Numero</th>
                   <th>Proveedor</th>
                   <th>Producto</th>
                   <th>Cantidad</th>
@@ -45,7 +45,7 @@
               </thead>
               <tbody>
                 <tr v-for="orden in ordenes">
-                  <td>@{{orden.id}}</td>
+                  <td>@{{orden.numero}}</td>
                   <td>@{{orden.proveedor_empresa}}</td>
                   <td>
                     <span v-for="(entrada, index) in orden.entradas">
@@ -68,7 +68,7 @@
                         <i class="far fa-eye"></i>
                       </a>
                       <a v-if="orden.archivo" class="btn btn-warning" title="PDF" :href="orden.archivo"
-                        :download="'orden-compra '+orden.id+'.pdf'">
+                        :download="'orden-compra '+orden.numero+'.pdf'">
                         <i class="far fa-file-pdf"></i>
                       </a>
                     </template>

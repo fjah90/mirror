@@ -20,6 +20,7 @@ class OrdenProceso extends Model
 
     protected $fillable = [
       'orden_compra_id',
+      'numero',
       'status','factura','packing','bl',
       'certificado','gastos','pago',
       'deposito_warehouse','carta_entrega',
