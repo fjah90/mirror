@@ -14,7 +14,7 @@
 @section('content')
 <!-- Content Header (Page header) -->
 <section class="content-header">
-    <h1>Tipos Productos</h1>
+    <h1>TIPOS DE PRODUCTOS</h1>
 </section>
 <!-- Main content -->
 <section class="content" id="content">
@@ -23,7 +23,7 @@
       <div class="panel">
         <div class="panel-heading">
           <h3 class="panel-title text-right">
-            <span class="pull-left p-10">Lista de Tipos</span>
+            <span class="pull-left p-10">LISTA DE TIPOS DE PRODUCTOS Y SERVICIOS</span>
             <a href="{{route('categorias.create')}}" class="btn btn-primary" style="color: #fff;">
               <i class="fa fa-plus"></i> Nuevo Tipo
             </a>
@@ -31,7 +31,8 @@
         </div>
         <div class="panel-body">
           <div class="table-responsive">
-            <table id="tabla" class="table table-bordred">
+            <table id="tabla" class="table table-bordred" style="width:100%;"
+            data-page-length="-1">
               <thead>
                 <tr>
                   <th>ID</th>
