@@ -27,6 +27,18 @@
               <div class="row">
                 <div class="col-md-4">
                   <div class="form-group">
+                    <label class="control-label">Usuario</label>
+                    <select class="form-control" name="usuario_id" v-model='cliente.usuario_id' required>
+                      @foreach($usuarios as $id => $nombre)
+                        <option value="{{$id}}">{{$nombre}}</option>
+                      @endforeach
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="form-group">
                     <label class="control-label">Tipo</label>
                     <select class="form-control" name="tipo_id" v-model='cliente.tipo_id' required>
                       @foreach($tipos as $tipo)
@@ -324,6 +336,7 @@ const app = new Vue({
     data: {
       translations: translationsES,
       cliente: {
+        usuario_id: '',
         tipo_id: '',
         nombre: '',
         rfc: '',

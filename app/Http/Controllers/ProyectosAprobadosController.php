@@ -15,7 +15,7 @@ class ProyectosAprobadosController extends Controller
      */
     public function index()
     {
-      $proyectos = ProyectoAprobado::with('cotizacion')->get();
+      $proyectos = ProyectoAprobado::with('cotizacion','cliente')->get();
       foreach ($proyectos as $proyecto) {
         $proyecto->cotizacion->archivo = asset('storage/'.$proyecto->cotizacion->archivo);
       }

@@ -11,7 +11,8 @@ class Cliente extends Model
 
     protected $fillable = ['tipo_id','nombre','telefono','email','rfc',
       'calle','numero','colonia','cp','ciudad','estado','razon_social',
-      'ninterior','delegacion','adicionales','pais','nacional'
+      'ninterior','delegacion','adicionales','pais','nacional','usuario_id',
+      'usuario_nombre'
     ];
 
     protected $casts = [
@@ -49,6 +50,10 @@ class Cliente extends Model
 
     public function tipo(){
       return $this->belongsTo('App\Models\TipoCliente', 'tipo_id', 'id');
+    }
+
+    public function usuario(){
+      return $this->belongsTo('App\User', 'usuario_id', 'id');
     }
 
     public function contactos(){

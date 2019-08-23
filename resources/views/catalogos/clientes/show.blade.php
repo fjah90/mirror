@@ -26,6 +26,14 @@
             <div class="row">
               <div class="col-md-4">
                 <div class="form-group">
+                  <label class="control-label">Usuario</label>
+                  <span class="form-control">{{$cliente->usuario_nombre}}</span>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-group">
                   <label class="control-label">Tipo</label>
                   <span class="form-control">{{$cliente->tipo->nombre}}</span>
                 </div>

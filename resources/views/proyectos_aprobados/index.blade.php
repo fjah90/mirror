@@ -31,7 +31,7 @@
             <table class="table table-bordred">
               <thead>
                 <tr>
-                  <th>ID</th>
+                  <th>Usuario</th>
                   <th>Cliente</th>
                   <th>Proyecto</th>
                   <th>Proveedores</th>
@@ -40,7 +40,7 @@
               </thead>
               <tbody>
                 <tr v-for="proyecto in proyectos">
-                  <td>@{{proyecto.id}}</td>
+                  <td>@{{proyecto.cliente.usuario_nombre}}</td>
                   <td>@{{proyecto.cliente_nombre}}</td>
                   <td>@{{proyecto.proyecto}}</td>
                   <td>

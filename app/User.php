@@ -36,4 +36,9 @@ class User extends Authenticatable
       if(count($roles)) return $roles[0];
       else return "";
     }
+
+
+    public function clientes(){
+      return $this->hasMany('App\Models\Cliente', 'usuario_id', 'id');
+    }
 }

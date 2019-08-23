@@ -37,26 +37,24 @@
             <table id="tabla" class="table table-bordred" style="width:100%;">
               <thead>
                 <tr>
-                  <th>ID</th>
+                  <th>Usuario</th>
                   <th>Tipo</th>
                   <th>Origen</th>
                   <th>Nombre</th>
                   <th>Teléfono</th>
                   <th>Email</th>
-                  <th>RFC</th>
                   <th></th>
                 </tr>
               </thead>
               <tbody>
                 <tr v-for="(cliente, index) in clientes">
-                  <td>@{{cliente.id}}</td>
+                  <td>@{{cliente.usuario_nombre}}</td>
                   <td>@{{cliente.tipo.nombre}}</td>
                   <td v-if="cliente.nacional">Nacional</td>
                   <td v-else>Internacional</td>
                   <td>@{{cliente.nombre}}</td>
                   <td>@{{cliente.telefono}}</td>
                   <td>@{{cliente.email}}</td>
-                  <td>@{{cliente.rfc}}</td>
                   <td class="text-right">
                     <a class="btn btn-info" data-toggle="tooltip" title="Ver"
                       :href="'/clientes/'+cliente.id">

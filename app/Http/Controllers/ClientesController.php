@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\TipoCliente;
 use App\Models\Cliente;
 use App\Models\ClienteContacto;
+use App\User;
 
 class ClientesController extends Controller
 {
@@ -31,14 +32,18 @@ class ClientesController extends Controller
     {
       $tipos = TipoCliente::all();
       $nacional = true;
-      return view('catalogos.clientes.create', compact('tipos', 'nacional'));
+      $usuarios = User::all()->pluck('name','id');
+
+      return view('catalogos.clientes.create', compact('tipos', 'nacional','usuarios'));
     }
 
     public function createInter()
     {
       $tipos = TipoCliente::all();
       $nacional = false;
-      return view('catalogos.clientes.create', compact('tipos', 'nacional'));
+      $usuarios = User::all()->pluck('name','id');
+
+      return view('catalogos.clientes.create', compact('tipos', 'nacional','usuarios'));
     }
 
     /**
@@ -50,6 +55,7 @@ class ClientesController extends Controller
     public function store(Request $request)
     {
       $validator = Validator::make($request->all(), [
+        'usuario_id' => 'required',
         'tipo_id' => 'required',
         'nombre' => 'required',
       ]);
@@ -62,6 +68,7 @@ class ClientesController extends Controller
       }
 
       $cliente = Cliente::create($request->except('contactos'));
+      $cliente->update(['usuario_nombre'=>$cliente->usuario->name]);
 
       foreach($request->contactos as $contacto){
         $contacto['cliente_id'] = $cliente->id;
@@ -92,8 +99,10 @@ class ClientesController extends Controller
     public function edit(Cliente $cliente)
     {
       $tipos = TipoCliente::all();
+      $usuarios = User::all()->pluck('name','id');
       $cliente->load(['tipo', 'contactos']);
-      return view('catalogos.clientes.edit', compact(['cliente','tipos']));
+
+      return view('catalogos.clientes.edit', compact(['cliente','tipos','usuarios']));
     }
 
     /**
@@ -118,6 +127,7 @@ class ClientesController extends Controller
       }
 
       $cliente->update($request->except('contactos'));
+      $cliente->update(['usuario_nombre'=>$cliente->usuario->name]);
       $contactos_ids = [];
 
       foreach($request->contactos as $contacto){
