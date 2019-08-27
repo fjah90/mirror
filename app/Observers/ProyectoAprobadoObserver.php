@@ -27,7 +27,7 @@ class ProyectoAprobadoObserver
           'cliente_nombre'=>$proyecto->cliente_nombre,
           'proyecto_nombre'=>$proyecto->proyecto,
           'proveedor_empresa'=>$proveedor,
-          'moneda'=>$entradas->first()->producto->proveedor->moneda
+          'moneda'=>$entradas->first()->producto->proveedor->moneda ?? 'Dolares'
         ];
 
         $orden = OrdenCompra::create($create);

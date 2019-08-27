@@ -41,7 +41,7 @@
                 <div class="form-group">
                   <label class="control-label">Numero Orden</label>
                   <input type="number" step="1" min="1" class="form-control" name="numero"
-                    v-model="numero" required />
+                    v-model="orden.numero" required />
                 </div>
               </div>
             </div>
@@ -54,12 +54,26 @@
               </div>
             </div>
             <div class="row">
+              @if($orden->proveedor_id)
               <div class="col-md-12">
                 <div class="form-group">
                   <label class="control-label">Proveedor</label>
                   <span class="form-control">{{$orden->proveedor_empresa}}</span>
                 </div>
               </div>
+              @else
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label class="control-label">Proveedor</label>
+                  <select class="form-control" name="proveedor_id" v-model='orden.proveedor_id'
+                    required @change="fijarProveedor()">
+                    @foreach($proveedores as $proveedor)
+                      <option value="{{$proveedor->id}}">{{$proveedor->empresa}}</option>
+                    @endforeach
+                  </select>
+                </div>
+              </div>
+              @endif
             </div>
             <div class="row">
               <div class="col-md-4">
@@ -183,13 +197,27 @@ const app = new Vue({
   el: '#content',
   data: {
     cargando: false,
-    numero: {{$orden->numero}}
+    proveedores: {!! json_encode($proveedores) !!},
+    orden:{
+      numero: {{$orden->numero}},
+      proveedor_id: '{{$orden->proveedor_id}}',
+      proveedor_empresa: '{{$orden->proveedor_empresa}}',
+      moneda: '{{$orden->moneda}}'
+    },
   },
   methods: {
+    fijarProveedor(){
+      this.proveedores.find(function(proveedor){
+        if(proveedor.id == this.orden.proveedor_id){
+          this.orden.proveedor_empresa = proveedor.empresa;
+          this.orden.moneda = proveedor.moneda;
+          return true;
+        }
+      }, this);
+    },
     comprar(){
       this.cargando = true;
-      axios.post('/proyectos-aprobados/{{$proyecto->id}}/ordenes-compra/{{$orden->id}}/comprar',
-      {numero: this.numero})
+      axios.post('/proyectos-aprobados/{{$proyecto->id}}/ordenes-compra/{{$orden->id}}/comprar',this.orden)
       .then(({data}) => {
         swal({
           title: "Orden Comprada",

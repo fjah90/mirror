@@ -29,6 +29,7 @@
                   <div class="form-group">
                     <label class="control-label">Proveedor</label>
                     <select class="form-control" name="proveedor_id" v-model='producto.proveedor_id' required>
+                      <option value="0">Por Definir</option>
                       @foreach($proveedores as $proveedor)
                         <option value="{{$proveedor->id}}">{{$proveedor->empresa}}</option>
                       @endforeach

@@ -240,7 +240,7 @@ class ProspectosController extends Controller
     {
       $prospecto->load('cliente','cotizaciones.entradas.producto','cotizaciones.entradas.descripciones');
       $productos = Producto::with('categoria','proveedor','descripciones.descripcionNombre')
-      ->has('proveedor')->has('categoria')->get();
+      ->has('categoria')->get();
       $condiciones = CondicionCotizacion::all();
 
       foreach ($prospecto->cotizaciones as $cotizacion) {

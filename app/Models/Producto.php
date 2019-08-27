@@ -32,7 +32,8 @@ class Producto extends Model
      */
 
     public function proveedor(){
-      return $this->belongsTo('App\Models\Proveedor', 'proveedor_id', 'id');
+      return $this->belongsTo('App\Models\Proveedor', 'proveedor_id', 'id')
+      ->withDefault(['id' => 0, 'empresa' => 'Por Definir']);
     }
 
     public function categoria(){

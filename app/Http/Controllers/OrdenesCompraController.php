@@ -111,9 +111,10 @@ class OrdenesCompraController extends Controller
      */
     public function show(ProyectoAprobado $proyecto, OrdenCompra $orden)
     {
+      $proveedores = Proveedor::all();
       $orden->load('proveedor', 'entradas.producto');
 
-      return view('ordenes-compra.show', compact('proyecto','orden'));
+      return view('ordenes-compra.show', compact('proyecto','orden','proveedores'));
     }
 
     /**
@@ -126,7 +127,12 @@ class OrdenesCompraController extends Controller
      */
     public function comprar(Request $request, ProyectoAprobado $proyecto, OrdenCompra $orden)
     {
-      $validator = Validator::make($request->all(), ['numero' => 'required']);
+      $validator = Validator::make($request->all(), [
+        'numero' => 'required',
+        'proveedor_id' => 'required',
+        'proveedor_empresa' => 'required',
+        'moneda' => 'required'
+      ]);
 
       if ($validator->fails()) {
         $errors = $validator->errors()->all();
@@ -146,7 +152,7 @@ class OrdenesCompraController extends Controller
       $this->avisarOrdenPorAprobar($orden);
 
       //generar PDF de orden
-      $orden->update(['numero'=>$request->numero]);
+      $orden->update($request->all());
       $orden->load('proveedor.contactos', 'proyecto.cotizacion',
       'proyecto.cliente', 'entradas.producto.descripciones.descripcionNombre');
       $firmaAbraham = User::select('firma')->where('id',2)->first()->firma;
@@ -186,11 +192,12 @@ class OrdenesCompraController extends Controller
       */
      public function edit(ProyectoAprobado $proyecto, OrdenCompra $orden)
      {
+       $proveedores = Proveedor::all();
        $productos = Producto::with('categoria')->has('categoria')->get();
        $orden->load('proveedor', 'entradas.producto');
        if($orden->iva>0) $orden->iva = 1;
 
-       return view('ordenes-compra.edit', compact('proyecto','orden','productos'));
+       return view('ordenes-compra.edit', compact('proyecto','orden','productos','proveedores'));
      }
 
     /**
@@ -221,7 +228,9 @@ class OrdenesCompraController extends Controller
         ], 422);
       }
 
-      $update = ['numero'=>$request->numero, 'subtotal'=>$request->subtotal];
+      $update = $request->only(
+        'proveedor_id','proveedor_empresa','moneda','numero','subtotal'
+      );
       if($request->iva=="1"){
         $update['iva'] = bcmul($update['subtotal'], 0.16, 2);
         $update['total'] = bcmul($update['subtotal'], 1.16, 2);

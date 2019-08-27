@@ -21,7 +21,6 @@ class ProductosController extends Controller
     public function index()
     {
       $productos = Producto::with('proveedor','categoria','subcategoria')
-      ->has('proveedor')
       ->has('categoria')
       ->get();
 
@@ -62,7 +61,8 @@ class ProductosController extends Controller
         ], 422);
       }
 
-      $create = $request->only('proveedor_id','categoria_id','nombre');
+      $create = $request->only('categoria_id','nombre');
+      if($request->proveedor_id!=0) $create['proveedor_id'] = $request->proveedor_id;
       if(!is_null($request->subcategoria_id)){
         $create['subcategoria_id'] = $request->subcategoria_id;
       }
@@ -173,7 +173,8 @@ class ProductosController extends Controller
         ], 422);
       }
 
-      $update = $request->only('proveedor_id','categoria_id','nombre');
+      $update = $request->only('categoria_id','nombre');
+      $update['proveedor_id'] = ($request->proveedor_id!=0)?$request->proveedor_id:null;
       if(!is_null($request->foto)) {
         Storage::delete('public/'.$producto->foto);
         $update['foto'] = Storage::putFile('public/productos', $request->file('foto'));

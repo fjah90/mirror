@@ -29,6 +29,7 @@
                   <div class="form-group">
                     <label class="control-label">Proveedor</label>
                     <select class="form-control" name="proveedor_id" v-model='producto.proveedor_id' required>
+                      <option value="0">Por Definir</option>
                       @foreach($proveedores as $proveedor)
                         <option value="{{$proveedor->id}}">{{$proveedor->empresa}}</option>
                       @endforeach
@@ -154,7 +155,7 @@ const app = new Vue({
     el: '#content',
     data: {
       producto: {
-        proveedor_id: '{{$producto->proveedor_id}}',
+        proveedor_id: '{{$producto->proveedor_id ?? 0}}',
         categoria_id: '{{$producto->categoria_id}}',
         subcategoria_id: '{{$producto->subcategoria->id}}',
         nombre: '{{$producto->nombre}}',

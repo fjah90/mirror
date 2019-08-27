@@ -46,16 +46,30 @@
               </div>
             </div>
             <div class="row">
+              @if($orden->proveedor_id)
               <div class="col-md-4">
                 <div class="form-group">
                   <label class="control-label">Proveedor</label>
                   <span class="form-control">{{$orden->proveedor_empresa}}</span>
                 </div>
               </div>
+              @else
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label class="control-label">Proveedor</label>
+                  <select class="form-control" name="proveedor_id" v-model='orden.proveedor_id'
+                    required @change="fijarProveedor()">
+                    @foreach($proveedores as $proveedor)
+                      <option value="{{$proveedor->id}}">{{$proveedor->empresa}}</option>
+                    @endforeach
+                  </select>
+                </div>
+              </div>
+              @endif
               <div class="col-md-4">
                 <div class="form-group">
                   <label class="control-label">Moneda</label>
-                  <span class="form-control">{{$orden->moneda}}</span>
+                  <span class="form-control">@{{orden.moneda}}</span>
                 </div>
               </div>
               <div class="col-md-4">
@@ -274,6 +288,7 @@
 const app = new Vue({
   el: '#content',
   data: {
+    proveedores: {!! json_encode($proveedores) !!},
     productos: {!! json_encode($productos) !!},
     orden: {!! json_encode($orden) !!},
     entrada: {
@@ -302,6 +317,17 @@ const app = new Vue({
     },
   },
   methods: {
+    fijarProveedor(){
+      this.proveedores.find(function(proveedor){
+        if(proveedor.id == this.orden.proveedor_id){
+          this.orden.proveedor_empresa = proveedor.empresa;
+          this.orden.moneda = proveedor.moneda;
+          return true;
+        }
+      }, this);
+
+      this.entrada.producto = {};//por si ya estaba seleccionado uno
+    },
     seleccionarProduco(prod){
       this.entrada.producto = prod;
       this.openCatalogo = false;
