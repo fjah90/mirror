@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Validator;
 use Storage;
+use Illuminate\Validation\Rule;
 use Illuminate\Http\Request;
 use App\Models\Proveedor;
 use App\Models\Categoria;
@@ -51,7 +52,7 @@ class ProductosController extends Controller
       $validator = Validator::make($request->all(), [
         'proveedor_id' => 'required',
         'categoria_id' => 'required',
-        'nombre' => 'required'
+        'nombre' => 'required|unique:productos,nombre'
       ]);
 
       if ($validator->fails()) {
@@ -163,7 +164,7 @@ class ProductosController extends Controller
       $validator = Validator::make($request->all(), [
         'proveedor_id' => 'required',
         'categoria_id' => 'required',
-        'nombre' => 'required'
+        'nombre' => ['required',Rule::unique('productos')->ignore($producto->id)]
       ]);
 
       if ($validator->fails()) {
