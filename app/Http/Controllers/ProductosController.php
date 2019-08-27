@@ -184,7 +184,7 @@ class ProductosController extends Controller
       if(!is_null($request->ficha_tecnica)) {
         Storage::delete('public/'.$producto->ficha_tecnica);
         $nombre_temp = "temp".time().".pdf";
-        $nombre_bueno = "ficha_tecnica_producto_".$producto->id.".pdf";
+        $nombre_bueno = "ficha_tecnica_producto_".$producto->id."t".time().".pdf";
 
         Storage::putFileAs('public/productos', $request->file('ficha_tecnica'), $nombre_temp);
 
