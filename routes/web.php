@@ -40,6 +40,9 @@ Route::middleware('auth')->group(function () {
   Route::resource('/tiposClientes', 'TiposClientesController', ['parameters' => [
     'tiposClientes' => 'tipo'
   ]]);
+  Route::resource('/unidadesMedida', 'UnidadesMedidaController', ['parameters' => [
+    'unidadesMedida' => 'unidad'
+  ]]);
   Route::get('/clientes/crearNacional', 'ClientesController@create')->name('clientes.createNacional');
   Route::get('/clientes/crearInternacional', 'ClientesController@createInter')->name('clientes.createInternacional');
   Route::resource('/clientes', 'ClientesController');
