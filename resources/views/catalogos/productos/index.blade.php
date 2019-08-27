@@ -35,7 +35,7 @@
             data-page-length="-1">
               <thead>
                 <tr>
-                  <th>Producto</th>
+                  <th>Código de Producto o Servicio</th>
                   <th>Proveedor</th>
                   <th>Categoria</th>
                   <th>Tipo</th>
