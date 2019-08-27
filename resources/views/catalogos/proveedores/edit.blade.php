@@ -41,25 +41,9 @@
                   <div class="form-group">
                     <label class="control-label">
                       <span v-if="proveedor.nacional">RFC</span>
-                      <span v-else>EIN</span>
+                      <span v-else>TAX ID NO</span>
                     </label>
                     <input type="text" class="form-control" name="identidad_fiscal" v-model="proveedor.identidad_fiscal" />
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label class="control-label">Telefono</label>
-                    <input type="tel" class="form-control" v-mask="['(###) ###-####','+#(###)###-####']"
-                     v-model="proveedor.telefono"
-                    />
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label class="control-label">Email</label>
-                    <input type="text" class="form-control" name="email" v-model="proveedor.email" />
                   </div>
                 </div>
               </div>
@@ -78,11 +62,36 @@
                 </div>
                 <div class="col-md-4">
                   <div class="form-group">
-                    <label class="control-label">Clave Intervancaria</label>
-                    <input type="text" class="form-control" name="calle" v-model="proveedor.clave_interbancaria" />
+                    <label class="control-label">No Cuenta (Intercorp/Cliente)</label>
+                    <input type="text" class="form-control" name="cuenta_interna" v-model="proveedor.cuenta_interna" />
                   </div>
                 </div>
               </div>
+              @if($proveedor->nacional)
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label class="control-label">Clave Interbancaria</label>
+                    <input type="text" class="form-control" name="clave_interbancaria" v-model="proveedor.clave_interbancaria" />
+                  </div>
+                </div>
+              </div>
+              @else
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label class="control-label">SWIF</label>
+                    <input type="text" class="form-control" name="swif" v-model="proveedor.swif" />
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label class="control-label">ABA</label>
+                    <input type="text" class="form-control" name="aba" v-model="proveedor.aba" />
+                  </div>
+                </div>
+              </div>
+              @endif
               <div class="row">
                 <div class="col-md-4">
                   <div class="form-group">
@@ -97,6 +106,12 @@
                   <div class="form-group">
                     <label class="control-label">Dias Credito</label>
                     <input type="number" min="0" step="1" class="form-control" name="dias_credito" v-model="proveedor.dias_credito" />
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label class="control-label">Limite Credito</label>
+                    <input type="number" min="0" step="0.01" class="form-control" name="limite_credito" v-model="proveedor.limite_credito" />
                   </div>
                 </div>
               </div>
@@ -168,6 +183,34 @@
                 </div>
               </div>
             </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="panel">
+          <div class="panel-heading">
+            <h3 class="panel-title">Datos Generales</h3>
+          </div>
+          <div class="panel-body">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="control-label">Telefono</label>
+                  <input type="tel" class="form-control" v-mask="['(###) ###-####','+#(###)###-####']"
+                   v-model="proveedor.telefono"
+                  />
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="control-label">Email</label>
+                  <input type="text" class="form-control" name="email" v-model="proveedor.email" />
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -331,9 +374,13 @@ const app = new Vue({
         email: '{{$proveedor->email}}',
         banco: '{{$proveedor->banco}}',
         numero_cuenta: '{{$proveedor->numero_cuenta}}',
+        cuenta_interna: '{{$proveedor->cuenta_interna}}',
         clave_interbancaria: '{{$proveedor->clave_interbancaria}}',
+        swif: '{{$proveedor->swif}}',
+        aba: '{{$proveedor->aba}}',
         moneda: '{{$proveedor->moneda}}',
         dias_credito: '{{$proveedor->dias_credito}}',
+        limite_credito: '{{$proveedor->limite_credito}}',
         calle: '{{$proveedor->calle}}',
         numero: '{{$proveedor->numero}}',
         colonia: '{{$proveedor->colonia}}',

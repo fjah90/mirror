@@ -40,7 +40,7 @@
                   <th>Origen</th>
                   <th>Teléfono</th>
                   <th>Email</th>
-                  <th>RFC / EIN</th>
+                  <th>RFC / TAX ID NO</th>
                   <th></th>
                 </tr>
               </thead>
@@ -48,7 +48,7 @@
                 <tr v-for="(proveedor, index) in proveedores">
                   <td>@{{proveedor.empresa}}</td>
                   <td v-if="proveedor.nacional">Nacional</td>
-                  <td v-else>Internacional</td>
+                  <td v-else>Extranjero</td>
                   <td>@{{proveedor.telefono}}</td>
                   <td>@{{proveedor.email}}</td>
                   <td>@{{proveedor.identidad_fiscal}}</td>
