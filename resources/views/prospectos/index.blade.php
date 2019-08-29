@@ -104,7 +104,7 @@ const app = new Vue({
       prospectos: {!! json_encode($prospectos) !!},
     },
     mounted(){
-      $("#tabla").DataTable();
+      $("#tabla").DataTable({"order": [[ 1, "asc" ]]});
     },
     methods: {
       borrar(prospecto, index){

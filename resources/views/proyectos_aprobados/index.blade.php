@@ -28,7 +28,7 @@
         </div>
         <div class="panel-body">
           <div class="table-responsive">
-            <table class="table table-bordred">
+            <table id="tabla" class="table table-bordred" style="width:100%;">
               <thead>
                 <tr>
                   <th>Usuario</th>
@@ -78,6 +78,9 @@ const app = new Vue({
     el: '#content',
     data: {
       proyectos: {!! json_encode($proyectos) !!},
+    },
+    mounted(){
+      $("#tabla").DataTable({"order": [[ 1, "asc" ]]});
     },
 });
 </script>
