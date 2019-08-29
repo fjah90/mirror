@@ -72,7 +72,7 @@
                 <div class="col-md-4">
                   <div class="form-group">
                     <label class="control-label">Telefono</label>
-                    <input type="tel" class="form-control" v-mask="['(###) ###-####','+#(###)###-####']"
+                    <input type="tel" class="form-control" v-mask="['(###) ###-####','+#(###)###-####','+##(###)###-####']"
                      v-model="cliente.telefono"
                     />
                   </div>
@@ -262,7 +262,7 @@
                 <div class="col-md-4">
                   <div class="form-group">
                     <label class="control-label">Numero</label>
-                    <input type="tel" class="form-control" v-mask="['(###) ###-####','+#(###)###-####']"
+                    <input type="tel" class="form-control" v-mask="['(###) ###-####','+#(###)###-####','+##(###)###-####']"
                      v-model="contacto.telefono"
                     />
                   </div>
@@ -290,7 +290,7 @@
                 <div class="col-md-4">
                   <div class="form-group">
                     <label class="control-label">Numero</label>
-                    <input type="tel" class="form-control" v-mask="['(###) ###-####','+#(###)###-####']"
+                    <input type="tel" class="form-control" v-mask="['(###) ###-####','+#(###)###-####','+##(###)###-####']"
                      v-model="contacto.telefono2"
                     />
                   </div>
