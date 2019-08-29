@@ -18,8 +18,6 @@ class CreateUnidadesMedidaConversionesTable extends Migration
           $table->increments('id');
           $table->unsignedInteger('unidad_medida_id');
           $table->unsignedInteger('unidad_conversion_id');
-          $table->string('unidad_conversion_simbolo');
-          $table->string('unidad_conversion_nombre')->nullable();
           $table->decimal('factor_conversion',7,4);
 
           $table->foreign('unidad_medida_id')->references('id')->on('unidades_medida');

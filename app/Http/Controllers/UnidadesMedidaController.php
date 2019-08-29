@@ -57,13 +57,9 @@ class UnidadesMedidaController extends Controller
       $unidad = UnidadMedida::create($request->except('conversiones'));
 
       foreach ($request->conversiones as $conversion) {
-        $unidad_conversion = UnidadMedida::findOrFail($conversion['unidad_id']);
-
         UnidadMedidaConversion::create([
           'unidad_medida_id' => $unidad->id,
-          'unidad_conversion_id' => $unidad_conversion->id,
-          'unidad_conversion_simbolo' => $unidad_conversion->simbolo,
-          'unidad_conversion_nombre' => $unidad_conversion->nombre,
+          'unidad_conversion_id' => $conversion['unidad_id'],
           'factor_conversion' => $conversion['factor']
         ]);
       }
@@ -79,6 +75,7 @@ class UnidadesMedidaController extends Controller
      */
     public function show(UnidadMedida $unidad)
     {
+      $unidad->load('conversiones');
       return view('catalogos.unidadesMedida.show', compact('unidad'));
     }
 
@@ -90,7 +87,7 @@ class UnidadesMedidaController extends Controller
      */
     public function edit(UnidadMedida $unidad)
     {
-      $unidad->update(['nombre'=>'Loco']);
+      $unidad->load('conversiones');
       $unidades = UnidadMedida::all();
 
       return view('catalogos.unidadesMedida.edit', compact('unidades', 'unidad'));
@@ -107,8 +104,8 @@ class UnidadesMedidaController extends Controller
     {
       $validator = Validator::make($request->all(), [
         'simbolo' => 'required',
-        'conversiones.*.unidad_id' => 'required_with:conversiones',
-        'conversiones.*.factor' => 'required_with:conversiones|numeric'
+        'conversiones.*.unidad_conversion_id' => 'required_with:conversiones',
+        'conversiones.*.factor_conversion' => 'required_with:conversiones|numeric'
       ]);
 
       if ($validator->fails()) {
@@ -127,26 +124,22 @@ class UnidadesMedidaController extends Controller
         //buscar actual entre nuevas
         $index = $nuevas->search(function($nueva) use($actual){
           if(!isset($nueva['unidad_medida_id'])) return false; //nueva
-          return $nueva['unidad_id'] == $actual->unidad_conversion_id;
+          return $nueva['unidad_conversion_id'] == $actual->unidad_conversion_id;
         });
         if($index===false){//actual no existe en nuevas, borrarla
           $actual->delete();
         }
         else {
           $nueva = $nuevas->pull($index);
-          $actual->update(['valor'=>$nueva['valor']]);
+          $actual->update(['factor_conversion'=>$nueva['factor_conversion']]);
         }
 
       }
 
       //ingresar nuevas
       foreach ($nuevas as $nueva) {
-        $create = array(
-          "producto_id"=>$producto->id,
-          "categoria_descripcion_id"=>$nueva['id']
-        );
-        if(isset($nueva['valor'])) $create['valor'] = $nueva['valor'];
-        ProductoDescripcion::create($create);
+        $nueva['unidad_medida_id'] = $unidad->id;
+        UnidadMedidaConversion::create($nueva);
       }
 
       return response()->json(['success' => true, "error" => false],200);
@@ -155,12 +148,12 @@ class UnidadesMedidaController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\TipoCliente  $tipoCliente
+     * @param  \App\Models\UnidadMedida  $unidad
      * @return \Illuminate\Http\Response
      */
-    public function destroy(TipoCliente $tipo)
+    public function destroy(UnidadMedida $unidad)
     {
-      $tipo->delete();
+      $unidad->delete();
 
       return response()->json(['success' => true, "error" => false],200);
     }

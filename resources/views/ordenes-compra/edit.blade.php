@@ -112,16 +112,9 @@
                     <label class="control-label">Unidad Medida</label>
                     <select class="form-control" name="medida" v-model="entrada.medida" required
                       @change="reiniciarConversion()">
-                      <option value="M">M</option>
-                      <option value="M2">M2</option>
-                      <option value="M3">M3</option>
-                      <option value="Yarda">Yarda</option>
-                      <option value="Yarda2">Yarda2</option>
-                      <option value="Pies">Pies</option>
-                      <option value="Pies2">Pies2</option>
-                      <option value="Caja">Caja</option>
-                      <option value="Cubeta">Cubeta</option>
-                      <option value="Piezas">Piezas</option>
+                      @foreach($unidades_medida as $unidad)
+                      <option value="{{ $unidad->simbolo }}">{{ $unidad->simbolo }}</option>
+                      @endforeach
                     </select>
                   </div>
                 </div>
@@ -301,12 +294,13 @@ const app = new Vue({
       importe: 0
     },
     conversiones:{
-      'M': {'Yarda':1.0936, 'Pies':3.2808},
-      'Yarda': {'M':0.9144, 'Pies':3},
-      'Pies': {'M':0.3048, 'Yarda':0.3333},
-      'M2': {'Yarda2':1.196, 'Pies2':10.7584},
-      'Yarda2': {'M2':0.8361, 'Pies2':9},
-      'Pies2': {'M2':0.0929, 'Yarda2':0.1110},
+      @foreach($unidades_medida as $unidad)
+        '{{$unidad->simbolo}}': {
+        @foreach($unidad->conversiones as $conversion)
+          '{{ $conversion->unidad_conversion_simbolo }}':{{ $conversion->factor_conversion }},
+        @endforeach
+        },
+      @endforeach
     },
     openCatalogo: false,
     cargando: false

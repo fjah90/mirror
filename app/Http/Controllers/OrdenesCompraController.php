@@ -11,6 +11,7 @@ use App\Models\Proveedor;
 use App\Models\Producto;
 use App\Models\OrdenProceso;
 use App\Models\CuentaPagar;
+use App\Models\UnidadMedida;
 use App\User;
 use Mail;
 use PDF;
@@ -46,9 +47,10 @@ class OrdenesCompraController extends Controller
     public function create(ProyectoAprobado $proyecto)
     {
       $proveedores = Proveedor::all();
+      $unidades_medida = UnidadMedida::orderBy('simbolo')->get();
       $productos = Producto::with('categoria')->has('categoria')->get();
 
-      return view('ordenes-compra.create', compact('proyecto','proveedores','productos'));
+      return view('ordenes-compra.create', compact('proyecto','proveedores','productos','unidades_medida'));
     }
 
     /**
@@ -194,10 +196,11 @@ class OrdenesCompraController extends Controller
      {
        $proveedores = Proveedor::all();
        $productos = Producto::with('categoria')->has('categoria')->get();
+       $unidades_medida = UnidadMedida::with('conversiones')->orderBy('simbolo')->get();
        $orden->load('proveedor', 'entradas.producto');
        if($orden->iva>0) $orden->iva = 1;
 
-       return view('ordenes-compra.edit', compact('proyecto','orden','productos','proveedores'));
+       return view('ordenes-compra.edit', compact('proyecto','orden','productos','proveedores','unidades_medida'));
      }
 
     /**

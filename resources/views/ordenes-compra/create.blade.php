@@ -92,14 +92,9 @@
                   <div class="form-group">
                     <label class="control-label">Unidad Medida</label>
                     <select class="form-control" name="medida" v-model="entrada.medida" required>
-                      <option value="M">M</option>
-                      <option value="M2">M2</option>
-                      <option value="M3">M3</option>
-                      <option value="Yarda">Yarda</option>
-                      <option value="Pies">Pies</option>
-                      <option value="Caja">Caja</option>
-                      <option value="Cubeta">Cubeta</option>
-                      <option value="Piezas">Piezas</option>
+                      @foreach($unidades_medida as $unidad)
+                      <option value="{{ $unidad->simbolo }}">{{ $unidad->simbolo }}</option>
+                      @endforeach
                     </select>
                   </div>
                 </div>
