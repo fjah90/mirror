@@ -166,6 +166,12 @@
             </a>
           </li>
           <hr class="divider-menu">
+          <li {!! (Request::is('unidadesMedida*') ? 'class="active"' : '') !!}>
+            <a href="{{ URL::to('unidadesMedida') }}">
+              <i class="fas fa-ruler-combined"></i> Unidades de Medida
+            </a>
+          </li>
+          <hr class="divider-menu">
           <li {!! (Request::is('subcategorias*') ? 'class="active"' : '') !!}>
             <a href="{{ URL::to('subcategorias') }}">
               <i class="fas fa-cubes "></i> Categoría de Productos
