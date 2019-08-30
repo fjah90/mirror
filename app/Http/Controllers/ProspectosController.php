@@ -346,6 +346,7 @@ class ProspectosController extends Controller
         }
         $observaciones.= "</ul>";
         $entrada['observaciones'] = ($observaciones=="<ul><li></li></ul>")?"":$observaciones;
+        $entrada['orden'] = $index + 1;
         $modelo_entrada = ProspectoCotizacionEntrada::create($entrada);
 
         foreach ($entrada['descripciones'] as $descripcion) {
@@ -445,21 +446,19 @@ class ProspectosController extends Controller
 
       if(!$update['numero']) $update['numero'] = $cotizacion->id;
       $cotizacion->update($update);
-      $cotizacion->load('entradas');
 
       //guardar entradas
       foreach ($request->entradas as $index => $entrada) {
-        if(isset($entrada['id'])){//actualizar entrada
-          //remover de las entradas ya en cotizacion
-          $cotizacion->entradas = $cotizacion->entradas->reject(function($ent) use ($entrada){
-            return $ent->id == $entrada['id'];
-          });
-
-          //recuperar entrada
+        if(isset($entrada['borrar'])){
+          ProspectoCotizacionEntrada::destroy($entrada['id']);
+        }
+        else if(isset($entrada['id']) && isset($entrada['actualizar'])){
+          //recuperar entrada para actualizar
           $entradaGuardada = ProspectoCotizacionEntrada::find($entrada['id']);
           unset($entrada['id']);
         }
-        else $entradaGuardada = false;
+        else if(isset($entrada['id']) && !isset($entrada['actualizar'])) continue;
+        else if(!isset($entrada['id'])) $entradaGuardada = false;
 
         $producto = Producto::find($entrada['producto_id']);
         if($entrada['fotos'] && !is_string($entrada['fotos'][0])){//hay fotos
@@ -531,12 +530,6 @@ class ProspectosController extends Controller
           }
         }
       }//foreach $request->entradas
-
-      //remover entradas restantes en cotizacion, porque significa que se eliminaron
-      foreach ($cotizacion->entradas as $entrada) {
-        $entrada->delete();
-      }
-      unset($cotizacion->entradas);
 
       $cotizacion->load('prospecto.cliente', 'condiciones', 'entradas.producto.categoria',
       'entradas.producto.proveedor', 'entradas.descripciones', 'user');

@@ -48,7 +48,8 @@ class ProspectoCotizacion extends Model
     }
 
     public function entradas(){
-      return $this->hasMany('App\Models\ProspectoCotizacionEntrada','cotizacion_id','id');
+      return $this->hasMany('App\Models\ProspectoCotizacionEntrada','cotizacion_id','id')
+      ->orderBy('orden','asc');
     }
 
 }

@@ -6,8 +6,11 @@
 @stop
 
 @section('header_styles')
-<!-- <style>
-</style> -->
+<style>
+  table td:first-child span.fa-grip-vertical:hover {
+    cursor: move;
+  }
+</style>
 @stop
 
 {{-- Page content --}}
@@ -319,9 +322,10 @@
             <div class="row">
               <div class="col-md-12">
                 <div class="table-responsive">
-                  <table class="table table-bordred">
+                  <table id="tablaEntradas" class="table table-bordred" style="width:100%;">
                     <thead>
                       <tr>
+                        <th>Orden</th>
                         <th>Producto</th>
                         <th>Cantidad</th>
                         <th>Precio</th>
@@ -330,39 +334,23 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr v-for="(entrada, index) in cotizacion.entradas">
-                        <td>@{{entrada.producto.nombre}}</td>
-                        <td>@{{entrada.cantidad}} @{{entrada.medida}}</td>
-                        <td>@{{entrada.precio | formatoMoneda}}</td>
-                        <td>@{{entrada.importe | formatoMoneda}}</td>
-                        <td class="text-right">
-                          <button class="btn btn-success" title="Editar"
-                            @click="editarEntrada(entrada, index)">
-                            <i class="fas fa-edit"></i>
-                          </button>
-                          <button class="btn btn-danger" title="Remover"
-                            @click="removerEntrada(entrada, index)">
-                            <i class="fas fa-times"></i>
-                          </button>
-                        </td>
-                      </tr>
                     </tbody>
                     <tfoot>
                       <tr>
-                        <td colspan="2"></td>
+                        <td colspan="3"></td>
                         <td class="text-right"><strong>Subtotal</strong></td>
                         <td>@{{cotizacion.subtotal | formatoMoneda}}</td>
                         <td></td>
                       </tr>
                       <tr>
-                        <td colspan="2"></td>
+                        <td colspan="3"></td>
                         <td class="text-right"><strong>IVA</strong></td>
                         <td v-if="cotizacion.iva=='0'">$0.00</td>
                         <td v-else>@{{cotizacion.subtotal * 0.16 | formatoMoneda}}</td>
                         <td></td>
                       </tr>
                       <tr>
-                        <td colspan="2"></td>
+                        <td colspan="3"></td>
                         <td class="text-right">
                           <strong>Total
                             <span v-if="cotizacion.moneda=='Dolares'"> Dolares</span>
@@ -572,6 +560,7 @@ const app = new Vue({
     },
     entrada: {
       producto: {},
+      orden: 0,
       cantidad: 0,
       medida: "",
       precio: 0,
@@ -596,6 +585,7 @@ const app = new Vue({
       cotizacion_id: 0,
       mensaje: ""
     },
+    dataTableEntradas: {},
     openCatalogo: false,
     openEnviar: false,
     openAceptar: false,
@@ -630,8 +620,88 @@ const app = new Vue({
       elErrorContainer: '#comprobante-file-errors',
     });
     $("#tablaProductos").DataTable({dom: 'ft'});
+
+    this.dataTableEntradas = $("#tablaEntradas").DataTable({
+      data: [],
+      searching: false,
+      info: false,
+      columnDefs: [
+        { "orderable": true, "targets": 0 },
+        { "orderable": false, "targets": '_all' }
+      ],
+      processing: false,
+      paging: false,
+      lengthChange: false,
+      rowReorder: {
+        selector: 'td:first-child span.fa-grip-vertical',
+        snapX: true
+      }
+    });
+
+    var vueInstance = this;
+    //handler para reordenamiento
+    this.dataTableEntradas.on( 'row-reorder', function ( e, diff, edit ) {
+      // console.log(diff);
+      // console.log(edit);
+      var i = 0, j = diff.length;
+      var nuevo_ordenamiento = 0;
+      var indice_descripcion
+      for (; i<j; i++) {
+        nuevo_ordenamiento = diff[i].newPosition + 1; //+1 Por que empieza en 1
+        // console.log(edit.nodes[i].cells[5].childNodes[0]); //Boton
+        indice_entrada = $(edit.nodes[i].cells[5].childNodes[0]).data('index');
+        vueInstance.cotizacion.entradas[indice_entrada].actualizar = true;
+        vueInstance.cotizacion.entradas[indice_entrada].orden = nuevo_ordenamiento;
+      }
+    });
+
+    //handler para botones de editar y borrar
+    $("#tablaEntradas")
+    .on('click', 'tr button.btn-success', function(){
+      var index = $(this).data('index');
+      vueInstance.editarEntrada(vueInstance.cotizacion.entradas[index], index);
+    })
+    .on('click', 'button.btn-danger', function(){
+      var index = $(this).data('index');
+      vueInstance.removerEntrada(vueInstance.cotizacion.entradas[index], index);
+    });
+
+    this.resetDataTables();
   },
   methods: {
+    resetDataTables(){
+      var rows = [], row = [];
+      this.cotizacion.entradas.forEach(function(entrada, index){
+        if(entrada.borrar==true) return true;
+        row = [
+          '<span class="fas fa-grip-vertical"></span> '+entrada.orden,
+          entrada.producto.nombre,
+          entrada.cantidad+" "+entrada.medida,
+          accounting.formatMoney(entrada.precio, "$", 2),
+          accounting.formatMoney(entrada.importe, "$", 2),
+        ];
+        row.push([
+          '<button class="btn btn-success" title="Editar" data-index="'+index+'">',
+            '<i class="fas fa-edit"></i>',
+          '</button>',
+          '<button class="btn btn-danger" title="Remover" data-index="'+index+'">',
+            '<i class="fas fa-times"></i>',
+          '</button>'
+        ].join(''));
+        rows.push(row);
+      });
+
+      this.dataTableEntradas.clear();
+      this.dataTableEntradas.rows.add(rows);
+      this.dataTableEntradas.draw();
+    },
+    cuentaEntradasNoBorradas(){
+      var i = 0;
+      this.cotizacion.entradas.forEach(function(entrada){
+        if(entrada.borrar!=true) i++;
+      });
+      return i;
+    },
     fijarComprobante(){
       this.aceptar.comprobante = this.$refs['comprobante'].files[0];
     },
@@ -705,9 +775,15 @@ const app = new Vue({
 
       this.entrada.importe = this.entrada.cantidad * this.entrada.precio;
       this.cotizacion.subtotal+= this.entrada.importe;
+
+      if(this.entrada.orden==0)
+        this.entrada.orden = this.cuentaEntradasNoBorradas()+1;
+
       this.cotizacion.entradas.push(this.entrada);
+      this.resetDataTables();
       this.entrada = {
         producto: {},
+        orden: 0,
         cantidad: 0,
         medida: "",
         precio: 0,
@@ -724,7 +800,9 @@ const app = new Vue({
     editarEntrada(entrada, index){
       this.cotizacion.subtotal-= entrada.importe;
       this.cotizacion.entradas.splice(index, 1);
+      entrada.actualizar = true;
       this.entrada = entrada;
+      this.resetDataTables();
 
       $("button.fileinput-remove").click();
       if(this.entrada.fotos.length){//hay fotos
@@ -753,10 +831,23 @@ const app = new Vue({
         else observacion.activa = true;
       }, this);
     },
-    removerEntrada(entrada, index){
+    removerEntrada(entrada, index, undefined){
       this.cotizacion.subtotal-= entrada.importe;
-      this.cotizacion.entradas.splice(index, 1);
+      if(entrada.id==undefined) this.cotizacion.entradas.splice(index, 1);
+      else entrada.borrar = true;
       $("button.fileinput-remove").click();
+
+      //restar 1 al orden de todas las entradas con orden mayor
+      //al de la entrada borrada
+      var orden = entrada.orden;
+      this.cotizacion.entradas.forEach(function(entrada){
+        if(entrada.orden>orden && entrada.borrar==undefined){
+          entrada.actualizar = true;
+          entrada.orden--;
+        }
+      });
+
+      this.resetDataTables();
     },
     editar(index, cotizacion){
       this.prospecto.cotizaciones.splice(index, 1);
@@ -823,6 +914,7 @@ const app = new Vue({
           if(encontrada==-1)this.observaciones_productos.push({activa:false, texto: observacion});
         }, this);
       }, this);
+      this.resetDataTables();
     },
     guardar(){
       var cotizacion = $.extend(true, {}, this.cotizacion);
@@ -866,6 +958,7 @@ const app = new Vue({
         this.observaciones.forEach(function(observacion){
           observacion.activa = false;
         });
+        this.resetDataTables();
         this.cargando = false;
         swal({
           title: "Cotizacion Guardada",
