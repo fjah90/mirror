@@ -162,19 +162,37 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label class="control-label">Condiciones De Pago</label>
-                    <select class="form-control" name="condiciones" v-model='cotizacion.condicion.id' required>
+                    <select class="form-control" name="condiciones" v-model='cotizacion.condicion.id'
+                      @change="condicionCambiada()" required>
                       <option v-for="condicion in condiciones" :value="condicion.id">@{{condicion.nombre}}</option>
                       <option value="0">Otra</option>
                     </select>
                   </div>
                 </div>
                 <div class="col-md-6">
-                  <div class="form-group">
+                  <div v-if="cotizacion.condicion.id==0" class="form-group">
                     <label class="control-label">Especifique Otra</label>
                     <input class="form-control" type="text" name="condiciones"
-                      v-model="cotizacion.condicion.nombre"
-                      :disabled="cotizacion.condicion.id!=0"
-                      :required="cotizacion.condicion.id==0" />
+                      v-model="cotizacion.condicion.nombre" required
+                    />
+                  </div>
+                  <div v-else class="form-group">
+                    <label class="control-label">Actualizar Condicion</label>
+                    <div class="input-group">
+                      <input class="form-control" type="text" name="condiciones"
+                        v-model="cotizacion.condicion.nombre" required
+                      />
+                      <span class="input-group-btn">
+                        <button class="btn btn-success" type="button" title="Actualizar"
+                          @click="actualizarCondicion()">
+                          <i class="far fa-edit"></i>
+                        </button>
+                        <button class="btn btn-danger" type="button" title="Borrar"
+                          @click="borrarCondicion()">
+                          <i class="fas fa-times"></i>
+                        </button>
+                      </span>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -669,6 +687,72 @@ const app = new Vue({
     this.resetDataTables();
   },
   methods: {
+    condicionCambiada(){
+      if(this.cotizacion.condicion.id==0){
+        this.cotizacion.condicion.nombre = "";
+        return true;
+      }
+
+      this.condiciones.find(function(cond){
+        if(cond.id == this.cotizacion.condicion.id){
+          this.cotizacion.condicion.nombre = cond.nombre;
+        }
+      }, this);
+    },
+    actualizarCondicion(){
+      this.cargando = true;
+      axios.put('/condicionesCotizacion/'+this.cotizacion.condicion.id, {'nombre':this.cotizacion.condicion.nombre})
+      .then(({data}) => {
+        this.condiciones.find(function(cond){
+          if(this.cotizacion.condicion.id == cond.id){
+            cond.nombre = this.cotizacion.condicion.nombre;
+          }
+        }, this);
+        this.cargando = false;
+        swal({
+          title: "Condicion Actualizada",
+          text: "",
+          type: "success"
+        });
+      })
+      .catch(({response}) => {
+        console.error(response);
+        this.cargando = false;
+        swal({
+          title: "Error",
+          text: response.data.message || "Ocurrio un error inesperado, intente mas tarde",
+          type: "error"
+        });
+      });
+    },
+    borrarCondicion(){
+      this.cargando = true;
+      axios.delete('/condicionesCotizacion/'+this.cotizacion.condicion.id, {})
+      .then(({data}) => {
+        var indexCondicion = this.condiciones.findIndex(function(cond){
+          return this.cotizacion.condicion.id == cond.id;
+        }, this);
+
+        this.condiciones.splice(indexCondicion, 1);
+        this.cotizacion.condicion = {id:0, nombre:''};
+
+        this.cargando = false;
+        swal({
+          title: "Condicion Actualizada",
+          text: "",
+          type: "success"
+        });
+      })
+      .catch(({response}) => {
+        console.error(response);
+        this.cargando = false;
+        swal({
+          title: "Error",
+          text: response.data.message || "Ocurrio un error inesperado, intente mas tarde",
+          type: "error"
+        });
+      });
+    },
     resetDataTables(){
       var rows = [], row = [];
       this.cotizacion.entradas.forEach(function(entrada, index){

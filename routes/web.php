@@ -43,6 +43,10 @@ Route::middleware('auth')->group(function () {
   Route::resource('/unidadesMedida', 'UnidadesMedidaController', ['parameters' => [
     'unidadesMedida' => 'unidad'
   ]]);
+  Route::resource('/condicionesCotizacion', 'CondicionesCotizacionController', [
+    'only'=>['update','destroy'],
+    'parameters'=>['condicionesCotizacion'=>'condicion']
+  ]);
   Route::get('/clientes/crearNacional', 'ClientesController@create')->name('clientes.createNacional');
   Route::get('/clientes/crearInternacional', 'ClientesController@createInter')->name('clientes.createInternacional');
   Route::resource('/clientes', 'ClientesController');
