@@ -11,6 +11,7 @@ use App\Models\Categoria;
 use App\Models\Subcategoria;
 use App\Models\Producto;
 use App\Models\ProductoDescripcion;
+use Mail;
 
 class ProductosController extends Controller
 {
@@ -93,6 +94,12 @@ class ProductosController extends Controller
         if(isset($descripcion['valor'])) $create['valor'] = $descripcion['valor'];
         ProductoDescripcion::create($create);
       }
+
+      $mensaje = "El usuario ".auth()->user()->name;
+      $mensaje.=" ha dado de alta un nuevo producto con nombre: ".$producto->nombre;
+      Mail::send('email', ['mensaje' => $mensaje], function ($message){
+        $message->to('abraham@intercorp.mx')->subject('Nueva Alta de Producto');
+      });
 
       return response()->json(['success' => true, "error" => false], 200);
     }

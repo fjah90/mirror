@@ -8,6 +8,7 @@ use App\Models\TipoCliente;
 use App\Models\Cliente;
 use App\Models\ClienteContacto;
 use App\User;
+use Mail;
 
 class ClientesController extends Controller
 {
@@ -74,6 +75,12 @@ class ClientesController extends Controller
         $contacto['cliente_id'] = $cliente->id;
         ClienteContacto::create($contacto);
       }
+
+      $mensaje = "El usuario ".$cliente->usuario_nombre;
+      $mensaje.=" ha dado de alta a un nuevo cliente con nombre: ".$cliente->nombre;
+      Mail::send('email', ['mensaje' => $mensaje], function ($message){
+        $message->to('abraham@intercorp.mx')->subject('Nueva Alta de Cliente');
+      });
 
       return response()->json(['success' => true, "error" => false],200);
     }

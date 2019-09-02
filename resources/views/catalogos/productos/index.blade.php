@@ -57,10 +57,12 @@
                       :href="'/productos/'+producto.id+'/editar'">
                       <i class="far fa-edit"></i>
                     </a>
+                    @hasrole('Administrador')
                     <button class="btn btn-danger" data-toggle="tooltip" title="Borrar"
                       @click="borrar(producto, index)">
                       <i class="fas fa-times"></i>
                     </button>
+                    @endhasrole
                   </td>
                 </tr>
               </tbody>

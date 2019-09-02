@@ -24,9 +24,12 @@
         <div class="panel-heading">
           <h3 class="panel-title text-right">
             <span class="pull-left p-10">Lista de Tipos de Productos y Servicios</span>
+            <span style="visibility:hidden">.</span>
+            @hasrole('Administrador')
             <a href="{{route('categorias.create')}}" class="btn btn-primary" style="color: #fff;">
               <i class="fa fa-plus"></i> Nuevo Tipo
             </a>
+            @endhasrole
           </h3>
         </div>
         <div class="panel-body">
@@ -53,10 +56,12 @@
                       :href="'/categorias/'+categoria.id+'/editar'">
                       <i class="far fa-edit"></i>
                     </a>
+                    @hasrole('Administrador')
                     <button class="btn btn-danger" data-toggle="tooltip" title="Borrar"
                       @click="borrar(categoria, index)">
                       <i class="fas fa-times"></i>
                     </button>
+                    @endhasrole
                   </td>
                 </tr>
               </tbody>

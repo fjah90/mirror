@@ -30,12 +30,6 @@ Route::middleware('auth')->group(function () {
   Route::get('/mi_cuenta', 'MiCuentaController@index')->name('mi_cuenta');
   Route::post('/mi_cuenta', 'MiCuentaController@update');
 
-  //Administracion
-  Route::middleware('role:Administrador')->group(function(){
-    Route::post('/usuarios/{usuario}', 'UsuariosController@update');
-    Route::resource('/usuarios', 'UsuariosController');
-  });
-
   //Catalogos
   Route::resource('/tiposClientes', 'TiposClientesController', ['parameters' => [
     'tiposClientes' => 'tipo'
@@ -55,10 +49,20 @@ Route::middleware('auth')->group(function () {
   Route::resource('/proveedores', 'ProveedoresController', ['parameters'=>['proveedores'=>'proveedor']]);
   Route::resource('/proyectos', 'ProyectosController');
   Route::resource('/subproyectos', 'SubProyectosController');
-  Route::resource('/categorias', 'CategoriasController');
-  Route::resource('/subcategorias', 'SubcategoriasController');
   Route::post('/productos/{producto}', 'ProductosController@update');
   Route::resource('/productos', 'ProductosController');
+  Route::resource('/categorias', 'CategoriasController');
+  Route::resource('/subcategorias', 'SubcategoriasController');
+
+  //Administracion
+  Route::middleware('role:Administrador')->group(function(){
+    Route::post('/usuarios/{usuario}', 'UsuariosController@update');
+    Route::resource('/usuarios', 'UsuariosController');
+    Route::resource('/subcategorias', 'SubcategoriasController', ['only'=>['create','store','delete']]);
+    Route::resource('/categorias', 'CategoriasController', ['only'=>['create','store','delete']]);
+    Route::delete('/productos/{producto}', 'ProductosController@delete');
+    Route::delete('/clientes/{cliente}', 'ClientesController@delete');
+  });
 
   //Prospectos
   Route::get('prospectos/regeneratePDF', 'ProspectosController@regeneratePDF');
