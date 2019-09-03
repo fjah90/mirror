@@ -89,7 +89,7 @@
                             <i class="far fa-sticky-note"></i>
                           </button>
                           <a class="btn btn-warning" title="PDF" :href="cotizacion.archivo"
-                            :download="'Cotizacion '+cotizacion.numero+' Intercorp '+prospecto.nombre+'.pdf'">
+                            :download="'C '+cotizacion.numero+' Intercorp '+prospecto.nombre+'.pdf'">
                             <i class="far fa-file-pdf"></i>
                           </a>
                           <button class="btn btn-info" title="Enviar"
@@ -962,6 +962,7 @@ const app = new Vue({
         notas: cotizacion.notas,
         observaciones: []
       };
+      this.condicionCambiada();
 
       //re-seleccionar observaciones
       var observaciones = cotizacion.observaciones.match(/<li>([^<]+)+<\/li>+/g);

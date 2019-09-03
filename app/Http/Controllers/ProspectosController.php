@@ -363,7 +363,7 @@ class ProspectosController extends Controller
       else $cotizacion->user->firma = public_path('images/firma_vacia.png');
 
       //crear pdf de cotizacion
-      $url = 'cotizaciones/'.$cotizacion->id.'/Cotizacion '.$cotizacion->numero.' Intercorp '.$prospecto->nombre.'.pdf';
+      $url = 'cotizaciones/'.$cotizacion->id.'/C '.$cotizacion->numero.' Intercorp '.$prospecto->nombre.'.pdf';
       $meses = ['ENERO','FEBRERO','MARZO','ABRIL','MAYO','JUNIO','JULIO',
       'AGOSTO','SEPTIEMBRE','OCTUBRE','NOVIEMBRE','DICIEMBRE'];
       list($ano,$mes,$dia) = explode('-', $cotizacion->fecha);
@@ -537,7 +537,7 @@ class ProspectosController extends Controller
       else $cotizacion->user->firma = public_path('images/firma_vacia.png');
 
       //crear pdf de cotizacion
-      $url = 'cotizaciones/'.$cotizacion->id.'/Cotizacion '.$cotizacion->numero.' Intercorp '.$prospecto->nombre.'.pdf';
+      $url = 'cotizaciones/'.$cotizacion->id.'/C '.$cotizacion->numero.' Intercorp '.$prospecto->nombre.'.pdf';
       $meses = ['ENERO','FEBRERO','MARZO','ABRIL','MAYO','JUNIO','JULIO',
       'AGOSTO','SEPTIEMBRE','OCTUBRE','NOVIEMBRE','DICIEMBRE'];
       list($ano,$mes,$dia) = explode('-', $cotizacion->fecha);
@@ -761,7 +761,7 @@ class ProspectosController extends Controller
         $cotizacion->user->firma = storage_path('app/public/'.$cotizacion->user->firma);
       else $cotizacion->user->firma = public_path('images/firma_vacia.png');
 
-      $url = 'cotizaciones/'.$cotizacion->id.'/Cotizacion '.$cotizacion->id.' Intercorp '.$cotizacion->prospecto->nombre.'.pdf';
+      $url = 'cotizaciones/'.$cotizacion->id.'/C '.$cotizacion->id.' Intercorp '.$cotizacion->prospecto->nombre.'.pdf';
       $meses = ['ENERO','FEBRERO','MARZO','ABRIL','MAYO','JUNIO','JULIO',
       'AGOSTO','SEPTIEMBRE','OCTUBRE','NOVIEMBRE','DICIEMBRE'];
       list($ano,$mes,$dia) = explode('-', $cotizacion->fecha);

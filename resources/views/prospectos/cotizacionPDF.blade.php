@@ -334,7 +334,10 @@
                 <table style="margin:0;">
                   <tr>
                     <td>Proyecto:</td>
-                    <td class="text-uppercase"><strong>{{$cotizacion->prospecto->nombre}}</strong></td>
+                    <td class="text-uppercase">
+                      <strong>{{$cotizacion->prospecto->nombre}}</strong> /
+                      {{$cotizacion->prospecto->descripcion}}
+                    </td>
                   </tr>
                   <tr>
                     <td>Entrega:</td>
@@ -360,12 +363,14 @@
                 <p class="text-uppercase">{{$cotizacion->lugar}}</p>
               </td>
             </tr>
+            @if($cotizacion->notas)
             <tr>
               <td colspan="2" class="bordered">
                 <p class="text-danger"><strong>Notas</strong></p>
                 <p class="text-uppercase">{{$cotizacion->notas}}</p>
               </td>
             </tr>
+            @endif
           </tbody>
         </table>
       </div>
