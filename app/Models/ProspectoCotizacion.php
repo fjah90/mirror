@@ -40,7 +40,8 @@ class ProspectoCotizacion extends Model
     }
 
     public function condiciones(){
-      return $this->belongsTo('App\Models\CondicionCotizacion', 'condicion_id', 'id');
+      return $this->belongsTo('App\Models\CondicionCotizacion', 'condicion_id', 'id')
+      ->withDefault(['nombre' => '']);
     }
 
     public function user(){

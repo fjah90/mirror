@@ -266,6 +266,13 @@
       border-right: 0.5px solid #000;
     }
     .table-cotizacion > tfoot {border: 0.5px solid #000;}
+    .cuadro_magico {
+      border-left: 0.5px solid #000;
+      border-right: 0.5px solid #000;
+      width:100%;
+      height:450px;
+      float:left;
+    }
   </style>
 </head>
 <body>
@@ -378,6 +385,7 @@
 
     <div class="row">
       <div class="col-lg-12">
+        <div class="cuadro_magico"></div>
         <table class="table table-cotizacion">
           <thead>
             <tr>
@@ -424,6 +432,26 @@
             </tr>
             @endforeach
           </tbody>
+          {{-- <tfoot>
+            <tr>
+              <td></td>
+              <td></td>
+              <td class="text-right">SUBTOTAL</td>
+              <td class="text-right"><strong>@format_money($cotizacion->subtotal)</strong></td>
+            </tr>
+            <tr>
+              <td></td>
+              <td></td>
+              <td class="text-right">IVA 16%</td>
+              <td class="text-right"><strong>@format_money($cotizacion->iva)</strong></td>
+            </tr>
+            <tr>
+              <td></td>
+              <td></td>
+              <td class="text-right text-uppercase">TOTAL {{$cotizacion->moneda}}</td>
+              <td class="text-right"><strong>@format_money($cotizacion->total)</strong></td>
+            </tr>
+          </tfoot> --}}
         </table>
       </div>
     </div>
@@ -434,7 +462,6 @@
       </div>
     </div> --}}
 
-    {{-- <div class="row" style="page-break-inside: avoid;"> --}}
     {{-- <div class="row footer" style="page-break-inside: avoid;"> --}}
     <div class="row" style="page-break-inside: avoid;">
       <div class="bordered" style="margin:0 15px;">

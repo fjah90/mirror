@@ -551,7 +551,7 @@ class ProspectosController extends Controller
       $fichas = [];
       foreach ($cotizacion->entradas as $entrada) {
         if($entrada->producto->ficha_tecnica)
-        $fichas[] = storage_path('app/public/'.$entrada->producto->ficha_tecnica);
+          $fichas[] = storage_path('app/public/'.$entrada->producto->ficha_tecnica);
       }
       $pdf = new PDFMerger();
       $pdf->addPDF(storage_path("app/public/$url"), 'all');
@@ -781,11 +781,14 @@ class ProspectosController extends Controller
       }
 
       $pdf = new PDFMerger();
-      $pdf->addPDF(storage_path('app/public/'.$cotizacion->archivo), 'all');
+      $pdf->addPDF(storage_path('app/public/'.$url), 'all');
       $fichas = array_unique($fichas, SORT_STRING);
       foreach ($fichas as $ficha) $pdf->addPDF($ficha, 'all');
-
       $pdf->merge('file', storage_path("app/public/$url"));
+
+      unset($cotizacion->fechaPDF);
+      $cotizacion->update(['archivo'=>$url]);
+
       $pdf->merge('download', "cotizacion.pdf");
     }
 
