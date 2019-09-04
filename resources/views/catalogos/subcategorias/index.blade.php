@@ -35,7 +35,7 @@
         <div class="panel-body">
           <div class="table-responsive">
             <table id="tabla" class="table table-bordred" style="width:100%;"
-            data-page-length="-1">
+            data-page-length="100">
               <thead>
                 <tr>
                   <th>ID</th>

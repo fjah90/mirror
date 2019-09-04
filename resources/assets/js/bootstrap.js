@@ -44,7 +44,7 @@ Vue.directive('mask', mask);
 
 $.extend($.fn.dataTable.defaults, {
   responsive: false,
-  lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "Todo"]],
+  lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todo"]],
   language: {
     "decimal": "",
     "emptyTable": "Sin datos...",
