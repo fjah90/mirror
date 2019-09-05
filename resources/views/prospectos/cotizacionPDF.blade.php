@@ -270,7 +270,7 @@
       border-left: 0.5px solid #000;
       border-right: 0.5px solid #000;
       width:100%;
-      height:450px;
+      height:400px;
       float:left;
     }
   </style>
@@ -287,7 +287,7 @@
     <div class="row margTop10">
       <div class="col-lg-1"></div>
       <div class="col-lg-10">
-        <hr style="border: 5px solid #000;">
+        <hr style="border: 2.5px solid #000;">
       </div>
     </div>
 
@@ -486,7 +486,9 @@
           <tr class="font-small">
             <td style="width:70%; text-transform: none; vertical-align: top;">
               <p class="margTop10" style="margin-left:10px;">
+                @if($cotizacion->observaciones)
                 <strong>@if($nombre=='nombre') Observaciones: @else Remarks: @endif</strong>
+                @endif
               </p>
               {!! $cotizacion->observaciones !!}
             </td>

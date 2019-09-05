@@ -588,9 +588,11 @@ class ProspectosController extends Controller
         ], 422);
       }
 
-      $cotizacion = ProspectoCotizacion::with('entradas')->findOrFail($request->cotizacion_id);
+      $cotizacion = ProspectoCotizacion::with('entradas','prospecto')->findOrFail($request->cotizacion_id);
       $email = $request->email;
-      $pdf_name = basename($cotizacion->archivo);
+      // $pdf_name = basename($cotizacion->archivo);
+      $pdf_name = 'C '.$cotizacion->numero.' Intercorp '.$cotizacion->prospecto->nombre;
+      $pdf_name.= ' / '.$cotizacion->prospecto->descripcion.'.pdf';
       $pdf = Storage::disk('public')->get($cotizacion->archivo);
       $user = auth()->user();
 

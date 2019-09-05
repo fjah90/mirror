@@ -89,7 +89,7 @@
                             <i class="far fa-sticky-note"></i>
                           </button>
                           <a class="btn btn-warning" title="PDF" :href="cotizacion.archivo"
-                            :download="'C '+cotizacion.numero+' Intercorp '+prospecto.nombre+'.pdf'">
+                            :download="'C '+cotizacion.numero+' Intercorp '+prospecto.nombre+' / '+prospecto.descripcion+'.pdf'">
                             <i class="far fa-file-pdf"></i>
                           </a>
                           <button class="btn btn-info" title="Enviar"
@@ -396,7 +396,13 @@
               <div class="col-md-12">
                 <div class="form-group">
                   <label class="control-label">Observaciónes Cotización</label>
-                  <p v-for="observacion in observaciones">
+                  <p v-for="(observacion, index) in observaciones">
+                    @role('Administrador')
+                    <button class="btn btn-xxs btn-danger" type="button" title="eliminar"
+                      @click="eliminarObservacion(index)">
+                      <i class="fas fa-times"></i>
+                    </button>
+                    @endrole
                     <i class="glyphicon glyphicon-check" v-if="observacion.activa" @click="quitarObservacion(observacion)"></i>
                     <i class="glyphicon glyphicon-unchecked" v-else @click="agregarObservacion(observacion)"></i>
                     @{{observacion.texto}}
@@ -800,6 +806,9 @@ const app = new Vue({
       this.cotizacion.observaciones.splice(index, 1);
       observacion.activa = false;
     },
+    eliminarObservacion(index){
+      this.observaciones.splice(index, 1);
+    },
     crearObservacion(){
       if(this.nuevaObservacion=="") return false;
       this.observaciones.push({activa:false, texto: this.nuevaObservacion});
@@ -1050,7 +1059,7 @@ const app = new Vue({
           text: "",
           type: "success"
         }).then(()=>{
-          $('a[download="Cotizacion '+data.cotizacion.numero+' Intercorp '+this.prospecto.nombre+'.pdf"]')[0].click();
+          $('a[download="C '+data.cotizacion.numero+' Intercorp '+this.prospecto.nombre+' / '+this.prospecto.descripcion+'.pdf"]')[0].click();
         });
       })
       .catch(({response}) => {
