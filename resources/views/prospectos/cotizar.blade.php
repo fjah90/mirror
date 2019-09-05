@@ -138,7 +138,7 @@
                   <div class="form-group">
                     <label class="control-label">Facturar A</label>
                     <input type="text" name="facturar" class="form-control"
-                    v-model="cotizacion.facturar" required />
+                    v-model="cotizacion.facturar" />
                   </div>
                 </div>
               </div>

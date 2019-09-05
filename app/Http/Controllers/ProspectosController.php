@@ -266,7 +266,6 @@ class ProspectosController extends Controller
     {
       $validator = Validator::make($request->all(), [
         'prospecto_id' => 'required',
-        'facturar' => 'required',
         'entrega' => 'required',
         'lugar' => 'required',
         'moneda' => 'required',
@@ -400,7 +399,6 @@ class ProspectosController extends Controller
       $validator = Validator::make($request->all(), [
         'prospecto_id' => 'required',
         'cotizacion_id' => 'required',
-        'facturar' => 'required',
         'entrega' => 'required',
         'lugar' => 'required',
         'moneda' => 'required',
