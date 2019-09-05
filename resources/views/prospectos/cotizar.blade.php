@@ -89,7 +89,7 @@
                             <i class="far fa-sticky-note"></i>
                           </button>
                           <a class="btn btn-warning" title="PDF" :href="cotizacion.archivo"
-                            :download="'C '+cotizacion.numero+' Intercorp '+prospecto.nombre+' - '+prospecto.descripcion+'.pdf'">
+                            :download="'C '+cotizacion.numero+' Intercorp '+prospecto.nombre+'.pdf'">
                             <i class="far fa-file-pdf"></i>
                           </a>
                           <button class="btn btn-info" title="Enviar"
@@ -1059,7 +1059,7 @@ const app = new Vue({
           text: "",
           type: "success"
         }).then(()=>{
-          $('a[download="C '+data.cotizacion.numero+' Intercorp '+this.prospecto.nombre+' - '+this.prospecto.descripcion+'.pdf"]')[0].click();
+          $('a[download="C '+data.cotizacion.numero+' Intercorp '+this.prospecto.nombre+'.pdf"]')[0].click();
         });
       })
       .catch(({response}) => {
