@@ -34,7 +34,8 @@
             <table id="tabla" class="table table-bordred">
               <thead>
                 <tr>
-                  <th>ID</th>
+                  {{-- <th>ID</th> --}}
+                  <th>Usuario</th>
                   <th>Cliente</th>
                   <th>Nombre de Proyecto</th>
                   <th>Ultima Actividad</th>
@@ -46,7 +47,8 @@
               </thead>
               <tbody>
                 <tr v-for="(prospecto, index) in prospectos">
-                  <td>@{{prospecto.id}}</td>
+                  {{-- <td>@{{prospecto.id}}</td> --}}
+                  <td>@{{prospecto.cliente.usuario_nombre}}</td>
                   <td>@{{prospecto.cliente.nombre}}</td>
                   <td>@{{prospecto.nombre}}</td>
                   <template v-if="prospecto.ultima_actividad">
