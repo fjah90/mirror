@@ -60,8 +60,8 @@ Route::middleware('auth')->group(function () {
     Route::resource('/usuarios', 'UsuariosController');
     Route::resource('/subcategorias', 'SubcategoriasController', ['only'=>['create','store','delete']]);
     Route::resource('/categorias', 'CategoriasController', ['only'=>['create','store','delete']]);
-    Route::delete('/productos/{producto}', 'ProductosController@delete');
-    Route::delete('/clientes/{cliente}', 'ClientesController@delete');
+    Route::delete('/productos/{producto}', 'ProductosController@destroy');
+    Route::delete('/clientes/{cliente}', 'ClientesController@destroy');
   });
 
   //Prospectos
