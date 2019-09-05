@@ -1059,7 +1059,7 @@ const app = new Vue({
           text: "",
           type: "success"
         }).then(()=>{
-          $('a[download="C '+data.cotizacion.numero+' Intercorp '+this.prospecto.nombre+' / '+this.prospecto.descripcion+'.pdf"]')[0].click();
+          $('a[download="C '+data.cotizacion.numero+' Intercorp '+this.prospecto.nombre+' - '+this.prospecto.descripcion+'.pdf"]')[0].click();
         });
       })
       .catch(({response}) => {
