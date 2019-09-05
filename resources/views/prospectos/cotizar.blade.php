@@ -89,7 +89,7 @@
                             <i class="far fa-sticky-note"></i>
                           </button>
                           <a class="btn btn-warning" title="PDF" :href="cotizacion.archivo"
-                            :download="'C '+cotizacion.numero+' Intercorp '+prospecto.nombre+' / '+prospecto.descripcion+'.pdf'">
+                            :download="'C '+cotizacion.numero+' Intercorp '+prospecto.nombre+' - '+prospecto.descripcion+'.pdf'">
                             <i class="far fa-file-pdf"></i>
                           </a>
                           <button class="btn btn-info" title="Enviar"

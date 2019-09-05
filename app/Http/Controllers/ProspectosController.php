@@ -592,7 +592,7 @@ class ProspectosController extends Controller
       $email = $request->email;
       // $pdf_name = basename($cotizacion->archivo);
       $pdf_name = 'C '.$cotizacion->numero.' Intercorp '.$cotizacion->prospecto->nombre;
-      $pdf_name.= ' / '.$cotizacion->prospecto->descripcion.'.pdf';
+      $pdf_name.= ' - '.$cotizacion->prospecto->descripcion.'.pdf';
       $pdf = Storage::disk('public')->get($cotizacion->archivo);
       $user = auth()->user();
 
