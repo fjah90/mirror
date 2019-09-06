@@ -79,7 +79,7 @@
                             <span>@{{index+1}}.- @{{entrada.producto.nombre}}</span><br />
                           </template>
                         </td>
-                        <td>@{{cotizacion.total | formatoMoneda}}</td>
+                        <td>@{{cotizacion.total | formatoMoneda}} @{{ cotizacion.moneda }}</td>
                         <td class="text-right">
                           <button class="btn btn-default" title="Notas"
                             @click="notas.cotizacion_id=cotizacion.id;
@@ -88,7 +88,7 @@
                             >
                             <i class="far fa-sticky-note"></i>
                           </button>
-                          <a class="btn btn-warning" title="PDF" :href="cotizacion.archivo"
+                          <a class="btn btn-warning" style="background-color:#fa0;" title="PDF" :href="cotizacion.archivo"
                             :download="'C '+cotizacion.numero+' Intercorp '+prospecto.nombre+'.pdf'">
                             <i class="far fa-file-pdf"></i>
                           </a>

@@ -42,15 +42,19 @@
               <div class="col-md-12">
                 <div class="form-group">
                   <label class="control-label">Nombre de Proyecto</label>
-                  <span class="form-control">{{$prospecto->nombre}}</span>
+                  <input type="text" class="form-control" name="nombre"
+                    v-model="prospecto.nombre" required
+                  />
                 </div>
               </div>
             </div>
             <div class="row">
               <div class="col-md-12">
                 <div class="form-group">
-                  <label class="control-label">Descripción</label>
-                  <span class="form-control" style="min-height:68px;">{{$prospecto->descripcion}}</span>
+                  <label class="control-label">Descripción del Proyecto CRM</label>
+                  <textarea name="descripcion" rows="3" cols="80" class="form-control"
+                    v-model="prospecto.descripcion" required>
+                  </textarea>
                 </div>
               </div>
             </div>
@@ -259,6 +263,8 @@ const app = new Vue({
     guardar(){
       this.cargando = true;
       axios.put('/prospectos/{{$prospecto->id}}', {
+        nombre: this.prospecto.nombre,
+        descripcion: this.prospecto.descripcion,
         proxima: this.prospecto.proxima_actividad,
         nueva: this.prospecto.nueva_proxima_actividad,
       })

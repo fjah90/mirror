@@ -95,11 +95,13 @@ class ProductosController extends Controller
         ProductoDescripcion::create($create);
       }
 
-      $mensaje = "El usuario ".auth()->user()->name;
-      $mensaje.=" ha dado de alta un nuevo producto con nombre: ".$producto->nombre;
-      Mail::send('email', ['mensaje' => $mensaje], function ($message){
-        $message->to('abraham@intercorp.mx')->subject('Nueva Alta de Producto');
-      });
+      if(auth()->user()->tipo!=='Administrador'){
+        $mensaje = "El usuario ".auth()->user()->name;
+        $mensaje.=" ha dado de alta un nuevo producto con nombre: ".$producto->nombre;
+        Mail::send('email', ['mensaje' => $mensaje], function ($message){
+          $message->to('abraham@intercorp.mx')->subject('Nueva Alta de Producto');
+        });
+      }
 
       return response()->json(['success' => true, "error" => false], 200);
     }

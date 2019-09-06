@@ -52,7 +52,7 @@
               <div class="row">
                 <div class="col-md-12">
                   <div class="form-group">
-                    <label class="control-label">Descripción</label>
+                    <label class="control-label">Descripción del Proyecto CRM</label>
                     <textarea name="descripcion" rows="3" cols="80" class="form-control" v-model="prospecto.descripcion" required></textarea>
                   </div>
                 </div>

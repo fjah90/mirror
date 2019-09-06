@@ -76,11 +76,13 @@ class ClientesController extends Controller
         ClienteContacto::create($contacto);
       }
 
-      $mensaje = "El usuario ".$cliente->usuario_nombre;
-      $mensaje.=" ha dado de alta a un nuevo cliente con nombre: ".$cliente->nombre;
-      Mail::send('email', ['mensaje' => $mensaje], function ($message){
-        $message->to('abraham@intercorp.mx')->subject('Nueva Alta de Cliente');
-      });
+      if(auth()->user()->tipo!=='Administrador'){
+        $mensaje = "El usuario ".$cliente->usuario_nombre;
+        $mensaje.=" ha dado de alta a un nuevo cliente con nombre: ".$cliente->nombre;
+        Mail::send('email', ['mensaje' => $mensaje], function ($message){
+          $message->to('abraham@intercorp.mx')->subject('Nueva Alta de Cliente');
+        });
+      }
 
       return response()->json(['success' => true, "error" => false],200);
     }

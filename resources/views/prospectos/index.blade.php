@@ -31,7 +31,8 @@
         </div>
         <div class="panel-body">
           <div class="table-responsive">
-            <table id="tabla" class="table table-bordred">
+            <table id="tabla" class="table table-bordred" style="width:100%;"
+              data-page-length="100">
               <thead>
                 <tr>
                   {{-- <th>ID</th> --}}
@@ -78,7 +79,7 @@
                     </a>
                     <a class="btn btn-warning" data-toggle="tooltip" title="Cotizar"
                       :href="'/prospectos/'+prospecto.id+'/cotizar'">
-                      <i class="fas fa-balance-scale"></i>
+                      <i class="far fa-file-alt"></i>
                     </a>
                     <button class="btn btn-danger" data-toggle="tooltip" title="Borrar"
                       @click="borrar(prospecto, index)">

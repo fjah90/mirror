@@ -250,6 +250,12 @@
     }
     .table-cotizacion > tbody{
       border-bottom: 0.5px solid #000;
+      /* border: none; */
+    }
+    .table-cotizacion > tbody tr:last-child {
+      margin-bottom: 5px !important;
+      border-top: 5px solid blue;
+      /* border: none; */
     }
     .table-cotizacion > tbody > tr > th,
     .table-cotizacion > tbody > tr > td,
@@ -265,10 +271,11 @@
     .table-cotizacion > tbody > tr > td:last-child{
       border-right: 0.5px solid #000;
     }
-    .table-cotizacion > tfoot {border: 0.5px solid #000;}
+    .table-cotizacion > tfoot {border: 0.5px solid #000; }
     .cuadro_magico {
       border-left: 0.5px solid #000;
       border-right: 0.5px solid #000;
+      border-bottom: 0.5px solid #000;
       width:100%;
       height:400px;
       float:left;
@@ -340,7 +347,7 @@
               <td class="bordered" style="padding:0;">
                 <table style="margin:0;">
                   <tr>
-                    <td>Proyecto:</td>
+                    <td style="vertical-align:top">Proyecto:</td>
                     <td class="text-uppercase">
                       <strong>{{$cotizacion->prospecto->nombre}}</strong> /
                       {{$cotizacion->prospecto->descripcion}}
@@ -385,14 +392,14 @@
 
     <div class="row">
       <div class="col-lg-12">
-        <div class="cuadro_magico"></div>
+        {{-- <div class="cuadro_magico"></div> --}}
         <table class="table table-cotizacion">
           <thead>
             <tr>
               <th class="text-center" style="width:10%; padding:3px 0 1px;">Cantidad</th>
-              <th class="text-center" style="width:70%; padding:3px 0 1px;">Descripciones</th>
-              <th class="text-center" style="width:15%; padding:3px 0 1px;">Precio Unitario</th>
-              <th class="text-center" style="width:15%; padding:3px 0 1px;">Total</th>
+              <th class="text-center" style="width:74%; padding:3px 0 1px;">Descripciones</th>
+              <th class="text-center" style="width:13%; padding:3px 0 1px;">Precio Unitario</th>
+              <th class="text-center" style="width:13%; padding:3px 0 1px;">Total</th>
             </tr>
           </thead>
           <tbody>
@@ -431,27 +438,19 @@
               <td class="text-right">@format_money($entrada->importe)</td>
             </tr>
             @endforeach
+            <tr>
+              <td></td>
+              <td>
+                @if($cotizacion->entradas->count()==1)
+                <div style="height: 220px; background-color:white;"></div>
+                @elseif($cotizacion->entradas->count()==2)
+                <div style="height: 0px; background-color:white;"></div>
+                @endif
+              </td>
+              <td></td>
+              <td></td>
+            </tr>
           </tbody>
-          {{-- <tfoot>
-            <tr>
-              <td></td>
-              <td></td>
-              <td class="text-right">SUBTOTAL</td>
-              <td class="text-right"><strong>@format_money($cotizacion->subtotal)</strong></td>
-            </tr>
-            <tr>
-              <td></td>
-              <td></td>
-              <td class="text-right">IVA 16%</td>
-              <td class="text-right"><strong>@format_money($cotizacion->iva)</strong></td>
-            </tr>
-            <tr>
-              <td></td>
-              <td></td>
-              <td class="text-right text-uppercase">TOTAL {{$cotizacion->moneda}}</td>
-              <td class="text-right"><strong>@format_money($cotizacion->total)</strong></td>
-            </tr>
-          </tfoot> --}}
         </table>
       </div>
     </div>
@@ -464,7 +463,7 @@
 
     {{-- <div class="row footer" style="page-break-inside: avoid;"> --}}
     <div class="row" style="page-break-inside: avoid;">
-      <div class="bordered" style="margin:0 15px;">
+      <div class="bordered" style="margin:5px 15px; 0">
         <table class="" style="margin-bottom:0; width:100%;">
           <tr>
             <td class="text-right" style="width:90%;"><strong>Subtotal:</strong></td>
@@ -481,7 +480,7 @@
         </table>
       </div>
 
-      <div class="bordered" style="margin:0 15px;">
+      <div class="bordered" style="margin:5px 15px 0;">
         <table style="margin: 0px; width:100%;">
           <tr class="font-small">
             <td style="width:70%; text-transform: none; vertical-align: top;">
@@ -494,22 +493,19 @@
             </td>
             <td class="text-center" style="width:30%; text-transform: none;">
               @if($cotizacion->user->id==2) <!-- "Abraham Shveid" -->
-              <img style="margin-top:10px; width:200px; height:auto;" src="{{$cotizacion->user->firma}}" alt=" " />
-              {{-- <img style="margin-top:10px; width:200px; height:auto;" src="F:\wamp64\www\intercorp\storage\app/public/usuarios/2/firma.png" alt=" " /> --}}
+              <img style="margin-top:10px; width:170px; height:auto;" src="{{$cotizacion->user->firma}}" alt=" " />
               <hr style="border:0.5px solid #000; width:70%; margin-top:-5px; margin-bottom:0px;" />
-            @elseif($cotizacion->user->id==5) <!-- "Elena Salido" -->
-              <img style="margin-top:10px; width:200px; height:auto;" src="{{$cotizacion->user->firma}}" alt=" " />
-              {{-- <img style="margin-top:10px; width:200px; height:auto;" src="F:\wamp64\www\intercorp\storage\app/public/usuarios/5/firma.png" alt=" " /> --}}
+              @elseif($cotizacion->user->id==5) <!-- "Elena Salido" -->
+              <img style="margin-top:10px; width:170px; height:auto;" src="{{$cotizacion->user->firma}}" alt=" " />
               <hr style="border:0.5px solid #000; width:70%; margin-top:0px; margin-bottom:0px;" />
               @else
-              <img style="margin-top:10px; width:200px; height:auto;" src="{{$cotizacion->user->firma}}" alt=" " />
-              {{-- <img style="margin-top:10px; width:200px; height:auto;" src="F:\wamp64\www\intercorp\storage\app/public/usuarios/4/firma.png" alt=" " /> --}}
+              <img style="margin-top:10px; width:170px; height:auto;" src="{{$cotizacion->user->firma}}" alt=" " />
               <hr style="border:0.5px solid #000; width:70%; margin-top:-15px; margin-bottom:0px;" />
               @endif
               <p style="">{{$cotizacion->user->name}}</p>
               <p style="">Intercorp Contract Resources</p>
               <hr style="border:0.5px solid #000; width:70%; margin-top:60px; margin-bottom:0px;" />
-              <p style="margin: 5px 0 10px;">APROBACIÓN DEL CLIENTE</p>
+              <p style="margin: 5px 0 10px;">Aprobacíon Del Cliente</p>
             </td>
           </tr>
         </table>
