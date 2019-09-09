@@ -1067,7 +1067,6 @@ const app = new Vue({
           notas: "",
           idioma: '{{ ($prospecto->cliente->nacional)?"español":"ingles" }}',
           observaciones: []
-          total: 0,
         };
         this.observaciones.forEach(function(observacion){
           observacion.activa = false;
