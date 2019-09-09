@@ -111,6 +111,15 @@
                           </template>
                         </td>
                       </tr>
+                      <tfoot>
+                        <tr>
+                          <td colspan="2"></td>
+                          <td class="text-right">Total Pesos <br /> Total Dolares</td>
+                          <td>@{{totales_cotizaciones.pesos | formatoMoneda}} <br />
+                              @{{totales_cotizaciones.dolares | formatoMoneda}}
+                          </td>
+                        </tr>
+                      </tfoot>
                     </tbody>
                   </table>
                 </div>
@@ -573,12 +582,12 @@ const app = new Vue({
       facturar: '{{$prospecto->cliente->razon_social}}',
       entrega: '',
       lugar: '',
-      moneda: '',
+      moneda: '{{ ($prospecto->cliente->nacional)?"Pesos":"Dolares" }}',
       entradas: [],
       subtotal: 0,
-      iva: 0,
+      iva: '{{ ($prospecto->cliente->nacional)?"1":"0" }}',
       total: 0,
-      idioma: "",
+      idioma: '{{ ($prospecto->cliente->nacional)?"español":"ingles" }}',
       notas: "",
       observaciones: []
     },
@@ -615,6 +624,16 @@ const app = new Vue({
     openAceptar: false,
     openNotas: false,
     cargando: false
+  },
+  computed: {
+    totales_cotizaciones(){
+      var dolares=0,pesos=0;
+      this.prospecto.cotizaciones.forEach(function(cotizacion){
+        if(cotizacion.moneda=="Pesos") pesos+= cotizacion.total;
+        else dolares+= cotizacion.total;
+      });
+      return {"dolares":dolares,"pesos":pesos}
+    }
   },
   filters:{
     formatoMoneda(numero){
@@ -1040,14 +1059,15 @@ const app = new Vue({
           facturar: '{{$prospecto->cliente->razon_social}}',
           entrega: '',
           lugar: '',
-          moneda: '',
+          moneda: '{{ ($prospecto->cliente->nacional)?"Pesos":"Dolares" }}',
           entradas: [],
           subtotal: 0,
-          iva: 0,
+          iva: '{{ ($prospecto->cliente->nacional)?"1":"0" }}',
           total: 0,
           notas: "",
-          idioma: "",
+          idioma: '{{ ($prospecto->cliente->nacional)?"español":"ingles" }}',
           observaciones: []
+          total: 0,
         };
         this.observaciones.forEach(function(observacion){
           observacion.activa = false;
