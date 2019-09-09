@@ -170,7 +170,31 @@ class ProspectosController extends Controller
     {
       $validator = Validator::make($request->all(), [
         'nombre' => 'required',
-        'descripcion' => 'required',
+        'descripcion' => 'required'
+      ]);
+
+      if ($validator->fails()) {
+        $errors = $validator->errors()->all();
+        return response()->json([
+          "success" => false, "error" => true, "message" => $errors[0]
+        ], 422);
+      }
+
+      $prospecto->update($request->all());
+
+      return response()->json(['success' => true, "error" => false], 200);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Prospecto  $prospecto
+     * @return \Illuminate\Http\Response
+     */
+    public function guardarActividades(Request $request, Prospecto $prospecto)
+    {
+      $validator = Validator::make($request->all(), [
         'proxima' => 'present',
         'nueva.tipo_id' => 'required',
         'nueva.fecha' => 'required|date_format:d/m/Y',
@@ -182,8 +206,6 @@ class ProspectosController extends Controller
           "success" => false, "error" => true, "message" => $errors[0]
         ], 422);
       }
-
-      $prospecto->update($request->only('nombre','descripcion'));
 
       if(!is_null($request->proxima)){
         $prospecto->load('proxima_actividad.tipo');
@@ -774,7 +796,6 @@ class ProspectosController extends Controller
       $nombre = ($cotizacion->idioma=='español')?"nombre":"name";
 
       // return view('prospectos.cotizacionPDF', compact('cotizacion', 'nombre'));
-      $cotizacion->entradas->push($cotizacion->entradas->first());
       $cotizacionPDF = PDF::loadView('prospectos.cotizacionPDF', compact('cotizacion', 'nombre'));
       Storage::disk('public')->put($url, $cotizacionPDF->output());
 

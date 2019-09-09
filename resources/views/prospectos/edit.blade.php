@@ -38,31 +38,51 @@
                 </div>
               </div>
             </div>
-            <div class="row">
-              <div class="col-md-12">
-                <div class="form-group">
-                  <label class="control-label">Nombre de Proyecto</label>
-                  <input type="text" class="form-control" name="nombre"
-                    v-model="prospecto.nombre" required
-                  />
+            <form class="" @submit.prevent="actualizar()">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label class="control-label">Nombre de Proyecto</label>
+                    <input type="text" class="form-control" name="nombre"
+                      v-model="prospecto.nombre" required
+                    />
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="row">
-              <div class="col-md-12">
-                <div class="form-group">
-                  <label class="control-label">Descripción del Proyecto CRM</label>
-                  <textarea name="descripcion" rows="3" cols="80" class="form-control"
-                    v-model="prospecto.descripcion" required>
-                  </textarea>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label class="control-label">Descripción del Proyecto CRM</label>
+                    <textarea name="descripcion" rows="3" cols="80" class="form-control"
+                      v-model="prospecto.descripcion" required>
+                    </textarea>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="row">
-              <div class="col-sm-12">
-                <h4>Actividades Realizadas</h4>
+              <div class="row">
+                <div class="col-sm-12 text-right">
+                  <a href="{{route('prospectos.index')}}" class="btn btn-info">
+                    Regresar
+                  </a>
+                  <button type="submit" class="btn btn-success" :disabled="cargando">
+                    <i class="fas fa-save"></i>
+                    Actualizar Datos
+                  </button>
+                </div>
               </div>
-            </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="panel ">
+          <div class="panel-heading">
+            <h3 class="panel-title">Actividades Realizadas</h3>
+          </div>
+          <div class="panel-body">
             <div class="row">
               <div class="col-md-12">
                 <div class="table-responsive">
@@ -203,10 +223,7 @@
               </div>
               <div class="row">
                 <div class="col-md-12 text-right">
-                  <a href="{{route('prospectos.index')}}" style="margin-top:25px;" class="btn btn-info">
-                    Regresar
-                  </a>
-                  <button style="margin-top:25px;" type="submit" class="btn btn-success" :disabled="cargando">
+                  <button type="submit" class="btn btn-success" :disabled="cargando">
                     <i class="fas fa-save"></i>
                     Guardar Actividades
                   </button>
@@ -260,11 +277,33 @@ const app = new Vue({
       this.prospecto.proxima_actividad.productos_ofrecidos.splice(index, 1);
       this.productos.push(ofrecido);
     },
-    guardar(){
+    actualizar(){
       this.cargando = true;
       axios.put('/prospectos/{{$prospecto->id}}', {
         nombre: this.prospecto.nombre,
-        descripcion: this.prospecto.descripcion,
+        descripcion: this.prospecto.descripcion
+      })
+      .then(({data}) => {
+        this.cargando = false;
+        swal({
+          title: "Datos Actualizados",
+          text: "",
+          type: "success"
+        });
+      })
+      .catch(({response}) => {
+        console.error(response);
+        this.cargando = false;
+        swal({
+          title: "Error",
+          text: response.data.message || "Ocurrio un error inesperado, intente mas tarde",
+          type: "error"
+        });
+      });
+    },//fin actualizar
+    guardar(){
+      this.cargando = true;
+      axios.post('/prospectos/{{$prospecto->id}}/guardarActividades', {
         proxima: this.prospecto.proxima_actividad,
         nueva: this.prospecto.nueva_proxima_actividad,
       })
