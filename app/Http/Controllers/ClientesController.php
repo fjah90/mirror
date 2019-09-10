@@ -19,9 +19,10 @@ class ClientesController extends Controller
      */
     public function index()
     {
-      $clientes = Cliente::with('tipo')->get();
+      $clientesNacionales = Cliente::with('tipo')->where('nacional',1)->get();
+      $clientesExtranjeros = Cliente::with('tipo')->where('nacional',0)->get();
 
-      return view('catalogos.clientes.index', compact('clientes'));
+      return view('catalogos.clientes.index', compact('clientesNacionales','clientesExtranjeros'));
     }
 
     /**

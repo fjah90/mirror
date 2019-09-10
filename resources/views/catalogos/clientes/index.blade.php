@@ -18,29 +18,25 @@
 </section>
 <!-- Main content -->
 <section class="content" id="content">
-  <div class="row">
-    <div class="col-lg-12">
+  <tabs>
+    <tab title="Nacionales">
       <div class="panel">
         <div class="panel-heading">
           <h3 class="panel-title text-right">
-            <span class="pull-left p-10">Lista de Clientes</span>
+            <span class="pull-left p-10">Lista de Clientes Nacionales</span>
             <a href="{{route('clientes.createNacional')}}" class="btn btn-primary" style="color: #fff;">
               <i class="fas fa-plus"></i> Cliente Nacional
-            </a>
-            <a href="{{route('clientes.createInternacional')}}" class="btn btn-brown" style="color: #fff;">
-              <i class="fas fa-plus"></i> Cliente Internacional
             </a>
           </h3>
         </div>
         <div class="panel-body">
           <div class="table-responsive">
-            <table id="tabla" class="table table-bordred" style="width:100%;"
+            <table id="tablaNac" class="table table-bordred" style="width:100%;"
               data-page-length="100">
               <thead>
                 <tr>
                   <th>Usuario</th>
                   <th>Tipo</th>
-                  <th>Origen</th>
                   <th>Nombre</th>
                   <th>Teléfono</th>
                   <th>Email</th>
@@ -48,11 +44,9 @@
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="(cliente, index) in clientes">
+                <tr v-for="(cliente, index) in clientesNacionales">
                   <td>@{{cliente.usuario_nombre}}</td>
                   <td>@{{cliente.tipo.nombre}}</td>
-                  <td v-if="cliente.nacional">Nacional</td>
-                  <td v-else>Internacional</td>
                   <td>@{{cliente.nombre}}</td>
                   <td>@{{cliente.telefono}}</td>
                   <td>@{{cliente.email}}</td>
@@ -78,8 +72,63 @@
           </div>
         </div>
       </div>
-    </div>
-  </div>
+    </tab>
+
+    <tab title="Extranjeros">
+      <div class="panel">
+        <div class="panel-heading">
+          <h3 class="panel-title text-right">
+            <span class="pull-left p-10">Lista de Clientes Extranjeros</span>
+            <a href="{{route('clientes.createInternacional')}}" class="btn btn-brown" style="color: #fff;">
+              <i class="fas fa-plus"></i> Cliente Extranjero
+            </a>
+          </h3>
+        </div>
+        <div class="panel-body">
+          <div class="table-responsive">
+            <table id="tablaExt" class="table table-bordred" style="width:100%;"
+              data-page-length="100">
+              <thead>
+                <tr>
+                  <th>Usuario</th>
+                  <th>Tipo</th>
+                  <th>Nombre</th>
+                  <th>Teléfono</th>
+                  <th>Email</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="(cliente, index) in clientesExtranjeros">
+                  <td>@{{cliente.usuario_nombre}}</td>
+                  <td>@{{cliente.tipo.nombre}}</td>
+                  <td>@{{cliente.nombre}}</td>
+                  <td>@{{cliente.telefono}}</td>
+                  <td>@{{cliente.email}}</td>
+                  <td class="text-right">
+                    <a class="btn btn-info" data-toggle="tooltip" title="Ver"
+                      :href="'/clientes/'+cliente.id">
+                      <i class="far fa-eye"></i>
+                    </a>
+                    <a class="btn btn-success" data-toggle="tooltip" title="Editar"
+                      :href="'/clientes/'+cliente.id+'/editar'">
+                      <i class="far fa-edit"></i>
+                    </a>
+                    @hasrole('Administrador')
+                    <button class="btn btn-danger" data-toggle="tooltip" title="Borrar"
+                      @click="borrar(cliente, index)">
+                      <i class="fas fa-times"></i>
+                    </button>
+                    @endhasrole
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </tab>
+  </tabs>
 </section>
 <!-- /.content -->
 @stop
@@ -90,10 +139,12 @@
 const app = new Vue({
     el: '#content',
     data: {
-      clientes: {!! json_encode($clientes) !!},
+      clientesNacionales: {!! json_encode($clientesNacionales) !!},
+      clientesExtranjeros: {!! json_encode($clientesExtranjeros) !!},
     },
     mounted(){
-      $("#tabla").DataTable();
+      $("#tablaNac").DataTable();
+      $("#tablaExt").DataTable();
     },
     methods: {
       borrar(cliente, index){
