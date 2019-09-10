@@ -268,7 +268,7 @@ const app = new Vue({
         tipo: '',
       },
       productos: {!! json_encode($productos) !!},
-      ofrecido: {},
+      ofrecido: {nombre:''},
       openCatalogo: false,
       cargando: false,
     },
@@ -288,7 +288,7 @@ const app = new Vue({
       agregarProducto(){
         if(this.ofrecido.id==undefined) return false;
         this.ultima_actividad.ofrecidos.push(this.ofrecido);
-        this.ofrecido = {};
+        this.ofrecido = {nombre:''};
       },
       removerProducto(index, ofrecido){
         this.ultima_actividad.ofrecidos.splice(index, 1);
