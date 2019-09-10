@@ -12,6 +12,7 @@ use App\Models\ProspectoCotizacion;
 use App\Models\ProspectoCotizacionEntrada;
 use App\Models\ProspectoCotizacionEntradaDescripcion;
 use App\Models\CondicionCotizacion;
+use App\Models\ObservacionCotizacion;
 use App\Models\UnidadMedida;
 use App\Models\CuentaCobrar;
 use App\Models\ProyectoAprobado;
@@ -269,6 +270,7 @@ class ProspectosController extends Controller
       $productos = Producto::with('categoria','proveedor','descripciones.descripcionNombre')
       ->has('categoria')->get();
       $condiciones = CondicionCotizacion::all();
+      $observaciones = ObservacionCotizacion::all();
       $unidades_medida = UnidadMedida::orderBy('simbolo')->get();
 
       foreach ($prospecto->cotizaciones as $cotizacion) {
@@ -278,7 +280,9 @@ class ProspectosController extends Controller
         if($producto->foto) $producto->foto = asset('storage/'.$producto->foto);
       }
 
-      return view('prospectos.cotizar', compact('prospecto', 'productos', 'condiciones','unidades_medida'));
+      return view('prospectos.cotizar',
+        compact('prospecto', 'productos', 'condiciones','observaciones','unidades_medida')
+      );
     }
 
     /**

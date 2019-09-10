@@ -408,11 +408,11 @@
                   <p v-for="(observacion, index) in observaciones">
                     @role('Administrador')
                     <button class="btn btn-xxs btn-danger" type="button" title="eliminar"
-                      @click="eliminarObservacion(index)">
+                      @click="eliminarObservacion(observacion, index)">
                       <i class="fas fa-times"></i>
                     </button>
                     @endrole
-                    <i class="glyphicon glyphicon-check" v-if="observacion.activa" @click="quitarObservacion(observacion)"></i>
+                    <i class="glyphicon glyphicon-check" v-if="observacion.activa" @click="quitarObservacion(observacion, index)"></i>
                     <i class="glyphicon glyphicon-unchecked" v-else @click="agregarObservacion(observacion)"></i>
                     @{{observacion.texto}}
                   </p>
@@ -561,14 +561,7 @@ const app = new Vue({
     prospecto: {!! json_encode($prospecto) !!},
     productos: {!! json_encode($productos) !!},
     condiciones: {!! json_encode($condiciones) !!},
-    observaciones: [
-      {activa:false, texto:'Cotización válida por 30 días.'},
-      {activa:false, texto:'Los pagos son en dólares, o en pesos al tipo de cambio bancario a la venta en Banorte del día de pago, previamente acordado entre el cliente e Intercorp.'},
-      {activa:false, texto:'Se requiere de pisos púlidos y nivelados para una apropiada instalación.'},
-      {activa:false, texto:'Si la cantidad de metros solicitados cambia antes de confirmar el pedido, el precio puede cambiar.'},
-      {activa:false, texto:'Se consideran maniobras de descarga, a nivel de primer piso.'},
-      {activa:false, texto:'No se consideran fianzas; de requerirlas séran con cargo al cliente.'},
-    ],
+    observaciones: {!! json_encode($observaciones) !!},
     nuevaObservacion: "",
     observaciones_productos: [],
     nuevaObservacionProducto: "",
@@ -825,14 +818,39 @@ const app = new Vue({
       this.cotizacion.observaciones.splice(index, 1);
       observacion.activa = false;
     },
-    eliminarObservacion(index){
-      this.observaciones.splice(index, 1);
+    eliminarObservacion(observacion, index){
+      axios.delete('/observacionesCotizacion/'+observacion.id, {})
+      .then(({data}) => {
+        this.quitarObservacion(observacion);
+        this.observaciones.splice(index, 1);
+      })
+      .catch(({response}) => {
+        console.error(response);
+        swal({
+          title: "Error",
+          text: response.data.message || "Ocurrio un error inesperado, intente mas tarde",
+          type: "error"
+        });
+      });
     },
     crearObservacion(){
       if(this.nuevaObservacion=="") return false;
-      this.observaciones.push({activa:false, texto: this.nuevaObservacion});
-      this.agregarObservacion(this.observaciones[this.observaciones.length - 1]);
-      this.nuevaObservacion = "";
+
+      axios.post('/observacionesCotizacion', {texto: this.nuevaObservacion})
+      .then(({data}) => {
+        this.observaciones.push(data.observacion);
+        this.agregarObservacion(this.observaciones[this.observaciones.length - 1]);
+        this.nuevaObservacion = "";
+      })
+      .catch(({response}) => {
+        console.error(response);
+        this.cargando = false;
+        swal({
+          title: "Error",
+          text: response.data.message || "Ocurrio un error inesperado, intente mas tarde",
+          type: "error"
+        });
+      });
     },
     agregarObservacionProducto(observacion){
       this.entrada.observaciones.push(observacion.texto);

@@ -31,6 +31,10 @@ Route::middleware('auth')->group(function () {
   Route::post('/mi_cuenta', 'MiCuentaController@update');
 
   //Catalogos
+  Route::resource('/observacionesCotizacion', 'ObservacionesCotizacionController', [
+    'only'=>['store','destroy'],
+    'parameters' => ['observacionesCotizacion' => 'observacion']
+  ]);
   Route::resource('/tiposClientes', 'TiposClientesController', ['parameters' => [
     'tiposClientes' => 'tipo'
   ]]);
