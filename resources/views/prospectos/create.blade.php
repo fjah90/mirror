@@ -107,34 +107,40 @@
                 </div>
               </div>
               <div class="row">
-                <div class="col-md-4">
-                  <div class="row">
-                    <div class="col-md-10">
-                      <label class="control-label">Productos Ofrecidos</label>
-                      <select class="form-control" name="producto" v-model='ofrecido'>
-                        <option v-for="producto in productos" :value="producto.id">@{{producto.id}}: @{{producto.nombre}}</option>
-                      </select>
-                    </div>
-                    <div class="col-md-2" style="padding-top: 25px;">
-                      <button type="button" class="btn btn-primary" @click="agregarProducto()">
-                        <i class="fas fa-plus"></i>
+                <div class="col-sm-10">
+                  <label class="control-label">Productos Ofrecidos</label>
+                  <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Producto"
+                      v-model="ofrecido.nombre" @click="openCatalogo=true"
+                      readonly
+                    />
+                    <span class="input-group-btn">
+                      <button class="btn btn-default" type="button" @click="openCatalogo=true">
+                        <i class="far fa-edit"></i>
                       </button>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-md-12">
-                      <ul style="list-style-type:none; padding:0;">
-                        <li style="margin-top:5px;" v-for="(ofrecido, index) in ultima_actividad.ofrecidos">
-                          <button type="button" class="btn btn-xxs btn-danger" @click="removerProducto(index, ofrecido)">
-                            <i class="fas fa-times"></i>
-                          </button>
-                          @{{ofrecido.id}}: @{{ofrecido.nombre}}
-                        </li>
-                      </ul>
-                    </div>
+                    </span>
                   </div>
                 </div>
-                <div class="col-md-8">
+                <div class="col-sm-2" style="padding-top: 25px;">
+                  <button type="button" class="btn btn-primary" @click="agregarProducto()">
+                    Agregar
+                  </button>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12">
+                  <ul style="list-style-type:none; padding:0;">
+                    <li style="margin-top:5px;" v-for="(ofrecido, index) in ultima_actividad.ofrecidos">
+                      <button type="button" class="btn btn-xxs btn-danger" @click="removerProducto(index)">
+                        <i class="fas fa-times"></i>
+                      </button>
+                      @{{ofrecido.nombre}}
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12">
                   <label class="control-label">Descripción Actividad</label>
                   <textarea name="descripcion" rows="5" cols="80" class="form-control" v-model="ultima_actividad.descripcion"></textarea>
                 </div>
@@ -202,6 +208,36 @@
       </div>
     </div>
 
+    <!-- Catalogo Productos Modal -->
+    <modal v-model="openCatalogo" title="Productos" :footer="false">
+      <div class="table-responsive">
+        <table id="tablaProductos" class="table table-bordred">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Nombre</th>
+              <th>Categoria</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="prod in productos">
+              <td>@{{prod.id}}</td>
+              <td>@{{prod.nombre}}</td>
+              <td>@{{prod.categoria.nombre}}</td>
+              <td class="text-right">
+                <button class="btn btn-primary" title="Seleccionar"
+                @click="ofrecido=prod; openCatalogo=false;">
+                  <i class="fas fa-check"></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </modal>
+    <!-- /.Catalogo Productos Modal -->
+
   </section>
   <!-- /.content -->
 @stop
@@ -232,8 +268,12 @@ const app = new Vue({
         tipo: '',
       },
       productos: {!! json_encode($productos) !!},
-      ofrecido: '',
+      ofrecido: {},
+      openCatalogo: false,
       cargando: false,
+    },
+    mounted(){
+      $("#tablaProductos").DataTable({dom: 'ft'});
     },
     methods: {
       formatoMoneda(numero){
@@ -246,19 +286,12 @@ const app = new Vue({
   			return moment(value, 'DD/MM/YYYY').toDate().getTime();
   		},
       agregarProducto(){
-        var ofrecido = this.ofrecido;
-        var index = this.productos.findIndex(function(producto){
-          return ofrecido == producto.id;
-        });
-        if(index==-1) return false;
-
-        var producto = this.productos[index];
-        this.ultima_actividad.ofrecidos.push(producto);
-        this.productos.splice(index, 1);
+        if(this.ofrecido.id==undefined) return false;
+        this.ultima_actividad.ofrecidos.push(this.ofrecido);
+        this.ofrecido = {};
       },
       removerProducto(index, ofrecido){
         this.ultima_actividad.ofrecidos.splice(index, 1);
-        this.productos.push(ofrecido);
       },
       guardar(){
         var prospecto = $.extend(true, {}, this.prospecto);

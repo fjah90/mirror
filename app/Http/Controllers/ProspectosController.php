@@ -45,7 +45,7 @@ class ProspectosController extends Controller
     public function create()
     {
       $clientes = Cliente::all();
-      $productos = Producto::all();
+      $productos = Producto::with('categoria')->get();
       $tipos = ProspectoTipoActividad::all();
       return view('prospectos.create', compact('clientes', 'productos', 'tipos'));
     }
@@ -163,7 +163,7 @@ class ProspectosController extends Controller
         'tipo_id'=>1,
         'tipo'=>''
       ];
-      $productos = Producto::all();
+      $productos = Producto::with('categoria')->get();
       $tipos = ProspectoTipoActividad::all();
       return view('prospectos.edit', compact('prospecto' ,'productos', 'tipos'));
     }
@@ -406,9 +406,16 @@ class ProspectosController extends Controller
       list($ano,$mes,$dia) = explode('-', $cotizacion->fecha);
       $mes = $meses[+$mes-1];
       $cotizacion->fechaPDF = "$mes $dia, $ano";
-      $nombre = ($cotizacion->idioma=='español')?"nombre":"name";
+      if($cotizacion->idioma=='español'){
+        $nombre = "nombre";
+        $view = 'prospectos.cotizacionPDF';
+      }
+      else {
+        $nombre = "name";
+        $view = 'prospectos.cotizacionPDFIngles';
+      }
 
-      $cotizacionPDF = PDF::loadView('prospectos.cotizacionPDF', compact('cotizacion', 'nombre'));
+      $cotizacionPDF = PDF::loadView($view, compact('cotizacion', 'nombre'));
       Storage::disk('public')->put($url, $cotizacionPDF->output());
 
       $pdf = new PDFMerger();
@@ -579,9 +586,16 @@ class ProspectosController extends Controller
       list($ano,$mes,$dia) = explode('-', $cotizacion->fecha);
       $mes = $meses[+$mes-1];
       $cotizacion->fechaPDF = "$mes $dia, $ano";
-      $nombre = ($cotizacion->idioma=='español')?"nombre":"name";
+      if($cotizacion->idioma=='español'){
+        $nombre = "nombre";
+        $view = 'prospectos.cotizacionPDF';
+      }
+      else {
+        $nombre = "name";
+        $view = 'prospectos.cotizacionPDFIngles';
+      }
 
-      $cotizacionPDF = PDF::loadView('prospectos.cotizacionPDF', compact('cotizacion', 'nombre'));
+      $cotizacionPDF = PDF::loadView($view, compact('cotizacion', 'nombre'));
       Storage::disk('public')->put($url, $cotizacionPDF->output());
 
       $fichas = [];
@@ -805,10 +819,17 @@ class ProspectosController extends Controller
       $mes = $meses[+$mes-1];
       $cotizacion->fechaPDF = "$mes $dia, $ano";
 
-      $nombre = ($cotizacion->idioma=='español')?"nombre":"name";
+      if($cotizacion->idioma=='español'){
+        $nombre = "nombre";
+        $view = 'prospectos.cotizacionPDF';
+      }
+      else {
+        $nombre = "name";
+        $view = 'prospectos.cotizacionPDFIngles';
+      }
 
       // return view('prospectos.cotizacionPDF', compact('cotizacion', 'nombre'));
-      $cotizacionPDF = PDF::loadView('prospectos.cotizacionPDF', compact('cotizacion', 'nombre'));
+      $cotizacionPDF = PDF::loadView($view, compact('cotizacion', 'nombre'));
       Storage::disk('public')->put($url, $cotizacionPDF->output());
 
       $fichas = [];

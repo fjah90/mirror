@@ -467,13 +467,13 @@
               <td class="text-right">
                 <button class="btn btn-primary" title="Seleccionar"
                 @click="seleccionarProduco(prod, index)">
-                <i class="fas fa-check"></i>
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+                  <i class="fas fa-check"></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </modal>
     <!-- /.Catalogo Productos Modal -->
 
