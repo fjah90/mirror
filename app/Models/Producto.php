@@ -37,7 +37,8 @@ class Producto extends Model
     }
 
     public function categoria(){
-      return $this->belongsTo('App\Models\Categoria', 'categoria_id', 'id');
+      return $this->belongsTo('App\Models\Categoria', 'categoria_id', 'id')
+      ->withDefault(['id' => 0, 'nombre' => '']);
     }
 
     public function subcategoria(){
