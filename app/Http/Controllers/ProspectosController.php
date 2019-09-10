@@ -85,6 +85,14 @@ class ProspectosController extends Controller
         'descripcion' => $request->descripcion
       ]);
 
+      //Actividad de alta de proyecto
+      ProspectoActividad::create([
+        'prospecto_id' => $prospecto->id,
+        'fecha' => date('d/m/Y'),
+        'descripcion' => 'Alta de Proyecto',
+        'realizada' => 1
+      ]);
+
       //ultima actividad
       if(isset($request->ultima_actividad)){
         $create = [

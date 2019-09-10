@@ -39,7 +39,8 @@ class ProspectoActividad extends Model
     }
 
     public function tipo(){
-      return $this->belongsTo('App\Models\ProspectoTipoActividad', 'tipo_id', 'id');
+      return $this->belongsTo('App\Models\ProspectoTipoActividad', 'tipo_id', 'id')
+      ->withDefault(["nombre"=>"Alta"]);
     }
 
     public function productos_ofrecidos(){
