@@ -655,7 +655,7 @@ const app = new Vue({
       allowedFileExtensions: ["jpg", "jpeg", "png", "pdf"],
       elErrorContainer: '#comprobante-file-errors',
     });
-    $("#tablaProductos").DataTable({dom: 'ft'});
+    $("#tablaProductos").DataTable({dom: 'ftp'});
 
     this.dataTableEntradas = $("#tablaEntradas").DataTable({
       data: [],

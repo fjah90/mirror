@@ -273,7 +273,7 @@ const app = new Vue({
       cargando: false,
     },
     mounted(){
-      $("#tablaProductos").DataTable({dom: 'ft'});
+      $("#tablaProductos").DataTable({dom: 'ftp'});
     },
     methods: {
       formatoMoneda(numero){
