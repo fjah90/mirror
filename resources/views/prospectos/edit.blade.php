@@ -249,7 +249,7 @@
             <tr>
               <th>ID</th>
               <th>Nombre</th>
-              <th>Categoria</th>
+              <th>Tipo</th>
               <th></th>
             </tr>
           </thead>

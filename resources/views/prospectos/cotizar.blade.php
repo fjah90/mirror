@@ -454,7 +454,7 @@
               <th>ID</th>
               <th>Nombre</th>
               <th>Proveedor</th>
-              <th>Categoria</th>
+              <th>Tipo</th>
               <th></th>
             </tr>
           </thead>
