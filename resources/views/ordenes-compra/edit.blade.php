@@ -174,7 +174,8 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr v-for="(entrada, index) in orden.entradas" v-if="entrada.borrar!=true">
+                      <tr v-for="(entrada, index) in orden.entradas" v-if="entrada.borrar!=true"
+                        :class="(entrada.conversion)?'bg-warning':''">
                         <td>@{{entrada.producto.nombre}}</td>
                         <td>@{{entrada.cantidad}} @{{entrada.medida}}</td>
                         <td>@{{entrada.conversion}}</td>

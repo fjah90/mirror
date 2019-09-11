@@ -270,6 +270,7 @@ const app = new Vue({
         if(proveedor.id == this.orden.proveedor_id){
           this.orden.proveedor_empresa = proveedor.empresa;
           this.orden.moneda = proveedor.moneda;
+          if(proveedor.internacional) this.orden.iva = 0;
           return true;
         }
       }, this);
