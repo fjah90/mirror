@@ -158,6 +158,12 @@
                 </div>
               </div>
               <div class="row form-group" v-if="cotizacion.facturar=='1'">
+                <div class="col-sm-12">
+                  <label class="control-label">Razon Social</label>
+                  <input type="text" name="razon_social" class="form-control" v-model="cotizacion.razon_social" />
+                </div>
+              </div>
+              <div class="row form-group" v-if="cotizacion.facturar=='1'">
                 <div class="col-sm-4">
                   <label class="control-label">Calle</label>
                   <input type="text" name="calle" class="form-control" v-model="cotizacion.calle" />
