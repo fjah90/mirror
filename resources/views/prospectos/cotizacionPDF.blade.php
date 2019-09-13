@@ -341,7 +341,13 @@
                   </a>
                 </p>
               </td>
-              <td class="bordered text-uppercase">{{$cotizacion->facturar}}</td>
+              <td class="bordered text-uppercase">
+                @if($cotizacion->facturar)
+                  <p class="text-uppercase">RFC: {{$cotizacion->rfc}}</p>
+                  <p class="text-uppercase">razon social: {{$cotizacion->razon_social}}</p>
+                  <p class="text-uppercase">{{$cotizacion->direccion}}</p>
+                @endif
+              </td>
             </tr>
             <tr>
               <td class="bordered" style="padding:0;">

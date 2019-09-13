@@ -143,12 +143,50 @@
                 </div>
               </div>
               <div class="row">
-                <div class="col-md-12">
+                <div class="col-sm-6">
                   <div class="form-group">
-                    <label class="control-label">Facturar A</label>
-                    <input type="text" name="facturar" class="form-control"
-                    v-model="cotizacion.facturar" />
+                    <label class="control-label">Facturar</label>
+                    <select class="form-control" name="facturar" v-model="cotizacion.facturar">
+                      <option value="0">No</option>
+                      <option value="1">Si</option>
+                    </select>
                   </div>
+                </div>
+                <div class="col-sm-6" v-if="cotizacion.facturar=='1'">
+                  <label class="control-label">RFC</label>
+                  <input type="text" name="rfc" class="form-control" v-model="cotizacion.rfc" />
+                </div>
+              </div>
+              <div class="row form-group" v-if="cotizacion.facturar=='1'">
+                <div class="col-sm-4">
+                  <label class="control-label">Calle</label>
+                  <input type="text" name="calle" class="form-control" v-model="cotizacion.calle" />
+                </div>
+                <div class="col-sm-2">
+                  <label class="control-label">No. Ext.</label>
+                  <input type="text" name="nexterior" class="form-control" v-model="cotizacion.nexterior" />
+                </div>
+                <div class="col-sm-2">
+                  <label class="control-label">No. Int.</label>
+                  <input type="text" name="ninterior" class="form-control" v-model="cotizacion.ninterior" />
+                </div>
+                <div class="col-sm-4">
+                  <label class="control-label">Colonia</label>
+                  <input type="text" name="colonia" class="form-control" v-model="cotizacion.colonia" />
+                </div>
+              </div>
+              <div class="row form-group" v-if="cotizacion.facturar=='1'">
+                <div class="col-sm-4">
+                  <label class="control-label">CP</label>
+                  <input type="text" name="cp" class="form-control" v-model="cotizacion.cp" />
+                </div>
+                <div class="col-sm-4">
+                  <label class="control-label">Ciudad</label>
+                  <input type="text" name="ciudad" class="form-control" v-model="cotizacion.ciudad" />
+                </div>
+                <div class="col-sm-4">
+                  <label class="control-label">Estado</label>
+                  <input type="text" name="estado" class="form-control" v-model="cotizacion.estado" />
                 </div>
               </div>
               <div class="row">
@@ -572,7 +610,16 @@ const app = new Vue({
         id: 0,
         nombre: ''
       },
-      facturar: '{{$prospecto->cliente->razon_social}}',
+      facturar: 0,
+      rfc: '',
+      razon_social: '',
+      calle: '',
+      nexterior: '',
+      ninterior: '',
+      colonia: '',
+      cp: '',
+      ciudad: '',
+      estado: '',
       entrega: '',
       lugar: '',
       moneda: '{{ ($prospecto->cliente->nacional)?"Pesos":"Dolares" }}',
@@ -996,7 +1043,16 @@ const app = new Vue({
           id: cotizacion.condicion_id,
           nombre: ''
         },
-        facturar: '{{$prospecto->cliente->razon_social}}',
+        facturar: (cotizacion.facturar)?1:0,
+        rfc: cotizacion.rfc,
+        razon_social: cotizacion.razon_social,
+        calle: cotizacion.calle,
+        nexterior: cotizacion.nexterior,
+        ninterior: cotizacion.ninterior,
+        colonia: cotizacion.colonia,
+        cp: cotizacion.cp,
+        ciudad: cotizacion.ciudad,
+        estado: cotizacion.estado,
         entrega: cotizacion.entrega,
         lugar: cotizacion.lugar,
         moneda: cotizacion.moneda,
@@ -1074,7 +1130,16 @@ const app = new Vue({
             id: 0,
             nombre: ''
           },
-          facturar: '{{$prospecto->cliente->razon_social}}',
+          facturar: 0,
+          rfc: '',
+          razon_social: '',
+          calle: '',
+          nexterior: '',
+          ninterior: '',
+          colonia: '',
+          cp: '',
+          ciudad: '',
+          estado: '',
           entrega: '',
           lugar: '',
           moneda: '{{ ($prospecto->cliente->nacional)?"Pesos":"Dolares" }}',
