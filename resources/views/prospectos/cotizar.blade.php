@@ -93,7 +93,7 @@
                             <i class="far fa-file-pdf"></i>
                           </a>
                           <button class="btn btn-info" title="Enviar"
-                            @click="enviar.cotizacion_id=cotizacion.id; openEnviar=true;">
+                            @click="enviar.cotizacion_id=cotizacion.id; enviar.numero=cotizacion.numero; openEnviar=true;">
                             <i class="far fa-envelope"></i>
                           </button>
                           <button v-if="cotizacion.aceptada" class="btn text-primary" title="Aceptada">
@@ -541,7 +541,7 @@
     <!-- /.Enviar Modal -->
 
     <!-- Enviar Modal -->
-    <modal v-model="openEnviar" :title="'Enviar Cotizacion '+enviar.cotizacion_id" :footer="false">
+    <modal v-model="openEnviar" :title="'Enviar Cotizacion '+enviar.numero" :footer="false">
       <form class="" @submit.prevent="enviarCotizacion()">
         <div class="form-group">
           <label class="control-label">Email(s)</label>
@@ -650,9 +650,15 @@ const app = new Vue({
     },
     enviar: {
       cotizacion_id: 0,
+      numero: 0,
       email: ["{{$prospecto->cliente->email}}"],
       emailOpciones: [
-        {id: "{{$prospecto->cliente->email}}", text:"{{$prospecto->cliente->email}}"}
+        {id: "{{$prospecto->cliente->email}}", text:"{{$prospecto->cliente->email}}"},
+        @foreach($prospecto->cliente->contactos as $contacto)
+          @if($contacto->email)
+            {id: "{{$contacto->email}}", text:"{{$contacto->email}}"},
+          @endif
+        @endforeach
       ],
       mensaje: "Buen día.\n\nLe envió cotización para su consideración.\n\n{{auth()->user()->name}}.\nAtención del Cliente\nIntercorp Contract Resources"
     },
@@ -1186,11 +1192,17 @@ const app = new Vue({
       .then(({data}) => {
         this.enviar = {
           cotizacion_id: 0,
+          numero: 0,
           email: ["{{$prospecto->cliente->email}}"],
           emailOpciones: [
-            {id: "{{$prospecto->cliente->email}}", text:"{{$prospecto->cliente->email}}"}
+            {id: "{{$prospecto->cliente->email}}", text:"{{$prospecto->cliente->email}}"},
+            @foreach($prospecto->cliente->contactos as $contacto)
+              @if($contacto->email)
+                {id: "{{$contacto->email}}", text:"{{$contacto->email}}"},
+              @endif
+            @endforeach
           ],
-          mensaje: "Buen día.\n\nLe envió cotización para su consideración.\n\nCarla Aguilar.\nAtención del Cliente\nIntercorp Contract Resources"
+          mensaje: "Buen día.\n\nLe envió cotización para su consideración.\n\n{{auth()->user()->name}}.\nAtención del Cliente\nIntercorp Contract Resources"
         };
         this.openEnviar = false;
         this.cargando = false;
