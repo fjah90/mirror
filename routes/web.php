@@ -41,6 +41,9 @@ Route::middleware('auth')->group(function () {
   Route::resource('/unidadesMedida', 'UnidadesMedidaController', ['parameters' => [
     'unidadesMedida' => 'unidad'
   ]]);
+  Route::resource('/agentesAduanales', 'AgentesAduanalesController', ['parameters' => [
+    'agentesAduanales' => 'agente'
+  ]]);
   Route::resource('/condicionesCotizacion', 'CondicionesCotizacionController', [
     'only'=>['update','destroy'],
     'parameters'=>['condicionesCotizacion'=>'condicion']

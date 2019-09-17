@@ -172,6 +172,12 @@
             </a>
           </li>
           <hr class="divider-menu">
+          <li {!! (Request::is('agentesAduanales*') ? 'class="active"' : '') !!}>
+            <a href="{{ URL::to('agentesAduanales') }}">
+              <i class="fas fa-warehouse"></i> Agentes Aduanales
+            </a>
+          </li>
+          <hr class="divider-menu">
           <li {!! (Request::is('subcategorias*') ? 'class="active"' : '') !!}>
             <a href="{{ URL::to('subcategorias') }}">
               <i class="fas fa-cubes "></i> Categoría de Productos
