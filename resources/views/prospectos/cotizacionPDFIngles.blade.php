@@ -388,7 +388,6 @@
               </td>
               <td class="bordered">
                 <p class="text-center font-small "><strong>Deliver to:</strong></p>
-                <p class="text-uppercase">{{$cotizacion->prospecto->cliente->nombre}}</p>
                 <p class="text-uppercase">{{$cotizacion->lugar}}</p>
               </td>
             </tr>
@@ -457,7 +456,7 @@
               <td></td>
               <td>
                 @if($cotizacion->entradas->count()==1)
-                <div style="height: 220px; background-color:white;"></div>
+                <div style="height: 200px; background-color:white;"></div>
                 @elseif($cotizacion->entradas->count()==2)
                 <div style="height: 0px; background-color:white;"></div>
                 @endif
