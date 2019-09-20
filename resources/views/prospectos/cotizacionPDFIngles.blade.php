@@ -332,20 +332,29 @@
                   {{$cotizacion->prospecto->cliente->numero}}
                 </p>
                 <p class="text-uppercase">{{$cotizacion->prospecto->cliente->colonia}}</p>
+                @if($cotizacion->prospecto->cliente->telefono)
                 <p class="text-uppercase">P. {{$cotizacion->prospecto->cliente->telefono}}</p>
+                @endif
                 <p class="text-uppercase">ATN: {{$cotizacion->prospecto->cliente->nombre}}</p>
+                @if($cotizacion->prospecto->cliente->email)
                 <p>
                   email:
                   <a href="mailto:{{$cotizacion->prospecto->cliente->email}}">
                     {{$cotizacion->prospecto->cliente->email}}
                   </a>
                 </p>
+                @endif
               </td>
               <td class="bordered text-uppercase">
                 @if($cotizacion->facturar)
                   <p class="text-uppercase">RFC: {{$cotizacion->rfc}}</p>
                   <p class="text-uppercase">razon social: {{$cotizacion->razon_social}}</p>
-                  <p class="text-uppercase">{{$cotizacion->direccion}}</p>
+                  <p class="text-uppercase">
+                    {{$cotizacion->calle}} {{$cotizacion->nexterior}}
+                    @if($cotizacion->ninterior) Int. {{$cotizacion->ninterior}} @endif
+                  </p>
+                  <p class="text-uppercase">{{$cotizacion->colonia}} {{$cotizacion->cp}}</p>
+                  <p class="text-uppercase">{{$cotizacion->ciudad}} {{$cotizacion->estado}}</p>
                 @endif
               </td>
             </tr>

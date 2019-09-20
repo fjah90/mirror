@@ -146,24 +146,26 @@
                 <div class="col-sm-6">
                   <div class="form-group">
                     <label class="control-label">Facturar</label>
-                    <select class="form-control" name="facturar" v-model="cotizacion.facturar">
+                    <select class="form-control" name="facturar" v-model="cotizacion.facturar"
+                      @change="seleccionarRFC()">
                       <option value="0">No</option>
                       <option value="1">Si</option>
+                      <option v-for="(rfc, index) in rfcs" :value="index">@{{index}}</option>
                     </select>
                   </div>
                 </div>
-                <div class="col-sm-6" v-if="cotizacion.facturar=='1'">
+                <div class="col-sm-6" v-if="cotizacion.facturar!='0'">
                   <label class="control-label">RFC</label>
                   <input type="text" name="rfc" class="form-control" v-model="cotizacion.rfc" />
                 </div>
               </div>
-              <div class="row form-group" v-if="cotizacion.facturar=='1'">
+              <div class="row form-group" v-if="cotizacion.facturar!='0'">
                 <div class="col-sm-12">
                   <label class="control-label">Razon Social</label>
                   <input type="text" name="razon_social" class="form-control" v-model="cotizacion.razon_social" />
                 </div>
               </div>
-              <div class="row form-group" v-if="cotizacion.facturar=='1'">
+              <div class="row form-group" v-if="cotizacion.facturar!='0'">
                 <div class="col-sm-4">
                   <label class="control-label">Calle</label>
                   <input type="text" name="calle" class="form-control" v-model="cotizacion.calle" />
@@ -181,7 +183,7 @@
                   <input type="text" name="colonia" class="form-control" v-model="cotizacion.colonia" />
                 </div>
               </div>
-              <div class="row form-group" v-if="cotizacion.facturar=='1'">
+              <div class="row form-group" v-if="cotizacion.facturar!='0'">
                 <div class="col-sm-4">
                   <label class="control-label">CP</label>
                   <input type="text" name="cp" class="form-control" v-model="cotizacion.cp" />
@@ -205,7 +207,7 @@
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
-                    <label class="control-label">Lugar de Entrega</label>
+                    <label class="control-label">Dirección de Entrega</label>
                     <input type="text" name="lugar" class="form-control"
                       v-model="cotizacion.lugar" required />
                   </div>
@@ -352,7 +354,11 @@
                 <div class="col-md-12">
                   <div class="form-group">
                     <label class="control-label">Observaciónes Producto</label>
-                    <p v-for="observacion in observaciones_productos">
+                    <p v-for="(observacion, index) in observaciones_productos">
+                      <button class="btn btn-xxs btn-danger" type="button" title="eliminar"
+                        @click="eliminarObservacionProducto(observacion, index)">
+                        <i class="fas fa-times"></i>
+                      </button>
                       <i v-if="observacion.activa" class="glyphicon glyphicon-check" @click="quitarObservacionProducto(observacion)"></i>
                       <i v-else class="glyphicon glyphicon-unchecked" @click="agregarObservacionProducto(observacion)"></i>
                       @{{observacion.texto}}
@@ -605,6 +611,7 @@ const app = new Vue({
     prospecto: {!! json_encode($prospecto) !!},
     productos: {!! json_encode($productos) !!},
     condiciones: {!! json_encode($condiciones) !!},
+    rfcs: {!! json_encode($rfcs) !!},
     observaciones: {!! json_encode($observaciones) !!},
     nuevaObservacion: "",
     observaciones_productos: [],
@@ -764,6 +771,19 @@ const app = new Vue({
     this.resetDataTables();
   },
   methods: {
+    seleccionarRFC(){
+      if(this.cotizacion.facturar!="0" && this.cotizacion.facturar!="1"){
+        this.cotizacion.rfc = this.rfcs[this.cotizacion.facturar].rfc;
+        this.cotizacion.razon_social = this.rfcs[this.cotizacion.facturar].razon_social;
+        this.cotizacion.calle = this.rfcs[this.cotizacion.facturar].calle;
+        this.cotizacion.nexterior = this.rfcs[this.cotizacion.facturar].nexterior;
+        this.cotizacion.ninterior = this.rfcs[this.cotizacion.facturar].ninterior;
+        this.cotizacion.colonia = this.rfcs[this.cotizacion.facturar].colonia;
+        this.cotizacion.cp = this.rfcs[this.cotizacion.facturar].cp;
+        this.cotizacion.ciudad = this.rfcs[this.cotizacion.facturar].ciudad;
+        this.cotizacion.estado = this.rfcs[this.cotizacion.facturar].estado;
+      }
+    },
     condicionCambiada(){
       if(this.cotizacion.condicion.id==0){
         this.cotizacion.condicion.nombre = "";
@@ -921,6 +941,10 @@ const app = new Vue({
       });
       this.entrada.observaciones.splice(index, 1);
       observacion.activa = false;
+    },
+    eliminarObservacionProducto(observacion, index){
+      this.quitarObservacionProducto(observacion);
+      this.observaciones_productos.splice(index, 1);
     },
     crearObservacionProducto(){
       if(this.nuevaObservacionProducto=="") return false;

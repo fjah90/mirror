@@ -280,6 +280,22 @@ class ProspectosController extends Controller
       $condiciones = CondicionCotizacion::all();
       $observaciones = ObservacionCotizacion::all();
       $unidades_medida = UnidadMedida::orderBy('simbolo')->get();
+      $rfcs = $prospecto->cotizaciones->reduce(function($datos,$cotizacion){
+        if($cotizacion->rfc) {
+          $datos[$cotizacion->rfc] = [
+            'rfc' => $cotizacion->rfc,
+            'razon_social' => $cotizacion->razon_social,
+            'calle' => $cotizacion->calle,
+            'nexterior' => $cotizacion->nexterior,
+            'ninterior' => $cotizacion->ninterior,
+            'colonia' => $cotizacion->colonia,
+            'cp' => $cotizacion->cp,
+            'ciudad' => $cotizacion->ciudad,
+            'estado' => $cotizacion->estado
+          ];
+        }
+        return $datos;
+      }, []);
 
       foreach ($prospecto->cotizaciones as $cotizacion) {
         if($cotizacion->archivo) $cotizacion->archivo = asset('storage/'.$cotizacion->archivo);
@@ -289,7 +305,7 @@ class ProspectosController extends Controller
       }
 
       return view('prospectos.cotizar',
-        compact('prospecto', 'productos', 'condiciones','observaciones','unidades_medida')
+        compact('prospecto', 'productos', 'condiciones','observaciones','unidades_medida', 'rfcs')
       );
     }
 
@@ -326,6 +342,7 @@ class ProspectosController extends Controller
       $user = auth()->user();
 
       $create = $request->except('entradas', 'condicion', 'observaciones');
+      if ($create['facturar'] != "0") $create['facturar'] = "1";
       $create['user_id'] = $user->id;
       $create['fecha'] = date('Y-m-d');
       if($request->condicion['id']==0){//nueva condicion, dar de alta
@@ -466,6 +483,7 @@ class ProspectosController extends Controller
       $user = auth()->user();
 
       $update = $request->except('entradas', 'condicion', 'observaciones','prospecto_id','cotizacion_id');
+      if($update['facturar']!="0") $update['facturar'] = "1";
       $update['user_id'] = $user->id;
       $update['fecha'] = date('Y-m-d');
       if($request->condicion['id']==0){//nueva condicion, dar de alta
