@@ -11,6 +11,35 @@
   <!-- page level css -->
   <link href="{{asset('assets/css/pages/login_register.css')}}" rel="stylesheet">
   <!-- end of page level css-->
+
+  <style>
+    .signup-form, .signin-form {
+        background      : url("/images/fondo.jpg");
+    }
+    .signup-form:before, .signin-form:before {
+        opacity       : 0.7;
+        background    : #000;
+    }
+    .signup-form label, .signin-form label {
+        font-size: 16px;
+        color: #FFF;
+    }
+    .form-control {
+        color: #000;
+        background-color: #FFF;
+        border: none;
+        border-radius: 10px;
+    }
+    input[type="submit"] {
+        background: #686767;
+        color: #FFF;
+        border: none;
+        font-size: 16px;
+        padding: 6px 60px;
+        letter-spacing: 1px;
+        border-radius: 10px;
+    }
+  </style>
 </head>
 
 <body id="sign-in">
@@ -21,7 +50,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <h2 class="text-center">
-                            <img src="{{asset('images/logo.jpg')}}" alt="Logo">
+                            <img src="{{asset('images/logo_trans.png')}}" alt="Logo" style="width:100%;">
                         </h2>
                     </div>
                 </div>
@@ -54,16 +83,14 @@
                                  name="password" required />
                             </div>
                         </div>
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <input type="submit" value="Acceder" class="btn btn-primary btn-block"/>
-                            </div>
+                        <div class="col-md-12 text-center">
+                            <input type="submit" value="Acceder" class="btn btn-default"/>
                         </div>
                         <div class="col-md-12">
                             <hr class="separator">
                         </div>
                         <div class="col-md-12 text-center">
-                            <span>&#169; 2018 789.mx</span>
+                            <span>&#169; {{date('Y')}} 789.mx</span>
                         </div>
                     </form>
                 </div>

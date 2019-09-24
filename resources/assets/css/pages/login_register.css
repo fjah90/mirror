@@ -104,3 +104,31 @@ hr.separator {
     margin           : 10px 0;
     background-image : linear-gradient(to right, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.15))
 }
+
+
+.signup-form, .signin-form {
+        background      : url("/images/fondo.jpg");
+    }
+    .signup-form:before, .signin-form:before {
+        opacity       : 0.7;
+        background    : #000;
+    }
+    .signup-form label, .signin-form label {
+        font-size: 16px;
+        color: #FFF;
+    }
+    .form-control {
+        color: #000;
+        background-color: #FFF;
+        border: none;
+        border-radius: 10px;
+    }
+    input[type="submit"] {
+        background: #686767;
+        color: #FFF;
+        border: none;
+        font-size: 16px;
+        padding: 6px 60px;
+        letter-spacing: 1px;
+        border-radius: 10px;
+    }
