@@ -26,94 +26,95 @@
           </div>
           <div class="panel-body">
             <form class="" @submit.prevent="agregarEntrada()">
-              <div class="row">
+              <div class="row form-group">
                 <div class="col-md-4">
-                  <div class="form-group">
-                    <label class="control-label">Numero Orden</label>
-                    <input type="number" step="1" min="1" class="form-control" name="numero"
-                      v-model="orden.numero" required />
-                  </div>
+                  <label class="control-label">Numero Orden</label>
+                  <input type="number" step="1" min="1" class="form-control" name="numero"
+                    v-model="orden.numero" required />
+                </div>
+                <div class="col-md-4">
+                  <label class="control-label">Numero Proyecto</label>
+                  <input type="number" step="1" min="1" class="form-control" name="numero_proyecto"
+                    v-model="orden.numero_proyecto" />
+                </div>
+                <div class="col-md-4">
+                  <label class="control-label">Tiempo de Entrega</label>
+                  <input type="text" class="form-control" name="tiempo_entrega" v-model="orden.tiempo_entrega" />
                 </div>
               </div>
-              <div class="row">
+              <div class="row form-group">
                 <div class="col-md-4">
-                  <div class="form-group">
-                    <label class="control-label">Proveedor</label>
-                    <select class="form-control" name="proveedor_id" v-model='orden.proveedor_id'
-                      required :disabled="orden.entradas.length>0" @change="fijarProveedor()">
-                      @foreach($proveedores as $proveedor)
-                        <option value="{{$proveedor->id}}">{{$proveedor->empresa}}</option>
-                      @endforeach
-                    </select>
-                  </div>
+                  <label class="control-label">Proveedor</label>
+                  <select class="form-control" name="proveedor_id" v-model='orden.proveedor_id'
+                    required :disabled="orden.entradas.length>0" @change="fijarProveedor()">
+                    @foreach($proveedores as $proveedor)
+                      <option value="{{$proveedor->id}}">{{$proveedor->empresa}}</option>
+                    @endforeach
+                  </select>
                 </div>
                 <div class="col-md-4">
-                  <div class="form-group">
-                    <label class="control-label">Moneda</label>
-                    <input type="text" class="form-control" name="moneda"
-                      v-model="orden.moneda" required disabled />
-                  </div>
+                  <label class="control-label">Agente Aduanal</label>
+                  <select class="form-control" name="aduana_id" v-model='orden.aduana_id' @change="fijarAduana()">
+                    @foreach($aduanas as $aduana)
+                      <option value="{{$aduana->id}}">{{$aduana->compañia}}</option>
+                    @endforeach
+                  </select>
                 </div>
                 <div class="col-md-4">
-                  <div class="form-group">
-                    <label class="control-label">IVA</label>
-                    <select class="form-control" name="iva" v-model="orden.iva" required>
-                      <option value="0">No</option>
-                      <option value="1">Si</option>
-                    </select>
-                  </div>
+                  <label class="control-label">Moneda</label>
+                  <input type="text" class="form-control" name="moneda"
+                    v-model="orden.moneda" required disabled />
                 </div>
               </div>
-              <div class="row">
+              <div class="row form-group">
                 <div class="col-md-4">
-                  <div class="form-group">
-                    <label class="control-label">Producto</label>
-                    <div class="input-group">
-                      <input type="text" class="form-control" placeholder="Producto"
-                      v-model="entrada.producto.nombre" @click="abrirCatalogo()"
-                      readonly required
-                      />
-                      <span class="input-group-btn">
-                        <button class="btn btn-default" type="button" @click="abrirCatalogo()">
-                          <i class="far fa-edit"></i>
-                        </button>
-                      </span>
-                    </div>
+                  <label class="control-label">IVA</label>
+                  <select class="form-control" name="iva" v-model="orden.iva" required>
+                    <option value="0">No</option>
+                    <option value="1">Si</option>
+                  </select>
+                </div>
+              </div>
+              <div class="row form-group">
+                <div class="col-md-4">
+                  <label class="control-label">Producto</label>
+                  <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Producto"
+                    v-model="entrada.producto.nombre" @click="abrirCatalogo()"
+                    readonly required
+                    />
+                    <span class="input-group-btn">
+                      <button class="btn btn-default" type="button" @click="abrirCatalogo()">
+                        <i class="far fa-edit"></i>
+                      </button>
+                    </span>
                   </div>
                 </div>
                 <div class="col-md-2">
-                  <div class="form-group">
-                    <label class="control-label">Cantidad</label>
-                    <input type="number" step="0.01" min="0.01" name="cantidad" class="form-control"
-                      v-model="entrada.cantidad" required />
-                  </div>
+                  <label class="control-label">Cantidad</label>
+                  <input type="number" step="0.01" min="0.01" name="cantidad" class="form-control"
+                    v-model="entrada.cantidad" required />
                 </div>
                 <div class="col-md-2">
-                  <div class="form-group">
-                    <label class="control-label">Unidad Medida</label>
-                    <select class="form-control" name="medida" v-model="entrada.medida" required>
-                      @foreach($unidades_medida as $unidad)
-                      <option value="{{ $unidad->simbolo }}">{{ $unidad->simbolo }}</option>
-                      @endforeach
-                    </select>
-                  </div>
+                  <label class="control-label">Unidad Medida</label>
+                  <select class="form-control" name="medida" v-model="entrada.medida" required>
+                    @foreach($unidades_medida as $unidad)
+                    <option value="{{ $unidad->simbolo }}">{{ $unidad->simbolo }}</option>
+                    @endforeach
+                  </select>
                 </div>
                 <div class="col-md-4">
-                  <div class="form-group">
-                    <label class="control-label">Precio Unitario</label>
-                    <input type="number" step="0.01" min="0.01" name="precio" class="form-control"
-                      v-model="entrada.precio" required />
-                  </div>
+                  <label class="control-label">Precio Unitario</label>
+                  <input type="number" step="0.01" min="0.01" name="precio" class="form-control"
+                    v-model="entrada.precio" required />
                 </div>
               </div>
-              <div class="row">
+              <div class="row form-group">
                 <div class="col-md-12 text-right">
-                  <div class="form-group" style="margin-top:25px;">
-                    <button type="submit" class="btn btn-info">
-                      <i class="fas fa-plus"></i>
-                      Agregar Producto
-                    </button>
-                  </div>
+                  <button type="submit" class="btn btn-info">
+                    <i class="fas fa-plus"></i>
+                    Agregar Producto
+                  </button>
                 </div>
               </div>
             </form>
@@ -237,12 +238,17 @@ const app = new Vue({
   el: '#content',
   data: {
     proveedores: {!! json_encode($proveedores) !!},
+    aduanas: {!! json_encode($aduanas) !!},
     productos: {!! json_encode($productos) !!},
     orden: {
       proyecto_id: {{$proyecto->id}},
       proveedor_id: 0,
       proveedor_empresa: '',
+      aduana_id: 0,
+      aduana_compañia: '',
       numero: '',
+      numero_proyecto: '',
+      tiempo_entrega: '',
       moneda: '',
       entradas: [],
       subtotal: 0,
@@ -276,6 +282,14 @@ const app = new Vue({
       }, this);
 
       this.entrada.producto = {};//por si ya estaba seleccionado uno
+    },
+    fijarAduana(){
+      this.aduanas.find(function(aduana){
+        if(aduana.id == this.orden.aduana_id){
+          this.orden.aduana_compañia = aduana.compañia;
+          return true;
+        }
+      }, this);
     },
     abrirCatalogo(){
       if(this.orden.proveedor_id==0){

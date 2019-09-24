@@ -15,10 +15,10 @@ class OrdenCompra extends Model
     const STATUS_RECHAZADA              = "Rechazada";
     const STATUS_CANCELADA              = "Cancelada";
 
-    protected $fillable = ['cliente_id','proyecto_id','proveedor_id',
-      'orden_proceso_id','cliente_nombre','proyecto_nombre','proveedor_empresa',
-      'status','moneda','subtotal','iva','total',
-      'motivo_rechazo','archivo','numero'
+    protected $fillable = ['cliente_id','proyecto_id','proveedor_id','orden_proceso_id',
+      'cliente_nombre','proyecto_nombre','proveedor_empresa','status','moneda','subtotal',
+      'iva','total','motivo_rechazo','archivo','numero','tiempo_entrega','numero_proyecto',
+      'aduana_id','aduana_compañia'
     ];
 
     protected $casts = [
@@ -52,6 +52,10 @@ class OrdenCompra extends Model
 
     public function ordenProceso(){
       return $this->hasOne('App\Models\OrdenProceso', 'orden_compra_id', 'id');
+    }
+
+    public function aduana(){
+      return $this->belongsTo('App\Models\AgenteAduanal', 'aduana_id', 'id');
     }
 
 }

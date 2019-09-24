@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AgenteAduanal;
 use Validator;
 use Illuminate\Http\Request;
 use App\Models\ProyectoAprobado;
@@ -48,9 +49,10 @@ class OrdenesCompraController extends Controller
     {
       $proveedores = Proveedor::all();
       $unidades_medida = UnidadMedida::orderBy('simbolo')->get();
+      $aduanas = AgenteAduanal::all();
       $productos = Producto::with('categoria')->has('categoria')->get();
 
-      return view('ordenes-compra.create', compact('proyecto','proveedores','productos','unidades_medida'));
+      return view('ordenes-compra.create', compact('proyecto','proveedores','productos','unidades_medida','aduanas'));
     }
 
     /**
@@ -195,12 +197,15 @@ class OrdenesCompraController extends Controller
      public function edit(ProyectoAprobado $proyecto, OrdenCompra $orden)
      {
        $proveedores = Proveedor::all();
+       $aduanas = AgenteAduanal::all();
        $productos = Producto::with('categoria')->has('categoria')->get();
        $unidades_medida = UnidadMedida::with('conversiones')->orderBy('simbolo')->get();
        $orden->load('proveedor', 'entradas.producto');
        if($orden->iva>0) $orden->iva = 1;
 
-       return view('ordenes-compra.edit', compact('proyecto','orden','productos','proveedores','unidades_medida'));
+       return view('ordenes-compra.edit', 
+        compact('proyecto','orden','productos','proveedores','unidades_medida','aduanas')
+      );
      }
 
     /**
@@ -232,7 +237,8 @@ class OrdenesCompraController extends Controller
       }
 
       $update = $request->only(
-        'proveedor_id','proveedor_empresa','moneda','numero','subtotal'
+        'proveedor_id','proveedor_empresa','moneda','numero','subtotal','numero_proyecto','tiempo_entrega',
+        'aduana_id','aduana_compañia'
       );
       if($request->iva=="1"){
         $update['iva'] = bcmul($update['subtotal'], 0.16, 2);
@@ -444,21 +450,28 @@ class OrdenesCompraController extends Controller
       else $firmaAbraham = public_path('images/firma_vacia.png');
       $orden->firmaAbraham = $firmaAbraham;
 
-      $url = 'ordenes_compra/'.$orden->id.'/orden_'.$orden->id.'.pdf';
-      $meses = ['ENERO','FEBRERO','MARZO','ABRIL','MAYO','JUNIO','JULIO',
-      'AGOSTO','SEPTIEMBRE','OCTUBRE','NOVIEMBRE','DICIEMBRE'];
+      $url = 'ordenes_compra/' . $orden->id . '/orden_' . $orden->numero . '.pdf';
+      // $meses = ['ENERO','FEBRERO','MARZO','ABRIL','MAYO','JUNIO','JULIO',
+      // 'AGOSTO','SEPTIEMBRE','OCTUBRE','NOVIEMBRE','DICIEMBRE'];
+      $meses = [
+        'JANUARY', 'FEBRUARY', 'MARCH', 'APRIL', 'MAY', 'JUNE', 'JULY',
+        'AUGUST', 'SEPTEMBER', 'OCTOBER', 'NOVEMBER', 'DECEMBER'
+      ];
       list($ano,$mes,$dia) = explode('-', date('Y-m-d'));
       $mes = $meses[+$mes-1];
-      $orden->fechaPDF = "$dia DE $mes DEL $ano";
-
+      // $orden->fechaPDF = "$dia DE $mes DEL $ano";
+      $orden->fechaPDF = "$mes $dia, $ano";
+      
       foreach ($orden->entradas as $entrada) {
         if($entrada->producto->foto) $entrada->producto->foto = asset('storage/'.$entrada->producto->foto);
       }
-
+      
       $ordenPDF = PDF::loadView('ordenes-compra.ordenPDF', compact('orden'));
       Storage::disk('public')->put($url, $ordenPDF->output());
-      $orden->update(['archivo'=>$url]);
-
+      unset($orden->fechaPDF);
+      unset($orden->firmaAbraham);
+      $orden->update(['archivo'=>$url]);    
+      
       return $ordenPDF->download('orden.pdf');
     }
 

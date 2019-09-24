@@ -179,7 +179,7 @@
     .text-danger {color: #FF7A7A;}
     /* fuentes */
     .font-small{font-size: 9px;}
-    .font-big{font-size: 14px;}
+    .font-big{font-size: 12px;}
     .font-bold{font-weight: bold;}
   </style>
   <style>
@@ -202,7 +202,7 @@
       float: left;
     }
     .bordered{
-      border: 1px solid #000;
+      border: 0.5px solid #000;
     }
     .clearfix:after {
       content: "";
@@ -249,6 +249,10 @@
   </style>
   <style>
     /* custom */
+    .table-cotizacion > tbody{
+      border-bottom: 0.5px solid #000;
+      /* border: none; */
+    }
     .table-cotizacion > tbody > tr > th,
     .table-cotizacion > tbody > tr > td,
     .table-cotizacion > tfoot > tr > th,
@@ -257,11 +261,11 @@
     }
     .table-cotizacion > tbody > tr > th,
     .table-cotizacion > tbody > tr > td{
-      border-left: 1px solid #000;
+      border-left: 0.5px solid #000;
     }
     .table-cotizacion > tbody > tr > th:last-child,
     .table-cotizacion > tbody > tr > td:last-child{
-      border-right: 1px solid #000;
+      border-right: 0.5px solid #000;
     }
     .table-cotizacion > tfoot {border: 1px solid #000;}
   </style>
@@ -278,7 +282,7 @@
     <div class="row margTop10">
       <div class="col-lg-1"></div>
       <div class="col-lg-10">
-        <hr style="border: 5px solid #000;">
+        <hr style="border: 2.5px solid #000;">
       </div>
     </div>
 
@@ -348,7 +352,7 @@
               <td class="bordered" style="padding:0;">
                 <table style="margin:0;">
                   <tr>
-                    <td>PROJECT:</td>
+                    <td style="vertical-align:top;">PROJECT:</td>
                     <td class="text-uppercase"><strong>{{$orden->proyecto_nombre}}</strong></td>
                   </tr>
                   <tr>
@@ -377,17 +381,10 @@
                 </table>
               </td>
               <td class="bordered">
-                <p class="text-center font-small "><strong>SHIP TO:</strong></p>
-                <p class="text-uppercase">{{$orden->proyecto->cliente->empresa}}</p>
+                <p class="text-center font-small "><strong>DELIVER TO:</strong></p>
                 <p class="text-uppercase">{{$orden->proyecto->cotizacion->lugar}}</p>
               </td>
             </tr>
-            {{-- <tr>
-              <td colspan="2" class="bordered">
-                <p class="text-danger"><strong>Notas</strong></p>
-                <p class="text-uppercase">{{$cotizacion->notas}}</p>
-              </td>
-            </tr> --}}
           </tbody>
         </table>
       </div>
@@ -399,12 +396,12 @@
           <thead style="background-color:#000; color:#fff;">
             <tr>
               <th class="text-center" style="width:10%; padding:3px 0 1px;">QUANTITY</th>
-              <th class="text-center" style="width:70%; padding:3px 0 1px;">DESCRIPTION</th>
-              <th class="text-center" style="width:15%; padding:3px 0 1px;">UNIT PRICE</th>
-              <th class="text-center" style="width:15%; padding:3px 0 1px;">AMOUNT</th>
+              <th class="text-center" style="width:74%; padding:3px 0 1px;">DESCRIPTION</th>
+              <th class="text-center" style="width:13%; padding:3px 0 1px;">UNIT PRICE</th>
+              <th class="text-center" style="width:13%; padding:3px 0 1px;">AMOUNT</th>
             </tr>
           </thead>
-          <tbody style="border-bottom: 1px solid #000;">
+          <tbody>
             @foreach($orden->entradas as $entrada)
             <tr>
               <td class="text-center">@format_number($entrada->cantidad) <br /> {{$entrada->medida}}</td>
@@ -437,18 +434,31 @@
               <td class="text-right">@format_money($entrada->importe)</td>
             </tr>
             @endforeach
+            <tr>
+              <td></td>
+              <td>
+                @if($orden->entradas->count()==1)
+                <div style="height: 200px; background-color:white;"></div>
+                @elseif($orden->entradas->count()==2)
+                <div style="height: 0px; background-color:white;"></div>
+                @endif
+              </td>
+              <td></td>
+              <td></td>
+            </tr>
           </tbody>
         </table>
       </div>
     </div>
 
     <!-- Espacio para que el footer no se sobreponga a la tabla -->
-    <div class="row">
+    {{-- <div class="row">
       <div class="col-lg-12" style="height:70px;">
       </div>
-    </div>
+    </div> --}}
 
-    <div class="row footer">
+    {{-- <div class="row footer" style="page-break-inside: avoid;"> --}}
+    <div class="row" style="page-break-inside: avoid;">
       <div class="col-lg-12 bordered" style="padding: 0px; margin-left:15px;">
         <table class="" style="margin-bottom:0; width:100%;">
           <tr>

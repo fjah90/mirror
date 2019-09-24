@@ -36,50 +36,60 @@
               </div>
             </div>
             @endif
-            <div class="row">
+            <div class="row form-group">
               <div class="col-md-4">
-                <div class="form-group">
-                  <label class="control-label">Numero Orden</label>
-                  <input type="number" step="1" min="1" class="form-control" name="numero"
-                    v-model="orden.numero" required />
-                </div>
+                <label class="control-label">Numero Orden</label>
+                <input type="number" step="1" min="1" class="form-control" name="numero"
+                  v-model="orden.numero" required />
+              </div>
+              <div class="col-md-4">
+                <label class="control-label">Numero Proyecto</label>
+                <input type="number" step="1" min="1" class="form-control" name="numero_proyecto"
+                  v-model="orden.numero_proyecto" />
+              </div>
+              <div class="col-md-4">
+                <label class="control-label">Tiempo de Entrega</label>
+                <input type="text" class="form-control" name="tiempo_entrega"
+                  v-model="orden.tiempo_entrega" />
               </div>
             </div>
-            <div class="row">
+            <div class="row form-group">
               @if($orden->proveedor_id)
               <div class="col-md-4">
-                <div class="form-group">
-                  <label class="control-label">Proveedor</label>
-                  <span class="form-control">{{$orden->proveedor_empresa}}</span>
-                </div>
+                <label class="control-label">Proveedor</label>
+                <span class="form-control">{{$orden->proveedor_empresa}}</span>
               </div>
               @else
               <div class="col-md-4">
-                <div class="form-group">
-                  <label class="control-label">Proveedor</label>
-                  <select class="form-control" name="proveedor_id" v-model='orden.proveedor_id'
-                    required @change="fijarProveedor()">
-                    @foreach($proveedores as $proveedor)
-                      <option value="{{$proveedor->id}}">{{$proveedor->empresa}}</option>
-                    @endforeach
-                  </select>
-                </div>
+                <label class="control-label">Proveedor</label>
+                <select class="form-control" name="proveedor_id" v-model='orden.proveedor_id'
+                  required @change="fijarProveedor()">
+                  @foreach($proveedores as $proveedor)
+                    <option value="{{$proveedor->id}}">{{$proveedor->empresa}}</option>
+                  @endforeach
+                </select>
               </div>
               @endif
               <div class="col-md-4">
-                <div class="form-group">
-                  <label class="control-label">Moneda</label>
-                  <span class="form-control">@{{orden.moneda}}</span>
-                </div>
+                <label class="control-label">Agente Aduanal</label>
+                <select class="form-control" name="aduana_id" v-model='orden.aduana_id' @change="fijarAduana()">
+                  @foreach($aduanas as $aduana)
+                    <option value="{{$aduana->id}}">{{$aduana->compañia}}</option>
+                  @endforeach
+                </select>
               </div>
               <div class="col-md-4">
-                <div class="form-group">
-                  <label class="control-label">IVA</label>
-                  <select class="form-control" name="iva" v-model="orden.iva" required>
-                    <option value="0">No</option>
-                    <option value="1">Si</option>
-                  </select>
-                </div>
+                <label class="control-label">Moneda</label>
+                <span class="form-control">@{{orden.moneda}}</span>
+              </div>
+            </div>
+            <div class="row form-group">
+              <div class="col-md-4">
+                <label class="control-label">IVA</label>
+                <select class="form-control" name="iva" v-model="orden.iva" required>
+                  <option value="0">No</option>
+                  <option value="1">Si</option>
+                </select>
               </div>
             </div>
             <form class="" @submit.prevent="agregarEntrada()">
@@ -283,6 +293,7 @@ const app = new Vue({
   el: '#content',
   data: {
     proveedores: {!! json_encode($proveedores) !!},
+    aduanas: {!! json_encode($aduanas) !!},
     productos: {!! json_encode($productos) !!},
     orden: {!! json_encode($orden) !!},
     entrada: {
@@ -322,6 +333,14 @@ const app = new Vue({
       }, this);
 
       this.entrada.producto = {};//por si ya estaba seleccionado uno
+    },
+    fijarAduana(){
+      this.aduanas.find(function(aduana){
+        if(aduana.id == this.orden.aduana_id){
+          this.orden.aduana_compañia = aduana.compañia;
+          return true;
+        }
+      }, this);
     },
     seleccionarProduco(prod){
       this.entrada.producto = prod;

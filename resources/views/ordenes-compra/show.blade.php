@@ -26,91 +26,86 @@
           </div>
           <div class="panel-body">
             @if($orden->status=='Rechazada')
-            <div class="row">
+            <div class="row form-group">
               <div class="col-md-12">
-                <div class="form-group">
-                  <label class="control-label text-danger" style="font-weight:bold">Orden Rechazada</label>
-                  <textarea class="form-control" disabled style="border:1px solid #FF7A7A;">{{$orden->motivo_rechazo}}
-                  </textarea>
-                </div>
+                <label class="control-label text-danger" style="font-weight:bold">Orden Rechazada</label>
+                <textarea class="form-control" disabled style="border:1px solid #FF7A7A;">{{$orden->motivo_rechazo}}
+                </textarea>
               </div>
             </div>
             @endif
-            <div class="row">
+            <div class="row form-group">
               <div class="col-md-4">
-                <div class="form-group">
-                  <label class="control-label">Numero Orden</label>
-                  <input type="number" step="1" min="1" class="form-control" name="numero"
-                    v-model="orden.numero" required />
-                </div>
+                <label class="control-label">Numero Orden</label>
+                <input type="number" step="1" min="1" class="form-control" name="numero"
+                  v-model="orden.numero" required />
+              </div>
+              <div class="col-md-4">
+                <label class="control-label">Numero Proyecto</label>
+                <input type="number" step="1" min="1" class="form-control" name="numero_proyecto"
+                  v-model="orden.numero_proyecto" />
+              </div>
+              <div class="col-md-4">
+                <label class="control-label">Tiempo de Entrega</label>
+                <span class="form-control">{{$orden->tiempo_entrega}}</span>
               </div>
             </div>
-            <div class="row">
+            <div class="row form-group">
               <div class="col-md-12">
-                <div class="form-group">
-                  <label class="control-label">Cliente</label>
-                  <span class="form-control">{{$orden->cliente_nombre}}</span>
-                </div>
+                <label class="control-label">Cliente</label>
+                <span class="form-control">{{$orden->cliente_nombre}}</span>
               </div>
             </div>
-            <div class="row">
+            <div class="row form-group">
               @if($orden->proveedor_id)
               <div class="col-md-12">
-                <div class="form-group">
-                  <label class="control-label">Proveedor</label>
-                  <span class="form-control">{{$orden->proveedor_empresa}}</span>
-                </div>
+                <label class="control-label">Proveedor</label>
+                <span class="form-control">{{$orden->proveedor_empresa}}</span>
               </div>
               @else
               <div class="col-md-12">
-                <div class="form-group">
-                  <label class="control-label">Proveedor</label>
-                  <select class="form-control" name="proveedor_id" v-model='orden.proveedor_id'
-                    required @change="fijarProveedor()">
-                    @foreach($proveedores as $proveedor)
-                      <option value="{{$proveedor->id}}">{{$proveedor->empresa}}</option>
-                    @endforeach
-                  </select>
-                </div>
+                <label class="control-label">Proveedor</label>
+                <select class="form-control" name="proveedor_id" v-model='orden.proveedor_id'
+                  required @change="fijarProveedor()">
+                  @foreach($proveedores as $proveedor)
+                    <option value="{{$proveedor->id}}">{{$proveedor->empresa}}</option>
+                  @endforeach
+                </select>
               </div>
               @endif
             </div>
-            <div class="row">
-              <div class="col-md-4">
-                <div class="form-group">
-                  <label class="control-label">Telefono</label>
-                  <span class="form-control">{{$orden->proveedor->telefono}}</span>
-                </div>
-              </div>
-              <div class="col-md-4">
-                <div class="form-group">
-                  <label class="control-label">E-mail</label>
-                  <span class="form-control">{{$orden->proveedor->email}}</span>
-                </div>
-              </div>
-              <div class="col-md-4">
-                <div class="form-group">
-                  <label class="control-label">Dias Credito</label>
-                  <span class="form-control">{{$orden->proveedor->dias_credito}}</span>
-                </div>
+            <div class="row form-group">
+              <div class="col-md-12">
+                <label class="control-label">Agente Aduanal</label>
+                <span class="form-control">{{$orden->aduana_compañia}}</span>
               </div>
             </div>
-            <div class="row">
+            <div class="row form-group">
               <div class="col-md-4">
-                <div class="form-group">
-                  <label class="control-label">Moneda</label>
-                  <span class="form-control">{{$orden->proveedor->moneda}}</span>
-                </div>
+                <label class="control-label">Telefono</label>
+                <span class="form-control">{{$orden->proveedor->telefono}}</span>
               </div>
               <div class="col-md-4">
-                <div class="form-group">
-                  <label class="control-label">IVA</label>
-                  @if($orden->iva > 0)
-                  <span class="form-control">Si</span>
-                  @else
-                  <span class="form-control">No</span>
-                  @endif
-                </div>
+                <label class="control-label">E-mail</label>
+                <span class="form-control">{{$orden->proveedor->email}}</span>
+              </div>
+              <div class="col-md-4">
+                <label class="control-label">Dias Credito</label>
+                <span class="form-control">{{$orden->proveedor->dias_credito}}</span>
+              </div>
+            </div>
+            <div class="row form-group">
+              <div class="col-md-4">
+                <label class="control-label">Moneda</label>
+                <span class="form-control">{{$orden->proveedor->moneda}}</span>
+              </div>
+              <div class="col-md-4">
+                <label class="control-label">IVA</label>
+                @if($orden->iva > 0)
+                <span class="form-control">Si</span>
+                @else
+                <span class="form-control">No</span>
+                @endif
               </div>
             </div>
 
@@ -200,6 +195,7 @@ const app = new Vue({
     proveedores: {!! json_encode($proveedores) !!},
     orden:{
       numero: {{$orden->numero}},
+      numero_proyecto: {{$orden->numero_proyecto}},
       proveedor_id: '{{$orden->proveedor_id}}',
       proveedor_empresa: '{{$orden->proveedor_empresa}}',
       moneda: '{{$orden->moneda}}'
