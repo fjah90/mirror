@@ -12,6 +12,7 @@ use App\Models\Proveedor;
 use App\Models\Producto;
 use App\Models\OrdenProceso;
 use App\Models\CuentaPagar;
+use App\Models\TiempoEntrega;
 use App\Models\UnidadMedida;
 use App\User;
 use Mail;
@@ -50,9 +51,12 @@ class OrdenesCompraController extends Controller
       $proveedores = Proveedor::all();
       $unidades_medida = UnidadMedida::orderBy('simbolo')->get();
       $aduanas = AgenteAduanal::all();
+      $tiempos_entrega = TiempoEntrega::all();
       $productos = Producto::with('categoria')->has('categoria')->get();
 
-      return view('ordenes-compra.create', compact('proyecto','proveedores','productos','unidades_medida','aduanas'));
+      return view('ordenes-compra.create', 
+        compact('proyecto','proveedores','productos','unidades_medida','aduanas','tiempos_entrega')
+      );
     }
 
     /**
@@ -82,10 +86,20 @@ class OrdenesCompraController extends Controller
         ], 422);
       }
 
-      $create = $request->except('entradas');
+      $create = $request->except('entradas','tiempo');
       $create['cliente_id'] = $proyecto->cliente_id;
       $create['cliente_nombre'] = $proyecto->cliente_nombre;
       $create['proyecto_nombre'] = $proyecto->proyecto;
+
+      if(!is_null($request->tiempo['id'])){
+        if($request->tiempo['id'] > 0){
+          $create['tiempo_entrega'] = TiempoEntrega::find($request->tiempo->id)->valor;
+        }
+        else if($request->tiempo['id'] == 0 && $request->tiempo['valor']){
+          TiempoEntrega::create(['valor'=>$request->tiempo['valor']]);
+          $create['tiempo_entrega'] = $request->tiempo['valor'];
+        }
+      }
 
       if($request->iva=="1"){
         $create['iva'] = bcmul($create['subtotal'], 0.16, 2);
@@ -200,11 +214,18 @@ class OrdenesCompraController extends Controller
        $aduanas = AgenteAduanal::all();
        $productos = Producto::with('categoria')->has('categoria')->get();
        $unidades_medida = UnidadMedida::with('conversiones')->orderBy('simbolo')->get();
+       $tiempos_entrega = TiempoEntrega::all();
        $orden->load('proveedor', 'entradas.producto');
        if($orden->iva>0) $orden->iva = 1;
+       
+       $tiempo_entrega = TiempoEntrega::where('valor',$orden->tiempo_entrega)->first();
+       if(is_null($tiempo_entrega)){
+         $orden->tiempo = ['id' => '', 'valor' => ''];
+       }
+       else $orden->tiempo = ['id' => $tiempo_entrega->id, 'valor' => ''];
 
        return view('ordenes-compra.edit', 
-        compact('proyecto','orden','productos','proveedores','unidades_medida','aduanas')
+        compact('proyecto','orden','productos','proveedores','unidades_medida','aduanas','tiempos_entrega')
       );
      }
 
@@ -237,9 +258,20 @@ class OrdenesCompraController extends Controller
       }
 
       $update = $request->only(
-        'proveedor_id','proveedor_empresa','moneda','numero','subtotal','numero_proyecto','tiempo_entrega',
+        'proveedor_id','proveedor_empresa','moneda','numero','subtotal','numero_proyecto',
         'aduana_id','aduana_compañia'
       );
+
+      if (!is_null($request->tiempo['id'])) {
+        if ($request->tiempo['id'] > 0) {
+          $update['tiempo_entrega'] = TiempoEntrega::find($request->tiempo->id)->valor;
+        } else if($request->tiempo['id'] == 0 && $request->tiempo['valor']){
+          TiempoEntrega::create(['valor' => $request->tiempo['valor']]);
+          $update['tiempo_entrega'] = $request->tiempo['valor'];
+        }
+      }
+      else $update['tiempo_entrega'] = '';
+
       if($request->iva=="1"){
         $update['iva'] = bcmul($update['subtotal'], 0.16, 2);
         $update['total'] = bcmul($update['subtotal'], 1.16, 2);

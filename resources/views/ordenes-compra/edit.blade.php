@@ -47,13 +47,6 @@
                 <input type="number" step="1" min="1" class="form-control" name="numero_proyecto"
                   v-model="orden.numero_proyecto" />
               </div>
-              <div class="col-md-4">
-                <label class="control-label">Tiempo de Entrega</label>
-                <input type="text" class="form-control" name="tiempo_entrega"
-                  v-model="orden.tiempo_entrega" />
-              </div>
-            </div>
-            <div class="row form-group">
               @if($orden->proveedor_id)
               <div class="col-md-4">
                 <label class="control-label">Proveedor</label>
@@ -70,6 +63,8 @@
                 </select>
               </div>
               @endif
+            </div>
+            <div class="row form-group">
               <div class="col-md-4">
                 <label class="control-label">Agente Aduanal</label>
                 <select class="form-control" name="aduana_id" v-model='orden.aduana_id' @change="fijarAduana()">
@@ -79,11 +74,25 @@
                 </select>
               </div>
               <div class="col-md-4">
-                <label class="control-label">Moneda</label>
-                <span class="form-control">@{{orden.moneda}}</span>
+                <label class="control-label">Tiempo de Entrega</label>
+                <select class="form-control" name="tiempo.id" v-model='orden.tiempo.id'>
+                  @foreach($tiempos_entrega as $tiempo)
+                  <option value="{{$tiempo->id}}">{{$tiempo->valor}}</option>
+                  @endforeach
+                  <option value="0">Otro</option>
+                </select>
+              </div>
+              <div class="col-md-4">
+                <label class="control-label">Especifique Tiempo</label>
+                <input type="text" class="form-control" name="tiempo.valor"
+                  v-model="orden.tiempo.valor" :disabled="orden.tiempo.id!='0'" />
               </div>
             </div>
             <div class="row form-group">
+              <div class="col-md-4">
+                <label class="control-label">Moneda</label>
+                <span class="form-control">@{{orden.moneda}}</span>
+              </div>
               <div class="col-md-4">
                 <label class="control-label">IVA</label>
                 <select class="form-control" name="iva" v-model="orden.iva" required>

@@ -38,35 +38,45 @@
                     v-model="orden.numero_proyecto" />
                 </div>
                 <div class="col-md-4">
-                  <label class="control-label">Tiempo de Entrega</label>
-                  <input type="text" class="form-control" name="tiempo_entrega" v-model="orden.tiempo_entrega" />
-                </div>
-              </div>
-              <div class="row form-group">
-                <div class="col-md-4">
                   <label class="control-label">Proveedor</label>
                   <select class="form-control" name="proveedor_id" v-model='orden.proveedor_id'
                     required :disabled="orden.entradas.length>0" @change="fijarProveedor()">
                     @foreach($proveedores as $proveedor)
-                      <option value="{{$proveedor->id}}">{{$proveedor->empresa}}</option>
+                    <option value="{{$proveedor->id}}">{{$proveedor->empresa}}</option>
                     @endforeach
                   </select>
                 </div>
+              </div>
+              <div class="row form-group">
                 <div class="col-md-4">
                   <label class="control-label">Agente Aduanal</label>
                   <select class="form-control" name="aduana_id" v-model='orden.aduana_id' @change="fijarAduana()">
                     @foreach($aduanas as $aduana)
-                      <option value="{{$aduana->id}}">{{$aduana->compañia}}</option>
+                    <option value="{{$aduana->id}}">{{$aduana->compañia}}</option>
                     @endforeach
                   </select>
                 </div>
+                <div class="col-md-4">
+                  <label class="control-label">Tiempo de Entrega</label>
+                  <select class="form-control" name="tiempo.id" v-model='orden.tiempo.id'>
+                    @foreach($tiempos_entrega as $tiempo)
+                    <option value="{{$tiempo->id}}">{{$tiempo->valor}}</option>
+                    @endforeach
+                    <option value="0">Otro</option>
+                  </select>
+                </div>
+                <div class="col-md-4">
+                  <label class="control-label">Especifique Tiempo</label>
+                  <input type="text" class="form-control" name="tiempo.valor"
+                    v-model="orden.tiempo.valor" :disabled="orden.tiempo.id!='0'" />
+                </div>
+              </div>
+              <div class="row form-group">
                 <div class="col-md-4">
                   <label class="control-label">Moneda</label>
                   <input type="text" class="form-control" name="moneda"
                     v-model="orden.moneda" required disabled />
                 </div>
-              </div>
-              <div class="row form-group">
                 <div class="col-md-4">
                   <label class="control-label">IVA</label>
                   <select class="form-control" name="iva" v-model="orden.iva" required>
@@ -248,7 +258,10 @@ const app = new Vue({
       aduana_compañia: '',
       numero: '',
       numero_proyecto: '',
-      tiempo_entrega: '',
+      tiempo: {
+        id: '',
+        valor: ''
+      },
       moneda: '',
       entradas: [],
       subtotal: 0,
