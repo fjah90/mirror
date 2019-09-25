@@ -107,28 +107,29 @@ hr.separator {
 
 
 .signup-form, .signin-form {
-        background      : url("/images/fondo.jpg");
-    }
-    .signup-form:before, .signin-form:before {
-        opacity       : 0.7;
-        background    : #000;
-    }
-    .signup-form label, .signin-form label {
-        font-size: 16px;
-        color: #FFF;
-    }
-    .form-control {
-        color: #000;
-        background-color: #FFF;
-        border: none;
-        border-radius: 10px;
-    }
-    input[type="submit"] {
-        background: #686767;
-        color: #FFF;
-        border: none;
-        font-size: 16px;
-        padding: 6px 60px;
-        letter-spacing: 1px;
-        border-radius: 10px;
-    }
+    background    : url("/images/fondo.jpg");
+    background-size: cover; 
+}
+.signup-form:before, .signin-form:before {
+    opacity       : 0.7;
+    background    : #000;
+}
+.signup-form label, .signin-form label {
+    font-size: 16px;
+    color: #FFF;
+}
+.form-control {
+    color: #000;
+    background-color: #FFF;
+    border: none;
+    border-radius: 10px;
+}
+input[type="submit"] {
+    background: #686767;
+    color: #FFF;
+    border: none;
+    font-size: 16px;
+    padding: 6px 60px;
+    letter-spacing: 1px;
+    border-radius: 10px;
+}

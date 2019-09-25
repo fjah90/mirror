@@ -15,6 +15,7 @@
   <style>
     .signup-form, .signin-form {
         background      : url("/images/fondo.jpg");
+        background-size: cover; 
     }
     .signup-form:before, .signin-form:before {
         opacity       : 0.7;
