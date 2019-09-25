@@ -353,7 +353,12 @@
                 <table style="margin:0; width:100%;">
                   <tr>
                     <td style="vertical-align:top; width:15%;">PROJECT:</td>
-                    <td class="text-uppercase"><strong>{{$orden->proyecto_nombre}}</strong></td>
+                    <td class="text-uppercase">
+                      <strong>
+                        {{$orden->numero_proyecto}}
+                        {{$orden->proyecto_nombre}}
+                      </strong>
+                    </td>
                   </tr>
                   <tr>
                     <td>DELIVERY:</td>
