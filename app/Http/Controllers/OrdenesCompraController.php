@@ -158,7 +158,7 @@ class OrdenesCompraController extends Controller
       //generar PDF de orden
       $orden->update($request->all());
       $orden->load('proveedor.contactos', 'proyecto.cotizacion',
-      'proyecto.cliente', 'entradas.producto.descripciones.descripcionNombre');
+      'proyecto.cliente', 'entradas.producto.descripciones.descripcionNombre', 'aduana');
       $firmaAbraham = User::select('firma')->where('id',2)->first()->firma;
       if($firmaAbraham) $firmaAbraham = storage_path('app/public/'.$firmaAbraham);
       else $firmaAbraham = public_path('images/firma_vacia.png');
@@ -443,7 +443,7 @@ class OrdenesCompraController extends Controller
     public function regeneratePDF(Request $request)
     {
       $orden = OrdenCompra::with('proveedor.contactos', 'proyecto.cotizacion',
-      'proyecto.cliente', 'entradas.producto.descripciones.descripcionNombre')
+      'proyecto.cliente', 'entradas.producto.descripciones.descripcionNombre', 'aduana')
       ->where('id', $request->orden_id)->first();
       $firmaAbraham = User::select('firma')->where('id',2)->first()->firma;
       if($firmaAbraham) $firmaAbraham = storage_path('app/public/'.$firmaAbraham);
@@ -466,6 +466,7 @@ class OrdenesCompraController extends Controller
         if($entrada->producto->foto) $entrada->producto->foto = asset('storage/'.$entrada->producto->foto);
       }
       
+      // return view('ordenes-compra.ordenPDF', compact('orden'));
       $ordenPDF = PDF::loadView('ordenes-compra.ordenPDF', compact('orden'));
       Storage::disk('public')->put($url, $ordenPDF->output());
       unset($orden->fechaPDF);

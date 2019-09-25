@@ -360,7 +360,7 @@
             </tr>
             <tr>
               <td class="bordered" style="padding:0;">
-                <table style="margin:0;">
+                <table style="margin:0; width:100%;">
                   <tr>
                     <td style="vertical-align:top">Project:</td>
                     <td class="text-uppercase">

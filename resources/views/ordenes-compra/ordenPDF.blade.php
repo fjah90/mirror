@@ -350,9 +350,9 @@
             </tr>
             <tr>
               <td class="bordered" style="padding:0;">
-                <table style="margin:0;">
+                <table style="margin:0; width:100%;">
                   <tr>
-                    <td style="vertical-align:top;">PROJECT:</td>
+                    <td style="vertical-align:top; width:15%;">PROJECT:</td>
                     <td class="text-uppercase"><strong>{{$orden->proyecto_nombre}}</strong></td>
                   </tr>
                   <tr>
@@ -383,6 +383,11 @@
               <td class="bordered">
                 <p class="text-center font-small "><strong>DELIVER TO:</strong></p>
                 <p class="text-uppercase">{{$orden->proyecto->cotizacion->lugar}}</p>
+                <p class="text-uppercase">By: {{$orden->aduana->compañia}}</p>
+                <p class="text-uppercase">{{$orden->aduana->contacto}}</p>
+                <p class="text-uppercase">{{$orden->aduana->telefono}}</p>
+                <p class="text-uppercase">{{$orden->aduana->email}}</p>
+                <p class="text-uppercase">{{$orden->aduana->direccion}}</p>
               </td>
             </tr>
           </tbody>
