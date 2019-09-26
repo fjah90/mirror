@@ -158,6 +158,40 @@
                 </div>
               </div>
             </div>
+
+            <div class="row form-group">
+              <div class="col-md-12">
+                <h4>Archivos para autorización</h4>
+                <ul>
+                  <li v-for="(archivo, index) in archivos_autorizacion" style="margin-bottom:3px;">
+                    <button class="btn btn-xxs btn-danger" @click="borrarArchivo(archivo, index)">
+                      <i class="fas fa-times"></i>
+                    </button>
+                    <a :href="archivo.liga" target="_blank">@{{archivo.nombre}}</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            
+            <form @submit.prevent="agregarArchivo()">
+              <div class="row form-group">
+                <div class="col-md-6">
+                  <label class="control-label">Nuevo Archivo</label>
+                  <div class="file-loading">
+                    <input id="archivo" name="nuevo_archivo" type="file" ref="archivo" required/>
+                  </div>
+                  <div id="archivo-file-errors"></div>
+                </div>
+                <div class="col-md-4">
+                  <label class="control-label">Nombre Archivo</label>
+                  <input class="form-control" name="nombre_archivo" type="text" v-model="archivo.nombre_archivo" />
+                </div>
+                <div class="col-md-2 text-right" style="margin-top:25px;">
+                  <button class="btn btn-primary" type="submit">Agregar</button>
+                </div>
+              </div>
+            </form>  
+
             <div class="row">
               <div class="col-md-12 text-center">
                 <div class="form-group">
@@ -175,6 +209,7 @@
                 </div>
               </div>
             </div>
+
           </div>
         </div>
       </div>
@@ -194,14 +229,70 @@ const app = new Vue({
     cargando: false,
     proveedores: {!! json_encode($proveedores) !!},
     orden:{
-      numero: {{$orden->numero}},
-      numero_proyecto: {{$orden->numero_proyecto}},
+      numero: '{{$orden->numero}}',
+      numero_proyecto: '{{$orden->numero_proyecto}}',
       proveedor_id: '{{$orden->proveedor_id}}',
       proveedor_empresa: '{{$orden->proveedor_empresa}}',
       moneda: '{{$orden->moneda}}'
     },
+    archivos_autorizacion: {!! json_encode($archivos_autorizacion) !!},
+    archivo: {
+      nombre_archivo: '',
+      nuevo_archivo: ''
+    }
+  },
+  mounted(){
+    $("#archivo").fileinput({
+      language: 'es',
+      showPreview: false,
+      showUpload: false,
+      showRemove: false,
+      allowedFileExtensions: ["jpg", "jpeg", "png", "pdf"],
+      elErrorContainer: '#archivo-file-errors',
+    });
   },
   methods: {
+    agregarArchivo(){
+      this.cargando = true;
+      this.archivo.nuevo_archivo = this.$refs['archivo'].files[0];
+      var formData = objectToFormData(this.archivo, {indices:true});
+      axios.post('/proyectos-aprobados/{{$proyecto->id}}/ordenes-compra/{{$orden->id}}/agregarArchivo',
+        formData, {headers: { 'Content-Type': 'multipart/form-data'}}
+      ).then(({data}) => {
+        this.archivos_autorizacion.push(data.archivo);
+        this.archivo = {
+          nombre_archivo: '',
+          nuevo_archivo: ''
+        };
+        $("#archivo").fileinput('clear');
+        this.cargando = false;
+      })
+      .catch(({response}) => {
+        console.error(response);
+        this.cargando = false;
+        swal({
+          title: "Error",
+          text: response.data.message || "Ocurrio un error inesperado, intente mas tarde",
+          type: "error"
+        });
+      });
+    },//fin agregarArchivo
+    borrarArchivo(archivo, index){
+      axios.post('/proyectos-aprobados/{{$proyecto->id}}/ordenes-compra/{{$orden->id}}/borrarArchivo',{
+        'archivo':archivo.nombre
+      }).then(({data}) => {
+        this.archivos_autorizacion.splice(index,1);
+      })
+      .catch(({response}) => {
+        console.error(response);
+        this.cargando = false;
+        swal({
+          title: "Error",
+          text: response.data.message || "Ocurrio un error inesperado, intente mas tarde",
+          type: "error"
+        });
+      });
+    },
     fijarProveedor(){
       this.proveedores.find(function(proveedor){
         if(proveedor.id == this.orden.proveedor_id){

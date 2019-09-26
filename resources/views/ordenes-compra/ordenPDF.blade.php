@@ -388,11 +388,13 @@
               <td class="bordered">
                 <p class="text-center font-small "><strong>DELIVER TO:</strong></p>
                 <p class="text-uppercase">{{$orden->proyecto->cotizacion->lugar}}</p>
+                @if($orden->aduana)
                 <p class="text-uppercase">By: {{$orden->aduana->compañia}}</p>
                 <p class="text-uppercase">{{$orden->aduana->contacto}}</p>
                 <p class="text-uppercase">{{$orden->aduana->telefono}}</p>
                 <p class="text-uppercase">{{$orden->aduana->email}}</p>
                 <p class="text-uppercase">{{$orden->aduana->direccion}}</p>
+                @endif
               </td>
             </tr>
           </tbody>

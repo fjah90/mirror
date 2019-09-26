@@ -35,6 +35,12 @@ class OrdenesCompraController extends Controller
 
       foreach ($ordenes as $orden) {
         if($orden->archivo) $orden->archivo = asset('storage/'.$orden->archivo);
+
+        $archivos_autorizacion = Storage::disk('public')->files('ordenes_compra/'.$orden->id.'/archivos_autorizacion');
+        $archivos_autorizacion = array_map(function ($archivo) {
+          return ['liga' => asset("storage/$archivo"), 'nombre' => basename($archivo)];
+        }, $archivos_autorizacion);
+        $orden->archivos_autorizacion = $archivos_autorizacion;
       }
 
       return view('ordenes-compra.index', compact('ordenes'));
@@ -131,8 +137,12 @@ class OrdenesCompraController extends Controller
     {
       $proveedores = Proveedor::all();
       $orden->load('proveedor', 'entradas.producto');
+      $archivos_autorizacion = Storage::disk('public')->files('ordenes_compra/'.$orden->id.'/archivos_autorizacion');
+      $archivos_autorizacion = array_map(function($archivo){
+        return ['liga'=> asset("storage/$archivo"), 'nombre'=>basename($archivo)];
+      }, $archivos_autorizacion);
 
-      return view('ordenes-compra.show', compact('proyecto','orden','proveedores'));
+      return view('ordenes-compra.show', compact('proyecto','orden','proveedores','archivos_autorizacion'));
     }
 
     /**
@@ -198,6 +208,68 @@ class OrdenesCompraController extends Controller
       unset($orden->firmaAbraham);
       $orden->update(['status'=>'Por Autorizar', 'archivo'=>$url]);
 
+      return response()->json(['success' => true, "error" => false], 200);
+    }
+
+    /**
+     * Guarda archivo enviado para autorizacion.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\ProyectoAprobado  $proyecto
+     * @param  \App\Models\OrdenCompra  $orden
+     * @return \Illuminate\Http\Response
+     */
+    public function agregarArchivo(Request $request, ProyectoAprobado $proyecto, OrdenCompra $orden)
+    {
+      $validator = Validator::make($request->all(), [
+        'nuevo_archivo' => 'required|file|mimes:jpeg,jpg,png,pdf'
+      ]);
+
+      if ($validator->fails()) {
+        $errors = $validator->errors()->all();
+        return response()->json([
+          "success" => false, "error" => true, "message" => $errors[0]
+        ], 422);
+      }
+
+      if($request->nombre_archivo) 
+        $nombre_archivo = $request->nombre_archivo.".".$request->nuevo_archivo->guessExtension();
+      else
+        $nombre_archivo = $request->nuevo_archivo->getClientOriginalName();
+      
+      $archivo = Storage::putFileAs(
+        'public/ordenes_compra/' . $orden->id . '/archivos_autorizacion',
+        $request->nuevo_archivo, $nombre_archivo
+      );
+      $archivo = asset('storage/' . str_replace('public/', '', $archivo));
+
+      return response()->json(['success' => true, "error" => false, "archivo" => [
+        "liga" => $archivo, "nombre" => $nombre_archivo
+      ]], 200);
+    }
+    /**
+     * Eliminar archivo de carpeta de autorizacion.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\ProyectoAprobado  $proyecto
+     * @param  \App\Models\OrdenCompra  $orden
+     * @return \Illuminate\Http\Response
+     */
+    public function borrarArchivo(Request $request, ProyectoAprobado $proyecto, OrdenCompra $orden)
+    {
+      $validator = Validator::make($request->all(), [
+        'archivo' => 'required'
+      ]);
+
+      if ($validator->fails()) {
+        $errors = $validator->errors()->all();
+        return response()->json([
+          "success" => false, "error" => true, "message" => $errors[0]
+        ], 422);
+      }
+
+      Storage::disk('public')->delete('ordenes_compra/'.$orden->id.'/archivos_autorizacion/'.$request->archivo);
+      
       return response()->json(['success' => true, "error" => false], 200);
     }
 
@@ -411,7 +483,7 @@ class OrdenesCompraController extends Controller
      */
     public function rechazar(Request $request, ProyectoAprobado $proyecto, OrdenCompra $orden)
     {
-      $validator = Validator::make($request->all(), ['motivo' => 'required']);
+      $validator = Validator::make($request->all(), ['motivo_rechazo' => 'required']);
       if ($validator->fails()) {
         $errors = $validator->errors()->all();
         return response()->json([
@@ -428,7 +500,7 @@ class OrdenesCompraController extends Controller
       }
       $orden->update([
         'status'=>OrdenCompra::STATUS_RECHAZADA,
-        'motivo_rechazo'=>$request->motivo
+        'motivo_rechazo'=>$request->motivo_rechazo
       ]);
 
       $this->avisarOrdenRechazada($orden);
