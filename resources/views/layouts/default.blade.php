@@ -203,17 +203,17 @@
           <li class="sub" {!! (Request::is('clientes*') ? 'class="active"' : '') !!}>
             <a href="javascript:;"><i class="fas fa-truck-loading"></i> Tipo de Proveedor</a>
           </li>
-          <li class="subsub" {!! (Request::is('proveedores*') ? 'class="active"' : '') !!}>
+          <li class="sub" {!! (Request::is('proveedores*') ? 'class="active"' : '') !!}>
             <a href="{{ URL::to('proveedores') }}">
               <i class="fas fa-truck-loading "></i> Proveedores Nacional
             </a>
           </li>
-          <li class="subsub" {!! (Request::is('proveedores*') ? 'class="active"' : '') !!}>
+          <li class="sub" {!! (Request::is('proveedores*') ? 'class="active"' : '') !!}>
             <a href="{{ URL::to('proveedores') }}">
               <i class="fas fa-truck-loading "></i> Proveedores Extranjero
             </a>
           </li>
-          <li class="subsub" {!! (Request::is('agentesAduanales*') ? 'class="active"' : '') !!}>
+          <li class="sub" {!! (Request::is('agentesAduanales*') ? 'class="active"' : '') !!}>
             <a href="{{ URL::to('agentesAduanales') }}">
               <i class="fas fa-warehouse"></i> Agentes Aduanales
             </a>
