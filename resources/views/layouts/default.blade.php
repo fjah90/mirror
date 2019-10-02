@@ -308,7 +308,7 @@
 <footer>
   <div class="row">
     <div class="col-md-offset-2 col-md-8">
-      <strong>&#169; 2018 789.mx</strong><br />
+      <strong>&#169; {{date('Y')}} 789.mx</strong><br />
       <span>Powered By <a href="http://www.789.mx" target="_blank">789.mx</a></span>
     </div>
     <div class="col-md-2 text-right">
