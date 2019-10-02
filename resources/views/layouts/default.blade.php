@@ -182,13 +182,13 @@
               <i class="far fa-folder-open "></i> Tipo de Proyecto
             </a>
           </li>
-          <li class="subsub" {!! (Request::is('prospectos*') ? 'class="active"' : '') !!} >
+          <li class="sub" {!! (Request::is('prospectos*') ? 'class="active"' : '') !!} >
             <a href="{{ URL::to('prospectos') }}">
               <i class="menu-icon fas fa-folder-open "></i>
               <span>Proyectos en Proceso</span>
             </a>
           </li>
-          <li class="subsub" {!! (Request::is('proyectos-aprobados*') ? 'class="active"' : '') !!} >
+          <li class="sub" {!! (Request::is('proyectos-aprobados*') ? 'class="active"' : '') !!} >
             <a href="{{ URL::to('proyectos-aprobados') }}">
               <i class="menu-icon fas fa-file-signature"></i>
               <span>Proyectos Aprobados</span>
@@ -285,7 +285,7 @@
           <hr class="divider-menu">
 
           <li {!! (Request::is('cuentas-pagar*') ? 'class="active"' : '') !!} >
-            <a href="{{ URL::to('cuentas-pagar') }}">
+            <a href="javascript:;">
               <i class="menu-icon fas fa-receipt"></i>
               <span>Reportes</span>
             </a>
