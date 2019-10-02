@@ -99,7 +99,7 @@ class OrdenesCompraController extends Controller
 
       if(!is_null($request->tiempo['id'])){
         if($request->tiempo['id'] > 0){
-          $create['tiempo_entrega'] = TiempoEntrega::find($request->tiempo->id)->valor;
+          $create['tiempo_entrega'] = TiempoEntrega::find($request->tiempo['id'])->valor;
         }
         else if($request->tiempo['id'] == 0 && $request->tiempo['valor']){
           TiempoEntrega::create(['valor'=>$request->tiempo['valor']]);
