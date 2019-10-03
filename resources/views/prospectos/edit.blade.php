@@ -249,6 +249,7 @@
             <tr>
               <th>ID</th>
               <th>Nombre</th>
+              <th>Marca</th>
               <th>Tipo</th>
               <th></th>
             </tr>
@@ -257,6 +258,7 @@
             <tr v-for="prod in productos">
               <td>@{{prod.id}}</td>
               <td>@{{prod.nombre}}</td>
+              <td>@{{prod.marca}}</td>
               <td>@{{prod.categoria.nombre}}</td>
               <td class="text-right">
                 <button class="btn btn-primary" title="Seleccionar"

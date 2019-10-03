@@ -13,11 +13,30 @@ class Producto extends Model
       'proveedor_id','categoria_id','nombre','foto','subcategoria_id','ficha_tecnica'
     ];
 
+    protected $appends = ['marca'];
+
     /**
      * ---------------------------------------------------------------------------
      *                             Agregates
      * ---------------------------------------------------------------------------
      */
+    public function getMarcaAttribute(){
+      $marca = \App\Models\ProductoDescripcion::select('productos_descripciones.valor')
+      ->join(
+        'categorias_descripciones',
+        'productos_descripciones.categoria_descripcion_id',
+        '=',
+        'categorias_descripciones.id'
+      )
+      ->where([
+        ['productos_descripciones.producto_id', $this->id],
+        ['categorias_descripciones.nombre', 'like', 'marca']
+      ])
+      ->first();
+
+      return (!is_null($marca))?$marca->valor:'';
+    }
+    
 
     /**
      * ---------------------------------------------------------------------------

@@ -28,7 +28,8 @@
         </div>
         <div class="panel-body">
           <div class="table-responsive">
-            <table id="tabla" class="table table-bordred" style="width:100%;">
+            <table id="tabla" class="table table-bordred" style="width:100%;"
+              data-page-length="-1">
               <thead>
                 <tr>
                   <th>Usuario</th>

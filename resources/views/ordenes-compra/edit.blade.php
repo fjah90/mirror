@@ -95,7 +95,7 @@
               </div>
               <div class="col-md-4">
                 <label class="control-label">IVA</label>
-                <select class="form-control" name="iva" v-model="orden.iva" required>
+                <select class="form-control" name="iva" v-model="orden.iva" required disabled>
                   <option value="0">No</option>
                   <option value="1">Si</option>
                 </select>
@@ -337,6 +337,8 @@ const app = new Vue({
         if(proveedor.id == this.orden.proveedor_id){
           this.orden.proveedor_empresa = proveedor.empresa;
           this.orden.moneda = proveedor.moneda;
+          if(proveedor.moneda=='Dolares') this.orden.iva = 0;
+          else this.orden.iva = 1;
           return true;
         }
       }, this);
