@@ -18,7 +18,7 @@ class OrdenCompra extends Model
     protected $fillable = ['cliente_id','proyecto_id','proveedor_id','orden_proceso_id',
       'cliente_nombre','proyecto_nombre','proveedor_empresa','status','moneda','subtotal',
       'iva','total','motivo_rechazo','archivo','numero','tiempo_entrega','numero_proyecto',
-      'aduana_id','aduana_compañia'
+      'aduana_id','aduana_compañia','proveedor_contacto_id'
     ];
 
     protected $casts = [
@@ -44,6 +44,11 @@ class OrdenCompra extends Model
     public function proveedor(){
       return $this->belongsTo('App\Models\Proveedor', 'proveedor_id', 'id')
       ->withDefault(['id' => 0, 'empresa' => 'Por Definir']);
+    }
+    
+    public function contacto(){
+      return $this->belongsTo('App\Models\ProveedorContacto', 'proveedor_contacto_id', 'id')
+      ->withDefault(['id' => 0, 'nombre' => 'Por Definir']);
     }
 
     public function entradas(){

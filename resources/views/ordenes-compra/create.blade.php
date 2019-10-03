@@ -84,6 +84,17 @@
                     <option value="1">Si</option>
                   </select>
                 </div>
+                <div class="col-md-4">
+                  <label class="control-label">Contacto Proveedor</label>
+                  <select class="form-control" name="proveedor_contacto_id" v-model='orden.proveedor_contacto_id'
+                    required>
+                    @foreach($contactos as $contacto)
+                    <option v-if="orden.proveedor_id=={{$contacto->proveedor_id}}" value="{{$contacto->id}}">
+                      {{$contacto->nombre}}
+                    </option>
+                    @endforeach
+                  </select>
+                </div>
               </div>
               <div class="row form-group">
                 <div class="col-md-4">
@@ -252,7 +263,8 @@ const app = new Vue({
     productos: {!! json_encode($productos) !!},
     orden: {
       proyecto_id: {{$proyecto->id}},
-      proveedor_id: 0,
+      proveedor_id: '',
+      proveedor_contacto_id: '',
       proveedor_empresa: '',
       aduana_id: 0,
       aduana_compañia: '',
@@ -288,6 +300,7 @@ const app = new Vue({
       this.proveedores.find(function(proveedor){
         if(proveedor.id == this.orden.proveedor_id){
           this.orden.proveedor_empresa = proveedor.empresa;
+          this.orden.proveedor_contacto_id = '';
           this.orden.moneda = proveedor.moneda;
           if(proveedor.moneda=='Dolares') this.orden.iva = 0;
           else this.orden.iva = 1;

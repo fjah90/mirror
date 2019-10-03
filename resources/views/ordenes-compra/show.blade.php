@@ -37,13 +37,11 @@
             <div class="row form-group">
               <div class="col-md-4">
                 <label class="control-label">Numero Orden</label>
-                <input type="number" step="1" min="1" class="form-control" name="numero"
-                  v-model="orden.numero" required />
+                <span class="form-control">{{$orden->numero}}</span>
               </div>
               <div class="col-md-4">
                 <label class="control-label">Numero Proyecto</label>
-                <input type="number" step="1" min="1" class="form-control" name="numero_proyecto"
-                  v-model="orden.numero_proyecto" />
+                <span class="form-control">{{$orden->numero_proyecto}}</span>
               </div>
               <div class="col-md-4">
                 <label class="control-label">Tiempo de Entrega</label>
@@ -57,22 +55,10 @@
               </div>
             </div>
             <div class="row form-group">
-              @if($orden->proveedor_id)
               <div class="col-md-12">
                 <label class="control-label">Proveedor</label>
                 <span class="form-control">{{$orden->proveedor_empresa}}</span>
               </div>
-              @else
-              <div class="col-md-12">
-                <label class="control-label">Proveedor</label>
-                <select class="form-control" name="proveedor_id" v-model='orden.proveedor_id'
-                  required @change="fijarProveedor()">
-                  @foreach($proveedores as $proveedor)
-                    <option value="{{$proveedor->id}}">{{$proveedor->empresa}}</option>
-                  @endforeach
-                </select>
-              </div>
-              @endif
             </div>
             <div class="row form-group">
               <div class="col-md-12">
@@ -81,13 +67,19 @@
               </div>
             </div>
             <div class="row form-group">
+              <div class="col-md-12">
+                <label class="control-label">Proveedor Contacto</label>
+                <span class="form-control">{{$orden->contacto->nombre}}</span>
+              </div>
+            </div>
+            <div class="row form-group">
               <div class="col-md-4">
                 <label class="control-label">Telefono</label>
-                <span class="form-control">{{$orden->proveedor->telefono}}</span>
+                <span class="form-control">{{$orden->contacto->telefono}}</span>
               </div>
               <div class="col-md-4">
                 <label class="control-label">E-mail</label>
-                <span class="form-control">{{$orden->proveedor->email}}</span>
+                <span class="form-control">{{$orden->contacto->email}}</span>
               </div>
               <div class="col-md-4">
                 <label class="control-label">Dias Credito</label>
@@ -97,15 +89,11 @@
             <div class="row form-group">
               <div class="col-md-4">
                 <label class="control-label">Moneda</label>
-                <span class="form-control">{{$orden->proveedor->moneda}}</span>
+                <span class="form-control">{{$orden->moneda}}</span>
               </div>
               <div class="col-md-4">
                 <label class="control-label">IVA</label>
-                @if($orden->iva > 0)
-                <span class="form-control">Si</span>
-                @else
-                <span class="form-control">No</span>
-                @endif
+                <span class="form-control">{{($orden->iva>0)?'Si':'No'}}</span>
               </div>
             </div>
 
@@ -227,14 +215,6 @@ const app = new Vue({
   el: '#content',
   data: {
     cargando: false,
-    proveedores: {!! json_encode($proveedores) !!},
-    orden:{
-      numero: '{{$orden->numero}}',
-      numero_proyecto: '{{$orden->numero_proyecto}}',
-      proveedor_id: '{{$orden->proveedor_id}}',
-      proveedor_empresa: '{{$orden->proveedor_empresa}}',
-      moneda: '{{$orden->moneda}}'
-    },
     archivos_autorizacion: {!! json_encode($archivos_autorizacion) !!},
     archivo: {
       nombre_archivo: '',
@@ -293,18 +273,9 @@ const app = new Vue({
         });
       });
     },
-    fijarProveedor(){
-      this.proveedores.find(function(proveedor){
-        if(proveedor.id == this.orden.proveedor_id){
-          this.orden.proveedor_empresa = proveedor.empresa;
-          this.orden.moneda = proveedor.moneda;
-          return true;
-        }
-      }, this);
-    },
     comprar(){
       this.cargando = true;
-      axios.post('/proyectos-aprobados/{{$proyecto->id}}/ordenes-compra/{{$orden->id}}/comprar',this.orden)
+      axios.post('/proyectos-aprobados/{{$proyecto->id}}/ordenes-compra/{{$orden->id}}/comprar',{})
       .then(({data}) => {
         swal({
           title: "Orden Comprada",

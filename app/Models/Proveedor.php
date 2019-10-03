@@ -13,7 +13,7 @@ class Proveedor extends Model
       'identidad_fiscal','identificacion_fiscal','banco','numero_cuenta',
       'clave_interbancaria','calle','numero','colonia','cp','ciudad','estado',
       'moneda','dias_credito','nacional','codigo_pais','pais','cuenta_intercorp',
-      'limite_credito','swif','aba'
+      'limite_credito','swift','aba'
     ];
 
     protected $casts = [

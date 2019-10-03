@@ -12,6 +12,7 @@ use App\Models\Proveedor;
 use App\Models\Producto;
 use App\Models\OrdenProceso;
 use App\Models\CuentaPagar;
+use App\Models\ProveedorContacto;
 use App\Models\TiempoEntrega;
 use App\Models\UnidadMedida;
 use App\User;
@@ -55,13 +56,14 @@ class OrdenesCompraController extends Controller
     public function create(ProyectoAprobado $proyecto)
     {
       $proveedores = Proveedor::all();
+      $contactos = ProveedorContacto::all();
       $unidades_medida = UnidadMedida::orderBy('simbolo')->get();
       $aduanas = AgenteAduanal::all();
       $tiempos_entrega = TiempoEntrega::all();
       $productos = Producto::with('categoria')->has('categoria')->get();
 
       return view('ordenes-compra.create', 
-        compact('proyecto','proveedores','productos','unidades_medida','aduanas','tiempos_entrega')
+        compact('proyecto','proveedores','contactos','productos','unidades_medida','aduanas','tiempos_entrega')
       );
     }
 
@@ -77,6 +79,7 @@ class OrdenesCompraController extends Controller
       $validator = Validator::make($request->all(), [
         'proyecto_id' => 'required',
         'proveedor_id' => 'required',
+        'proveedor_contacto_id' => 'required',
         'numero' => 'required',
         'moneda' => 'required',
         'subtotal' => 'required',
@@ -135,38 +138,33 @@ class OrdenesCompraController extends Controller
      */
     public function show(ProyectoAprobado $proyecto, OrdenCompra $orden)
     {
-      $proveedores = Proveedor::all();
-      $orden->load('proveedor', 'entradas.producto');
+      $orden->load('proveedor', 'contacto', 'entradas.producto');
       $archivos_autorizacion = Storage::disk('public')->files('ordenes_compra/'.$orden->id.'/archivos_autorizacion');
       $archivos_autorizacion = array_map(function($archivo){
         return ['liga'=> asset("storage/$archivo"), 'nombre'=>basename($archivo)];
       }, $archivos_autorizacion);
 
-      return view('ordenes-compra.show', compact('proyecto','orden','proveedores','archivos_autorizacion'));
+      return view('ordenes-compra.show', compact('proyecto','orden','archivos_autorizacion'));
     }
 
     /**
      * Cambia status a Por Autorizar.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\ProyectoAprobado  $proyecto
      * @param  \App\Models\OrdenCompra  $orden
      * @return \Illuminate\Http\Response
      */
-    public function comprar(Request $request, ProyectoAprobado $proyecto, OrdenCompra $orden)
+    public function comprar(ProyectoAprobado $proyecto, OrdenCompra $orden)
     {
-      $validator = Validator::make($request->all(), [
-        'numero' => 'required',
-        'proveedor_id' => 'required',
-        'proveedor_empresa' => 'required',
-        'moneda' => 'required'
-      ]);
-
-      if ($validator->fails()) {
-        $errors = $validator->errors()->all();
-        return response()->json([
-          "success" => false, "error" => true, "message" => $errors[0]
-        ], 422);
+      if(is_null($orden->proveedor_id)){
+        return response()->json(['success' => false, "error" => true,
+          'message'=>'Falta agregar proveedor a la orden'
+        ], 400);
+      }
+      if(is_null($orden->proveedor_contacto_id)){
+        return response()->json(['success' => false, "error" => true,
+          'message'=>'Falta agregar contacto a la orden'
+        ], 400);
       }
 
       if($orden->status!=OrdenCompra::STATUS_PENDIENTE){
@@ -180,8 +178,7 @@ class OrdenesCompraController extends Controller
       $this->avisarOrdenPorAprobar($orden);
 
       //generar PDF de orden
-      $orden->update($request->all());
-      $orden->load('proveedor.contactos', 'proyecto.cotizacion',
+      $orden->load('proveedor', 'contacto', 'proyecto.cotizacion',
       'proyecto.cliente', 'entradas.producto.descripciones.descripcionNombre', 'aduana');
       $firmaAbraham = User::select('firma')->where('id',2)->first()->firma;
       if($firmaAbraham) $firmaAbraham = storage_path('app/public/'.$firmaAbraham);
@@ -283,11 +280,12 @@ class OrdenesCompraController extends Controller
      public function edit(ProyectoAprobado $proyecto, OrdenCompra $orden)
      {
        $proveedores = Proveedor::all();
+       $contactos = ProveedorContacto::all();
        $aduanas = AgenteAduanal::all();
        $productos = Producto::with('categoria')->has('categoria')->get();
        $unidades_medida = UnidadMedida::with('conversiones')->orderBy('simbolo')->get();
        $tiempos_entrega = TiempoEntrega::all();
-       $orden->load('proveedor', 'entradas.producto');
+       $orden->load('proveedor', 'contacto', 'entradas.producto');
        if($orden->iva>0) $orden->iva = 1;
        
        $tiempo_entrega = TiempoEntrega::where('valor',$orden->tiempo_entrega)->first();
@@ -297,7 +295,7 @@ class OrdenesCompraController extends Controller
        else $orden->tiempo = ['id' => $tiempo_entrega->id, 'valor' => ''];
 
        return view('ordenes-compra.edit', 
-        compact('proyecto','orden','productos','proveedores','unidades_medida','aduanas','tiempos_entrega')
+        compact('proyecto','orden','productos','proveedores','contactos','unidades_medida','aduanas','tiempos_entrega')
       );
      }
 
@@ -314,6 +312,7 @@ class OrdenesCompraController extends Controller
       $validator = Validator::make($request->all(), [
         'proyecto_id' => 'required',
         'proveedor_id' => 'required',
+        'proveedor_contacto_id' => 'required',
         'numero' => 'required',
         'moneda' => 'required',
         'subtotal' => 'required',
@@ -331,7 +330,7 @@ class OrdenesCompraController extends Controller
 
       $update = $request->only(
         'proveedor_id','proveedor_empresa','moneda','numero','subtotal','numero_proyecto',
-        'aduana_id','aduana_compañia'
+        'aduana_id','aduana_compañia','proveedor_contacto_id'
       );
 
       if (!is_null($request->tiempo['id'])) {
@@ -546,7 +545,7 @@ class OrdenesCompraController extends Controller
      */
     public function regeneratePDF(Request $request)
     {
-      $orden = OrdenCompra::with('proveedor.contactos', 'proyecto.cotizacion',
+      $orden = OrdenCompra::with('proveedor', 'contacto', 'proyecto.cotizacion',
       'proyecto.cliente', 'entradas.producto.descripciones.descripcionNombre', 'aduana')
       ->where('id', $request->orden_id)->first();
       $firmaAbraham = User::select('firma')->where('id',2)->first()->firma;

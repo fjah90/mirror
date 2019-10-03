@@ -325,16 +325,12 @@
                   {{$orden->proveedor->estado}}
                   {{$orden->proveedor->cp}}
                 </p>
-                <p class="text-uppercase">T. {{$orden->proveedor->telefono}}</p>
-                @if ($orden->proveedor->contactos->count())
-                  <p class="text-uppercase">ATN: {{$orden->proveedor->contactos->first()->nombre}}</p>
-                @else
-                  <p class="text-uppercase">ATN: </p>
-                @endif
+                <p class="text-uppercase">T. {{$orden->contacto->telefono}}</p>
+                <p class="text-uppercase">ATN: {{$orden->contacto->nombre}}</p>
                 <p>
                   email:
-                  <a href="mailto:{{$orden->proveedor->email}}">
-                    {{$orden->proveedor->email}}
+                  <a href="mailto:{{$orden->contacto->email}}">
+                    {{$orden->contacto->email}}
                   </a>
                 </p>
               </td>

@@ -376,7 +376,7 @@ const app = new Vue({
         numero_cuenta: '{{$proveedor->numero_cuenta}}',
         cuenta_interna: '{{$proveedor->cuenta_interna}}',
         clave_interbancaria: '{{$proveedor->clave_interbancaria}}',
-        swif: '{{$proveedor->swif}}',
+        swift: '{{$proveedor->swift}}',
         aba: '{{$proveedor->aba}}',
         moneda: '{{$proveedor->moneda}}',
         dias_credito: '{{$proveedor->dias_credito}}',

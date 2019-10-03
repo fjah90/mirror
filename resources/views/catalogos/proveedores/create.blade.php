@@ -373,7 +373,7 @@ const app = new Vue({
         numero_cuenta: '',
         cuenta_interna: '',
         clave_interbancaria: '',
-        swif: '',
+        swift: '',
         aba: '',
         moneda: '',
         dias_credito: '',
