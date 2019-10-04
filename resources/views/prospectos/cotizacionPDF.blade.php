@@ -364,8 +364,7 @@
                   <tr>
                     <td style="vertical-align:top">Proyecto:</td>
                     <td class="text-uppercase">
-                      <strong>{{$cotizacion->prospecto->nombre}}</strong> /
-                      {{$cotizacion->prospecto->descripcion}}
+                      <strong>{{$cotizacion->prospecto->nombre}}</strong>
                     </td>
                   </tr>
                   <tr>
@@ -432,7 +431,7 @@
                         </p>
                         @endif
                       @endforeach
-                      @if($entrada->observaciones)
+                      @if($entrada->observaciones && $entrada->observaciones!='<ul></ul>')
                         <p>
                           <span>@if($nombre=='nombre') Observaciones: @else Remarks: @endif</span>
                           {!! $entrada->observaciones !!}
