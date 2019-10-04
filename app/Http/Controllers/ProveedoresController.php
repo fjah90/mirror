@@ -16,9 +16,25 @@ class ProveedoresController extends Controller
      */
     public function index()
     {
-      $proveedores = Proveedor::all();
+      $proveedoresNacionales = Proveedor::where('nacional',1)->get();
+      $proveedoresExtranjeros = Proveedor::where('nacional',0)->get();
+      $tab = 0;
 
-      return view('catalogos.proveedores.index', compact('proveedores'));
+      return view('catalogos.proveedores.index', compact('proveedoresNacionales', 'proveedoresExtranjeros','tab'));
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function indexExtra()
+    {
+      $proveedoresNacionales = Proveedor::where('nacional', 1)->get();
+      $proveedoresExtranjeros = Proveedor::where('nacional', 0)->get();
+      $tab = 1;
+
+      return view('catalogos.proveedores.index', compact('proveedoresNacionales', 'proveedoresExtranjeros', 'tab'));
     }
 
     /**

@@ -209,7 +209,7 @@
             </a>
           </li>
           <li class="sub" {!! (Request::is('proveedores*') ? 'class="active"' : '') !!}>
-            <a href="{{ URL::to('proveedores') }}">
+            <a href="{{ URL::to('proveedoresExtra') }}">
               <i class="fas fa-truck-loading "></i> Proveedores Extranjero
             </a>
           </li>

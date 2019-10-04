@@ -17,64 +17,120 @@
 </section>
 <!-- Main content -->
 <section class="content" id="content">
-  <div class="row">
-    <div class="col-lg-12">
-      <div class="panel">
-        <div class="panel-heading">
-          <h3 class="panel-title text-right">
-            <span class="pull-left p-10">Lista de Proveedores</span>
-            <a href="{{route('proveedores.createNacional')}}" class="btn btn-primary" style="color: #fff;">
-              <i class="fas fa-plus"></i> Proveedor Nacional
-            </a>
-            <a href="{{route('proveedores.createInternacional')}}" class="btn btn-brown" style="color: #fff;">
-              <i class="fas fa-plus"></i> Proveedor Internacional
-            </a>
-          </h3>
-        </div>
-        <div class="panel-body">
-          <div class="table-responsive">
-            <table id="tabla" class="table table-bordred" style="width:100%;"
-              data-page-length="100">
-              <thead>
-                <tr>
-                  <th>Empresa</th>
-                  <th>Origen</th>
-                  <th>Teléfono</th>
-                  <th>Email</th>
-                  <th>RFC / TAX ID NO</th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr v-for="(proveedor, index) in proveedores">
-                  <td>@{{proveedor.empresa}}</td>
-                  <td v-if="proveedor.nacional">Nacional</td>
-                  <td v-else>Extranjero</td>
-                  <td>@{{proveedor.telefono}}</td>
-                  <td>@{{proveedor.email}}</td>
-                  <td>@{{proveedor.identidad_fiscal}}</td>
-                  <td class="text-right">
-                    <a class="btn btn-info" data-toggle="tooltip" title="Ver"
-                      :href="'/proveedores/'+proveedor.id">
-                      <i class="far fa-eye"></i>
-                    </a>
-                    <a class="btn btn-success" data-toggle="tooltip" title="Editar"
-                      :href="'/proveedores/'+proveedor.id+'/editar'">
-                      <i class="far fa-edit"></i>
-                    </a>
-                    <button class="btn btn-danger" data-toggle="tooltip" title="Borrar"
-                      @click="borrar(proveedor, index)">
-                      <i class="fas fa-times"></i>
-                    </button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+  <tabs v-model="activeTab">
+    <tab title="Nacionales">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="panel">
+            <div class="panel-heading">
+              <h3 class="panel-title text-right">
+                <span class="pull-left p-10">Lista de Proveedores Nacionales</span>
+                <a href="{{route('proveedores.createNacional')}}" class="btn btn-primary" style="color: #fff;">
+                  <i class="fas fa-plus"></i> Proveedor
+                </a>
+              </h3>
+            </div>
+            <div class="panel-body">
+              <div class="table-responsive">
+                <table id="tablaNacionales" class="table table-bordred" style="width:100%;"
+                  data-page-length="100">
+                  <thead>
+                    <tr>
+                      <th>Empresa</th>
+                      <th>Teléfono</th>
+                      <th>Email</th>
+                      <th>RFC</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr v-for="(proveedor, index) in proveedoresNacionales">
+                      <td>@{{proveedor.empresa}}</td>
+                      <td>@{{proveedor.telefono}}</td>
+                      <td>@{{proveedor.email}}</td>
+                      <td>@{{proveedor.identidad_fiscal}}</td>
+                      <td class="text-right">
+                        <a class="btn btn-info" data-toggle="tooltip" title="Ver"
+                          :href="'/proveedores/'+proveedor.id">
+                          <i class="far fa-eye"></i>
+                        </a>
+                        <a class="btn btn-success" data-toggle="tooltip" title="Editar"
+                          :href="'/proveedores/'+proveedor.id+'/editar'">
+                          <i class="far fa-edit"></i>
+                        </a>
+                        <button class="btn btn-danger" data-toggle="tooltip" title="Borrar"
+                          @click="borrar('Nacionales',proveedor, index)">
+                          <i class="fas fa-times"></i>
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  </div>
+    </tab>
+
+    <tab title="Extranjeros">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="panel">
+            <div class="panel-heading">
+              <h3 class="panel-title text-right">
+                <span class="pull-left p-10">Lista de Proveedores Extranjeros</span>
+                <a href="{{route('proveedores.createInternacional')}}" class="btn btn-brown" style="color: #fff;">
+                  <i class="fas fa-plus"></i> Proveedor
+                </a>
+              </h3>
+            </div>
+            <div class="panel-body">
+              <div class="table-responsive">
+                <table id="tablaExtranjeros" class="table table-bordred" style="width:100%;"
+                  data-page-length="100">
+                  <thead>
+                    <tr>
+                      <th>Empresa</th>
+                      <th>Teléfono</th>
+                      <th>Email</th>
+                      <th>TAX ID NO</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr v-for="(proveedor, index) in proveedoresExtranjeros">
+                      <td>@{{proveedor.empresa}}</td>
+                      <td>@{{proveedor.telefono}}</td>
+                      <td>@{{proveedor.email}}</td>
+                      <td>@{{proveedor.identidad_fiscal}}</td>
+                      <td class="text-right">
+                        <a class="btn btn-info" data-toggle="tooltip" title="Ver"
+                          :href="'/proveedores/'+proveedor.id">
+                          <i class="far fa-eye"></i>
+                        </a>
+                        <a class="btn btn-success" data-toggle="tooltip" title="Editar"
+                          :href="'/proveedores/'+proveedor.id+'/editar'">
+                          <i class="far fa-edit"></i>
+                        </a>
+                        <button class="btn btn-danger" data-toggle="tooltip" title="Borrar"
+                          @click="borrar('Extranjeros', proveedor, index)">
+                          <i class="fas fa-times"></i>
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </tab>
+  </tabs>
+
+
+  
 </section>
 <!-- /.content -->
 @stop
@@ -85,18 +141,26 @@
 const app = new Vue({
     el: '#content',
     data: {
-      proveedores: {!! json_encode($proveedores) !!},
+      proveedoresNacionales: {!! json_encode($proveedoresNacionales) !!},
+      proveedoresExtranjeros: {!! json_encode($proveedoresExtranjeros) !!},
+      activeTab: {{$tab}},
     },
     mounted(){
-      $("#tabla").DataTable({
+      $("#tablaNacionales").DataTable({
         "order": [[ 0, "asc" ]],
         "columnDefs": [
-          { "width": "120px", "targets": 5 }
+          { "width": "200px", "targets": 4 }
+        ]
+      });
+      $("#tablaExtranjeros").DataTable({
+        "order": [[ 0, "asc" ]],
+        "columnDefs": [
+          { "width": "200px", "targets": 4 }
         ]
       });
     },
     methods: {
-      borrar(proveedor, index){
+      borrar(tipo, proveedor, index){
         swal({
           title: 'Cuidado',
           text: "Borrar el Proveedor "+proveedor.nombre+"?",
@@ -110,7 +174,7 @@ const app = new Vue({
           if (result.value) {
             axios.delete('/proveedores/'+proveedor.id, {})
             .then(({data}) => {
-              this.proveedores.splice(index, 1);
+              this['proveedores'+tipo].splice(index, 1);
               swal({
                 title: "Exito",
                 text: "El Proveedor ha sido borrado",
