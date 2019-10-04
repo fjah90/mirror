@@ -53,6 +53,7 @@ Route::middleware('auth')->group(function () {
   Route::resource('/clientes', 'ClientesController');
   Route::get('/proveedores/crearNacional', 'ProveedoresController@create')->name('proveedores.createNacional');
   Route::get('/proveedores/crearInternacional', 'ProveedoresController@createInter')->name('proveedores.createInternacional');
+  Route::get('/proveedoresExtra', 'ProveedoresController@indexExtra')->name('proveedores.indexExtra');
   Route::resource('/proveedores', 'ProveedoresController', ['parameters'=>['proveedores'=>'proveedor']]);
   Route::resource('/proyectos', 'ProyectosController');
   Route::resource('/subproyectos', 'SubProyectosController');
