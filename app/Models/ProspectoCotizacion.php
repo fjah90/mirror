@@ -12,7 +12,7 @@ class ProspectoCotizacion extends Model
     protected $fillable = ['prospecto_id','condicion_id','fecha','subtotal','iva',
       'total','observaciones','notas','archivo','entrega','lugar','moneda','facturar',
       'user_id','idioma','aceptada','notas2','numero','rfc','razon_social','calle',
-      'nexterior','ninterior','colonia','cp','ciudad','estado'
+      'nexterior','ninterior','colonia','cp','ciudad','estado','fletes'
     ];
 
     protected $casts = [
