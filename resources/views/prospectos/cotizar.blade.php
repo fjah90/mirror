@@ -253,6 +253,12 @@
                   </div>
                 </div>
               </div>
+              <div class="row form-group">
+                <div class="col-md-6">
+                  <label class="control-label">Fletes</label>
+                  <input class="form-control" type="text" name="fletes" v-model="cotizacion.fletes" />
+                </div>
+              </div>
               <div class="row">
                 <div class="col-md-4">
                   <div class="form-group">
@@ -637,6 +643,7 @@ const app = new Vue({
       estado: '',
       entrega: '',
       lugar: '',
+      fletes: '',
       moneda: '{{ ($prospecto->cliente->nacional)?"Pesos":"Dolares" }}',
       entradas: [],
       subtotal: 0,
@@ -1093,6 +1100,7 @@ const app = new Vue({
         estado: cotizacion.estado,
         entrega: cotizacion.entrega,
         lugar: cotizacion.lugar,
+        fletes: cotizacion.fletes,
         moneda: cotizacion.moneda,
         entradas: cotizacion.entradas,
         subtotal: cotizacion.subtotal,
@@ -1180,6 +1188,7 @@ const app = new Vue({
           estado: '',
           entrega: '',
           lugar: '',
+          fletes: '',
           moneda: '{{ ($prospecto->cliente->nacional)?"Pesos":"Dolares" }}',
           entradas: [],
           subtotal: 0,

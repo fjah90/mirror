@@ -373,7 +373,7 @@
                   </tr>
                   <tr>
                     <td>Fletes:</td>
-                    <td>INCLUIDOS A LA CD. DE MÉXICO</td>
+                    <td>{{$cotizacion->fletes}}</td>
                   </tr>
                   <tr>
                     <td>Precios:</td>

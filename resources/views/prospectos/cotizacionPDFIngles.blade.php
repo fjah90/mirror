@@ -373,7 +373,7 @@
                   </tr>
                   <tr>
                     <td>Shipping:</td>
-                    <td>Included to Mexico City</td>
+                    <td>{{$cotizacion->fletes}}</td>
                   </tr>
                   <tr>
                     <td>Currency:</td>
