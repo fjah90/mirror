@@ -138,7 +138,7 @@
                 <div class="col-md-4">
                   <div class="form-group">
                     <label class="control-label">Numero Cotización</label>
-                    <input type="number" step="1" min="1" name="numero" class="form-control"
+                    <input type="number" step="1" min="0" name="numero" class="form-control"
                     v-model="cotizacion.numero" />
                   </div>
                 </div>
@@ -626,7 +626,7 @@ const app = new Vue({
     nuevaObservacionProducto: "",
     cotizacion: {
       prospecto_id: {{$prospecto->id}},
-      numero: "",
+      numero: {{$numero_siguiente}},
       condicion: {
         id: 0,
         nombre: ''
@@ -1156,10 +1156,11 @@ const app = new Vue({
         delete entrada.producto;
       });
       var formData = objectToFormData(cotizacion, {indices:true});
-      var url = "";
+      var url = "", numero_siguiente = false;
 
       if(this.cotizacion.cotizacion_id){
         url = '/prospectos/{{$prospecto->id}}/cotizacion/'+this.cotizacion.cotizacion_id;
+        numero_siguiente = {{$numero_siguiente}};
       }
       else url = '/prospectos/{{$prospecto->id}}/cotizacion';
 
@@ -1171,7 +1172,11 @@ const app = new Vue({
         this.prospecto.cotizaciones.push(data.cotizacion);
         this.cotizacion = {
           prospecto_id: {{$prospecto->id}},
-          numero: "",
+          @if(auth()->user()->tipo=='Administrador')
+          numero: (numero_siguiente)?numero_siguiente:data.cotizacion.id+1,
+          @else 
+          numero: 0,
+          @endif
           condicion: {
             id: 0,
             nombre: ''

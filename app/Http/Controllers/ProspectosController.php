@@ -280,7 +280,10 @@ class ProspectosController extends Controller
       $condiciones = CondicionCotizacion::all();
       $observaciones = ObservacionCotizacion::all();
       $unidades_medida = UnidadMedida::orderBy('simbolo')->get();
-      $rfcs = $prospecto->cotizaciones->reduce(function($datos,$cotizacion){
+      if(auth()->user()->tipo=='Administrador')
+        $numero_siguiente = ProspectoCotizacion::select('id')->orderBy('id','desc')->first()->id + 1;
+      else $numero_siguiente = 0;
+        $rfcs = $prospecto->cotizaciones->reduce(function($datos,$cotizacion){
         if($cotizacion->rfc) {
           $datos[$cotizacion->rfc] = [
             'rfc' => $cotizacion->rfc,
@@ -305,7 +308,7 @@ class ProspectosController extends Controller
       }
 
       return view('prospectos.cotizar',
-        compact('prospecto', 'productos', 'condiciones','observaciones','unidades_medida', 'rfcs')
+        compact('prospecto', 'productos', 'condiciones','observaciones','unidades_medida', 'rfcs','numero_siguiente')
       );
     }
 
