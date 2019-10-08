@@ -280,7 +280,7 @@ class ProspectosController extends Controller
       $condiciones = CondicionCotizacion::all();
       $observaciones = ObservacionCotizacion::all();
       $unidades_medida = UnidadMedida::orderBy('simbolo')->get();
-      if(auth()->user()->tipo=='Administrador')
+      if(auth()->user()->can('editar numero cotizacion'))
         $numero_siguiente = ProspectoCotizacion::select('id')->orderBy('id','desc')->first()->id + 1;
       else $numero_siguiente = 0;
         $rfcs = $prospecto->cotizaciones->reduce(function($datos,$cotizacion){

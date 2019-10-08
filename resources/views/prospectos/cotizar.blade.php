@@ -133,7 +133,7 @@
                   <hr />
                 </div>
               </div>
-              @role('Administrador')
+              @can('editar numero cotizacion')
               <div class="row">
                 <div class="col-md-4">
                   <div class="form-group">
@@ -143,7 +143,7 @@
                   </div>
                 </div>
               </div>
-              @endrole
+              @endcan
               <div class="row">
                 <div class="col-sm-6">
                   <div class="form-group">
@@ -1172,11 +1172,11 @@ const app = new Vue({
         this.prospecto.cotizaciones.push(data.cotizacion);
         this.cotizacion = {
           prospecto_id: {{$prospecto->id}},
-          @if(auth()->user()->tipo=='Administrador')
+          @can('editar numero cotizacion')
           numero: (numero_siguiente)?numero_siguiente:data.cotizacion.id+1,
-          @else 
+          @elsecan 
           numero: 0,
-          @endif
+          @endcan
           condicion: {
             id: 0,
             nombre: ''
