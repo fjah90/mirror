@@ -1174,7 +1174,7 @@ const app = new Vue({
           prospecto_id: {{$prospecto->id}},
           @can('editar numero cotizacion')
           numero: (numero_siguiente)?numero_siguiente:data.cotizacion.id+1,
-          @elsecan 
+          @else
           numero: 0,
           @endcan
           condicion: {
