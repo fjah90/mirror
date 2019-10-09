@@ -275,7 +275,9 @@ class ProspectosController extends Controller
      */
     public function cotizar(Prospecto $prospecto)
     {
-      $prospecto->load('cliente.contactos','cotizaciones.entradas.producto','cotizaciones.entradas.descripciones');
+      $prospecto->load(
+        'cliente.contactos','cotizaciones.cuentaCobrar','cotizaciones.entradas.producto','cotizaciones.entradas.descripciones'
+      );
       $productos = Producto::with('categoria','proveedor','descripciones.descripcionNombre')
       ->has('categoria')->get();
       $condiciones = CondicionCotizacion::all();
@@ -303,6 +305,8 @@ class ProspectosController extends Controller
 
       foreach ($prospecto->cotizaciones as $cotizacion) {
         if($cotizacion->archivo) $cotizacion->archivo = asset('storage/'.$cotizacion->archivo);
+        if($cotizacion->cuentaCobrar) 
+          $cotizacion->comprobante_confirmacion = asset('storage/'.$cotizacion->cuentaCobrar->comprobante_confirmacion);
       }
       foreach ($productos as $producto) {
         if($producto->foto) $producto->foto = asset('storage/'.$producto->foto);

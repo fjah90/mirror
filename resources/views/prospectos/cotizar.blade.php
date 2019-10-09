@@ -96,9 +96,11 @@
                             @click="enviar.cotizacion_id=cotizacion.id; enviar.numero=cotizacion.numero; openEnviar=true;">
                             <i class="far fa-envelope"></i>
                           </button>
-                          <button v-if="cotizacion.aceptada" class="btn text-primary" title="Aceptada">
+                          <a v-if="cotizacion.aceptada" class="btn text-primary" title="Comprobante Confirmación" 
+                            :href="cotizacion.comprobante_confirmacion"
+                            target="_blank">
                             <i class="fas fa-user-check"></i>
-                          </button>
+                          </a>
                           <template v-else>
                             <button class="btn btn-primary" title="Aceptar"
                               @click="aceptar.cotizacion_id=cotizacion.id; openAceptar=true;">

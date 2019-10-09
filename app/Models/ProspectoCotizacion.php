@@ -65,4 +65,8 @@ class ProspectoCotizacion extends Model
       ->orderBy('orden','asc');
     }
 
+    public function cuentaCobrar(){
+      return $this->hasOne('App\Models\CuentaCobrar','cotizacion_id','id');
+    }
+
 }
