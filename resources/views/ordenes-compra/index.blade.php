@@ -91,11 +91,20 @@
                       title="Rechazar" @click="ordenModal=orden; openRechazar=true;">
                       <i class="far fa-thumbs-down"></i>
                     </button>
+                    <button v-if="orden.status=='Aprobada'" class="btn btn-purple"
+                      title="Confirmar" @click="ordenModal=orden; openConfirmar=true;">
+                      <i class="fas fa-clipboard-check"></i>
+                    </button>
                     @endrole
-                    <button v-if="orden.status!='Aprobada' && orden.status!='Cancelada'" class="btn btn-danger"
-                      title="Cancelar" @click="cancelarOrden(orden)">
+                    <button v-if="orden.status!='Aprobada' && orden.status!='Confirmada' && orden.status!='Cancelada'" 
+                      class="btn btn-danger" title="Cancelar" @click="cancelarOrden(orden)">
                       <i class="fas fa-times"></i>
                     </button>
+                    <a v-if="orden.status=='Confirmada'" class="btn text-primary" title="Confirmación Fabrica" 
+                      :href="orden.confirmacion_fabrica"
+                      target="_blank">
+                      <i class="fas fa-clipboard-check"></i>
+                    </a>
                   </td>
                 </tr>
               </tbody>
@@ -147,6 +156,28 @@
   </modal>
   <!-- /.Rechazar Modal -->
 
+  <!-- Confirmar Modal -->
+  <modal v-model="openConfirmar" :title="'Confirmar orden '+ordenModal.numero" :footer="false">
+    <form class="" @submit.prevent="confirmarOrden()">
+      <div class="form-group">
+        <label class="control-label">Confirmación Fabrica</label>
+        <div class="file-loading">
+          <input id="confirmacion" name="confirmacion" type="file" ref="confirmacion"
+            @change="fijarConfirmacion()" required />
+        </div>
+        <div id="confirmacion-file-errors"></div>
+      </div>
+      <div class="form-group text-right">
+        <button type="submit" class="btn btn-primary" :disabled="cargando">Aceptar</button>
+        <button type="button" class="btn btn-default"
+          @click="ordenModal={}; openConfirmar=false;">
+          Cancelar
+        </button>
+      </div>
+    </form>
+  </modal>
+  <!-- /.Confirmar Modal -->
+
 </section>
 
 <!-- /.content -->
@@ -162,9 +193,23 @@ const app = new Vue({
       ordenModal : {},
       openAprobar: false,
       openRechazar: false,
+      openConfirmar: false,
       cargando: false
     },
+    mounted(){
+      $("#confirmacion").fileinput({
+        language: 'es',
+        showPreview: false,
+        showUpload: false,
+        showRemove: false,
+        allowedFileExtensions: ["jpg", "jpeg", "png", "pdf"],
+        elErrorContainer: '#confirmacion-file-errors',
+      });
+    },
     methods: {
+      fijarConfirmacion(){
+        this.ordenModal.confirmacion_fabrica = this.$refs['confirmacion'].files[0];
+      },
       rechazarOrden(){
         this.cargando = true;
         axios.post(
@@ -243,6 +288,36 @@ const app = new Vue({
           } //if confirmacion
         });
       },//cancelar
+      confirmarOrden(){
+        var formData = objectToFormData({confirmacion_fabrica:this.ordenModal.confirmacion_fabrica}, {indices:true});
+
+        this.cargando = true;
+        axios.post('/proyectos-aprobados/'+this.ordenModal.proyecto_id+'/ordenes-compra/'+this.ordenModal.id+'/confirmar', 
+        formData, { headers: { 'Content-Type': 'multipart/form-data'}})
+        .then(({data}) => {
+          this.ordenModal.status = 'Confirmada';
+          this.ordenModal.confirmacion_fabrica = data.confirmacion;
+          
+          $("#confirmacion").fileinput('clear');
+          this.openConfirmar = false;
+          this.cargando = false;
+          swal({
+            title: "Exito",
+            text: "La orden ha sido confirmada",
+            type: "success"
+          });
+
+        })
+        .catch(({response}) => {
+          console.error(response);
+          this.cargando = false;
+          swal({
+            title: "Error",
+            text: response.data.message || "Ocurrio un error inesperado, intente mas tarde",
+            type: "error"
+          });
+        });
+      },//fin confirmarOrden
     }
 });
 </script>

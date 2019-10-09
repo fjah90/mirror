@@ -12,13 +12,14 @@ class OrdenCompra extends Model
     const STATUS_PENDIENTE              = "Pendiente";
     const STATUS_POR_AUTORIZAR          = "Por Autorizar";
     const STATUS_APROBADA               = "Aprobada";
+    const STATUS_CONFIRMADA             = "Confirmada";
     const STATUS_RECHAZADA              = "Rechazada";
     const STATUS_CANCELADA              = "Cancelada";
 
     protected $fillable = ['cliente_id','proyecto_id','proveedor_id','orden_proceso_id',
       'cliente_nombre','proyecto_nombre','proveedor_empresa','status','moneda','subtotal',
       'iva','total','motivo_rechazo','archivo','numero','tiempo_entrega','numero_proyecto',
-      'aduana_id','aduana_compañia','proveedor_contacto_id'
+      'aduana_id','aduana_compañia','proveedor_contacto_id','confirmacion_fabrica'
     ];
 
     protected $casts = [

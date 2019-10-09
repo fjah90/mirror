@@ -244,6 +244,7 @@ class OrdenesCompraController extends Controller
         "liga" => $archivo, "nombre" => $nombre_archivo
       ]], 200);
     }
+
     /**
      * Eliminar archivo de carpeta de autorizacion.
      *
@@ -268,6 +269,49 @@ class OrdenesCompraController extends Controller
       Storage::disk('public')->delete('ordenes_compra/'.$orden->id.'/archivos_autorizacion/'.$request->archivo);
       
       return response()->json(['success' => true, "error" => false], 200);
+    }
+
+
+    /**
+     * Cambiar a status Confirmada.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\ProyectoAprobado  $proyecto
+     * @param  \App\Models\OrdenCompra  $orden
+     * @return \Illuminate\Http\Response
+     */
+    public function confirmar(Request $request, ProyectoAprobado $proyecto, OrdenCompra $orden)
+    {
+      if ($orden->status != OrdenCompra::STATUS_APROBADA) {
+        return response()->json([
+          'success' => false, "error" => true,
+          'message' => 'La orden debe estar en estatus '
+            . OrdenCompra::STATUS_APROBADA
+            . ' para poder ser confirmada'
+        ], 400);
+      }
+
+      $validator = Validator::make($request->all(), [
+        'confirmacion_fabrica' => 'required|file|mimes:jpeg,jpg,png,pdf'
+      ]);
+
+      if ($validator->fails()) {
+        $errors = $validator->errors()->all();
+        return response()->json([
+          "success" => false, "error" => true, "message" => $errors[0]
+        ], 422);
+      }
+
+      $confirmacion = Storage::putFileAs(
+        'public/ordenes_compra/'.$orden->id, $request->confirmacion_fabrica,
+        "confirmacion_fabrica.".$request->confirmacion_fabrica->guessExtension()
+      );
+      $confirmacion = str_replace('public/', '', $confirmacion);
+      $orden->update(['confirmacion_fabrica'=>$confirmacion, 'status'=>OrdenCompra::STATUS_CONFIRMADA]);
+
+      return response()->json([
+        'success' => true, "error" => false, "confirmacion" => asset('storage/' . $confirmacion) 
+      ], 200);
     }
 
      /**
@@ -422,7 +466,7 @@ class OrdenesCompraController extends Controller
         return response()->json(['success' => false, "error" => true,
           'message'=>'La orden debe estar en estatus '
             .OrdenCompra::STATUS_POR_AUTORIZAR
-            .' para poder ser rechazada'
+            .' para poder ser aprobada'
         ], 400);
       }
 
