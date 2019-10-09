@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Cliente;
+use App\Models\ClienteContacto;
 use App\Models\Producto;
 use App\Models\Prospecto;
 use App\Models\ProspectoActividad;
@@ -323,6 +324,7 @@ class ProspectosController extends Controller
     {
       $validator = Validator::make($request->all(), [
         'prospecto_id' => 'required',
+        'cliente_contacto_id' => 'required',
         'entrega' => 'required',
         'lugar' => 'required',
         'moneda' => 'required',
@@ -463,6 +465,7 @@ class ProspectosController extends Controller
     {
       $validator = Validator::make($request->all(), [
         'prospecto_id' => 'required',
+        'cliente_contacto_id' => 'required',
         'cotizacion_id' => 'required',
         'entrega' => 'required',
         'lugar' => 'required',

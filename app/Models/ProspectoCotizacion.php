@@ -12,7 +12,7 @@ class ProspectoCotizacion extends Model
     protected $fillable = ['prospecto_id','condicion_id','fecha','subtotal','iva',
       'total','observaciones','notas','archivo','entrega','lugar','moneda','facturar',
       'user_id','idioma','aceptada','notas2','numero','rfc','razon_social','calle',
-      'nexterior','ninterior','colonia','cp','ciudad','estado','fletes'
+      'nexterior','ninterior','colonia','cp','ciudad','estado','fletes','cliente_contacto_id'
     ];
 
     protected $casts = [
@@ -53,6 +53,11 @@ class ProspectoCotizacion extends Model
 
     public function user(){
       return $this->belongsTo('App\User', 'user_id', 'id');
+    }
+
+    public function contacto(){
+      return $this->belongsTo('App\Models\ClienteContacto', 'cliente_contacto_id', 'id')
+        ->withDefault(['id' => 0, 'nombre' => 'Por Definir', 'email'=>'']);
     }
 
     public function entradas(){

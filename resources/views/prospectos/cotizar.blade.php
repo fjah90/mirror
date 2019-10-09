@@ -258,6 +258,14 @@
                   <label class="control-label">Fletes</label>
                   <input class="form-control" type="text" name="fletes" v-model="cotizacion.fletes" />
                 </div>
+                <div class="col-md-6">
+                  <label class="control-label">Cliente Contacto</label>
+                  <select name="cliente_contacto_id" v-model="cotizacion.cliente_contacto_id" class="form-control" required>
+                    @foreach($prospecto->cliente->contactos as $contacto)
+                    <option value="{{$contacto->id}}">{{$contacto->nombre}}</option>
+                    @endforeach
+                  </select>
+                </div>
               </div>
               <div class="row">
                 <div class="col-md-4">
@@ -626,6 +634,7 @@ const app = new Vue({
     nuevaObservacionProducto: "",
     cotizacion: {
       prospecto_id: {{$prospecto->id}},
+      cliente_contacto_id: '',
       numero: {{$numero_siguiente}},
       condicion: {
         id: 0,
@@ -1082,6 +1091,7 @@ const app = new Vue({
       //vaciar datos de cotizacion
       this.cotizacion = {
         prospecto_id: {{$prospecto->id}},
+        cliente_contacto_id: cotizacion.cliente_contacto_id,
         cotizacion_id: cotizacion.id,
         numero: cotizacion.numero,
         condicion: {
@@ -1172,6 +1182,7 @@ const app = new Vue({
         this.prospecto.cotizaciones.push(data.cotizacion);
         this.cotizacion = {
           prospecto_id: {{$prospecto->id}},
+          cliente_contacto_id: '',
           @can('editar numero cotizacion')
           numero: (numero_siguiente)?numero_siguiente:data.cotizacion.id+1,
           @else

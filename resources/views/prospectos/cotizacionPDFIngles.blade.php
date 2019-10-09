@@ -333,14 +333,12 @@
                 </p>
                 <p class="text-uppercase">{{$cotizacion->prospecto->cliente->colonia}}</p>
                 @if($cotizacion->prospecto->cliente->telefono)
-                <p class="text-uppercase">P. {{$cotizacion->prospecto->cliente->telefono}}</p>
-                @endif
-                <p class="text-uppercase">ATN: {{$cotizacion->prospecto->cliente->nombre}}</p>
-                @if($cotizacion->prospecto->cliente->email)
+                <p class="text-uppercase">P. {{$cotizacion->contacto->telefono}}</p>
+                <p class="text-uppercase">ATN: {{$cotizacion->contacto->nombre}}</p>
                 <p>
                   email:
-                  <a href="mailto:{{$cotizacion->prospecto->cliente->email}}">
-                    {{$cotizacion->prospecto->cliente->email}}
+                  <a href="mailto:{{$cotizacion->contacto->email}}">
+                    {{$cotizacion->contacto->email}}
                   </a>
                 </p>
                 @endif
