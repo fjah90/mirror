@@ -180,6 +180,7 @@
     /* fuentes */
     .font-small{font-size: 9px;}
     .font-big{font-size: 12px;}
+    .font-bold{font-weight: bold;}
   </style>
   <style>
     @page {
@@ -225,6 +226,10 @@
       width: 100%;
       position: absolute;
     }
+    .footer .corte {
+      border-top: 2px dashed #000;
+      margin: -5px -50px 0;
+    }
     .header {
       top: 0px;
     }
@@ -244,17 +249,8 @@
   </style>
   <style>
     /* custom */
-    .table-cotizacion { margin:-5px 0px 0px; }
-    .table-cotizacion > thead{
-      background-color:#000; color:#fff;
-    }
     .table-cotizacion > tbody{
       border-bottom: 0.5px solid #000;
-      /* border: none; */
-    }
-    .table-cotizacion > tbody tr:last-child {
-      margin-bottom: 5px !important;
-      border-top: 5px solid blue;
       /* border: none; */
     }
     .table-cotizacion > tbody > tr > th,
@@ -271,15 +267,7 @@
     .table-cotizacion > tbody > tr > td:last-child{
       border-right: 0.5px solid #000;
     }
-    .table-cotizacion > tfoot {border: 0.5px solid #000; }
-    .cuadro_magico {
-      border-left: 0.5px solid #000;
-      border-right: 0.5px solid #000;
-      border-bottom: 0.5px solid #000;
-      width:100%;
-      height:400px;
-      float:left;
-    }
+    .table-cotizacion > tfoot {border: 1px solid #000;}
   </style>
 </head>
 <body>
@@ -300,8 +288,9 @@
 
     <div class="row margTop10">
       <div class="col-lg-5">
-        <p>Cotizacion # {{$cotizacion->numero}}</p>
-        <p>Fecha: {{$cotizacion->fechaPDF}}</p>
+        <p class="font-bold">Purchase</p>
+        <p>Order: {{$orden->numero}}</p>
+        <p>Date: {{$orden->fechaPDF}}</p>
       </div>
       <div class="col-lg-7">
         <p class="text-uppercase text-right">Intercorp Contract Resources, s.a. de c.v.</p>
@@ -316,84 +305,94 @@
           <thead style="background-color:#000; color:#fff;">
             <tr>
               <th class="text-center" style="width:50%; padding:3px 0;">
-                Cliente:
+                TO:
               </th>
               <th class="text-center" style="width:50%; padding:3px 0;">
-                Facturar a:
+                INVOICE TO / CONSIGNED TO:
               </th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <td class="bordered">
-                <p class="text-uppercase">{{$cotizacion->prospecto->cliente->nombre}}</p>
+                <p class="text-uppercase">{{$orden->proveedor->empresa}}</p>
                 <p class="text-uppercase">
-                  {{$cotizacion->prospecto->cliente->calle}}
-                  {{$cotizacion->prospecto->cliente->numero}}
+                  {{$orden->proveedor->calle}}
+                  {{$orden->proveedor->numero}}
                 </p>
-                <p class="text-uppercase">{{$cotizacion->prospecto->cliente->colonia}}</p>
-                <p class="text-uppercase">T. {{$cotizacion->contacto->telefono}}</p>
-                <p class="text-uppercase">ATN: {{$cotizacion->contacto->nombre}}</p>
+                <p class="text-uppercase">
+                  {{$orden->proveedor->colonia}}
+                  {{$orden->proveedor->estado}}
+                  {{$orden->proveedor->cp}}
+                </p>
+                <p class="text-uppercase">T. {{$orden->contacto->telefono}}</p>
+                <p class="text-uppercase">ATN: {{$orden->contacto->nombre}}</p>
                 <p>
                   email:
-                  <a href="mailto:{{$cotizacion->contacto->email}}">
-                    {{$cotizacion->contacto->email}}
+                  <a href="mailto:{{$orden->contacto->email}}">
+                    {{$orden->contacto->email}}
                   </a>
                 </p>
               </td>
-              <td class="bordered text-uppercase">
-                @if($cotizacion->facturar)
-                  <p class="text-uppercase">RFC: {{$cotizacion->rfc}}</p>
-                  <p class="text-uppercase">razon social: {{$cotizacion->razon_social}}</p>
-                  <p class="text-uppercase">
-                    {{$cotizacion->calle}} {{$cotizacion->nexterior}}
-                    @if($cotizacion->ninterior) Int. {{$cotizacion->ninterior}} @endif
-                  </p>
-                  <p class="text-uppercase">{{$cotizacion->colonia}} {{$cotizacion->cp}}</p>
-                  <p class="text-uppercase">{{$cotizacion->ciudad}} {{$cotizacion->estado}}</p>
-                @endif
+              <td class="bordered">
+                <p>INTERCORP CONTRACT RESOURCES, S.A. DE C.V.</p>
+                <p>MOLIERE 61, COL. POLANCO III SECC.</p>
+                <p>CIUDAD DE MÉXICO 11540, MEXICO</p>
+                <p>T. +52 (55) 5557-5214</p>
+                <p style="width:49%; display:inline-block;">ATTN: ABRAHAM SHVEID</p>
+                <p style="width:49%; display:inline-block;"><a href="mailto:abraham@intercorp.mx">abraham@intercorp.mx</a></p>
+                <p>RFC: ICR090925MV2</p>
               </td>
             </tr>
             <tr>
               <td class="bordered" style="padding:0;">
                 <table style="margin:0; width:100%;">
                   <tr>
-                    <td style="vertical-align:top">Proyecto:</td>
+                    <td style="vertical-align:top; width:15%;">PROJECT:</td>
                     <td class="text-uppercase">
-                      <strong>{{$cotizacion->prospecto->nombre}}</strong>
+                      <strong>
+                        {{$orden->numero_proyecto}}
+                        {{$orden->proyecto_nombre}}
+                      </strong>
                     </td>
                   </tr>
                   <tr>
-                    <td style="vertical-align:top">Entrega:</td>
-                    <td class="text-uppercase">{{$cotizacion->entrega}}</td>
+                    <td>DELIVERY:</td>
+                    <td class="text-uppercase">{{$orden->proyecto->cotizacion->entrega}}</td>
                   </tr>
                   <tr>
-                    <td style="vertical-align:top">Fletes:</td>
-                    <td>{{$cotizacion->fletes}}</td>
+                    <td>D. POINT:</td>
+                    <td class="text-uppercase">
+                      {{$orden->proyecto->cliente->ciudad}}
+                      {{$orden->proyecto->cliente->estado}}
+                    </td>
                   </tr>
                   <tr>
-                    <td>Precios:</td>
-                    <td class="text-uppercase">{{$cotizacion->moneda}}</td>
+                    <td>FREIGHT:</td>
+                    <td></td>
                   </tr>
                   <tr>
-                    <td style="vertical-align:top;">Condiciones:</td>
-                    <td class="text-uppercase">{{$cotizacion->condiciones->nombre}}</td>
+                    <td>PRICES:</td>
+                    <td class="text-uppercase">{{$orden->moneda}}</td>
+                  </tr>
+                  <tr>
+                    <td style="vertical-align:top;">TERMS:</td>
+                    <td class="text-uppercase">CREDIT FOR {{$orden->proveedor->dias_credito}} DAYS</td>
                   </tr>
                 </table>
               </td>
               <td class="bordered">
-                <p class="text-center font-small "><strong>Enviar a:</strong></p>
-                <p class="text-uppercase">{{$cotizacion->lugar}}</p>
+                <p class="text-center font-small "><strong>DELIVER TO:</strong></p>
+                <p class="text-uppercase">{{$orden->proyecto->cotizacion->lugar}}</p>
+                @if($orden->aduana)
+                <p class="text-uppercase">By: {{$orden->aduana->compañia}}</p>
+                <p class="text-uppercase">{{$orden->aduana->contacto}}</p>
+                <p class="text-uppercase">{{$orden->aduana->telefono}}</p>
+                <p class="text-uppercase">{{$orden->aduana->email}}</p>
+                <p class="text-uppercase">{{$orden->aduana->direccion}}</p>
+                @endif
               </td>
             </tr>
-            @if($cotizacion->notas)
-            <tr>
-              <td colspan="2" class="bordered">
-                <p class="text-danger"><strong>Notas</strong></p>
-                <p class="text-uppercase">{{$cotizacion->notas}}</p>
-              </td>
-            </tr>
-            @endif
           </tbody>
         </table>
       </div>
@@ -401,44 +400,40 @@
 
     <div class="row">
       <div class="col-lg-12">
-        {{-- <div class="cuadro_magico"></div> --}}
-        <table class="table table-cotizacion">
-          <thead>
+        <table class="table table-cotizacion" style="margin:-5px 0px 0px;">
+          <thead style="background-color:#000; color:#fff;">
             <tr>
-              <th class="text-center" style="width:10%; padding:3px 0 1px;">Cantidad</th>
-              <th class="text-center" style="width:74%; padding:3px 0 1px;">Descripciones</th>
-              <th class="text-center" style="width:13%; padding:3px 0 1px;">Precio Unitario</th>
-              <th class="text-center" style="width:13%; padding:3px 0 1px;">Total</th>
+              <th class="text-center" style="width:10%; padding:3px 0 1px;">QUANTITY</th>
+              <th class="text-center" style="width:74%; padding:3px 0 1px;">DESCRIPTION</th>
+              <th class="text-center" style="width:13%; padding:3px 0 1px;">UNIT PRICE</th>
+              <th class="text-center" style="width:13%; padding:3px 0 1px;">AMOUNT</th>
             </tr>
           </thead>
           <tbody>
-            @foreach($cotizacion->entradas as $entrada)
+            @foreach($orden->entradas as $entrada)
             <tr>
               <td class="text-center">@format_number($entrada->cantidad) <br /> {{$entrada->medida}}</td>
               <td>
                 <table style="width:100%; margin:0;">
                   <tr>
                     <td style="vertical-align: top;">
-                      @foreach($entrada->descripciones as $descripcion)
-                        @if($descripcion->valor)
+                      @foreach($entrada->producto->descripciones as $descripcion)
                         <p>
-                          <span>@text_capitalize($descripcion->{$nombre}): </span>
+                          <span>@text_capitalize($descripcion->descripcionNombre->name): </span>
                           <span class="text-uppercase">{{$descripcion->valor}}</span>
                         </p>
-                        @endif
                       @endforeach
-                      @if($entrada->observaciones && $entrada->observaciones!='<ul></ul>')
+                      @if($entrada->conversion)
                         <p>
-                          <span>@if($nombre=='nombre') Observaciones: @else Remarks: @endif</span>
-                          {!! $entrada->observaciones !!}
+                          @format_number($entrada->cantidad) {{$entrada->medida}} =
+                          @format_number($entrada->cantidad_convertida) {{$entrada->conversion}}
                         </p>
                       @endif
                     </td>
                     <td style="width:100px;">
-                      @foreach($entrada->fotos as $foto)
-                      <img src="{{$foto}}" alt="foto" style="width:100px; height:100px;" />
-                      <br />
-                      @endforeach
+                      @if ($entrada->producto->foto)
+                      <img src="{{$entrada->producto->foto}}" alt="foto" style="width:100px; height:100px;" />
+                      @endif
                     </td>
                   </tr>
                 </table>
@@ -450,9 +445,9 @@
             <tr>
               <td></td>
               <td>
-                @if($cotizacion->entradas->count()==1)
+                @if($orden->entradas->count()==1)
                 <div style="height: 200px; background-color:white;"></div>
-                @elseif($cotizacion->entradas->count()==2)
+                @elseif($orden->entradas->count()==2)
                 <div style="height: 0px; background-color:white;"></div>
                 @endif
               </td>
@@ -466,55 +461,49 @@
 
     <!-- Espacio para que el footer no se sobreponga a la tabla -->
     {{-- <div class="row">
-      <div class="col-lg-12" style="height:180px;">
+      <div class="col-lg-12" style="height:70px;">
       </div>
     </div> --}}
 
     {{-- <div class="row footer" style="page-break-inside: avoid;"> --}}
     <div class="row" style="page-break-inside: avoid;">
-      <div class="bordered" style="margin:5px 15px; 0">
+      <div class="col-lg-12 bordered" style="padding: 0px; margin-left:15px;">
         <table class="" style="margin-bottom:0; width:100%;">
           <tr>
-            <td class="text-right" style="width:90%;"><strong>Subtotal:</strong></td>
-            <td class="text-right" style="width:10%;">@format_money($cotizacion->subtotal)</td>
+            <td class="text-right" style="width:90%;"><strong>MERCHANDISE AMOUNT:</strong></td>
+            <td class="text-right" style="width:10%;">@format_money($orden->subtotal)</td>
           </tr>
           <tr>
-            <td class="text-right" style="width:90%;"><strong>IVA 16%:</strong></td>
-            <td class="text-right" style="width:10%;">@format_money($cotizacion->iva)</td>
+            <td class="text-right" style="width:90%;"><strong>FREIGHT:</strong></td>
+            <td class="text-right" style="width:10%;">@format_money(0)</td>
           </tr>
           <tr>
-            <td class="text-right" style="width:90%;"><strong>Total {{$cotizacion->moneda}}:</strong></td>
-            <td class="text-right" style="width:10%;">@format_money($cotizacion->total)</td>
+            <td class="text-right" style="width:90%;"><strong>OTHER:</strong></td>
+            <td class="text-right" style="width:10%;">@format_money($orden->iva)</td>
+          </tr>
+          <tr>
+            <td class="text-right" style="width:90%;"><strong>INVOICE TOTAL:</strong></td>
+            <td class="text-right" style="width:10%;">@format_money($orden->total)</td>
           </tr>
         </table>
       </div>
-
-      <div class="bordered" style="margin:5px 15px 0;">
+      <div class="clearfix">
+      </div>
+      <div class="col-lg-12 bordered" style="padding: 0px; margin-left:15px;">
         <table style="margin: 0px; width:100%;">
           <tr class="font-small">
-            <td style="width:70%; text-transform: none; vertical-align: top;">
-              <p class="margTop10" style="margin-left:10px;">
-                @if($cotizacion->observaciones)
-                <strong>@if($nombre=='nombre') Observaciones: @else Remarks: @endif</strong>
-                @endif
-              </p>
-              {!! $cotizacion->observaciones !!}
+            <td style="width:70%; text-transform: none;">
+              <p><strong>Remarks:</strong></p>
+              <ul>
+                <li>PLEASE SEND WITH THE ORDER THE INVOICE AND PACKING LIST.</li>
+                <li>ORDER MUST SHIP COMPLETE; NO PARTIAL SHIPMENTS WILL BE ACCEPTED.</li>
+                <li>PLEASE CONFIRM THE RECEPTION OF THIS ORDER AND ESTIMATED SHIPPING DATE.</li>
+              </ul>
             </td>
             <td class="text-center" style="width:30%; text-transform: none;">
-              @if($cotizacion->user->id==2) <!-- "Abraham Shveid" -->
-              <img style="margin-top:10px; width:170px; height:auto;" src="{{$cotizacion->user->firma}}" alt=" " />
+              <img style="margin-top:1em; width:200px; height:auto;" src="{{$orden->firmaAbraham}}" alt=" " />
               <hr style="border:0.5px solid #000; width:70%; margin-top:-5px; margin-bottom:0px;" />
-              @elseif($cotizacion->user->id==5) <!-- "Elena Salido" -->
-              <img style="margin-top:10px; width:170px; height:auto;" src="{{$cotizacion->user->firma}}" alt=" " />
-              <hr style="border:0.5px solid #000; width:70%; margin-top:0px; margin-bottom:0px;" />
-              @else
-              <img style="margin-top:10px; width:170px; height:auto;" src="{{$cotizacion->user->firma}}" alt=" " />
-              <hr style="border:0.5px solid #000; width:70%; margin-top:-15px; margin-bottom:0px;" />
-              @endif
-              <p style="">{{$cotizacion->user->name}}</p>
-              <p style="">Intercorp Contract Resources</p>
-              <hr style="border:0.5px solid #000; width:70%; margin-top:60px; margin-bottom:0px;" />
-              <p style="margin: 5px 0 10px;">Aprobacíon Del Cliente</p>
+              <img style="width:150px; height:auto;" src="{{public_path().'/images/logo.jpg'}}" alt="INTERCORP" />
             </td>
           </tr>
         </table>

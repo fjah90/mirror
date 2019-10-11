@@ -288,9 +288,9 @@
 
     <div class="row margTop10">
       <div class="col-lg-5">
-        <p class="font-bold">Purchase</p>
-        <p>Order: {{$orden->numero}}</p>
-        <p>Date: {{$orden->fechaPDF}}</p>
+        <p class="font-bold">Compra</p>
+        <p>Orden: {{$orden->numero}}</p>
+        <p>Fecha: {{$orden->fechaPDF}}</p>
       </div>
       <div class="col-lg-7">
         <p class="text-uppercase text-right">Intercorp Contract Resources, s.a. de c.v.</p>
@@ -305,10 +305,10 @@
           <thead style="background-color:#000; color:#fff;">
             <tr>
               <th class="text-center" style="width:50%; padding:3px 0;">
-                TO:
+                A:
               </th>
               <th class="text-center" style="width:50%; padding:3px 0;">
-                INVOICE TO / CONSIGNED TO:
+                FACTURAR A:
               </th>
             </tr>
           </thead>
@@ -348,7 +348,7 @@
               <td class="bordered" style="padding:0;">
                 <table style="margin:0; width:100%;">
                   <tr>
-                    <td style="vertical-align:top; width:15%;">PROJECT:</td>
+                    <td style="vertical-align:top; width:15%;">PROYECTO:</td>
                     <td class="text-uppercase">
                       <strong>
                         {{$orden->numero_proyecto}}
@@ -357,32 +357,32 @@
                     </td>
                   </tr>
                   <tr>
-                    <td>DELIVERY:</td>
+                    <td>TIEMPO DE ENTREGA:</td>
                     <td class="text-uppercase">{{$orden->proyecto->cotizacion->entrega}}</td>
                   </tr>
                   <tr>
-                    <td>D. POINT:</td>
+                    <td>PUNTO DE ENTREGA:</td>
                     <td class="text-uppercase">
                       {{$orden->proyecto->cliente->ciudad}}
                       {{$orden->proyecto->cliente->estado}}
                     </td>
                   </tr>
                   <tr>
-                    <td>FREIGHT:</td>
+                    <td>FLETES:</td>
                     <td></td>
                   </tr>
                   <tr>
-                    <td>PRICES:</td>
+                    <td>PRECIOS:</td>
                     <td class="text-uppercase">{{$orden->moneda}}</td>
                   </tr>
                   <tr>
-                    <td style="vertical-align:top;">TERMS:</td>
-                    <td class="text-uppercase">CREDIT FOR {{$orden->proveedor->dias_credito}} DAYS</td>
+                    <td style="vertical-align:top;">TERMINOS:</td>
+                    <td class="text-uppercase">CREDITO POR {{$orden->proveedor->dias_credito}} DIAS</td>
                   </tr>
                 </table>
               </td>
               <td class="bordered">
-                <p class="text-center font-small "><strong>DELIVER TO:</strong></p>
+                <p class="text-center font-small "><strong>ENVIAR A:</strong></p>
                 <p class="text-uppercase">{{$orden->proyecto->cotizacion->lugar}}</p>
                 @if($orden->aduana)
                 <p class="text-uppercase">By: {{$orden->aduana->compañia}}</p>
@@ -403,10 +403,10 @@
         <table class="table table-cotizacion" style="margin:-5px 0px 0px;">
           <thead style="background-color:#000; color:#fff;">
             <tr>
-              <th class="text-center" style="width:10%; padding:3px 0 1px;">QUANTITY</th>
-              <th class="text-center" style="width:74%; padding:3px 0 1px;">DESCRIPTION</th>
-              <th class="text-center" style="width:13%; padding:3px 0 1px;">UNIT PRICE</th>
-              <th class="text-center" style="width:13%; padding:3px 0 1px;">AMOUNT</th>
+              <th class="text-center" style="width:10%; padding:3px 0 1px;">CANTIDAD</th>
+              <th class="text-center" style="width:74%; padding:3px 0 1px;">DESCRIPCION</th>
+              <th class="text-center" style="width:13%; padding:3px 0 1px;">PRECIO UNITARIO</th>
+              <th class="text-center" style="width:13%; padding:3px 0 1px;">IMPORTE</th>
             </tr>
           </thead>
           <tbody>
@@ -419,7 +419,7 @@
                     <td style="vertical-align: top;">
                       @foreach($entrada->producto->descripciones as $descripcion)
                         <p>
-                          <span>@text_capitalize($descripcion->descripcionNombre->name): </span>
+                          <span>@text_capitalize($descripcion->descripcionNombre->nombre): </span>
                           <span class="text-uppercase">{{$descripcion->valor}}</span>
                         </p>
                       @endforeach
@@ -470,19 +470,19 @@
       <div class="col-lg-12 bordered" style="padding: 0px; margin-left:15px;">
         <table class="" style="margin-bottom:0; width:100%;">
           <tr>
-            <td class="text-right" style="width:90%;"><strong>MERCHANDISE AMOUNT:</strong></td>
+            <td class="text-right" style="width:90%;"><strong>SUBTOTAL:</strong></td>
             <td class="text-right" style="width:10%;">@format_money($orden->subtotal)</td>
           </tr>
           <tr>
-            <td class="text-right" style="width:90%;"><strong>FREIGHT:</strong></td>
+            <td class="text-right" style="width:90%;"><strong>FLETES:</strong></td>
             <td class="text-right" style="width:10%;">@format_money(0)</td>
           </tr>
           <tr>
-            <td class="text-right" style="width:90%;"><strong>OTHER:</strong></td>
+            <td class="text-right" style="width:90%;"><strong>IVA:</strong></td>
             <td class="text-right" style="width:10%;">@format_money($orden->iva)</td>
           </tr>
           <tr>
-            <td class="text-right" style="width:90%;"><strong>INVOICE TOTAL:</strong></td>
+            <td class="text-right" style="width:90%;"><strong>TOTAL:</strong></td>
             <td class="text-right" style="width:10%;">@format_money($orden->total)</td>
           </tr>
         </table>
@@ -495,9 +495,9 @@
             <td style="width:70%; text-transform: none;">
               <p><strong>Remarks:</strong></p>
               <ul>
-                <li>PLEASE SEND WITH THE ORDER THE INVOICE AND PACKING LIST.</li>
-                <li>ORDER MUST SHIP COMPLETE; NO PARTIAL SHIPMENTS WILL BE ACCEPTED.</li>
-                <li>PLEASE CONFIRM THE RECEPTION OF THIS ORDER AND ESTIMATED SHIPPING DATE.</li>
+                <li>FAVOR DE ENVIAR JUNTO CON LA ORDEN, LA FACTURA Y LA LISTA DE EMBARQUE.</li>
+                <li>LA ORDEN DEBE ESTAR COMPLETA; NO SE ACEPTARAN ENVIOS PARCIALES.</li>
+                <li>FAVOR DE CONFIRMAR LA RECEPCION DE ESTA ORDEN ASI COMO LA FECHA ESTIMADA DE ENVIO.</li>
               </ul>
             </td>
             <td class="text-center" style="width:30%; text-transform: none;">

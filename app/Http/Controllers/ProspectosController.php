@@ -522,6 +522,7 @@ class ProspectosController extends Controller
       foreach ($request->entradas as $index => $entrada) {
         if(isset($entrada['borrar'])){
           ProspectoCotizacionEntrada::destroy($entrada['id']);
+          continue;
         }
         else if(isset($entrada['id']) && isset($entrada['actualizar'])){
           //recuperar entrada para actualizar

@@ -366,11 +366,11 @@
                     </td>
                   </tr>
                   <tr>
-                    <td>Delivery:</td>
+                    <td style="vertical-align:top">Delivery:</td>
                     <td class="text-uppercase">{{$cotizacion->entrega}}</td>
                   </tr>
                   <tr>
-                    <td>Shipping:</td>
+                    <td style="vertical-align:top">Shipping:</td>
                     <td>{{$cotizacion->fletes}}</td>
                   </tr>
                   <tr>

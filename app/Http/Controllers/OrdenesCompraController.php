@@ -186,20 +186,27 @@ class OrdenesCompraController extends Controller
       $orden->firmaAbraham = $firmaAbraham;
 
       $url = 'ordenes_compra/'.$orden->id.'/orden_'.$orden->numero.'.pdf';
-      // $meses = ['ENERO','FEBRERO','MARZO','ABRIL','MAYO','JUNIO','JULIO',
-      // 'AGOSTO','SEPTIEMBRE','OCTUBRE','NOVIEMBRE','DICIEMBRE'];
-      $meses = ['JANUARY','FEBRUARY','MARCH','APRIL','MAY','JUNE','JULY',
-      'AUGUST','SEPTEMBER','OCTOBER','NOVEMBER','DECEMBER'];
-      list($ano,$mes,$dia) = explode('-', date('Y-m-d'));
-      $mes = $meses[+$mes-1];
-      // $orden->fechaPDF = "$dia DE $mes DEL $ano";
-      $orden->fechaPDF = "$mes $dia, $ano";
-
       foreach ($orden->entradas as $entrada) {
         if($entrada->producto->foto) $entrada->producto->foto = asset('storage/'.$entrada->producto->foto);
       }
 
-      $ordenPDF = PDF::loadView('ordenes-compra.ordenPDF', compact('orden'));
+      list($ano,$mes,$dia) = explode('-', date('Y-m-d'));
+      if($orden->proveedor->nacional){
+        $meses = ['ENERO','FEBRERO','MARZO','ABRIL','MAYO','JUNIO','JULIO',
+        'AGOSTO','SEPTIEMBRE','OCTUBRE','NOVIEMBRE','DICIEMBRE'];
+        $mes = $meses[+$mes-1];
+        $orden->fechaPDF = "$dia DE $mes DEL $ano";
+        $vista = 'ordenes-compra.ordenPDF';
+      }
+      else {
+        $meses = ['JANUARY','FEBRUARY','MARCH','APRIL','MAY','JUNE','JULY',
+        'AUGUST','SEPTEMBER','OCTOBER','NOVEMBER','DECEMBER'];
+        $mes = $meses[+$mes-1];
+        $orden->fechaPDF = "$mes $dia, $ano";
+        $vista = 'ordenes-compra.ordenInglesPDF';
+      }
+
+      $ordenPDF = PDF::loadView($vista, compact('orden'));
       Storage::disk('public')->put($url, $ordenPDF->output());
       unset($orden->fechaPDF);
       unset($orden->firmaAbraham);
@@ -598,23 +605,31 @@ class OrdenesCompraController extends Controller
       $orden->firmaAbraham = $firmaAbraham;
 
       $url = 'ordenes_compra/' . $orden->id . '/orden_' . $orden->numero . '.pdf';
-      // $meses = ['ENERO','FEBRERO','MARZO','ABRIL','MAYO','JUNIO','JULIO',
-      // 'AGOSTO','SEPTIEMBRE','OCTUBRE','NOVIEMBRE','DICIEMBRE'];
-      $meses = [
-        'JANUARY', 'FEBRUARY', 'MARCH', 'APRIL', 'MAY', 'JUNE', 'JULY',
-        'AUGUST', 'SEPTEMBER', 'OCTOBER', 'NOVEMBER', 'DECEMBER'
-      ];
-      list($ano,$mes,$dia) = explode('-', date('Y-m-d'));
-      $mes = $meses[+$mes-1];
-      // $orden->fechaPDF = "$dia DE $mes DEL $ano";
-      $orden->fechaPDF = "$mes $dia, $ano";
-      
       foreach ($orden->entradas as $entrada) {
         if($entrada->producto->foto) $entrada->producto->foto = asset('storage/'.$entrada->producto->foto);
       }
-      
-      // return view('ordenes-compra.ordenPDF', compact('orden'));
-      $ordenPDF = PDF::loadView('ordenes-compra.ordenPDF', compact('orden'));
+
+      list($ano, $mes, $dia) = explode('-', date('Y-m-d'));
+      if ($orden->proveedor->nacional) {
+        $meses = [
+          'ENERO', 'FEBRERO', 'MARZO', 'ABRIL', 'MAYO', 'JUNIO', 'JULIO',
+          'AGOSTO', 'SEPTIEMBRE', 'OCTUBRE', 'NOVIEMBRE', 'DICIEMBRE'
+        ];
+        $mes = $meses[+$mes - 1];
+        $orden->fechaPDF = "$dia DE $mes DEL $ano";
+        $vista = 'ordenes-compra.ordenPDF';
+      } else {
+        $meses = [
+          'JANUARY', 'FEBRUARY', 'MARCH', 'APRIL', 'MAY', 'JUNE', 'JULY',
+          'AUGUST', 'SEPTEMBER', 'OCTOBER', 'NOVEMBER', 'DECEMBER'
+        ];
+        $mes = $meses[+$mes - 1];
+        $orden->fechaPDF = "$mes $dia, $ano";
+        $vista = 'ordenes-compra.ordenInglesPDF';
+      }
+
+      // return view($vista, compact('orden'));
+      $ordenPDF = PDF::loadView($vista, compact('orden'));
       Storage::disk('public')->put($url, $ordenPDF->output());
       unset($orden->fechaPDF);
       unset($orden->firmaAbraham);
