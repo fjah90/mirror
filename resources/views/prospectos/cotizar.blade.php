@@ -135,8 +135,8 @@
                   <hr />
                 </div>
               </div>
-              @can('editar numero cotizacion')
               <div class="row">
+                @can('editar numero cotizacion')
                 <div class="col-md-4">
                   <div class="form-group">
                     <label class="control-label">Numero Cotización</label>
@@ -144,8 +144,16 @@
                     v-model="cotizacion.numero" />
                   </div>
                 </div>
+                @endcan
+                <div class="col-md-offset-2 col-md-6">
+                  <label class="control-label">Cliente Contacto</label>
+                  <select name="cliente_contacto_id" v-model="cotizacion.cliente_contacto_id" class="form-control" required>
+                    @foreach($prospecto->cliente->contactos as $contacto)
+                    <option value="{{$contacto->id}}">{{$contacto->nombre}}</option>
+                    @endforeach
+                  </select>
+                </div>
               </div>
-              @endcan
               <div class="row">
                 <div class="col-sm-6">
                   <div class="form-group">
@@ -259,14 +267,6 @@
                 <div class="col-md-6">
                   <label class="control-label">Fletes</label>
                   <input class="form-control" type="text" name="fletes" v-model="cotizacion.fletes" />
-                </div>
-                <div class="col-md-6">
-                  <label class="control-label">Cliente Contacto</label>
-                  <select name="cliente_contacto_id" v-model="cotizacion.cliente_contacto_id" class="form-control" required>
-                    @foreach($prospecto->cliente->contactos as $contacto)
-                    <option value="{{$contacto->id}}">{{$contacto->nombre}}</option>
-                    @endforeach
-                  </select>
                 </div>
               </div>
               <div class="row">
