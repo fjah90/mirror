@@ -678,8 +678,6 @@ class ProspectosController extends Controller
       use ($email, $pdf, $pdf_name, $user){
         $message->to($email)
                 ->cc('abraham@intercorp.mx')
-                ->cc('omar.herrera@tigears.com')
-                ->cc('simonc@789.mx')
                 ->replyTo($user->email, $user->name)
                 ->subject('Cotización Intercorp');
         $message->attachData($pdf, $pdf_name);
