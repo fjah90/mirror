@@ -499,7 +499,7 @@
               <div class="col-md-12 text-right">
                 <div class="form-group">
                   <button type="button" class="btn btn-primary"
-                  @click="guardar()" :disabled="cargando">
+                  @click="guardar()" :disabled="cargando || edicionEntradaActiva">
                   <i v-if="!cargando" class="fas fa-save"></i>
                   <i v-else class="fas fa-refresh animation-rotate"></i>
                   Guardar Cotización
@@ -625,6 +625,7 @@ function FileListItem(a) {
 const app = new Vue({
   el: '#content',
   data: {
+    edicionEntradaActiva: false,
     locale: localeES,
     prospecto: {!! json_encode($prospecto) !!},
     productos: {!! json_encode($productos) !!},
@@ -1025,16 +1026,19 @@ const app = new Vue({
         observaciones: [],
         fotos: []
       };
+      this.edicionEntradaActiva = false;
       $("button.fileinput-remove").click();
       this.observaciones_productos.forEach(function(observacion){
         observacion.activa = false;
       });
     },
     editarEntrada(entrada, index){
+      if(this.edicionEntradaActiva) return false;
       this.cotizacion.subtotal-= entrada.importe;
       this.cotizacion.entradas.splice(index, 1);
       entrada.actualizar = true;
       this.entrada = entrada;
+      this.edicionEntradaActiva = true;
       this.resetDataTables();
 
       $("button.fileinput-remove").click();
