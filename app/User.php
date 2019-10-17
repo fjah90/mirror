@@ -41,4 +41,8 @@ class User extends Authenticatable
     public function clientes(){
       return $this->hasMany('App\Models\Cliente', 'usuario_id', 'id');
     }
+
+    public function prospectos(){
+      return $this->hasManyThrough('App\Models\Prospecto', 'App\Models\Cliente', 'usuario_id', 'cliente_id');
+    }
 }

@@ -70,6 +70,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('/categorias', 'CategoriasController', ['only'=>['create','store','delete']]);
     Route::delete('/productos/{producto}', 'ProductosController@destroy');
     Route::delete('/clientes/{cliente}', 'ClientesController@destroy');
+    Route::post('/prospectos/listado', 'ProspectosController@listado');
   });
 
   //Prospectos

@@ -17,6 +17,7 @@ use App\Models\ObservacionCotizacion;
 use App\Models\UnidadMedida;
 use App\Models\CuentaCobrar;
 use App\Models\ProyectoAprobado;
+use App\User;
 use Validator;
 use PDF;
 use PDFMerger;
@@ -32,11 +33,33 @@ class ProspectosController extends Controller
      */
     public function index()
     {
-      $prospectos = Prospecto::with('cliente', 'ultima_actividad.tipo', 'proxima_actividad.tipo')
+      $prospectos = auth()->user()->prospectos()->with('cliente', 'ultima_actividad.tipo', 'proxima_actividad.tipo')
       ->has('cliente')->get();
 
-      return view('prospectos.index', compact('prospectos'));
+      if(auth()->user()->tipo=='Administrador')
+        $usuarios = User::all();
+      else $usuarios = [];
+
+      return view('prospectos.index', compact('prospectos','usuarios'));
     }
+
+    public function listado(Request $request)
+    {
+      if($request->id=='Todos'){
+        $prospectos = Prospecto::with('cliente', 'ultima_actividad.tipo', 'proxima_actividad.tipo')
+        ->has('cliente')->get();
+      }
+      else {
+        $user = User::with('prospectos.cliente', 'prospectos.ultima_actividad.tipo', 'prospectos.proxima_actividad.tipo')
+        ->has('prospectos.cliente')->find($request->id);
+        if(is_null($user)) $prospectos = [];
+        else $prospectos = $user->prospectos;
+      }
+
+      return response()->json(['success' => true, "error" => false, 'prospectos'=>$prospectos], 200);
+    }
+
+
 
     /**
      * Show the form for creating a new resource.

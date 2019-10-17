@@ -22,11 +22,22 @@
     <div class="col-lg-12">
       <div class="panel">
         <div class="panel-heading">
-          <h3 class="panel-title text-right">
-            <span class="pull-left p-10">Lista de Proyectos</span>
-            <a href="{{route('prospectos.create')}}" class="btn btn-primary" style="color: #fff;">
-              <i class="fas fa-plus"></i> Nuevo Proyecto
-            </a>
+          <h3 class="panel-title">
+            <div class="p-10">
+              Lista de Proyectos
+              @role('Administrador')
+                de 
+                <select class="form-control" @change="cargar()" v-model="usuarioCargado" style="width:auto;display:inline-block;">
+                  <option value="Todos">Todos</option>
+                  @foreach($usuarios as $usuario)
+                  <option value="{{$usuario->id}}">{{$usuario->name}}</option>
+                  @endforeach
+                </select>
+              @endrole
+              <a href="{{route('prospectos.create')}}" class="btn btn-primary pull-right" style="color: #fff;">
+                <i class="fas fa-plus"></i> Nuevo Proyecto
+              </a>
+            </div>
           </h3>
         </div>
         <div class="panel-body">
@@ -105,11 +116,31 @@ const app = new Vue({
     el: '#content',
     data: {
       prospectos: {!! json_encode($prospectos) !!},
+      usuarioCargado: {{auth()->user()->id}}
     },
     mounted(){
       $("#tabla").DataTable({"order": [[ 1, "asc" ]]});
     },
     methods: {
+      cargar(){
+        axios.post('/prospectos/listado', {id: this.usuarioCargado})
+        .then(({data}) => {
+          this.prospectos = data.prospectos;
+          swal({
+            title: "Exito",
+            text: "Datos Cargados",
+            type: "success"
+          });
+        })
+        .catch(({response}) => {
+          console.error(response);
+          swal({
+            title: "Error",
+            text: response.data.message || "Ocurrio un error inesperado, intente mas tarde",
+            type: "error"
+          });
+        });
+      },
       borrar(prospecto, index){
         swal({
           title: 'Cuidado',

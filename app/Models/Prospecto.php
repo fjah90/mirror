@@ -20,7 +20,7 @@ class Prospecto extends Model
     public function cliente(){
       return $this->belongsTo('App\Models\Cliente', 'cliente_id', 'id');
     }
-
+    
     public function actividades(){
       return $this->hasMany('App\Models\ProspectoActividad', 'prospecto_id', 'id');
     }
