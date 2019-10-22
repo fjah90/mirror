@@ -383,7 +383,12 @@
               </td>
               <td class="bordered">
                 <p class="text-center font-small "><strong>Enviar a:</strong></p>
-                <p class="text-uppercase">{{$cotizacion->lugar}}</p>
+                <p class="text-uppercase">
+                  {{$cotizacion->dircalle}} {{$cotizacion->dirnexterior}}
+                  @if($cotizacion->dirninterior) Int. {{$cotizacion->dirninterior}} @endif
+                </p>
+                <p class="text-uppercase">{{$cotizacion->dircolonia}} {{$cotizacion->dircp}}</p>
+                <p class="text-uppercase">{{$cotizacion->dirciudad}} {{$cotizacion->direstado}}</p>
               </td>
             </tr>
             @if($cotizacion->notas)

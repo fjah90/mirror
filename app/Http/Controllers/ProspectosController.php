@@ -309,8 +309,8 @@ class ProspectosController extends Controller
       if(auth()->user()->can('editar numero cotizacion'))
         $numero_siguiente = ProspectoCotizacion::select('id')->orderBy('id','desc')->first()->id + 1;
       else $numero_siguiente = 0;
-        $rfcs = $prospecto->cotizaciones->reduce(function($datos,$cotizacion){
-        if($cotizacion->rfc) {
+      $rfcs = $prospecto->cotizaciones->reduce(function($datos,$cotizacion){
+        if($cotizacion->facturar) {
           $datos[$cotizacion->rfc] = [
             'rfc' => $cotizacion->rfc,
             'razon_social' => $cotizacion->razon_social,
@@ -325,6 +325,20 @@ class ProspectosController extends Controller
         }
         return $datos;
       }, []);
+      $direcciones = $prospecto->cotizaciones->reduce(function($datos,$cotizacion){
+        if($cotizacion->direccion) {
+          $datos[$cotizacion->direccion_entrega] = [
+            'dircalle' => $cotizacion->dircalle,
+            'dirnexterior' => $cotizacion->dirnexterior,
+            'dirninterior' => $cotizacion->dirninterior,
+            'dircolonia' => $cotizacion->dircolonia,
+            'dircp' => $cotizacion->dircp,
+            'dirciudad' => $cotizacion->dirciudad,
+            'direstado' => $cotizacion->direstado
+          ];
+        }
+        return $datos;
+      }, []);
 
       foreach ($prospecto->cotizaciones as $cotizacion) {
         if($cotizacion->archivo) $cotizacion->archivo = asset('storage/'.$cotizacion->archivo);
@@ -335,9 +349,9 @@ class ProspectosController extends Controller
         if($producto->foto) $producto->foto = asset('storage/'.$producto->foto);
       }
 
-      return view('prospectos.cotizar',
-        compact('prospecto', 'productos', 'condiciones','observaciones','unidades_medida', 'rfcs','numero_siguiente')
-      );
+      return view('prospectos.cotizar', compact('prospecto', 'productos', 'condiciones',
+        'observaciones','unidades_medida', 'rfcs','numero_siguiente','direcciones'
+      ));
     }
 
     /**
@@ -353,7 +367,6 @@ class ProspectosController extends Controller
         'prospecto_id' => 'required',
         'cliente_contacto_id' => 'required',
         'entrega' => 'required',
-        'lugar' => 'required',
         'moneda' => 'required',
         'condicion' => 'required',
         'iva' => 'required',
@@ -375,6 +388,7 @@ class ProspectosController extends Controller
 
       $create = $request->except('entradas', 'condicion', 'observaciones');
       if ($create['facturar'] != "0") $create['facturar'] = "1";
+      if ($create['direccion'] != "0") $create['direccion'] = "1";
       $create['user_id'] = $user->id;
       $create['fecha'] = date('Y-m-d');
       if($request->condicion['id']==0){//nueva condicion, dar de alta
@@ -495,7 +509,6 @@ class ProspectosController extends Controller
         'cliente_contacto_id' => 'required',
         'cotizacion_id' => 'required',
         'entrega' => 'required',
-        'lugar' => 'required',
         'moneda' => 'required',
         'condicion' => 'required',
         'iva' => 'required',
@@ -517,6 +530,7 @@ class ProspectosController extends Controller
 
       $update = $request->except('entradas', 'condicion', 'observaciones','prospecto_id','cotizacion_id');
       if($update['facturar']!="0") $update['facturar'] = "1";
+      if($update['direccion']!="0") $update['direccion'] = "1";
       $update['user_id'] = $user->id;
       $update['fecha'] = date('Y-m-d');
       if($request->condicion['id']==0){//nueva condicion, dar de alta

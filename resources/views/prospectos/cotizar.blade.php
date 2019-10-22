@@ -210,19 +210,48 @@
                 </div>
               </div>
               <div class="row">
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label class="control-label">Tiempo de Entrega</label>
-                    <input type="text" name="entrega" class="form-control"
-                      v-model="cotizacion.entrega" required />
-                  </div>
-                </div>
-                <div class="col-md-6">
+                <div class="col-sm-12">
                   <div class="form-group">
                     <label class="control-label">Dirección de Entrega</label>
-                    <input type="text" name="lugar" class="form-control"
-                      v-model="cotizacion.lugar" required />
+                    <select class="form-control" name="direccion" v-model="cotizacion.direccion"
+                      @change="seleccionarDireccion()">
+                      <option value="0">No</option>
+                      <option value="1">Si</option>
+                      <option v-for="(direccion, index) in direcciones" :value="index">@{{index}}</option>
+                    </select>
                   </div>
+                </div>
+              </div>
+              <div class="row form-group" v-if="cotizacion.direccion!='0'">
+                <div class="col-sm-4">
+                  <label class="control-label">Calle</label>
+                  <input type="text" name="calle" class="form-control" v-model="cotizacion.dircalle" />
+                </div>
+                <div class="col-sm-2">
+                  <label class="control-label">No. Ext.</label>
+                  <input type="text" name="nexterior" class="form-control" v-model="cotizacion.dirnexterior" />
+                </div>
+                <div class="col-sm-2">
+                  <label class="control-label">No. Int.</label>
+                  <input type="text" name="ninterior" class="form-control" v-model="cotizacion.dirninterior" />
+                </div>
+                <div class="col-sm-4">
+                  <label class="control-label">Colonia</label>
+                  <input type="text" name="colonia" class="form-control" v-model="cotizacion.dircolonia" />
+                </div>
+              </div>
+              <div class="row form-group" v-if="cotizacion.direccion!='0'">
+                <div class="col-sm-4">
+                  <label class="control-label">CP</label>
+                  <input type="text" name="cp" class="form-control" v-model="cotizacion.dircp" />
+                </div>
+                <div class="col-sm-4">
+                  <label class="control-label">Ciudad</label>
+                  <input type="text" name="ciudad" class="form-control" v-model="cotizacion.dirciudad" />
+                </div>
+                <div class="col-sm-4">
+                  <label class="control-label">Estado</label>
+                  <input type="text" name="estado" class="form-control" v-model="cotizacion.direstado" />
                 </div>
               </div>
               <div class="row">
@@ -264,6 +293,13 @@
                 </div>
               </div>
               <div class="row form-group">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="control-label">Tiempo de Entrega</label>
+                    <input type="text" name="entrega" class="form-control"
+                      v-model="cotizacion.entrega" required />
+                  </div>
+                </div>
                 <div class="col-md-6">
                   <label class="control-label">Fletes</label>
                   <input class="form-control" type="text" name="fletes" v-model="cotizacion.fletes" />
@@ -631,6 +667,7 @@ const app = new Vue({
     productos: {!! json_encode($productos) !!},
     condiciones: {!! json_encode($condiciones) !!},
     rfcs: {!! json_encode($rfcs) !!},
+    direcciones: {!! json_encode($direcciones) !!},
     observaciones: {!! json_encode($observaciones) !!},
     nuevaObservacion: "",
     observaciones_productos: [],
@@ -653,6 +690,14 @@ const app = new Vue({
       cp: '',
       ciudad: '',
       estado: '',
+      direccion: 0,
+      dircalle: '',
+      dirnexterior: '',
+      dirninterior: '',
+      dircolonia: '',
+      dircp: '',
+      dirciudad: '',
+      direstado: '',
       entrega: '',
       lugar: '',
       fletes: '',
@@ -803,6 +848,17 @@ const app = new Vue({
         this.cotizacion.cp = this.rfcs[this.cotizacion.facturar].cp;
         this.cotizacion.ciudad = this.rfcs[this.cotizacion.facturar].ciudad;
         this.cotizacion.estado = this.rfcs[this.cotizacion.facturar].estado;
+      }
+    },
+    seleccionarDireccion(){
+      if(this.cotizacion.direccion!="0" && this.cotizacion.direccion!="1"){
+        this.cotizacion.dircalle = this.direcciones[this.cotizacion.direccion].dircalle;
+        this.cotizacion.dirnexterior = this.direcciones[this.cotizacion.direccion].dirnexterior;
+        this.cotizacion.dirninterior = this.direcciones[this.cotizacion.direccion].dirninterior;
+        this.cotizacion.dircolonia = this.direcciones[this.cotizacion.direccion].dircolonia;
+        this.cotizacion.dircp = this.direcciones[this.cotizacion.direccion].dircp;
+        this.cotizacion.dirciudad = this.direcciones[this.cotizacion.direccion].dirciudad;
+        this.cotizacion.direstado = this.direcciones[this.cotizacion.direccion].direstado;
       }
     },
     condicionCambiada(){
@@ -1114,6 +1170,14 @@ const app = new Vue({
         cp: cotizacion.cp,
         ciudad: cotizacion.ciudad,
         estado: cotizacion.estado,
+        direccion: (cotizacion.direccion)?1:0,
+        dircalle: cotizacion.dircalle,
+        dirnexterior: cotizacion.dirnexterior,
+        dirninterior: cotizacion.dirninterior,
+        dircolonia: cotizacion.dircolonia,
+        dircp: cotizacion.dircp,
+        dirciudad: cotizacion.dirciudad,
+        direstado: cotizacion.direstado,
         entrega: cotizacion.entrega,
         lugar: cotizacion.lugar,
         fletes: cotizacion.fletes,
@@ -1208,6 +1272,14 @@ const app = new Vue({
           cp: '',
           ciudad: '',
           estado: '',
+          direccion: 0,
+          dircalle: '',
+          dirnexterior: '',
+          dirninterior: '',
+          dircolonia: '',
+          dircp: '',
+          dirciudad: '',
+          direstado: '',
           entrega: '',
           lugar: '',
           fletes: '',
