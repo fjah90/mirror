@@ -79,7 +79,7 @@ const app = new Vue({
       tipos: {!! json_encode($tipos) !!},
     },
     mounted(){
-      $("#tabla").DataTable();
+      $("#tabla").DataTable({"order": [[ 1, "asc" ]]});
     },
     methods: {
       borrar(tipo, index){
