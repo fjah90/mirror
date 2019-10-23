@@ -95,7 +95,7 @@
               </div>
               <div class="col-md-4">
                 <label class="control-label">IVA</label>
-                <select class="form-control" name="iva" v-model="orden.iva" required disabled>
+                <select class="form-control" name="iva" v-model="orden.iva" required>
                   <option value="0">No</option>
                   <option value="1">Si</option>
                 </select>
