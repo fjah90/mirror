@@ -214,7 +214,7 @@ const app = new Vue({
         this.cargando = true;
         axios.post(
         '/proyectos-aprobados/'+this.ordenModal.proyecto_id+'/ordenes-compra/'+this.ordenModal.id+'/rechazar',
-        {'motivo_rechazo': ordenModal.motivo_rechazo}).then(({data}) => {
+        {'motivo_rechazo': this.ordenModal.motivo_rechazo}).then(({data}) => {
           this.ordenModal.status = 'Rechazada';
           this.openRechazar = false;
           this.cargando = true;
