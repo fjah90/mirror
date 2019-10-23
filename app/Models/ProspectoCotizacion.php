@@ -12,7 +12,8 @@ class ProspectoCotizacion extends Model
     protected $fillable = ['prospecto_id','condicion_id','fecha','subtotal','iva',
       'total','observaciones','notas','archivo','entrega','lugar','moneda','facturar',
       'user_id','idioma','aceptada','notas2','numero','rfc','razon_social','calle',
-      'nexterior','ninterior','colonia','cp','ciudad','estado','fletes','cliente_contacto_id'
+      'nexterior','ninterior','colonia','cp','ciudad','estado','fletes','cliente_contacto_id',
+      'direccion', 'dircalle', 'dirnexterior', 'dirninterior', 'dircolonia', 'dircp', 'dirciudad', 'direstado'
     ];
 
     protected $casts = [
@@ -24,16 +25,21 @@ class ProspectoCotizacion extends Model
     ];
 
     protected $appends = [
-      'fecha_formated', 'direccion'
+      'fecha_formated', 'direccion_facturacion', 'direccion_entrega'
     ];
 
     public function getFechaFormatedAttribute(){
       return Carbon::parse($this->fecha)->format('d/m/Y');
     }
 
-    public function getDireccionAttribute(){
+    public function getDireccionFacturacionAttribute(){
       return $this->calle." ".$this->nexterior.(($this->ninterior)?" Int. ".$this->ninterior:"")." "
       .$this->colonia." ".$this->cp." ".$this->ciudad." ".$this->estado." ".$this->pais;
+    }
+
+    public function getDireccionEntregaAttribute(){
+      return $this->dircalle." ".$this->dirnexterior.(($this->dirninterior)?" Int. ".$this->dirninterior:"")." "
+      .$this->dircolonia." ".$this->dircp." ".$this->dirciudad." ".$this->direstado." ".$this->dirpais;
     }
 
     /**
