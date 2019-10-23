@@ -143,8 +143,8 @@ const app = new Vue({
       clientesExtranjeros: {!! json_encode($clientesExtranjeros) !!},
     },
     mounted(){
-      $("#tablaNac").DataTable();
-      $("#tablaExt").DataTable();
+      $("#tablaNac").DataTable({"order": [[ 2, "asc" ]]});
+      $("#tablaExt").DataTable({"order": [[ 2, "asc" ]]});
     },
     methods: {
       borrar(cliente, index){

@@ -84,7 +84,7 @@ const app = new Vue({
       categorias: {!! json_encode($categorias) !!},
     },
     mounted(){
-      $("#tabla").DataTable();
+      $("#tabla").DataTable({"order": [[ 1, "asc" ]]});
     },
     methods: {
       borrar(categoria, index){
