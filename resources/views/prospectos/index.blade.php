@@ -116,20 +116,24 @@ const app = new Vue({
     el: '#content',
     data: {
       prospectos: {!! json_encode($prospectos) !!},
-      usuarioCargado: {{auth()->user()->id}}
+      usuarioCargado: {{auth()->user()->id}},
+      tabla: {}
     },
     mounted(){
-      $("#tabla").DataTable({"order": [[ 1, "asc" ]]});
+      this.tabla = $("#tabla").DataTable({"order": [[ 1, "asc" ]]});
     },
     methods: {
       cargar(){
         axios.post('/prospectos/listado', {id: this.usuarioCargado})
         .then(({data}) => {
+          this.tabla.destroy();
           this.prospectos = data.prospectos;
           swal({
             title: "Exito",
             text: "Datos Cargados",
             type: "success"
+          }).then(()=>{
+            this.tabla = $("#tabla").DataTable({"order": [[ 1, "asc" ]]});
           });
         })
         .catch(({response}) => {

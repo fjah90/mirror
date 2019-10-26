@@ -71,6 +71,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/productos/{producto}', 'ProductosController@destroy');
     Route::delete('/clientes/{cliente}', 'ClientesController@destroy');
     Route::post('/prospectos/listado', 'ProspectosController@listado');
+    Route::post('/proyectos-aprobados/listado', 'ProyectosAprobadosController@listado');
   });
 
   //Prospectos

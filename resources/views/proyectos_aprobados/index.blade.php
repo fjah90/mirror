@@ -23,7 +23,18 @@
       <div class="panel">
         <div class="panel-heading">
           <h3 class="panel-title">
-            <span class="p-10">Lista de Proyectos</span>
+            <div class="p-10">
+              Lista de Proyectos
+              @role('Administrador')
+                de 
+                <select class="form-control" @change="cargar()" v-model="usuarioCargado" style="width:auto;display:inline-block;">
+                  <option value="Todos">Todos</option>
+                  @foreach($usuarios as $usuario)
+                  <option value="{{$usuario->id}}">{{$usuario->name}}</option>
+                  @endforeach
+                </select>
+              @endrole
+            </div>
           </h3>
         </div>
         <div class="panel-body">
@@ -79,10 +90,36 @@ const app = new Vue({
     el: '#content',
     data: {
       proyectos: {!! json_encode($proyectos) !!},
+      usuarioCargado: {{auth()->user()->id}},
+      tabla: {}
     },
     mounted(){
-      $("#tabla").DataTable({"order": [[ 1, "asc" ]]});
+      this.tabla = $("#tabla").DataTable({"order": [[ 1, "asc" ]]});
     },
+    methods:{
+      cargar(){
+        axios.post('/proyectos-aprobados/listado', {id: this.usuarioCargado})
+        .then(({data}) => {
+          this.tabla.destroy();
+          this.proyectos = data.proyectos;
+          swal({
+            title: "Exito",
+            text: "Datos Cargados",
+            type: "success"
+          }).then(()=>{
+            this.tabla = $("#tabla").DataTable({"order": [[ 1, "asc" ]]});
+          });
+        })
+        .catch(({response}) => {
+          console.error(response);
+          swal({
+            title: "Error",
+            text: response.data.message || "Ocurrio un error inesperado, intente mas tarde",
+            type: "error"
+          });
+        });
+      },
+    }
 });
 </script>
 @stop

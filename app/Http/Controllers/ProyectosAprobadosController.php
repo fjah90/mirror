@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use App\Models\ProyectoAprobado;
 use App\Models\OrdenCompra;
 use App\Models\OrdenCompraEntrada;
+use App\User;
 
 class ProyectosAprobadosController extends Controller
 {
@@ -15,12 +17,29 @@ class ProyectosAprobadosController extends Controller
      */
     public function index()
     {
-      $proyectos = ProyectoAprobado::with('cotizacion','cliente')->get();
+      $proyectos = auth()->user()->proyectos_aprobados()->with('cotizacion','cliente')->get();
       foreach ($proyectos as $proyecto) {
         $proyecto->cotizacion->archivo = asset('storage/'.$proyecto->cotizacion->archivo);
       }
 
-      return view('proyectos_aprobados.index', compact('proyectos'));
+      if (auth()->user()->tipo == 'Administrador')
+        $usuarios = User::all();
+      else $usuarios = [];
+
+      return view('proyectos_aprobados.index', compact('proyectos','usuarios'));
+    }
+
+    public function listado(Request $request)
+    {
+      if ($request->id == 'Todos') {
+        $proyectos = ProyectoAprobado::with('cotizacion','cliente')->get();
+      } else {
+        $user = User::with('proyectos_aprobados.cotizacion', 'proyectos_aprobados.cliente')->find($request->id);
+        if (is_null($user)) $proyectos = [];
+        else $proyectos = $user->proyectos_aprobados;
+      }
+
+      return response()->json(['success' => true, "error" => false, 'proyectos' => $proyectos], 200);
     }
 
     public function generarOrdenes(ProyectoAprobado $proyecto){
