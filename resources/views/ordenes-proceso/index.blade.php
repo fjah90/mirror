@@ -28,7 +28,8 @@
         </div>
         <div class="panel-body">
           <div class="table-responsive">
-            <table class="table table-bordred">
+            <table id="tabla" class="table table-bordred" style="width:100%;"
+              data-page-length="-1">
               <thead>
                 <tr>
                   <th>Cliente</th>
@@ -460,6 +461,7 @@ const app = new Vue({
       openEntrega: false
     },
     mounted(){
+      $("#tabla").DataTable({"order": [[ 1, "asc" ]]});
       $("#factura").fileinput({
         language: 'es',
         showPreview: false,

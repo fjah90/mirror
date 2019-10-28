@@ -22,11 +22,26 @@
     <tab title="Nacionales">
       <div class="panel">
         <div class="panel-heading">
-          <h3 class="panel-title text-right">
-            <span class="pull-left p-10">Lista de Clientes Nacionales</span>
-            <a href="{{route('clientes.createNacional')}}" class="btn btn-primary" style="color: #fff;">
-              <i class="fas fa-plus"></i> Cliente Nacional
-            </a>
+          <h3 class="panel-title">
+            <div class="p-10">
+              Clientes Nacionales de 
+              <select class="form-control" @change="cargar()" v-model="usuarioCargado" style="width:auto;display:inline-block;">
+                <option value="Todos">Todos</option>
+                @foreach($usuarios as $usuario)
+                <option value="{{$usuario->id}}">{{$usuario->name}}</option>
+                @endforeach
+              </select>
+              , tipo 
+              <select class="form-control" @change="cargar()" v-model="tipoCargado" style="width:auto;display:inline-block;">
+                <option value="Todos">Todos</option>
+                @foreach($tipos as $tipo)
+                <option value="{{$tipo->id}}">{{$tipo->nombre}}</option>
+                @endforeach
+              </select>
+              <a href="{{route('clientes.createNacional')}}" class="btn btn-primary pull-right" style="color: #fff;">
+                <i class="fas fa-plus"></i> Cliente Nacional
+              </a>
+            </div>
           </h3>
         </div>
         <div class="panel-body">
@@ -77,11 +92,26 @@
     <tab title="Extranjeros">
       <div class="panel">
         <div class="panel-heading">
-          <h3 class="panel-title text-right">
-            <span class="pull-left p-10">Lista de Clientes Extranjeros</span>
-            <a href="{{route('clientes.createInternacional')}}" class="btn btn-brown" style="color: #fff;">
-              <i class="fas fa-plus"></i> Cliente Extranjero
-            </a>
+          <h3 class="panel-title">
+            <div class="p-10">
+              Clientes Extranjeros de 
+              <select class="form-control" @change="cargar()" v-model="usuarioCargado" style="width:auto;display:inline-block;">
+                <option value="Todos">Todos</option>
+                @foreach($usuarios as $usuario)
+                <option value="{{$usuario->id}}">{{$usuario->name}}</option>
+                @endforeach
+              </select>
+              , tipo 
+              <select class="form-control" @change="cargar()" v-model="tipoCargado" style="width:auto;display:inline-block;">
+                <option value="Todos">Todos</option>
+                @foreach($tipos as $tipo)
+                <option value="{{$tipo->id}}">{{$tipo->nombre}}</option>
+                @endforeach
+              </select>
+              <a href="{{route('clientes.createInternacional')}}" class="btn btn-brown pull-right" style="color: #fff;">
+                <i class="fas fa-plus"></i> Cliente Extranjero
+              </a>
+            </div>
           </h3>
         </div>
         <div class="panel-body">
@@ -141,12 +171,41 @@ const app = new Vue({
     data: {
       clientesNacionales: {!! json_encode($clientesNacionales) !!},
       clientesExtranjeros: {!! json_encode($clientesExtranjeros) !!},
+      usuarioCargado: "Todos",
+      tipoCargado: "Todos",
+      tablaNac: {},
+      tablaExt: {}
     },
     mounted(){
-      $("#tablaNac").DataTable({"order": [[ 2, "asc" ]]});
-      $("#tablaExt").DataTable({"order": [[ 2, "asc" ]]});
+      this.tablaNac = $("#tablaNac").DataTable({"order": [[ 2, "asc" ]]});
+      this.tablaExt = $("#tablaExt").DataTable({"order": [[ 2, "asc" ]]});
     },
     methods: {
+      cargar(){
+        axios.post('/clientes/listado', {id: this.usuarioCargado, tipo: this.tipoCargado})
+        .then(({data}) => {
+          this.tablaNac.destroy();
+          this.tablaExt.destroy();
+          this.clientesNacionales = data.clientesNacionales;
+          this.clientesExtranjeros = data.clientesExtranjeros;
+          swal({
+            title: "Exito",
+            text: "Datos Cargados",
+            type: "success"
+          }).then(()=>{
+            this.tablaNac = $("#tablaNac").DataTable({"order": [[ 2, "asc" ]]});
+            this.tablaExt = $("#tablaExt").DataTable({"order": [[ 2, "asc" ]]});
+          });
+        })
+        .catch(({response}) => {
+          console.error(response);
+          swal({
+            title: "Error",
+            text: response.data.message || "Ocurrio un error inesperado, intente mas tarde",
+            type: "error"
+          });
+        });
+      },
       borrar(cliente, index){
         swal({
           title: 'Cuidado',

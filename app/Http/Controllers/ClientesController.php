@@ -21,8 +21,30 @@ class ClientesController extends Controller
     {
       $clientesNacionales = Cliente::with('tipo')->where('nacional',1)->get();
       $clientesExtranjeros = Cliente::with('tipo')->where('nacional',0)->get();
+      $usuarios = User::all();
+      $tipos = TipoCliente::all();
 
-      return view('catalogos.clientes.index', compact('clientesNacionales','clientesExtranjeros'));
+      return view('catalogos.clientes.index', compact('clientesNacionales','clientesExtranjeros','usuarios','tipos'));
+    }
+
+    public function listado(Request $request)
+    {
+      $clientesNacionales = Cliente::with('tipo')->where('nacional', 1);
+      $clientesExtranjeros = Cliente::with('tipo')->where('nacional', 0);
+      if ($request->id != 'Todos'){
+        $clientesNacionales = $clientesNacionales->where('usuario_id', $request->id);
+        $clientesExtranjeros = $clientesExtranjeros->where('usuario_id', $request->id);
+      }
+      if ($request->tipo != 'Todos'){
+        $clientesNacionales = $clientesNacionales->where('tipo_id', $request->tipo);
+        $clientesExtranjeros = $clientesExtranjeros->where('tipo_id', $request->tipo);
+      }
+      $clientesNacionales = $clientesNacionales->get();
+      $clientesExtranjeros = $clientesExtranjeros->get();
+      
+      return response()->json(['success' => true, "error" => false, 
+        'clientesNacionales' => $clientesNacionales, 'clientesExtranjeros' => $clientesExtranjeros 
+      ], 200);
     }
 
     /**

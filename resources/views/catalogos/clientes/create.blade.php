@@ -20,7 +20,7 @@
       <div class="col-lg-12">
         <div class="panel ">
           <div class="panel-heading">
-            <h3 class="panel-title">Nuevo Cliente {{ ($nacional)?"Nacional":"Internacional" }}</h3>
+            <h3 class="panel-title">Nuevo Cliente {{ ($nacional)?"Nacional":"Extranjero" }}</h3>
           </div>
           <div class="panel-body">
             <form class="" @submit.prevent="guardar()">
