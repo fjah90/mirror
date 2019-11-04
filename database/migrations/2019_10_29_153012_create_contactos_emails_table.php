@@ -19,7 +19,7 @@ class CreateContactosEmailsTable extends Migration
             $table->unsignedInteger('contacto_id');
             $table->string('contacto_type');
             $table->string('email');
-            $table->string('email_tipo')->nullable();
+            $table->string('tipo')->nullable();
 
             $table->timestamps();
         });
