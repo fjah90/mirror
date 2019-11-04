@@ -10,19 +10,19 @@ class ClienteContacto extends Model
 
     protected $fillable = ['cliente_id','nombre','cargo'];
 
-    // protected $appends = ['tipo','telefono','email'];
+    protected $appends = ['tipo','telefono','email'];
 
-    // public function getTipoAttribute(){
-    //   return 'cliente';
-    // }
+    public function getTipoAttribute(){
+      return 'cliente';
+    }
 
-    // public function getEmailAttribute(){
-    //   return $this->emails->get(0, (object) ['email' => ""])->email;
-    // }
+    public function getEmailAttribute(){
+      return $this->emails->get(0, (object) ['email' => ""])->email;
+    }
 
-    // public function getTelefonoAttribute(){
-    //   return $this->telefonos->get(0, (object) ['telefono' => ""])->telefono;
-    // }
+    public function getTelefonoAttribute(){
+      return $this->telefonos->get(0, (object) ['telefono' => ""])->telefono;
+    }
 
     /**
      * ---------------------------------------------------------------------------
