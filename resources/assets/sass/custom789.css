@@ -11,6 +11,9 @@ Created by: Omar Herrera
 */
 
 /******** General *********/
+.form-control.focus, .form-control:focus {
+	background-color: gainsboro !important;
+}
 footer {
 	background-color: #FFF;
 	border-top: 5px solid #EEE;

@@ -33,7 +33,7 @@ class ProspectosController extends Controller
     public function index()
     {
       $prospectos = auth()->user()->prospectos()->with('cliente', 'ultima_actividad.tipo', 'proxima_actividad.tipo')
-      ->has('cliente')->get();
+      ->has('cliente')->orderBy('id','desc')->get();
 
       if(auth()->user()->tipo=='Administrador')
         $usuarios = User::all();
@@ -46,7 +46,7 @@ class ProspectosController extends Controller
     {
       if($request->id=='Todos'){
         $prospectos = Prospecto::with('cliente', 'ultima_actividad.tipo', 'proxima_actividad.tipo')
-        ->has('cliente')->get();
+        ->has('cliente')->orderBy('id', 'desc')->get();
       }
       else {
         $user = User::with('prospectos.cliente', 'prospectos.ultima_actividad.tipo', 'prospectos.proxima_actividad.tipo')

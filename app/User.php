@@ -43,7 +43,8 @@ class User extends Authenticatable
     }
 
     public function prospectos(){
-      return $this->hasManyThrough('App\Models\Prospecto', 'App\Models\Cliente', 'usuario_id', 'cliente_id');
+      return $this->hasManyThrough('App\Models\Prospecto', 'App\Models\Cliente', 'usuario_id', 'cliente_id')
+      ->orderBy('id','desc');
     }
 
     public function proyectos_aprobados(){

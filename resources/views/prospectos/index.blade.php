@@ -34,9 +34,9 @@
                   @endforeach
                 </select>
               @endrole
-              <a href="{{route('prospectos.create')}}" class="btn btn-primary pull-right" style="color: #fff;">
+              {{-- <a href="{{route('prospectos.create')}}" class="btn btn-primary pull-right" style="color: #fff;">
                 <i class="fas fa-plus"></i> Nuevo Proyecto
-              </a>
+              </a> --}}
             </div>
           </h3>
         </div>
@@ -64,7 +64,7 @@
                   <td>@{{prospecto.cliente.nombre}}</td>
                   <td>@{{prospecto.nombre}}</td>
                   <template v-if="prospecto.ultima_actividad">
-                    <td>@{{prospecto.ultima_actividad.fecha_formated}}</td>
+                    <td>@{{prospecto.ultima_actividad.fecha}}</td>
                     <td>@{{prospecto.ultima_actividad.tipo.nombre}}</td>
                   </template>
                   <template v-else>
@@ -83,10 +83,10 @@
                     <a class="btn btn-info" title="Ver" :href="'/prospectos/'+prospecto.id">
                       <i class="far fa-eye"></i>
                     </a>
-                    <a class="btn btn-success" title="Editar" :href="'/prospectos/'+prospecto.id+'/editar'">
+                    <a class="btn btn-warning" title="Editar" :href="'/prospectos/'+prospecto.id+'/editar'">
                       <i class="far fa-edit"></i>
                     </a>
-                    <a class="btn btn-warning" title="Cotizar" :href="'/prospectos/'+prospecto.id+'/cotizar'">
+                    <a class="btn btn-success" title="Cotizar" :href="'/prospectos/'+prospecto.id+'/cotizar'">
                       <i class="far fa-file-alt"></i>
                     </a>
                     <button class="btn btn-danger" title="Borrar" @click="borrar(prospecto, index)">
@@ -116,7 +116,7 @@ const app = new Vue({
       tabla: {}
     },
     mounted(){
-      this.tabla = $("#tabla").DataTable({"order": [[ 1, "asc" ]]});
+      this.tabla = $("#tabla").DataTable({"order": [[ 3, "desc" ]]});
     },
     methods: {
       cargar(){
@@ -129,7 +129,7 @@ const app = new Vue({
             text: "Datos Cargados",
             type: "success"
           }).then(()=>{
-            this.tabla = $("#tabla").DataTable({"order": [[ 1, "asc" ]]});
+            this.tabla = $("#tabla").DataTable({"order": [[ 3, "desc" ]]});
           });
         })
         .catch(({response}) => {

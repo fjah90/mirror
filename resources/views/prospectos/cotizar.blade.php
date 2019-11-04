@@ -52,9 +52,21 @@
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="panel">
+          <div class="panel-heading">
+            <h4 class="panel-title">Cotizaciones Realizadas</h4>
+          </div>
+          <div class="panel-body">
             <div class="row">
               <div class="col-sm-12">
-                <h4>Cotizaciones Realizadas</h4>
               </div>
             </div>
             <div class="row">
@@ -88,7 +100,7 @@
                             >
                             <i class="far fa-sticky-note"></i>
                           </button>
-                          <a class="btn btn-warning" style="background-color:#fa0;" title="PDF" :href="cotizacion.archivo"
+                          <a class="btn btn-success" title="PDF" :href="cotizacion.archivo"
                             :download="'C '+cotizacion.numero+' Intercorp '+prospecto.nombre+'.pdf'">
                             <i class="far fa-file-pdf"></i>
                           </a>
@@ -106,7 +118,7 @@
                               @click="aceptar.cotizacion_id=cotizacion.id; openAceptar=true;">
                               <i class="fas fa-user-check"></i>
                             </button>
-                            <button class="btn btn-success" title="Editar"
+                            <button class="btn btn-warning" title="Editar"
                               @click="editar(index, cotizacion)">
                               <i class="far fa-edit"></i>
                             </button>
@@ -127,14 +139,19 @@
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="panel">
+          <div class="panel-heading">
+            <h4 class="panel-title">Nueva Cotización</h4>
+          </div>
+          <div class="panel-body">
             <form class="" @submit.prevent="agregarEntrada()">
-              <div class="row">
-                <div class="col-sm-12">
-                  <h4>Nueva Cotización</h4>
-                  <hr />
-                </div>
-              </div>
               <div class="row">
                 @can('editar numero cotizacion')
                 <div class="col-md-4">
@@ -174,46 +191,46 @@
               <div class="row form-group" v-if="cotizacion.facturar!='0'">
                 <div class="col-sm-12">
                   <label class="control-label">Razon Social</label>
-                  <input type="text" name="razon_social" class="form-control" v-model="cotizacion.razon_social" />
+                  <input type="text" name="razon_social" class="form-control text-uppercase" v-model="cotizacion.razon_social" />
                 </div>
               </div>
               <div class="row form-group" v-if="cotizacion.facturar!='0'">
                 <div class="col-sm-4">
                   <label class="control-label">Calle</label>
-                  <input type="text" name="calle" class="form-control" v-model="cotizacion.calle" />
+                  <input type="text" name="calle" class="form-control text-uppercase" v-model="cotizacion.calle" />
                 </div>
                 <div class="col-sm-2">
                   <label class="control-label">No. Ext.</label>
-                  <input type="text" name="nexterior" class="form-control" v-model="cotizacion.nexterior" />
+                  <input type="text" name="nexterior" class="form-control text-uppercase" v-model="cotizacion.nexterior" />
                 </div>
                 <div class="col-sm-2">
                   <label class="control-label">No. Int.</label>
-                  <input type="text" name="ninterior" class="form-control" v-model="cotizacion.ninterior" />
+                  <input type="text" name="ninterior" class="form-control text-uppercase" v-model="cotizacion.ninterior" />
                 </div>
                 <div class="col-sm-4">
                   <label class="control-label">Colonia</label>
-                  <input type="text" name="colonia" class="form-control" v-model="cotizacion.colonia" />
+                  <input type="text" name="colonia" class="form-control text-uppercase" v-model="cotizacion.colonia" />
                 </div>
               </div>
               <div class="row form-group" v-if="cotizacion.facturar!='0'">
                 <div class="col-sm-4">
                   <label class="control-label">CP</label>
-                  <input type="text" name="cp" class="form-control" v-model="cotizacion.cp" />
+                  <input type="text" name="cp" class="form-control text-uppercase" v-model="cotizacion.cp" />
                 </div>
                 <div class="col-sm-4">
                   <label class="control-label">Ciudad</label>
-                  <input type="text" name="ciudad" class="form-control" v-model="cotizacion.ciudad" />
+                  <input type="text" name="ciudad" class="form-control text-uppercase" v-model="cotizacion.ciudad" />
                 </div>
                 <div class="col-sm-4">
                   <label class="control-label">Estado</label>
-                  <input type="text" name="estado" class="form-control" v-model="cotizacion.estado" />
+                  <input type="text" name="estado" class="form-control text-uppercase" v-model="cotizacion.estado" />
                 </div>
               </div>
               <div class="row">
                 <div class="col-sm-12">
                   <div class="form-group">
                     <label class="control-label">Dirección de Entrega</label>
-                    <select class="form-control" name="direccion" v-model="cotizacion.direccion"
+                    <select class="form-control text-uppercase" name="direccion" v-model="cotizacion.direccion"
                       @change="seleccionarDireccion()">
                       <option value="0">No</option>
                       <option value="1">Si</option>
@@ -225,33 +242,33 @@
               <div class="row form-group" v-if="cotizacion.direccion!='0'">
                 <div class="col-sm-4">
                   <label class="control-label">Calle</label>
-                  <input type="text" name="calle" class="form-control" v-model="cotizacion.dircalle" />
+                  <input type="text" name="calle" class="form-control text-uppercase" v-model="cotizacion.dircalle" />
                 </div>
                 <div class="col-sm-2">
                   <label class="control-label">No. Ext.</label>
-                  <input type="text" name="nexterior" class="form-control" v-model="cotizacion.dirnexterior" />
+                  <input type="text" name="nexterior" class="form-control text-uppercase" v-model="cotizacion.dirnexterior" />
                 </div>
                 <div class="col-sm-2">
                   <label class="control-label">No. Int.</label>
-                  <input type="text" name="ninterior" class="form-control" v-model="cotizacion.dirninterior" />
+                  <input type="text" name="ninterior" class="form-control text-uppercase" v-model="cotizacion.dirninterior" />
                 </div>
                 <div class="col-sm-4">
                   <label class="control-label">Colonia</label>
-                  <input type="text" name="colonia" class="form-control" v-model="cotizacion.dircolonia" />
+                  <input type="text" name="colonia" class="form-control text-uppercase" v-model="cotizacion.dircolonia" />
                 </div>
               </div>
               <div class="row form-group" v-if="cotizacion.direccion!='0'">
                 <div class="col-sm-4">
                   <label class="control-label">CP</label>
-                  <input type="text" name="cp" class="form-control" v-model="cotizacion.dircp" />
+                  <input type="text" name="cp" class="form-control text-uppercase" v-model="cotizacion.dircp" />
                 </div>
                 <div class="col-sm-4">
                   <label class="control-label">Ciudad</label>
-                  <input type="text" name="ciudad" class="form-control" v-model="cotizacion.dirciudad" />
+                  <input type="text" name="ciudad" class="form-control text-uppercase" v-model="cotizacion.dirciudad" />
                 </div>
                 <div class="col-sm-4">
                   <label class="control-label">Estado</label>
-                  <input type="text" name="estado" class="form-control" v-model="cotizacion.direstado" />
+                  <input type="text" name="estado" class="form-control text-uppercase" v-model="cotizacion.direstado" />
                 </div>
               </div>
               <div class="row">
@@ -543,7 +560,6 @@
                 </div>
               </div>
             </div>
-
           </div>
         </div>
       </div>
