@@ -10,6 +10,7 @@ class Proveedor extends Model
     protected $table = 'proveedores';
 
     protected $fillable = [
+      'tipo_id',
       'empresa','numero_cliente',
       'razon_social','identidad_fiscal','identificacion_fiscal',
       'calle','nexterior',
@@ -58,6 +59,11 @@ class Proveedor extends Model
 
     public function contactos(){
       return $this->hasMany('App\Models\ProveedorContacto', 'proveedor_id', 'id');
+    }
+
+    public function tipo(){
+      return $this->belongsTo('App\Models\TipoProveedor', 'tipo_id', 'id')
+        ->withDefault(['id'=>0,'nombre'=>'']);
     }
 
 }

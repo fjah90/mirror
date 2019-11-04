@@ -36,30 +36,27 @@
                   data-page-length="100">
                   <thead>
                     <tr>
+                      <th>Tipo</th>
                       <th>Empresa</th>
-                      <th>Teléfono</th>
-                      <th>Email</th>
+                      <th>Numero Cliente</th>
                       <th>RFC</th>
                       <th></th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr v-for="(proveedor, index) in proveedoresNacionales">
+                      <td>@{{proveedor.tipo.nombre}}</td>
                       <td>@{{proveedor.empresa}}</td>
-                      <td>@{{proveedor.telefono}}</td>
-                      <td>@{{proveedor.email}}</td>
+                      <td>@{{proveedor.numero_cliente}}</td>
                       <td>@{{proveedor.identidad_fiscal}}</td>
                       <td class="text-right">
-                        <a class="btn btn-info" data-toggle="tooltip" title="Ver"
-                          :href="'/proveedores/'+proveedor.id">
+                        <a class="btn btn-info" title="Ver" :href="'/proveedores/'+proveedor.id">
                           <i class="far fa-eye"></i>
                         </a>
-                        <a class="btn btn-success" data-toggle="tooltip" title="Editar"
-                          :href="'/proveedores/'+proveedor.id+'/editar'">
+                        <a class="btn btn-success" title="Editar" :href="'/proveedores/'+proveedor.id+'/editar'">
                           <i class="far fa-edit"></i>
                         </a>
-                        <button class="btn btn-danger" data-toggle="tooltip" title="Borrar"
-                          @click="borrar('Nacionales',proveedor, index)">
+                        <button class="btn btn-danger" title="Borrar" @click="borrar('Nacionales',proveedor, index)">
                           <i class="fas fa-times"></i>
                         </button>
                       </td>
@@ -91,29 +88,29 @@
                   data-page-length="100">
                   <thead>
                     <tr>
+                      <th>Tipo</th>
                       <th>Empresa</th>
-                      <th>Teléfono</th>
-                      <th>Email</th>
+                      <th>Numero Cliente</th>
                       <th>TAX ID NO</th>
                       <th></th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr v-for="(proveedor, index) in proveedoresExtranjeros">
+                      <td>@{{proveedor.tipo.nombre}}</td>
                       <td>@{{proveedor.empresa}}</td>
-                      <td>@{{proveedor.telefono}}</td>
-                      <td>@{{proveedor.email}}</td>
+                      <td>@{{proveedor.numero_cliente}}</td>
                       <td>@{{proveedor.identidad_fiscal}}</td>
                       <td class="text-right">
-                        <a class="btn btn-info" data-toggle="tooltip" title="Ver"
+                        <a class="btn btn-info" title="Ver"
                           :href="'/proveedores/'+proveedor.id">
                           <i class="far fa-eye"></i>
                         </a>
-                        <a class="btn btn-success" data-toggle="tooltip" title="Editar"
+                        <a class="btn btn-success" title="Editar"
                           :href="'/proveedores/'+proveedor.id+'/editar'">
                           <i class="far fa-edit"></i>
                         </a>
-                        <button class="btn btn-danger" data-toggle="tooltip" title="Borrar"
+                        <button class="btn btn-danger" title="Borrar"
                           @click="borrar('Extranjeros', proveedor, index)">
                           <i class="fas fa-times"></i>
                         </button>
@@ -147,13 +144,13 @@ const app = new Vue({
     },
     mounted(){
       $("#tablaNacionales").DataTable({
-        "order": [[ 0, "asc" ]],
+        "order": [[ 1, "asc" ]],
         "columnDefs": [
           { "width": "200px", "targets": 4 }
         ]
       });
       $("#tablaExtranjeros").DataTable({
-        "order": [[ 0, "asc" ]],
+        "order": [[ 1, "asc" ]],
         "columnDefs": [
           { "width": "200px", "targets": 4 }
         ]

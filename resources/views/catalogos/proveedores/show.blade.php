@@ -23,6 +23,12 @@
             <h3 class="panel-title">Ver Proveedor {{$proveedor->empresa}}</h3>
           </div>
           <div class="panel-body">
+            <div class="row form-group">
+              <div class="col-md-6">
+                <label class="control-label">Tipo Proveedor</label>
+                <span class="form-control">{{$proveedor->tipo->nombre}}</span>
+              </div>
+            </div>
             <div class="row">
               <div class="col-md-4">
                 <div class="form-group">

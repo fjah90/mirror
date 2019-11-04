@@ -27,6 +27,16 @@
                 </div>
                 <div class="panel-body">
                   <div class="row form-group">
+                    <div class="col-md-6">
+                      <label class="control-label">Tipo</label>
+                      <select name="tipo" v-model="proveedor.tipo_id" class="form-control">
+                        @foreach($tipos as $tipo)
+                        <option value="{{$tipo->id}}">{{$tipo->nombre}}</option>
+                        @endforeach
+                      </select>
+                    </div>
+                  </div>
+                  <div class="row form-group">
                     <div class="col-md-8">
                       <label class="control-label">Nombre Empresa</label>
                       <input type="text" class="form-control" name="empresa" v-model="proveedor.empresa" required />

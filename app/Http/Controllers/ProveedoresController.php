@@ -6,6 +6,7 @@ use Validator;
 use Illuminate\Http\Request;
 use App\Models\Proveedor;
 use App\Models\ProveedorContacto;
+use App\Models\TipoProveedor;
 
 class ProveedoresController extends Controller
 {
@@ -16,8 +17,8 @@ class ProveedoresController extends Controller
      */
     public function index()
     {
-      $proveedoresNacionales = Proveedor::where('nacional',1)->get();
-      $proveedoresExtranjeros = Proveedor::where('nacional',0)->get();
+      $proveedoresNacionales = Proveedor::with('tipo')->where('nacional',1)->get();
+      $proveedoresExtranjeros = Proveedor::with('tipo')->where('nacional',0)->get();
       $tab = 0;
 
       return view('catalogos.proveedores.index', compact('proveedoresNacionales', 'proveedoresExtranjeros','tab'));
@@ -30,8 +31,8 @@ class ProveedoresController extends Controller
      */
     public function indexExtra()
     {
-      $proveedoresNacionales = Proveedor::where('nacional', 1)->get();
-      $proveedoresExtranjeros = Proveedor::where('nacional', 0)->get();
+      $proveedoresNacionales = Proveedor::with('tipo')->where('nacional', 1)->get();
+      $proveedoresExtranjeros = Proveedor::with('tipo')->where('nacional', 0)->get();
       $tab = 1;
 
       return view('catalogos.proveedores.index', compact('proveedoresNacionales', 'proveedoresExtranjeros', 'tab'));
@@ -44,12 +45,14 @@ class ProveedoresController extends Controller
      */
     public function create()
     {
-      return view('catalogos.proveedores.create', ["nacional"=>true]);
+      $tipos = TipoProveedor::all();
+      return view('catalogos.proveedores.create', ["nacional"=>true,"tipos"=>$tipos]);
     }
-
+    
     public function createInter()
     {
-      return view('catalogos.proveedores.create', ["nacional"=>false]);
+      $tipos = TipoProveedor::all();
+      return view('catalogos.proveedores.create', ["nacional"=> false, "tipos" => $tipos]);
     }
 
     /**
@@ -86,7 +89,7 @@ class ProveedoresController extends Controller
      */
     public function show(Proveedor $proveedor)
     {
-      $proveedor->load('contactos');
+      $proveedor->load('contactos','tipo');
       return view('catalogos.proveedores.show', compact('proveedor'));
     }
 
@@ -98,10 +101,11 @@ class ProveedoresController extends Controller
      */
     public function edit(Proveedor $proveedor, Request $request)
     {
-      $proveedor->load('contactos.emails','contactos.telefonos');
+      $proveedor->load('contactos.emails','contactos.telefonos','tipo');
       $tab = ($request->has('contactos')) ? 1 : 0;
+      $tipos = TipoProveedor::all();
   
-      return view('catalogos.proveedores.edit', compact('proveedor','tab'));
+      return view('catalogos.proveedores.edit', compact('proveedor','tab','tipos'));
     }
 
     /**
