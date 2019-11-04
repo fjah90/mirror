@@ -9,11 +9,16 @@ class Proveedor extends Model
 {
     protected $table = 'proveedores';
 
-    protected $fillable = ['empresa','razon_social','telefono','email',
-      'identidad_fiscal','identificacion_fiscal','banco','numero_cuenta',
-      'clave_interbancaria','calle','numero','colonia','cp','ciudad','estado',
-      'moneda','dias_credito','nacional','codigo_pais','pais','cuenta_intercorp',
-      'limite_credito','swift','aba'
+    protected $fillable = [
+      'empresa','numero_cliente',
+      'razon_social','identidad_fiscal','identificacion_fiscal',
+      'calle','nexterior',
+      'colonia','delegacion','cp','ciudad','estado','pais',
+      'pagina_web','adicionales',
+      'moneda','limite_credito','dias_credito',
+      'banco','numero_cuenta','clave_interbancaria','cuenta_intercorp','swift','aba',
+      'banco_colonia','banco_delegacion','banco_ciudad','banco_estado','banco_zipcode','banco_pais',
+      'nacional'
     ];
 
     protected $casts = [
@@ -35,7 +40,9 @@ class Proveedor extends Model
      */
 
     public function getDireccionAttribute(){
-      return $this->calle." ".$this->numero." ".(($this->colonia)?$this->colonia." ":"")
+      return 
+        // $this->calle." ".$this->nexterior." ".
+        (($this->colonia)?$this->colonia." ":"")
         .$this->cp." ".$this->ciudad." ".$this->estado." ".$this->pais;
     }
 

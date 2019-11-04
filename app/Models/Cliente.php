@@ -9,10 +9,11 @@ class Cliente extends Model
 {
     protected $table = 'clientes';
 
-    protected $fillable = ['tipo_id','nombre','telefono','email','rfc',
-      'calle','numero','colonia','cp','ciudad','estado','razon_social',
-      'ninterior','delegacion','adicionales','pais','nacional','usuario_id',
-      'usuario_nombre'
+    protected $fillable = [
+      'usuario_id','tipo_id','nombre','rfc','razon_social',
+      'calle','ninterior','ninterior',
+      'colonia', 'delegacion', 'cp','ciudad','estado', 'pais',
+      'pagina_web','adicionales','nacional','usuario_nombre'
     ];
 
     protected $casts = [
@@ -33,8 +34,9 @@ class Cliente extends Model
      */
 
     public function getDireccionAttribute(){
-      return $this->calle." ".$this->numero.(($this->ninterior)?" Int. ".$this->ninterior:"")." "
-      .(($this->colonia)?$this->colonia." ":"").(($this->delegacion)?$this->delegacion." ":"")
+      return 
+      // $this->calle." ".$this->nexterior.(($this->ninterior)?" Int. ".$this->ninterior:"")." ".
+      (($this->colonia)?$this->colonia." ":"").(($this->delegacion)?$this->delegacion." ":"")
       .$this->cp." ".$this->ciudad." ".$this->estado." ".$this->pais;
     }
 

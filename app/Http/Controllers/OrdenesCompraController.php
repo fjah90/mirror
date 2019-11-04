@@ -568,8 +568,6 @@ class OrdenesCompraController extends Controller
       $mensaje.= ", para el proyecto ".$orden->proyecto_nombre;
       Mail::send('email', ['mensaje'=>$mensaje], function ($message){
         $message->to('abraham@intercorp.mx')
-                ->cc('omar.herrera@tigears.com')
-                ->cc('simonc@789.mx')
                 ->subject('Nueva orden por autorizar');
       });
     }
@@ -584,8 +582,6 @@ class OrdenesCompraController extends Controller
       $email = $orden->proyecto->cotizacion->user->email;
       Mail::send('email', ['mensaje'=>$mensaje], function ($message) use ($email){
         $message->to($email)
-                ->cc('omar.herrera@tigears.com')
-                ->cc('simonc@789.mx')
                 ->subject('Su orden ha sido rechazada');
       });
     }

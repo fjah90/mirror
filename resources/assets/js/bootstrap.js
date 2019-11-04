@@ -37,10 +37,12 @@ window.axios.defaults.headers.common = {
 // };
 
 Vue.use(uiv);
+Vue.directive('mask', mask);
 Vue.component('tinymce-editor', Editor);
 Vue.component('select2multags', require('./components/select2multags.vue'));
+Vue.component('contacto-emails', require('./components/contacto-emails.vue'));
+Vue.component('contacto-telefonos', require('./components/contacto-telefonos.vue'));
 Vue.component('vue-phone-number-input', VuePhoneNumberInput);
-Vue.directive('mask', mask);
 
 $.extend($.fn.dataTable.defaults, {
   responsive: false,

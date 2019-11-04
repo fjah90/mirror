@@ -41,6 +41,11 @@ class AppServiceProvider extends ServiceProvider
 
       //Observadores
       ProyectoAprobado::observe(ProyectoAprobadoObserver::class);
+
+      Relation::morphMap([
+        'ClienteContacto' => 'App\Models\ClienteContacto',
+        'ProveedorContacto' => 'App\Models\ProveedorContacto'
+      ]);
     }
 
     /**

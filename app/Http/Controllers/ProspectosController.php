@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Cliente;
-use App\Models\ClienteContacto;
 use App\Models\Producto;
 use App\Models\Prospecto;
 use App\Models\ProspectoActividad;
@@ -299,7 +298,7 @@ class ProspectosController extends Controller
     public function cotizar(Prospecto $prospecto)
     {
       $prospecto->load(
-        'cliente.contactos','cotizaciones.cuentaCobrar','cotizaciones.entradas.producto','cotizaciones.entradas.descripciones'
+        'cliente.contactos.emails','cotizaciones.cuentaCobrar','cotizaciones.entradas.producto','cotizaciones.entradas.descripciones'
       );
       $productos = Producto::with('categoria','proveedor','descripciones.descripcionNombre')
       ->has('categoria')->get();

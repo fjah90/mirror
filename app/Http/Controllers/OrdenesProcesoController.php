@@ -4,13 +4,7 @@ namespace App\Http\Controllers;
 
 use Validator;
 use Illuminate\Http\Request;
-use App\Models\ProyectoAprobado;
-use App\Models\OrdenCompra;
-use App\Models\OrdenCompraEntrada;
-use App\Models\Proveedor;
-use App\Models\Producto;
 use App\Models\OrdenProceso;
-use App\Models\CuentaPagar;
 use App\User;
 use Storage;
 

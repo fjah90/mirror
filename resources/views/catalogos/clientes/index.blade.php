@@ -53,8 +53,8 @@
                   <th>Usuario</th>
                   <th>Tipo</th>
                   <th>Nombre</th>
-                  <th>Teléfono</th>
-                  <th>Email</th>
+                  <th>RFC</th>
+                  <th>Razon Social</th>
                   <th></th>
                 </tr>
               </thead>
@@ -63,8 +63,8 @@
                   <td>@{{cliente.usuario_nombre}}</td>
                   <td>@{{cliente.tipo.nombre}}</td>
                   <td>@{{cliente.nombre}}</td>
-                  <td>@{{cliente.telefono}}</td>
-                  <td>@{{cliente.email}}</td>
+                  <td>@{{cliente.rfc}}</td>
+                  <td>@{{cliente.razon_social}}</td>
                   <td class="text-right">
                     <a class="btn btn-info" data-toggle="tooltip" title="Ver"
                       :href="'/clientes/'+cliente.id">
@@ -108,7 +108,7 @@
                 <option value="{{$tipo->id}}">{{$tipo->nombre}}</option>
                 @endforeach
               </select>
-              <a href="{{route('clientes.createInternacional')}}" class="btn btn-brown pull-right" style="color: #fff;">
+              <a href="{{route('clientes.createExtranjero')}}" class="btn btn-brown pull-right" style="color: #fff;">
                 <i class="fas fa-plus"></i> Cliente Extranjero
               </a>
             </div>
@@ -123,8 +123,8 @@
                   <th>Usuario</th>
                   <th>Tipo</th>
                   <th>Nombre</th>
-                  <th>Teléfono</th>
-                  <th>Email</th>
+                  <th>RFC</th>
+                  <th>Razon Social</th>
                   <th></th>
                 </tr>
               </thead>
@@ -133,8 +133,8 @@
                   <td>@{{cliente.usuario_nombre}}</td>
                   <td>@{{cliente.tipo.nombre}}</td>
                   <td>@{{cliente.nombre}}</td>
-                  <td>@{{cliente.telefono}}</td>
-                  <td>@{{cliente.email}}</td>
+                  <td>@{{cliente.rfc}}</td>
+                  <td>@{{cliente.razon_social}}</td>
                   <td class="text-right">
                     <a class="btn btn-info" data-toggle="tooltip" title="Ver"
                       :href="'/clientes/'+cliente.id">

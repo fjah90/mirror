@@ -49,13 +49,16 @@ Route::middleware('auth')->group(function () {
     'parameters'=>['condicionesCotizacion'=>'condicion']
   ]);
   Route::get('/clientes/crearNacional', 'ClientesController@create')->name('clientes.createNacional');
-  Route::get('/clientes/crearInternacional', 'ClientesController@createInter')->name('clientes.createInternacional');
+  Route::get('/clientes/crearExtranjero', 'ClientesController@createExtra')->name('clientes.createExtranjero');
   Route::post('/clientes/listado', 'ClientesController@listado');
   Route::resource('/clientes', 'ClientesController');
   Route::get('/proveedores/crearNacional', 'ProveedoresController@create')->name('proveedores.createNacional');
   Route::get('/proveedores/crearInternacional', 'ProveedoresController@createInter')->name('proveedores.createInternacional');
   Route::get('/proveedoresExtra', 'ProveedoresController@indexExtra')->name('proveedores.indexExtra');
   Route::resource('/proveedores', 'ProveedoresController', ['parameters'=>['proveedores'=>'proveedor']]);
+  Route::resource('/contactos', 'ContactosController');
+  Route::resource('/emails', 'EmailsController');
+  Route::resource('/telefonos', 'TelefonosController');
   Route::resource('/proyectos', 'ProyectosController');
   Route::resource('/subproyectos', 'SubProyectosController');
   Route::post('/productos/{producto}', 'ProductosController@update');

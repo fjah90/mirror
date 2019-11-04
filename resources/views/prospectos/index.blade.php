@@ -80,20 +80,16 @@
                     <td></td>
                   </template>
                   <td class="text-right">
-                    <a class="btn btn-info" data-toggle="tooltip" title="Ver"
-                      :href="'/prospectos/'+prospecto.id">
+                    <a class="btn btn-info" title="Ver" :href="'/prospectos/'+prospecto.id">
                       <i class="far fa-eye"></i>
                     </a>
-                    <a class="btn btn-success" data-toggle="tooltip" title="Editar"
-                      :href="'/prospectos/'+prospecto.id+'/editar'">
+                    <a class="btn btn-success" title="Editar" :href="'/prospectos/'+prospecto.id+'/editar'">
                       <i class="far fa-edit"></i>
                     </a>
-                    <a class="btn btn-warning" data-toggle="tooltip" title="Cotizar"
-                      :href="'/prospectos/'+prospecto.id+'/cotizar'">
+                    <a class="btn btn-warning" title="Cotizar" :href="'/prospectos/'+prospecto.id+'/cotizar'">
                       <i class="far fa-file-alt"></i>
                     </a>
-                    <button class="btn btn-danger" data-toggle="tooltip" title="Borrar"
-                      @click="borrar(prospecto, index)">
+                    <button class="btn btn-danger" title="Borrar" @click="borrar(prospecto, index)">
                       <i class="fas fa-times"></i>
                     </button>
                   </td>

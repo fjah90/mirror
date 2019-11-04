@@ -12,343 +12,258 @@
 @section('content')
   <!-- Content Header (Page header) -->
   <section class="content-header">
-    <h1>Proveedors</h1>
+    <h1>Nuevo Proveedor {{ ($nacional)?'Nacional':'Internacional' }}</h1>
   </section>
   <!-- Main content -->
   <section class="content" id="content">
-    <div class="row">
-      <div class="col-lg-12">
-        <div class="panel ">
-          <div class="panel-heading">
-            <h3 class="panel-title">Nuevo Proveedor {{ ($nacional)?'Nacional':'Internacional' }}</h3>
+    <form class="" @submit.prevent="guardar()">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="panel ">
+            <div class="panel-heading">
+              <h3 class="panel-title">Datos Generales</h3>
+            </div>
+            <div class="panel-body">
+              <div class="row form-group">
+                <div class="col-md-8">
+                  <label class="control-label">Nombre Empresa</label>
+                  <input type="text" class="form-control" name="empresa" v-model="proveedor.empresa" required />
+                </div>
+                <div class="col-md-4">
+                  <label class="control-label">Numero Cliente</label>
+                  <input type="text" class="form-control" name="numero_cliente" v-model="proveedor.numero_cliente" />
+                </div>
+              </div>
+              <div class="row form-group">
+                <div class="col-md-8">
+                  <label class="control-label">Razon Social</label>
+                  <input type="text" class="form-control" name="razon_social" v-model="proveedor.razon_social" />
+                </div>
+                <div class="col-md-4">
+                  <label class="control-label">{{ ($nacional)?'RFC':'TAX ID NO' }}:</label>
+                  <input type="text" class="form-control" name="identidad_fiscal" v-model="proveedor.identidad_fiscal" />
+                </div>
+              </div>
+            </div>
           </div>
-          <div class="panel-body">
-            <form class="" @submit.prevent="guardar()">
-              <div class="row">
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="panel ">
+            <div class="panel-heading">
+              <h3 class="panel-title">Dirección</h3>
+            </div>
+            <div class="panel-body">
+              {{-- <div class="row form-group">
                 <div class="col-md-4">
-                  <div class="form-group">
-                    <label class="control-label">Nombre Empresa</label>
-                    <input type="text" class="form-control" name="empresa" v-model="proveedor.empresa" required />
-                  </div>
+                  <label class="control-label">Calle</label>
+                  <input type="text" class="form-control" name="calle" v-model="proveedor.calle" />
                 </div>
                 <div class="col-md-4">
-                  <div class="form-group">
-                    <label class="control-label">Razon Social</label>
-                    <input type="text" class="form-control" name="razon_social" v-model="proveedor.razon_social" />
-                  </div>
+                  <label class="control-label">Numero</label>
+                  <input type="text" class="form-control" name="numero" v-model="proveedor.numero" />
                 </div>
-                <div class="col-md-4">
-                  <div class="form-group">
-                    <label class="control-label">{{ ($nacional)?'RFC':'TAX ID NO' }}:</label>
-                    <input type="text" class="form-control" name="identidad_fiscal" v-model="proveedor.identidad_fiscal" />
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-4">
-                  <div class="form-group">
-                    <label class="control-label">Banco</label>
-                    <input type="text" class="form-control" name="email" v-model="proveedor.banco" />
-                  </div>
-                </div>
-                <div class="col-md-4">
-                  <div class="form-group">
-                    <label class="control-label">Número de Cuenta</label>
-                    <input type="text" class="form-control" name="email" v-model="proveedor.numero_cuenta" />
-                  </div>
-                </div>
-                <div class="col-md-4">
-                  <div class="form-group">
-                    <label class="control-label">No Cuenta (Intercorp/Cliente)</label>
-                    <input type="text" class="form-control" name="cuenta_interna" v-model="proveedor.cuenta_interna" />
-                  </div>
-                </div>
-              </div>
+              </div> --}}
               @if($nacional)
-              <div class="row">
+              <div class="row form-group">
                 <div class="col-md-4">
-                  <div class="form-group">
-                    <label class="control-label">Clave Interbancaria</label>
-                    <input type="text" class="form-control" name="clave_interbancaria" v-model="proveedor.clave_interbancaria" />
-                  </div>
+                  <label class="control-label">Colonia</label>
+                  <input type="text" class="form-control" name="colonia" v-model="proveedor.colonia" />
+                </div>
+                <div class="col-md-4">
+                  <label class="control-label">Delegación</label>
+                  <input type="text" class="form-control" name="delegacion" v-model="proveedor.delegacion" />
+                </div>
+                <div class="col-md-4">
+                  <label class="control-label">C. Postal</label>
+                  <input type="text" class="form-control" name="colonia" v-model="proveedor.cp" />
+                </div>
+              </div>
+              <div class="row form-group">
+                <div class="col-md-4">
+                  <label class="control-label">Ciudad</label>
+                  <input type="text" class="form-control" name="ciudad" v-model="proveedor.ciudad" />
+                </div>
+                <div class="col-md-4">
+                  <label class="control-label">Estado</label>
+                  <input type="text" class="form-control" name="estado" v-model="proveedor.estado" />
+                </div>
+                <div class="col-md-4">
+                  <label class="control-label">Pais</label>
+                  <input type="text" class="form-control" name="pais" v-model="proveedor.pais" />
                 </div>
               </div>
               @else
-              <div class="row">
+              <div class="row form-group">
                 <div class="col-md-4">
-                  <div class="form-group">
-                    <label class="control-label">SWIF</label>
-                    <input type="text" class="form-control" name="swif" v-model="proveedor.swif" />
-                  </div>
+                  <label class="control-label">Ciudad</label>
+                  <input type="text" class="form-control" name="ciudad" v-model="proveedor.ciudad" />
                 </div>
                 <div class="col-md-4">
+                  <label class="control-label">Estado</label>
+                  <input type="text" class="form-control" name="estado" v-model="proveedor.estado" />
+                </div>
+                <div class="col-md-4">
+                  <label class="control-label">ZIP Code</label>
+                  <input type="text" class="form-control" name="colonia" v-model="proveedor.cp" />
+                </div>
+              </div>
+              <div class="row form-group">
+                <div class="col-md-4">
+                  <label class="control-label">Pais</label>
+                  <input type="text" class="form-control" name="pais" v-model="proveedor.pais" />
+                </div>
+              </div>
+              @endif
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-heading">
+          <h3 class="panel-title">Otros</h3>
+        </div>
+        <div class="panel-body">
+          <div class="row form-group">
+            <div class="col-md-12">
+              <label class="control-label">Pagina Web</label>
+              <input type="text" class="form-control" name="pagina_web" v-model="proveedor.pagina_web" />
+            </div>
+          </div>
+          <div class="row form-group">
+            <div class="col-md-12">
+              <label class="control-label">Datos Adicionales</label>
+              <input type="text" class="form-control" name="adicionales" v-model="proveedor.adicionales" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="panel ">
+            <div class="panel-heading">
+              <h3 class="panel-title">Datos Bancarios</h3>
+            </div>
+            <div class="panel-body">
+              <div class="row form-group">
+                <div class="col-md-4">
+                  <label class="control-label">Moneda</label>
+                  <select class="form-control" name="moneda" v-model="proveedor.moneda">
+                    <option value="Pesos">Pesos</option>
+                    <option value="Dolares">Dolares</option>
+                  </select>
+                </div>
+                <div class="col-md-4">
+                  <label class="control-label">Limite Credito</label>
+                  <input type="number" min="0" step="0.01" class="form-control" name="limite_credito" v-model="proveedor.limite_credito" />
+                </div>
+                <div class="col-md-4">
+                  <label class="control-label">Dias Credito</label>
+                  <input type="number" min="0" step="1" class="form-control" name="dias_credito" v-model="proveedor.dias_credito" />
+                </div>
+              </div>
+              <div class="row form-group">
+                <div class="col-md-4">
+                  <label class="control-label">Banco</label>
+                  <input type="text" class="form-control" name="banco" v-model="proveedor.banco" />
+                </div>
+                <div class="col-md-4">
+                  <label class="control-label">Número de Cuenta</label>
+                  <input type="text" class="form-control" name="numero_cuenta" v-model="proveedor.numero_cuenta" />
+                </div>
+                {{-- <div class="col-md-4">
+                  <label class="control-label">No Cuenta (Intercorp/Cliente)</label>
+                  <input type="text" class="form-control" name="cuenta_interna" v-model="proveedor.cuenta_interna" />
+                </div> --}}
+                @if($nacional)
+                <div class="col-md-4">
+                  <label class="control-label">Clave Interbancaria</label>
+                  <input type="text" class="form-control" name="clave_interbancaria" v-model="proveedor.clave_interbancaria" />
+                </div>
+                @else
+                <div class="col-md-2">
+                  <div class="form-group">
+                    <label class="control-label">SWIF</label>
+                    <input type="text" class="form-control" name="swift" v-model="proveedor.swift" />
+                  </div>
+                </div>
+                <div class="col-md-2">
                   <div class="form-group">
                     <label class="control-label">ABA</label>
                     <input type="text" class="form-control" name="aba" v-model="proveedor.aba" />
                   </div>
                 </div>
+                @endif
+              </div>
+              @if($nacional)
+              <div class="row form-group">
+                <div class="col-md-4">
+                  <label class="control-label">Colonia</label>
+                  <input type="text" class="form-control" name="banco_colonia" v-model="proveedor.banco_colonia" />
+                </div>
+                <div class="col-md-4">
+                  <label class="control-label">Delegación</label>
+                  <input type="text" class="form-control" name="banco_delegacion" v-model="proveedor.banco_delegacion" />
+                </div>
+                <div class="col-md-4">
+                  <label class="control-label">C. Postal</label>
+                  <input type="text" class="form-control" name="banco_cp" v-model="proveedor.banco_cp" />
+                </div>
+              </div>
+              <div class="row form-group">
+                <div class="col-md-4">
+                  <label class="control-label">Ciudad</label>
+                  <input type="text" class="form-control" name="banco_ciudad" v-model="proveedor.banco_ciudad" />
+                </div>
+                <div class="col-md-4">
+                  <label class="control-label">Estado</label>
+                  <input type="text" class="form-control" name="banco_estado" v-model="proveedor.banco_estado" />
+                </div>
+                <div class="col-md-4">
+                  <label class="control-label">Pais</label>
+                  <input type="text" class="form-control" name="banco_pais" v-model="proveedor.banco_pais" />
+                </div>
+              </div>
+              @else
+              <div class="row form-group">
+                <div class="col-md-4">
+                  <label class="control-label">Ciudad</label>
+                  <input type="text" class="form-control" name="banco_ciudad" v-model="proveedor.banco_ciudad" />
+                </div>
+                <div class="col-md-4">
+                  <label class="control-label">Estado</label>
+                  <input type="text" class="form-control" name="banco_estado" v-model="proveedor.banco_estado" />
+                </div>
+                <div class="col-md-4">
+                  <label class="control-label">ZIP Code</label>
+                  <input type="text" class="form-control" name="banco_cp" v-model="proveedor.banco_cp" />
+                </div>
+              </div>
+              <div class="row form-group">
+                <div class="col-md-4">
+                  <label class="control-label">Pais</label>
+                  <input type="text" class="form-control" name="banco_pais" v-model="proveedor.banco_pais" />
+                </div>
               </div>
               @endif
-              <div class="row">
-                <div class="col-md-4">
-                  <div class="form-group">
-                    <label class="control-label">Moneda</label>
-                    <select class="form-control" name="moneda" v-model="proveedor.moneda">
-                      <option value="Pesos">Pesos</option>
-                      <option value="Dolares">Dolares</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="col-md-4">
-                  <div class="form-group">
-                    <label class="control-label">Dias Credito</label>
-                    <input type="number" min="0" step="1" class="form-control" name="dias_credito" v-model="proveedor.dias_credito" />
-                  </div>
-                </div>
-                <div class="col-md-4">
-                  <div class="form-group">
-                    <label class="control-label">Limite Credito</label>
-                    <input type="number" min="0" step="0.01" class="form-control" name="limite_credito" v-model="proveedor.limite_credito" />
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-4">
-                  <div class="form-group">
-                    <label class="control-label">Calle</label>
-                    <input type="text" class="form-control" name="calle" v-model="proveedor.calle" />
-                  </div>
-                </div>
-                <div class="col-md-4">
-                  <div class="form-group">
-                    <label class="control-label">Numero</label>
-                    <input type="text" class="form-control" name="numero" v-model="proveedor.numero" />
-                  </div>
-                </div>
-                @if($nacional)
-                <div class="col-md-4">
-                  <div class="form-group">
-                    <label class="control-label">Colonia</label>
-                    <input type="text" class="form-control" name="colonia" v-model="proveedor.colonia" />
-                  </div>
-                </div>
-                @else
-                <div class="col-md-4">
-                  <div class="form-group">
-                    <label class="control-label">C. Postal</label>
-                    <input type="text" class="form-control" name="cp" v-model="proveedor.cp" />
-                  </div>
-                </div>
-                @endif
-              </div>
-              <div class="row">
-                @if($nacional)
-                <div class="col-md-4">
-                  <div class="form-group">
-                    <label class="control-label">C. Postal</label>
-                    <input type="text" class="form-control" name="cp" v-model="proveedor.cp" />
-                  </div>
-                </div>
-                @endif
-                <div class="col-md-4">
-                  <div class="form-group">
-                    <label class="control-label">Ciudad</label>
-                    <input type="text" class="form-control" name="ciudad" v-model="proveedor.ciudad" />
-                  </div>
-                </div>
-                <div class="col-md-4">
-                  <div class="form-group">
-                    <label class="control-label">Estado</label>
-                    <input type="text" class="form-control" name="estado" v-model="proveedor.estado" />
-                  </div>
-                </div>
-                @if(!$nacional)
-                <div class="col-md-4">
-                  <div class="form-group">
-                    <label class="control-label">Pais</label>
-                    <input type="text" class="form-control" name="pais" v-model="proveedor.pais" />
-                  </div>
-                </div>
-                @endif
-              </div>
-              <div class="row">
-                <div class="col-md-12 text-right">
-                  <button style="margin-top:25px;" type="submit" class="btn btn-primary" :disabled="cargando">
-                    <i class="fas fa-save"></i>
-                    Guardar Proveedor
-                  </button>
-                </div>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col-lg-12">
-        <div class="panel">
-          <div class="panel-heading">
-            <h3 class="panel-title">Datos Generales</h3>
-          </div>
-          <div class="panel-body">
-            <div class="row">
-              <div class="col-md-4">
-                <div class="form-group">
-                  <label class="control-label">Telefono</label>
-                  <input type="tel" class="form-control" v-mask="['(###) ###-####','+#(###)###-####','+##(###)###-####']"
-                   v-model="proveedor.telefono"
-                  />
-                </div>
-              </div>
-              <div class="col-md-8">
-                <div class="form-group">
-                  <label class="control-label">Email</label>
-                  <input type="text" class="form-control" name="email" v-model="proveedor.email" />
-                </div>
-              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-
-    <div class="row">
-      <div class="col-lg-12">
-        <div class="panel ">
-          <div class="panel-heading">
-            <h3 class="panel-title">Contactos del Proveedor</h3>
-          </div>
-          <div class="panel-body">
-            <div class="row">
-              <div class="col-md-12">
-                <div class="table-responsive">
-                  <table class="table">
-                    <thead>
-                      <tr>
-                        <th>Nombre</th>
-                        <th>Cargo</th>
-                        <th>Email</th>
-                        <th>Teléfono</th>
-                        <th>Teléfono 2</th>
-                        <th></th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr v-for="(contacto, index) in proveedor.contactos">
-                        <td>@{{contacto.nombre}}</td>
-                        <td>@{{contacto.cargo}}</td>
-                        <td>@{{contacto.email}}</td>
-                        <td>@{{contacto.tipo_telefono}} @{{contacto.telefono}} Ext. @{{contacto.extencion_telefono}}</td>
-                        <td>@{{contacto.tipo_telefono2}} @{{contacto.telefono2}} Ext. @{{contacto.extencion_telefono2}}</td>
-                        <td class="text-right">
-                          <button class="btn btn-success" data-toggle="tooltip" title="Editar"
-                            @click="editarContacto(contacto, index)">
-                            <i class="fas fa-edit"></i>
-                          </button>
-                          <button class="btn btn-danger" data-toggle="tooltip" title="Borrar"
-                            @click="borrarContacto(index)">
-                            <i class="fas fa-times"></i>
-                          </button>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-            <hr />
-            <form class="" @submit.prevent="agregarContacto()">
-              <div class="row">
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label class="control-label">Nombre</label>
-                    <input type="text" class="form-control" name="nombre" v-model="contacto.nombre" required />
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label class="control-label">Cargo</label>
-                    <input type="text" class="form-control" name="cargo" v-model="contacto.cargo" required />
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label class="control-label">Email</label>
-                    <input type="text" class="form-control" name="email" v-model="contacto.email" />
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-12">
-                  <h4>Teléfono</h4>
-                </div>
-                <div class="col-md-4">
-                  <div class="form-group">
-                    <label class="control-label">Numero</label>
-                    <input type="tel" class="form-control" v-mask="['(###) ###-####','+#(###)###-####','+##(###)###-####']"
-                     v-model="contacto.telefono"
-                    />
-                  </div>
-                </div>
-                <div class="col-md-4">
-                  <div class="form-group">
-                    <label class="control-label">Extención</label>
-                    <input type="text" class="form-control" v-model="contacto.extencion_telefono" />
-                  </div>
-                </div>
-                <div class="col-md-4">
-                  <div class="form-group">
-                    <label class="control-label">Tipo</label>
-                    <select class="form-control" v-model="contacto.tipo_telefono">
-                      <option value="Oficina">Oficina</option>
-                      <option value="Celular">Celular</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-12">
-                  <h4>Teléfono 2</h4>
-                </div>
-                <div class="col-md-4">
-                  <div class="form-group">
-                    <label class="control-label">Numero</label>
-                    <input type="tel" class="form-control" v-mask="['(###) ###-####','+#(###)###-####','+##(###)###-####']"
-                     v-model="contacto.telefono2"
-                    />
-                  </div>
-                </div>
-                <div class="col-md-4">
-                  <div class="form-group">
-                    <label class="control-label">Extención</label>
-                    <input type="text" class="form-control" v-model="contacto.extencion_telefono2" />
-                  </div>
-                </div>
-                <div class="col-md-4">
-                  <div class="form-group">
-                    <label class="control-label">Tipo</label>
-                    <select class="form-control" v-model="contacto.tipo_telefono2">
-                      <option value="Oficina">Oficina</option>
-                      <option value="Celular">Celular</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-12 text-right">
-                  <button style="margin-top:25px;" type="submit" class="btn btn-primary">
-                    <i class="fas fa-plus"></i> Contacto
-                  </button>
-                </div>
-              </div>
-            </form>
-          </div>
+              
+      <div class="row">
+        <div class="col-md-12 text-center">
+          <button type="submit" class="btn btn-primary" :disabled="cargando">
+            <i class="fas fa-save"></i>
+            Guardar Proveedor
+          </button>
         </div>
       </div>
-    </div>
+    </form>
   </section>
   <!-- /.content -->
 @stop
@@ -362,74 +277,41 @@ const app = new Vue({
     data: {
       translations: translationsES,
       proveedor: {
-        empresa: '',
         nacional: {{ ($nacional)?"true":"false" }},
+        empresa: '',
+        numero_cliente: '',
         razon_social: '',
         identificacion_fiscal: '{{ ($nacional)?"RFC":"TAX ID NO" }}',
         identidad_fiscal: '',
-        telefono: '',
-        email: '',
-        banco: '',
-        numero_cuenta: '',
-        cuenta_interna: '',
-        clave_interbancaria: '',
-        swift: '',
-        aba: '',
-        moneda: '',
-        dias_credito: '',
-        limite_credito: '',
-        calle: '',
-        numero: '',
+        // calle: '',
+        // nexterior: '',
         colonia: '',
+        delegacion: '',
         cp: '',
         ciudad: '',
         estado: '',
-        contactos: []
-      },
-      contacto: {
-        nombre: '',
-        cargo: '',
-        telefono: '',
-        telefono2: '',
-        extencion_telefono: '',
-        extencion_telefono2: '',
-        tipo_telefono: '',
-        tipo_telefono2: '',
-        email: '',
+        pais: '',
+        pagina_web: '',
+        adicionales: '',
+        moneda: '',
+        limite_credito: '',
+        dias_credito: '',
+        banco: '',
+        numero_cuenta: '',
+        clave_interbancaria: '',
+        // cuenta_intercorp: '',
+        swift: '',
+        aba: '',
+        banco_colonia: '',
+        banco_delegacion: '',
+        banco_ciudad: '',
+        banco_estado: '',
+        banco_zipcode: '',
+        banco_pais: ''
       },
       cargando: false,
     },
     methods: {
-      agregarContacto(){
-        if(this.contacto.nombre.trim()=="" || this.contacto.cargo.trim()==""){
-          swal({
-            title: "Atención",
-            text: "El nombre y cargo del contacto son obligatorios",
-            type: "warning"
-          });
-          return false;
-        }
-
-        this.proveedor.contactos.push(this.contacto);
-        this.contacto = {
-          nombre: '',
-          cargo: '',
-          telefono: '',
-          telefono2: '',
-          extencion_telefono: '',
-          extencion_telefono2: '',
-          tipo_telefono: '',
-          tipo_telefono2: '',
-          email: '',
-        };
-      },
-      editarContacto(contacto, index){
-        this.contacto = contacto;
-        this.proveedor.contactos.splice(index, 1);
-      },
-      borrarContacto(index){
-        this.proveedor.contactos.splice(index, 1);
-      },
       guardar(){
         this.cargando = true;
         axios.post('/proveedores', this.proveedor)
@@ -440,7 +322,7 @@ const app = new Vue({
             text: "",
             type: "success"
           }).then(()=>{
-            window.location = "/proveedores";
+            window.location = "/proveedores/"+data.proveedor.id+"/editar?contactos";
           });
         })
         .catch(({response}) => {
@@ -452,7 +334,7 @@ const app = new Vue({
             type: "error"
           });
         });
-      },//fin cargarPresupuesto
+      },//fin guardar
     }
 });
 </script>

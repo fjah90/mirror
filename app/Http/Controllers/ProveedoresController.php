@@ -73,14 +73,9 @@ class ProveedoresController extends Controller
         ], 422);
       }
 
-      $proveedor = Proveedor::create($request->except('contactos'));
+      $proveedor = Proveedor::create($request->all());
 
-      foreach($request->contactos as $contacto){
-        $contacto['proveedor_id'] = $proveedor->id;
-        ProveedorContacto::create($contacto);
-      }
-
-      return response()->json(['success' => true, "error" => false],200);
+      return response()->json(['success' => true, "error" => false, "proveedor"=> $proveedor],200);
     }
 
     /**
@@ -101,10 +96,12 @@ class ProveedoresController extends Controller
      * @param  \App\Models\Proveedor  $proveedor
      * @return \Illuminate\Http\Response
      */
-    public function edit(Proveedor $proveedor)
+    public function edit(Proveedor $proveedor, Request $request)
     {
-      $proveedor->load('contactos');
-      return view('catalogos.proveedores.edit', compact('proveedor'));
+      $proveedor->load('contactos.emails','contactos.telefonos');
+      $tab = ($request->has('contactos')) ? 1 : 0;
+  
+      return view('catalogos.proveedores.edit', compact('proveedor','tab'));
     }
 
     /**
@@ -130,28 +127,6 @@ class ProveedoresController extends Controller
       }
 
       $proveedor->update($request->except('contactos'));
-      $contactos_ids = [];
-
-      foreach($request->contactos as $contacto){
-        if(isset($contacto['id'])){ //actualizar contacto
-          $contac = ProveedorContacto::find($contacto['id']);
-          $contac->update($contacto);
-        }
-        else {//ingresar nuevo contacto
-          $contacto['proveedor_id'] = $proveedor->id;
-          $contac = ProveedorContacto::create($contacto);
-        }
-
-        $contactos_ids[] = $contac->id;
-      }
-
-      //eliminar contactos borrados
-      $borrados = ProveedorContacto::where('proveedor_id', $proveedor->id)
-      ->whereNotIn('id', $contactos_ids)
-      ->get();
-      foreach ($borrados as $borrado) {
-        $borrado->delete();
-      }
 
       return response()->json(['success' => true, "error" => false], 200);
     }

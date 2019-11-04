@@ -93,9 +93,9 @@
                     <label class="control-label">Tipo</label>
                     <select class="form-control" name="tipo" v-model='ultima_actividad.tipo_id' >
                       @foreach($tipos as $tipo)
-                        <option value="{{$tipo->id}}">{{$tipo->nombre}}</option>
+                      <option value="{{$tipo->id}}">{{$tipo->nombre}}</option>
                       @endforeach
-                        <option value="0">Otro</option>
+                      <option value="0">Otro</option>
                     </select>
                   </div>
                 </div>

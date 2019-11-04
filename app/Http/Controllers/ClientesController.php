@@ -61,7 +61,7 @@ class ClientesController extends Controller
       return view('catalogos.clientes.create', compact('tipos', 'nacional','usuarios'));
     }
 
-    public function createInter()
+    public function createExtra()
     {
       $tipos = TipoCliente::all();
       $nacional = false;
@@ -91,13 +91,8 @@ class ClientesController extends Controller
         ], 422);
       }
 
-      $cliente = Cliente::create($request->except('contactos'));
+      $cliente = Cliente::create($request->all());
       $cliente->update(['usuario_nombre'=>$cliente->usuario->name]);
-
-      foreach($request->contactos as $contacto){
-        $contacto['cliente_id'] = $cliente->id;
-        ClienteContacto::create($contacto);
-      }
 
       if(auth()->user()->tipo!=='Administrador'){
         $mensaje = "El usuario ".$cliente->usuario_nombre;
@@ -107,7 +102,7 @@ class ClientesController extends Controller
         });
       }
 
-      return response()->json(['success' => true, "error" => false],200);
+      return response()->json(['success' => true, "error" => false, "cliente"=>$cliente],200);
     }
 
     /**
@@ -128,13 +123,14 @@ class ClientesController extends Controller
      * @param  \App\Models\Cliente  $tipo
      * @return \Illuminate\Http\Response
      */
-    public function edit(Cliente $cliente)
+    public function edit(Cliente $cliente, Request $request)
     {
       $tipos = TipoCliente::all();
       $usuarios = User::all()->pluck('name','id');
-      $cliente->load(['tipo', 'contactos']);
+      $cliente->load(['tipo', 'contactos.emails','contactos.telefonos']);
+      $tab = ($request->has('contactos'))?1:0;
 
-      return view('catalogos.clientes.edit', compact(['cliente','tipos','usuarios']));
+      return view('catalogos.clientes.edit', compact(['cliente','tipos','usuarios','tab']));
     }
 
     /**
@@ -160,28 +156,6 @@ class ClientesController extends Controller
 
       $cliente->update($request->except('contactos'));
       $cliente->update(['usuario_nombre'=>$cliente->usuario->name]);
-      $contactos_ids = [];
-
-      foreach($request->contactos as $contacto){
-        if(isset($contacto['id'])){ //actualizar contacto
-          $contac = ClienteContacto::find($contacto['id']);
-          $contac->update($contacto);
-        }
-        else {//ingresar nuevo contacto
-          $contacto['cliente_id'] = $cliente->id;
-          $contac = ClienteContacto::create($contacto);
-        }
-
-        $contactos_ids[] = $contac->id;
-      }
-
-      //eliminar contactos borrados
-      $borrados = ClienteContacto::where('cliente_id', $cliente->id)
-      ->whereNotIn('id', $contactos_ids)
-      ->get();
-      foreach ($borrados as $borrado) {
-        $borrado->delete();
-      }
 
       return response()->json(['success' => true, "error" => false], 200);
     }

@@ -724,13 +724,12 @@ const app = new Vue({
     enviar: {
       cotizacion_id: 0,
       numero: 0,
-      email: ["{{$prospecto->cliente->email}}"],
+      email: [],
       emailOpciones: [
-        {id: "{{$prospecto->cliente->email}}", text:"{{$prospecto->cliente->email}}"},
         @foreach($prospecto->cliente->contactos as $contacto)
-          @if($contacto->email)
-            {id: "{{$contacto->email}}", text:"{{$contacto->email}}"},
-          @endif
+          @foreach($contacto->emails as $email)
+            {id: "{{$email->email}}", text:"{{$email->email}}"},
+          @endforeach
         @endforeach
       ],
       mensaje: "Buen día.\n\nLe envió cotización para su consideración.\n\n{{auth()->user()->name}}.\nAtención del Cliente\nIntercorp Contract Resources"
@@ -1322,13 +1321,12 @@ const app = new Vue({
         this.enviar = {
           cotizacion_id: 0,
           numero: 0,
-          email: ["{{$prospecto->cliente->email}}"],
+          email: [],
           emailOpciones: [
-            {id: "{{$prospecto->cliente->email}}", text:"{{$prospecto->cliente->email}}"},
             @foreach($prospecto->cliente->contactos as $contacto)
-              @if($contacto->email)
-                {id: "{{$contacto->email}}", text:"{{$contacto->email}}"},
-              @endif
+              @foreach($contacto->emails as $email)
+                {id: "{{$email->email}}", text:"{{$email->email}}"},
+              @endforeach
             @endforeach
           ],
           mensaje: "Buen día.\n\nLe envió cotización para su consideración.\n\n{{auth()->user()->name}}.\nAtención del Cliente\nIntercorp Contract Resources"
