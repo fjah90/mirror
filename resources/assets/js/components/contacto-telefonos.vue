@@ -10,16 +10,20 @@
           <select class="form-control" v-model="telefono.tipo">
             <option value="Oficina">Oficina</option>
             <option value="Celular">Celular</option>
+            <option value="Otro">Otro</option>
           </select>
         </div>
         <div class="col-md-4">
           <label class="control-label">Numero</label>
-          <input type="tel" class="form-control" v-mask="['(###) ###-####','+#(###)###-####','+##(###)###-####']"
-          v-model="telefono.telefono" required
+          <input v-if="nacional" type="tel" class="form-control" v-mask="['(##) ####-####']"
+            v-model="telefono.telefono" required
+          />
+          <input v-else type="tel" class="form-control" v-mask="['+#(###)###-####','+##(###)###-####']"
+            v-model="telefono.telefono" required
           />
         </div>
         <div class="col-md-2">
-          <label class="control-label">Extención</label>
+          <label class="control-label">Extensión</label>
           <input type="text" class="form-control" v-model="telefono.extencion" />
         </div>
         <div class="col-md-2 text-right" style="margin-top:25px;">
@@ -50,7 +54,8 @@ export default {
   props: {
     'contacto_id': Number,
     'contacto_type': String,
-    'telefonos': Array
+    'telefonos': Array,
+    'nacional': Boolean
   },
   data(){
     return {

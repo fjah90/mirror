@@ -173,7 +173,8 @@
                   </contacto-emails>
                   <contacto-telefonos :telefonos="contacto.telefonos" 
                     :contacto_id="(contacto.id)?contacto.id:0"
-                    contacto_type="ClienteContacto">
+                    contacto_type="ClienteContacto"
+                    :nacional="cliente.nacional">
                   </contacto-telefonos>
                   <div class="row" style="margin-top:40px;">
                     <div class="col-md-12 text-center">
