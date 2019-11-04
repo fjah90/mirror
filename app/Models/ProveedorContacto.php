@@ -11,19 +11,19 @@ class ProveedorContacto extends Model
 
     protected $fillable = ['proveedor_id','nombre','cargo'];
 
-    protected $appends = ['tipo', 'telefono', 'email'];
+    // protected $appends = ['tipo', 'telefono', 'email'];
 
-    public function getTipoAttribute(){
-      return 'proveedor';
-    }
+    // public function getTipoAttribute(){
+    //   return 'proveedor';
+    // }
 
-    public function getEmailAttribute(){
-      return $this->emails->get(0, (object) ['email' => ""])->email;
-    }
+    // public function getEmailAttribute(){
+    //   return $this->emails->get(0, (object) ['email' => ""])->email;
+    // }
 
-    public function getTelefonoAttribute(){
-      return $this->telefonos->get(0, (object) ['telefono' => ""])->telefono;
-    }
+    // public function getTelefonoAttribute(){
+    //   return $this->telefonos->get(0, (object) ['telefono' => ""])->telefono;
+    // }
 
     /**
      * ---------------------------------------------------------------------------

@@ -48,14 +48,14 @@ class llenarTablasDeEmailsYTelefonos extends Command
             if($contacto->email){
                 ContactoEmail::create([
                     'contacto_id'=>$contacto->id, 
-                    'contacto_type'=>'ProveedorContacto', 
+                    'contacto_type'=>'ClienteContacto', 
                     'email'=>$contacto->email
                 ]);
             }
             if($contacto->telefono){
                 ContactoTelefono::create([
                     'contacto_id' => $contacto->id,
-                    'contacto_type' => 'ProveedorContacto',
+                    'contacto_type' => 'ClienteContacto',
                     'telefono'=>$contacto->telefono, 
                     'telefono_extencion'=>$contacto->extencion_telefono, 
                     'telefono_tipo'=>$contacto->tipo_telefono
@@ -64,7 +64,7 @@ class llenarTablasDeEmailsYTelefonos extends Command
             if($contacto->telefono2){
                 ContactoTelefono::create([
                     'contacto_id' => $contacto->id,
-                    'contacto_type' => 'ProveedorContacto',
+                    'contacto_type' => 'ClienteContacto',
                     'telefono'=>$contacto->telefono2, 
                     'telefono_extencion'=>$contacto->extencion_telefono2, 
                     'telefono_tipo'=>$contacto->tipo_telefono2
