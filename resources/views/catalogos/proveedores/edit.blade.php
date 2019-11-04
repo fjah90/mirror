@@ -293,7 +293,8 @@
                   </contacto-emails>
                   <contacto-telefonos :telefonos="contacto.telefonos" 
                     :contacto_id="(contacto.id)?contacto.id:0"
-                    contacto_type="ProveedorContacto">
+                    contacto_type="ProveedorContacto"
+                    :nacional="proveedor.nacional">
                   </contacto-telefonos>
                   <div class="row" style="margin-top:40px;">
                     <div class="col-md-12 text-center">

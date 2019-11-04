@@ -38,6 +38,9 @@ Route::middleware('auth')->group(function () {
   Route::resource('/tiposClientes', 'TiposClientesController', ['parameters' => [
     'tiposClientes' => 'tipo'
   ]]);
+  Route::resource('/tiposProveedores', 'TiposProveedoresController', ['parameters' => [
+    'tiposProveedores' => 'tipo'
+  ]]);
   Route::resource('/unidadesMedida', 'UnidadesMedidaController', ['parameters' => [
     'unidadesMedida' => 'unidad'
   ]]);

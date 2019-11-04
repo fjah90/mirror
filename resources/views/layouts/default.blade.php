@@ -200,8 +200,10 @@
           <li {!! (Request::is('clientes*') ? 'class="active"' : '') !!}>
             <a href="javascript:;"><i class="fas fa-truck-loading"></i> Proveedores</a>
           </li>
-          <li class="sub" {!! (Request::is('clientes*') ? 'class="active"' : '') !!}>
-            <a href="javascript:;"><i class="fas fa-truck-loading"></i> Tipo de Proveedor</a>
+          <li class="sub" {!! (Request::is('tiposProveedores*') ? 'class="active"' : '') !!}>
+            <a href="{{URL::to('tiposProveedores')}}">
+              <i class="fas fa-address-book"></i> Tipos de Proveedores
+            </a>
           </li>
           <li class="sub" {!! (Request::is('proveedores*') ? 'class="active"' : '') !!}>
             <a href="{{ URL::to('proveedores') }}">
