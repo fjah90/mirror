@@ -34,7 +34,7 @@
                     <table id="tabla" class="table table-bordred" style="width:100%;">
                       <thead>
                         <tr>
-                          <th>ID</th>
+                          <th>#</th>
                           <th>Tipo</th>
                           <th>Nombre</th>
                           <th>Email</th>
@@ -42,9 +42,9 @@
                         </tr>
                       </thead>
                       <tbody>
-                        @foreach($usuarios as $usuario)
+                        @foreach($usuarios as $index => $usuario)
                         <tr>
-                          <td>{{$usuario->id}}</td>
+                          <td>{{$index+1}}</td>
                           <td>{{$usuario->tipo}}</td>
                           <td>{{$usuario->name}}</td>
                           <td>{{$usuario->email}}</td>

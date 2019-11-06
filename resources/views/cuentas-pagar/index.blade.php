@@ -31,7 +31,7 @@
             <table class="table table-bordred">
               <thead>
                 <tr>
-                  <th>ID</th>
+                  <th>#</th>
                   <th>Proveedor</th>
                   <th>Proyecto</th>
                   <th>Dias Credito</th>
@@ -45,7 +45,7 @@
               </thead>
               <tbody>
                 <tr v-for="(cuenta, index) in cuentas">
-                  <td>@{{cuenta.id}}</td>
+                  <td>@{{index+1}}</td>
                   <td>@{{cuenta.proveedor_empresa}}</td>
                   <td>@{{cuenta.proyecto_nombre}}</td>
                   <td>@{{cuenta.dias_credito}}</td>

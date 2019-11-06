@@ -36,6 +36,7 @@
                   data-page-length="100">
                   <thead>
                     <tr>
+                      <th>#</th>
                       <th>Tipo</th>
                       <th>Empresa</th>
                       <th>Numero Cliente</th>
@@ -45,6 +46,7 @@
                   </thead>
                   <tbody>
                     <tr v-for="(proveedor, index) in proveedoresNacionales">
+                      <td>@{{index+1}}</td>
                       <td>@{{proveedor.tipo.nombre}}</td>
                       <td>@{{proveedor.empresa}}</td>
                       <td>@{{proveedor.numero_cliente}}</td>
@@ -88,6 +90,7 @@
                   data-page-length="100">
                   <thead>
                     <tr>
+                      <th>#</th>
                       <th>Tipo</th>
                       <th>Empresa</th>
                       <th>Numero Cliente</th>
@@ -97,6 +100,7 @@
                   </thead>
                   <tbody>
                     <tr v-for="(proveedor, index) in proveedoresExtranjeros">
+                      <td>@{{index+1}}</td>
                       <td>@{{proveedor.tipo.nombre}}</td>
                       <td>@{{proveedor.empresa}}</td>
                       <td>@{{proveedor.numero_cliente}}</td>

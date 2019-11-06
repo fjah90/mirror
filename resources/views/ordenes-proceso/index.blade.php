@@ -32,6 +32,7 @@
               data-page-length="-1">
               <thead>
                 <tr>
+                  <th>#</th>
                   <th>Cliente</th>
                   <th>Proyecto</th>
                   <th>Proveedor</th>
@@ -41,7 +42,8 @@
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="orden in ordenes">
+                <tr v-for="(orden,index) in ordenes">
+                  <td>@{{index+1}}</td>
                   <td>@{{orden.orden_compra.cliente_nombre}}</td>
                   <td>@{{orden.orden_compra.proyecto_nombre}}</td>
                   <td>@{{orden.orden_compra.proveedor_empresa}}</td>

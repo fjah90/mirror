@@ -34,9 +34,6 @@
                   @endforeach
                 </select>
               @endrole
-              {{-- <a href="{{route('prospectos.create')}}" class="btn btn-primary pull-right" style="color: #fff;">
-                <i class="fas fa-plus"></i> Nuevo Proyecto
-              </a> --}}
             </div>
           </h3>
         </div>
@@ -46,7 +43,7 @@
               data-page-length="100">
               <thead>
                 <tr>
-                  {{-- <th>ID</th> --}}
+                  <th>#</th>
                   <th>Usuario</th>
                   <th>Cliente</th>
                   <th>Nombre de Proyecto</th>
@@ -59,7 +56,7 @@
               </thead>
               <tbody>
                 <tr v-for="(prospecto, index) in prospectos">
-                  {{-- <td>@{{prospecto.id}}</td> --}}
+                  <td>@{{index+1}}</td>
                   <td>@{{prospecto.cliente.usuario_nombre}}</td>
                   <td>@{{prospecto.cliente.nombre}}</td>
                   <td>@{{prospecto.nombre}}</td>

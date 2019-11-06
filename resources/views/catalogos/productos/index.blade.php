@@ -35,6 +35,7 @@
             data-page-length="-1">
               <thead>
                 <tr>
+                  <th>#</th>
                   <th>Código de Producto o Servicio</th>
                   <th>Proveedor</th>
                   <th>Categoria</th>
@@ -44,6 +45,7 @@
               </thead>
               <tbody>
                 <tr v-for="(producto, index) in productos">
+                  <td>@{{index+1}}</td>
                   <td>@{{producto.nombre}}</td>
                   <td>@{{producto.proveedor.empresa}}</td>
                   <td>@{{producto.subcategoria.nombre}}</td>

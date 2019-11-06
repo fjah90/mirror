@@ -35,14 +35,14 @@
               data-page-length="100">
               <thead>
                 <tr>
-                  <th>ID</th>
+                  <th>#</th>
                   <th>Tipo</th>
                   <th></th>
                 </tr>
               </thead>
               <tbody>
                 <tr v-for="(tipo, index) in tipos">
-                  <td>@{{tipo.id}}</td>
+                  <td>@{{index+1}}</td>
                   <td>@{{tipo.nombre}}</td>
                   <td class="text-right">
                     <a class="btn btn-info" title="Ver"

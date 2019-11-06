@@ -35,7 +35,7 @@
               data-page-length="100">
               <thead>
                 <tr>
-                  <th>ID</th>
+                  <th>#</th>
                   <th>Categoría</th>
                   <th>Nombre</th>
                   <th></th>
@@ -43,7 +43,7 @@
               </thead>
               <tbody>
                 <tr v-for="(subproyecto, index) in subproyectos">
-                  <td>@{{subproyecto.id}}</td>
+                  <td>@{{index+1}}</td>
                   <td>@{{subproyecto.proyecto.nombre}}</td>
                   <td>@{{subproyecto.nombre}}</td>
                   <td class="text-right">

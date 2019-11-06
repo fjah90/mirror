@@ -35,6 +35,7 @@
               data-page-length="100">
               <thead>
                 <tr>
+                  <th>#</th>
                   <th>Compañia</th>
                   <th>Contacto</th>
                   <th>Telefono</th>
@@ -44,6 +45,7 @@
               </thead>
               <tbody>
                 <tr v-for="(agente, index) in agentes">
+                  <td>@{{index+1}}</td>
                   <td>@{{agente.compañia}}</td>
                   <td>@{{agente.contacto}}</td>
                   <td>@{{agente.telefono}}</td>

@@ -35,14 +35,14 @@
               data-page-length="100">
               <thead>
                 <tr>
-                  <th>ID</th>
+                  <th>#</th>
                   <th>Nombre</th>
                   <th></th>
                 </tr>
               </thead>
               <tbody>
                 <tr v-for="(proyecto, index) in proyectos">
-                  <td>@{{proyecto.id}}</td>
+                  <td>@{{index+1}}</td>
                   <td>@{{proyecto.nombre}}</td>
                   <td class="text-right">
                     <a class="btn btn-info" data-toggle="tooltip" title="Ver"

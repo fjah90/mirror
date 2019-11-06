@@ -120,6 +120,7 @@
               data-page-length="100">
               <thead>
                 <tr>
+                  <th>#</th>
                   <th>Usuario</th>
                   <th>Tipo</th>
                   <th>Nombre</th>
@@ -130,6 +131,7 @@
               </thead>
               <tbody>
                 <tr v-for="(cliente, index) in clientesExtranjeros">
+                  <td>@{{index+1}}</td>
                   <td>@{{cliente.usuario_nombre}}</td>
                   <td>@{{cliente.tipo.nombre}}</td>
                   <td>@{{cliente.nombre}}</td>

@@ -35,6 +35,7 @@
             <table class="table table-bordred">
               <thead>
                 <tr>
+                  <th>#</th>
                   <th>Numero</th>
                   <th>Proveedor</th>
                   <th>Producto</th>
@@ -44,7 +45,8 @@
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="orden in ordenes">
+                <tr v-for="(orden,index) in ordenes">
+                  <td>@{{index+1}}</td>
                   <td>@{{orden.numero}}</td>
                   <td>@{{orden.proveedor_empresa}}</td>
                   <td>

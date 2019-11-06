@@ -43,6 +43,7 @@
               data-page-length="-1">
               <thead>
                 <tr>
+                  <th>#</th>
                   <th>Usuario</th>
                   <th>Cliente</th>
                   <th>Proyecto</th>
@@ -51,7 +52,8 @@
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="proyecto in proyectos">
+                <tr v-for="(proyecto,index) in proyectos">
+                  <td>@{{index+1}}</td>
                   <td>@{{proyecto.cliente.usuario_nombre}}</td>
                   <td>@{{proyecto.cliente_nombre}}</td>
                   <td>@{{proyecto.proyecto}}</td>

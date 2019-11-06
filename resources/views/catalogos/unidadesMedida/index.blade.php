@@ -35,6 +35,7 @@
               data-page-length="100">
               <thead>
                 <tr>
+                  <th>#</th>
                   <th>Unidad</th>
                   <th>Conversiones</th>
                   <th></th>
@@ -42,6 +43,7 @@
               </thead>
               <tbody>
                 <tr v-for="(unidad, index) in unidades">
+                  <td>@{{index+1}}</td>
                   <td>@{{unidad.simbolo}} - @{{unidad.nombre}}</td>
                   <td>
                     <div v-for="(conversion, indice) in unidad.conversiones">
