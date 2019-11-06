@@ -141,7 +141,7 @@
             <a href="javascript:;"><i class="fas fa-address-book"></i> Cotizaciones</a>
           </li>
           <li class="sub" {!! (Request::is('tiposClientes*') ? 'class="active"' : '') !!}>
-            <a href="{{ URL::to('prospectos') }}">
+            <a href="{{route('prospectos.create')}}">
               <i class="fas fa-address-book"></i> Nueva Cotización
             </a>
           </li>
