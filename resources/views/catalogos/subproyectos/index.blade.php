@@ -24,9 +24,12 @@
         <div class="panel-heading">
           <h3 class="panel-title text-right">
             <span class="pull-left p-10">Lista de Tipos Proyectos</span>
+            <span style="visibility:hidden">.</span>
+            @hasrole('Administrador')
             <a href="{{route('subproyectos.create')}}" class="btn btn-primary" style="color: #fff;">
               <i class="fas fa-plus"></i> Nuevo Tipo Proyecto
             </a>
+            @endhasrole
           </h3>
         </div>
         <div class="panel-body">

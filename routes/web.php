@@ -73,10 +73,18 @@ Route::middleware('auth')->group(function () {
   Route::middleware('role:Administrador')->group(function(){
     Route::post('/usuarios/{usuario}', 'UsuariosController@update');
     Route::resource('/usuarios', 'UsuariosController');
+    
     Route::resource('/subcategorias', 'SubcategoriasController', ['only'=>['create','store','delete']]);
     Route::resource('/categorias', 'CategoriasController', ['only'=>['create','store','delete']]);
     Route::delete('/productos/{producto}', 'ProductosController@destroy');
     Route::delete('/clientes/{cliente}', 'ClientesController@destroy');
+    Route::resource('/tiposClientes', 'TiposClientesController', ['only' => ['create', 'store']]);
+    Route::resource('/tiposProveedores', 'TiposProveedoresController', ['only' => ['create', 'store']]);
+    Route::resource('/proyectos', 'ProyectosController', ['only' => ['create', 'store']]);
+    Route::resource('/subproyectos', 'SubProyectosController', ['only' => ['create', 'store']]);
+    Route::resource('/unidadesMedida', 'UnidadesMedidaController', ['only' => ['create', 'store']]);
+    
+    
     Route::post('/prospectos/listado', 'ProspectosController@listado');
     Route::post('/proyectos-aprobados/listado', 'ProyectosAprobadosController@listado');
   });

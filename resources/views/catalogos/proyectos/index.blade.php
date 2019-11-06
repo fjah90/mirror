@@ -24,9 +24,12 @@
         <div class="panel-heading">
           <h3 class="panel-title text-right">
             <span class="pull-left p-10">Lista de Categorias Proyectos</span>
+            <span style="visibility:hidden">.</span>
+            @hasrole('Administrador')
             <a href="{{route('proyectos.create')}}" class="btn btn-primary" style="color: #fff;">
               <i class="fa fa-plus"></i> Nueva Categoria
             </a>
+            @endhasrole
           </h3>
         </div>
         <div class="panel-body">
