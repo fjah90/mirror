@@ -289,6 +289,34 @@ class ProspectosController extends Controller
       return response()->json(['success' => true, "error" => false], 200);
     }
 
+    private function getDatosFacturacion($cliente_id){
+      $prospectos = Prospecto::with('cotizaciones')->where('cliente_id', $cliente_id)->get();
+      $datos = [];
+
+      foreach($prospectos as $prospecto){
+        $datos2 = $prospecto->cotizaciones->reduce(function ($rfcs, $cotizacion) {
+          if ($cotizacion->facturar && !isset($rfcs[$cotizacion->rfc])) {
+            $rfcs[$cotizacion->rfc] = [
+              'rfc' => $cotizacion->rfc,
+              'razon_social' => $cotizacion->razon_social,
+              'calle' => $cotizacion->calle,
+              'nexterior' => $cotizacion->nexterior,
+              'ninterior' => $cotizacion->ninterior,
+              'colonia' => $cotizacion->colonia,
+              'cp' => $cotizacion->cp,
+              'ciudad' => $cotizacion->ciudad,
+              'estado' => $cotizacion->estado
+            ];
+          }
+          return $rfcs;
+        }, $datos);
+
+        $datos = array_merge($datos, $datos2);
+      }
+
+      return $datos;
+    }
+
     /**
      * Agrear cotizacion.
      *
@@ -308,22 +336,7 @@ class ProspectosController extends Controller
       if(auth()->user()->can('editar numero cotizacion'))
         $numero_siguiente = ProspectoCotizacion::select('id')->orderBy('id','desc')->first()->id + 1;
       else $numero_siguiente = 0;
-      $rfcs = $prospecto->cotizaciones->reduce(function($datos,$cotizacion){
-        if($cotizacion->facturar) {
-          $datos[$cotizacion->rfc] = [
-            'rfc' => $cotizacion->rfc,
-            'razon_social' => $cotizacion->razon_social,
-            'calle' => $cotizacion->calle,
-            'nexterior' => $cotizacion->nexterior,
-            'ninterior' => $cotizacion->ninterior,
-            'colonia' => $cotizacion->colonia,
-            'cp' => $cotizacion->cp,
-            'ciudad' => $cotizacion->ciudad,
-            'estado' => $cotizacion->estado
-          ];
-        }
-        return $datos;
-      }, []);
+      $rfcs = $this->getDatosFacturacion($prospecto->cliente_id);
       $direcciones = $prospecto->cotizaciones->reduce(function($datos,$cotizacion){
         if($cotizacion->direccion) {
           $datos[$cotizacion->direccion_entrega] = [
