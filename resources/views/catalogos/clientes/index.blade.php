@@ -50,6 +50,7 @@
               data-page-length="100">
               <thead>
                 <tr>
+                  <th>#</th>
                   <th>Usuario</th>
                   <th>Tipo</th>
                   <th>Nombre</th>
@@ -60,6 +61,7 @@
               </thead>
               <tbody>
                 <tr v-for="(cliente, index) in clientesNacionales">
+                  <td>@{{index+1}}</td>
                   <td>@{{cliente.usuario_nombre}}</td>
                   <td>@{{cliente.tipo.nombre}}</td>
                   <td>@{{cliente.nombre}}</td>
@@ -179,8 +181,8 @@ const app = new Vue({
       tablaExt: {}
     },
     mounted(){
-      this.tablaNac = $("#tablaNac").DataTable({"order": [[ 2, "asc" ]]});
-      this.tablaExt = $("#tablaExt").DataTable({"order": [[ 2, "asc" ]]});
+      this.tablaNac = $("#tablaNac").DataTable({"order": [[ 3, "asc" ]]});
+      this.tablaExt = $("#tablaExt").DataTable({"order": [[ 3, "asc" ]]});
     },
     methods: {
       cargar(){
@@ -195,8 +197,8 @@ const app = new Vue({
             text: "Datos Cargados",
             type: "success"
           }).then(()=>{
-            this.tablaNac = $("#tablaNac").DataTable({"order": [[ 2, "asc" ]]});
-            this.tablaExt = $("#tablaExt").DataTable({"order": [[ 2, "asc" ]]});
+            this.tablaNac = $("#tablaNac").DataTable({"order": [[ 3, "asc" ]]});
+            this.tablaExt = $("#tablaExt").DataTable({"order": [[ 3, "asc" ]]});
           });
         })
         .catch(({response}) => {

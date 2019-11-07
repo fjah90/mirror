@@ -88,7 +88,7 @@ const app = new Vue({
     },
     mounted(){
       $("#tabla").DataTable({
-        "order": [[ 0, "asc" ]],
+        "order": [[ 1, "asc" ]],
         "columnDefs": [
           { "width": "120px", "targets": 4 }
         ]

@@ -148,13 +148,13 @@ const app = new Vue({
     },
     mounted(){
       $("#tablaNacionales").DataTable({
-        "order": [[ 1, "asc" ]],
+        "order": [[ 2, "asc" ]],
         "columnDefs": [
           { "width": "200px", "targets": 4 }
         ]
       });
       $("#tablaExtranjeros").DataTable({
-        "order": [[ 1, "asc" ]],
+        "order": [[ 2, "asc" ]],
         "columnDefs": [
           { "width": "200px", "targets": 4 }
         ]
