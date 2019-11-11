@@ -24,13 +24,16 @@
         <div class="panel-heading">
           <h3 class="panel-title">
             <div class="p-10">
-              Clientes Nacionales de 
+              Clientes Nacionales 
+              @role('Administrador')
+              de 
               <select class="form-control" @change="cargar()" v-model="usuarioCargado" style="width:auto;display:inline-block;">
                 <option value="Todos">Todos</option>
                 @foreach($usuarios as $usuario)
                 <option value="{{$usuario->id}}">{{$usuario->name}}</option>
                 @endforeach
               </select>
+              @endrole
               , tipo 
               <select class="form-control" @change="cargar()" v-model="tipoCargado" style="width:auto;display:inline-block;">
                 <option value="Todos">Todos</option>
@@ -96,13 +99,16 @@
         <div class="panel-heading">
           <h3 class="panel-title">
             <div class="p-10">
-              Clientes Extranjeros de 
+              Clientes Extranjeros 
+              @role('Administrador')
+              de 
               <select class="form-control" @change="cargar()" v-model="usuarioCargado" style="width:auto;display:inline-block;">
                 <option value="Todos">Todos</option>
                 @foreach($usuarios as $usuario)
                 <option value="{{$usuario->id}}">{{$usuario->name}}</option>
                 @endforeach
               </select>
+              @endrole
               , tipo 
               <select class="form-control" @change="cargar()" v-model="tipoCargado" style="width:auto;display:inline-block;">
                 <option value="Todos">Todos</option>
