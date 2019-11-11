@@ -330,6 +330,10 @@ class ProspectosController extends Controller
       );
       $productos = Producto::with('categoria','proveedor','descripciones.descripcionNombre')
       ->has('categoria')->get();
+      foreach($productos as $producto){
+       if ($producto->ficha_tecnica) 
+        $producto->ficha_tecnica = asset('storage/' . $producto->ficha_tecnica);
+      }
       $condiciones = CondicionCotizacion::all();
       $observaciones = ObservacionCotizacion::all();
       $unidades_medida = UnidadMedida::orderBy('simbolo')->get();
