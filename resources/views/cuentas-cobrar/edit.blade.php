@@ -213,6 +213,15 @@
                 </div>
               </div>
             </form>
+
+            <div class="row">
+              <div class="col-md-12 text-right">
+                <a href="{{ route('cuentas-cobrar.index') }}" class="btn btn-default">
+                  Regresar
+                </a>
+              </div>
+            </div>
+
           </div>
         </div>
       </div>

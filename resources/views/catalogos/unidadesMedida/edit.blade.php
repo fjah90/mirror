@@ -40,6 +40,9 @@
               </div>
               <div class="row">
                 <div class="col-md-12 text-right">
+                  <a class="btn btn-default" href="{{route('unidadesMedida.index')}}" style="margin-right:20px;">
+                    Regresar
+                  </a>
                   <button type="submit" class="btn btn-success" :disabled="cargando">
                     <i class="fas fa-save"></i>
                     Actualizar Tipo

@@ -45,9 +45,12 @@
                   </div>
                 </div>
               </div>
-              <div class="row">
+              <div class="row" style="margin-top:25px;" >
                 <div class="col-md-12 text-right">
-                  <button style="margin-top:25px;" type="submit" class="btn btn-success" :disabled="cargando">
+                  <a class="btn btn-default" href="{{route('categorias.index')}}" style="margin-right: 20px;">
+                    Regresar
+                  </a>
+                  <button type="submit" class="btn btn-success" :disabled="cargando">
                     <i class="fas fa-save"></i>
                     Actualizar Tipo
                   </button>

@@ -258,11 +258,15 @@
             <div class="row">
               <div class="col-md-12 text-right">
                 <div class="form-group">
+                  <a class="btn btn-default"
+                    href="{{route('proyectos-aprobados.ordenes-compra.index', $proyecto->id)}}">
+                    Regresar
+                  </a>
                   <button type="button" class="btn btn-success"
-                  @click="guardar()" :disabled="cargando">
-                  <i class="fas fa-save"></i>
-                  Actualizar Orden
-                </button>
+                    @click="guardar()" :disabled="cargando">
+                    <i class="fas fa-save"></i>
+                    Actualizar Orden
+                  </button>
                 </div>
               </div>
             </div>

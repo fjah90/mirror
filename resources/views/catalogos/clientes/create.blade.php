@@ -137,6 +137,9 @@
 
       <div class="row">
         <div class="col-md-12 text-center">
+          <a class="btn btn-default" href="{{route('clientes.index')}}" style="margin-right: 20px;">
+            Regresar
+          </a>
           <button type="submit" class="btn btn-primary" :disabled="cargando">
             <i class="fas fa-save"></i>
             Guardar Cliente

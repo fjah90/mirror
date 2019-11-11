@@ -120,6 +120,15 @@
                 </div>
               </div>
             </div>
+
+            <div class="row">
+              <div class="col-md-12 text-right">
+                <a href="{{ route('cuentas-pagar.index') }}" class="btn btn-default">
+                  Regresar
+                </a>
+              </div>
+            </div>
+
           </div>
         </div>
       </div>

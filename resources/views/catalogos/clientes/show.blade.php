@@ -128,7 +128,7 @@
 
     <div class="row">
       <div class="col-md-12 text-right">
-        <a class="btn btn-info" href="{{route('clientes.index')}}">
+        <a class="btn btn-default" href="{{route('clientes.index')}}">
           Regresar
         </a>
       </div>

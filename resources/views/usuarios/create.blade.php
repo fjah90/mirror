@@ -85,9 +85,10 @@
                     </div>
                   </div>
                   <div class="col-md-3">
-                    <div class="row">
+                    <div class="row" style="margin-top:25px;">
                       <div class="col-sm-12 text-right">
-                        <button style="margin-top:25px;" type="submit" class="btn btn-primary" :disabled="cargando">
+                        <a href="{{route('usuarios.index')}}" class="btn btn-default">Regresar</a>
+                        <button type="submit" class="btn btn-primary" :disabled="cargando">
                           <i class="fa fa-save"></i>
                           Guardar Usuario
                         </button>

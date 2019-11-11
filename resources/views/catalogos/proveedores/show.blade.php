@@ -194,7 +194,7 @@
 
     <div class="row">
       <div class="col-md-12 text-right">
-        <a class="btn btn-info" href="{{route('proveedores.index')}}">
+        <a class="btn btn-default" href="{{route('proveedores.index')}}">
           Regresar
         </a>
       </div>

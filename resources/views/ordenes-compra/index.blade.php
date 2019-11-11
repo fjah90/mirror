@@ -112,6 +112,15 @@
               </tbody>
             </table>
           </div>
+
+          <div class="row">
+            <div class="col-md-12 text-right">
+              <a href="{{ route('proyectos-aprobados.index') }}" class="btn btn-default">
+                Regresar
+              </a>
+            </div>
+          </div>
+
         </div>
       </div>
     </div>

@@ -33,7 +33,7 @@
             </div>
             <div class="row">
               <div class="col-md-12 text-right">
-                <a class="btn btn-info" href="{{route('proyectos.index')}}">
+                <a class="btn btn-default" href="{{route('proyectos.index')}}">
                   Regresar
                 </a>
               </div>

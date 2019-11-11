@@ -39,7 +39,7 @@
               </div>
               <div class="row">
                 <div class="col-md-12 text-right">
-                  <a href="{{ route('unidadesMedida.index') }}" class="btn btn-info">
+                  <a href="{{ route('unidadesMedida.index') }}" class="btn btn-default">
                     Regresar
                   </a>
                 </div>

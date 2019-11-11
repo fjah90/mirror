@@ -92,7 +92,7 @@
             </div>
             <div class="row">
               <div class="col-md-12 text-right">
-                <a href="{{route('prospectos.index')}}" style="margin-top:25px;" class="btn btn-info">
+                <a href="{{route('prospectos.index')}}" style="margin-top:25px;" class="btn btn-default">
                   Regresar
                 </a>
               </div>

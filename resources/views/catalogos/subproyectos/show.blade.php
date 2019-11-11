@@ -39,7 +39,7 @@
             </div>
             <div class="row">
               <div class="col-md-12 text-right">
-                <a class="btn btn-info" href="{{route('subproyectos.index')}}">
+                <a class="btn btn-default" href="{{route('subproyectos.index')}}">
                   Regresar
                 </a>
               </div>

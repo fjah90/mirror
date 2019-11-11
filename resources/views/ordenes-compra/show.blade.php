@@ -190,7 +190,7 @@
                     Comprar Orden
                   </button>
                   @endif
-                  <a class="btn btn-info"
+                  <a class="btn btn-default"
                     href="{{route('proyectos-aprobados.ordenes-compra.index', $proyecto->id)}}">
                     Regresar
                   </a>

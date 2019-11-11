@@ -105,7 +105,7 @@
                 </div>
               </div>
               <div class="col-md-4 text-right">
-                <a style="margin-top:25px;" class="btn btn-info" href="{{route('productos.index')}}">
+                <a style="margin-top:25px;" class="btn btn-default" href="{{route('productos.index')}}">
                   Regresar
                 </a>
               </div>

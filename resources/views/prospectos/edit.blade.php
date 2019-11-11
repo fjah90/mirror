@@ -229,6 +229,9 @@
               </div>
               <div class="row">
                 <div class="col-md-12 text-right">
+                  <a href="{{route('prospectos.index')}}" class="btn btn-default">
+                    Regresar
+                  </a>  
                   <button type="submit" class="btn btn-success" :disabled="cargando">
                     <i class="fas fa-save"></i>
                     Guardar Actividades

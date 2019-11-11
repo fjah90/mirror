@@ -194,9 +194,12 @@
                   </div>
                 </div>
               </div>
-              <div class="row">
+              <div class="row" style="margin-top:25px;">
                 <div class="col-md-12 text-right">
-                  <button style="margin-top:25px;" type="submit" class="btn btn-primary" :disabled="cargando">
+                  <a href="{{route('prospectos.index')}}" class="btn btn-default">
+                    Regresar
+                  </a>
+                  <button type="submit" class="btn btn-primary" :disabled="cargando">
                     <i class="fas fa-save"></i>
                     Guardar Prospecto
                   </button>

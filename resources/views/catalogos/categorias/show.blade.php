@@ -69,7 +69,7 @@
             </div>
             <div class="row">
               <div class="col-md-12 text-right">
-                <a class="btn btn-info" href="{{route('categorias.index')}}">
+                <a class="btn btn-default" href="{{route('categorias.index')}}">
                   Regresar
                 </a>
               </div>

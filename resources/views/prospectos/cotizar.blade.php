@@ -551,12 +551,15 @@
             <div class="row">
               <div class="col-md-12 text-right">
                 <div class="form-group">
+                  <a href="{{route('prospectos.index')}}" class="btn btn-default">
+                    Regresar
+                  </a>
                   <button type="button" class="btn btn-primary"
-                  @click="guardar()" :disabled="cargando || edicionEntradaActiva">
-                  <i v-if="!cargando" class="fas fa-save"></i>
-                  <i v-else class="fas fa-refresh animation-rotate"></i>
-                  Guardar Cotización
-                </button>
+                    @click="guardar()" :disabled="cargando || edicionEntradaActiva">
+                    <i v-if="!cargando" class="fas fa-save"></i>
+                    <i v-else class="fas fa-refresh animation-rotate"></i>
+                    Guardar Cotización
+                  </button>
                 </div>
               </div>
             </div>
@@ -571,19 +574,24 @@
         <table id="tablaProductos" class="table table-bordred">
           <thead>
             <tr>
-              <th>ID</th>
               <th>Nombre</th>
               <th>Proveedor</th>
               <th>Tipo</th>
+              <th>Ficha Técnica</th>
               <th></th>
             </tr>
           </thead>
           <tbody>
             <tr v-for="(prod, index) in productos">
-              <td>@{{prod.id}}</td>
               <td>@{{prod.nombre}}</td>
               <td>@{{prod.proveedor.empresa}}</td>
               <td>@{{prod.categoria.nombre}}</td>
+              <td>
+                <a v-if="prod.ficha_tecnica" :href="prod.ficha_tecnica" target="_blank"
+                  class="btn btn-success" style="cursor:pointer;">
+                  <i class="far fa-file-pdf"></i>
+                </a>
+              </td>
               <td class="text-right">
                 <button class="btn btn-primary" title="Seleccionar"
                 @click="seleccionarProduco(prod, index)">

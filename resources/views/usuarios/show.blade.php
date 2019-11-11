@@ -51,7 +51,7 @@
               </div>
               <div class="row">
                 <div class="col-sm-12">
-                  <a href="{{route('usuarios.index')}}" class="btn btn-info">Regresar</a>
+                  <a href="{{route('usuarios.index')}}" class="btn btn-default">Regresar</a>
                 </div>
               </div>
             </div>

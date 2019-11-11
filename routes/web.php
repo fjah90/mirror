@@ -101,7 +101,7 @@ Route::middleware('auth')->group(function () {
   Route::resource('/prospectos', 'ProspectosController');
 
   //Proyectos Aprobados
-  Route::get('/proyectos-aprobados', 'ProyectosAprobadosController@index');
+  Route::get('/proyectos-aprobados', 'ProyectosAprobadosController@index')->name('proyectos-aprobados.index');
   // Route::get('/proyectos-aprobados/{proyecto}/generarOrdenes', 'ProyectosAprobadosController@generarOrdenes');
 
   //Ordenes de Compra
