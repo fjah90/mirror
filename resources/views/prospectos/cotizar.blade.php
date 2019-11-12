@@ -457,7 +457,7 @@
                 </div>
               </div>
               <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-12 text-right">
                   <div class="form-group" style="margin-top:25px;">
                     <button type="submit" class="btn btn-info">
                       <i class="fas fa-plus"></i>
@@ -737,9 +737,9 @@ const app = new Vue({
     entrada: {
       producto: {},
       orden: 0,
-      cantidad: 0,
+      cantidad: "",
       medida: "",
-      precio: 0,
+      precio: "",
       importe: 0,
       descripciones: [],
       observaciones: [],
@@ -1097,9 +1097,9 @@ const app = new Vue({
       this.entrada = {
         producto: {},
         orden: 0,
-        cantidad: 0,
+        cantidad: "",
         medida: "",
-        precio: 0,
+        precio: "",
         importe: 0,
         descripciones: [],
         observaciones: [],

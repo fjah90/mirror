@@ -83,6 +83,26 @@ hr.divider-menu {
   margin: 0;
   border-top: 1px solid #ccc;
 }
+#menu .navigation span.title {
+	text-align: left;
+	color: #666;
+	position: relative;
+	display: block;
+	font-size: 13px;
+	font-weight: bold;
+	line-height: 20px;
+	padding: 11px 20px;
+	-webkit-transition: none;
+	transition: none;
+}
+#menu li.active > span.title {
+	padding: 11px 20px 11px 17px;
+	background: #f8f8f8;
+	color: #2283bf;
+	border-left: 3px solid #2283bf;
+	-webkit-transition: none;
+	transition: none;
+}
 #menu li.sub > a {
 	padding-left: 34px;
 }

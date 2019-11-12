@@ -138,7 +138,7 @@
 
           <!-- Cotizaciones -->
           <li {!! (Request::is('cotizaciones*') ? 'class="active"' : '') !!}>
-            <a href="javascript:;"><i class="fas fa-address-book"></i> Cotizaciones</a>
+            <span class="title"><i class="fas fa-address-book"></i> Cotizaciones</span>
           </li>
           <li class="sub" {!! (Request::is('tiposClientes*') ? 'class="active"' : '') !!}>
             <a href="{{route('prospectos.create')}}">
@@ -154,7 +154,7 @@
 
           <!-- Catalogos -->
           <li {!! (Request::is('clientes*') ? 'class="active"' : '') !!}>
-            <a href="javascript:;"><i class="fas fa-user-tie"></i> Clientes</a>
+            <span class="title"><i class="fas fa-user-tie"></i> Clientes</span>
           </li>
           <li class="sub" {!! (Request::is('tiposClientes*') ? 'class="active"' : '') !!}>
             <a href="{{ URL::to('tiposClientes') }}">
@@ -170,7 +170,7 @@
           
           <!-- Proyectos-->
           <li {!! (Request::is('clientes*') ? 'class="active"' : '') !!}>
-            <a href="javascript:;"><i class="fas fa-folder-open"></i> Proyectos</a>
+            <span class="title"><i class="fas fa-folder-open"></i> Proyectos</span>
           </li>
           <li class="sub" {!! (Request::is('proyectos*') ? 'class="active"' : '') !!}>
             <a href="{{ URL::to('proyectos') }}">
@@ -198,7 +198,7 @@
 
           <!-- Proveedores -->
           <li {!! (Request::is('clientes*') ? 'class="active"' : '') !!}>
-            <a href="javascript:;"><i class="fas fa-truck-loading"></i> Proveedores</a>
+            <span class="title"><i class="fas fa-truck-loading"></i> Proveedores</span>
           </li>
           <li class="sub" {!! (Request::is('tiposProveedores*') ? 'class="active"' : '') !!}>
             <a href="{{URL::to('tiposProveedores')}}">
@@ -223,7 +223,7 @@
           <hr class="divider-menu">
 
           <li {!! (Request::is('productos*') ? 'class="active"' : '') !!}>
-            <a href="javascript:;"><i class="fas fa-parking"></i> Producto</a>
+            <span class="title"><i class="fas fa-parking"></i> Producto</span>
           </li>
           <li class="sub" {!! (Request::is('unidadesMedida*') ? 'class="active"' : '') !!}>
             <a href="{{ URL::to('unidadesMedida') }}">
@@ -248,9 +248,7 @@
           <hr class="divider-menu">
           
           <li {!! (Request::is('productos*') ? 'class="active"' : '') !!}>
-            <a href="javascript:;">
-              <i class="fas fa-parking "></i> Ventas
-            </a>
+            <span class="title"><i class="fas fa-parking "></i> Ventas</span>
           </li>
           <li class="sub" {!! (Request::is('cuentas-cobrar*') ? 'class="active"' : '') !!} >
             <a href="javascript:;">
@@ -267,10 +265,10 @@
           <hr class="divider-menu">
           
           <li {!! (Request::is('cuentas-cobrar*') ? 'class="active"' : '') !!} >
-            <a href="javascript:;">
+            <span class="title">
               <i class="menu-icon fas fa-hand-holding-usd"></i>
-              <span>Ordenes Compra</span>
-            </a>
+              Ordenes Compra
+            </span>
           </li>
           <li class="sub" {!! (Request::is('ordenes-proceso*') ? 'class="active"' : '') !!} >
             <a href="{{ URL::to('ordenes-proceso') }}">
@@ -287,10 +285,10 @@
           <hr class="divider-menu">
 
           <li {!! (Request::is('cuentas-pagar*') ? 'class="active"' : '') !!} >
-            <a href="javascript:;">
+            <span class="title">
               <i class="menu-icon fas fa-receipt"></i>
-              <span>Reportes</span>
-            </a>
+              Reportes
+            </span>
           </li>
           <hr class="divider-menu">
 
