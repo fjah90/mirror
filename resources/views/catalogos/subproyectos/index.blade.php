@@ -54,6 +54,7 @@
                       :href="'/subproyectos/'+subproyecto.id">
                       <i class="far fa-eye"></i>
                     </a>
+                    @role('Administrador')
                     <a class="btn btn-success" data-toggle="tooltip" title="Editar"
                       :href="'/subproyectos/'+subproyecto.id+'/editar'">
                       <i class="far fa-edit"></i>
@@ -62,6 +63,7 @@
                       @click="borrar(subproyecto, index)">
                       <i class="fas fa-times"></i>
                     </button>
+                    @endrole
                   </td>
                 </tr>
               </tbody>

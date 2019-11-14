@@ -74,15 +74,15 @@ Route::middleware('auth')->group(function () {
     Route::post('/usuarios/{usuario}', 'UsuariosController@update');
     Route::resource('/usuarios', 'UsuariosController');
     
-    Route::resource('/subcategorias', 'SubcategoriasController', ['only'=>['create','store','delete']]);
-    Route::resource('/categorias', 'CategoriasController', ['only'=>['create','store','delete']]);
     Route::delete('/productos/{producto}', 'ProductosController@destroy');
     Route::delete('/clientes/{cliente}', 'ClientesController@destroy');
-    Route::resource('/tiposClientes', 'TiposClientesController', ['only' => ['create', 'store']]);
-    Route::resource('/tiposProveedores', 'TiposProveedoresController', ['only' => ['create', 'store']]);
-    Route::resource('/proyectos', 'ProyectosController', ['only' => ['create', 'store']]);
-    Route::resource('/subproyectos', 'SubProyectosController', ['only' => ['create', 'store']]);
-    Route::resource('/unidadesMedida', 'UnidadesMedidaController', ['only' => ['create', 'store']]);
+    Route::resource('/subcategorias', 'SubcategoriasController', ['only'=>['create','store','edit','update','delete']]);
+    Route::resource('/categorias', 'CategoriasController', ['only'=>['create','store', 'edit', 'update', 'delete']]);
+    Route::resource('/tiposClientes', 'TiposClientesController', ['only' => ['create','store','edit','update','delete']]);
+    Route::resource('/tiposProveedores', 'TiposProveedoresController', ['only' => ['create', 'store', 'edit', 'update', 'delete']]);
+    Route::resource('/proyectos', 'ProyectosController', ['only' => ['create', 'store', 'edit', 'update','delete']]);
+    Route::resource('/subproyectos', 'SubProyectosController', ['only' => ['create', 'store', 'edit', 'update', 'delete']]);
+    Route::resource('/unidadesMedida', 'UnidadesMedidaController', ['only' => ['create', 'store', 'edit', 'update', 'delete']]);
     
     
     Route::post('/prospectos/listado', 'ProspectosController@listado');

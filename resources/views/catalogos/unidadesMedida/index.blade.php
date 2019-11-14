@@ -58,6 +58,7 @@
                       :href="'/unidadesMedida/'+unidad.id">
                       <i class="far fa-eye"></i>
                     </a>
+                    @role('Administrador')
                     <a class="btn btn-success" data-toggle="tooltip" title="Editar"
                       :href="'/unidadesMedida/'+unidad.id+'/editar'">
                       <i class="far fa-edit"></i>
@@ -66,6 +67,7 @@
                       @click="borrar(tipo, index)">
                       <i class="fas fa-times"></i>
                     </button> --}}
+                    @endrole
                   </td>
                 </tr>
               </tbody>

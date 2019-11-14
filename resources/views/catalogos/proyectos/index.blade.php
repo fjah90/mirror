@@ -14,7 +14,7 @@
 @section('content')
 <!-- Content Header (Page header) -->
 <section class="content-header">
-    <h1>Categirias Proyectos</h1>
+    <h1>Categorias Proyectos</h1>
 </section>
 <!-- Main content -->
 <section class="content" id="content">
@@ -25,11 +25,11 @@
           <h3 class="panel-title text-right">
             <span class="pull-left p-10">Lista de Categorias Proyectos</span>
             <span style="visibility:hidden">.</span>
-            @hasrole('Administrador')
+            @role('Administrador')
             <a href="{{route('proyectos.create')}}" class="btn btn-primary" style="color: #fff;">
               <i class="fa fa-plus"></i> Nueva Categoria
             </a>
-            @endhasrole
+            @endrole
           </h3>
         </div>
         <div class="panel-body">
@@ -52,6 +52,7 @@
                       :href="'/proyectos/'+proyecto.id">
                       <i class="far fa-eye"></i>
                     </a>
+                    @role('Administrador')
                     <a class="btn btn-success" data-toggle="tooltip" title="Editar"
                       :href="'/proyectos/'+proyecto.id+'/editar'">
                       <i class="far fa-edit"></i>
@@ -60,6 +61,7 @@
                       @click="borrar(proyecto, index)">
                       <i class="fas fa-times"></i>
                     </button>
+                    @endrole
                   </td>
                 </tr>
               </tbody>
