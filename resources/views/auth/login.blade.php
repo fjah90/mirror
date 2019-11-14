@@ -13,12 +13,21 @@
   <!-- end of page level css-->
 
   <style>
+    html{
+        background      : url("/images/unnamed.png");
+        background-size: cover;
+        background-position: center -170px;
+    }
+    #sign-in, #sign-up {
+        background: transparent;
+    }
     .signup-form, .signin-form {
-        background      : url("/images/fondo.jpg");
-        background-size: cover; 
+        background      : none;
+        /* background      : url("/images/fondo.jpg"); */
+        /* background-size: cover;  */
     }
     .signup-form:before, .signin-form:before {
-        opacity       : 0.7;
+        opacity       : 0;
         background    : #000;
     }
     .signup-form label, .signin-form label {
@@ -51,7 +60,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <h2 class="text-center">
-                            <img src="{{asset('images/logo_trans.png')}}" alt="Logo" style="width:100%;">
+                            <img src="{{asset('images/logo_trans.png')}}" alt="Logo" style="width:100%; visibility:hidden;">
                         </h2>
                     </div>
                 </div>
