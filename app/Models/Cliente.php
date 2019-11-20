@@ -11,7 +11,7 @@ class Cliente extends Model
 
     protected $fillable = [
       'usuario_id','tipo_id','nombre','rfc','razon_social',
-      'calle','ninterior','ninterior',
+      'calle','nexterior','ninterior',
       'colonia', 'delegacion', 'cp','ciudad','estado', 'pais',
       'pagina_web','adicionales','nacional','usuario_nombre'
     ];
@@ -35,7 +35,7 @@ class Cliente extends Model
 
     public function getDireccionAttribute(){
       return 
-      // $this->calle." ".$this->nexterior.(($this->ninterior)?" Int. ".$this->ninterior:"")." ".
+      $this->calle." ".$this->nexterior.(($this->ninterior)?" Int. ".$this->ninterior:"")." ".
       (($this->colonia)?$this->colonia." ":"").(($this->delegacion)?$this->delegacion." ":"")
       .$this->cp." ".$this->ciudad." ".$this->estado." ".$this->pais;
     }

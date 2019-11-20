@@ -67,20 +67,20 @@
               <h3 class="panel-title">Dirección</h3>
             </div>
             <div class="panel-body">
-              {{-- <div class="row form-group">
+              <div class="row form-group">
                 <div class="col-md-4">
                   <label class="control-label">Calle</label>
                   <input type="text" class="form-control" name="calle" v-model="cliente.calle" />
                 </div>
                 <div class="col-md-4">
                   <label class="control-label">Numero Exterior</label>
-                  <input type="text" class="form-control" name="numero" v-model="cliente.numero" />
+                  <input type="text" class="form-control" name="nexterior" v-model="cliente.nexterior" />
                 </div>
                 <div class="col-md-4">
                   <label class="control-label">Numero Interior</label>
                   <input type="text" class="form-control" name="ninterior" v-model="cliente.ninterior" />
                 </div>
-              </div> --}}
+              </div>
               <div class="row form-group">
                 <div class="col-md-4">
                   <label class="control-label">Colonia</label>
@@ -166,9 +166,9 @@ const app = new Vue({
         nombre: '',
         rfc: '',
         razon_social: '',
-        // calle: '',
-        // nexterior: '',
-        // ninterior: '',
+        calle: '',
+        nexterior: '',
+        ninterior: '',
         colonia: '',
         delegacion: '',
         cp: '',
