@@ -6,8 +6,9 @@
 @stop
 
 @section('header_styles')
-
-<!-- <style></style> -->
+<style>
+  .marg025 {margin: 0 25px;}
+</style>
 @stop
 
 {{-- Page content --}}
@@ -38,6 +39,48 @@
           </h3>
         </div>
         <div class="panel-body">
+          <div id="oculto" class="hide">
+            <dropdown id="fecha_ini_control" class="marg025">
+              <div class="input-group">
+                <div class="input-group-btn">
+                  <btn class="dropdown-toggle" style="background-color:#fff;">
+                    <i class="fas fa-calendar"></i>
+                  </btn>
+                </div>
+                <input class="form-control" type="text" placeholder="DD/MM/YYYY"
+                  v-model="fecha_ini" readonly
+                  style="width:120px;"
+                />
+              </div>
+              <template slot="dropdown">
+                <li>
+                  <date-picker :locale="locale" :today-btn="false"
+                  format="dd/MM/yyyy" :date-parser="dateParser"
+                  v-model="fecha_ini"/>
+                </li>
+              </template>
+            </dropdown>
+            <dropdown id="fecha_fin_control" class="marg025">
+              <div class="input-group">
+                <div class="input-group-btn">
+                  <btn class="dropdown-toggle" style="background-color:#fff;">
+                    <i class="fas fa-calendar"></i>
+                  </btn>
+                </div>
+                <input class="form-control" type="text" placeholder="DD/MM/YYYY"
+                  v-model="fecha_fin" readonly
+                  style="width:120px;"
+                />
+              </div>
+              <template slot="dropdown">
+                <li>
+                  <date-picker :locale="locale" :today-btn="false"
+                  format="dd/MM/yyyy" :date-parser="dateParser"
+                  v-model="fecha_fin"/>
+                </li>
+              </template>
+            </dropdown>
+          </div>
           <div class="table-responsive">
             <table id="tabla" class="table table-bordred" style="width:100%;"
               data-page-length="100">
@@ -105,20 +148,60 @@
 {{-- footer_scripts --}}
 @section('footer_scripts')
 <script>
+
 const app = new Vue({
     el: '#content',
     data: {
       prospectos: {!! json_encode($prospectos) !!},
       usuarioCargado: {{auth()->user()->id}},
-      tabla: {}
+      tabla: {},
+      locale: localeES,
+      fecha_ini: '',
+      fecha_fin: ''
     },
     mounted(){
-      this.tabla = $("#tabla").DataTable({"order": [[ 4, "desc" ]]});
+      this.tabla = $("#tabla").DataTable({
+        "dom": 'f<"#fechas_container.pull-left">ltip',
+        "order": [[ 4, "desc" ]]
+      });
+      $("#fechas_container").append($("#fecha_ini_control"));
+      $("#fechas_container").append($("#fecha_fin_control"));
+      var vue = this;
+      $.fn.dataTableExt.afnFiltering.push(
+        function( settings, data, dataIndex ) {
+            var min  = vue.fecha_ini;
+            var max  = vue.fecha_fin;
+            var fecha = data[4] || 0; // Our date column in the table
+            
+            var startDate   = moment(min, "DD/MM/YYYY");
+            var endDate     = moment(max, "DD/MM/YYYY");
+            var diffDate = moment(fecha, "YYYY-MM-DD");
+            // console.log(min=="",max=="",diffDate.isSameOrAfter(startDate),diffDate.isSameOrBefore(endDate),diffDate.isBetween(startDate, endDate));
+            if (min=="" && max=="") return true;
+            if (max=="" && diffDate.isSameOrAfter(startDate)) return true;
+            if (min=="" && diffDate.isSameOrBefore(endDate)) return true;
+            if (diffDate.isBetween(startDate, endDate, null, '[]')) return true; 
+            return false;
+          }
+        );
+    },
+    watch: {
+      fecha_ini: function (val) {
+        this.tabla.draw();
+      },
+      fecha_fin: function (val) {
+        this.tabla.draw();
+      }
     },
     methods: {
+      dateParser(value){
+  			return moment(value, 'DD/MM/YYYY').toDate().getTime();
+      },
       cargar(){
         axios.post('/prospectos/listado', {id: this.usuarioCargado})
         .then(({data}) => {
+          $("#oculto").append($("#fecha_ini_control"));
+          $("#oculto").append($("#fecha_fin_control"));
           this.tabla.destroy();
           this.prospectos = data.prospectos;
           swal({
@@ -126,7 +209,12 @@ const app = new Vue({
             text: "Datos Cargados",
             type: "success"
           }).then(()=>{
-            this.tabla = $("#tabla").DataTable({"order": [[ 4, "desc" ]]});
+            this.tabla = $("#tabla").DataTable({
+              "dom": 'f<"#fechas_container.pull-left">ltip',
+              "order": [[ 4, "desc" ]]
+            });
+            $("#fechas_container").append($("#fecha_ini_control"));
+            $("#fechas_container").append($("#fecha_fin_control"));
           });
         })
         .catch(({response}) => {
