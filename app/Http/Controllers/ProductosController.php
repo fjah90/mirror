@@ -36,9 +36,9 @@ class ProductosController extends Controller
      */
     public function create()
     {
-      $proveedores = Proveedor::all();
-      $categorias = Categoria::with('descripciones')->get();
-      $subcategorias = Subcategoria::all();
+      $proveedores = Proveedor::orderBy('empresa')->get();
+      $categorias = Categoria::with('descripciones')->orderBy('nombre')->get();
+      $subcategorias = Subcategoria::orderBy('nombre')->get();
       return view('catalogos.productos.create', compact('proveedores','categorias','subcategorias'));
     }
 
@@ -128,9 +128,9 @@ class ProductosController extends Controller
      */
     public function edit(Producto $producto)
     {
-      $proveedores = Proveedor::all();
-      $categorias = Categoria::with('descripciones')->get();
-      $subcategorias = Subcategoria::all();
+      $proveedores = Proveedor::orderBy('empresa')->get();
+      $categorias = Categoria::with('descripciones')->orderBy('nombre')->get();
+      $subcategorias = Subcategoria::orderBy('nombre')->get();
       $producto->load('proveedor','categoria.descripciones','subcategoria','descripciones.descripcionNombre');
 
       $producto_descripciones = $producto->descripciones->count();

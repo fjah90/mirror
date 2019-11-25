@@ -28,7 +28,7 @@
         </div>
         <div class="col-md-2 text-right" style="margin-top:25px;">
           <button class="btn btn-sm btn-primary" type="submit" title="Agregar" :disabled="cargando">
-            <i class="fas fa-plus"></i>
+            Agregar
           </button>
         </div>
       </div>

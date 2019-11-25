@@ -7,7 +7,10 @@
         </div>
         <div class="col-md-4">
           <label class="control-label">Tipo</label>
-          <input type="text" class="form-control" name="tipo" v-model="email.tipo" />
+          <select class="form-control" name="tipo" v-model=email.tipo>
+            <option value="Empresarial">Empresarial</option>
+            <option value="Personal">Personal</option>
+          </select>
         </div>
         <div class="col-md-6">
           <label class="control-label">Email</label>
@@ -15,7 +18,7 @@
         </div>
         <div class="col-md-2 text-right" style="margin-top:25px;">
           <button class="btn btn-sm btn-primary" type="submit" title="Agregar" :disabled="cargando">
-            <i class="fas fa-plus"></i>
+            Agregar
           </button>
         </div>
       </div>
