@@ -60,7 +60,7 @@ class OrdenesCompraController extends Controller
       $unidades_medida = UnidadMedida::orderBy('simbolo')->get();
       $aduanas = AgenteAduanal::all();
       $tiempos_entrega = TiempoEntrega::all();
-      $productos = Producto::with('categoria')->has('categoria')->get();
+      $productos = Producto::with('categoria','proveedor')->has('categoria')->get();
 
       return view('ordenes-compra.create', 
         compact('proyecto','proveedores','contactos','productos','unidades_medida','aduanas','tiempos_entrega')
@@ -333,7 +333,7 @@ class OrdenesCompraController extends Controller
        $proveedores = Proveedor::all();
        $contactos = ProveedorContacto::all();
        $aduanas = AgenteAduanal::all();
-       $productos = Producto::with('categoria')->has('categoria')->get();
+       $productos = Producto::with('categoria','proveedor')->has('categoria')->get();
        $unidades_medida = UnidadMedida::with('conversiones')->orderBy('simbolo')->get();
        $tiempos_entrega = TiempoEntrega::all();
        $orden->load('proveedor', 'contacto', 'entradas.producto');

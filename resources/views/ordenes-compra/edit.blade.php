@@ -278,23 +278,30 @@
     <!-- Catalogo Productos Modal -->
     <modal v-model="openCatalogo" title="Productos" :footer="false">
       <div class="table-responsive">
-        <table class="table table-bordred">
+        <table id="tablaProductos" class="table table-bordred">
           <thead>
             <tr>
-              <th>ID</th>
-              <th>Categoria</th>
               <th>Nombre</th>
+              <th>Proveedor</th>
+              <th>Tipo</th>
+              <th>Ficha Técnica</th>
               <th></th>
             </tr>
           </thead>
           <tbody>
-            <tr v-for="(prod, index) in productos" v-if="prod.proveedor_id==orden.proveedor_id">
-              <td>@{{prod.id}}</td>
-              <td>@{{prod.categoria.nombre}}</td>
+            <tr v-for="(prod, index) in productos">
               <td>@{{prod.nombre}}</td>
+              <td>@{{prod.proveedor.empresa}}</td>
+              <td>@{{prod.categoria.nombre}}</td>
+              <td>
+                <a v-if="prod.ficha_tecnica" :href="prod.ficha_tecnica" target="_blank"
+                  class="btn btn-success" style="cursor:pointer;">
+                  <i class="far fa-file-pdf"></i>
+                </a>
+              </td>
               <td class="text-right">
                 <button class="btn btn-primary" title="Seleccionar"
-                  @click="seleccionarProduco(prod, index)">
+                @click="seleccionarProduco(prod, index)">
                   <i class="fas fa-check"></i>
                 </button>
               </td>
@@ -338,6 +345,7 @@ const app = new Vue({
         },
       @endforeach
     },
+    tablaProductos: {},
     openCatalogo: false,
     cargando: false
   },
@@ -345,6 +353,16 @@ const app = new Vue({
     formatoMoneda(numero){
       return accounting.formatMoney(numero, "$", 2);
     },
+  },
+  mounted(){
+    var vue = this;
+    $.fn.dataTableExt.afnFiltering.push(
+      function( settings, data, dataIndex ) {
+        var prov = data[1] || ""; // Our date column in the table
+        return (vue.orden.proveedor.empresa == prov);
+      }
+    );
+    this.tablaProductos = $("#tablaProductos").DataTable({dom: 'ftp'});
   },
   methods: {
     fijarProveedor(){
@@ -360,6 +378,7 @@ const app = new Vue({
       }, this);
 
       this.entrada.producto = {};//por si ya estaba seleccionado uno
+      this.tablaProductos.draw();
     },
     fijarAduana(){
       this.aduanas.find(function(aduana){

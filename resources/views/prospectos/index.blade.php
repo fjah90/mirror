@@ -169,21 +169,21 @@ const app = new Vue({
       var vue = this;
       $.fn.dataTableExt.afnFiltering.push(
         function( settings, data, dataIndex ) {
-            var min  = vue.fecha_ini;
-            var max  = vue.fecha_fin;
-            var fecha = data[4] || 0; // Our date column in the table
-            
-            var startDate   = moment(min, "DD/MM/YYYY");
-            var endDate     = moment(max, "DD/MM/YYYY");
-            var diffDate = moment(fecha, "YYYY-MM-DD");
-            // console.log(min=="",max=="",diffDate.isSameOrAfter(startDate),diffDate.isSameOrBefore(endDate),diffDate.isBetween(startDate, endDate));
-            if (min=="" && max=="") return true;
-            if (max=="" && diffDate.isSameOrAfter(startDate)) return true;
-            if (min=="" && diffDate.isSameOrBefore(endDate)) return true;
-            if (diffDate.isBetween(startDate, endDate, null, '[]')) return true; 
-            return false;
-          }
-        );
+          var min  = vue.fecha_ini;
+          var max  = vue.fecha_fin;
+          var fecha = data[4] || 0; // Our date column in the table
+          
+          var startDate   = moment(min, "DD/MM/YYYY");
+          var endDate     = moment(max, "DD/MM/YYYY");
+          var diffDate = moment(fecha, "YYYY-MM-DD");
+          // console.log(min=="",max=="",diffDate.isSameOrAfter(startDate),diffDate.isSameOrBefore(endDate),diffDate.isBetween(startDate, endDate));
+          if (min=="" && max=="") return true;
+          if (max=="" && diffDate.isSameOrAfter(startDate)) return true;
+          if (min=="" && diffDate.isSameOrBefore(endDate)) return true;
+          if (diffDate.isBetween(startDate, endDate, null, '[]')) return true; 
+          return false;
+        }
+      );
     },
     watch: {
       fecha_ini: function (val) {
