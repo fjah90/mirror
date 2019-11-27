@@ -93,34 +93,34 @@
                         </td>
                         <td>@{{cotizacion.total | formatoMoneda}} @{{ cotizacion.moneda }}</td>
                         <td class="text-right">
-                          <button class="btn btn-default" title="Notas"
+                          <button class="btn btn-xs btn-default" title="Notas"
                             @click="notas.cotizacion_id=cotizacion.id;
                               notas.mensaje=cotizacion.notas2;
                               openNotas=true;"
                             >
                             <i class="far fa-sticky-note"></i>
                           </button>
-                          <a class="btn btn-success" title="PDF" :href="cotizacion.archivo"
+                          <a class="btn btn-xs btn-success" title="PDF" :href="cotizacion.archivo"
                             :download="'C '+cotizacion.numero+' Intercorp '+prospecto.nombre+'.pdf'">
                             <i class="far fa-file-pdf"></i>
                           </a>
-                          <button class="btn btn-info" title="Enviar"
+                          <button class="btn btn-xs btn-info" title="Enviar"
                             @click="enviar.cotizacion_id=cotizacion.id; enviar.numero=cotizacion.numero; openEnviar=true;">
                             <i class="far fa-envelope"></i>
                           </button>
-                          <a v-if="cotizacion.aceptada" class="btn text-primary" title="Comprobante Confirmación" 
+                          <a v-if="cotizacion.aceptada" class="btn btn-xs text-primary" title="Comprobante Confirmación" 
                             :href="cotizacion.comprobante_confirmacion"
                             target="_blank">
                             <i class="fas fa-user-check"></i>
                           </a>
                           <template v-else>
-                            <button class="btn btn-primary" title="Aceptar"
+                            <button class="btn btn-xs btn-primary" title="Aceptar"
                               @click="aceptar.cotizacion_id=cotizacion.id; openAceptar=true;">
                               <i class="fas fa-user-check"></i>
                             </button>
-                            <button class="btn btn-warning" title="Editar"
+                            <button class="btn btn-xs btn-warning" title="Editar"
                               @click="editar(index, cotizacion)">
-                              <i class="far fa-edit"></i>
+                              <i class="fas fa-pencil-alt"></i>
                             </button>
                           </template>
                         </td>
@@ -962,10 +962,10 @@ const app = new Vue({
           accounting.formatMoney(entrada.importe, "$", 2),
         ];
         row.push([
-          '<button class="btn btn-success" title="Editar" data-index="'+index+'">',
-            '<i class="fas fa-edit"></i>',
+          '<button class="btn btn-xs btn-success" title="Editar" data-index="'+index+'">',
+            '<i class="fas fa-pencil-alt"></i>',
           '</button>',
-          '<button class="btn btn-danger" title="Remover" data-index="'+index+'">',
+          '<button class="btn btn-xs btn-danger" title="Remover" data-index="'+index+'">',
             '<i class="fas fa-times"></i>',
           '</button>'
         ].join(''));

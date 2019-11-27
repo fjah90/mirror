@@ -65,44 +65,44 @@
                   <td>@{{orden.status}}</td>
                   <td class="text-right">
                     <template v-if="orden.status!='Pendiente' && orden.status!='Cancelada'">
-                      <a class="btn btn-info" title="Ver"
+                      <a class="btn btn-xs btn-info" title="Ver"
                         :href="'/proyectos-aprobados/'+orden.proyecto_id+'/ordenes-compra/'+orden.id">
                         <i class="far fa-eye"></i>
                       </a>
-                      <a v-if="orden.archivo" class="btn btn-warning" title="PDF" :href="orden.archivo"
+                      <a v-if="orden.archivo" class="btn btn-xs btn-warning" title="PDF" :href="orden.archivo"
                         :download="'orden-compra '+orden.numero+'.pdf'">
                         <i class="far fa-file-pdf"></i>
                       </a>
                     </template>
                     <a v-if="orden.status=='Pendiente'"
-                      class="btn btn-warning" title="Comprar"
+                      class="btn btn-xs btn-warning" title="Comprar"
                       :href="'/proyectos-aprobados/'+orden.proyecto_id+'/ordenes-compra/'+orden.id">
                       <i class="fas fa-cash-register"></i>
                     </a>
                     <a v-if="orden.status=='Pendiente' || orden.status=='Rechazada'"
-                      class="btn btn-success" title="Editar"
+                      class="btn btn-xs btn-success" title="Editar"
                       :href="'/proyectos-aprobados/'+orden.proyecto_id+'/ordenes-compra/'+orden.id+'/editar'">
-                      <i class="fas fa-edit"></i>
+                      <i class="fas fa-pencil-alt"></i>
                     </a>
                     @role('Administrador')
-                    <button v-if="orden.status=='Por Autorizar'" class="btn btn-primary"
+                    <button v-if="orden.status=='Por Autorizar'" class="btn btn-xs btn-primary"
                       title="Aprobar" @click="ordenModal=orden; openAprobar=true;">
                       <i class="far fa-thumbs-up"></i>
                     </button>
-                    <button v-if="orden.status=='Por Autorizar'" class="btn btn-danger"
+                    <button v-if="orden.status=='Por Autorizar'" class="btn btn-xs btn-danger"
                       title="Rechazar" @click="ordenModal=orden; openRechazar=true;">
                       <i class="far fa-thumbs-down"></i>
                     </button>
-                    <button v-if="orden.status=='Aprobada'" class="btn btn-purple"
+                    <button v-if="orden.status=='Aprobada'" class="btn btn-xs btn-purple"
                       title="Confirmar" @click="ordenModal=orden; openConfirmar=true;">
                       <i class="fas fa-clipboard-check"></i>
                     </button>
                     @endrole
                     <button v-if="orden.status!='Aprobada' && orden.status!='Confirmada' && orden.status!='Cancelada'" 
-                      class="btn btn-danger" title="Cancelar" @click="cancelarOrden(orden)">
+                      class="btn btn-xs btn-danger" title="Cancelar" @click="cancelarOrden(orden)">
                       <i class="fas fa-times"></i>
                     </button>
-                    <a v-if="orden.status=='Confirmada'" class="btn text-primary" title="Confirmación Fabrica" 
+                    <a v-if="orden.status=='Confirmada'" class="btn btn-xs text-primary" title="Confirmación Fabrica" 
                       :href="orden.confirmacion_fabrica"
                       target="_blank">
                       <i class="fas fa-clipboard-check"></i>

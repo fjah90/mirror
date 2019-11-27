@@ -94,7 +94,7 @@
                   <th>Tipo</th>
                   <th>Próxima Actividad</th>
                   <th>Tipo</th>
-                  <th></th>
+                  <th style="min-width:105px;"></th>
                 </tr>
               </thead>
               <tbody>
@@ -120,16 +120,16 @@
                     <td></td>
                   </template>
                   <td class="text-right">
-                    <a class="btn btn-info" title="Ver" :href="'/prospectos/'+prospecto.id">
+                    <a class="btn btn-xs btn-info" title="Ver" :href="'/prospectos/'+prospecto.id">
                       <i class="far fa-eye"></i>
                     </a>
-                    <a class="btn btn-warning" title="Editar" :href="'/prospectos/'+prospecto.id+'/editar'">
-                      <i class="far fa-edit"></i>
+                    <a class="btn btn-xs btn-warning" title="Editar" :href="'/prospectos/'+prospecto.id+'/editar'">
+                      <i class="fas fa-pencil-alt"></i>
                     </a>
-                    <a class="btn btn-success" title="Cotizar" :href="'/prospectos/'+prospecto.id+'/cotizar'">
+                    <a class="btn btn-xs btn-success" title="Cotizar" :href="'/prospectos/'+prospecto.id+'/cotizar'">
                       <i class="far fa-file-alt"></i>
                     </a>
-                    <button class="btn btn-danger" title="Borrar" @click="borrar(prospecto, index)">
+                    <button class="btn btn-xs btn-danger" title="Borrar" @click="borrar(prospecto, index)">
                       <i class="fas fa-times"></i>
                     </button>
                   </td>

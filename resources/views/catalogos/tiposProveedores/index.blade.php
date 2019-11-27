@@ -48,16 +48,16 @@
                   <td>@{{index+1}}</td>
                   <td>@{{tipo.nombre}}</td>
                   <td class="text-right">
-                    <a class="btn btn-info" title="Ver"
+                    <a class="btn btn-xs btn-info" title="Ver"
                       :href="'/tiposProveedores/'+tipo.id">
                       <i class="far fa-eye"></i>
                     </a>
                     @role('Administrador')
-                    <a class="btn btn-success" title="Editar"
+                    <a class="btn btn-xs btn-success" title="Editar"
                       :href="'/tiposProveedores/'+tipo.id+'/editar'">
-                      <i class="far fa-edit"></i>
+                      <i class="fas fa-pencil-alt"></i>
                     </a>
-                    <button class="btn btn-danger" title="Borrar"
+                    <button class="btn btn-xs btn-danger" title="Borrar"
                       @click="borrar(tipo, index)">
                       <i class="fas fa-times"></i>
                     </button>

@@ -40,7 +40,7 @@
                   <th>Proveedor</th>
                   <th>Categoria</th>
                   <th>Tipo</th>
-                  <th></th>
+                  <th style="min-width:70px;"></th>
                 </tr>
               </thead>
               <tbody>
@@ -51,16 +51,16 @@
                   <td>@{{producto.subcategoria.nombre}}</td>
                   <td>@{{producto.categoria.nombre}}</td>
                   <td class="text-right">
-                    <a class="btn btn-info" data-toggle="tooltip" title="Ver"
+                    <a class="btn btn-xs btn-info" data-toggle="tooltip" title="Ver"
                       :href="'/productos/'+producto.id">
                       <i class="far fa-eye"></i>
                     </a>
-                    <a class="btn btn-success" data-toggle="tooltip" title="Editar"
+                    <a class="btn btn-xs btn-success" data-toggle="tooltip" title="Editar"
                       :href="'/productos/'+producto.id+'/editar'">
-                      <i class="far fa-edit"></i>
+                      <i class="fas fa-pencil-alt"></i>
                     </a>
                     @hasrole('Administrador')
-                    <button class="btn btn-danger" data-toggle="tooltip" title="Borrar"
+                    <button class="btn btn-xs btn-danger" data-toggle="tooltip" title="Borrar"
                       @click="borrar(producto, index)">
                       <i class="fas fa-times"></i>
                     </button>

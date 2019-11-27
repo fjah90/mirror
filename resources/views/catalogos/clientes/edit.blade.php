@@ -219,11 +219,11 @@
                               </div>
                             </td>
                             <td class="text-right">
-                              <button class="btn btn-success" data-toggle="tooltip" title="Editar"
+                              <button class="btn btn-xs btn-success" data-toggle="tooltip" title="Editar"
                                 @click="editarContacto(contacto, index)">
-                                <i class="fas fa-edit"></i>
+                                <i class="fas fa-pencil-alt"></i>
                               </button>
-                              <button class="btn btn-danger" data-toggle="tooltip" title="Borrar"
+                              <button class="btn btn-xs btn-danger" data-toggle="tooltip" title="Borrar"
                                 @click="borrarContacto(contacto, index)">
                                 <i class="fas fa-times"></i>
                               </button>

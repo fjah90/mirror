@@ -59,7 +59,7 @@
                   <th>Nombre</th>
                   <th>RFC</th>
                   <th>Razon Social</th>
-                  <th></th>
+                  <th style="min-width:70px;"></th>
                 </tr>
               </thead>
               <tbody>
@@ -71,16 +71,16 @@
                   <td>@{{cliente.rfc}}</td>
                   <td>@{{cliente.razon_social}}</td>
                   <td class="text-right">
-                    <a class="btn btn-info" data-toggle="tooltip" title="Ver"
+                    <a class="btn btn-xs btn-info" data-toggle="tooltip" title="Ver"
                       :href="'/clientes/'+cliente.id">
                       <i class="far fa-eye"></i>
                     </a>
-                    <a class="btn btn-success" data-toggle="tooltip" title="Editar"
+                    <a class="btn btn-xs btn-success" data-toggle="tooltip" title="Editar"
                       :href="'/clientes/'+cliente.id+'/editar'">
-                      <i class="far fa-edit"></i>
+                      <i class="fas fa-pencil-alt"></i>
                     </a>
                     @hasrole('Administrador')
-                    <button class="btn btn-danger" data-toggle="tooltip" title="Borrar"
+                    <button class="btn btn-xs btn-danger" data-toggle="tooltip" title="Borrar"
                       @click="borrar(cliente, index)">
                       <i class="fas fa-times"></i>
                     </button>
@@ -134,7 +134,7 @@
                   <th>Nombre</th>
                   <th>RFC</th>
                   <th>Razon Social</th>
-                  <th></th>
+                  <th style="min-width:70px;"></th>
                 </tr>
               </thead>
               <tbody>
@@ -146,16 +146,16 @@
                   <td>@{{cliente.rfc}}</td>
                   <td>@{{cliente.razon_social}}</td>
                   <td class="text-right">
-                    <a class="btn btn-info" data-toggle="tooltip" title="Ver"
+                    <a class="btn btn-xs btn-info" data-toggle="tooltip" title="Ver"
                       :href="'/clientes/'+cliente.id">
                       <i class="far fa-eye"></i>
                     </a>
-                    <a class="btn btn-success" data-toggle="tooltip" title="Editar"
+                    <a class="btn btn-xs btn-success" data-toggle="tooltip" title="Editar"
                       :href="'/clientes/'+cliente.id+'/editar'">
-                      <i class="far fa-edit"></i>
+                      <i class="fas fa-pencil-alt"></i>
                     </a>
                     @hasrole('Administrador')
-                    <button class="btn btn-danger" data-toggle="tooltip" title="Borrar"
+                    <button class="btn btn-xs btn-danger" data-toggle="tooltip" title="Borrar"
                       @click="borrar(cliente, index)">
                       <i class="fas fa-times"></i>
                     </button>

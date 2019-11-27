@@ -48,16 +48,16 @@
                   <td>@{{index+1}}</td>
                   <td>@{{subcategoria.nombre}}</td>
                   <td class="text-right">
-                    <a class="btn btn-info" data-toggle="tooltip" title="Ver"
+                    <a class="btn btn-xs btn-info" data-toggle="tooltip" title="Ver"
                       :href="'/subcategorias/'+subcategoria.id">
                       <i class="far fa-eye"></i>
                     </a>
                     @role('Administrador')
-                    <a class="btn btn-success" data-toggle="tooltip" title="Editar"
+                    <a class="btn btn-xs btn-success" data-toggle="tooltip" title="Editar"
                       :href="'/subcategorias/'+subcategoria.id+'/editar'">
-                      <i class="far fa-edit"></i>
+                      <i class="fas fa-pencil-alt"></i>
                     </a>
-                    <button class="btn btn-danger" data-toggle="tooltip" title="Borrar"
+                    <button class="btn btn-xs btn-danger" data-toggle="tooltip" title="Borrar"
                       @click="borrar(subcategoria, index)">
                       <i class="fas fa-times"></i>
                     </button>
