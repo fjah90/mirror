@@ -7,22 +7,23 @@ use Carbon\Carbon;
 
 class CategoriaDescripcion extends Model
 {
-    protected $table = 'categorias_descripciones';
+  protected $table = 'categorias_descripciones';
 
-    protected $fillable = ['categoria_id','nombre','name','ordenamiento','no_alta_productos'];
+  protected $fillable = ['categoria_id', 'nombre', 'name', 'ordenamiento', 'no_alta_productos', 'valor_ingles'];
 
-    protected $casts = [
-      'no_alta_productos' => 'boolean'
-    ];
+  protected $casts = [
+    'no_alta_productos' => 'boolean',
+    'valor_ingles' => 'boolean'
+  ];
 
-    /**
-     * ---------------------------------------------------------------------------
-     *                             Relationships
-     * ---------------------------------------------------------------------------
-     */
+  /**
+   * ---------------------------------------------------------------------------
+   *                             Relationships
+   * ---------------------------------------------------------------------------
+   */
 
-    public function categoria(){
-      return $this->belognsTo('App\Models\Categoria', 'categoria_id');
-    }
-
+  public function categoria()
+  {
+    return $this->belognsTo('App\Models\Categoria', 'categoria_id');
+  }
 }

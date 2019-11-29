@@ -3,13 +3,12 @@
 namespace App\Models;
 
 use App\Model;
-use Carbon\Carbon;
 
 class ProspectoCotizacionEntradaDescripcion extends Model
 {
     protected $table = 'prospectos_cotizaciones_entradas_descripciones';
 
-    protected $fillable = ['entrada_id','nombre','name','valor'];
+    protected $fillable = ['entrada_id', 'nombre', 'name', 'valor', 'valor_ingles'];
 
     /**
      * ---------------------------------------------------------------------------
@@ -17,8 +16,9 @@ class ProspectoCotizacionEntradaDescripcion extends Model
      * ---------------------------------------------------------------------------
      */
 
-    public function entrada(){
-      return $this->belongsTo('App\Models\ProspectoCotizacionEntrada', 'entrada_id', 'id');
+    public function entrada()
+    {
+        return $this->belongsTo('App\Models\ProspectoCotizacionEntrada', 'entrada_id', 'id');
     }
 
 }

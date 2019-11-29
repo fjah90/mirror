@@ -83,6 +83,7 @@
                           <th>Nombre</th>
                           <th>Name</th>
                           <th>Valor</th>
+                          <th>Valor Ingles</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -90,9 +91,10 @@
                           <td>@{{descripcion.nombre}}</td>
                           <td>@{{descripcion.name}}</td>
                           <td>
-                            <input v-if="!descripcion.no_alta_productos"
-                              type="text" class="form-control" v-model="descripcion.valor"
-                            />
+                            <input v-if="!descripcion.no_alta_productos" type="text" class="form-control" v-model="descripcion.valor"/>
+                          </td>
+                          <td>
+                            <input v-if="!descripcion.no_alta_productos" type="text" class="form-control" v-model="descripcion.valor_ingles"/>
                           </td>
                         </tr>
                       </tbody>

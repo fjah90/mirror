@@ -427,7 +427,12 @@
                   <tr>
                     <td style="vertical-align: top;">
                       @foreach($entrada->descripciones as $descripcion)
-                        @if($descripcion->valor)
+                        @if($descripcion->valor_ingles)
+                        <p>
+                          <span>@text_capitalize($descripcion->{$nombre}): </span>
+                          <span class="text-uppercase">{{$descripcion->valor_ingles}}</span>
+                        </p>
+                        @elseif($descripcion->valor)
                         <p>
                           <span>@text_capitalize($descripcion->{$nombre}): </span>
                           <span class="text-uppercase">{{$descripcion->valor}}</span>
