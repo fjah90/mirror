@@ -94,7 +94,7 @@
                             <input v-if="!descripcion.no_alta_productos" type="text" class="form-control" v-model="descripcion.valor"/>
                           </td>
                           <td>
-                            <input v-if="!descripcion.no_alta_productos" type="text" class="form-control" v-model="descripcion.valor_ingles"/>
+                            <input v-if="descripcion.descripcion_nombre.valor_ingles" type="text" class="form-control" v-model="descripcion.valor_ingles"/>
                           </td>
                         </tr>
                       </tbody>
@@ -155,6 +155,8 @@
 @section('footer_scripts')
 
 <script>
+  Vue.config.devtools = true;
+
 const app = new Vue({
     el: '#content',
     data: {

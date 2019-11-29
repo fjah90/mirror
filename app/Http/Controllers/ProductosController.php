@@ -169,7 +169,6 @@ class ProductosController extends Controller
         foreach ($producto->descripciones as $descripcion) {
             $descripcion->nombre = $descripcion->descripcionNombre->nombre;
             $descripcion->name   = $descripcion->descripcionNombre->name;
-            unset($descripcion->descripcionNombre);
         }
 
         if ($producto->foto) {
