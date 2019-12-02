@@ -55,7 +55,7 @@
                             </a>
                             <a class="btn btn-xs btn-success" title="Editar"
                               href="{{route('usuarios.edit', ['usuario'=>$usuario->id])}}">
-                              <i class="far fa-edit"></i>
+                              <i class="fas fa-pencil-alt"></i>
                             </a>
                           </td>
                         </tr>

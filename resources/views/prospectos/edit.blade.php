@@ -105,7 +105,7 @@
                           </template>
                         </td>
                         <td v-if="actividad.tipo.id==4"><!-- Cotización enviada -->
-                          <a class="btn btn-warning" title="PDF" :href="actividad.descripcion" target="_blank">
+                          <a class="btn btn-xs btn-warning" title="PDF" :href="actividad.descripcion" target="_blank">
                             <i class="far fa-file-pdf"></i>
                           </a>
                         </td>
@@ -149,7 +149,7 @@
                       />
                       <span class="input-group-btn">
                         <button class="btn btn-default" type="button" @click="openCatalogo=true">
-                          <i class="far fa-edit"></i>
+                          <i class="fas fa-pencil-alt"></i>
                         </button>
                       </span>
                     </div>
@@ -264,7 +264,7 @@
               <td>@{{prod.marca}}</td>
               <td>@{{prod.categoria.nombre}}</td>
               <td class="text-right">
-                <button class="btn btn-primary" title="Seleccionar"
+                <button class="btn btn-sm btn-primary" title="Seleccionar"
                 @click="ofrecido=prod; openCatalogo=false;">
                   <i class="fas fa-check"></i>
                 </button>

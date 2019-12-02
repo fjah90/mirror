@@ -63,13 +63,12 @@
                     </span>
                   </td>
                   <td class="text-right">
-                    <a class="btn btn-info" title="Ver Cotización"
+                    <a class="btn btn-xs btn-info" title="Ver Cotización"
                       target="_blank" :href="proyecto.cotizacion.archivo">
                       <i class="far fa-eye"></i>
                     </a>
-                    <a class="btn btn-success" title="Ordenes Compra"
-                      :href="'/proyectos-aprobados/'+proyecto.id+'/ordenes-compra'"
-                      style="font-size:20px; padding:2px 12px;">
+                    <a class="btn btn-xs btn-success" title="Ordenes Compra"
+                      :href="'/proyectos-aprobados/'+proyecto.id+'/ordenes-compra'">
                       <i class="fas fa-file-invoice-dollar"></i>
                     </a>
                   </td>

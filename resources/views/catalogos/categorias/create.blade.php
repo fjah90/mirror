@@ -118,10 +118,10 @@ Nuevo Tipo | @parent
                       <td>@{{descripcion.nombre}}</td>
                       <td>@{{descripcion.name}}</td>
                       <td class="text-right">
-                        <button class="btn btn-success" data-toggle="tooltip" title="Editar" @click="editarDescripcion(descripcion, index)">
-                          <i class="fas fa-edit"></i>
+                        <button class="btn btn-xs btn-success" data-toggle="tooltip" title="Editar" @click="editarDescripcion(descripcion, index)">
+                          <i class="fas fa-pencil-alt"></i>
                         </button>
-                        <button class="btn btn-danger" data-toggle="tooltip" title="Borrar" @click="borrarDescripcion(descripcion, index)">
+                        <button class="btn btn-xs btn-danger" data-toggle="tooltip" title="Borrar" @click="borrarDescripcion(descripcion, index)">
                           <i class="fas fa-times"></i>
                         </button>
                       </td>

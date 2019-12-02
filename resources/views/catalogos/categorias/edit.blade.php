@@ -210,10 +210,10 @@ const app = new Vue({
             descripcion.name
           ];
           row.push([
-            '<button class="btn btn-success" title="Editar" data-index="'+index+'">',
-              '<i class="fas fa-edit"></i>',
+            '<button class="btn btn-xs btn-success" title="Editar" data-index="'+index+'">',
+              '<i class="fas fa-pencil-alt"></i>',
             '</button>',
-            '<button class="btn btn-danger" title="Borrar" data-index="'+index+'">',
+            '<button class="btn btn-xs btn-danger" title="Borrar" data-index="'+index+'">',
               '<i class="fas fa-times"></i>',
             '</button>'
           ].join(''));

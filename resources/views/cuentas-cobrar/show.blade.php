@@ -106,11 +106,11 @@
                         <td>@format_money($factura->pendiente)</td>
                         <td>{{$factura->vencimiento_formated}}</td>
                         <td class="text-right">
-                          <a class="btn btn-warning" title="PDF" href="{{$factura->pdf}}"
+                          <a class="btn btn-xs btn-warning" title="PDF" href="{{$factura->pdf}}"
                             download="factura {{$factura->documento}}.pdf">
                             <i class="far fa-file-pdf"></i>
                           </a>
-                          <a class="btn btn-default" title="XML" href="{{$factura->xml}}"
+                          <a class="btn btn-xs btn-default" title="XML" href="{{$factura->xml}}"
                             download="factura {{$factura->documento}}.xml">
                             <i class="far fa-file-excel"></i>
                           </a>

@@ -78,11 +78,11 @@
                         <td>@{{conversion.simbolo}} - @{{conversion.nombre}}</td>
                         <td>@{{conversion.factor}}</td>
                         <td class="text-right">
-                          <button class="btn btn-success" data-toggle="tooltip" title="Editar"
+                          <button class="btn btn-xs btn-success" data-toggle="tooltip" title="Editar"
                             @click="editarConversion(conversion, index)">
-                            <i class="fas fa-edit"></i>
+                            <i class="fas fa-pencil-alt"></i>
                           </button>
-                          <button class="btn btn-danger" data-toggle="tooltip" title="Borrar"
+                          <button class="btn btn-xs btn-danger" data-toggle="tooltip" title="Borrar"
                             @click="borrarConversion(index)">
                             <i class="fas fa-times"></i>
                           </button>

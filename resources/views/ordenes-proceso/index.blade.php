@@ -50,100 +50,100 @@
                   <td>@{{orden.numero}}</td>
                   <td>@{{orden.status}}</td>
                   <td class="text-right">
-                    {{-- <a class="btn btn-info" title="Ver"
+                    {{-- <a class="btn btn-xs btn-info" title="Ver"
                       :href="'/proyectos-aprobados/'+orden.proyecto_id+'/ordenes-compra/'+orden.id">
                       <i class="far fa-eye"></i>
                     </a> --}}
-                    <button class="btn btn-unique"
+                    <button class="btn btn-xs btn-unique"
                       title="Historial" @click="ordenHistorial=orden; openHistorial=true;">
                       <i class="fas fa-history"></i>
                     </button>
                     {{-- Descarga de archivos --}}
-                    <a v-if="orden.orden_compra.archivo" class="btn btn-warning"
+                    <a v-if="orden.orden_compra.archivo" class="btn btn-xs btn-warning"
                       title="PDF" :href="orden.orden_compra.archivo"
                       :download="'orden-compra '+orden.numero+'.pdf'">
                       <i class="far fa-file-pdf"></i>
                     </a>
                     <template v-if="orden.factura" >
-                      <a class="btn btn-info"
+                      <a class="btn btn-xs btn-info"
                         title="Factura" :href="orden.factura"
                         :download="'Factura orden proceso '+orden.numero">
                         <i class="fas fa-file-invoice-dollar"></i>
                       </a>
-                      <a class="btn btn-info"
+                      <a class="btn btn-xs btn-info"
                         title="Packing List" :href="orden.packing"
                         :download="'Packing list orden proceso '+orden.numero">
                         <i class="fas fa-list-ol"></i>
                       </a>
-                      <a v-if="orden.bl" class="btn btn-info"
+                      <a v-if="orden.bl" class="btn btn-xs btn-info"
                         title="BL" :href="orden.bl"
                         :download="'BL orden proceso '+orden.numero">
                         <i class="fas fa-file"></i>
                       </a>
-                      <a v-if="orden.certificado" class="btn btn-info"
+                      <a v-if="orden.certificado" class="btn btn-xs btn-info"
                         title="Certificado" :href="orden.certificado"
                         :download="'Certificado orden proceso '+orden.numero">
                         <i class="fas fa-file-contract"></i>
                       </a>
                     </template>
-                    <a v-if="orden.deposito_warehouse" class="btn btn-info"
+                    <a v-if="orden.deposito_warehouse" class="btn btn-xs btn-info"
                       title="Deposito Warehouse" :href="orden.deposito_warehouse"
                       :download="'Deposito Warehouse orden '+orden.numero">
                       <i class="far fa-file-word"></i>
                     </a>
                     <template v-if="orden.gastos" >
-                      <a class="btn btn-info"
+                      <a class="btn btn-xs btn-info"
                         title="Cuenta de gastos" :href="orden.gastos"
                         :download="'Cuenta gastos orden proceso '+orden.numero">
                         <i class="fas fa-file-invoice"></i>
                       </a>
-                      <a class="btn btn-info"
+                      <a class="btn btn-xs btn-info"
                         title="Pago" :href="orden.pago"
                         :download="'Pago orden proceso '+orden.numero">
                         <i class="fas fa-money-check-alt"></i>
                       </a>
                     </template>
-                    <a v-if="orden.carta_entrega" class="btn btn-info"
+                    <a v-if="orden.carta_entrega" class="btn btn-xs btn-info"
                       title="Carta de Entrega" :href="orden.carta_entrega"
                       :download="'Carta de Entrega orden '+orden.numero">
                       <i class="fas fa-people-carry"></i>
                     </a>
                     {{-- Botones de acciones --}}
                     <button v-if="orden.status=='En fabricación'"
-                      class="btn btn-brown" title="Embarcar"
+                      class="btn btn-xs btn-brown" title="Embarcar"
                       @click="embarcarModal(orden)">
                       <i class="fas fa-dolly-flatbed"></i>
                     </button>
-                    <button v-if="orden.status=='Embarcado de fabrica'" class="btn btn-success"
+                    <button v-if="orden.status=='Embarcado de fabrica'" class="btn btn-xs btn-success"
                       title="Frontera" @click="fronteraModal(orden)">
                       <i class="fas fa-flag"></i>
                     </button>
-                    <button v-if="orden.status=='En frontera'" class="btn btn-warning"
+                    <button v-if="orden.status=='En frontera'" class="btn btn-xs btn-warning"
                       title="Aduana" @click="aduanaModal(orden)">
                       <i class="fas fa-warehouse"></i>
                     </button>
-                    <button v-if="orden.status=='Aduana'" class="btn btn-unique"
+                    <button v-if="orden.status=='Aduana'" class="btn btn-xs btn-unique"
                       title="Importación" @click="updateStatus(orden)">
                       <i class="fas fa-ship"></i>
                     </button>
-                    <button v-if="orden.status=='Proceso de Importación'" class="btn btn-success"
+                    <button v-if="orden.status=='Proceso de Importación'" class="btn btn-xs btn-success"
                       title="Liberadar Aduana" @click="updateStatus(orden)">
                       <i class="fas fa-lock-open"></i>
                     </button>
-                    <button v-if="orden.status=='Liberado de Aduana'" class="btn btn-elegant"
+                    <button v-if="orden.status=='Liberado de Aduana'" class="btn btn-xs btn-elegant"
                       title="Embarque final" @click="updateStatus(orden)">
                       <i class="fas fa-shipping-fast"></i>
                     </button>
-                    <button v-if="orden.status=='Embarque al destino Final'" class="btn btn-purple"
+                    <button v-if="orden.status=='Embarque al destino Final'" class="btn btn-xs btn-purple"
                       title="Descarga" @click="updateStatus(orden)">
                       <i class="fas fa-dolly"></i>
                     </button>
-                    <button v-if="orden.status=='Descarga'" class="btn btn-default"
+                    <button v-if="orden.status=='Descarga'" class="btn btn-xs btn-default"
                       title="Entrega" @click="entregaModal(orden)">
                       <i class="fas fa-box"></i>
                     </button>
                     <button v-if="orden.status=='Entregado' && !orden.fecha_real_entrega"
-                      class="btn btn-info" title="Instalación"
+                      class="btn btn-xs btn-info" title="Instalación"
                       @click="updateStatus(orden)">
                       <i class="fas fa-tools"></i>
                     </button>

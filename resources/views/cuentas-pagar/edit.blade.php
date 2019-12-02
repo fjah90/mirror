@@ -102,15 +102,15 @@
                         <td>@{{factura.pendiente | formatoMoneda}}</td>
                         <td>@{{factura.vencimiento_formated}}</td>
                         <td class="text-right">
-                          <a v-if="factura.pdf" class="btn btn-warning" title="PDF" :href="factura.pdf"
+                          <a v-if="factura.pdf" class="btn btn-xs btn-warning" title="PDF" :href="factura.pdf"
                             :download="'factura '+factura.documento+'.pdf'">
                             <i class="far fa-file-pdf"></i>
                           </a>
-                          <a v-if="factura.xml" class="btn btn-default" title="XML" :href="factura.xml"
+                          <a v-if="factura.xml" class="btn btn-xs btn-default" title="XML" :href="factura.xml"
                             :download="'factura '+factura.documento+'.xml'">
                             <i class="far fa-file-excel"></i>
                           </a>
-                          <button v-if="!factura.pagada" class="btn btn-success" title="Pagar"
+                          <button v-if="!factura.pagada" class="btn btn-xs btn-success" title="Pagar"
                             @click="agregarPago(factura)">
                             <i class="fas fa-hand-holding-usd"></i>
                           </button>

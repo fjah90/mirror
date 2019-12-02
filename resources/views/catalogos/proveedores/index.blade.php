@@ -41,7 +41,7 @@
                       <th>Empresa</th>
                       <th>Numero Cliente</th>
                       <th>RFC</th>
-                      <th></th>
+                      <th style="min-width:70px;"></th>
                     </tr>
                   </thead>
                   <tbody>
@@ -52,13 +52,13 @@
                       <td>@{{proveedor.numero_cliente}}</td>
                       <td>@{{proveedor.identidad_fiscal}}</td>
                       <td class="text-right">
-                        <a class="btn btn-info" title="Ver" :href="'/proveedores/'+proveedor.id">
+                        <a class="btn btn-xs btn-info" title="Ver" :href="'/proveedores/'+proveedor.id">
                           <i class="far fa-eye"></i>
                         </a>
-                        <a class="btn btn-success" title="Editar" :href="'/proveedores/'+proveedor.id+'/editar'">
-                          <i class="far fa-edit"></i>
+                        <a class="btn btn-xs btn-success" title="Editar" :href="'/proveedores/'+proveedor.id+'/editar'">
+                          <i class="fas fa-pencil-alt"></i>
                         </a>
-                        <button class="btn btn-danger" title="Borrar" @click="borrar('Nacionales',proveedor, index)">
+                        <button class="btn btn-xs btn-danger" title="Borrar" @click="borrar('Nacionales',proveedor, index)">
                           <i class="fas fa-times"></i>
                         </button>
                       </td>
@@ -95,7 +95,7 @@
                       <th>Empresa</th>
                       <th>Numero Cliente</th>
                       <th>TAX ID NO</th>
-                      <th></th>
+                      <th style="min-width:70px;"></th>
                     </tr>
                   </thead>
                   <tbody>
@@ -106,15 +106,15 @@
                       <td>@{{proveedor.numero_cliente}}</td>
                       <td>@{{proveedor.identidad_fiscal}}</td>
                       <td class="text-right">
-                        <a class="btn btn-info" title="Ver"
+                        <a class="btn btn-xs btn-info" title="Ver"
                           :href="'/proveedores/'+proveedor.id">
                           <i class="far fa-eye"></i>
                         </a>
-                        <a class="btn btn-success" title="Editar"
+                        <a class="btn btn-xs btn-success" title="Editar"
                           :href="'/proveedores/'+proveedor.id+'/editar'">
-                          <i class="far fa-edit"></i>
+                          <i class="fas fa-pencil-alt"></i>
                         </a>
-                        <button class="btn btn-danger" title="Borrar"
+                        <button class="btn btn-xs btn-danger" title="Borrar"
                           @click="borrar('Extranjeros', proveedor, index)">
                           <i class="fas fa-times"></i>
                         </button>

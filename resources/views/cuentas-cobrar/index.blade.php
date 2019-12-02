@@ -40,7 +40,7 @@
                   <th>Facturado</th>
                   <th>Pagado</th>
                   <th>Pendiente</th>
-                  <th></th>
+                  <th style="min-width:70px;"></th>
                 </tr>
               </thead>
               <tbody>
@@ -55,13 +55,12 @@
                   <td>@{{cuenta.pagado | formatoMoneda}}</td>
                   <td>@{{cuenta.pendiente | formatoMoneda}}</td>
                   <td class="text-right">
-                    <a class="btn btn-info" data-toggle="tooltip" title="Ver"
+                    <a class="btn btn-xs btn-info" data-toggle="tooltip" title="Ver"
                       :href="'/cuentas-cobrar/'+cuenta.id">
                       <i class="far fa-eye"></i>
                     </a>
-                    <a class="btn btn-success" data-toggle="tooltip" title="Facturas"
-                      :href="'/cuentas-cobrar/'+cuenta.id+'/editar'"
-                      style="font-size:20px; padding:2px 12px;">
+                    <a class="btn btn-xs btn-success" data-toggle="tooltip" title="Facturas"
+                      :href="'/cuentas-cobrar/'+cuenta.id+'/editar'">
                       <i class="fas fa-file-invoice-dollar"></i>
                     </a>
                   </td>
