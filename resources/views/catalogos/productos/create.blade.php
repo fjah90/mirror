@@ -2,7 +2,7 @@
 
 {{-- Page title --}}
 @section('title')
-    Nuevo Producto | @parent
+Nuevo Producto | @parent
 @stop
 
 @section('header_styles')
@@ -10,145 +10,145 @@
 
 {{-- Page content --}}
 @section('content')
-  <!-- Content Header (Page header) -->
-  <section class="content-header">
-    <h1>Productos</h1>
-  </section>
-  <!-- Main content -->
-  <section class="content" id="content">
-    <div class="row">
-      <div class="col-lg-12">
-        <div class="panel ">
-          <div class="panel-heading">
-            <h3 class="panel-title">Nuevo Producto</h3>
-          </div>
-          <div class="panel-body">
-            <form class="" @submit.prevent="guardar()">
-              <div class="row">
-                <div class="col-md-12">
-                  <div class="form-group">
-                    <label class="control-label">Proveedor</label>
-                    <select class="form-control" name="proveedor_id" v-model='producto.proveedor_id' required>
-                      <option value="0">Por Definir</option>
-                      @foreach($proveedores as $proveedor)
-                        <option value="{{$proveedor->id}}">{{$proveedor->empresa}}</option>
-                      @endforeach
-                    </select>
-                  </div>
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <h1>Productos</h1>
+</section>
+<!-- Main content -->
+<section class="content" id="content">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="panel ">
+        <div class="panel-heading">
+          <h3 class="panel-title">Nuevo Producto</h3>
+        </div>
+        <div class="panel-body">
+          <form class="" @submit.prevent="guardar()">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label class="control-label">Proveedor</label>
+                  <select class="form-control" name="proveedor_id" v-model='producto.proveedor_id' required>
+                    <option value="0">Por Definir</option>
+                    @foreach($proveedores as $proveedor)
+                    <option value="{{$proveedor->id}}">{{$proveedor->empresa}}</option>
+                    @endforeach
+                  </select>
                 </div>
               </div>
-              <div class="row">
-                <div class="col-md-12">
-                  <div class="form-group">
-                    <label class="control-label">Categoria</label>
-                    <select class="form-control" name="subcategoria_id" v-model='producto.subcategoria_id'>
-                      <option value=""></option>
-                      @foreach($subcategorias as $subcategoria)
-                        <option value="{{$subcategoria->id}}">{{$subcategoria->nombre}}</option>
-                      @endforeach
-                    </select>
-                  </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label class="control-label">Categoria</label>
+                  <select class="form-control" name="subcategoria_id" v-model='producto.subcategoria_id'>
+                    <option value=""></option>
+                    @foreach($subcategorias as $subcategoria)
+                    <option value="{{$subcategoria->id}}">{{$subcategoria->nombre}}</option>
+                    @endforeach
+                  </select>
                 </div>
               </div>
-              <div class="row">
-                <div class="col-md-12">
-                  <div class="form-group">
-                    <label class="control-label">Tipo de Producto o Servicio</label>
-                    <select class="form-control" name="categoria_id" v-model='producto.categoria_id'
-                    @change="cambiarDescripciones()" required>
-                      @foreach($categorias as $categoria)
-                        <option value="{{$categoria->id}}">{{$categoria->nombre}}</option>
-                      @endforeach
-                    </select>
-                  </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label class="control-label">Tipo de Producto o Servicio</label>
+                  <select class="form-control" name="categoria_id" v-model='producto.categoria_id' @change="cambiarDescripciones()" required>
+                    @foreach($categorias as $categoria)
+                    <option value="{{$categoria->id}}">{{$categoria->nombre}}</option>
+                    @endforeach
+                  </select>
                 </div>
               </div>
-              <div class="row">
-                <div class="col-md-12">
-                  <div class="form-group">
-                    <label class="control-label">Código de Producto o Servicio</label>
-                    <input type="text" class="form-control" name="nombre" v-model="producto.nombre" required />
-                  </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label class="control-label">Código de Producto o Servicio</label>
+                  <input type="text" class="form-control" name="nombre" v-model="producto.nombre" required />
                 </div>
               </div>
-              <div class="row">
-                <div class="col-md-12">
-                  <div class="table-responsive">
-                    <table class="table table-bordred">
-                      <thead>
-                        <tr>
-                          <th colspan="3">Descripciones</th>
-                        </tr>
-                        <tr>
-                          <th>Nombre</th>
-                          <th>Name</th>
-                          <th>Valor</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr v-for="(descripcion, index) in producto.descripciones">
-                          <td>@{{descripcion.nombre}}</td>
-                          <td>@{{descripcion.name}}</td>
-                          <td>
-                            <input v-if="!descripcion.no_alta_productos"
-                              type="text" class="form-control" v-model="descripcion.valor"
-                            />
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="table-responsive">
+                  <table class="table table-bordred">
+                    <thead>
+                      <tr>
+                        <th colspan="3">Descripciones</th>
+                      </tr>
+                      <tr>
+                        <th>Nombre</th>
+                        <th>Name</th>
+                        <th>Valor</th>
+                        <th>Valor Inglés</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr v-for="(descripcion, index) in producto.descripciones">
+                        <td>@{{descripcion.nombre}}</td>
+                        <td>@{{descripcion.name}}</td>
+                        <td>
+                          <input v-if="!descripcion.no_alta_productos" type="text" class="form-control" v-model="descripcion.valor" />
+                        </td>
+                        <td>
+                          <input v-if="!descripcion.no_alta_productos && descripcion.valor_ingles" type="text" class="form-control" v-model="descripcion.valor_ingles_valor" />
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
                 </div>
               </div>
-              <div class="row">
-                <div class="col-md-4">
-                  <div class="form-group">
-                    <label class="control-label" style="display:block;">Foto</label>
-                    <div class="kv-avatar">
-                      <div class="file-loading">
-                        <input id="foto" name="foto" type="file" ref="foto"
-                          @change="fijarArchivo('foto')" />
-                      </div>
-                    </div>
-                    <div id="foto-file-errors"></div>
-                  </div>
-                </div>
-                <div class="col-md-8">
-                  <div class="form-group">
-                    <label class="control-label" style="display:block;">Ficha Técnica</label>
+            </div>
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label class="control-label" style="display:block;">Foto</label>
+                  <div class="kv-avatar">
                     <div class="file-loading">
-                      <input id="ficha_tecnica" name="ficha_tecnica" type="file" ref="ficha_tecnica"
-                        @change="fijarArchivo('ficha_tecnica')" />
+                      <input id="foto" name="foto" type="file" ref="foto" @change="fijarArchivo('foto')" />
                     </div>
-                    <div id="ficha_tecnica-file-errors"></div>
                   </div>
+                  <div id="foto-file-errors"></div>
                 </div>
               </div>
-              <div class="row" style="margin-top:25px;">
-                <div class="col-md-12 text-right">
-                  <a class="btn btn-default" href="{{route('productos.index')}}" style="margin-right: 20px;">
-                    Regresar
-                  </a>
-                  <button type="submit" class="btn btn-primary" :disabled="cargando">
-                    <i class="fas fa-save"></i>
-                    Guardar Producto
-                  </button>
+              <div class="col-md-8">
+                <div class="form-group">
+                  <label class="control-label" style="display:block;">Ficha Técnica</label>
+                  <div class="file-loading">
+                    <input id="ficha_tecnica" name="ficha_tecnica" type="file" ref="ficha_tecnica" @change="fijarArchivo('ficha_tecnica')" />
+                  </div>
+                  <div id="ficha_tecnica-file-errors"></div>
                 </div>
               </div>
-            </form>
-          </div>
+            </div>
+            <div class="row" style="margin-top:25px;">
+              <div class="col-md-12 text-right">
+                <a class="btn btn-default" href="{{route('productos.index')}}" style="margin-right: 20px;">
+                  Regresar
+                </a>
+                <button type="submit" class="btn btn-primary" :disabled="cargando">
+                  <i class="fas fa-save"></i>
+                  Guardar Producto
+                </button>
+              </div>
+            </div>
+          </form>
         </div>
       </div>
     </div>
+  </div>
 
-  </section>
-  <!-- /.content -->
+</section>
+<!-- /.content -->
 @stop
 
 {{-- footer_scripts --}}
 @section('footer_scripts')
 
 <script>
+  /* beautify ignore:start */
 const app = new Vue({
     el: '#content',
     data: {
@@ -161,7 +161,7 @@ const app = new Vue({
         ficha_tecnica: '',
         descripciones: []
       },
-      categorias: {!! json_encode($categorias) !!},
+      categorias: @json($categorias),
       cargando: false,
     },
     mounted(){
@@ -229,5 +229,6 @@ const app = new Vue({
       },//fin cargarPresupuesto
     }
 });
+/* beautify ignore:end */
 </script>
 @stop

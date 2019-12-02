@@ -406,6 +406,7 @@
                           <th>Nombre</th>
                           <th>Name</th>
                           <th>Valor</th>
+                          <th>Valor Inglés</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -414,6 +415,9 @@
                           <td>@{{descripcion.name}}</td>
                           <td>
                             <input type="text" class="form-control" v-model="descripcion.valor" />
+                          </td>
+                          <td>
+                            <input  v-if="entrada.producto.descripciones[index].descripcion_nombre.valor_ingles" type="text" class="form-control" v-model="descripcion.valor_ingles"/>
                           </td>
                         </tr>
                       </tbody>
@@ -1060,6 +1064,7 @@ const app = new Vue({
           nombre: desc.descripcion_nombre.nombre,
           name: desc.descripcion_nombre.name,
           valor: desc.valor,
+          valor_ingles:desc.valor_ingles
         });
       }, this);
 

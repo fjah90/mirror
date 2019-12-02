@@ -83,14 +83,19 @@
               <div class="row">
                 <div class="col-md-12">
                   <div class="form-group">
-                    <label class="control-label" style="cursor:pointer;"
-                      @click="descripcion.no_alta_productos=!descripcion.no_alta_productos">
-                      <i class="text-info far"
-                        :class="(descripcion.no_alta_productos)?'fa-check-square':'fa-square'">
+                    <label class="control-label" style="cursor:pointer;" @click="descripcion.no_alta_productos=!descripcion.no_alta_productos">
+                      <i class="text-info far":class="(descripcion.no_alta_productos)?'fa-check-square':'fa-square'">
                       </i>
                       No Alta Productos
                     </label>
                   </div>
+                  <div class="form-group">
+                  <label class="control-label" style="cursor:pointer;" @click="descripcion.valor_ingles=!descripcion.valor_ingles">
+                    <i class="text-info far" :class="(descripcion.valor_ingles)?'fa-check-square':'fa-square'">
+                    </i>
+                    Añadir valor en inglés
+                  </label>
+                </div>
                 </div>
               </div>
               <div class="row">
@@ -140,7 +145,8 @@ const app = new Vue({
         nombre: '',
         name: '',
         ordenamiento: 0,
-        no_alta_productos: false
+        no_alta_productos: false,
+        valor_ingles: false
       },
       dataTable: {},
       cargando: false,
@@ -240,7 +246,7 @@ const app = new Vue({
 
         this.categoria.descripciones.push(this.descripcion);
         this.resetDataTables();
-        this.descripcion = {nombre: '', name: '', ordenamiento:0, no_alta_productos:false};
+        this.descripcion = {nombre: '', name: '', ordenamiento:0, no_alta_productos:false, valor_ingles:false};
       },
       editarDescripcion(descripcion, index){
         descripcion.actualizar = true;
