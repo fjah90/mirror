@@ -417,11 +417,13 @@
                 <table style="width:100%; margin:0;">
                   <tr>
                     <td style="vertical-align: top;">
-                      @foreach($entrada->producto->descripciones as $descripcion)
+                      @foreach($entrada->descripciones as $descripcion)
+                        @if($descripcion->valor)
                         <p>
-                          <span>@text_capitalize($descripcion->descripcionNombre->name): </span>
+                          <span>@text_capitalize($descripcion->{$nombre}): </span>
                           <span class="text-uppercase">{{$descripcion->valor}}</span>
                         </p>
+                        @endif
                       @endforeach
                       @if($entrada->conversion)
                         <p>

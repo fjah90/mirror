@@ -4,6 +4,7 @@ namespace App\Observers;
 use App\Models\ProyectoAprobado;
 use App\Models\OrdenCompra;
 use App\Models\OrdenCompraEntrada;
+use App\Models\OrdenCompraEntradaDescripcion;
 
 class ProyectoAprobadoObserver
 {
@@ -12,7 +13,7 @@ class ProyectoAprobadoObserver
     * Crear ordenes de compra para proveedores involucrados en el proyecto
     */
     public function created($proyecto){
-      $proyecto->load('cotizacion.entradas.producto.proveedor');
+      $proyecto->load('cotizacion.entradas.producto.proveedor', 'cotizacion.entradas.descripciones');
 
       //se va a crear una orden por cada proveedor
       $proveedores = $proyecto->cotizacion->entradas->groupBy(function($entrada){
@@ -34,7 +35,7 @@ class ProyectoAprobadoObserver
         $orden->update(['numero'=>$orden->id]);
 
         foreach ($entradas as $entrada) {
-          OrdenCompraEntrada::create([
+          $ent = OrdenCompraEntrada::create([
             'orden_id'=>$orden->id,
             'producto_id'=>$entrada->producto_id,
             'cantidad'=>$entrada->cantidad,
@@ -44,6 +45,15 @@ class ProyectoAprobadoObserver
           ]);
 
           $orden->subtotal = bcadd($orden->subtotal, $entrada->importe, 2);
+
+          foreach($entrada->descripciones as $descripcion){
+            OrdenCompraEntradaDescripcion::create([
+              'entrada_id' => $ent->id, 
+              'nombre' => $descripcion->nombre ?? '',
+              'name' => $descripcion->name ?? '',
+              'valor' => $descripcion->valor
+            ]);
+          }
         }
 
         if($proyecto->cotizacion->iva > 0){
