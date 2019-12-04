@@ -110,6 +110,7 @@ Nuevo Tipo | @parent
                     <tr>
                       <th>Nombre</th>
                       <th>Name</th>
+                      <th>Aparece en Orden de Compra</th>
                       <th></th>
                     </tr>
                   </thead>
@@ -117,6 +118,12 @@ Nuevo Tipo | @parent
                     <tr v-for="(descripcion, index) in categoria.descripciones">
                       <td>@{{descripcion.nombre}}</td>
                       <td>@{{descripcion.name}}</td>
+                      <td>
+                        <label class="control-label" style="cursor:pointer;" @click="descripcion.aparece_orden_compra=!descripcion.aparece_orden_compra">
+                          <i class="text-info far" :class="(descripcion.aparece_orden_compra)?'fa-check-square':'fa-square'">
+                          </i>
+                        </label>
+                      </td>
                       <td class="text-right">
                         <button class="btn btn-xs btn-success" data-toggle="tooltip" title="Editar" @click="editarDescripcion(descripcion, index)">
                           <i class="fas fa-pencil-alt"></i>
@@ -155,7 +162,8 @@ Nuevo Tipo | @parent
         nombre: '',
         name: '',
         no_alta_productos: false,
-        valor_ingles: false
+        valor_ingles: false,
+        aparece_orden_compra: false
       },
       cargando: false,
     },
@@ -175,7 +183,8 @@ Nuevo Tipo | @parent
           nombre: '',
           name: '',
           no_alta_productos: false,
-          valor_ingles: false
+          valor_ingles: false,
+          aparece_orden_compra: false
         };
       },
       editarDescripcion(descripcion, index) {

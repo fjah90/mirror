@@ -96,6 +96,13 @@
                     Añadir valor en inglés
                   </label>
                 </div>
+                  <div class="form-group">
+                  <label class="control-label" style="cursor:pointer;" @click="descripcion.aparece_orden_compra=!descripcion.aparece_orden_compra">
+                    <i class="text-info far" :class="(descripcion.aparece_orden_compra)?'fa-check-square':'fa-square'">
+                    </i>
+                    Mostrar en Orden de Compra
+                  </label>
+                </div>
                 </div>
               </div>
               <div class="row">
@@ -116,6 +123,7 @@
                         <th>Orden</th>
                         <th>Nombre</th>
                         <th>Name</th>
+                        <td>Mostrar en orden de compra</td>
                         <th></th>
                       </tr>
                     </thead>
@@ -146,7 +154,8 @@ const app = new Vue({
         name: '',
         ordenamiento: 0,
         no_alta_productos: false,
-        valor_ingles: false
+        valor_ingles: false,
+        aparece_orden_compra: false
       },
       dataTable: {},
       cargando: false,
@@ -204,11 +213,14 @@ const app = new Vue({
         var rows = [], row = [];
         this.categoria.descripciones.forEach(function(descripcion, index){
           if(descripcion.borrar==true) return true;
+          checked='<i class="text-info far fa-check-square"></i></label>';
+          unchecked='<i class="text-info far fa-square"></i></label>';
           row = [
             '<span class="fas fa-grip-vertical"></span> '+descripcion.ordenamiento,
             descripcion.nombre,
             descripcion.name
           ];
+          (descripcion.aparece_orden_compra?row.push(checked):row.push(unchecked));
           row.push([
             '<button class="btn btn-xs btn-success" title="Editar" data-index="'+index+'">',
               '<i class="fas fa-pencil-alt"></i>',
@@ -246,7 +258,7 @@ const app = new Vue({
 
         this.categoria.descripciones.push(this.descripcion);
         this.resetDataTables();
-        this.descripcion = {nombre: '', name: '', ordenamiento:0, no_alta_productos:false, valor_ingles:false};
+        this.descripcion = {nombre: '', name: '', ordenamiento:0, no_alta_productos:false, valor_ingles:false,aparece_orden_compra: false};
       },
       editarDescripcion(descripcion, index){
         descripcion.actualizar = true;
