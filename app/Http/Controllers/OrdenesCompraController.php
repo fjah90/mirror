@@ -197,6 +197,7 @@ class OrdenesCompraController extends Controller
         $mes = $meses[+$mes-1];
         $orden->fechaPDF = "$dia DE $mes DEL $ano";
         $vista = 'ordenes-compra.ordenPDF';
+        $nombre = "nombre";
       }
       else {
         $meses = ['JANUARY','FEBRUARY','MARCH','APRIL','MAY','JUNE','JULY',
@@ -204,9 +205,10 @@ class OrdenesCompraController extends Controller
         $mes = $meses[+$mes-1];
         $orden->fechaPDF = "$mes $dia, $ano";
         $vista = 'ordenes-compra.ordenInglesPDF';
+        $nombre = "name";
       }
 
-      $ordenPDF = PDF::loadView($vista, compact('orden'));
+      $ordenPDF = PDF::loadView($vista, compact('orden','nombre'));
       Storage::disk('public')->put($url, $ordenPDF->output());
       unset($orden->fechaPDF);
       unset($orden->firmaAbraham);
@@ -614,6 +616,7 @@ class OrdenesCompraController extends Controller
         $mes = $meses[+$mes - 1];
         $orden->fechaPDF = "$dia DE $mes DEL $ano";
         $vista = 'ordenes-compra.ordenPDF';
+        $nombre = 'nombre';
       } else {
         $meses = [
           'JANUARY', 'FEBRUARY', 'MARCH', 'APRIL', 'MAY', 'JUNE', 'JULY',
@@ -622,10 +625,11 @@ class OrdenesCompraController extends Controller
         $mes = $meses[+$mes - 1];
         $orden->fechaPDF = "$mes $dia, $ano";
         $vista = 'ordenes-compra.ordenInglesPDF';
+        $nombre = 'name';
       }
 
       // return view($vista, compact('orden'));
-      $ordenPDF = PDF::loadView($vista, compact('orden'));
+      $ordenPDF = PDF::loadView($vista, compact('orden','nombre'));
       Storage::disk('public')->put($url, $ordenPDF->output());
       unset($orden->fechaPDF);
       unset($orden->firmaAbraham);

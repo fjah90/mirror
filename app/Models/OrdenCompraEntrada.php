@@ -33,4 +33,7 @@ class OrdenCompraEntrada extends Model
       return $this->belongsTo('App\Models\Producto', 'producto_id', 'id');
     }
 
+    public function descripciones(){
+      return $this->hasMany('App\Models\OrdenCompraEntradaDescripcion', 'entrada_id', 'id');
+    }
 }
