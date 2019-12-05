@@ -100,7 +100,7 @@
                   <label class="control-label" style="cursor:pointer;" @click="descripcion.aparece_orden_compra=!descripcion.aparece_orden_compra">
                     <i class="text-info far" :class="(descripcion.aparece_orden_compra)?'fa-check-square':'fa-square'">
                     </i>
-                    Mostrar en Orden de Compra
+                    Aparece en Orden de Compra
                   </label>
                 </div>
                 </div>
@@ -123,7 +123,7 @@
                         <th>Orden</th>
                         <th>Nombre</th>
                         <th>Name</th>
-                        <td>Mostrar en orden de compra</td>
+                        <td>Aparece en Orden de Compra</td>
                         <th></th>
                       </tr>
                     </thead>
