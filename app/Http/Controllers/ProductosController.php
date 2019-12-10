@@ -252,7 +252,7 @@ class ProductosController extends Controller
                 $actual->delete();
             } else {
                 $nueva = $nuevas->pull($index);
-                $actual->update(['valor' => $nueva['valor']]);
+                $actual->update(['valor' => $nueva['valor'], 'valor_ingles' => $nueva['valor_ingles']]);
             }
         }
 
