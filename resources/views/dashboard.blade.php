@@ -597,7 +597,8 @@ Dashboard | @parent
       //variables gráfica cuentas por cobrar
       porCobrar_fecha_ini: '',
       porCobrar_fecha_fin: '',
-      porCobrar_data: {}
+      porCobrar_data: {},
+      graficaPorCobrar:null
     },
     mounted(){
       //Tabla cotizaciones
@@ -725,27 +726,30 @@ Dashboard | @parent
           }]
         ];
         graphData.series.push(serie1, serie2, serie3)
-        console.log(graphData);
-        new Chartist.Bar('.ct-chart', graphData,options, responsiveOptions);
+        console.log(typeof this.graficaPorCobrar)
+        if(!this.graficaPorCobrar){
+          this.graficaPorCobrar = new Chartist.Bar('.ct-chart', graphData,options, responsiveOptions);
+        }else{
+          this.graficaPorCobrar.update(graphData);
+        }  
       },
       cargar(){
-        axios.post('/prospectos/listado', {id: this.usuarioCargado})
+        axios.post('/dashboard/listado', {id: this.usuarioCargado})
         .then(({data}) => {
-          $("#oculto").append($("#fecha_ini_control"));
-          $("#oculto").append($("#fecha_fin_control"));
-          this.tabla.destroy();
-          this.prospectos = data.prospectos;
+          this.tablaCotizaciones.destroy();
+          this.tablaAceptadas.destroy();
+          this.tablaProximasActividades.destroy();
+          this.data=data.data;
           swal({
             title: "Exito",
             text: "Datos Cargados",
             type: "success"
           }).then(()=>{
-            this.tabla = $("#tabla").DataTable({
-              "dom": 'f<"#fechas_container.pull-left">ltip',
-              "order": [[ 4, "desc" ]]
-            });
-            $("#fechas_container").append($("#fecha_ini_control"));
-            $("#fechas_container").append($("#fecha_fin_control"));
+            this.tablaCotizaciones = this.tableFactory("#tablaCotizaciones", "cotizaciones");
+            this.tablaAceptadas = this.tableFactory("#tablaAceptadas", "aceptadas");
+            this.tablaProximasActividades=$("#tablaProximasActividades").DataTable();
+            porCobrar_data=this.data.cuentasCobrar;
+            this.grafica();
           });
         })
         .catch(({response}) => {
