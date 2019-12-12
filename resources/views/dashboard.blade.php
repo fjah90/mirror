@@ -500,14 +500,79 @@ Dashboard | @parent
       </div>
     </div>
   </div>
+  {{-- Total Facturado VS Cobrado --}}
+  <div class="row">
+      <div class="col-sm-12">
+          <div class="panel product-details">
+            <div class="panel-heading">
+              <h3 class="panel-title">Total Facturado VS Cobrado</h3>
+            </div>
+            <div class="panel-body">
+              <div class="row">
+                  <div class="col-md-6  pull-left">
+                      <dropdown id="porCobrar_fecha_ini_control" class="marg025">
+                          <div class="input-group">
+                            <div class="input-group-btn">
+                              <btn class="dropdown-toggle" style="background-color:#fff;">
+                                <i class="fas fa-calendar"></i>
+                              </btn>
+                            </div>
+                            <input class="form-control" type="text" placeholder="DD/MM/YYYY"
+                              v-model="porCobrar_fecha_ini" readonly
+                              style="width:120px;"
+                            />
+                          </div>
+                          <template slot="dropdown">
+                            <li>
+                              <date-picker :locale="locale" :today-btn="false"
+                              format="dd/MM/yyyy" :date-parser="dateParser"
+                              v-model="porCobrar_fecha_ini"/>
+                            </li>
+                          </template>
+                        </dropdown>
+                        <dropdown id="porCobrar_fecha_fin_control" class="marg025">
+                          <div class="input-group">
+                            <div class="input-group-btn">
+                              <btn class="dropdown-toggle" style="background-color:#fff;">
+                                <i class="fas fa-calendar"></i>
+                              </btn>
+                            </div>
+                            <input class="form-control" type="text" placeholder="DD/MM/YYYY"
+                              v-model="porCobrar_fecha_fin" readonly
+                              style="width:120px;"
+                            />
+                          </div>
+                          <template slot="dropdown">
+                            <li>
+                              <date-picker :locale="locale" :today-btn="false"
+                              format="dd/MM/yyyy" :date-parser="dateParser"
+                              v-model="porCobrar_fecha_fin"/>
+                            </li>
+                          </template>
+                        </dropdown>
+                        <div class="marg025 btn-group">
+                          <button type="button" class="btn btn-primary">Cargar</button>
+                        </div>    
+                  </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-12">
+                    <div class="ct-chart ct-perfect-fourth" id="porCobrarGrafica">
+                    </div>
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>  
+  </div>
 </section>
 <!-- /.content -->
 @stop
 
 {{-- footer_scripts --}}
 @section('footer_scripts')
-<script src="{{ URL::asset('js/plugins/datepicker/datepicker.min.js') }}" ></script>
-<link href="{{ URL::asset('css/datepicker.min.css') }}" rel="stylesheet" type="text/css">
+<script src="{{ URL::asset('js/plugins/chartist/chartist.min.js') }}" ></script>
+<link href="{{ URL::asset('css/chartist.min.css') }}" rel="stylesheet" type="text/css">
 <script>
   const app = new Vue({
     el: '#content',
@@ -519,14 +584,20 @@ Dashboard | @parent
       tablaProximasActividades:{},
       data: {!! json_encode($data) !!},
       locale: localeES,
+      //variables tabla cotizaciones
       cotizaciones_fecha_ini: '',
       cotizaciones_fecha_fin: '',
       valor_cotizaciones_clientes:'Cliente',
       valor_cotizaciones_proyectos:'Proyecto',
+      //variables tabla cotizaciones aceptadas
       aceptadas_fecha_ini: '',
       aceptadas_fecha_fin: '',
       valor_aceptadas_clientes:'Cliente',
-      valor_aceptadas_proyectos:'Proyecto'
+      valor_aceptadas_proyectos:'Proyecto',
+      //variables gráfica cuentas por cobrar
+      porCobrar_fecha_ini: '',
+      porCobrar_fecha_fin: '',
+      porCobrar_data: {}
     },
     mounted(){
       //Tabla cotizaciones
@@ -534,6 +605,8 @@ Dashboard | @parent
       this.tablaAceptadas = this.tableFactory("#tablaAceptadas", "aceptadas");
       this.tablaProximasActividades=$("#tablaProximasActividades").DataTable();
       var vue = this;
+      porCobrar_data=vue.data.cuentasCobrar;
+      this.grafica();
       //Filtrado para rango de fechas
       $.fn.dataTableExt.afnFiltering.push(
         function( settings, data, dataIndex ) {
@@ -558,7 +631,8 @@ Dashboard | @parent
           return false;
         }
       );
-      //Tabla aceptadas
+      //grafica cuentas cobrar
+
       
     },
     watch: {
@@ -624,6 +698,35 @@ Dashboard | @parent
         $("#"+prefix+"_fechas_container").append(baseClientes);
         $("#"+prefix+"_fechas_container").append(baseProyectos);
         return newTable;
+      },
+      grafica(){
+        var graphData={labels:[], series:[]};
+        var serie1=[]
+        var serie2=[]
+        var serie3=[]
+        porCobrar_data.forEach(element => {
+          graphData['labels'].push(element.cotizacion_id)
+          serie1.push(element.total);
+          serie2.push(element.facturado);
+          serie3.push(element.pagado);
+        });
+        var options = {
+          seriesBarDistance: 10
+        };
+
+        var responsiveOptions = [
+          ['screen and (max-width: 640px)', {
+            seriesBarDistance: 5,
+            axisX: {
+              labelInterpolationFnc: function (value) {
+                return value[0];
+              }
+            }
+          }]
+        ];
+        graphData.series.push(serie1, serie2, serie3)
+        console.log(graphData);
+        new Chartist.Bar('.ct-chart', graphData,options, responsiveOptions);
       },
       cargar(){
         axios.post('/prospectos/listado', {id: this.usuarioCargado})
