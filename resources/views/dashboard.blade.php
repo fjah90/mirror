@@ -296,7 +296,7 @@ Dashboard | @parent
           <h3 class="panel-title">Ultimas Cotizaciones</h3>
         </div>
         <div class="panel-body">
-            <div id="oculto" class="hide">
+            <div id="oculto_cotizaciones" class="hide">
                 <dropdown id="cotizaciones_fecha_ini_control" class="marg025">
                   <div class="input-group">
                     <div class="input-group-btn">
@@ -339,15 +339,17 @@ Dashboard | @parent
                 </dropdown>
                 <div class="marg025 btn-group" id="cotizaciones_clientes" >
                     <select name="proxDias" class="form-control" size="1" v-model="valor_cotizaciones_clientes" id="select_cotizaciones_clientes">
-                      <option disabled selected hidden>Cliente</option>
-                      <option value=""></option>
+                    <option v-for="(option, index) in datos_select_cotizaciones_clientes" v-bind:value="option" >
+                        @{{ option }}
+                      </option>
                       
                     </select>
                 </div>
                 <div class="marg025 btn-group" id="cotizaciones_proyectos" >
                     <select name="proxDias" class="form-control" size="1" v-model="valor_cotizaciones_proyectos" id="select_cotizaciones_proyectos">
-                      <option disabled selected hidden>Proyecto</option>
-                      <option value=""></option>
+                      <option v-for="option in datos_select_cotizaciones_proyectos" v-bind:value="option">
+                        @{{ option }}
+                      </option>
                       
                     </select>
                 </div>
@@ -403,7 +405,7 @@ Dashboard | @parent
           <h3 class="panel-title">Ultimas Cotizaciones Aceptadas</h3>
         </div>
         <div class="panel-body">
-            <div id="oculto" class="hide">
+            <div id="oculto_aceptadas" class="hide">
                 <dropdown id="aceptadas_fecha_ini_control" class="marg025">
                   <div class="input-group">
                     <div class="input-group-btn">
@@ -446,15 +448,17 @@ Dashboard | @parent
                 </dropdown>
                 <div class="marg025 btn-group" id="aceptadas_clientes" >
                     <select name="proxDias" class="form-control" size="1" v-model="valor_aceptadas_clientes" id="select_aceptadas_clientes">
-                      <option disabled selected hidden>Cliente</option>
-                      <option value=""></option>
+                      <option v-for="(option, index) in datos_select_aceptadas_clientes" v-bind:value="option" >
+                        @{{ option }}
+                      </option>
                       
                     </select>
                 </div>
                 <div class="marg025 btn-group" id="aceptadas_proyectos" >
                     <select name="proxDias" class="form-control" size="1" v-model="valor_aceptadas_proyectos" id="select_aceptadas_proyectos">
-                      <option disabled selected hidden>Proyecto</option>
-                      <option value=""></option>
+                      <option v-for="(option, index) in datos_select_aceptadas_proyectos" v-bind:value="option" >
+                        @{{ option }}
+                      </option>
                       
                     </select>
                 </div>
@@ -508,7 +512,7 @@ Dashboard | @parent
               <h3 class="panel-title">Total Facturado VS Cobrado</h3>
             </div>
             <div class="panel-body">
-              <div class="row">
+              <div class="row hide">
                   <div class="col-md-6  pull-left">
                       <dropdown id="porCobrar_fecha_ini_control" class="marg025">
                           <div class="input-group">
@@ -557,7 +561,7 @@ Dashboard | @parent
               </div>
               <div class="row">
                 <div class="col-lg-12">
-                    <div class="ct-chart ct-perfect-fourth" id="porCobrarGrafica">
+                    <canvas  id="porCobrarGrafica">
                     </div>
                 </div>
               </div>
@@ -571,8 +575,8 @@ Dashboard | @parent
 
 {{-- footer_scripts --}}
 @section('footer_scripts')
-<script src="{{ URL::asset('js/plugins/chartist/chartist.min.js') }}" ></script>
-<link href="{{ URL::asset('css/chartist.min.css') }}" rel="stylesheet" type="text/css">
+<script src="{{ URL::asset('js/plugins/chartist/Chart.min.js') }}" ></script>
+<link href="{{ URL::asset('css/Chart.min.css') }}" rel="stylesheet" type="text/css">
 <script>
   const app = new Vue({
     el: '#content',
@@ -589,11 +593,15 @@ Dashboard | @parent
       cotizaciones_fecha_fin: '',
       valor_cotizaciones_clientes:'Cliente',
       valor_cotizaciones_proyectos:'Proyecto',
+      datos_select_cotizaciones_clientes:[],
+      datos_select_cotizaciones_proyectos:[],
       //variables tabla cotizaciones aceptadas
       aceptadas_fecha_ini: '',
       aceptadas_fecha_fin: '',
       valor_aceptadas_clientes:'Cliente',
       valor_aceptadas_proyectos:'Proyecto',
+      datos_select_aceptadas_clientes:[],
+      datos_select_aceptadas_proyectos:[],
       //variables gráfica cuentas por cobrar
       porCobrar_fecha_ini: '',
       porCobrar_fecha_fin: '',
@@ -638,7 +646,7 @@ Dashboard | @parent
     },
     watch: {
       cotizaciones_fecha_ini: function (val) {
-        console.log('yes');
+        
         this.tablaCotizaciones.draw();
       },
       cotizaciones_fecha_fin: function (val) {
@@ -675,33 +683,57 @@ Dashboard | @parent
       tableFactory(table, prefix){
         var baseClientes;
         var baseProyectos;
+        var clientes=[]
+        var proyectos=[]
         newTable=$(table).DataTable({
           "dom": 'f<"#'+prefix+'_fechas_container.pull-left">ltip',
           initComplete: function () {
-            //Crear y llenar los select para clientes y proyectos
-            baseClientes=$("#"+prefix+"_clientes").clone();
-            var selectClientes= baseClientes.children('#select_'+prefix+'_clientes');
+            
+            //Crear y llenar los select para clientes 
+            clientes.push('Clientes')
+            clientes.push('');
             this.api().column(0).data().sort().unique().each(function(d,j){   
-              option='<option value="'+d+'">'+d+'</option>',     
-              selectClientes.append((option));
+              clientes.push(d);
             });
-            baseProyectos=$("#"+prefix+"_proyectos").clone();
-            var selectProyectos= baseProyectos.children('#select_'+prefix+'_proyectos');
-            this.api().column(1).data().sort().unique().each(function(d,j){   
-              option='<option value="'+d+'">'+d+'</option>',     
-              selectProyectos.append((option));
+            //Crear y llenar los select para clientes 
+            proyectos.push('Proyectos')
+            proyectos.push('');
+            this.api().column(0).data().sort().unique().each(function(d,j){   
+              proyectos.push(d);
             });
           }
         });
         //Agregarcontroles de fecha y selects
-        $("#"+prefix+"_fechas_container").append($("#"+prefix+"_fecha_ini_control").clone());
-        $("#"+prefix+"_fechas_container").append($("#"+prefix+"_fecha_fin_control").clone());
-        $("#"+prefix+"_fechas_container").append(baseClientes);
-        $("#"+prefix+"_fechas_container").append(baseProyectos);
+        switch (prefix) {
+          case 'cotizaciones':
+            this.datos_select_cotizaciones_clientes=[...clientes]
+            this.datos_select_cotizaciones_proyectos=[...proyectos]
+          break;
+          case 'aceptadas':
+            this.datos_select_aceptadas_clientes=[...clientes]
+            this.datos_select_aceptadas_proyectos=[...proyectos]
+          break;
+        }
+        $("#"+prefix+"_fechas_container").append($("#"+prefix+"_fecha_ini_control"));
+        $("#"+prefix+"_fechas_container").append($("#"+prefix+"_fecha_fin_control"));
+        $("#"+prefix+"_fechas_container").append($("#"+prefix+"_clientes"));
+        $("#"+prefix+"_fechas_container").append($("#"+prefix+"_proyectos"));
         return newTable;
       },
+      restarControls(){
+        $("#oculto_cotizaciones").append($("#cotizaciones_fecha_ini_control"));
+        $("#oculto_cotizaciones").append($("#cotizaciones_fecha_fin_control"));
+        $("#oculto_cotizaciones").append($("#cotizaciones_clientes"));
+        $("#oculto_cotizaciones").append($("#cotizaciones_proyectos"));
+
+        $("#oculto_aceptadas").append($("#aceptadas_fecha_ini_control"));
+        $("#oculto_aceptadas").append($("#aceptadas_fecha_fin_control"));
+        $("#oculto_aceptadas").append($("#aceptadas_clientes"));
+        $("#oculto_aceptadas").append($("#aceptadas_proyectos"));
+      },
       grafica(){
-        var graphData={labels:[], series:[]};
+        var ctx = $('#porCobrarGrafica')[0].getContext('2d');
+        var graphData={labels:[], datasets:[]};
         var serie1=[]
         var serie2=[]
         var serie3=[]
@@ -711,31 +743,67 @@ Dashboard | @parent
           serie2.push(element.facturado);
           serie3.push(element.pagado);
         });
-        var options = {
-          seriesBarDistance: 10
-        };
-
-        var responsiveOptions = [
-          ['screen and (max-width: 640px)', {
-            seriesBarDistance: 5,
-            axisX: {
-              labelInterpolationFnc: function (value) {
-                return value[0];
-              }
-            }
-          }]
-        ];
-        graphData.series.push(serie1, serie2, serie3)
-        console.log(typeof this.graficaPorCobrar)
+        console.log(serie1)
+        graphData.datasets=[
+          {
+            label:'Total',
+            backgroundColor: 'rgba(255, 99, 132, 0.2)',
+            borderColor:'rgba(255, 99, 132, 1)',
+            borderWidth: 1,
+            data:[...serie1]
+          },
+          {
+            label:'Facturado',
+            backgroundColor: 'rgba(54, 162, 235, 0.2)',
+            borderColor:  'rgba(54, 162, 235, 1)',
+            borderWidth: 1,
+            data:[...serie2]
+          },
+          {
+            label:'Pagado',
+            backgroundColor: 'rgba(255, 206, 86, 0.2)',
+            borderColor: 'rgba(255, 206, 86, 1)',
+            borderWidth: 1,
+            data:[...serie3]
+          },
+          ]
         if(!this.graficaPorCobrar){
-          this.graficaPorCobrar = new Chartist.Bar('.ct-chart', graphData,options, responsiveOptions);
+          console.log('create')
+          this.graficaPorCobrar = new Chart(ctx,{
+            type:'bar', data:graphData,
+            options: {
+              responsive: true,
+              legend: {
+                position: 'top',
+                },
+              title: {
+                display: true,
+                text: 'Chart.js Bar Chart'
+              },
+              scales: {
+                yAxes: [{
+                  ticks: {
+                    beginAtZero: true,
+                    callback: function(value, index, values) {
+                      if(parseInt(value) >= 1000){
+                        return '$' + value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                      } else {
+                        return '$' + value;
+                      }
+                    }
+                  }
+                }]
+              }}});
         }else{
+          console.log('update')
+          this.graficaPorCobrar.data=graphData;
           this.graficaPorCobrar.update(graphData);
         }  
       },
       cargar(){
         axios.post('/dashboard/listado', {id: this.usuarioCargado})
         .then(({data}) => {
+          this.restarControls();
           this.tablaCotizaciones.destroy();
           this.tablaAceptadas.destroy();
           this.tablaProximasActividades.destroy();
