@@ -10,6 +10,7 @@ use App\Models\ProspectoCotizacion;
 use App\Models\ProyectoAprobado;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
@@ -61,6 +62,10 @@ class DashboardController extends Controller
             ->select('cuentas_cobrar.total', 'cuentas_cobrar.facturado', 'cuentas_cobrar.pagado', 'cuentas_cobrar.pendiente', 'cuentas_cobrar.cotizacion_id')
             ->whereIn('prospectos_cotizaciones.prospecto_id', $prospectosId)
             ->get();
+        $totalesCuentas = CuentaCobrar::leftjoin('prospectos_cotizaciones', 'cuentas_cobrar.cotizacion_id', '=', 'prospectos_cotizaciones.id')
+            ->select(DB::raw('SUM(cuentas_cobrar.total) as "total", SUM(cuentas_cobrar.facturado) as "facturado", SUM(cuentas_cobrar.pagado) as "pagado"'))
+            ->whereIn('prospectos_cotizaciones.prospecto_id', $prospectosId)
+            ->get();
 
         $data = [
             'clientes'            => $clientes,
@@ -72,6 +77,7 @@ class DashboardController extends Controller
             'proximasActividades' => $proximasActividades,
             'usuarios'            => $usuarios,
             'cuentasCobrar'       => $cuentasCobrar,
+            'totalCuentas'        => $totalesCuentas,
         ];
 
         return view('dashboard', compact('data'));
@@ -112,6 +118,11 @@ class DashboardController extends Controller
             ->whereIn('prospectos_cotizaciones.prospecto_id', $prospectosId)
             ->get();
 
+        $totalesCuentas = CuentaCobrar::leftjoin('prospectos_cotizaciones', 'cuentas_cobrar.cotizacion_id', '=', 'prospectos_cotizaciones.id')
+            ->select(DB::raw('SUM(cuentas_cobrar.total) as "total", SUM(cuentas_cobrar.facturado) as "facturado", SUM(cuentas_cobrar.pagado) as "pagado"'))
+            ->whereIn('prospectos_cotizaciones.prospecto_id', $prospectosId)
+            ->get();
+
         $data = [
             'clientes'            => $clientes,
             'prospectos'          => $prospectos,
@@ -122,6 +133,7 @@ class DashboardController extends Controller
             'proximasActividades' => $proximasActividades,
             'usuarios'            => $usuarios,
             'cuentasCobrar'       => $cuentasCobrar,
+            'totalCuentas'        => $totalesCuentas,
         ];
 
         return response()->json(['success' => true, "error" => false, 'data' => $data], 200);
