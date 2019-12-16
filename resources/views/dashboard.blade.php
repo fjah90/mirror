@@ -171,7 +171,6 @@ Dashboard | @parent
             <label class="col-md-3 control-label" for="example-select">Datos de: </label>
             <div class="col-md-9">
               <select name="" id="selectUsuario" class="form-control" @change="cargar()" v-model="usuarioCargado">
-                <option value="todos">Todos</option>
                 @foreach($data['usuarios'] as $usuario)
                   <option value="{{$usuario->id}}">{{$usuario->name}}</option>
                 @endforeach
@@ -420,7 +419,7 @@ Dashboard | @parent
                       <td>@{{cotizacion.prospecto_nombre}}</td>
                       <td>@{{cotizacion.id}}</td>
                       <td>@{{cotizacion.fecha_formated}}</td>
-                      <td>@{{cotizacion.total | formatoMoneda}}</td>
+                      <td>@{{cotizacion.total | formatoMoneda}} @{{cotizacion.moneda|formatoCurrency}}</td>
                       <td class="text-warning">
                           <a title="Ver" :href="'/prospectos/'+cotizacion.prospecto_id" class="btn btn-info">
                             Ver <i class="far fa-eye"></i>
@@ -529,7 +528,7 @@ Dashboard | @parent
                       <td>@{{cotizacion.prospecto_nombre}}</td>
                       <td>@{{cotizacion.id}}</td>
                       <td>@{{cotizacion.fecha_formated}}</td>
-                      <td>@{{cotizacion.total | formatoMoneda}}</td>
+                      <td>@{{cotizacion.total | formatoMoneda}} @{{cotizacion.moneda| formatoCurrency}}</td>
                       <td class="text-warning">
                           <a title="Ver" :href="'/prospectos/'+cotizacion.prospecto_id" class="btn btn-info">
                             Ver <i class="far fa-eye"></i>
@@ -606,15 +605,15 @@ Dashboard | @parent
                   </div>
               </div>
               <div class="row">
-                <div class="col-lg-12">
+                <div class="col-lg-12" v-for="(row, index) in data.totalCuentas">
                   <div class="col-sm-4">
-                    <h3><strong>Total: </strong>@{{data.totalCuentas[0].total|formatoMoneda}}</h3>
+                    <h3><strong>Total: </strong>@{{row.total|formatoMoneda}} @{{row.moneda| formatoCurrency}}</h3>
                   </div>
                   <div class="col-sm-4">
-                    <h3><strong>Facturado: </strong>@{{data.totalCuentas[0].facturado|formatoMoneda}}</h3>
+                    <h3><strong>Facturado: </strong>@{{row.facturado|formatoMoneda}} @{{row.moneda| formatoCurrency}}</h3>
                   </div>
                   <div class="col-sm-4">
-                    <h3><strong>Pagado: </strong>@{{data.totalCuentas[0].pagado|formatoMoneda}}</h3>
+                    <h3><strong>Pagado: </strong>@{{row.pagado|formatoMoneda}} @{{row.moneda| formatoCurrency}}</h3>
                   </div>
                 </div>
                 <div class="col-lg-12">
@@ -759,6 +758,9 @@ Dashboard | @parent
     formatoMoneda(numero){
       return accounting.formatMoney(numero, "$", 2);
     },
+    formatoCurrency(valor){
+      return valor=='Dolares'?'USD':'MXN';
+    }
   },
     methods: {
       dateParser(value){
@@ -914,15 +916,15 @@ Dashboard | @parent
             
             this.grafica();
           });
+        })
+        .catch(({response}) => {
+          console.error(response);
+          swal({
+            title: "Error",
+            text: response.data.message || "Ocurrio un error inesperado, intente mas tarde",
+            type: "error"
+          });
         });
-        // .catch(({response}) => {
-        //   console.error(response);
-        //   swal({
-        //     title: "Error",
-        //     text: response.data.message || "Ocurrio un error inesperado, intente mas tarde",
-        //     type: "error"
-        //   });
-        // });
       }
     }})
 </script>

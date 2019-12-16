@@ -59,12 +59,13 @@ class DashboardController extends Controller
         $usuarios = User::select('id', 'name')->get();
 
         $cuentasCobrar = CuentaCobrar::leftjoin('prospectos_cotizaciones', 'cuentas_cobrar.cotizacion_id', '=', 'prospectos_cotizaciones.id')
-            ->select('cuentas_cobrar.total', 'cuentas_cobrar.facturado', 'cuentas_cobrar.pagado', 'cuentas_cobrar.pendiente', 'cuentas_cobrar.cotizacion_id')
+            ->select('cuentas_cobrar.total', 'cuentas_cobrar.facturado', 'cuentas_cobrar.pagado', 'cuentas_cobrar.pendiente', 'cuentas_cobrar.cotizacion_id', 'prospectos_cotizaciones.moneda')
             ->whereIn('prospectos_cotizaciones.prospecto_id', $prospectosId)
             ->get();
         $totalesCuentas = CuentaCobrar::leftjoin('prospectos_cotizaciones', 'cuentas_cobrar.cotizacion_id', '=', 'prospectos_cotizaciones.id')
-            ->select(DB::raw('SUM(cuentas_cobrar.total) as "total", SUM(cuentas_cobrar.facturado) as "facturado", SUM(cuentas_cobrar.pagado) as "pagado"'))
+            ->select(DB::raw('SUM(cuentas_cobrar.total) as "total", SUM(cuentas_cobrar.facturado) as "facturado", SUM(cuentas_cobrar.pagado) as "pagado", prospectos_cotizaciones.moneda as "moneda"'))
             ->whereIn('prospectos_cotizaciones.prospecto_id', $prospectosId)
+            ->groupBy('prospectos_cotizaciones.moneda')
             ->get();
 
         $data = [
@@ -114,7 +115,7 @@ class DashboardController extends Controller
         $usuarios = User::select('id', 'name')->get();
 
         $cuentasCobrar = CuentaCobrar::leftjoin('prospectos_cotizaciones', 'cuentas_cobrar.cotizacion_id', '=', 'prospectos_cotizaciones.id')
-            ->select('cuentas_cobrar.total', 'cuentas_cobrar.facturado', 'cuentas_cobrar.pagado', 'cuentas_cobrar.pendiente', 'cuentas_cobrar.cotizacion_id')
+            ->select('cuentas_cobrar.total', 'cuentas_cobrar.facturado', 'cuentas_cobrar.pagado', 'cuentas_cobrar.pendiente', 'cuentas_cobrar.cotizacion_id', 'prospectos_cotizaciones.moneda')
             ->whereIn('prospectos_cotizaciones.prospecto_id', $prospectosId)
             ->get();
 
