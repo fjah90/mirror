@@ -67,6 +67,7 @@
                         <th>Nombre</th>
                         <th>Name</th>
                         <th>Valor</th>
+                        <th>Valor Ingles</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -75,6 +76,7 @@
                         <td>{{$descripcion->descripcionNombre->nombre}}</td>
                         <td>{{$descripcion->descripcionNombre->name}}</td>
                         <td>{{$descripcion->valor}}</td>
+                        <td>{{$descripcion->valor_ingles}}</td>
                       </tr>
                       @endforeach
                     </tbody>
