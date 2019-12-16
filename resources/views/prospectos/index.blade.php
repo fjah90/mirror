@@ -27,7 +27,7 @@
             <div class="p-10">
               Lista de Proyectos
               @role('Administrador')
-                de 
+                de
                 <select class="form-control" @change="cargar()" v-model="usuarioCargado" style="width:auto;display:inline-block;">
                   <option value="Todos">Todos</option>
                   @foreach($usuarios as $usuario)
@@ -172,7 +172,7 @@ const app = new Vue({
           var min  = vue.fecha_ini;
           var max  = vue.fecha_fin;
           var fecha = data[4] || 0; // Our date column in the table
-          
+
           var startDate   = moment(min, "DD/MM/YYYY");
           var endDate     = moment(max, "DD/MM/YYYY");
           var diffDate = moment(fecha, "YYYY-MM-DD");
@@ -180,7 +180,7 @@ const app = new Vue({
           if (min=="" && max=="") return true;
           if (max=="" && diffDate.isSameOrAfter(startDate)) return true;
           if (min=="" && diffDate.isSameOrBefore(endDate)) return true;
-          if (diffDate.isBetween(startDate, endDate, null, '[]')) return true; 
+          if (diffDate.isBetween(startDate, endDate, null, '[]')) return true;
           return false;
         }
       );

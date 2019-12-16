@@ -86,6 +86,7 @@ Route::middleware('auth')->group(function () {
     
     
     Route::post('/prospectos/listado', 'ProspectosController@listado');
+    Route::post('/dashboard/listado', 'DashboardController@listado');
     Route::post('/proyectos-aprobados/listado', 'ProyectosAprobadosController@listado');
   });
 
