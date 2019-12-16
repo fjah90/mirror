@@ -850,7 +850,6 @@ Dashboard | @parent
           },
           ]
         if(!this.graficaPorCobrar){
-          console.log('create')
           this.graficaPorCobrar = new Chart(ctx,{
             type:'bar', data:graphData,
             options: {
@@ -861,6 +860,18 @@ Dashboard | @parent
               title: {
                 display: true,
                 text: 'Montos Cuentas por Cobrar'
+              },
+              tooltips: {
+                  callbacks: {
+                      label: function(tooltipItem, data) {
+                          var value=tooltipItem.yLabel || '';
+                          if(parseInt(value) >= 1000){
+                            return '$' + value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                          } else {
+                            return '$' + value;
+                          }
+                      }
+                  }
               },
               scales: {
                 yAxes: [{
