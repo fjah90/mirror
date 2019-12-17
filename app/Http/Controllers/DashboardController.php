@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cliente;
 use App\Models\CuentaCobrar;
 use App\Models\OrdenCompra;
 use App\Models\OrdenProceso;
+use App\Models\Prospecto;
 use App\Models\ProspectoActividad;
 use App\Models\ProspectoCotizacion;
 use App\Models\ProyectoAprobado;
@@ -86,43 +88,71 @@ class DashboardController extends Controller
 
     public function listado(Request $request)
     {
-        $usuario            = User::find($request->id);
-        $clientesId         = $usuario->clientes()->get()->pluck('id');
-        $clientes           = sizeof($clientesId);
-        $proyectosAprobados = ProyectoAprobado::whereIn('cliente_id', $clientesId)->get()->count();
-        $prospectosId       = $usuario->prospectos()->get()->pluck('id');
-        $prospectos         = sizeof($prospectosId);
-        $ordenesProceso     = OrdenProceso::whereIn('orden_compra_id', OrdenCompra::whereIn('cliente_id', $clientesId)->pluck('id'))->get()->count();
+        $usuario            = null;
+        $clientesId         = null;
+        $clientes           = null;
+        $proyectosAprobados = null;
+        $prospectosId       = null;
+        $prospectos         = null;
+        $ordenesProceso     = null;
+
+        if ($request->id != "todos") {
+            $usuario            = User::find($request->id);
+            $clientesId         = $usuario->clientes()->get()->pluck('id');
+            $clientes           = sizeof($clientesId);
+            $proyectosAprobados = ProyectoAprobado::whereIn('cliente_id', $clientesId)->get()->count();
+            $prospectosId       = $usuario->prospectos()->get()->pluck('id');
+            $prospectos         = sizeof($prospectosId);
+            $ordenesProceso     = OrdenProceso::whereIn('orden_compra_id', OrdenCompra::whereIn('cliente_id', $clientesId)->pluck('id'))->get()->count();
+        } else {
+            $clientesId         = Cliente::get();
+            $clientes           = sizeof($clientesId);
+            $proyectosAprobados = ProyectoAprobado::get()->count();
+            $prospectosId       = Prospecto::get()->pluck('id');
+            $prospectos         = sizeof($prospectosId);
+            $ordenesProceso     = OrdenProceso::get()->count();
+        }
 
         $cotizaciones = ProspectoCotizacion::leftjoin('prospectos', 'prospectos_cotizaciones.prospecto_id', '=', 'prospectos.id')
             ->leftjoin('clientes', 'prospectos.cliente_id', '=', 'clientes.id')
-            ->select('prospectos_cotizaciones.*', 'prospectos.nombre as prospecto_nombre', 'prospectos.id as prospecto_id', 'clientes.nombre as cliente_nombre')
-            ->whereIn('prospecto_id', $prospectosId)->orderBy('fecha', 'desc')->get();
+            ->select('prospectos_cotizaciones.*', 'prospectos.nombre as prospecto_nombre', 'prospectos.id as prospecto_id', 'clientes.nombre as cliente_nombre');
+        if ($request->id != "todos") {
+            $cotizaciones->whereIn('prospecto_id', $prospectosId);
+        }
+        $cotizaciones = $cotizaciones->orderBy('fecha', 'desc')->get();
 
         $cotizacionesAceptadas = ProspectoCotizacion::leftjoin('prospectos', 'prospectos_cotizaciones.prospecto_id', '=', 'prospectos.id')
             ->leftjoin('clientes', 'prospectos.cliente_id', '=', 'clientes.id')
-            ->select('prospectos_cotizaciones.*', 'prospectos.nombre as prospecto_nombre', 'prospectos.id as prospecto_id', 'clientes.nombre as cliente_nombre')
-            ->whereIn('prospecto_id', $prospectosId)
-            ->where('aceptada', true)
-            ->orderBy('fecha', 'desc')->get();
+            ->select('prospectos_cotizaciones.*', 'prospectos.nombre as prospecto_nombre', 'prospectos.id as prospecto_id', 'clientes.nombre as cliente_nombre');
+        if ($request->id != "todos") {
+            $cotizacionesAceptadas->whereIn('prospecto_id', $prospectosId);
+        }
+        $cotizacionesAceptadas = $cotizacionesAceptadas->where('aceptada', true)->orderBy('fecha', 'desc')->get();
 
         $proximasActividades = ProspectoActividad::leftjoin('prospectos', 'prospectos_actividades.prospecto_id', '=', 'prospectos.id')
             ->leftjoin('clientes', 'prospectos.cliente_id', '=', 'clientes.id')
             ->leftjoin('prospectos_tipos_actividades', 'prospectos_actividades.tipo_id', '=', 'prospectos_tipos_actividades.id')
-            ->select('prospectos_actividades.*', 'prospectos.nombre as prospecto_nombre', 'prospectos.id as prospecto_id', 'clientes.nombre as cliente_nombre', 'prospectos_tipos_actividades.nombre as tipo_actividad')
-            ->whereIn('prospecto_id', $prospectosId)->where('realizada', false)->orderBy('fecha', 'desc')->get();
+            ->select('prospectos_actividades.*', 'prospectos.nombre as prospecto_nombre', 'prospectos.id as prospecto_id', 'clientes.nombre as cliente_nombre', 'prospectos_tipos_actividades.nombre as tipo_actividad');
+        if ($request->id != "todos") {
+            $proximasActividades->whereIn('prospecto_id', $prospectosId);
+        }
+        $proximasActividades = $proximasActividades->where('realizada', false)->orderBy('fecha', 'desc')->get();
 
         $usuarios = User::select('id', 'name')->get();
 
         $cuentasCobrar = CuentaCobrar::leftjoin('prospectos_cotizaciones', 'cuentas_cobrar.cotizacion_id', '=', 'prospectos_cotizaciones.id')
-            ->select('cuentas_cobrar.total', 'cuentas_cobrar.facturado', 'cuentas_cobrar.pagado', 'cuentas_cobrar.pendiente', 'cuentas_cobrar.cotizacion_id', 'prospectos_cotizaciones.moneda')
-            ->whereIn('prospectos_cotizaciones.prospecto_id', $prospectosId)
-            ->get();
+            ->select('cuentas_cobrar.total', 'cuentas_cobrar.facturado', 'cuentas_cobrar.pagado', 'cuentas_cobrar.pendiente', 'cuentas_cobrar.cotizacion_id', 'prospectos_cotizaciones.moneda');
+        if ($request->id != "todos") {
+            $cuentasCobrar->whereIn('prospectos_cotizaciones.prospecto_id', $prospectosId);
+        }
+        $cuentasCobrar = $cuentasCobrar->get();
 
         $totalesCuentas = CuentaCobrar::leftjoin('prospectos_cotizaciones', 'cuentas_cobrar.cotizacion_id', '=', 'prospectos_cotizaciones.id')
-            ->select(DB::raw('SUM(cuentas_cobrar.total) as "total", SUM(cuentas_cobrar.facturado) as "facturado", SUM(cuentas_cobrar.pagado) as "pagado"'))
-            ->whereIn('prospectos_cotizaciones.prospecto_id', $prospectosId)
-            ->get();
+            ->select(DB::raw('SUM(cuentas_cobrar.total) as "total", SUM(cuentas_cobrar.facturado) as "facturado", SUM(cuentas_cobrar.pagado) as "pagado", prospectos_cotizaciones.moneda as "moneda"'));
+        if ($request->id != "todos") {
+            $totalesCuentas->whereIn('prospectos_cotizaciones.prospecto_id', $prospectosId);
+        }
+        $totalesCuentas = $totalesCuentas->groupBy('prospectos_cotizaciones.moneda')->get();
 
         $data = [
             'clientes'            => $clientes,

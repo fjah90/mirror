@@ -171,6 +171,7 @@ Dashboard | @parent
             <label class="col-md-3 control-label" for="example-select">Datos de: </label>
             <div class="col-md-9">
               <select name="" id="selectUsuario" class="form-control" @change="cargar()" v-model="usuarioCargado">
+                <option value="todos">Todos</option>
                 @foreach($data['usuarios'] as $usuario)
                   <option value="{{$usuario->id}}">{{$usuario->name}}</option>
                 @endforeach
