@@ -422,7 +422,7 @@ Dashboard | @parent
                       <td>@{{cotizacion.fecha_formated}}</td>
                       <td>@{{cotizacion.total | formatoMoneda}} @{{cotizacion.moneda|formatoCurrency}}</td>
                       <td class="text-warning">
-                          <a title="Ver" :href="'/prospectos/'+cotizacion.prospecto_id" class="btn btn-info">
+                          <a title="Ver" :href="'/prospectos/'+cotizacion.prospecto_id+'/cotizar'" class="btn btn-info">
                             Ver <i class="far fa-eye"></i>
                           </a>
                       </td>
@@ -531,7 +531,7 @@ Dashboard | @parent
                       <td>@{{cotizacion.fecha_formated}}</td>
                       <td>@{{cotizacion.total | formatoMoneda}} @{{cotizacion.moneda| formatoCurrency}}</td>
                       <td class="text-warning">
-                          <a title="Ver" :href="'/prospectos/'+cotizacion.prospecto_id" class="btn btn-info">
+                          <a title="Ver" :href="'/proyectos-aprobados/'+cotizacion.id_aprobado+'/ordenes-compra'" class="btn btn-info">
                             Ver <i class="far fa-eye"></i>
                           </a>
                       </td>
