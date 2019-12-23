@@ -828,7 +828,6 @@ Dashboard | @parent
           serie2.push(element.facturado);
           serie3.push(element.pagado);
         });
-        console.log(this.porCobrar_data)
         graphData.datasets=[
           {
             label:'Total',
