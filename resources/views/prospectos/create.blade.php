@@ -12,11 +12,31 @@
   font-size: 10px;
   cursor: pointer;
 }
-.zandgar__wizard .zandgar__step {
-    display: none;
+/* esconder los pasos: */
+.tab {
+  display: none;
 }
-.zandgar__wizard .zandgar__step.zandgar__step__active {
-    display: block;
+
+/* hacer los indicadores para los pasos */
+.step {
+  height: 15px;
+  width: 15px;
+  margin: 0 2px;
+  background-color: #bbbbbb;
+  border: none;
+  border-radius: 50%;
+  display: inline-block;
+  opacity: 0.5;
+}
+
+/* Marcar el paso actual: */
+.step.active {
+  opacity: 1;
+}
+
+/* Marcar los pasos validos */
+.step.finish {
+  background-color: #4CAF50;
 }
 
 </style>
@@ -42,7 +62,7 @@
           </div> --}}
           <div class="panel-body">
             <form class="" @submit.prevent="guardar()" id="formulario">
-              <section data-step="Proyecto">
+              <div class="tab">
                 <div class="row">
                   <div class="col-md-4">
                     <div class="form-group">
@@ -79,9 +99,8 @@
                     </div>
                   </div>
                 </div>
-                <button type="button" class="btn btn-white rounded " data-next>Siguiente ></button>
-              </section>
-              <section data-step="Actividad">
+              </div>
+              <div class="tab">
                 <div class="row">
                   <div class="col-sm-12">
                     <h4>Actividad</h4>
@@ -170,10 +189,8 @@
                     <textarea name="descripcion" rows="5" cols="80" class="form-control" v-model="ultima_actividad.descripcion"></textarea>
                   </div>
                 </div>
-                <button type="button" class="btn btn-white rounded " data-prev>< Anterior</button>
-                <button type="button" class="btn btn-white rounded " data-next>Siguiente ></button>
-              </section>
-              <section data-step="Proxima Actividad">
+              </div>
+              <div class="tab">
                 <div class="row">
                   <div class="col-sm-12">
                     <h4>Próxima Actividad</h4>
@@ -223,7 +240,6 @@
                     </div>
                   </div>
                 </div>
-                <button type="button" class="btn btn-white rounded " data-prev>< Anterior</button>
                 <div class="row" style="margin-top:25px;">
                   <div class="col-md-12 text-right">
                     <a href="{{route('prospectos.index')}}" class="btn btn-default">
@@ -235,7 +251,22 @@
                     </button>
                   </div>
                 </div>
-              </section>
+              </div>
+
+              <!--controles wizard-->
+              <div style="overflow:auto;">
+                <div style="float:right;">
+                  <button type="button" class="btn btn-white rounded" id="prevBtn" @click="siguienteTab(-1)">< Anterior</button>
+                  <button type="button" class="btn btn-white rounded" id="nextBtn" @click="siguienteTab(1)">Siguiente ></button>
+                </div>
+              </div>
+
+              <!--indicadore de pasos en proceso-->
+              <div style="text-align:center;margin-top:40px;">
+                <span class="step"></span>
+                <span class="step"></span>
+                <span class="step"></span>
+              </div>
             </form>
           </div>
         </div>
@@ -274,127 +305,8 @@
     
     <!-- Nuevo Cliente Modal-->
     <modal v-model="showModal" title="Nuevo cliente" :footer="false">
-      <form @submit.prevent=guardar()>
-        <div class="row">
-          <div class="col-lg-12">
-  
-            <div class="panel">
-              <div class="panel-heading">
-                <h3 class="panel-title">Datos Generales</h3>
-              </div>
-              <div class="panel-body">
-                <div class="row form-group">
-                </div>
-                <div class="row form-group">
-                  <div class="col-md-4">
-                    <label class="control-label">Tipo</label>
-                    <select class="form-control" name="tipo_id"  required>
-                      
-                    </select>
-                  </div>
-                  <div class="col-md-8">
-                    <label class="control-label">Nombre</label>
-                    <input type="text" class="form-control" name="nombre"  required />
-                  </div>
-                </div>
-                <div class="row form-group">
-                  <div class="col-md-4">
-                    <label class="control-label">RFC</label>
-                    <input type="text" class="form-control" name="rfc"  />
-                  </div>
-                  <div class="col-md-8">
-                    <label class="control-label">Razon Social</label>
-                    <input type="text" class="form-control" name="razon_social"  />
-                  </div>
-                </div>
-              </div>
-            </div>
-  
-            <div class="panel ">
-              <div class="panel-heading">
-                <h3 class="panel-title">Dirección</h3>
-              </div>
-              <div class="panel-body">
-                <div class="row form-group">
-                  <div class="col-md-4">
-                    <label class="control-label">Calle</label>
-                    <input type="text" class="form-control" name="calle"  />
-                  </div>
-                  <div class="col-md-4">
-                    <label class="control-label">Numero Exterior</label>
-                    <input type="text" class="form-control" name="nexterior"  />
-                  </div>
-                  <div class="col-md-4">
-                    <label class="control-label">Numero Interior</label>
-                    <input type="text" class="form-control" name="ninterior"  />
-                  </div>
-                </div>
-                <div class="row form-group">
-                  <div class="col-md-4">
-                    <label class="control-label">Colonia</label>
-                    <input type="text" class="form-control" name="colonia"  />
-                  </div>
-                  <div class="col-md-4">
-                    <label class="control-label">Delegacion</label>
-                    <input type="text" class="form-control" name="delagacion"  />
-                  </div>
-                  <div class="col-md-4">
-                    <label class="control-label">C. Postal</label>
-                    <input type="text" class="form-control" name="cp"  />
-                  </div>
-                </div>
-                <div class="row form-group">
-                  <div class="col-md-4">
-                    <label class="control-label">Ciudad</label>
-                    <input type="text" class="form-control" name="ciudad"  />
-                  </div>
-                  <div class="col-md-4">
-                    <label class="control-label">Estado</label>
-                    <input type="text" class="form-control" name="estado"  />
-                  </div>
-                  <div class="col-md-4">
-                    <label class="control-label">País</label>
-                    <input type="text" class="form-control" name="pais"  />
-                  </div>
-                </div>
-              </div>
-            </div>
-  
-            <div class="panel">
-              <div class="panel-heading">
-                <h3 class="panel-title">Otros</h3>
-              </div>
-              <div class="panel-body">
-                <div class="row form-group">
-                  <div class="col-md-12">
-                    <label class="control-label">Pagina Web</label>
-                    <input type="text" class="form-control" name="pagina_web"  />
-                  </div>
-                </div>
-                <div class="row form-group">
-                  <div class="col-md-12">
-                    <label class="control-label">Datos Adicionales</label>
-                    <input type="text" class="form-control" name="adicionales"  />
-                  </div>
-                </div>
-              </div>
-            </div>
-  
-          </div>
-        </div>
-  
-        <div class="row">
-          <div class="col-md-12 text-center">
-            <button type="button" class="btn btn-default" href="{{route('clientes.index')}}" style="margin-right: 20px;">
-              Regresar
-            </button>
-            <button type="button" class="btn btn-primary" :disabled="cargando">
-              <i class="fas fa-save"></i>
-              Guardar Cliente
-            </button>
-          </div>
-        </div>
-      </form>
+      <iframe id="theFrame" src="../clientes/crearNacional" style="width:100%; eight=200%" frameborder="0">
+      </iframe>
     </modal>
     <!-- /.Nuevo Cliente Modal -->
   </section>
@@ -411,7 +323,8 @@
 const app = new Vue({
     el: '#content',
     data: {
-      showModal: false,
+      tabActual: 0,
+      showModal:false,
       locale: localeES,
       prospecto: {
         cliente_id: '',
@@ -437,48 +350,56 @@ const app = new Vue({
     },
     mounted(){
       $("#tablaProductos").DataTable({dom: 'ftp'});
-      
-      document.addEventListener('DOMContentLoaded', () => {
-        const wizard = new Zangdar('#formulario', {
-          onStepChange(step) {
-                const breadcrumb = this.getBreadcrumb()
-                buildSteps(breadcrumb)
-			    }
-        })
-
-        const buildSteps = steps => {
-            const $steps = document.getElementById('steps')
-            $steps.innerHTML = ''
-            for (let label in steps) {
-                if (steps.hasOwnProperty(label)) {
-                    const $li = document.createElement('li')
-                    const $a = document.createElement('a')
-                    $li.classList.add('step-item')
-                    if (steps[label].active) {
-                        $li.classList.add('active')
-                    }
-                    $a.setAttribute('href', '#')
-                    $a.classList.add('tooltip')
-                    $a.dataset.tooltip = label
-                    $a.innerText = label
-                    $a.addEventListener('click', e => {
-                        e.preventDefault()
-                        wizard.revealStep(label)
-                    })
-                    $li.appendChild($a)
-                    $steps.appendChild($li)
-                }
-            }
-        }
-
-        const breadcrumb = wizard.getBreadcrumb()
-        buildSteps(breadcrumb)
-      })
-
-      
-
+      this.mostrarTab(this.tabActual);
     },
     methods: {
+      mostrarTab(tab){
+        var x = $(".tab");
+        x.eq(tab).show();
+        if (tab == 0) {
+          $("#prevBtn").hide();
+        } else {
+          $("#prevBtn").css('display', 'inline');
+        }
+        if (tab == (x.length - 1)) {
+          $("#nextBtn").hide();
+        } else {
+          $("#nextBtn").show();
+        }
+        this.arreglarIndicadores();
+      },
+      siguienteTab(n) {
+        var x = $(".tab");
+        if (n == 1 && !this.validarForm()) return false;
+        x.eq(this.tabActual).hide();
+        this.tabActual=this.tabActual+n;
+        this.mostrarTab(this.tabActual);
+      },
+      validarForm() {
+        var x, y, i, valido = true;
+        x = $(".tab");
+        y = x.eq(this.tabActual).find('.form-control');
+        console.log(y)
+        for (i = 0; i < y.length; i++) {
+          if (! y.get(i).checkValidity()) {
+            valido = false;
+            y.get(i).reportValidity();
+            break;
+          }
+        }
+        if (valido) {
+          $(".step").eq(this.tabActual).addClass("finish");
+        }
+        return valido; 
+      },
+      arreglarIndicadores() {
+        var i;
+        var x = $(".step");
+        for (i = 0; i < x.length; i++) {
+          x.eq(i).removeClass('active');
+        }
+       x.eq(this.tabActual).addClass("active");
+      },
       formatoMoneda(numero){
         return accounting.formatMoney(numero, "$ ", 2);
       },
