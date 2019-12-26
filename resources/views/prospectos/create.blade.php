@@ -338,7 +338,7 @@ const app = new Vue({
       tabActual: 0,
       modalCliente:false,
       modalProducto:false,
-      tablaProductos:null,
+      tablaProductos:{},
       locale: localeES,
       prospecto: {
         cliente_id: '',
@@ -364,7 +364,7 @@ const app = new Vue({
       cargando: false,
     },
     mounted(){
-      this.tablaProductos= $("#tablaProductos").DataTable({dom: 'ftp'});
+      this.tablaProductos= $("#tablaProductos").DataTable({"order": [[ 0, "asc" ]]});
       this.mostrarTab(this.tabActual);
       var vue=this;
       //escuchar Iframe
@@ -375,12 +375,12 @@ const app = new Vue({
             vue.modalCliente=false;
           }
           if(e.data.tipo=="producto"){
-            console.log(e);
-            vue.productos.push(e.data.object);
-            vue.ofrecido=e.data.object;
             vue.tablaProductos.destroy();
-            vue.tablaProductos= $("#tablaProductos").DataTable({dom: 'ftp'});
+            vue.productos.push(e.data.object);
+            vue.ofrecido=e.data.object;    
             vue.modalProducto=false;
+            Vue.nextTick(function() {vue.tablaProductos=$("#tablaProductos").DataTable({"order": [[ 0, "asc" ]]})});
+            
           }
       },false);
     },
