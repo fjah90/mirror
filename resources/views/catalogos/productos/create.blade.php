@@ -1,4 +1,4 @@
-@extends('layouts/default')
+@extends($layout==="iframe"?'layouts/iframe' : 'layouts/default')
 
 {{-- Page title --}}
 @section('title')
@@ -125,9 +125,11 @@ Nuevo Producto | @parent
             </div>
             <div class="row" style="margin-top:25px;">
               <div class="col-md-12 text-right">
-                <a class="btn btn-default" href="{{route('productos.index')}}" style="margin-right: 20px;">
-                  Regresar
-                </a>
+                @if($layout !=='iframe')
+                  <a class="btn btn-default" href="{{route('productos.index')}}" style="margin-right: 20px;">
+                    Regresar
+                  </a>
+                @endif
                 <button type="submit" class="btn btn-primary" :disabled="cargando">
                   <i class="fas fa-save"></i>
                   Guardar Producto
@@ -163,6 +165,7 @@ const app = new Vue({
       },
       categorias: @json($categorias),
       cargando: false,
+      is_iframe: {{$layout==="iframe"?'true' : 'false'}},
     },
     mounted(){
       $("#foto").fileinput({
@@ -214,7 +217,12 @@ const app = new Vue({
             text: "",
             type: "success"
           }).then(()=>{
-            window.location = "/productos";
+            if(this.is_iframe){
+              parent.postMessage({message:"OK", tipo:"producto", object: data.producto}, "*")
+              window.location = "/productos/crear?layout=iframe";
+            }else{
+              window.location = "/productos";
+            }     
           });
         })
         .catch(({response}) => {

@@ -34,12 +34,13 @@ class ProductosController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
+        $layout        = $request->layout;
         $proveedores   = Proveedor::orderBy('empresa')->get();
         $categorias    = Categoria::with('descripciones')->orderBy('nombre')->get();
         $subcategorias = Subcategoria::orderBy('nombre')->get();
-        return view('catalogos.productos.create', compact('proveedores', 'categorias', 'subcategorias'));
+        return view('catalogos.productos.create', compact('proveedores', 'categorias', 'subcategorias', 'layout'));
     }
 
     /**
@@ -113,7 +114,8 @@ class ProductosController extends Controller
             });
         }
 
-        return response()->json(['success' => true, "error" => false], 200);
+        $productorespuesta = Producto::where('id', '=', $producto->id)->with('categoria')->first();
+        return response()->json(['success' => true, "error" => false, "producto" => $productorespuesta], 200);
     }
 
     /**

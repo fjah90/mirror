@@ -1,4 +1,6 @@
-@extends('layouts/default')
+@extends($layout==="iframe"?'layouts/iframe' : 'layouts/default')
+
+
 
 {{-- Page title --}}
 @section('title')
@@ -11,6 +13,7 @@
 {{-- Page content --}}
 @section('content')
   <!-- Content Header (Page header) -->
+  
   <section class="content-header">
     <h1>Nuevo Cliente {{ ($nacional)?"Nacional":"Extranjero" }}</h1>
   </section>
@@ -137,9 +140,11 @@
 
       <div class="row">
         <div class="col-md-12 text-center">
-          <a class="btn btn-default" href="{{route('clientes.index')}}" style="margin-right: 20px;">
-            Regresar
-          </a>
+          @if($layout !=='iframe')
+            <a class="btn btn-default" href="{{route('clientes.index')}}" style="margin-right: 20px;">
+              Regresar
+            </a>
+          @endif
           <button type="submit" class="btn btn-primary" :disabled="cargando">
             <i class="fas fa-save"></i>
             Guardar Cliente
@@ -159,6 +164,7 @@
 const app = new Vue({
     el: '#content',
     data: {
+      is_iframe: {{$layout==="iframe"?'true' : 'false'}},
       translations: translationsES,
       cliente: {
         usuario_id: '',
@@ -192,7 +198,12 @@ const app = new Vue({
             text: "",
             type: "success"
           }).then(()=>{
+            if(this.is_iframe){
+              parent.postMessage({message:"OK", tipo:"cliente", object: data.cliente}, "*")
+              window.location = "/clientes/crearNacional?layout=iframe";
+            }else{
             window.location = "/clientes/"+data.cliente.id+"/editar?contactos";
+            }
           });
         })
         .catch(({response}) => {

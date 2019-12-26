@@ -68,18 +68,18 @@
                     <div class="form-group">
                       <label class="control-label">Cliente</label>
                       <select class="form-control" name="cliente_id" v-model='prospecto.cliente_id' required>
-                        @foreach($clientes as $cliente)
-                          <option value="{{$cliente->id}}">{{$cliente->nombre}}</option>
-                        @endforeach
+                        <option v-for="(cliente, index) in clientes" v-bind:value="cliente.id" >
+                          @{{ cliente.nombre }}
+                        </option>
                       </select>
                     </div>
                   </div>
                 <div class="col-md-2">
                   <div class="form-group">
                     <label class="control-label">Registrar cliente</label>
-                    <button type="button" id="show-modal" @click="showModal = true" class="btn btn-effect-ripple btn-primary form-control">Nuevo Cliente</button>
+                    <button type="button" id="show-modal" @click="modalCliente = true" class="btn btn-effect-ripple btn-primary form-control">Nuevo Cliente</button>
                     <!-- use the modal component, pass in the prop -->
-                    <modal v-if="showModal" @close="showModal = false">
+                    <modal v-if="modalCliente" @close="modalCliente = false">
                   </div>
                 </div>
                 </div>
@@ -151,7 +151,7 @@
                   </div>
                 </div>
                 <div class="row">
-                  <div class="col-sm-10">
+                  <div class="col-sm-8">
                     <label class="control-label">Productos Ofrecidos</label>
                     <div class="input-group">
                       <input type="text" class="form-control" placeholder="Producto"
@@ -168,6 +168,11 @@
                   <div class="col-sm-2" style="padding-top: 25px;">
                     <button type="button" class="btn btn-primary" @click="agregarProducto()">
                       Agregar
+                    </button>
+                  </div>
+                  <div class="col-sm-2" style="padding-top: 25px;">
+                    <button type="button" class="btn btn-primary" @click="modalProducto=true">
+                      Registrar producto
                     </button>
                   </div>
                 </div>
@@ -304,11 +309,18 @@
     <!-- /.Catalogo Productos Modal -->
     
     <!-- Nuevo Cliente Modal-->
-    <modal v-model="showModal" title="Nuevo cliente" :footer="false">
-      <iframe id="theFrame" src="../clientes/crearNacional" style="width:100%; eight=200%" frameborder="0">
+    <modal v-model="modalCliente" title="Registrar Cliente" :footer="false">
+      <iframe id="theFrame" src="../clientes/crearNacional?layout=iframe" style="width:100%; height:700px;" frameborder="0">
       </iframe>
     </modal>
     <!-- /.Nuevo Cliente Modal -->
+
+    <!-- Nuevo Producto Modal-->
+    <modal v-model="modalProducto" title="Registrar Producto" :footer="false">
+      <iframe id="theFrame" src="../productos/crear?layout=iframe" style="width:100%; height:700px;" frameborder="0">
+      </iframe>
+    </modal>
+    <!-- /.Nuevo Producto Modal -->
   </section>
   <!-- /.content -->
 @stop
@@ -324,7 +336,9 @@ const app = new Vue({
     el: '#content',
     data: {
       tabActual: 0,
-      showModal:false,
+      modalCliente:false,
+      modalProducto:false,
+      tablaProductos:null,
       locale: localeES,
       prospecto: {
         cliente_id: '',
@@ -344,13 +358,31 @@ const app = new Vue({
         tipo: '',
       },
       productos: {!! json_encode($productos) !!},
+      clientes: {!! json_encode($clientes) !!},
       ofrecido: {nombre:''},
       openCatalogo: false,
       cargando: false,
     },
     mounted(){
-      $("#tablaProductos").DataTable({dom: 'ftp'});
+      this.tablaProductos= $("#tablaProductos").DataTable({dom: 'ftp'});
       this.mostrarTab(this.tabActual);
+      var vue=this;
+      //escuchar Iframe
+      window.addEventListener('message',function(e) {
+          if(e.data.tipo=="cliente"){
+            vue.clientes.push({id:e.data.object.id, nombre:e.data.object.nombre});
+            vue.prospecto.cliente_id=e.data.object.id;
+            vue.modalCliente=false;
+          }
+          if(e.data.tipo=="producto"){
+            console.log(e);
+            vue.productos.push(e.data.object);
+            vue.ofrecido=e.data.object;
+            vue.tablaProductos.destroy();
+            vue.tablaProductos= $("#tablaProductos").DataTable({dom: 'ftp'});
+            vue.modalProducto=false;
+          }
+      },false);
     },
     methods: {
       mostrarTab(tab){
