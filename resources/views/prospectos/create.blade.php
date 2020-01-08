@@ -472,7 +472,7 @@ const app = new Vue({
             text: "",
             type: "success"
           }).then(()=>{
-            window.location = "/prospectos";
+            window.location = "/prospectos/"+data.prospecto.id+"/cotizar";
           });
         })
         .catch(({response}) => {
