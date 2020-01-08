@@ -91,9 +91,9 @@ Route::middleware('auth')->group(function () {
         Route::post('/dashboard/listado', 'DashboardController@listado');
         Route::post('/proyectos-aprobados/listado', 'ProyectosAprobadosController@listado');
 
-        Route::get('/reportes/cotizaciones', 'reportesController@cotizaciones');
-        Route::get('/reportes/compras', 'reportesController@compras');
-        Route::get('/reportes/cuentaCliente', 'reportesController@cuentaCliente');
+        Route::get('/reportes/cotizaciones', 'ReportesController@cotizaciones');
+        Route::get('/reportes/compras', 'ReportesController@compras');
+        Route::get('/reportes/cuentaCliente', 'ReportesController@cuentaCliente');
 
     });
 
