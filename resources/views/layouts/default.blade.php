@@ -133,15 +133,6 @@
               </li>
             </ul>
           </li>
-
-          <li  {!! (Request::is('reportes*') ? 'class="active"' : '') !!}>
-            <a href="javascript:;">
-              <i class="menu-icon fas fa-chart-line"></i>
-              <span>Reportes</span>
-              <span class="fa arrow"></span>
-            </a>
-           
-          </li>
           <hr class="divider-menu">
           @endhasanyrole
 

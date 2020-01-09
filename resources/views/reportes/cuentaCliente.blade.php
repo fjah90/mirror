@@ -66,7 +66,7 @@ Reportes | @parent
                                 <th colspan="4"  style="text-align:right">Total MXN: </th>
                                 <th class="text-center">@{{proyecto.totalMxn.monto | formatoMoneda}} </th>
                                 <th class="text-center">@{{proyecto.totalMxn.facturado | formatoMoneda}}</th>
-                                <th class="text-center">@{{proyecto.totalMxn.porfacturar | formatoMoneda}}</th>
+                                <th class="text-center">@{{proyecto.totalMxn.porFacturar | formatoMoneda}}</th>
                                 <th class="text-center">@{{proyecto.totalMxn.pagado | formatoMoneda}}</th>
                                 <th class="text-center">@{{proyecto.totalMxn.pendiente | formatoMoneda}}</th>
                             </tr>
@@ -74,7 +74,7 @@ Reportes | @parent
                                 <th colspan="4"  style="text-align:right">Total USD: </th>
                                 <th class="text-center">@{{proyecto.totalDolares.monto | formatoMoneda}} </th>
                                 <th class="text-center">@{{proyecto.totalDolares.facturado | formatoMoneda}}</th>
-                                <th class="text-center">@{{proyecto.totalDolares.porfacturar | formatoMoneda}}</th>
+                                <th class="text-center">@{{proyecto.totalDolares.porFacturar | formatoMoneda}}</th>
                                 <th class="text-center">@{{proyecto.totalDolares.pagado | formatoMoneda}}</th>
                                 <th class="text-center">@{{proyecto.totalDolares.pendiente | formatoMoneda}}</th>
                             </tr>
@@ -105,8 +105,8 @@ Reportes | @parent
     watch:{
         data: function(val){
             this.data.proyectos.forEach(element => {
-                var totalDolares = {monto:0, facturado:0, porFacturar:0, pagado:0, pendiente:0};
-                var totalMxn     = {monto:0, facturado:0, porFacturar:0, pagado:0, pendiente:0};
+                var totalDolares = {monto:0.0, facturado:0.0, porFacturar:0.0, pagado:0.0, pendiente:0.0};
+                var totalMxn     = {monto:0.0, facturado:0.0, porFacturar:0.0, pagado:0.0, pendiente:0.0};
                 element.forEach(element2 => {
                    if(element2.moneda=="Dolares"){
                     totalDolares.monto+=element2.total;
@@ -120,13 +120,10 @@ Reportes | @parent
                     totalMxn.pendiente+=element2.pendiente;
                    } 
                 });
-                totalDolares.porFacturar=totalDolares.monto-totalDolares.facturado;
-                totalMxn.porFacturar=totalDolares.monto-totalDolares.facturado;
-                console.log(totalDolares)
+                totalDolares.porFacturar=+totalDolares.monto-totalDolares.facturado;
+                totalMxn.porFacturar=+totalMxn.monto-totalMxn.facturado;
                 element['totalDolares']={...totalDolares};
                 element['totalMxn']=totalMxn;
-                Object.assign(element,totalMxn );
-                console.log(element);
             });
         }
      
