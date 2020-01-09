@@ -210,11 +210,11 @@ const app = new Vue({
  
             // Actualizar
             var nCells = row.getElementsByTagName('th');
-            nCells[1].innerHTML = totalMxn;
+            nCells[1].innerHTML = accounting.formatMoney(totalMxn, "$", 2);
 
             var secondRow = $(row).next()[0]; 
             var nCells = secondRow.getElementsByTagName('th');
-            nCells[1].innerHTML = totalUsd;
+            nCells[1].innerHTML = accounting.formatMoney(totalUsd, "$", 2);
         }
       });
       $("#fechas_container").append($("#fecha_ini_control"));

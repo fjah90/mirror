@@ -140,43 +140,7 @@
               <span>Reportes</span>
               <span class="fa arrow"></span>
             </a>
-            <ul class="sub-menu">
-              <li {!! (Request::is('reportes/cotizaciones') ? 'class="active"' : '') !!}>
-                <a href="{{ URL::to('reportes/cotizaciones') }}">
-                  <i class="fas fa-file-invoice-dollar"></i> Cotizaciones
-                </a>
-              </li>
-              <li {!! (Request::is('reportes/cobros') ? 'class="active"' : '') !!}>
-                <a href="{{ URL::to('reportes/cobros') }}">
-                  <i class="fas fa-file-invoice-dollar"></i> Cobros
-                </a>
-              </li>
-              <li {!! (Request::is('reportes/compras') ? 'class="active"' : '') !!}>
-                <a href="{{ URL::to('reportes/compras') }}">
-                  <i class="fas fa-file-invoice-dollar"></i> Compras
-                </a>
-              </li>
-              <li {!! (Request::is('reportes/pagos') ? 'class="active"' : '') !!}>
-                <a href="{{ URL::to('reportes/pagos') }}">
-                  <i class="fas fa-file-invoice-dollar"></i> Pagos
-                </a>
-              </li>
-              <li {!! (Request::is('reportes/saldoProveedores') ? 'class="active"' : '') !!}>
-                <a href="{{ URL::to('reportes/saldoProveedores') }}">
-                  <i class="fas fa-file-invoice-dollar"></i> Saldo Proveedores
-                </a>
-              </li>
-              <li {!! (Request::is('reportes/cuentaCliente') ? 'class="active"' : '') !!}>
-                <a href="{{ URL::to('reportes/cuentaCliente') }}">
-                  <i class="fas fa-file-invoice-dollar"></i> Cuenta Cliente
-                </a>
-              </li>
-              <li {!! (Request::is('reportes/utilidades') ? 'class="active"' : '') !!}>
-                <a href="{{ URL::to('reportes/utilidades') }}">
-                  <i class="fas fa-file-invoice-dollar"></i> Utilidades
-                </a>
-              </li>
-            </ul>
+           
           </li>
           <hr class="divider-menu">
           @endhasanyrole
@@ -334,6 +298,41 @@
               <i class="menu-icon fas fa-receipt"></i>
               Reportes
             </span>
+          </li>
+          <li class="sub {!! (Request::is('reportes/cotizaciones') ? 'active' : '') !!}">
+            <a href="{{ URL::to('reportes/cotizaciones') }}">
+              <i class="fas fa-file-invoice-dollar"></i> Cotizaciones
+            </a>
+          </li>
+          <li class="sub {!! (Request::is('reportes/cobros') ? 'active' : '') !!}">
+            <a href="{{ URL::to('reportes/cobros') }}">
+              <i class="fas fa-file-invoice-dollar"></i> Cobros
+            </a>
+          </li>
+          <li class="sub {!! (Request::is('reportes/compras') ? 'active' : '') !!}">
+            <a href="{{ URL::to('reportes/compras') }}">
+              <i class="fas fa-file-invoice-dollar"></i> Compras
+            </a>
+          </li>
+          <li class="sub {!! (Request::is('reportes/pagos') ? 'active' : '') !!}">
+            <a href="{{ URL::to('reportes/pagos') }}">
+              <i class="fas fa-file-invoice-dollar"></i> Pagos
+            </a>
+          </li>
+          <li class="sub {!! (Request::is('reportes/saldoProveedores') ? 'active' : '') !!}">
+            <a href="{{ URL::to('reportes/saldoProveedores') }}">
+              <i class="fas fa-file-invoice-dollar"></i> Saldo Proveedores
+            </a>
+          </li>
+          <li class="sub {!! (Request::is('reportes/cuentaCliente') ? 'active' : '') !!}">
+            <a href="{{ URL::to('reportes/cuentaCliente') }}">
+              <i class="fas fa-file-invoice-dollar"></i> Cuenta Cliente
+            </a>
+          </li>
+          <li class="sub {!! (Request::is('reportes/utilidades') ? 'active' : '') !!}">
+            <a href="{{ URL::to('reportes/utilidades') }}">
+              <i class="fas fa-file-invoice-dollar"></i> Utilidades
+            </a>
           </li>
           <hr class="divider-menu">
 

@@ -63,20 +63,20 @@ Reportes | @parent
                         </tr>
                         <tfoot>
                             <tr>
-                                <th colspan="4"  style="text-align:right">Total: </th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
+                                <th colspan="4"  style="text-align:right">Total MXN: </th>
+                                <th class="text-center">@{{proyecto.totalMxn.monto | formatoMoneda}} </th>
+                                <th class="text-center">@{{proyecto.totalMxn.facturado | formatoMoneda}}</th>
+                                <th class="text-center">@{{proyecto.totalMxn.porfacturar | formatoMoneda}}</th>
+                                <th class="text-center">@{{proyecto.totalMxn.pagado | formatoMoneda}}</th>
+                                <th class="text-center">@{{proyecto.totalMxn.pendiente | formatoMoneda}}</th>
                             </tr>
                             <tr>
-                                <th colspan="4"  style="text-align:right">Total: </th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
+                                <th colspan="4"  style="text-align:right">Total USD: </th>
+                                <th class="text-center">@{{proyecto.totalDolares.monto | formatoMoneda}} </th>
+                                <th class="text-center">@{{proyecto.totalDolares.facturado | formatoMoneda}}</th>
+                                <th class="text-center">@{{proyecto.totalDolares.porfacturar | formatoMoneda}}</th>
+                                <th class="text-center">@{{proyecto.totalDolares.pagado | formatoMoneda}}</th>
+                                <th class="text-center">@{{proyecto.totalDolares.pendiente | formatoMoneda}}</th>
                             </tr>
                         </tfoot>
                       </tbody>
@@ -102,17 +102,46 @@ Reportes | @parent
       clienteCargado:'',
       locale: localeES,
     },
+    watch:{
+        data: function(val){
+            this.data.proyectos.forEach(element => {
+                var totalDolares = {monto:0, facturado:0, porFacturar:0, pagado:0, pendiente:0};
+                var totalMxn     = {monto:0, facturado:0, porFacturar:0, pagado:0, pendiente:0};
+                element.forEach(element2 => {
+                   if(element2.moneda=="Dolares"){
+                    totalDolares.monto+=element2.total;
+                    totalDolares.facturado+=element2.facturado;
+                    totalDolares.pagado+=element2.pagado;
+                    totalDolares.pendiente+=element2.pendiente;
+                   }else{
+                    totalMxn.monto+=element2.total;
+                    totalMxn.facturado+=element2.facturado;
+                    totalMxn.pagado+=element2.pagado;
+                    totalMxn.pendiente+=element2.pendiente;
+                   } 
+                });
+                totalDolares.porFacturar=totalDolares.monto-totalDolares.facturado;
+                totalMxn.porFacturar=totalDolares.monto-totalDolares.facturado;
+                console.log(totalDolares)
+                element['totalDolares']={...totalDolares};
+                element['totalMxn']=totalMxn;
+                Object.assign(element,totalMxn );
+                console.log(element);
+            });
+        }
+     
+    },
     filters:{
-    formatoMoneda(numero){
-      return accounting.formatMoney(numero, "$", 2);
+        formatoMoneda(numero){
+        return accounting.formatMoney(numero, "$", 2);
+        },
+        formatoCurrency(valor){
+        return valor=='Dolares'?'USD':'MXN';
+        },
+        date(value){
+                return moment(value, 'YYYY-MM-DD  hh:mm:ss').format('DD/MM/YYYY');
+        },
     },
-    formatoCurrency(valor){
-      return valor=='Dolares'?'USD':'MXN';
-    },
-    date(value){
-  			return moment(value, 'YYYY-MM-DD  hh:mm:ss').format('DD/MM/YYYY');
-      },
-  },
     methods: {
       dateParser(value){
   			return moment(value, 'DD/MM/YYYY').toDate().getTime();
