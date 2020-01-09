@@ -772,6 +772,7 @@ Dashboard | @parent
         var proyectos=[]
         newTable=$(table).DataTable({
           "dom": 'f<"#'+prefix+'_fechas_container.pull-left">ltip',
+          "order":[],
           initComplete: function () {
             
             //Crear y llenar los select para clientes 
@@ -828,7 +829,6 @@ Dashboard | @parent
           serie2.push(element.facturado);
           serie3.push(element.pagado);
         });
-        console.log(this.porCobrar_data)
         graphData.datasets=[
           {
             label:'Total',

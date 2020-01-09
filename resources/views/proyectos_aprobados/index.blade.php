@@ -43,23 +43,25 @@
               data-page-length="-1">
               <thead>
                 <tr>
-                  <th>#</th>
                   <th>Usuario</th>
                   <th>Cliente</th>
                   <th>Proyecto</th>
+                  <th>Numero de Cotización</th>
+                  <th>Fecha aprobación</th>
                   <th>Proveedores</th>
                   <th></th>
                 </tr>
               </thead>
               <tbody>
                 <tr v-for="(proyecto,index) in proyectos">
-                  <td>@{{index+1}}</td>
                   <td>@{{proyecto.cliente.usuario_nombre}}</td>
                   <td>@{{proyecto.cliente_nombre}}</td>
                   <td>@{{proyecto.proyecto}}</td>
+                  <td>@{{proyecto.cotizacion_id}}</td>
+                  <td>@{{proyecto.created_at|date}}</td>
                   <td>
                     <span v-for="(proveedor, index) in proyecto.proveedores">
-                      @{{index+1}}.- @{{proveedor}} <br />
+                      @{{index+1}}.- @{{proveedor}} <br/>
                     </span>
                   </td>
                   <td class="text-right">
@@ -95,9 +97,17 @@ const app = new Vue({
       tabla: {}
     },
     mounted(){
-      this.tabla = $("#tabla").DataTable({"order": [[ 1, "asc" ]]});
+      this.tabla = $("#tabla").DataTable({"order": [[ 4, "desc" ]]});
+    },
+      filters:{
+      date(value){
+  			return moment(value, 'YYYY-MM-DD  hh:mm:ss').format('YYYY/MM/DD');
+      },
     },
     methods:{
+      dateParser(value){
+  			return moment(value, 'DD/MM/YYYY').toDate().getTime();
+      },
       cargar(){
         axios.post('/proyectos-aprobados/listado', {id: this.usuarioCargado})
         .then(({data}) => {
