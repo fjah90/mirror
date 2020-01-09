@@ -418,7 +418,7 @@
                   <tr>
                     <td style="vertical-align: top;">
                       @foreach($entrada->descripciones as $descripcion)
-                      if($descripcion->valor && $entrada->producto->descripciones[$loop->index]->descripcionNombre->aparece_orden_compra )
+                      @if($descripcion->valor && $entrada->producto->descripciones[$loop->index]->descripcionNombre->aparece_orden_compra )
                         <p>
                           <span>@text_capitalize($descripcion->{$name}): </span>
                           <span class="text-uppercase">{{$descripcion->valor}}</span>
