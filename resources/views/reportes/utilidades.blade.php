@@ -22,7 +22,7 @@ Reportes | @parent
         <div class="col-sm-12">
           <div class="panel product-details">
             <div class="panel-heading">
-              <h3 class="panel-title">Reporte de Pagos</h3>
+              <h3 class="panel-title">Reporte de Utilidades</h3>
             </div>
             <div class="panel-body">
                 <div id="oculto_filtros" class="hide">
