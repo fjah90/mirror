@@ -22,7 +22,7 @@ Reportes | @parent
         <div class="col-sm-12">
           <div class="panel product-details">
             <div class="panel-heading">
-              <h3 class="panel-title">Reporte de Cotizaciones</h3>
+              <h3 class="panel-title">Reporte de Pagos</h3>
             </div>
             <div class="panel-body">
                 <div id="oculto_filtros" class="hide">
@@ -66,9 +66,9 @@ Reportes | @parent
                         </li>
                       </template>
                     </dropdown>
-                    <div class="marg025 btn-group" id="select_clientes" >
-                        <select name="proxDias" class="form-control" size="1" v-model="valor_clientes" id="select_clientes">
-                        <option v-for="(option, index) in datos_select.clientes" v-bind:value="option" >
+                    <div class="marg025 btn-group" id="select_cotizaciones" >
+                        <select name="proxDias" class="form-control" size="1" v-model="valor_cotizaciones" id="select_cotizaciones">
+                        <option v-for="(option, index) in datos_select.cotizaciones" v-bind:value="option" >
                             @{{ option }}
                           </option>
                           
@@ -82,9 +82,9 @@ Reportes | @parent
                           
                         </select>
                     </div>
-                    <div class="marg025 btn-group" id="select_ids" >
-                        <select name="proxDias" class="form-control" size="1" v-model="valor_ids" id="select_ids">
-                          <option v-for="option in datos_select.ids" v-bind:value="option">
+                    <div class="marg025 btn-group" id="select_clientes" >
+                        <select name="proxDias" class="form-control" size="1" v-model="valor_clientes" id="select_clientes">
+                          <option v-for="option in datos_select.clientes" v-bind:value="option">
                             @{{ option }}
                           </option>
                           
@@ -98,32 +98,36 @@ Reportes | @parent
                     <table class="table table-striped text-center" id="tabla">
                       <thead>
                         <tr>
-                          <th class="text-center">Fecha</th>
-                          <th class="text-center"><strong>Número Cotización</strong></th>
+                          <th class="text-center">Número de Cotización</th>
                           <th class="text-center"><strong>Cliente</strong></th>
-                          <th class="text-center"><strong>Proyecto</strong></th>                    
+                          <th class="text-center"><strong>Proyecto</strong></th>
                           <th class="text-center"><strong>Monto</strong></th>
                           <th class="text-center"><strong>Moneda</strong></th>
+                          <th class="text-center"><strong>Numero Compra</strong></th>
+                          <th class="text-center"><strong>Costo</strong></th>
+                          <th class="text-center"><strong>Utilidad</strong></th>
                         </tr>
                       </thead>
                       <tbody>
-                        <tr v-for="(cotizacion, index) in cotizaciones">
-                          <td>@{{cotizacion.fecha_formated}}</td>
-                          <td>@{{cotizacion.id}}</td>
-                          <td>@{{cotizacion.cliente_nombre}}</td>
-                          <td>@{{cotizacion.prospecto_nombre}}</td>
-                          <td>@{{cotizacion.total | formatoMoneda}}</td>
-                          <td>@{{cotizacion.moneda}}</td>
+                        <tr v-for="(dato, index) in datos">
+                          <td>@{{dato.cotizaciones_id}}</td>
+                          <td>@{{dato.cliente_nombre}}</td>
+                          <td>@{{dato.proyecto_nombre}}</td>
+                          <td>@{{dato.cotizaciones_total | formatoMoneda}}</td>
+                          <td>@{{dato.cotizaciones_moneda}}</td>
+                          <td>@{{dato.numero}}</td>
+                          <td>@{{dato.total | formatoConvertirMoneda(dato.cotizaciones_moneda, dato.moneda)}}</td>
+                          <td>@{{dato.total | formatoUtilidad(dato.cotizaciones_moneda, dato.moneda, dato.cotizaciones_total)}}</td>
                         </tr>
                         
                       </tbody>
                       <tfoot>
                         <tr>
-                            <th colspan="5" style="text-align:right">Total MXN:</th>
+                            <th colspan="7" style="text-align:right">Total MXN:</th>
                             <th></th>
                         </tr>
                         <tr>
-                            <th colspan="5" style="text-align:right">Total USD:</th>
+                            <th colspan="7" style="text-align:right">Total USD:</th>
                             <th></th>
                         </tr>
                     </tfoot>
@@ -149,13 +153,13 @@ Reportes | @parent
 const app = new Vue({
     el: '#content',
     data: {
-      cotizaciones: {!! json_encode($cotizaciones) !!},
+      datos: {!! json_encode($datos) !!},
       fecha_ini: '',
       fecha_fin: '',
-      valor_clientes:'Clientes',
+      valor_cotizaciones:'Cotizaciones',
       valor_proyectos:'Proyectos',
-      valor_ids:'Cotización',
-      datos_select:{clientes:[], proyectos:[], ids:[]},   
+      valor_clientes:'Clientes',
+      datos_select:{cotizaciones:[], proyectos:[], clientes:[]},   
       tabla: {},
       locale: localeES
     },
@@ -166,23 +170,24 @@ const app = new Vue({
           "order":[],
           initComplete: function () {
             
-            //Crear y llenar los select para clientes 
-            vue.datos_select.clientes.push('Clientes')
-            vue.datos_select.clientes.push('');
-            this.api().column(2).data().sort().unique().each(function(d,j){   
-              vue.datos_select.clientes.push(d);
+            //Crear y llenar los select para cotizaciones 
+            vue.datos_select.cotizaciones.push('Cotizaciones')
+            vue.datos_select.cotizaciones.push('');
+            this.api().column(0).data().sort().unique().each(function(d,j){
+              console.log(d);     
+              vue.datos_select.cotizaciones.push((d.replace("&amp;", " &")));
             });
-            //Crear y llenar los select para clientes 
+            //Crear y llenar los select para proyecto 
             vue.datos_select.proyectos.push('Proyectos')
             vue.datos_select.proyectos.push('');
-            this.api().column(3).data().sort().unique().each(function(d,j){   
+            this.api().column(2).data().sort().unique().each(function(d,j){   
               vue.datos_select.proyectos.push(d);
             });
 
-            vue.datos_select.ids.push('Cotización')
-            vue.datos_select.ids.push('');
+            vue.datos_select.clientes.push('Clientes')
+            vue.datos_select.clientes.push('');
             this.api().column(1).data().sort().unique().each(function(d,j){   
-              vue.datos_select.ids.push(d);
+              vue.datos_select.clientes.push(d);
             });
           },
 
@@ -197,7 +202,7 @@ const app = new Vue({
                         i : 0;
             };
             //datos de la tabla con filtros aplicados
-            var datos= api.columns([4,5], {search: 'applied'}).data();
+            var datos= api.columns([3,4,6,7], {search: 'applied'}).data();
             var totalMxn = 0;
             var totalUsd = 0;
             //suma de montos
@@ -220,9 +225,9 @@ const app = new Vue({
       });
       $("#fechas_container").append($("#fecha_ini_control"));
       $("#fechas_container").append($("#fecha_fin_control"));
-      $("#fechas_container").append($("#select_clientes"));
+      $("#fechas_container").append($("#select_cotizaciones"));
       $("#fechas_container").append($("#select_proyectos"));
-      $("#fechas_container").append($("#select_ids"));
+      $("#fechas_container").append($("#select_clientes"));
 
       $.fn.dataTableExt.afnFiltering.push(
         function( settings, data, dataIndex ) {
@@ -249,23 +254,48 @@ const app = new Vue({
       fecha_fin: function (val) {
         this.tabla.draw();
       },
-      valor_clientes:function(val){
-        this.tabla.columns(2).search(this.valor_clientes).draw();
+      valor_cotizaciones:function(val){
+        this.tabla.columns(0).search(this.valor_cotizaciones).draw();
       },
       valor_proyectos:function(val){
-        this.tabla.columns(3).search(this.valor_proyectos).draw();
+        this.tabla.columns(2).search(this.valor_proyectos).draw();
       },
-      valor_ids:function(val){
-        this.tabla.columns(1).search(this.valor_ids).draw();
+      valor_clientes:function(val){
+        this.tabla.columns(1).search(this.valor_clientes).draw();
       },
     },
     filters:{
         formatoMoneda(numero){
-        return accounting.formatMoney(numero, "$", 2);
+            return accounting.formatMoney(numero, "$", 2);
         },
         formatoCurrency(valor){
-        return valor=='Dolares'?'USD':'MXN';
-        }
+            return valor=='Dolares'?'USD':'MXN';
+        },
+        date(value){
+  			return moment(value, 'YYYY-MM-DD  hh:mm:ss').format('DD/MM/YYYY');
+        },
+        formatoConvertirMoneda(value, monedaCotizacion, monedaCompra){
+  			if(monedaCotizacion == monedaCompra){
+                  return accounting.formatMoney(value, "$", 2);
+              }
+            else if(monedaCotizacion == "Dolares" && monedaCompra == "Pesos"){
+                  return accounting.formatMoney((value/19), "$", 2);
+              }
+            else if(monedaCotizacion == "Pesos" && monedaCompra == "Dolares"){
+                  return accounting.formatMoney((value*19), "$", 2);
+              }
+        },
+        formatoUtilidad(value, monedaCotizacion, monedaCompra, totalCotizacion){
+  			if(monedaCotizacion == monedaCompra){
+                  return accounting.formatMoney((totalCotizacion-value), "$", 2);
+              }
+            else if(monedaCotizacion == "Dolares" && monedaCompra == "Pesos"){
+                  return accounting.formatMoney((totalCotizacion-(value/19)), "$", 2);
+              }
+            else if(monedaCotizacion == "Pesos" && monedaCompra == "Dolares"){
+                  return accounting.formatMoney((totalCotizacion-(value*19)), "$", 2);
+              }
+        },
     },
     methods: {
       dateParser(value){

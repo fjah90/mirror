@@ -165,6 +165,7 @@ const app = new Vue({
         var vue =this;
       this.tabla = $("#tabla").DataTable({
           "dom": 'f<"#fechas_container.pull-left">ltip',
+          "order":[],
           initComplete: function () {
             
             //Crear y llenar los select para proveedores 

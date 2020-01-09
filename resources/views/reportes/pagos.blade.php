@@ -22,7 +22,7 @@ Reportes | @parent
         <div class="col-sm-12">
           <div class="panel product-details">
             <div class="panel-heading">
-              <h3 class="panel-title">Reporte de Cotizaciones</h3>
+              <h3 class="panel-title">Reporte de Pagos</h3>
             </div>
             <div class="panel-body">
                 <div id="oculto_filtros" class="hide">
@@ -66,9 +66,9 @@ Reportes | @parent
                         </li>
                       </template>
                     </dropdown>
-                    <div class="marg025 btn-group" id="select_clientes" >
-                        <select name="proxDias" class="form-control" size="1" v-model="valor_clientes" id="select_clientes">
-                        <option v-for="(option, index) in datos_select.clientes" v-bind:value="option" >
+                    <div class="marg025 btn-group" id="select_proveedores" >
+                        <select name="proxDias" class="form-control" size="1" v-model="valor_proveedores" id="select_proveedores">
+                        <option v-for="(option, index) in datos_select.proveedores" v-bind:value="option" >
                             @{{ option }}
                           </option>
                           
@@ -82,9 +82,9 @@ Reportes | @parent
                           
                         </select>
                     </div>
-                    <div class="marg025 btn-group" id="select_ids" >
-                        <select name="proxDias" class="form-control" size="1" v-model="valor_ids" id="select_ids">
-                          <option v-for="option in datos_select.ids" v-bind:value="option">
+                    <div class="marg025 btn-group" id="select_compras" >
+                        <select name="proxDias" class="form-control" size="1" v-model="valor_compras" id="select_compras">
+                          <option v-for="option in datos_select.compras" v-bind:value="option">
                             @{{ option }}
                           </option>
                           
@@ -98,32 +98,36 @@ Reportes | @parent
                     <table class="table table-striped text-center" id="tabla">
                       <thead>
                         <tr>
-                          <th class="text-center">Fecha</th>
-                          <th class="text-center"><strong>Número Cotización</strong></th>
+                          <th class="text-center">Fecha Pago</th>
+                          <th class="text-center"><strong>Número Compra</strong></th>
+                          <th class="text-center"><strong>Proveedor</strong></th>
                           <th class="text-center"><strong>Cliente</strong></th>
-                          <th class="text-center"><strong>Proyecto</strong></th>                    
+                          <th class="text-center"><strong>Proyecto</strong></th>
+                          <th class="text-center"><strong>Documento</strong></th>
                           <th class="text-center"><strong>Monto</strong></th>
                           <th class="text-center"><strong>Moneda</strong></th>
                         </tr>
                       </thead>
                       <tbody>
-                        <tr v-for="(cotizacion, index) in cotizaciones">
-                          <td>@{{cotizacion.fecha_formated}}</td>
-                          <td>@{{cotizacion.id}}</td>
-                          <td>@{{cotizacion.cliente_nombre}}</td>
-                          <td>@{{cotizacion.prospecto_nombre}}</td>
-                          <td>@{{cotizacion.total | formatoMoneda}}</td>
-                          <td>@{{cotizacion.moneda}}</td>
+                        <tr v-for="(pago, index) in pagos">
+                          <td>@{{pago.pago_fecha | date}}</td>
+                          <td>@{{pago.numero_compra}}</td>
+                          <td>@{{pago.proveedor_nombre}}</td>
+                          <td>@{{pago.cliente_nombre}}</td>
+                          <td>@{{pago.proyecto_nombre}}</td>
+                          <td>@{{pago.documento}}</td>
+                          <td>@{{pago.pago_monto | formatoMoneda}}</td>
+                          <td>@{{pago.moneda}}</td>
                         </tr>
                         
                       </tbody>
                       <tfoot>
                         <tr>
-                            <th colspan="5" style="text-align:right">Total MXN:</th>
+                            <th colspan="7" style="text-align:right">Total MXN:</th>
                             <th></th>
                         </tr>
                         <tr>
-                            <th colspan="5" style="text-align:right">Total USD:</th>
+                            <th colspan="7" style="text-align:right">Total USD:</th>
                             <th></th>
                         </tr>
                     </tfoot>
@@ -149,13 +153,13 @@ Reportes | @parent
 const app = new Vue({
     el: '#content',
     data: {
-      cotizaciones: {!! json_encode($cotizaciones) !!},
+      pagos: {!! json_encode($pagos) !!},
       fecha_ini: '',
       fecha_fin: '',
-      valor_clientes:'Clientes',
+      valor_proveedores:'Proveedores',
       valor_proyectos:'Proyectos',
-      valor_ids:'Cotización',
-      datos_select:{clientes:[], proyectos:[], ids:[]},   
+      valor_compras:'Numero de compra',
+      datos_select:{proveedores:[], proyectos:[], compras:[]},   
       tabla: {},
       locale: localeES
     },
@@ -166,23 +170,24 @@ const app = new Vue({
           "order":[],
           initComplete: function () {
             
-            //Crear y llenar los select para clientes 
-            vue.datos_select.clientes.push('Clientes')
-            vue.datos_select.clientes.push('');
-            this.api().column(2).data().sort().unique().each(function(d,j){   
-              vue.datos_select.clientes.push(d);
+            //Crear y llenar los select para proveedores 
+            vue.datos_select.proveedores.push('Proveedores')
+            vue.datos_select.proveedores.push('');
+            this.api().column(2).data().sort().unique().each(function(d,j){
+              console.log(d);     
+              vue.datos_select.proveedores.push((d.replace("&amp;", " &")));
             });
-            //Crear y llenar los select para clientes 
+            //Crear y llenar los select para proyecto 
             vue.datos_select.proyectos.push('Proyectos')
             vue.datos_select.proyectos.push('');
-            this.api().column(3).data().sort().unique().each(function(d,j){   
+            this.api().column(4).data().sort().unique().each(function(d,j){   
               vue.datos_select.proyectos.push(d);
             });
 
-            vue.datos_select.ids.push('Cotización')
-            vue.datos_select.ids.push('');
+            vue.datos_select.compras.push('Numero de compra')
+            vue.datos_select.compras.push('');
             this.api().column(1).data().sort().unique().each(function(d,j){   
-              vue.datos_select.ids.push(d);
+              vue.datos_select.compras.push(d);
             });
           },
 
@@ -197,7 +202,7 @@ const app = new Vue({
                         i : 0;
             };
             //datos de la tabla con filtros aplicados
-            var datos= api.columns([4,5], {search: 'applied'}).data();
+            var datos= api.columns([6,7], {search: 'applied'}).data();
             var totalMxn = 0;
             var totalUsd = 0;
             //suma de montos
@@ -220,9 +225,9 @@ const app = new Vue({
       });
       $("#fechas_container").append($("#fecha_ini_control"));
       $("#fechas_container").append($("#fecha_fin_control"));
-      $("#fechas_container").append($("#select_clientes"));
+      $("#fechas_container").append($("#select_proveedores"));
       $("#fechas_container").append($("#select_proyectos"));
-      $("#fechas_container").append($("#select_ids"));
+      $("#fechas_container").append($("#select_compras"));
 
       $.fn.dataTableExt.afnFiltering.push(
         function( settings, data, dataIndex ) {
@@ -249,23 +254,26 @@ const app = new Vue({
       fecha_fin: function (val) {
         this.tabla.draw();
       },
-      valor_clientes:function(val){
-        this.tabla.columns(2).search(this.valor_clientes).draw();
+      valor_proveedores:function(val){
+        this.tabla.columns(2).search(this.valor_proveedores).draw();
       },
       valor_proyectos:function(val){
-        this.tabla.columns(3).search(this.valor_proyectos).draw();
+        this.tabla.columns(4).search(this.valor_proyectos).draw();
       },
-      valor_ids:function(val){
-        this.tabla.columns(1).search(this.valor_ids).draw();
+      valor_compras:function(val){
+        this.tabla.columns(1).search(this.valor_compras).draw();
       },
     },
     filters:{
         formatoMoneda(numero){
-        return accounting.formatMoney(numero, "$", 2);
+            return accounting.formatMoney(numero, "$", 2);
         },
         formatoCurrency(valor){
-        return valor=='Dolares'?'USD':'MXN';
-        }
+            return valor=='Dolares'?'USD':'MXN';
+        },
+        date(value){
+  			return moment(value, 'YYYY-MM-DD  hh:mm:ss').format('DD/MM/YYYY');
+      },
     },
     methods: {
       dateParser(value){

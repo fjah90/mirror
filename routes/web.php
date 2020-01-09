@@ -92,8 +92,12 @@ Route::middleware('auth')->group(function () {
         Route::post('/proyectos-aprobados/listado', 'ProyectosAprobadosController@listado');
 
         Route::get('/reportes/cotizaciones', 'ReportesController@cotizaciones');
+        Route::get('/reportes/cobros', 'ReportesController@cobros');
         Route::get('/reportes/compras', 'ReportesController@compras');
+        Route::get('/reportes/pagos', 'ReportesController@pagos');
         Route::get('/reportes/cuentaCliente', 'ReportesController@cuentaCliente');
+        Route::get('/reportes/saldoProveedores', 'ReportesController@saldoProveedores');
+        Route::get('/reportes/utilidades', 'ReportesController@utilidades');
 
     });
 
