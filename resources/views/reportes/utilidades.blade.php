@@ -123,11 +123,21 @@ Reportes | @parent
                       </tbody>
                       <tfoot>
                         <tr>
-                            <th colspan="7" style="text-align:right">Total MXN:</th>
+                            <th colspan="5" style="text-align:right"></th>
+                            <th>Total Ventas</th>
+                            <th>Total Costo</th>
+                            <th>Total Utilidad</th>
+                        </tr>
+                        <tr>
+                            <th colspan="5" style="text-align:right">MXN:</th>
+                            <th></th>
+                            <th></th>
                             <th></th>
                         </tr>
                         <tr>
-                            <th colspan="7" style="text-align:right">Total USD:</th>
+                            <th colspan="5" style="text-align:right">USD:</th>
+                            <th></th>
+                            <th></th>
                             <th></th>
                         </tr>
                     </tfoot>
@@ -173,8 +183,7 @@ const app = new Vue({
             //Crear y llenar los select para cotizaciones 
             vue.datos_select.cotizaciones.push('Cotizaciones')
             vue.datos_select.cotizaciones.push('');
-            this.api().column(0).data().sort().unique().each(function(d,j){
-              console.log(d);     
+            this.api().column(0).data().sort().unique().each(function(d,j){     
               vue.datos_select.cotizaciones.push((d.replace("&amp;", " &")));
             });
             //Crear y llenar los select para proyecto 
@@ -201,8 +210,8 @@ const app = new Vue({
                     typeof i === 'number' ?
                         i : 0;
             };
-            //datos de la tabla con filtros aplicados
-            var datos= api.columns([3,4,6,7], {search: 'applied'}).data();
+            //datos de la tabla con filtros aplicados calcular costo
+            var datos= api.columns([6,4], {search: 'applied'}).data();
             var totalMxn = 0;
             var totalUsd = 0;
             //suma de montos
@@ -213,14 +222,37 @@ const app = new Vue({
                     totalMxn+=formato(element)
                 }
             });
+            //datos de la tabla con filtros aplicados calcular venta
+            var datos= api.columns([3,4,0], {search: 'applied'}).data();
+            var numeroCotizacion=[];
+            var ventaMxn = 0;
+            var ventaUsd = 0;
+            //suma de montos
+            datos[0].forEach(function(element, index){
+                if(numeroCotizacion.includes(datos[2][index])){
+
+                }else{
+                    numeroCotizacion.push(datos[2][index])
+                    if(datos[1][index]=="Dolares"){
+                        ventaUsd+=formato(element)
+                    }else{
+                        ventaMxn+=formato(element)
+                    }
+                }    
+            });
  
             // Actualizar
-            var nCells = row.getElementsByTagName('th');
-            nCells[1].innerHTML = accounting.formatMoney(totalMxn, "$", 2);
-
-            var secondRow = $(row).next()[0]; 
+            var secondRow =$(row).next()[0];
             var nCells = secondRow.getElementsByTagName('th');
-            nCells[1].innerHTML = accounting.formatMoney(totalUsd, "$", 2);
+            nCells[1].innerHTML = accounting.formatMoney(ventaMxn, "$", 2);
+            nCells[2].innerHTML = accounting.formatMoney(totalMxn, "$", 2);
+            nCells[3].innerHTML = accounting.formatMoney(ventaMxn-totalMxn, "$", 2);
+
+            var thirdRow = $(row).next().next()[0]; 
+            var nCells = thirdRow.getElementsByTagName('th');
+            nCells[1].innerHTML = accounting.formatMoney(ventaUsd, "$", 2);
+            nCells[2].innerHTML = accounting.formatMoney(totalUsd, "$", 2);
+            nCells[3].innerHTML = accounting.formatMoney(ventaUsd-totalUsd, "$", 2);
         }
       });
       $("#fechas_container").append($("#fecha_ini_control"));
