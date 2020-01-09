@@ -255,8 +255,8 @@ const app = new Vue({
             nCells[3].innerHTML = accounting.formatMoney(ventaUsd-totalUsd, "$", 2);
         }
       });
-      $("#fechas_container").append($("#fecha_ini_control"));
-      $("#fechas_container").append($("#fecha_fin_control"));
+    //   $("#fechas_container").append($("#fecha_ini_control"));
+    //   $("#fechas_container").append($("#fecha_fin_control"));
       $("#fechas_container").append($("#select_cotizaciones"));
       $("#fechas_container").append($("#select_proyectos"));
       $("#fechas_container").append($("#select_clientes"));
