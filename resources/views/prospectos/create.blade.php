@@ -12,6 +12,33 @@
   font-size: 10px;
   cursor: pointer;
 }
+/* esconder los pasos: */
+.tab {
+  display: none;
+}
+
+/* hacer los indicadores para los pasos */
+.step {
+  height: 15px;
+  width: 15px;
+  margin: 0 2px;
+  background-color: #bbbbbb;
+  border: none;
+  border-radius: 50%;
+  display: inline-block;
+  opacity: 0.5;
+}
+
+/* Marcar el paso actual: */
+.step.active {
+  opacity: 1;
+}
+
+/* Marcar los pasos validos */
+.step.finish {
+  background-color: #4CAF50;
+}
+
 </style>
 @stop
 
@@ -29,181 +56,221 @@
           <div class="panel-heading">
             <h3 class="panel-title">Nuevo Proyecto</h3>
           </div>
+          {{-- <div>
+            <h2>Wizard generated from HTML</h2>
+			      <ul id="steps" class="step"></ul>
+          </div> --}}
           <div class="panel-body">
-            <form class="" @submit.prevent="guardar()">
-              <div class="row">
-                <div class="col-md-4">
+            <form class="" @submit.prevent="guardar()" id="formulario">
+              <div class="tab">
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label class="control-label">Cliente</label>
+                      <select class="form-control" name="cliente_id" v-model='prospecto.cliente_id' required>
+                        <option v-for="(cliente, index) in clientes" v-bind:value="cliente.id" >
+                          @{{ cliente.nombre }}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                <div class="col-md-2">
                   <div class="form-group">
-                    <label class="control-label">Cliente</label>
-                    <select class="form-control" name="cliente_id" v-model='prospecto.cliente_id' required>
-                      @foreach($clientes as $cliente)
-                        <option value="{{$cliente->id}}">{{$cliente->nombre}}</option>
-                      @endforeach
-                    </select>
+                    <label class="control-label">Registrar cliente</label>
+                    <button type="button" id="show-modal" @click="modalCliente = true" class="btn btn-effect-ripple btn-primary form-control">Nuevo Cliente</button>
+                    <!-- use the modal component, pass in the prop -->
+                    <modal v-if="modalCliente" @close="modalCliente = false">
                   </div>
                 </div>
-                <div class="col-md-8">
-                  <div class="form-group">
-                    <label class="control-label">Nombre de Proyecto</label>
-                    <input name="nombre" class="form-control" v-model="prospecto.nombre" required />
+                </div>
+                <div class="row">
+                  <div class="col-md-8">
+                    <div class="form-group">
+                      <label class="control-label">Nombre de Proyecto</label>
+                      <input name="nombre" class="form-control" v-model="prospecto.nombre" required />
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label class="control-label">Descripción del Proyecto CRM</label>
+                      <textarea name="descripcion" rows="3" cols="80" class="form-control" v-model="prospecto.descripcion" required></textarea>
+                    </div>
                   </div>
                 </div>
               </div>
-              <div class="row">
-                <div class="col-md-12">
-                  <div class="form-group">
-                    <label class="control-label">Descripción del Proyecto CRM</label>
-                    <textarea name="descripcion" rows="3" cols="80" class="form-control" v-model="prospecto.descripcion" required></textarea>
+              <div class="tab">
+                <div class="row">
+                  <div class="col-sm-12">
+                    <h4>Actividad</h4>
+                    <hr />
                   </div>
                 </div>
-              </div>
-              <div class="row">
-                <div class="col-sm-12">
-                  <h4>Actividad</h4>
-                  <hr />
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-4">
-                  <div class="form-group">
-                    <label for="ultima_actividad.fecha" class="control-label">Fecha</label>
-                    <br />
-                    <dropdown>
-                      <div class="input-group">
-                        <div class="input-group-btn">
-                          <btn class="dropdown-toggle" style="background-color:#fff;">
-                            <i class="fas fa-calendar"></i>
-                          </btn>
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label for="ultima_actividad.fecha" class="control-label">Fecha</label>
+                      <br />
+                      <dropdown>
+                        <div class="input-group">
+                          <div class="input-group-btn">
+                            <btn class="dropdown-toggle" style="background-color:#fff;">
+                              <i class="fas fa-calendar"></i>
+                            </btn>
+                          </div>
+                          <input class="form-control" type="text" name="fecha"
+                            v-model="ultima_actividad.fecha" placeholder="DD/MM/YYYY" readonly
+                          />
                         </div>
-                        <input class="form-control" type="text" name="fecha"
-                          v-model="ultima_actividad.fecha" placeholder="DD/MM/YYYY" readonly
-                        />
-                      </div>
-                      <template slot="dropdown">
-                        <li>
-                          <date-picker :locale="locale" :today-btn="false" :clear-btn="false"
-                          format="dd/MM/yyyy" :date-parser="dateParser" v-model="ultima_actividad.fecha"/>
-                        </li>
-                      </template>
-                    </dropdown>
+                        <template slot="dropdown">
+                          <li>
+                            <date-picker :locale="locale" :today-btn="false" :clear-btn="false"
+                            format="dd/MM/yyyy" :date-parser="dateParser" v-model="ultima_actividad.fecha"/>
+                          </li>
+                        </template>
+                      </dropdown>
+                    </div>
                   </div>
-                </div>
-                <div class="col-md-4">
-                  <div class="form-group">
-                    <label class="control-label">Tipo</label>
-                    <select class="form-control" name="tipo" v-model='ultima_actividad.tipo_id' >
-                      @foreach($tipos as $tipo)
-                      <option value="{{$tipo->id}}">{{$tipo->nombre}}</option>
-                      @endforeach
-                      <option value="0">Otro</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="col-md-4" v-if="ultima_actividad.tipo_id==0">
-                  <div class="form-group">
-                    <label class="control-label">Especifique</label>
-                    <input class="form-control" type="text" name="tipo" v-model="ultima_actividad.tipo"/>
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-sm-10">
-                  <label class="control-label">Productos Ofrecidos</label>
-                  <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Producto"
-                      v-model="ofrecido.nombre" @click="openCatalogo=true"
-                      readonly
-                    />
-                    <span class="input-group-btn">
-                      <button class="btn btn-default" type="button" @click="openCatalogo=true">
-                        <i class="far fa-edit"></i>
-                      </button>
-                    </span>
-                  </div>
-                </div>
-                <div class="col-sm-2" style="padding-top: 25px;">
-                  <button type="button" class="btn btn-primary" @click="agregarProducto()">
-                    Agregar
-                  </button>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-sm-12">
-                  <ul style="list-style-type:none; padding:0;">
-                    <li style="margin-top:5px;" v-for="(ofrecido, index) in ultima_actividad.ofrecidos">
-                      <button type="button" class="btn btn-xxs btn-danger" @click="removerProducto(index)">
-                        <i class="fas fa-times"></i>
-                      </button>
-                      @{{ofrecido.nombre}}
-                    </li>
-                  </ul>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-sm-12">
-                  <label class="control-label">Descripción Actividad</label>
-                  <textarea name="descripcion" rows="5" cols="80" class="form-control" v-model="ultima_actividad.descripcion"></textarea>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-sm-12">
-                  <h4>Próxima Actividad</h4>
-                  <hr />
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-4">
-                  <div class="form-group">
-                    <label for="proxima_actividad.fecha" class="control-label">Fecha</label>
-                    <br />
-                    <dropdown>
-                      <div class="input-group">
-                        <div class="input-group-btn">
-                          <btn class="dropdown-toggle" style="background-color:#fff;">
-                            <i class="fas fa-calendar"></i>
-                          </btn>
-                        </div>
-                        <input class="form-control" type="text" name="fecha"
-                          v-model="proxima_actividad.fecha" placeholder="DD/MM/YYYY" readonly
-                        />
-                      </div>
-                      <template slot="dropdown">
-                        <li>
-                          <date-picker :locale="locale" :today-btn="false" :clear-btn="false"
-                          format="dd/MM/yyyy" :date-parser="dateParser" v-model="proxima_actividad.fecha"/>
-                        </li>
-                      </template>
-                    </dropdown>
-                  </div>
-                </div>
-                <div class="col-md-4">
-                  <div class="form-group">
-                    <label class="control-label">Tipo</label>
-                    <select class="form-control" name="tipo" v-model='proxima_actividad.tipo_id'>
-                      @foreach($tipos as $tipo)
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label class="control-label">Tipo</label>
+                      <select class="form-control" name="tipo" v-model='ultima_actividad.tipo_id' >
+                        @foreach($tipos as $tipo)
                         <option value="{{$tipo->id}}">{{$tipo->nombre}}</option>
-                      @endforeach
+                        @endforeach
                         <option value="0">Otro</option>
-                    </select>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-md-4" v-if="ultima_actividad.tipo_id==0">
+                    <div class="form-group">
+                      <label class="control-label">Especifique</label>
+                      <input class="form-control" type="text" name="tipo" v-model="ultima_actividad.tipo"/>
+                    </div>
                   </div>
                 </div>
-                <div class="col-md-4" v-if="proxima_actividad.tipo_id==0">
-                  <div class="form-group">
-                    <label class="control-label">Especifique</label>
-                    <input class="form-control" type="text" name="tipo" v-model="proxima_actividad.tipo"/>
+                <div class="row">
+                  <div class="col-sm-8">
+                    <label class="control-label">Productos Ofrecidos</label>
+                    <div class="input-group">
+                      <input type="text" class="form-control" placeholder="Producto"
+                        v-model="ofrecido.nombre" @click="openCatalogo=true"
+                        readonly
+                      />
+                      <span class="input-group-btn">
+                        <button class="btn btn-default" type="button" @click="openCatalogo=true">
+                          <i class="far fa-edit"></i>
+                        </button>
+                      </span>
+                    </div>
+                  </div>
+                  <div class="col-sm-2" style="padding-top: 25px;">
+                    <button type="button" class="btn btn-primary" @click="agregarProducto()">
+                      Agregar
+                    </button>
+                  </div>
+                  <div class="col-sm-2" style="padding-top: 25px;">
+                    <button type="button" class="btn btn-primary" @click="modalProducto=true">
+                      Registrar producto
+                    </button>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-12">
+                    <ul style="list-style-type:none; padding:0;">
+                      <li style="margin-top:5px;" v-for="(ofrecido, index) in ultima_actividad.ofrecidos">
+                        <button type="button" class="btn btn-xxs btn-danger" @click="removerProducto(index)">
+                          <i class="fas fa-times"></i>
+                        </button>
+                        @{{ofrecido.nombre}}
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-12">
+                    <label class="control-label">Descripción Actividad</label>
+                    <textarea name="descripcion" rows="5" cols="80" class="form-control" v-model="ultima_actividad.descripcion"></textarea>
                   </div>
                 </div>
               </div>
-              <div class="row" style="margin-top:25px;">
-                <div class="col-md-12 text-right">
-                  <a href="{{route('prospectos.index')}}" class="btn btn-default">
-                    Regresar
-                  </a>
-                  <button type="submit" class="btn btn-primary" :disabled="cargando">
-                    <i class="fas fa-save"></i>
-                    Guardar Prospecto
-                  </button>
+              <div class="tab">
+                <div class="row">
+                  <div class="col-sm-12">
+                    <h4>Próxima Actividad</h4>
+                    <hr />
+                  </div>
                 </div>
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label for="proxima_actividad.fecha" class="control-label">Fecha</label>
+                      <br />
+                      <dropdown>
+                        <div class="input-group">
+                          <div class="input-group-btn">
+                            <btn class="dropdown-toggle" style="background-color:#fff;">
+                              <i class="fas fa-calendar"></i>
+                            </btn>
+                          </div>
+                          <input class="form-control" type="text" name="fecha"
+                            v-model="proxima_actividad.fecha" placeholder="DD/MM/YYYY" readonly
+                          />
+                        </div>
+                        <template slot="dropdown">
+                          <li>
+                            <date-picker :locale="locale" :today-btn="false" :clear-btn="false"
+                            format="dd/MM/yyyy" :date-parser="dateParser" v-model="proxima_actividad.fecha"/>
+                          </li>
+                        </template>
+                      </dropdown>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label class="control-label">Tipo</label>
+                      <select class="form-control" name="tipo" v-model='proxima_actividad.tipo_id'>
+                        @foreach($tipos as $tipo)
+                          <option value="{{$tipo->id}}">{{$tipo->nombre}}</option>
+                        @endforeach
+                          <option value="0">Otro</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-md-4" v-if="proxima_actividad.tipo_id==0">
+                    <div class="form-group">
+                      <label class="control-label">Especifique</label>
+                      <input class="form-control" type="text" name="tipo" v-model="proxima_actividad.tipo"/>
+                    </div>
+                  </div>
+                </div>
+                <div class="row" style="margin-top:25px;">
+                  <div class="col-md-12 text-right">
+                    <a href="{{route('prospectos.index')}}" class="btn btn-default">
+                      Cancelar
+                    </a>
+                    <button type="submit" class="btn btn-primary" :disabled="cargando">
+                      <i class="fas fa-save"></i>
+                      Guardar Prospecto
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!--controles wizard-->
+              <div style="overflow:auto;">
+                <div style="float:right;">
+                  <button type="button" class="btn btn-white rounded" id="prevBtn" @click="siguienteTab(-1)">< Anterior</button>
+                  <button type="button" class="btn btn-white rounded" id="nextBtn" @click="siguienteTab(1)">Siguiente ></button>
+                </div>
+              </div>
+
+              <!--indicadore de pasos en proceso-->
+              <div style="text-align:center;margin-top:40px;">
+                <span class="step"></span>
+                <span class="step"></span>
+                <span class="step"></span>
               </div>
             </form>
           </div>
@@ -240,18 +307,38 @@
       </div>
     </modal>
     <!-- /.Catalogo Productos Modal -->
+    
+    <!-- Nuevo Cliente Modal-->
+    <modal v-model="modalCliente" title="Registrar Cliente" :footer="false">
+      <iframe id="theFrame" src="../clientes/crearNacional?layout=iframe" style="width:100%; height:700px;" frameborder="0">
+      </iframe>
+    </modal>
+    <!-- /.Nuevo Cliente Modal -->
 
+    <!-- Nuevo Producto Modal-->
+    <modal v-model="modalProducto" title="Registrar Producto" :footer="false">
+      <iframe id="theFrame" src="../productos/crear?layout=iframe" style="width:100%; height:700px;" frameborder="0">
+      </iframe>
+    </modal>
+    <!-- /.Nuevo Producto Modal -->
   </section>
   <!-- /.content -->
 @stop
 
 {{-- footer_scripts --}}
 @section('footer_scripts')
+<script src="{{ URL::asset('js/plugins/zangdar/zangdar.min.js') }}" ></script>
+
 
 <script>
+
 const app = new Vue({
     el: '#content',
     data: {
+      tabActual: 0,
+      modalCliente:false,
+      modalProducto:false,
+      tablaProductos:{},
       locale: localeES,
       prospecto: {
         cliente_id: '',
@@ -271,14 +358,80 @@ const app = new Vue({
         tipo: '',
       },
       productos: {!! json_encode($productos) !!},
+      clientes: {!! json_encode($clientes) !!},
       ofrecido: {nombre:''},
       openCatalogo: false,
       cargando: false,
     },
     mounted(){
-      $("#tablaProductos").DataTable({dom: 'ftp'});
+      this.tablaProductos= $("#tablaProductos").DataTable({"order": [[ 0, "asc" ]]});
+      this.mostrarTab(this.tabActual);
+      var vue=this;
+      //escuchar Iframe
+      window.addEventListener('message',function(e) {
+          if(e.data.tipo=="cliente"){
+            vue.clientes.push({id:e.data.object.id, nombre:e.data.object.nombre});
+            vue.prospecto.cliente_id=e.data.object.id;
+            vue.modalCliente=false;
+          }
+          if(e.data.tipo=="producto"){
+            vue.tablaProductos.destroy();
+            vue.productos.push(e.data.object);
+            vue.ofrecido=e.data.object;    
+            vue.modalProducto=false;
+            Vue.nextTick(function() {vue.tablaProductos=$("#tablaProductos").DataTable({"order": [[ 0, "asc" ]]})});
+            
+          }
+      },false);
     },
     methods: {
+      mostrarTab(tab){
+        var x = $(".tab");
+        x.eq(tab).show();
+        if (tab == 0) {
+          $("#prevBtn").hide();
+        } else {
+          $("#prevBtn").css('display', 'inline');
+        }
+        if (tab == (x.length - 1)) {
+          $("#nextBtn").hide();
+        } else {
+          $("#nextBtn").show();
+        }
+        this.arreglarIndicadores();
+      },
+      siguienteTab(n) {
+        var x = $(".tab");
+        if (n == 1 && !this.validarForm()) return false;
+        x.eq(this.tabActual).hide();
+        this.tabActual=this.tabActual+n;
+        this.mostrarTab(this.tabActual);
+      },
+      validarForm() {
+        var x, y, i, valido = true;
+        x = $(".tab");
+        y = x.eq(this.tabActual).find('.form-control');
+        console.log(y)
+        for (i = 0; i < y.length; i++) {
+          if (! y.get(i).checkValidity()) {
+            valido = false;
+            y.get(i).reportValidity();
+            break;
+          }
+        }
+        if (valido) {
+          $(".step").eq(this.tabActual).addClass("finish");
+        }
+        return valido; 
+      },
+      arreglarIndicadores() {
+        var i;
+        var x = $(".step");
+        for (i = 0; i < x.length; i++) {
+          x.eq(i).removeClass('active');
+        }
+       x.eq(this.tabActual).addClass("active");
+      },
       formatoMoneda(numero){
         return accounting.formatMoney(numero, "$ ", 2);
       },
@@ -319,7 +472,7 @@ const app = new Vue({
             text: "",
             type: "success"
           }).then(()=>{
-            window.location = "/prospectos";
+            window.location = "/prospectos/"+data.prospecto.id+"/cotizar";
           });
         })
         .catch(({response}) => {

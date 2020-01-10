@@ -151,7 +151,7 @@ class ProspectosController extends Controller
         }
       }
 
-      return response()->json(['success' => true, "error" => false], 200);
+      return response()->json(['success' => true, "error" => false, "prospecto"=>$prospecto], 200);
     }
 
     /**

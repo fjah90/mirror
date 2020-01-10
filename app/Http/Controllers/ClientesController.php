@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Validator;
-use Illuminate\Http\Request;
-use App\Models\TipoCliente;
 use App\Models\Cliente;
-use App\Models\ClienteContacto;
+use App\Models\TipoCliente;
 use App\User;
+use Illuminate\Http\Request;
 use Mail;
+use Validator;
 
 class ClientesController extends Controller
 {
@@ -19,32 +18,32 @@ class ClientesController extends Controller
      */
     public function index()
     {
-      $clientesNacionales = Cliente::with('tipo')->where('nacional',1)->get();
-      $clientesExtranjeros = Cliente::with('tipo')->where('nacional',0)->get();
-      $usuarios = User::all();
-      $tipos = TipoCliente::all();
+        $clientesNacionales  = Cliente::with('tipo')->where('nacional', 1)->get();
+        $clientesExtranjeros = Cliente::with('tipo')->where('nacional', 0)->get();
+        $usuarios            = User::all();
+        $tipos               = TipoCliente::all();
 
-      return view('catalogos.clientes.index', compact('clientesNacionales','clientesExtranjeros','usuarios','tipos'));
+        return view('catalogos.clientes.index', compact('clientesNacionales', 'clientesExtranjeros', 'usuarios', 'tipos'));
     }
 
     public function listado(Request $request)
     {
-      $clientesNacionales = Cliente::with('tipo')->where('nacional', 1);
-      $clientesExtranjeros = Cliente::with('tipo')->where('nacional', 0);
-      if ($request->id != 'Todos'){
-        $clientesNacionales = $clientesNacionales->where('usuario_id', $request->id);
-        $clientesExtranjeros = $clientesExtranjeros->where('usuario_id', $request->id);
-      }
-      if ($request->tipo != 'Todos'){
-        $clientesNacionales = $clientesNacionales->where('tipo_id', $request->tipo);
-        $clientesExtranjeros = $clientesExtranjeros->where('tipo_id', $request->tipo);
-      }
-      $clientesNacionales = $clientesNacionales->get();
-      $clientesExtranjeros = $clientesExtranjeros->get();
-      
-      return response()->json(['success' => true, "error" => false, 
-        'clientesNacionales' => $clientesNacionales, 'clientesExtranjeros' => $clientesExtranjeros 
-      ], 200);
+        $clientesNacionales  = Cliente::with('tipo')->where('nacional', 1);
+        $clientesExtranjeros = Cliente::with('tipo')->where('nacional', 0);
+        if ($request->id != 'Todos') {
+            $clientesNacionales  = $clientesNacionales->where('usuario_id', $request->id);
+            $clientesExtranjeros = $clientesExtranjeros->where('usuario_id', $request->id);
+        }
+        if ($request->tipo != 'Todos') {
+            $clientesNacionales  = $clientesNacionales->where('tipo_id', $request->tipo);
+            $clientesExtranjeros = $clientesExtranjeros->where('tipo_id', $request->tipo);
+        }
+        $clientesNacionales  = $clientesNacionales->get();
+        $clientesExtranjeros = $clientesExtranjeros->get();
+
+        return response()->json(['success' => true, "error"                              => false,
+            'clientesNacionales'               => $clientesNacionales, 'clientesExtranjeros' => $clientesExtranjeros,
+        ], 200);
     }
 
     /**
@@ -52,22 +51,22 @@ class ClientesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-      $tipos = TipoCliente::all();
-      $nacional = true;
-      $usuarios = User::all()->pluck('name','id');
-
-      return view('catalogos.clientes.create', compact('tipos', 'nacional','usuarios'));
+        $layout   = $request->layout;
+        $tipos    = TipoCliente::all();
+        $nacional = true;
+        $usuarios = User::all()->pluck('name', 'id');
+        return view('catalogos.clientes.create', compact('tipos', 'nacional', 'usuarios', 'layout'));
     }
 
     public function createExtra()
     {
-      $tipos = TipoCliente::all();
-      $nacional = false;
-      $usuarios = User::all()->pluck('name','id');
+        $tipos    = TipoCliente::all();
+        $nacional = false;
+        $usuarios = User::all()->pluck('name', 'id');
 
-      return view('catalogos.clientes.create', compact('tipos', 'nacional','usuarios'));
+        return view('catalogos.clientes.create', compact('tipos', 'nacional', 'usuarios'));
     }
 
     /**
@@ -78,31 +77,31 @@ class ClientesController extends Controller
      */
     public function store(Request $request)
     {
-      $validator = Validator::make($request->all(), [
-        'usuario_id' => 'required',
-        'tipo_id' => 'required',
-        'nombre' => 'required',
-      ]);
+        $validator = Validator::make($request->all(), [
+            'usuario_id' => 'required',
+            'tipo_id'    => 'required',
+            'nombre'     => 'required',
+        ]);
 
-      if ($validator->fails()) {
-        $errors = $validator->errors()->all();
-        return response()->json([
-          "success" => false, "error" => true, "message" => $errors[0]
-        ], 422);
-      }
+        if ($validator->fails()) {
+            $errors = $validator->errors()->all();
+            return response()->json([
+                "success" => false, "error" => true, "message" => $errors[0],
+            ], 422);
+        }
 
-      $cliente = Cliente::create($request->all());
-      $cliente->update(['usuario_nombre'=>$cliente->usuario->name]);
+        $cliente = Cliente::create($request->all());
+        $cliente->update(['usuario_nombre' => $cliente->usuario->name]);
 
-      if(auth()->user()->tipo!=='Administrador'){
-        $mensaje = "El usuario ".$cliente->usuario_nombre;
-        $mensaje.=" ha dado de alta a un nuevo cliente con nombre: ".$cliente->nombre;
-        Mail::send('email', ['mensaje' => $mensaje], function ($message){
-          $message->to('abraham@intercorp.mx')->subject('Nueva Alta de Cliente');
-        });
-      }
+        if (auth()->user()->tipo !== 'Administrador') {
+            $mensaje = "El usuario " . $cliente->usuario_nombre;
+            $mensaje .= " ha dado de alta a un nuevo cliente con nombre: " . $cliente->nombre;
+            Mail::send('email', ['mensaje' => $mensaje], function ($message) {
+                $message->to('abraham@intercorp.mx')->subject('Nueva Alta de Cliente');
+            });
+        }
 
-      return response()->json(['success' => true, "error" => false, "cliente"=>$cliente],200);
+        return response()->json(['success' => true, "error" => false, "cliente" => $cliente], 200);
     }
 
     /**
@@ -113,8 +112,8 @@ class ClientesController extends Controller
      */
     public function show(Cliente $cliente)
     {
-      $cliente->load(['tipo', 'contactos']);
-      return view('catalogos.clientes.show', compact('cliente'));
+        $cliente->load(['tipo', 'contactos']);
+        return view('catalogos.clientes.show', compact('cliente'));
     }
 
     /**
@@ -125,12 +124,12 @@ class ClientesController extends Controller
      */
     public function edit(Cliente $cliente, Request $request)
     {
-      $tipos = TipoCliente::all();
-      $usuarios = User::all()->pluck('name','id');
-      $cliente->load(['tipo', 'contactos.emails','contactos.telefonos']);
-      $tab = ($request->has('contactos'))?1:0;
+        $tipos    = TipoCliente::all();
+        $usuarios = User::all()->pluck('name', 'id');
+        $cliente->load(['tipo', 'contactos.emails', 'contactos.telefonos']);
+        $tab = ($request->has('contactos')) ? 1 : 0;
 
-      return view('catalogos.clientes.edit', compact(['cliente','tipos','usuarios','tab']));
+        return view('catalogos.clientes.edit', compact(['cliente', 'tipos', 'usuarios', 'tab']));
     }
 
     /**
@@ -142,22 +141,22 @@ class ClientesController extends Controller
      */
     public function update(Request $request, Cliente $cliente)
     {
-      $validator = Validator::make($request->all(), [
-        'tipo_id' => 'required',
-        'nombre' => 'required',
-      ]);
+        $validator = Validator::make($request->all(), [
+            'tipo_id' => 'required',
+            'nombre'  => 'required',
+        ]);
 
-      if ($validator->fails()) {
-        $errors = $validator->errors()->all();
-        return response()->json([
-          "success" => false, "error" => true, "message" => $errors[0]
-        ], 422);
-      }
+        if ($validator->fails()) {
+            $errors = $validator->errors()->all();
+            return response()->json([
+                "success" => false, "error" => true, "message" => $errors[0],
+            ], 422);
+        }
 
-      $cliente->update($request->except('contactos'));
-      $cliente->update(['usuario_nombre'=>$cliente->usuario->name]);
+        $cliente->update($request->except('contactos'));
+        $cliente->update(['usuario_nombre' => $cliente->usuario->name]);
 
-      return response()->json(['success' => true, "error" => false], 200);
+        return response()->json(['success' => true, "error" => false], 200);
     }
 
     /**
@@ -168,7 +167,7 @@ class ClientesController extends Controller
      */
     public function destroy(Cliente $cliente)
     {
-      $cliente->delete();
-      return response()->json(['success' => true, "error" => false], 200);
+        $cliente->delete();
+        return response()->json(['success' => true, "error" => false], 200);
     }
 }
