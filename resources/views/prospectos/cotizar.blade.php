@@ -1331,6 +1331,7 @@ const app = new Vue({
           type: "success"
         }).then(()=>{
           $('a[download="C '+data.cotizacion.numero+' Intercorp '+this.prospecto.nombre+'.pdf"]')[0].click();
+          window.location.reload(true);
         });
       })
       .catch(({response}) => {
