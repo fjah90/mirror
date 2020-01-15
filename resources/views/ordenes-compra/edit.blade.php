@@ -97,7 +97,7 @@
                 <label class="control-label">IVA</label>
                 <select class="form-control" name="iva" v-model="orden.iva" required>
                   <option value="0">No</option>
-                  <option value="1">Si</option>
+                  <option value="1" >Si</option>
                 </select>
               </div>
               <div class="col-md-4">
@@ -356,6 +356,9 @@ const app = new Vue({
   },
   mounted(){
     var vue = this;
+    console.log(vue.orden.iva)
+    vue.orden.iva = vue.orden.proveedor.nacional? 1:0;
+    console.log(vue.orden.iva)
     $.fn.dataTableExt.afnFiltering.push(
       function( settings, data, dataIndex ) {
         var prov = data[1] || ""; // Our date column in the table

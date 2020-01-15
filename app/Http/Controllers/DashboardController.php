@@ -33,6 +33,7 @@ class DashboardController extends Controller
      */
     public function index()
     {
+        $userId             = auth()->user()->id;
         $clientesId         = auth()->user()->clientes()->get()->pluck('id');
         $clientes           = sizeof($clientesId);
         $proyectosAprobados = ProyectoAprobado::whereIn('cliente_id', $clientesId)->get()->count();
@@ -42,14 +43,15 @@ class DashboardController extends Controller
 
         $cotizaciones = ProspectoCotizacion::leftjoin('prospectos', 'prospectos_cotizaciones.prospecto_id', '=', 'prospectos.id')
             ->leftjoin('clientes', 'prospectos.cliente_id', '=', 'clientes.id')
-            ->select('prospectos_cotizaciones.*', 'prospectos.nombre as prospecto_nombre', 'prospectos.id as prospecto_id', 'clientes.nombre as cliente_nombre')
-            ->whereIn('prospecto_id', $prospectosId)->orderBy('fecha', 'desc')->get();
+            ->leftjoin('users', 'prospectos_cotizaciones.user_id', '=', 'users.id')
+            ->select('prospectos_cotizaciones.*', 'users.name as user_name', 'prospectos.nombre as prospecto_nombre', 'prospectos.id as prospecto_id', 'clientes.nombre as cliente_nombre')
+            ->where('prospectos_cotizaciones.user_id', '=', $userId)->orderBy('fecha', 'desc')->get();
 
         $cotizacionesAceptadas = ProspectoCotizacion::leftjoin('prospectos', 'prospectos_cotizaciones.prospecto_id', '=', 'prospectos.id')
             ->leftjoin('clientes', 'prospectos.cliente_id', '=', 'clientes.id')
             ->leftjoin('proyectos_aprobados', 'prospectos_cotizaciones.id', '=', 'proyectos_aprobados.cotizacion_id')
             ->select('prospectos_cotizaciones.*', 'prospectos.nombre as prospecto_nombre', 'prospectos.id as prospecto_id', 'clientes.nombre as cliente_nombre', 'proyectos_aprobados.id as id_aprobado')
-            ->whereIn('prospecto_id', $prospectosId)
+            ->where('prospectos_cotizaciones.user_id', '=', $userId)
             ->where('aceptada', true)
             ->orderBy('fecha', 'desc')->get();
 
@@ -116,9 +118,10 @@ class DashboardController extends Controller
 
         $cotizaciones = ProspectoCotizacion::leftjoin('prospectos', 'prospectos_cotizaciones.prospecto_id', '=', 'prospectos.id')
             ->leftjoin('clientes', 'prospectos.cliente_id', '=', 'clientes.id')
-            ->select('prospectos_cotizaciones.*', 'prospectos.nombre as prospecto_nombre', 'prospectos.id as prospecto_id', 'clientes.nombre as cliente_nombre');
+            ->leftjoin('users', 'prospectos_cotizaciones.user_id', '=', 'users.id')
+            ->select('prospectos_cotizaciones.*', 'users.name as user_name', 'prospectos.nombre as prospecto_nombre', 'prospectos.id as prospecto_id', 'clientes.nombre as cliente_nombre');
         if ($request->id != "todos") {
-            $cotizaciones->whereIn('prospecto_id', $prospectosId);
+            $cotizaciones->where('prospectos_cotizaciones.user_id', '=', $request->id);
         }
         $cotizaciones = $cotizaciones->orderBy('fecha', 'desc')->get();
 
@@ -127,7 +130,7 @@ class DashboardController extends Controller
             ->leftjoin('proyectos_aprobados', 'prospectos_cotizaciones.id', '=', 'proyectos_aprobados.cotizacion_id')
             ->select('prospectos_cotizaciones.*', 'prospectos.nombre as prospecto_nombre', 'prospectos.id as prospecto_id', 'clientes.nombre as cliente_nombre', 'proyectos_aprobados.id as id_aprobado');
         if ($request->id != "todos") {
-            $cotizacionesAceptadas->whereIn('prospecto_id', $prospectosId);
+            $cotizacionesAceptadas->where('prospectos_cotizaciones.user_id', '=', $request->id);
         }
         $cotizacionesAceptadas = $cotizacionesAceptadas->where('aceptada', true)->orderBy('fecha', 'desc')->get();
 

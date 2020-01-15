@@ -114,13 +114,13 @@
                             <i class="fas fa-user-check"></i>
                           </a>
                           <template v-else>
-                            <button class="btn btn-xs btn-primary" title="Aceptar"
-                              @click="aceptar.cotizacion_id=cotizacion.id; openAceptar=true;">
-                              <i class="fas fa-user-check"></i>
-                            </button>
                             <button class="btn btn-xs btn-warning" title="Editar"
                               @click="editar(index, cotizacion)">
                               <i class="fas fa-pencil-alt"></i>
+                            </button>
+                            <button class="btn btn-xs btn-primary" title="Aceptar"
+                              @click="aceptar.cotizacion_id=cotizacion.id; openAceptar=true;">
+                              <i class="fas fa-user-check"></i>
                             </button>
                           </template>
                         </td>
@@ -1331,6 +1331,7 @@ const app = new Vue({
           type: "success"
         }).then(()=>{
           $('a[download="C '+data.cotizacion.numero+' Intercorp '+this.prospecto.nombre+'.pdf"]')[0].click();
+          window.location.reload(true);
         });
       })
       .catch(({response}) => {

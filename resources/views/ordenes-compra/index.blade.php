@@ -74,16 +74,17 @@
                         <i class="far fa-file-pdf"></i>
                       </a>
                     </template>
-                    <a v-if="orden.status=='Pendiente'"
-                      class="btn btn-xs btn-warning" title="Comprar"
-                      :href="'/proyectos-aprobados/'+orden.proyecto_id+'/ordenes-compra/'+orden.id">
-                      <i class="fas fa-cash-register"></i>
-                    </a>
                     <a v-if="orden.status=='Pendiente' || orden.status=='Rechazada'"
                       class="btn btn-xs btn-success" title="Editar"
                       :href="'/proyectos-aprobados/'+orden.proyecto_id+'/ordenes-compra/'+orden.id+'/editar'">
                       <i class="fas fa-pencil-alt"></i>
                     </a>
+                    <a v-if="orden.status=='Pendiente'"
+                      class="btn btn-xs btn-warning" title="Comprar"
+                      :href="'/proyectos-aprobados/'+orden.proyecto_id+'/ordenes-compra/'+orden.id">
+                      <i class="fas fa-cash-register"></i>
+                    </a>
+                    
                     @role('Administrador')
                     <button v-if="orden.status=='Por Autorizar'" class="btn btn-xs btn-primary"
                       title="Aprobar" @click="ordenModal=orden; openAprobar=true;">

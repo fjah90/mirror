@@ -104,6 +104,7 @@ Reportes | @parent
                           <th class="text-center"><strong>Proyecto</strong></th>                    
                           <th class="text-center"><strong>Monto</strong></th>
                           <th class="text-center"><strong>Moneda</strong></th>
+                          <th class="text-center"><strong>Usuario</strong></th>
                         </tr>
                       </thead>
                       <tbody>
@@ -114,16 +115,17 @@ Reportes | @parent
                           <td>@{{cotizacion.prospecto_nombre}}</td>
                           <td>@{{cotizacion.total | formatoMoneda}}</td>
                           <td>@{{cotizacion.moneda}}</td>
+                          <td>@{{cotizacion.user_name}}</td>
                         </tr>
                         
                       </tbody>
                       <tfoot>
                         <tr>
-                            <th colspan="5" style="text-align:right">Total MXN:</th>
+                            <th colspan="6" style="text-align:right">Total MXN:</th>
                             <th></th>
                         </tr>
                         <tr>
-                            <th colspan="5" style="text-align:right">Total USD:</th>
+                            <th colspan="6" style="text-align:right">Total USD:</th>
                             <th></th>
                         </tr>
                     </tfoot>
