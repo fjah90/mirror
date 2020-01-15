@@ -114,13 +114,13 @@
                             <i class="fas fa-user-check"></i>
                           </a>
                           <template v-else>
-                            <button class="btn btn-xs btn-primary" title="Aceptar"
-                              @click="aceptar.cotizacion_id=cotizacion.id; openAceptar=true;">
-                              <i class="fas fa-user-check"></i>
-                            </button>
                             <button class="btn btn-xs btn-warning" title="Editar"
                               @click="editar(index, cotizacion)">
                               <i class="fas fa-pencil-alt"></i>
+                            </button>
+                            <button class="btn btn-xs btn-primary" title="Aceptar"
+                              @click="aceptar.cotizacion_id=cotizacion.id; openAceptar=true;">
+                              <i class="fas fa-user-check"></i>
                             </button>
                           </template>
                         </td>

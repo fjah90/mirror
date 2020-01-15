@@ -313,7 +313,7 @@ Dashboard | @parent
                       <td>@{{actividad.tipo_actividad}}</td>
                       <td>@{{actividad.fecha_formated}}</td>
                       <td>
-                          <a title="Ver" href="/prospectos/39" class="btn btn-info">
+                        <a title="Ver" :href="'/prospectos/'+actividad.prospecto_id" class="btn btn-info">
                             Ver <i class="far fa-eye"></i>
                           </a>
                       </td>
@@ -411,6 +411,7 @@ Dashboard | @parent
                       <th class="text-center"><strong>Número Cotización</strong></th>
                       <th class="text-center"><strong>Fecha</strong></th>                     
                       <th class="text-center"><strong>Total</strong></th>
+                      <th class="text-center"><strong>Usuario</strong></th>
                       <th class="text-center"><strong>Acciones</strong></th>
                     </tr>
                   </thead>
@@ -421,6 +422,7 @@ Dashboard | @parent
                       <td>@{{cotizacion.id}}</td>
                       <td>@{{cotizacion.fecha_formated}}</td>
                       <td>@{{cotizacion.total | formatoMoneda}} @{{cotizacion.moneda|formatoCurrency}}</td>
+                      <td>@{{cotizacion.user_name}}</td>
                       <td class="text-warning">
                           <a title="Ver" :href="'/prospectos/'+cotizacion.prospecto_id+'/cotizar'" class="btn btn-info">
                             Ver <i class="far fa-eye"></i>
