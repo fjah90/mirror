@@ -101,7 +101,8 @@ Reportes | @parent
                           <th class="text-center">Fecha</th>
                           <th class="text-center"><strong>Número Cotización</strong></th>
                           <th class="text-center"><strong>Cliente</strong></th>
-                          <th class="text-center"><strong>Proyecto</strong></th>                    
+                          <th class="text-center"><strong>Proyecto</strong></th>
+                          <th class="text-center"><strong>Marca</strong></th>
                           <th class="text-center"><strong>Monto</strong></th>
                           <th class="text-center"><strong>Moneda</strong></th>
                           <th class="text-center"><strong>Usuario</strong></th>
@@ -111,21 +112,26 @@ Reportes | @parent
                         <tr v-for="(cotizacion, index) in cotizaciones">
                           <td>@{{cotizacion.fecha_formated}}</td>
                           <td>@{{cotizacion.id}}</td>
-                          <td>@{{cotizacion.cliente_nombre}}</td>
-                          <td>@{{cotizacion.prospecto_nombre}}</td>
+                          <td>@{{cotizacion.prospecto.cliente.nombre}}</td>
+                          <td>@{{cotizacion.prospecto.nombre}}</td>
+                          <td>
+                            <template v-for="(entrada, index) in cotizacion.entradas">
+                              <span > @{{entrada.producto.proveedor.empresa}}</span><br/>
+                            </template>
+                          </td>
                           <td>@{{cotizacion.total | formatoMoneda}}</td>
                           <td>@{{cotizacion.moneda}}</td>
-                          <td>@{{cotizacion.user_name}}</td>
+                          <td>@{{cotizacion.user.name}}</td>
                         </tr>
                         
                       </tbody>
                       <tfoot>
                         <tr>
-                            <th colspan="6" style="text-align:right">Total MXN:</th>
+                            <th colspan="7" style="text-align:right">Total MXN:</th>
                             <th></th>
                         </tr>
                         <tr>
-                            <th colspan="6" style="text-align:right">Total USD:</th>
+                            <th colspan="7" style="text-align:right">Total USD:</th>
                             <th></th>
                         </tr>
                     </tfoot>
@@ -147,11 +153,11 @@ Reportes | @parent
 {{-- footer_scripts --}}
 @section('footer_scripts')
 <script>
-
+Vue.config.devtools = true;
 const app = new Vue({
     el: '#content',
     data: {
-      cotizaciones: {!! json_encode($cotizaciones) !!},
+      cotizaciones: ({!! JSON_encode($cotizaciones) !!}),
       fecha_ini: '',
       fecha_fin: '',
       valor_clientes:'Clientes',
@@ -163,6 +169,9 @@ const app = new Vue({
     },
     mounted(){
         var vue =this;
+        this.cotizaciones=this.cotizaciones;
+        console.log(this.cotizaciones[0].prospecto.cliente.nombre)
+        console.log(this.cotizaciones[0].entradas[0].cantidad)
       this.tabla = $("#tabla").DataTable({
           "dom": 'f<"#fechas_container.pull-left">ltip',
           "order":[],
@@ -199,7 +208,7 @@ const app = new Vue({
                         i : 0;
             };
             //datos de la tabla con filtros aplicados
-            var datos= api.columns([4,5], {search: 'applied'}).data();
+            var datos= api.columns([5,6], {search: 'applied'}).data();
             var totalMxn = 0;
             var totalUsd = 0;
             //suma de montos

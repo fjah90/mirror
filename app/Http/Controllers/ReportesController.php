@@ -19,13 +19,11 @@ class ReportesController extends Controller
 
     public function cotizaciones()
     {
-        $cotizaciones = ProspectoCotizacion::leftjoin('prospectos', 'prospectos_cotizaciones.prospecto_id', '=', 'prospectos.id')
-            ->leftjoin('clientes', 'prospectos.cliente_id', '=', 'clientes.id')
-            ->leftjoin('users', 'prospectos_cotizaciones.user_id', '=', 'users.id')
-            ->select('prospectos_cotizaciones.*', 'users.name as user_name', 'prospectos.nombre as prospecto_nombre', 'prospectos.id as prospecto_id', 'clientes.nombre as cliente_nombre')
+
+        $cotizaciones = ProspectoCotizacion::with('prospecto:id,nombre,cliente_id', 'prospecto.cliente:id,nombre', 'user:id,name', 'entradas:id,cantidad,producto_id,cotizacion_id', 'entradas.producto:id,proveedor_id', 'entradas.producto.proveedor:id,empresa')
+            ->has('prospecto')
             ->orderBy('fecha', 'desc')
             ->get();
-
         return view('reportes.cotizaciones', compact('cotizaciones'));
     }
 
