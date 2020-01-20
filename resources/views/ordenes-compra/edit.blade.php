@@ -166,7 +166,8 @@
                 <div class="col-md-4">
                   <div class="form-group">
                     <label class="control-label">Cant. en conversión</label>
-                    <span class="form-control">@{{entrada.cantidad_convertida}}</span>
+                    <input type="text" class="form-control" name="cantidad_conversion"
+                      v-model="entrada.cantidad_convertida"  />
                   </div>
                 </div>
                 <div class="col-md-4">

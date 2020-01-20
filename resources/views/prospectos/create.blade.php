@@ -67,7 +67,7 @@
                   <div class="col-md-4">
                     <div class="form-group">
                       <label class="control-label">Cliente</label>
-                      <select class="form-control" name="cliente_id" v-model='prospecto.cliente_id' required>
+                      <select class="form-control" name="cliente_id" v-model='prospecto.cliente_id' id="clienteSelect" required>
                         <option v-for="(cliente, index) in clientes" v-bind:value="cliente.id" >
                           @{{ cliente.nombre }}
                         </option>
@@ -339,6 +339,7 @@ const app = new Vue({
       modalCliente:false,
       modalProducto:false,
       tablaProductos:{},
+      clienteSelect:null,
       locale: localeES,
       prospecto: {
         cliente_id: '',
@@ -365,6 +366,7 @@ const app = new Vue({
     },
     mounted(){
       this.tablaProductos= $("#tablaProductos").DataTable({"order": [[ 0, "asc" ]]});
+      this.clienteSelect= $('#clienteSelect').select2({ width: '100%'});
       this.mostrarTab(this.tabActual);
       var vue=this;
       //escuchar Iframe
@@ -373,6 +375,8 @@ const app = new Vue({
             vue.clientes.push({id:e.data.object.id, nombre:e.data.object.nombre});
             vue.prospecto.cliente_id=e.data.object.id;
             vue.modalCliente=false;
+            vue.clienteSelect.select2('destroy');
+            vue.clienteSelect.select2({ width: '100%'});
           }
           if(e.data.tipo=="producto"){
             vue.tablaProductos.destroy();
