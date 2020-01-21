@@ -123,6 +123,10 @@
                               <i class="fas fa-user-check"></i>
                             </button>
                           </template>
+                          <button class="btn btn-xs btn-white" title="Copiar"
+                              @click="copiar(index, cotizacion)">
+                              <i class="far fa-copy"></i>
+                            </button>
                         </td>
                       </tr>
                       <tfoot>
@@ -678,6 +682,7 @@
 {{-- footer_scripts --}}
 @section('footer_scripts')
 <script type="text/javascript">
+
 // Used for creating a new FileList in a round-about way
 function FileListItem(a) {
   a = [].slice.call(Array.isArray(a) ? a : arguments)
@@ -686,6 +691,7 @@ function FileListItem(a) {
   for (b = (new ClipboardEvent("")).clipboardData || new DataTransfer; c--;) b.items.add(a[c])
   return b.files
 }
+Vue.config.devtools = true;
 const app = new Vue({
   el: '#content',
   data: {
@@ -854,6 +860,7 @@ const app = new Vue({
     $("#tablaEntradas")
     .on('click', 'tr button.btn-success', function(){
       var index = $(this).data('index');
+      console.log(index);
       vueInstance.editarEntrada(vueInstance.cotizacion.entradas[index], index);
     })
     .on('click', 'button.btn-danger', function(){
@@ -1116,12 +1123,15 @@ const app = new Vue({
         observacion.activa = false;
       });
     },
-    editarEntrada(entrada, index){
+    editarEntrada(entradaEdit,index){
       if(this.edicionEntradaActiva) return false;
-      this.cotizacion.subtotal-= entrada.importe;
+      entradaEdit.actualizar = true;
+      this.entrada =  entradaEdit;
+      this.cotizacion.subtotal= this.cotizacion.subtotal- entradaEdit.importe;
+      console.log(entradaEdit);
+      console.log(this.entrada);
       this.cotizacion.entradas.splice(index, 1);
-      entrada.actualizar = true;
-      this.entrada = entrada;
+      
       this.edicionEntradaActiva = true;
       this.resetDataTables();
 
@@ -1151,6 +1161,7 @@ const app = new Vue({
         if(index==-1) observacion.activa = false;
         else observacion.activa = true;
       }, this);
+      return true;
     },
     removerEntrada(entrada, index, undefined){
       this.cotizacion.subtotal-= entrada.importe;
@@ -1168,6 +1179,91 @@ const app = new Vue({
         }
       });
 
+      this.resetDataTables();
+    },
+    copiar(index, cotizacion){
+
+      //reiniciar observaciones
+      this.observaciones.forEach(function(observacion){
+        observacion.activa = false;
+      });
+      var numero = this.cotizacion.numero;
+      //vaciar datos de cotizacion
+      this.cotizacion = {
+        prospecto_id: {{$prospecto->id}},
+        cliente_contacto_id: cotizacion.cliente_contacto_id,
+        numero:numero,
+        condicion: {
+          id: cotizacion.condicion_id,
+          nombre: ''
+        },
+        facturar: (cotizacion.facturar)?1:0,
+        rfc: cotizacion.rfc,
+        razon_social: cotizacion.razon_social,
+        calle: cotizacion.calle,
+        nexterior: cotizacion.nexterior,
+        ninterior: cotizacion.ninterior,
+        colonia: cotizacion.colonia,
+        cp: cotizacion.cp,
+        ciudad: cotizacion.ciudad,
+        estado: cotizacion.estado,
+        direccion: (cotizacion.direccion)?1:0,
+        dircalle: cotizacion.dircalle,
+        dirnexterior: cotizacion.dirnexterior,
+        dirninterior: cotizacion.dirninterior,
+        dircolonia: cotizacion.dircolonia,
+        dircp: cotizacion.dircp,
+        dirciudad: cotizacion.dirciudad,
+        direstado: cotizacion.direstado,
+        entrega: cotizacion.entrega,
+        lugar: cotizacion.lugar,
+        fletes: cotizacion.fletes,
+        moneda: cotizacion.moneda,
+        entradas: cotizacion.entradas,
+        subtotal: cotizacion.subtotal,
+        iva: (cotizacion.iva==0)?0:1,
+        total: cotizacion.total,
+        idioma: cotizacion.idioma,
+        notas: cotizacion.notas,
+        observaciones: []
+      };
+      this.condicionCambiada();
+
+      //re-seleccionar observaciones
+      var observaciones = cotizacion.observaciones.match(/<li>([^<]+)+<\/li>+/g);
+      if(observaciones==null) observaciones = [];
+      var encontrada;
+      observaciones.forEach(function(observacion){
+        observacion = observacion.replace(/(<li>|<\/li>)/g, '');
+        encontrada = this.observaciones.findIndex(function(obs){
+          return observacion == obs.texto;
+        });
+
+        if(encontrada!=-1){
+          this.observaciones[encontrada].activa = true;
+        }
+        else { //observacion diferente de las predefinidas
+          this.observaciones.push({activa:true, texto: observacion});
+        }
+        this.cotizacion.observaciones.push(observacion);
+      }, this);
+
+      // agregar observaciones de entradas de productos
+      cotizacion.entradas.forEach(function(entrada){
+        observaciones = entrada.observaciones.match(/<li>([^<]+)+<\/li>+/g);
+        entrada.observaciones = [];
+        if(observaciones==null) return false;
+        encontrada;
+        observaciones.forEach(function(observacion){
+          observacion = observacion.replace(/(<li>|<\/li>)/g, '');
+          entrada.observaciones.push(observacion);
+
+          encontrada = this.observaciones_productos.findIndex(function(obs){
+            return observacion == obs.texto;
+          });
+          if(encontrada==-1)this.observaciones_productos.push({activa:false, texto: observacion});
+        }, this);
+      }, this);
       this.resetDataTables();
     },
     editar(index, cotizacion){
