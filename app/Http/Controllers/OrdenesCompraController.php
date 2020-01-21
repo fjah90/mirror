@@ -161,12 +161,7 @@ class OrdenesCompraController extends Controller
           'message'=>'Falta agregar proveedor a la orden'
         ], 400);
       }
-      if(is_null($orden->proveedor_contacto_id)){
-        return response()->json(['success' => false, "error" => true,
-          'message'=>'Falta agregar contacto a la orden'
-        ], 400);
-      }
-
+      
       if($orden->status!=OrdenCompra::STATUS_PENDIENTE){
         return response()->json(['success' => false, "error" => true,
           'message'=>'La orden debe estar en estatus '.
@@ -365,7 +360,6 @@ class OrdenesCompraController extends Controller
       $validator = Validator::make($request->all(), [
         'proyecto_id' => 'required',
         'proveedor_id' => 'required',
-        'proveedor_contacto_id' => 'required',
         'numero' => 'required',
         'moneda' => 'required',
         'subtotal' => 'required',
