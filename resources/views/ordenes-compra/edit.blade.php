@@ -156,6 +156,7 @@
                     <select class="form-control" name="conversion" v-model="entrada.conversion"
                       @change="convertirCantidad()">
                       <option value="" disabled>Seleccionar</option>
+                      <option value="" >No</option>
                       <option v-for="(multiplo, unidad) in conversiones[entrada.medida]"
                         :value="unidad">
                         @{{unidad}}

@@ -67,7 +67,7 @@ class ProspectosController extends Controller
      */
     public function create()
     {
-      $clientes = Cliente::all();
+      $clientes = Cliente::orderBy('nombre', 'asc')->get();
       $productos = Producto::with('categoria')->get();
       $tipos = ProspectoTipoActividad::all();
       return view('prospectos.create', compact('clientes', 'productos', 'tipos'));
