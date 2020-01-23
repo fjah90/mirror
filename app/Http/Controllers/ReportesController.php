@@ -22,7 +22,6 @@ class ReportesController extends Controller
 
         $cotizaciones = ProspectoCotizacion::with('prospecto:id,nombre,cliente_id', 'prospecto.cliente:id,nombre', 'user:id,name', 'entradas:id,cantidad,producto_id,cotizacion_id', 'entradas.producto:id,proveedor_id', 'entradas.producto.proveedor:id,empresa')
             ->has('prospecto')
-            ->has('entradas')
             ->has('entradas.producto')
             ->orderBy('fecha', 'desc')
             ->get();
