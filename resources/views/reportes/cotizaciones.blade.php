@@ -116,7 +116,7 @@ Reportes | @parent
                           <td>@{{cotizacion.prospecto.nombre}}</td>
                           <td>
                             <template v-for="(entrada, index) in cotizacion.entradas">
-                              <span > @{{entrada.producto.proveedor.empresa}}</span><br/>
+                              <span > @{{(entrada.producto ? entrada.producto.proveedor.empresa:'')}}</span><br/>
                             </template>
                           </td>
                           <td>@{{cotizacion.total | formatoMoneda}}</td>

@@ -60,13 +60,14 @@ class ClientesController extends Controller
         return view('catalogos.clientes.create', compact('tipos', 'nacional', 'usuarios', 'layout'));
     }
 
-    public function createExtra()
+    public function createExtra(Request $request)
     {
+        $layout   = $request->layout;
         $tipos    = TipoCliente::all();
         $nacional = false;
         $usuarios = User::all()->pluck('name', 'id');
 
-        return view('catalogos.clientes.create', compact('tipos', 'nacional', 'usuarios'));
+        return view('catalogos.clientes.create', compact('tipos', 'nacional', 'usuarios', 'layout'));
     }
 
     /**
