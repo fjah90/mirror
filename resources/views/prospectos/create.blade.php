@@ -67,7 +67,7 @@
                   <div class="col-md-4">
                     <div class="form-group">
                       <label class="control-label">Cliente</label>
-                      <select class="form-control" name="cliente_id" v-model='prospecto.cliente_id' id="clienteSelect" required>
+                      <select class="form-control" name="cliente_id" v-model='prospecto.cliente_id' id="clienteSelect" required tabindex="-1">
                         <option v-for="(cliente, index) in clientes" v-bind:value="cliente.id" >
                           @{{ cliente.nombre }}
                         </option>
@@ -331,7 +331,7 @@
 
 
 <script>
-
+Vue.config.devtools = true;
 const app = new Vue({
     el: '#content',
     data: {
@@ -365,10 +365,14 @@ const app = new Vue({
       cargando: false,
     },
     mounted(){
-      this.tablaProductos= $("#tablaProductos").DataTable({"order": [[ 0, "asc" ]]});
-      this.clienteSelect= $('#clienteSelect').select2({ width: '100%'});
-      this.mostrarTab(this.tabActual);
       var vue=this;
+      this.tablaProductos= $("#tablaProductos").DataTable({"order": [[ 0, "asc" ]]});
+      // this.clienteSelect= $('#clienteSelect').select2({ width: '100%'}).on('select2:select', function () {       
+      //  	var value = $("#miSelect").select2('data');
+      //   vue.prospecto.cliente_id = value[0].id
+      // });
+      this.mostrarTab(this.tabActual);
+      
       //escuchar Iframe
       window.addEventListener('message',function(e) {
           if(e.data.tipo=="cliente"){
