@@ -367,10 +367,10 @@ const app = new Vue({
     mounted(){
       var vue=this;
       this.tablaProductos= $("#tablaProductos").DataTable({"order": [[ 0, "asc" ]]});
-      // this.clienteSelect= $('#clienteSelect').select2({ width: '100%'}).on('select2:select', function () {       
-      //  	var value = $("#miSelect").select2('data');
-      //   vue.prospecto.cliente_id = value[0].id
-      // });
+      this.clienteSelect= $('#clienteSelect').select2({ width: '100%'}).on('select2:select', function () {       
+       	var value = $("#clienteSelect").select2('data');
+        vue.prospecto.cliente_id = value[0].id
+      });
       this.mostrarTab(this.tabActual);
       
       //escuchar Iframe
