@@ -155,8 +155,7 @@
                     <label class="control-label">Conversión</label>
                     <select class="form-control" name="conversion" v-model="entrada.conversion"
                       @change="convertirCantidad()">
-                      <option value="" disabled>Seleccionar</option>
-                      <option value="" >No</option>
+                      <option value="">Seleccionar</option>
                       <option v-for="(multiplo, unidad) in conversiones[entrada.medida]"
                         :value="unidad">
                         @{{unidad}}
@@ -402,9 +401,14 @@ const app = new Vue({
       this.entrada.cantidad_convertida = "";
     },
     convertirCantidad(){
+
+      if(this.entrada.conversion==""){
+        this.entrada.cantidad_convertida="";
+      }else{
       this.entrada.cantidad_convertida =
         (this.entrada.cantidad * this.conversiones[this.entrada.medida][this.entrada.conversion])
         .toFixed(2);
+      }
     },
     agregarEntrada(){
       if(this.entrada.producto.id==undefined){
