@@ -170,7 +170,7 @@ class OrdenesCompraController extends Controller
         ], 400);
       }
 
-      $this->avisarOrdenPorAprobar($orden);
+      //$this->avisarOrdenPorAprobar($orden);
 
       //generar PDF de orden
       $orden->load('proveedor', 'contacto', 'proyecto.cotizacion',
