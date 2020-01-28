@@ -117,6 +117,7 @@ Route::middleware('auth')->group(function () {
     // Route::get('/proyectos-aprobados/{proyecto}/generarOrdenes', 'ProyectosAprobadosController@generarOrdenes');
 
     //Ordenes de Compra
+    Route::get('ordenes-compra/checarDescripciones', 'OrdenesCompraController@checarDescripciones');
     Route::get('ordenes-compra/regeneratePDF', 'OrdenesCompraController@regeneratePDF');
     Route::post('/proyectos-aprobados/{proyecto}/ordenes-compra/{orden}/comprar', 'OrdenesCompraController@comprar');
     Route::post('/proyectos-aprobados/{proyecto}/ordenes-compra/{orden}/agregarArchivo', 'OrdenesCompraController@agregarArchivo');

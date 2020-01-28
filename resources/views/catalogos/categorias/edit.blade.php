@@ -145,6 +145,7 @@
 @section('footer_scripts')
 
 <script>
+  Vue.config.devtools = true;
 const app = new Vue({
     el: '#content',
     data: {
