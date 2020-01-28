@@ -412,7 +412,11 @@
           <tbody>
             @foreach($orden->entradas as $entrada)
             <tr>
-              <td class="text-center">@format_number($entrada->cantidad) <br /> {{$entrada->medida}}</td>
+              @if($entrada->cantidad_convertida)
+                <td class="text-center">@format_number($entrada->cantidad_convertida) <br /> {{$entrada->conversion}}</td>
+              @else
+                <td class="text-center">@format_number($entrada->cantidad) <br /> {{$entrada->medida}}</td>
+              @endif
               <td>
                 <table style="width:100%; margin:0;">
                   <tr>

@@ -291,6 +291,7 @@ class ProspectosController extends Controller
 
     private function getDatosFacturacion($cliente_id){
       $prospectos = Prospecto::with('cotizaciones')->where('cliente_id', $cliente_id)->get();
+      $cliente1= Cliente::where('id', $cliente_id)->first();
       $datos = [];
 
       foreach($prospectos as $prospecto){
@@ -312,6 +313,19 @@ class ProspectosController extends Controller
         }, $datos);
 
         $datos = array_merge($datos, $datos2);
+        if(isset($cliente1->rfc)&& !isset($datos[$cliente1->rfc])){
+          $datos[$cliente1->rfc] = [
+            'rfc' => $cliente1->rfc,
+            'razon_social' => $cliente1->razon_social,
+            'calle' => $cliente1->calle,
+            'nexterior' => $cliente1->nexterior,
+            'ninterior' => $cliente1->ninterior,
+            'colonia' => $cliente1->colonia,
+            'cp' => $cliente1->cp,
+            'ciudad' => $cliente1->ciudad,
+            'estado' => $cliente1->estado
+          ];
+        }
       }
 
       return $datos;
@@ -820,7 +834,7 @@ class ProspectosController extends Controller
       })->keys()->all();
       $proveedores = implode(",", $proveedores);
 
-      $create = [
+      $create1 = [
         'cliente_id' => $prospecto->cliente_id,
         'cotizacion_id' => $cotizacion->id,
         'cliente_nombre' => $prospecto->cliente->nombre,
@@ -828,7 +842,7 @@ class ProspectosController extends Controller
         'moneda' => $cotizacion->moneda,
         'proveedores' => $proveedores
       ];
-      ProyectoAprobado::create($create);
+      ProyectoAprobado::create($create1);
 
       //generar cuenta por cobrar
       $create = [
