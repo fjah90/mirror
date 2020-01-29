@@ -339,7 +339,9 @@ class ProspectosController extends Controller
      */
     public function cotizar(Prospecto $prospecto)
     {
-      $prospecto->load(
+      $prospecto->load(['cotizaciones.entradas.producto' => function ($query) {
+        $query->withTrashed();
+    }],
         'cliente.contactos.emails','cotizaciones.cuentaCobrar','cotizaciones.entradas.producto', 'cotizaciones.entradas.descripciones', 'cotizaciones.entradas.producto.descripciones.descripcionNombre'
       );
       $productos = Producto::with('categoria','proveedor','descripciones.descripcionNombre')
