@@ -640,9 +640,18 @@ class ProspectosController extends Controller
         if($entradaGuardada){
           if($entradaGuardada->producto_id==$producto->id){
             //mismo producto, solo actualizar descripciones
-            foreach ($entrada['descripciones'] as $descripcion) {
-              ProspectoCotizacionEntradaDescripcion::find($descripcion['id'])
-              ->update(['valor'=>$descripcion['valor']]);
+            if(isset($entrada['descripciones'])){
+              foreach ($entrada['descripciones'] as $descripcion) {
+                $entradaDescripcion= ProspectoCotizacionEntradaDescripcion::find($descripcion['id']);
+                if($entradaDescripcion != null){
+                $entradaDescripcion->update(['valor'=>$descripcion['valor']]);
+                }else{
+                  $descripcion['entrada_id'] = $entrada->id;
+                  if(is_null($descripcion['nombre'])) $descripcion['nombre'] = $descripcion['name'];
+                  if(is_null($descripcion['name'])) $descripcion['name'] = $descripcion['nombre'];
+                  ProspectoCotizacionEntradaDescripcion::create($descripcion);
+                }
+              }
             }
           }
           else {
