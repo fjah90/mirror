@@ -399,6 +399,15 @@
                 </div>
               </div>
               <div class="row">
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label class="control-label">Precio de Compra</label>
+                    <input type="number" step="0.01" min="0.01" name="precio_compra" class="form-control"
+                      v-model="entrada.precio_compra"/>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
                 <div class="col-md-12">
                   <div class="table-responsive">
                     <table class="table table-bordred">
@@ -750,6 +759,8 @@ const app = new Vue({
       cantidad: "",
       medida: "",
       precio: "",
+      precio_compra: "",
+      fecha_precio_compra:"",
       importe: 0,
       descripciones: [],
       observaciones: [],
