@@ -344,7 +344,7 @@ class ProspectosController extends Controller
     }],
         'cliente.contactos.emails','cotizaciones.cuentaCobrar','cotizaciones.entradas.producto', 'cotizaciones.entradas.descripciones', 'cotizaciones.entradas.producto.descripciones.descripcionNombre'
       );
-      $productos = Producto::with('categoria','proveedor','descripciones.descripcionNombre')
+      $productos = Producto::with('categoria','proveedor','descripciones.descripcionNombre', 'proveedor.contactos')
       ->has('categoria')->get();
       foreach($productos as $producto){
        if ($producto->ficha_tecnica) 
