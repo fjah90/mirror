@@ -399,6 +399,47 @@
                 </div>
               </div>
               <div class="row">
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label class="control-label">Precio de Compra</label>
+                    <input type="number" step="0.01" min="0.01" name="precio_compra" class="form-control"
+                      v-model="entrada.precio_compra"/>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label class="control-label">Fecha Precio</label>
+                    <br />
+                    <dropdown>
+                      <div class="input-group">
+                        <div class="input-group-btn">
+                          <btn class="dropdown-toggle" style="background-color:#fff;">
+                            <i class="fas fa-calendar"></i>
+                          </btn>
+                        </div>
+                        <input class="form-control" type="text" name="fecha"
+                          v-model="entrada.fecha_precio_compra" placeholder="DD/MM/YYYY" readonly
+                        />
+                      </div>
+                      <template slot="dropdown">
+                        <li>
+                          <date-picker :locale="locale" :today-btn="false" :clear-btn="false"
+                          format="dd/MM/yyyy" :date-parser="dateParser" v-model="entrada.fecha_precio_compra"/>
+                        </li>
+                      </template>
+                    </dropdown>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label class="control-label">Contacto Proveedor</label>
+                    <select class="form-control" name="medida" v-model="entrada.proveedor_contacto_id" >
+                      <option v-for="contacto in entrada.producto.proveedor.contactos" :value="contacto.id">@{{contacto.nombre}}</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
                 <div class="col-md-12">
                   <div class="table-responsive">
                     <table class="table table-bordred">
@@ -706,6 +747,7 @@ const app = new Vue({
     nuevaObservacion: "",
     observaciones_productos: [],
     nuevaObservacionProducto: "",
+    contactos_proveedor:"",
     cotizacion: {
       prospecto_id: {{$prospecto->id}},
       cliente_contacto_id: '',
@@ -745,15 +787,18 @@ const app = new Vue({
       observaciones: []
     },
     entrada: {
-      producto: {},
+      producto: {"proveedor":{"contactos":{}}},
       orden: 0,
       cantidad: "",
       medida: "",
       precio: "",
+      precio_compra: "",
+      fecha_precio_compra:"",
       importe: 0,
       descripciones: [],
       observaciones: [],
       fotos: [],
+      proveedor_contacto_id:""
     },
     enviar: {
       cotizacion_id: 0,
@@ -871,6 +916,9 @@ const app = new Vue({
     this.resetDataTables();
   },
   methods: {
+    dateParser(value){
+  			return moment(value, 'DD/MM/YYYY').toDate().getTime();
+  		},
     seleccionarRFC(){
       if(this.cotizacion.facturar!="0" && this.cotizacion.facturar!="1"){
         this.cotizacion.rfc = this.rfcs[this.cotizacion.facturar].rfc;
@@ -1107,15 +1155,18 @@ const app = new Vue({
       this.cotizacion.entradas.push(this.entrada);
       this.resetDataTables();
       this.entrada = {
-        producto: {},
-        orden: 0,
-        cantidad: "",
-        medida: "",
-        precio: "",
-        importe: 0,
-        descripciones: [],
-        observaciones: [],
-        fotos: []
+        producto: {"proveedor":{"contactos":{}}},
+      orden: 0,
+      cantidad: "",
+      medida: "",
+      precio: "",
+      precio_compra: "",
+      fecha_precio_compra:"",
+      importe: 0,
+      descripciones: [],
+      observaciones: [],
+      fotos: [],
+      proveedor_contacto_id:""
       };
       this.edicionEntradaActiva = false;
       $("button.fileinput-remove").click();

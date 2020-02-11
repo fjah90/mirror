@@ -343,6 +343,7 @@ class OrdenesCompraController extends Controller
         if ($orden->iva > 0) {
             $orden->iva = 1;
         }
+        $proyecto->load('cotizacion', 'cotizacion.entradas', 'cotizacion.entradas.producto', 'cotizacion.entradas.contacto');
 
         $tiempo_entrega = TiempoEntrega::where('valor', $orden->tiempo_entrega)->first();
         if (is_null($tiempo_entrega)) {
