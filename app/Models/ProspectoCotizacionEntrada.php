@@ -66,7 +66,7 @@ class ProspectoCotizacionEntrada extends Model
 
     public function contacto()
     {
-        return $this->hasMany('App\Models\ProveedorContacto', 'proveedor_contacto_id', 'id');
+        return $this->belongsTo('App\Models\ProveedorContacto', 'proveedor_contacto_id', 'id');
     }
 
 }

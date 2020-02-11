@@ -275,6 +275,37 @@
         </div>
       </div>
     </div>
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="panel">
+          <div class="panel-heading">
+            <h3 class="panel-title">Precios Aprobados</h3>
+          </div>
+          <div class="panel-body">
+            <div class="table-responsive">
+              <table class="table table-bordred">
+                <thead>
+                  <tr>
+                    <th>Producto</th>
+                    <th>Fecha de Precio</th>
+                    <th>Precio de Compra</th>
+                    <th>contacto de proveedor</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="(entrada, index) in proyecto.cotizacion.entradas" v-if="entrada.precio_compra!=null">
+                    <td>@{{entrada.producto.nombre}}</td>
+                    <td>@{{entrada.fecha_precio_compra}}</td>
+                    <td>@{{entrada.precio_compra | formatoMoneda}}</td>
+                    <td>@{{entrada.contacto.nombre}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <!-- Catalogo Productos Modal -->
     <modal v-model="openCatalogo" title="Productos" :footer="false">
@@ -328,6 +359,7 @@ const app = new Vue({
     aduanas: {!! json_encode($aduanas) !!},
     productos: {!! json_encode($productos) !!},
     orden: {!! json_encode($orden) !!},
+    proyecto: {!! json_encode($proyecto) !!},
     entrada: {
       producto: {},
       cantidad: 0,

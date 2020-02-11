@@ -35,6 +35,7 @@ class ProyectoAprobadoObserver
             $orden->update(['numero' => $orden->id]);
 
             foreach ($entradas as $entrada) {
+
                 $ent = OrdenCompraEntrada::create([
                     'orden_id'    => $orden->id,
                     'producto_id' => $entrada->producto_id,
