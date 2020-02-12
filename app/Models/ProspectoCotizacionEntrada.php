@@ -9,8 +9,10 @@ class ProspectoCotizacionEntrada extends Model
 {
     protected $table = 'prospectos_cotizaciones_entradas';
 
-    protected $fillable = ['cotizacion_id', 'producto_id', 'cantidad', 'medida',
-        'precio', 'importe', 'fotos', 'observaciones', 'orden', 'precio_compra', 'fecha_precio_compra', 'proveedor_contacto_id'];
+    protected $fillable = [
+        'cotizacion_id', 'producto_id', 'cantidad', 'medida',
+        'precio', 'importe', 'fotos', 'observaciones', 'orden', 'precio_compra', 'fecha_precio_compra', 'proveedor_contacto_id'
+    ];
 
     protected $casts = [
         'cantidad' => 'float',
@@ -20,8 +22,10 @@ class ProspectoCotizacionEntrada extends Model
 
     public function setFechaPrecioCompraAttribute($value)
     {
-        list($dia, $mes, $ano)                   = explode('/', $value);
-        $this->attributes['fecha_precio_compra'] = "$ano-$mes-$dia";
+        if (isset($value)) {
+            list($dia, $mes, $ano)                   = explode('/', $value);
+            $this->attributes['fecha_precio_compra'] = "$ano-$mes-$dia";
+        }
     }
 
     public function getFechaPrecioCompraFormatedAttribute()
@@ -68,5 +72,4 @@ class ProspectoCotizacionEntrada extends Model
     {
         return $this->belongsTo('App\Models\ProveedorContacto', 'proveedor_contacto_id', 'id');
     }
-
 }
