@@ -17,6 +17,7 @@ use App\Models\UnidadMedida;
 use App\Models\CuentaCobrar;
 use App\Models\ProyectoAprobado;
 use App\User;
+use DateTime;
 use Validator;
 use PDF;
 use PDFMerger;
@@ -538,6 +539,16 @@ class ProspectosController extends Controller
     unset($cotizacion->fechaPDF);
     $cotizacion->update(['archivo' => $url]);
     $cotizacion->archivo = asset('storage/' . $cotizacion->archivo);
+
+    // Guardar activiad de cotizar
+    $today = new DateTime();
+    ProspectoActividad::create([
+      'prospecto_id' => $cotizacion->prospecto_id,
+      'tipo_id' => 7,
+      'fecha' => $today->format('d/m/Y'),
+      'descripcion' => 'Cotizacion realizada',
+      'realizada' => true
+    ]);
 
     return response()->json(['success' => true, 'error' => false, 'cotizacion' => $cotizacion], 200);
   }
