@@ -98,7 +98,7 @@ const app = new Vue({
       borrar(producto, index){
         swal({
           title: 'Cuidado',
-          text: "Borrar el Producto "+producto.nombre+"?",
+          text: "Borrar este producto '"+producto.nombre+"' puede afectar cotizaciones, ¿Desea continuar?",
           type: 'warning',
           showCancelButton: true,
           confirmButtonColor: '#3085d6',
