@@ -15,6 +15,7 @@
   <!-- Content Header (Page header) -->
   <section class="content-header">
     <h1>Ordenes de Compra</h1>
+    {{$orden}}
   </section>
   <!-- Main content -->
   <section class="content" id="content">
@@ -297,7 +298,7 @@
                     <td>@{{entrada.producto.nombre}}</td>
                     <td>@{{entrada.fecha_precio_compra}}</td>
                     <td>@{{entrada.precio_compra | formatoMoneda}}</td>
-                    <td>@{{entrada.contacto.nombre}}</td>
+                    <td >@{{entrada.contacto && entrada.contacto.nombre}}</td>
                   </tr>
                 </tbody>
               </table>
@@ -352,6 +353,7 @@
 {{-- footer_scripts --}}
 @section('footer_scripts')
 <script type="text/javascript">
+Vue.config.devtools = true;
 const app = new Vue({
   el: '#content',
   data: {
