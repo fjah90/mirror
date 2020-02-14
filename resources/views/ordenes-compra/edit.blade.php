@@ -23,7 +23,7 @@
       <div class="col-lg-12">
         <div class="panel">
           <div class="panel-heading">
-            <h3 class="panel-title">Editar Orden Proyecto {{$proyecto->proyecto}}</h3>
+            <h3 class="panel-title">Editar Orden Proyecto</h3>
           </div>
           <div class="panel-body">
             @if($orden->status=='Rechazada')
@@ -298,7 +298,7 @@
                     <td>@{{entrada.producto.nombre}}</td>
                     <td>@{{entrada.fecha_precio_compra}}</td>
                     <td>@{{entrada.precio_compra | formatoMoneda}}</td>
-                    <td >@{{entrada.contacto && entrada.contacto.nombre}}</td>
+                    <td>@{{entrada.contacto && entrada.contacto.nombre}}</td>
                   </tr>
                 </tbody>
               </table>
