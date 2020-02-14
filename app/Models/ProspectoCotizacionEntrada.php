@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Model;
 use Carbon\Carbon;
+use DateTime;
 
 class ProspectoCotizacionEntrada extends Model
 {
@@ -23,6 +24,8 @@ class ProspectoCotizacionEntrada extends Model
     public function setFechaPrecioCompraAttribute($value)
     {
         if ($value != null && $value != "") {
+            $newDate = new DateTime($value);
+            $value = Carbon::parse($value)->format('d/m/Y');
             $value = str_replace("-", "/", $value);
             list($dia, $mes, $ano) = explode('/', $value);
             $this->attributes['fecha_precio_compra'] = "$ano-$mes-$dia";
