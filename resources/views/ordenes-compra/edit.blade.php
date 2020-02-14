@@ -15,7 +15,6 @@
   <!-- Content Header (Page header) -->
   <section class="content-header">
     <h1>Ordenes de Compra</h1>
-    {{$orden}}
   </section>
   <!-- Main content -->
   <section class="content" id="content">
@@ -23,7 +22,7 @@
       <div class="col-lg-12">
         <div class="panel">
           <div class="panel-heading">
-            <h3 class="panel-title">Editar Orden Proyecto</h3>
+            <h3 class="panel-title">Editar Orden Proyecto {{$proyecto->proyecto}}</h3>
           </div>
           <div class="panel-body">
             @if($orden->status=='Rechazada')
