@@ -22,7 +22,7 @@ class ProspectoCotizacionEntrada extends Model
 
     public function setFechaPrecioCompraAttribute($value)
     {
-        if (isset($value)) {
+        if ($value != null && $value != "") {
             list($dia, $mes, $ano)                   = explode('/', $value);
             $this->attributes['fecha_precio_compra'] = "$ano-$mes-$dia";
         }
