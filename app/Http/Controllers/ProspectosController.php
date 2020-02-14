@@ -465,15 +465,17 @@ class ProspectosController extends Controller
         $fotos = "";
         $separador = "";
         foreach ($entrada['fotos'] as $foto_index => $foto) {
-          $ruta = Storage::putFileAs(
-            'public/cotizaciones/' . $cotizacion->id,
-            $foto,
-            'entrada_' . ($index + 1) . '_foto_' . ($foto_index + 1) . '.' . $foto->guessExtension()
-          );
-          $ruta = str_replace('public/', '', $ruta);
-          $fotos .= $separador . $ruta;
-          $separador = "|";
-        }
+          if(!is_string($foto)){
+            $ruta = Storage::putFileAs(
+              'public/cotizaciones/' . $cotizacion->id,
+              $foto,
+              'entrada_' . ($index + 1) . '_foto_' . ($foto_index + 1) . '.' . $foto->guessExtension()
+            );
+            $ruta = str_replace('public/', '', $ruta);
+            $fotos .= $separador . $ruta;
+            $separador = "|";
+          }
+      }
         $entrada['fotos'] = $fotos;
       } else if ($producto->foto) {
         $extencion = pathinfo(asset($producto->foto), PATHINFO_EXTENSION);
