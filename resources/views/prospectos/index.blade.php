@@ -104,7 +104,7 @@
                   <td>@{{prospecto.cliente.nombre}}</td>
                   <td>@{{prospecto.nombre}}</td>
                   <template v-if="prospecto.ultima_actividad">
-                    <td>@{{prospecto.ultima_actividad.fecha}}</td>
+                    <td>@{{prospecto.ultima_actividad.fecha_formated}}</td>
                     <td>@{{prospecto.ultima_actividad.tipo.nombre}}</td>
                   </template>
                   <template v-else>

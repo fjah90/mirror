@@ -4,7 +4,6 @@ namespace App\Models;
 
 use App\Model;
 use Carbon\Carbon;
-use DateTime;
 
 class ProspectoCotizacionEntrada extends Model
 {
@@ -12,7 +11,7 @@ class ProspectoCotizacionEntrada extends Model
 
     protected $fillable = [
         'cotizacion_id', 'producto_id', 'cantidad', 'medida',
-        'precio', 'importe', 'fotos', 'observaciones', 'orden', 'precio_compra', 'fecha_precio_compra', 'proveedor_contacto_id'
+        'precio', 'importe', 'fotos', 'observaciones', 'orden', 'precio_compra', 'fecha_precio_compra', 'proveedor_contacto_id',
     ];
 
     protected $casts = [
@@ -21,13 +20,17 @@ class ProspectoCotizacionEntrada extends Model
         'importe'  => 'float',
     ];
 
+    protected $appends = [
+        'fecha_precio_compra_formated',
+    ];
+
     public function setFechaPrecioCompraAttribute($value)
     {
         if ($value != null && $value != "") {
-            $newDate = new DateTime($value);
-            $value = Carbon::parse($value)->format('d/m/Y');
-            $value = str_replace("-", "/", $value);
-            list($dia, $mes, $ano) = explode('/', $value);
+            if (strpos($value, "-")) {
+                $value = Carbon::parse($value)->format('d/m/Y');
+            }
+            list($dia, $mes, $ano)                   = explode('/', $value);
             $this->attributes['fecha_precio_compra'] = "$ano-$mes-$dia";
         }
     }

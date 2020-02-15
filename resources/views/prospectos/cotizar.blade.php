@@ -1178,6 +1178,7 @@ const app = new Vue({
       if(this.edicionEntradaActiva) return false;
       entradaEdit.actualizar = true;
       this.entrada =  entradaEdit;
+      this.entrada.fecha_precio_compra=entradaEdit.fecha_precio_compra_formated;
       this.cotizacion.subtotal= this.cotizacion.subtotal- entradaEdit.importe;
       console.log(entradaEdit);
       console.log(this.entrada);
