@@ -513,6 +513,8 @@ class ProspectosController extends Controller
                         $ruta = str_replace('public/', '', $ruta);
                         $fotos .= $separador . $ruta;
                         $separador = "|";
+                    } else {
+                        $fotos .= $separador . strstr($foto, "cotizaciones/");
                     }
                 }
                 $entrada['fotos'] = $fotos;
@@ -1094,5 +1096,26 @@ class ProspectosController extends Controller
         $cotizacion->update(['archivo' => $url]);
 
         $pdf->merge('download', "cotizacion.pdf");
+    }
+
+    public function actualizarActividades()
+    {
+        $prospectos = Prospecto::has('cotizaciones')
+            ->with(['cotizaciones' => function ($query) {
+                $query->orderBy('fecha', 'desc');
+            }], 'actividades')->get();
+
+        foreach ($prospectos as $prospecto) {
+            ProspectoActividad::create([
+                'prospecto_id' => $prospecto->id,
+                'tipo_id'      => 7,
+                'fecha'        => $prospecto->cotizaciones[0]->fecha_formated,
+                'descripcion'  => 'Cotizacion realizada',
+                'realizada'    => true,
+            ]);
+        }
+
+        response()->json(['success' => true, 'error' => false], 200);
+
     }
 }

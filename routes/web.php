@@ -103,6 +103,7 @@ Route::middleware('auth')->group(function () {
 
     //Prospectos
     Route::get('prospectos/regeneratePDF', 'ProspectosController@regeneratePDF');
+    Route::get('prospectos/actualizarActividades', 'ProspectosController@actualizarActividades');
     Route::post('/prospectos/{prospecto}/guardarActividades', 'ProspectosController@guardarActividades');
     Route::get('/prospectos/{prospecto}/cotizar', 'ProspectosController@cotizar')->name('prospectos.cotizar');
     Route::post('/prospectos/{prospecto}/cotizacion', 'ProspectosController@cotizacion');
