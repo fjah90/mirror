@@ -111,6 +111,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/prospectos/{prospecto}/enviarCotizacion', 'ProspectosController@enviarCotizacion');
     Route::post('/prospectos/{prospecto}/aceptarCotizacion', 'ProspectosController@aceptarCotizacion');
     Route::post('/prospectos/{prospecto}/notasCotizacion', 'ProspectosController@notasCotizacion');
+    Route::delete('/prospectos/{prospecto}/cotizacion/{cotizacion}', 'ProspectosController@destroyCotizacion');
     Route::resource('/prospectos', 'ProspectosController');
 
     //Proyectos Aprobados

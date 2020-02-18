@@ -304,6 +304,12 @@ class ProspectosController extends Controller
         return response()->json(['success' => true, "error" => false], 200);
     }
 
+    public function destroyCotizacion(Prospecto $prospecto, ProspectoCotizacion $cotizacion)
+    {
+        $cotizacion->delete();
+        return response()->json(['success' => true, "error" => false], 200);
+    }
+
     private function getDatosFacturacion($cliente_id)
     {
         $prospectos = Prospecto::with('cotizaciones')->where('cliente_id', $cliente_id)->get();

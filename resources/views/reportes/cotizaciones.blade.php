@@ -90,6 +90,14 @@ Reportes | @parent
                           
                         </select>
                     </div>
+                    <div class="marg025 btn-group" id="select_usuarios" >
+                        <select name="proxDias" class="form-control" size="1" v-model="valor_usuarios" id="select_usuarios">
+                          <option v-for="option in datos_select.usuarios" v-bind:value="option">
+                            @{{ option }}
+                          </option>
+                          
+                        </select>
+                    </div>
                   </div>
               <div class="row">
                 <div class="col-sm-12">
@@ -163,7 +171,8 @@ const app = new Vue({
       valor_clientes:'Clientes',
       valor_proyectos:'Proyectos',
       valor_ids:'Cotización',
-      datos_select:{clientes:[], proyectos:[], ids:[]},   
+      valor_usuarios:'Usuarios',
+      datos_select:{clientes:[], proyectos:[], ids:[], usuarios:[]},   
       tabla: {},
       locale: localeES
     },
@@ -194,6 +203,12 @@ const app = new Vue({
             vue.datos_select.ids.push('');
             this.api().column(1).data().sort().unique().each(function(d,j){   
               vue.datos_select.ids.push(d);
+            });
+
+            vue.datos_select.usuarios.push('Usuarios')
+            vue.datos_select.usuarios.push('');
+            this.api().column(7).data().sort().unique().each(function(d,j){   
+              vue.datos_select.usuarios.push(d);
             });
           },
 
@@ -234,6 +249,7 @@ const app = new Vue({
       $("#fechas_container").append($("#select_clientes"));
       $("#fechas_container").append($("#select_proyectos"));
       $("#fechas_container").append($("#select_ids"));
+      $("#fechas_container").append($("#select_usuarios"));
 
       $.fn.dataTableExt.afnFiltering.push(
         function( settings, data, dataIndex ) {
@@ -268,6 +284,9 @@ const app = new Vue({
       },
       valor_ids:function(val){
         this.tabla.columns(1).search(this.valor_ids).draw();
+      },
+      valor_usuarios:function(val){
+        this.tabla.columns(7).search(this.valor_usuarios).draw();
       },
     },
     filters:{

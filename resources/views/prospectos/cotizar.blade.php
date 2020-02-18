@@ -122,11 +122,18 @@
                               @click="aceptar.cotizacion_id=cotizacion.id; openAceptar=true;">
                               <i class="fas fa-user-check"></i>
                             </button>
+                            @role('Administrador')
+                              <button  class="btn btn-xs btn-danger" title="Eliminar"
+                                @click="borrar(index, cotizacion)">
+                                <i class="fas fa-times"></i>
+                              </button>
+                            @endrole  
                           </template>
                           <button class="btn btn-xs btn-white" title="Copiar"
                               @click="copiar(index, cotizacion)">
                               <i class="far fa-copy"></i>
-                            </button>
+                          </button>
+                          
                         </td>
                       </tr>
                       <tfoot>
@@ -357,6 +364,53 @@
               </div>
               <hr />
               <div class="row">
+                <div class="col-md-12">
+                  <div class="table-responsive">
+                    <table id="tablaEntradas" class="table table-bordred" style="width:100%;">
+                      <thead>
+                        <tr>
+                          <th>Orden</th>
+                          <th>Producto</th>
+                          <th>Cantidad</th>
+                          <th>Precio</th>
+                          <th>Importe</th>
+                          <th></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                      </tbody>
+                      <tfoot>
+                        <tr>
+                          <td colspan="3"></td>
+                          <td class="text-right"><strong>Subtotal</strong></td>
+                          <td>@{{cotizacion.subtotal | formatoMoneda}}</td>
+                          <td></td>
+                        </tr>
+                        <tr>
+                          <td colspan="3"></td>
+                          <td class="text-right"><strong>IVA</strong></td>
+                          <td v-if="cotizacion.iva=='0'">$0.00</td>
+                          <td v-else>@{{cotizacion.subtotal * 0.16 | formatoMoneda}}</td>
+                          <td></td>
+                        </tr>
+                        <tr>
+                          <td colspan="3"></td>
+                          <td class="text-right">
+                            <strong>Total
+                              <span v-if="cotizacion.moneda=='Dolares'"> Dolares</span>
+                              <span v-else> Pesos</span>
+                            </strong>
+                          </td>
+                          <td v-if="cotizacion.iva=='0'">@{{cotizacion.subtotal | formatoMoneda}}</td>
+                          <td v-else>@{{cotizacion.subtotal * 1.16 | formatoMoneda}}</td>
+                          <td></td>
+                        </tr>
+                      </tfoot>
+                    </table>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
                 <div class="col-md-4">
                   <div class="form-group">
                     <label class="control-label">Producto</label>
@@ -516,7 +570,7 @@
                 </div>
               </div>
             </form>
-            <div class="row">
+            {{-- <div class="row">
               <div class="col-md-12">
                 <div class="table-responsive">
                   <table id="tablaEntradas" class="table table-bordred" style="width:100%;">
@@ -562,7 +616,7 @@
                   </table>
                 </div>
               </div>
-            </div>
+            </div> --}}
             <div class="row">
               <div class="col-md-12">
                 <div class="form-group">
@@ -1599,6 +1653,38 @@ const app = new Vue({
         });
       });
     },//fin notasCotizacion
+    borrar(index, cotizacion){
+        swal({
+          title: 'Cuidado',
+          text: "Borrar Cotizacion "+cotizacion.numero+"?",
+          type: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Si, Borrar',
+          cancelButtonText: 'No, Cancelar',
+        }).then((result) => {
+          if (result.value) {
+            axios.delete('/prospectos/{{$prospecto->id}}/cotizacion/'+cotizacion.id, {})
+            .then(({data}) => {
+              this.prospecto.cotizaciones.splice(index, 1);
+              swal({
+                title: "Exito",
+                text: "La cotizacion ha sido borrado",
+                type: "success"
+              });
+            })
+            .catch(({response}) => {
+              console.error(response);
+              swal({
+                title: "Error",
+                text: response.data.message || "Ocurrio un error inesperado, intente mas tarde",
+                type: "error"
+              });
+            });
+          } //if confirmacion
+        });
+      },
   }
 });
 </script>
