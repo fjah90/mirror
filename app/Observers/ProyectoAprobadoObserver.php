@@ -49,10 +49,11 @@ class ProyectoAprobadoObserver
 
                 foreach ($entrada->descripciones as $descripcion) {
                     OrdenCompraEntradaDescripcion::create([
-                        'entrada_id' => $ent->id,
-                        'nombre'     => $descripcion->nombre ?? '',
-                        'name'       => $descripcion->name ?? '',
-                        'valor'      => $descripcion->valor,
+                        'entrada_id'   => $ent->id,
+                        'nombre'       => $descripcion->nombre ?? '',
+                        'name'         => $descripcion->name ?? '',
+                        'valor'        => $descripcion->valor,
+                        'valor_ingles' => $descripcion->valor_ingles,
                     ]);
                 }
             }

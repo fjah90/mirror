@@ -8,7 +8,7 @@ class OrdenCompraEntradaDescripcion extends Model
 {
     protected $table = 'ordenes_compra_entradas_descripciones';
 
-    protected $fillable = ['entrada_id', 'nombre', 'name', 'valor'];
+    protected $fillable = ['entrada_id', 'nombre', 'name', 'valor', 'valor_ingles'];
 
     /**
      * ---------------------------------------------------------------------------

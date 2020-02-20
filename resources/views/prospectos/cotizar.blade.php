@@ -453,13 +453,23 @@
                 </div>
               </div>
               <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-2">
                   <div class="form-group">
                     <label class="control-label">Precio de Compra</label>
                     <input type="number" step="0.01" min="0.01" name="precio_compra" class="form-control"
                       v-model="entrada.precio_compra"/>
                   </div>
                 </div>
+                <div class="col-md-2">
+                  <div class="form-group">
+                    <label class="control-label">Unidad Medida Compra</label>
+                    <select class="form-control" name="medida" v-model="entrada.medida_compra" required>
+                      @foreach($unidades_medida as $unidad)
+                      <option value="{{ $unidad->simbolo }}">{{ $unidad->simbolo }}</option>
+                      @endforeach
+                    </select>
+                  </div>
+                </div>  
                 <div class="col-md-4">
                   <div class="form-group">
                     <label class="control-label">Fecha Precio</label>
@@ -848,6 +858,7 @@ const app = new Vue({
       precio: "",
       precio_compra: "",
       fecha_precio_compra:"",
+      medida_comra:"",
       importe: 0,
       descripciones: [],
       observaciones: [],
@@ -1213,6 +1224,7 @@ const app = new Vue({
       orden: 0,
       cantidad: "",
       medida: "",
+      medida_compra: "",
       precio: "",
       precio_compra: "",
       fecha_precio_compra:"",
