@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <style>
     html {
       font-family: sans-serif;
       -webkit-text-size-adjust: 100%;
-          -ms-text-size-adjust: 100%;
+      -ms-text-size-adjust: 100%;
     }
+
     body {
       margin: 25px;
       font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -16,106 +18,174 @@
       color: #333;
       background-color: #fff;
     }
-    h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    .h1,
+    .h2,
+    .h3,
+    .h4,
+    .h5,
+    .h6 {
       font-family: inherit;
       font-weight: 500;
       color: inherit;
     }
-    h1, .h1, h2, .h2, h3, .h3 {
+
+    h1,
+    .h1,
+    h2,
+    .h2,
+    h3,
+    .h3 {
       margin-top: 20px;
       margin-bottom: 10px;
     }
-    h1, .h1 { font-size: 36px; }
-    h2, .h2 { font-size: 30px; }
-    h3, .h3 { font-size: 24px; }
-    h4, .h4 { font-size: 18px; }
-    h5, .h5 { font-size: 14px; }
-    h6, .h6 { font-size: 12px; }
-    p { margin: 0; }
+
+    h1,
+    .h1 {
+      font-size: 36px;
+    }
+
+    h2,
+    .h2 {
+      font-size: 30px;
+    }
+
+    h3,
+    .h3 {
+      font-size: 24px;
+    }
+
+    h4,
+    .h4 {
+      font-size: 18px;
+    }
+
+    h5,
+    .h5 {
+      font-size: 14px;
+    }
+
+    h6,
+    .h6 {
+      font-size: 12px;
+    }
+
+    p {
+      margin: 0;
+    }
+
     caption {
       padding-top: 8px;
       padding-bottom: 8px;
       color: #777;
       text-align: left;
     }
+
     table {
       border-spacing: 0;
       border-collapse: collapse;
       background-color: transparent;
-      margin:5px 0 10px;
+      margin: 5px 0 10px;
     }
-    th { text-align: left; }
+
+    th {
+      text-align: left;
+    }
+
     table col[class*="col-"] {
       position: static;
       display: table-column;
       float: none;
     }
+
     table td[class*="col-"],
     table th[class*="col-"] {
       position: static;
       display: table-cell;
       float: none;
     }
+
     .table {
       width: 100%;
       max-width: 100%;
       margin-bottom: 10px;
     }
-    .table > thead > tr > th, .table > tbody > tr > th,
-    .table > tfoot > tr > th, .table > thead > tr > td,
-    .table > tbody > tr > td, .table > tfoot > tr > td {
+
+    .table>thead>tr>th,
+    .table>tbody>tr>th,
+    .table>tfoot>tr>th,
+    .table>thead>tr>td,
+    .table>tbody>tr>td,
+    .table>tfoot>tr>td {
       padding: 2px;
       vertical-align: top;
       border-top: 1px solid #000;
     }
-    .table > thead > tr > th {
+
+    .table>thead>tr>th {
       vertical-align: bottom;
       border-bottom: 2px solid #000;
     }
-    .table > caption + thead > tr:first-child > th,
-    .table > colgroup + thead > tr:first-child > th,
-    .table > thead:first-child > tr:first-child > th,
-    .table > caption + thead > tr:first-child > td,
-    .table > colgroup + thead > tr:first-child > td,
-    .table > thead:first-child > tr:first-child > td {
+
+    .table>caption+thead>tr:first-child>th,
+    .table>colgroup+thead>tr:first-child>th,
+    .table>thead:first-child>tr:first-child>th,
+    .table>caption+thead>tr:first-child>td,
+    .table>colgroup+thead>tr:first-child>td,
+    .table>thead:first-child>tr:first-child>td {
       border-top: 0;
     }
+
     .table-condensed th,
     .table-condensed td {
       padding: 5px;
     }
+
     .table-bordered {
       border: 1px solid #000;
     }
+
     .table-bordered th,
     .table-bordered td {
       border: 1px solid #000;
     }
+
     .table-bordered thead th,
     .table-bordered thead td {
       border-bottom-width: 2px;
     }
-    .table-striped > tbody > tr:nth-of-type(odd) {
+
+    .table-striped>tbody>tr:nth-of-type(odd) {
       background-color: #f9f9f9;
     }
+
     .table tr.success td,
     .table tr.success th,
     .table td.success,
     .table th.success {
       background-color: #dff0d8;
     }
+
     .table tr.info td,
     .table tr.info th,
     .table td.info,
     .table th.info {
       background-color: #d9edf7;
     }
+
     .table tr.warning td,
     .table tr.warning th,
     .table td.warning,
     .table th.warning {
       background-color: #fcf8e3;
     }
+
     .table tr.danger td,
     .table tr.danger th,
     .table td.danger,
@@ -129,147 +199,276 @@
     .row {
       width: 744px;
     }
+
     .landscape .row {
       width: 1070px;
     }
+
     .row::after {
       display: block;
       content: "";
       clear: both;
     }
-    .col-lg-1, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6,
-    .col-lg-7, .col-lg-8, .col-lg-9, .col-lg-10, .col-lg-11, .col-lg-12 {
-    	position: relative;
-    	min-height: 1px;
-    	padding-left: 15px;
-    	padding-right: 15px;
+
+    .col-lg-1,
+    .col-lg-2,
+    .col-lg-3,
+    .col-lg-4,
+    .col-lg-5,
+    .col-lg-6,
+    .col-lg-7,
+    .col-lg-8,
+    .col-lg-9,
+    .col-lg-10,
+    .col-lg-11,
+    .col-lg-12 {
+      position: relative;
+      min-height: 1px;
+      padding-left: 15px;
+      padding-right: 15px;
       float: left;
     }
+
     /* Todas las columnas tienen -30px por el margin de row */
-    .col-lg-1{ width: 31.9752px; }
-    .landscape .col-lg-1{ width: 69.131px; }
-    .col-lg-2{ width: 93.9504px; }
-    .landscape .col-lg-2{ width: 148.262px; }
-    .col-lg-3{ width: 156px; }
-    .landscape .col-lg-3{ width: 237.5px; }
-    .col-lg-4{ width: 217.9752px; }
-    .landscape .col-lg-4{ width: 326.631px; }
-    .col-lg-5{ width: 279.9504px; }
-    .landscape .col-lg-5{ width: 415.762px; }
-    .col-lg-6{ width: 342px; }
-    .landscape .col-lg-6{ width: 505px; }
-    .col-lg-7{ width: 403.9752px; }
-    .landscape .col-lg-7{ width: 594.131px; }
-    .col-lg-8{ width: 465.9504px; }
-    .landscape .col-lg-8{ width: 683.262px; }
-    .col-lg-9{ width: 528px; }
-    .landscape .col-lg-9{ width: 772.5px; }
-    .col-lg-10{ width: 589.9752px; }
-    .landscape .col-lg-10{ width: 861.631px; }
-    .col-lg-11{ width: 651.9504px; }
-    .landscape .col-lg-11{ width: 950.762px; }
-    .col-lg-12{ width: 714px; }
-    .landscape .col-lg-12{ width: 1040px; }
+    .col-lg-1 {
+      width: 31.9752px;
+    }
+
+    .landscape .col-lg-1 {
+      width: 69.131px;
+    }
+
+    .col-lg-2 {
+      width: 93.9504px;
+    }
+
+    .landscape .col-lg-2 {
+      width: 148.262px;
+    }
+
+    .col-lg-3 {
+      width: 156px;
+    }
+
+    .landscape .col-lg-3 {
+      width: 237.5px;
+    }
+
+    .col-lg-4 {
+      width: 217.9752px;
+    }
+
+    .landscape .col-lg-4 {
+      width: 326.631px;
+    }
+
+    .col-lg-5 {
+      width: 279.9504px;
+    }
+
+    .landscape .col-lg-5 {
+      width: 415.762px;
+    }
+
+    .col-lg-6 {
+      width: 342px;
+    }
+
+    .landscape .col-lg-6 {
+      width: 505px;
+    }
+
+    .col-lg-7 {
+      width: 403.9752px;
+    }
+
+    .landscape .col-lg-7 {
+      width: 594.131px;
+    }
+
+    .col-lg-8 {
+      width: 465.9504px;
+    }
+
+    .landscape .col-lg-8 {
+      width: 683.262px;
+    }
+
+    .col-lg-9 {
+      width: 528px;
+    }
+
+    .landscape .col-lg-9 {
+      width: 772.5px;
+    }
+
+    .col-lg-10 {
+      width: 589.9752px;
+    }
+
+    .landscape .col-lg-10 {
+      width: 861.631px;
+    }
+
+    .col-lg-11 {
+      width: 651.9504px;
+    }
+
+    .landscape .col-lg-11 {
+      width: 950.762px;
+    }
+
+    .col-lg-12 {
+      width: 714px;
+    }
+
+    .landscape .col-lg-12 {
+      width: 1040px;
+    }
   </style>
   <style>
     /* textos */
-    .text-uppercase {text-transform: uppercase;}
-    .text-center {text-align: center;}
-    .text-right {text-align: right;}
-    .text-danger {color: #FF7A7A;}
+    .text-uppercase {
+      text-transform: uppercase;
+    }
+
+    .text-center {
+      text-align: center;
+    }
+
+    .text-right {
+      text-align: right;
+    }
+
+    .text-danger {
+      color: #FF7A7A;
+    }
+
     /* fuentes */
-    .font-small{font-size: 9px;}
-    .font-big{font-size: 12px;}
-    .font-bold{font-weight: bold;}
+    .font-small {
+      font-size: 9px;
+    }
+
+    .font-big {
+      font-size: 12px;
+    }
+
+    .font-bold {
+      font-weight: bold;
+    }
   </style>
   <style>
     @page {
       margin: 0;
     }
+
     .border {
       border: 1px solid #000;
     }
+
     .page-title {
       border-bottom: 1px solid #ccc;
     }
+
     .general-info {
       background: #E6E6E6;
     }
-    .pull-right{
+
+    .pull-right {
       float: right;
     }
-    .pull-left{
+
+    .pull-left {
       float: left;
     }
-    .bordered{
+
+    .bordered {
       border: 0.5px solid #000;
     }
+
     .clearfix:after {
       content: "";
       display: table;
       clear: both;
     }
-    .hidden{
+
+    .hidden {
       visibility: hidden;
     }
+
     .page-break {
       page-break-after: always;
     }
+
     .container {
       margin: 0px;
       padding: 0px;
       width: 100%;
       max-height: 100%;
     }
+
     .header,
     .footer {
       width: 100%;
       position: absolute;
     }
+
     .footer .corte {
       border-top: 2px dashed #000;
       margin: -5px -50px 0;
     }
+
     .header {
       top: 0px;
     }
+
     .footer {
       bottom: 0px;
     }
+
     .margBott10 {
       margin-bottom: 10px;
     }
+
     .margTop10 {
       margin-top: 10px;
     }
-    ul{
+
+    ul {
       margin: 0px;
       padding-left: 20px;
     }
   </style>
   <style>
     /* custom */
-    .table-cotizacion > tbody{
+    .table-cotizacion>tbody {
       border-bottom: 0.5px solid #000;
       /* border: none; */
     }
-    .table-cotizacion > tbody > tr > th,
-    .table-cotizacion > tbody > tr > td,
-    .table-cotizacion > tfoot > tr > th,
-    .table-cotizacion > tfoot > tr > td {
+
+    .table-cotizacion>tbody>tr>th,
+    .table-cotizacion>tbody>tr>td,
+    .table-cotizacion>tfoot>tr>th,
+    .table-cotizacion>tfoot>tr>td {
       border: 0;
     }
-    .table-cotizacion > tbody > tr > th,
-    .table-cotizacion > tbody > tr > td{
+
+    .table-cotizacion>tbody>tr>th,
+    .table-cotizacion>tbody>tr>td {
       border-left: 0.5px solid #000;
     }
-    .table-cotizacion > tbody > tr > th:last-child,
-    .table-cotizacion > tbody > tr > td:last-child{
+
+    .table-cotizacion>tbody>tr>th:last-child,
+    .table-cotizacion>tbody>tr>td:last-child {
       border-right: 0.5px solid #000;
     }
-    .table-cotizacion > tfoot {border: 1px solid #000;}
+
+    .table-cotizacion>tfoot {
+      border: 1px solid #000;
+    }
   </style>
 </head>
+
 <body>
   <div class="container">
 
@@ -294,7 +493,7 @@
       </div>
       <div class="col-lg-7">
         <p class="text-uppercase text-right">Intercorp Contract Resources, s.a. de c.v.</p>
-        <p class="text-uppercase text-right">Av. Moliere 61, Col. Polanco III Sección, CDMX, 11540, Mexico</p>
+        <p class="text-uppercase text-right">Av. Juan Salvador Agraz 50, Oficina 702, Santa Fe Cuajimalpa. Ciudad de Mexico, 05348 Mexico</p>
         <p class="text-right font-small">T. +52 (55) 5557-5214 intercorp.com.mx</p>
       </div>
     </div>
@@ -336,8 +535,8 @@
               </td>
               <td class="bordered">
                 <p>INTERCORP CONTRACT RESOURCES, S.A. DE C.V.</p>
-                <p>MOLIERE 61, COL. POLANCO III SECC.</p>
-                <p>CIUDAD DE MÉXICO 11540, MEXICO</p>
+                <p>Av. Juan Salvador Agraz 50, Oficina 702, Santa Fe Cuajimalpa</p>
+                <p>Ciudad de Mexico, 05348 Mexico</p>
                 <p>T. +52 (55) 5557-5214</p>
                 <p style="width:49%; display:inline-block;">ATTN: ABRAHAM SHVEID</p>
                 <p style="width:49%; display:inline-block;"><a href="mailto:abraham@intercorp.mx">abraham@intercorp.mx</a></p>
@@ -413,9 +612,9 @@
             @foreach($orden->entradas as $entrada)
             <tr>
               @if($entrada->cantidad_convertida)
-                <td class="text-center">@format_number($entrada->cantidad_convertida) <br /> {{$entrada->conversion}}</td>
+              <td class="text-center">@format_number($entrada->cantidad_convertida) <br /> {{$entrada->conversion}}</td>
               @else
-                <td class="text-center">@format_number($entrada->cantidad) <br /> {{$entrada->medida}}</td>
+              <td class="text-center">@format_number($entrada->cantidad) <br /> {{$entrada->medida}}</td>
               @endif
               <td>
                 <table style="width:100%; margin:0;">
@@ -423,17 +622,17 @@
                     <td style="vertical-align: top;">
                       @foreach($entrada->descripciones as $descripcion)
                       @if($descripcion->valor && $entrada->producto->descripciones[$loop->index]->descripcionNombre->aparece_orden_compra )
-                        <p>
-                          <span>@text_capitalize($descripcion->name): </span>
-                          <span class="text-uppercase">{{$descripcion->valor}}</span>
-                        </p>
-                        @endif
+                      <p>
+                        <span>@text_capitalize($descripcion->name): </span>
+                        <span class="text-uppercase">{{$descripcion->valor}}</span>
+                      </p>
+                      @endif
                       @endforeach
                       @if($entrada->conversion)
-                        <p>
-                          @format_number($entrada->cantidad) {{$entrada->medida}} =
-                          @format_number($entrada->cantidad_convertida) {{$entrada->conversion}}
-                        </p>
+                      <p>
+                        @format_number($entrada->cantidad) {{$entrada->medida}} =
+                        @format_number($entrada->cantidad_convertida) {{$entrada->conversion}}
+                      </p>
                       @endif
                     </td>
                     <td style="width:100px;">
@@ -518,4 +717,5 @@
 
   </div><!-- Container -->
 </body>
+
 </html>
