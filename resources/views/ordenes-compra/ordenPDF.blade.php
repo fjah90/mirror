@@ -493,7 +493,8 @@
       </div>
       <div class="col-lg-7">
         <p class="text-uppercase text-right">Intercorp Contract Resources, s.a. de c.v.</p>
-        <p class="text-uppercase text-right">Av. Juan Salvador Agraz 50, Oficina 702, Santa Fe Cuajimalpa. Ciudad de Mexico, 05348 Mexico</p>
+        <p class="text-uppercase text-right font-small">Av. Juan Salvador Agraz 50, Oficina 702, Santa Fe Cuajimalpa.</p>
+        <p class="text-uppercase text-right font-small">Ciudad de Mexico, 05348 Mexico</p>
         <p class="text-right font-small">T. +52 (55) 5557-5214 intercorp.com.mx</p>
       </div>
     </div>
