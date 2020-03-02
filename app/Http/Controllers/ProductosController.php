@@ -114,7 +114,13 @@ class ProductosController extends Controller
             });
         }
 
-        $productorespuesta = Producto::where('id', '=', $producto->id)->with('categoria')->first();
+        $productorespuesta = Producto::where('id', '=', $producto->id)->with('categoria', 'proveedor', 'descripciones.descripcionNombre', 'proveedor.contactos')->first();
+        if ($productorespuesta->foto) {
+            $productorespuesta->foto = asset('storage/' . $productorespuesta->foto);
+        }
+        if ($productorespuesta->ficha_tecnica) {
+            $productorespuesta->ficha_tecnica = asset('storage/' . $productorespuesta->ficha_tecnica);
+        }
         return response()->json(['success' => true, "error" => false, "producto" => $productorespuesta], 200);
     }
 

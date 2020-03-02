@@ -39,7 +39,6 @@
                       <th>#</th>
                       <th>Tipo</th>
                       <th>Empresa</th>
-                      <th>Numero Cliente</th>
                       <th>RFC</th>
                       <th style="min-width:70px;"></th>
                     </tr>
@@ -49,7 +48,6 @@
                       <td>@{{index+1}}</td>
                       <td>@{{proveedor.tipo.nombre}}</td>
                       <td>@{{proveedor.empresa}}</td>
-                      <td>@{{proveedor.numero_cliente}}</td>
                       <td>@{{proveedor.identidad_fiscal}}</td>
                       <td class="text-right">
                         <a class="btn btn-xs btn-info" title="Ver" :href="'/proveedores/'+proveedor.id">
@@ -93,7 +91,6 @@
                       <th>#</th>
                       <th>Tipo</th>
                       <th>Empresa</th>
-                      <th>Numero Cliente</th>
                       <th>TAX ID NO</th>
                       <th style="min-width:70px;"></th>
                     </tr>
@@ -103,7 +100,6 @@
                       <td>@{{index+1}}</td>
                       <td>@{{proveedor.tipo.nombre}}</td>
                       <td>@{{proveedor.empresa}}</td>
-                      <td>@{{proveedor.numero_cliente}}</td>
                       <td>@{{proveedor.identidad_fiscal}}</td>
                       <td class="text-right">
                         <a class="btn btn-xs btn-info" title="Ver"

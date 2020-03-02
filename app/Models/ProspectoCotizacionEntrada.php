@@ -11,7 +11,8 @@ class ProspectoCotizacionEntrada extends Model
 
     protected $fillable = [
         'cotizacion_id', 'producto_id', 'cantidad', 'medida',
-        'precio', 'importe', 'fotos', 'observaciones', 'orden', 'precio_compra', 'fecha_precio_compra', 'proveedor_contacto_id', 'medida_compra', 'soporte_precio_compra',
+        'precio', 'importe', 'fotos', 'observaciones', 'orden',
+        'precio_compra', 'fecha_precio_compra', 'proveedor_contacto_id', 'medida_compra', 'soporte_precio_compra', 'moneda_referencia',
     ];
 
     protected $casts = [

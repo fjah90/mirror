@@ -454,6 +454,13 @@
               </div>
               <div class="row">
                 <div class="col-md-2">
+                  <button type="button" class="btn btn-primary" @click="modalProducto=true">
+                    Registrar producto
+                  </button>
+                </div>
+              </div>
+              <div class="row"  style="padding-top: 10px;">
+                <div class="col-md-2">
                   <div class="form-group">
                     <label class="control-label">Precio de Compra</label>
                     <input type="number" step="0.01" min="0.01" name="precio_compra" class="form-control"
@@ -463,14 +470,14 @@
                 <div class="col-md-2">
                   <div class="form-group">
                     <label class="control-label">Unidad Medida Compra</label>
-                    <select class="form-control" name="medida" v-model="entrada.medida_compra" required>
+                    <select class="form-control" name="medida" v-model="entrada.medida_compra" >
                       @foreach($unidades_medida as $unidad)
                       <option value="{{ $unidad->simbolo }}">{{ $unidad->simbolo }}</option>
                       @endforeach
                     </select>
                   </div>
                 </div>  
-                <div class="col-md-4">
+                <div class="col-md-2">
                   <div class="form-group">
                     <label class="control-label">Fecha Precio</label>
                     <br />
@@ -492,6 +499,16 @@
                         </li>
                       </template>
                     </dropdown>
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="form-group">
+                    <label class="control-label">Moneda Referencia</label>
+                    <select class="form-control" name="moneda" v-model="entrada.moneda_referencia">
+                      <option value=""></option>
+                      <option value="Dolares">Dolares USD</option>
+                      <option value="Pesos">Pesos MXN</option>
+                    </select>
                   </div>
                 </div>
                 <div class="col-md-4">
@@ -779,6 +796,13 @@
     </modal>
     <!-- /.Aceptar Modal -->
 
+    <!-- Nuevo Producto Modal-->
+    <modal v-model="modalProducto" title="Registrar Producto" :footer="false">
+      <iframe id="theFrame" src="{{url("/")}}/productos/crear?layout=iframe" style="width:100%; height:700px;" frameborder="0">
+      </iframe>
+    </modal>
+    <!-- /.Nuevo Producto Modal -->
+
   </section>
   <!-- /.content -->
 
@@ -811,6 +835,8 @@ const app = new Vue({
     nuevaObservacion: "",
     observaciones_productos: [],
     nuevaObservacionProducto: "",
+    tablaProductos: {},
+    modalProducto:false,
     contactos_proveedor:"",
     cotizacion: {
       prospecto_id: {{$prospecto->id}},
@@ -858,7 +884,8 @@ const app = new Vue({
       precio: "",
       precio_compra: "",
       fecha_precio_compra:"",
-      medida_comra:"",
+      medida_compra:"",
+      moneda_referencia:"",
       importe: 0,
       descripciones: [],
       observaciones: [],
@@ -930,7 +957,7 @@ const app = new Vue({
       allowedFileExtensions: ["jpg", "jpeg", "png", "pdf"],
       elErrorContainer: '#comprobante-file-errors',
     });
-    $("#tablaProductos").DataTable({dom: 'ftp'});
+    this.tablaProductos=$("#tablaProductos").DataTable({dom: 'ftp'});
 
     this.dataTableEntradas = $("#tablaEntradas").DataTable({
       data: [],
@@ -979,6 +1006,18 @@ const app = new Vue({
     });
 
     this.resetDataTables();
+
+    //escuchar Iframe
+    window.addEventListener('message',function(e) {
+          if(e.data.tipo=="producto"){
+            vueInstance.tablaProductos.destroy();
+            vueInstance.productos.push(e.data.object);
+            vueInstance.seleccionarProduco(e.data.object);   
+            vueInstance.modalProducto=false;
+            Vue.nextTick(function() {vueInstance.tablaProductos=$("#tablaProductos").DataTable({dom: 'ftp'});});
+            
+          }
+      },false);
   },
   methods: {
     dateParser(value){
@@ -1225,6 +1264,7 @@ const app = new Vue({
       cantidad: "",
       medida: "",
       medida_compra: "",
+      moneda_referencia:"",
       precio: "",
       precio_compra: "",
       fecha_precio_compra:"",
