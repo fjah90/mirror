@@ -100,10 +100,10 @@
                   <label class="control-label">Estado</label>
                   <input type="text" class="form-control" name="estado" v-model="proveedor.estado" />
                 </div>
-                <div class="col-md-4">
+                <!-- <div class="col-md-4">
                   <label class="control-label">Pais</label>
                   <input type="text" class="form-control" name="pais" v-model="proveedor.pais" />
-                </div>
+                </div> -->
               </div>
               @else
               <div class="row form-group">
