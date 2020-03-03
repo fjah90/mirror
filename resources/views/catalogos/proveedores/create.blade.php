@@ -66,7 +66,7 @@
               <h3 class="panel-title">Dirección</h3>
             </div>
             <div class="panel-body">
-              {{-- <div class="row form-group">
+              <div class="row form-group">
                 <div class="col-md-4">
                   <label class="control-label">Calle</label>
                   <input type="text" class="form-control" name="calle" v-model="proveedor.calle" />
@@ -75,7 +75,7 @@
                   <label class="control-label">Numero</label>
                   <input type="text" class="form-control" name="numero" v-model="proveedor.numero" />
                 </div>
-              </div> --}}
+              </div>
               @if($nacional)
               <div class="row form-group">
                 <div class="col-md-4">
