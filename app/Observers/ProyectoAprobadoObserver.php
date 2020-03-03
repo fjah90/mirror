@@ -67,6 +67,7 @@ class ProyectoAprobadoObserver
             $orden->total = bcadd($orden->subtotal, $orden->iva, 2);
             $orden->save();
         } //foreach proveedores
+
     }
 
 }

@@ -1014,6 +1014,16 @@ class ProspectosController extends Controller
         CuentaCobrar::create($create);
         $cotizacion->update(['aceptada' => true]);
 
+        // Guardar activiad de aprobar
+        $today = new DateTime();
+        ProspectoActividad::create([
+            'prospecto_id' => $cotizacion->prospecto_id,
+            'tipo_id'      => 10,
+            'fecha'        => $today->format('d/m/Y'),
+            'descripcion'  => 'Cotización aceptada',
+            'realizada'    => true,
+        ]);
+
         return response()->json(['success' => true, 'error' => false], 200);
     }
 

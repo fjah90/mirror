@@ -147,6 +147,7 @@
 
 {{-- footer_scripts --}}
 @section('footer_scripts')
+<script src="{{ URL::asset('js/plugins/date-time/datetime-moment.js') }}" ></script>
 <script>
 
 const app = new Vue({
@@ -160,13 +161,16 @@ const app = new Vue({
       fecha_fin: ''
     },
     mounted(){
+      $.fn.dataTable.moment( 'DD/MM/YYYY' );
       this.tabla = $("#tabla").DataTable({
         "dom": 'f<"#fechas_container.pull-left">ltip',
         "order": [[ 4, "desc" ]]
       });
       $("#fechas_container").append($("#fecha_ini_control"));
       $("#fechas_container").append($("#fecha_fin_control"));
+      
       var vue = this;
+      
       $.fn.dataTableExt.afnFiltering.push(
         function( settings, data, dataIndex ) {
           var min  = vue.fecha_ini;
