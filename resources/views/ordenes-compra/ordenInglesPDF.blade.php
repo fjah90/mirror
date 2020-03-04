@@ -613,9 +613,9 @@
             @foreach($orden->entradas as $entrada)
             <tr>
               @if($entrada->cantidad_convertida)
-              <td class="text-center">@format_number($entrada->cantidad_convertida) <br /> {{$entrada->conversion}}</td>
+              <td class="text-center">@format_number($entrada->cantidad_convertida) <br /> {{$entrada->conversion_ingles}}</td>
               @else
-              <td class="text-center">@format_number($entrada->cantidad) <br /> {{$entrada->medida}}</td>
+              <td class="text-center">@format_number($entrada->cantidad) <br /> {{$entrada->medida_ingles}}</td>
               @endif
               <td>
                 <table style="width:100%; margin:0;">
@@ -635,8 +635,8 @@
                       @endforeach
                       @if($entrada->conversion)
                       <p>
-                        @format_number($entrada->cantidad) {{$entrada->medida}} =
-                        @format_number($entrada->cantidad_convertida) {{$entrada->conversion}}
+                        @format_number($entrada->cantidad) {{$entrada->medida_ingles}} =
+                        @format_number($entrada->cantidad_convertida) {{$entrada->conversion_ingles}}
                       </p>
                       @endif
                     </td>
