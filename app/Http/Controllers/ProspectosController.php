@@ -362,7 +362,7 @@ class ProspectosController extends Controller
     {
         $prospecto->load(
             ['cotizaciones' => function ($query) {
-                $query->orderBy('fecha', 'desc');
+                $query->orderBy('fecha', 'asc');
             }, 'cotizaciones.entradas.descripciones', 'cotizaciones.entradas.producto' => function ($query) {
                 $query->withTrashed()->with('proveedor.contactos', 'descripciones', 'descripciones.descripcionNombre');
             }],

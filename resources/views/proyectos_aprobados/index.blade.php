@@ -88,6 +88,7 @@
 
 {{-- footer_scripts --}}
 @section('footer_scripts')
+<script src="{{ URL::asset('js/plugins/date-time/datetime-moment.js') }}" ></script>
 <script>
 const app = new Vue({
     el: '#content',
@@ -118,7 +119,7 @@ const app = new Vue({
             text: "Datos Cargados",
             type: "success"
           }).then(()=>{
-            this.tabla = $("#tabla").DataTable({"order": [[ 1, "asc" ]]});
+            this.tabla = $("#tabla").DataTable({"order": [[4,"desc" ]]});
           });
         })
         .catch(({response}) => {

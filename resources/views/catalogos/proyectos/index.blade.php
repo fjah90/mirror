@@ -77,6 +77,7 @@
 
 {{-- footer_scripts --}}
 @section('footer_scripts')
+<script src="{{ URL::asset('js/plugins/date-time/datetime-moment.js') }}" ></script>
 <script>
 const app = new Vue({
     el: '#content',
