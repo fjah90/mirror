@@ -58,7 +58,6 @@ class ProspectosController extends Controller
             } else {
                 $prospectos = $user->prospectos;
             }
-
         }
 
         return response()->json(['success' => true, "error" => false, 'prospectos' => $prospectos], 200);
@@ -362,7 +361,9 @@ class ProspectosController extends Controller
     public function cotizar(Prospecto $prospecto)
     {
         $prospecto->load(
-            ['cotizaciones.entradas.descripciones', 'cotizaciones.entradas.producto' => function ($query) {
+            ['cotizaciones' => function ($query) {
+                $query->orderBy('fecha', 'desc');
+            }, 'cotizaciones.entradas.descripciones', 'cotizaciones.entradas.producto' => function ($query) {
                 $query->withTrashed()->with('proveedor.contactos', 'descripciones', 'descripciones.descripcionNombre');
             }],
             'cliente.contactos.emails',
@@ -374,7 +375,6 @@ class ProspectosController extends Controller
             if ($producto->ficha_tecnica) {
                 $producto->ficha_tecnica = asset('storage/' . $producto->ficha_tecnica);
             }
-
         }
         $condiciones     = CondicionCotizacion::all();
         $observaciones   = ObservacionCotizacion::all();
@@ -409,13 +409,11 @@ class ProspectosController extends Controller
             if ($cotizacion->cuentaCobrar) {
                 $cotizacion->comprobante_confirmacion = asset('storage/' . $cotizacion->cuentaCobrar->comprobante_confirmacion);
             }
-
         }
         foreach ($productos as $producto) {
             if ($producto->foto) {
                 $producto->foto = asset('storage/' . $producto->foto);
             }
-
         }
 
         return view('prospectos.cotizar', compact(
@@ -839,7 +837,6 @@ class ProspectosController extends Controller
             if ($entrada->producto->ficha_tecnica) {
                 $fichas[] = storage_path('app/public/' . $entrada->producto->ficha_tecnica);
             }
-
         }
         $pdf = new PDFMerger();
         $pdf->addPDF(storage_path("app/public/$url"), 'all');
@@ -887,13 +884,13 @@ class ProspectosController extends Controller
         $user     = auth()->user();
 
         Mail::send('email', ['mensaje' => $request->mensaje], function ($message)
-             use ($email, $pdf, $pdf_name, $user) {
-                $message->to($email)
-                    ->cc('abraham@intercorp.mx')
-                    ->replyTo($user->email, $user->name)
-                    ->subject('Cotización Intercorp');
-                $message->attachData($pdf, $pdf_name);
-            });
+        use ($email, $pdf, $pdf_name, $user) {
+            $message->to($email)
+                ->cc('abraham@intercorp.mx')
+                ->replyTo($user->email, $user->name)
+                ->subject('Cotización Intercorp');
+            $message->attachData($pdf, $pdf_name);
+        });
 
         //generar actividad de envio de cotizacion
         $this->registrarActividadDeCotizacionEnviada($cotizacion);
@@ -1096,7 +1093,6 @@ class ProspectosController extends Controller
             if ($entrada->producto->ficha_tecnica) {
                 $fichas[] = storage_path('app/public/' . $entrada->producto->ficha_tecnica);
             }
-
         }
 
         $pdf = new PDFMerger();
@@ -1132,6 +1128,5 @@ class ProspectosController extends Controller
         }
 
         response()->json(['success' => true, 'error' => false], 200);
-
     }
 }
