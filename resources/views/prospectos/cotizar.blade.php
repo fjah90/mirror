@@ -903,7 +903,7 @@ const app = new Vue({
           @endforeach
         @endforeach
       ],
-      mensaje: "Buen día.\n\nLe envió cotización para su consideración.\n\n{{auth()->user()->name}}.\nAtención del Cliente\nIntercorp Contract Resources"
+      mensaje: "Buenas tardes  .\n\nAnexo a la presente encontrarán la cotización solicitada de   para  .\n\nEsperamos esta información les sea de utilidad y quedamos a sus órdenes para cualquier duda o comentario.\n\nSaludos,\n\n{{auth()->user()->name}}.\n{{auth()->user()->email}}\nIntercorp Contract Resources"
     },
     aceptar: {
       cotizacion_id: 0,
