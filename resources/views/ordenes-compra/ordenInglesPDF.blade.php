@@ -536,8 +536,8 @@
               </td>
               <td class="bordered">
                 <p>INTERCORP CONTRACT RESOURCES, S.A. DE C.V.</p>
-                <p>Av. Juan Salvador Agraz 50, Oficina 702, Santa Fe Cuajimalpa</p>
-                <p>Ciudad de Mexico, 05348 Mexico</p>
+                <p class="text-uppercase">Av. Juan Salvador Agraz 50, Oficina 702, Santa Fe Cuajimalpa</p>
+                <p class="text-uppercase">Ciudad de Mexico, 05348 Mexico</p>
                 <p>T. +52 (55) 5557-5214</p>
                 <p style="width:49%; display:inline-block;">ATTN: ABRAHAM SHVEID</p>
                 <p style="width:49%; display:inline-block;"><a href="mailto:abraham@intercorp.mx">abraham@intercorp.mx</a></p>
@@ -582,8 +582,8 @@
                 </table>
               </td>
               <td class="bordered">
-                <p class="text-center font-small "><strong>DELIVER TO:</strong></p>
-                <p class="text-uppercase">{{$orden->proyecto->cotizacion->lugar}}</p>
+                <p class="text-center font-small "><strong>SHIP TO:</strong></p>
+                <p class="text-uppercase">{{$orden->delivery}}</p>
                 @if($orden->aduana)
                 <p class="text-uppercase">By: {{$orden->aduana->compañia}}</p>
                 <p class="text-uppercase">{{$orden->aduana->contacto}}</p>

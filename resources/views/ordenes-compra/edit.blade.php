@@ -112,6 +112,14 @@
                 </select>
               </div>
             </div>
+            @if(!$orden->proveedor->nacional)
+            <div class="row form-group">
+              <div class="col-md-6">
+                <label class="control-label">Direccion de Entrega:</label>
+                <textarea rows="4" class="form-control" v-model="orden.delivery"></textarea>
+              </div>
+            </div>
+            @endif
             <form class="" @submit.prevent="agregarEntrada()">
               <div class="row">
                 <div class="col-md-4">

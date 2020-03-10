@@ -49,6 +49,12 @@ class OrdenCompraEntrada extends Model
             case 'Unidad':
                 $result = "Unit";
                 break;
+            case 'Yarda2':
+                $result = "Yard2";
+                break;
+            case 'Yarda':
+                $result = "Yard";
+                break;
 
             default:
                 # code...

@@ -570,7 +570,7 @@ class ProspectosController extends Controller
         }
 
         //crear pdf de cotizacion
-        $url   = 'cotizaciones/' . $cotizacion->id . '/C ' . $cotizacion->numero . ' Intercorp.pdf';
+        $url   = 'cotizaciones/' . $cotizacion->id . '/INTERCORP PO ' . $cotizacion->numero . ' ' . '.pdf';
         $meses = [
             'ENERO', 'FEBRERO', 'MARZO', 'ABRIL', 'MAYO', 'JUNIO', 'JULIO',
             'AGOSTO', 'SEPTIEMBRE', 'OCTUBRE', 'NOVIEMBRE', 'DICIEMBRE',
@@ -884,13 +884,13 @@ class ProspectosController extends Controller
         $user     = auth()->user();
 
         Mail::send('email', ['mensaje' => $request->mensaje], function ($message)
-        use ($email, $pdf, $pdf_name, $user) {
-            $message->to($email)
-                ->cc('abraham@intercorp.mx')
-                ->replyTo($user->email, $user->name)
-                ->subject('Cotización Intercorp');
-            $message->attachData($pdf, $pdf_name);
-        });
+             use ($email, $pdf, $pdf_name, $user) {
+                $message->to($email)
+                    ->cc('abraham@intercorp.mx')
+                    ->replyTo($user->email, $user->name)
+                    ->subject('Cotización Intercorp');
+                $message->attachData($pdf, $pdf_name);
+            });
 
         //generar actividad de envio de cotizacion
         $this->registrarActividadDeCotizacionEnviada($cotizacion);

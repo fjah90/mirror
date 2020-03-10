@@ -411,7 +411,7 @@ class OrdenesCompraController extends Controller
         if ($orden->status == OrdenCompra::STATUS_RECHAZADA) {
             $update['status'] = OrdenCompra::STATUS_POR_AUTORIZAR;
         }
-
+        $update['delivery'] = $request->delivery;
         $orden->update($update);
 
         //sincronizar entradas
