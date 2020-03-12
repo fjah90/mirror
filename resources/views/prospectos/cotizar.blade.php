@@ -101,7 +101,7 @@
                             <i class="far fa-sticky-note"></i>
                           </button>
                           <a class="btn btn-xs btn-success" title="PDF" :href="cotizacion.archivo"
-                            :download="'INTERCORP PO  '+cotizacion.numero+' '+prospecto.nombre+'.pdf'">
+                            :download="'C '+cotizacion.numero+' Intercorp '+prospecto.nombre+'.pdf'">
                             <i class="far fa-file-pdf"></i>
                           </a>
                           <button class="btn btn-xs btn-info" title="Enviar"
@@ -1584,7 +1584,7 @@ const app = new Vue({
           text: "",
           type: "success"
         }).then(()=>{
-          $('a[download="INTERCORP PO  '+data.cotizacion.numero+' '+this.prospecto.nombre+'.pdf"]')[0].click();
+          $('a[download="C '+data.cotizacion.numero+' Intercorp '+this.prospecto.nombre+'.pdf"]')[0].click();
           window.location.reload(true);
         });
       })

@@ -570,7 +570,7 @@ class ProspectosController extends Controller
         }
 
         //crear pdf de cotizacion
-        $url   = 'cotizaciones/' . $cotizacion->id . '/INTERCORP PO ' . $cotizacion->numero . ' ' . '.pdf';
+        $url   = 'cotizaciones/' . $cotizacion->id . '/C ' . $cotizacion->numero . ' Intercorp.pdf';
         $meses = [
             'ENERO', 'FEBRERO', 'MARZO', 'ABRIL', 'MAYO', 'JUNIO', 'JULIO',
             'AGOSTO', 'SEPTIEMBRE', 'OCTUBRE', 'NOVIEMBRE', 'DICIEMBRE',

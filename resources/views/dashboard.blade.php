@@ -313,9 +313,12 @@ Dashboard | @parent
                       <td>@{{actividad.tipo_actividad}}</td>
                       <td>@{{actividad.fecha_formated}}</td>
                       <td>
-                        <a title="Ver" :href="'/prospectos/'+actividad.prospecto_id" class="btn btn-info">
+                        <a title="Ver" :href="'/prospectos/'+actividad.prospecto_id" class="btn btn-xs btn-info">
                             Ver <i class="far fa-eye"></i>
                           </a>
+                          <a class="btn btn-xs btn-warning" title="Editar" :href="'/prospectos/'+actividad.prospecto_id+'/editar'">
+                            Editar<i class="fas fa-pencil-alt"></i>
+                          </a>  
                       </td>
                       
                     </tr>
