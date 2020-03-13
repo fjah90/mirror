@@ -189,8 +189,8 @@ const app = new Vue({
         var indice_descripcion
         for (; i<j; i++) {
           nuevo_ordenamiento = diff[i].newPosition + 1; //+1 Por que empieza en 1
-          //console.log(edit.nodes[i].cells[3].childNodes[0]); //Boton
-          indice_descripcion = $(edit.nodes[i].cells[3].childNodes[0]).data('index');
+          //console.log(edit.nodes[i].cells[4].childNodes[0]); //Boton
+          indice_descripcion = $(edit.nodes[i].cells[4].childNodes[0]).data('index');
           vueInstance.categoria.descripciones[indice_descripcion].actualizar = true;
           vueInstance.categoria.descripciones[indice_descripcion].ordenamiento = nuevo_ordenamiento;
         }
