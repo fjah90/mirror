@@ -282,6 +282,22 @@
                   <input type="text" name="estado" class="form-control text-uppercase" v-model="cotizacion.direstado" />
                 </div>
               </div>
+              <div class="row form-group" v-if="cotizacion.direccion!='0'">
+                <div class="col-sm-4">
+                  <label class="control-label">Nombre de Contacto</label>
+                  <input type="text" name="cp" class="form-control " v-model="cotizacion.contacto_nombre" />
+                </div>
+                <div class="col-sm-4">
+                  <label class="control-label">Teléfono de Contacto</label>
+                  <input type="text" class="form-control" name="telefono" v-model="cotizacion.contacto_telefono"
+                    v-mask="['(###) ###-####','+#(###)###-####','+##(###)###-####']" required 
+                  />
+                </div>
+                <div class="col-sm-4">
+                  <label class="control-label">Correo de Contacto</label>
+                  <input type="email" name="estado" class="form-control " v-model="cotizacion.contacto_email" />
+                </div>
+              </div>
               <div class="row">
                 <div class="col-md-6">
                   <div class="form-group">
@@ -864,6 +880,9 @@ const app = new Vue({
       dircp: '',
       dirciudad: '',
       direstado: '',
+      contacto_nombre:'',
+      contacto_telefono:'',
+      contacto_email:'',
       entrega: '',
       lugar: '',
       fletes: '',
@@ -1045,6 +1064,9 @@ const app = new Vue({
         this.cotizacion.dircp = this.direcciones[this.cotizacion.direccion].dircp;
         this.cotizacion.dirciudad = this.direcciones[this.cotizacion.direccion].dirciudad;
         this.cotizacion.direstado = this.direcciones[this.cotizacion.direccion].direstado;
+        this.cotizacion.contacto_nombre= this.direcciones[this.cotizacion.direccion].contacto_nombre;
+        this.cotizacion.contacto_email= this.direcciones[this.cotizacion.direccion].contacto_email;
+        this.cotizacion.contacto_telefono= this.direcciones[this.cotizacion.direccion].contacto_telefono;
       }
     },
     condicionCambiada(){
@@ -1371,6 +1393,9 @@ const app = new Vue({
         dirninterior: cotizacion.dirninterior,
         dircolonia: cotizacion.dircolonia,
         dircp: cotizacion.dircp,
+        contacto_nombre:cotizacion.contacto_nombre,
+        contacto_telefono:cotizacion.contacto_telefono,
+        contacto_email:cotizacion.contacto_email,
         dirciudad: cotizacion.dirciudad,
         direstado: cotizacion.direstado,
         entrega: cotizacion.entrega,
@@ -1458,6 +1483,9 @@ const app = new Vue({
         dirninterior: cotizacion.dirninterior,
         dircolonia: cotizacion.dircolonia,
         dircp: cotizacion.dircp,
+        contacto_nombre:cotizacion.contacto_nombre,
+        contacto_telefono:cotizacion.contacto_telefono,
+        contacto_email:cotizacion.contacto_email,
         dirciudad: cotizacion.dirciudad,
         direstado: cotizacion.direstado,
         entrega: cotizacion.entrega,
@@ -1560,6 +1588,9 @@ const app = new Vue({
           dirninterior: '',
           dircolonia: '',
           dircp: '',
+          contacto_nombre:'',
+          contacto_telefono:'',
+          contacto_email:'',
           dirciudad: '',
           direstado: '',
           entrega: '',

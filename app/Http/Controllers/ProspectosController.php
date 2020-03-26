@@ -389,13 +389,16 @@ class ProspectosController extends Controller
         $direcciones = $prospecto->cotizaciones->reduce(function ($datos, $cotizacion) {
             if ($cotizacion->direccion) {
                 $datos[$cotizacion->direccion_entrega] = [
-                    'dircalle'     => $cotizacion->dircalle,
-                    'dirnexterior' => $cotizacion->dirnexterior,
-                    'dirninterior' => $cotizacion->dirninterior,
-                    'dircolonia'   => $cotizacion->dircolonia,
-                    'dircp'        => $cotizacion->dircp,
-                    'dirciudad'    => $cotizacion->dirciudad,
-                    'direstado'    => $cotizacion->direstado,
+                    'dircalle'          => $cotizacion->dircalle,
+                    'dirnexterior'      => $cotizacion->dirnexterior,
+                    'dirninterior'      => $cotizacion->dirninterior,
+                    'dircolonia'        => $cotizacion->dircolonia,
+                    'dircp'             => $cotizacion->dircp,
+                    'dirciudad'         => $cotizacion->dirciudad,
+                    'direstado'         => $cotizacion->direstado,
+                    'contacto_nombre'   => $cotizacion->contacto_nombre,
+                    'contacto_email'    => $cotizacion->contacto_email,
+                    'contacto_telefono' => $cotizacion->contacto_telefono,
                 ];
             }
             return $datos;

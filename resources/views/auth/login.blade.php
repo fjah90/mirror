@@ -14,7 +14,7 @@
 
   <style>
     html{
-        background      : url("/images/unnamed.png");
+        background      : url("/images/unnamed2.png");
         background-size: cover;
         background-position: center -170px;
     }
@@ -60,7 +60,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <h2 class="text-center">
-                            <img src="{{asset('images/logo_trans.png')}}" alt="Logo" style="width:100%; visibility:hidden;">
+                            <img src="{{asset('images/logo_trans.png')}}" alt="Logo" style="width:100%;">
                         </h2>
                     </div>
                 </div>
