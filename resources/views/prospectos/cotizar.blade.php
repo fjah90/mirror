@@ -190,7 +190,7 @@
                       @change="seleccionarRFC()">
                       <option value="0">No</option>
                       <option value="1">Si</option>
-                      <option v-for="(rfc, index) in rfcs" :value="index">@{{index}}</option>
+                      <option v-for="(rfc, index) in rfcs" :value="index">@{{rfc.rfc}}</option>
                     </select>
                   </div>
                 </div>

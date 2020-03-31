@@ -63,6 +63,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/proveedoresExtra', 'ProveedoresController@indexExtra')->name('proveedores.indexExtra');
     Route::resource('/proveedores', 'ProveedoresController', ['parameters' => ['proveedores' => 'proveedor']]);
     Route::resource('/contactos', 'ContactosController');
+    Route::resource('/datosFacturacion', 'DatosFacturacionController');
     Route::resource('/emails', 'EmailsController');
     Route::resource('/telefonos', 'TelefonosController');
     Route::resource('/proyectos', 'ProyectosController');

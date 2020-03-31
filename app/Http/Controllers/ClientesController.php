@@ -113,7 +113,7 @@ class ClientesController extends Controller
      */
     public function show(Cliente $cliente)
     {
-        $cliente->load(['tipo', 'contactos']);
+        $cliente->load(['tipo', 'contactos', 'datos_facturacion']);
         return view('catalogos.clientes.show', compact('cliente'));
     }
 
@@ -127,7 +127,7 @@ class ClientesController extends Controller
     {
         $tipos    = TipoCliente::all();
         $usuarios = User::all()->pluck('name', 'id');
-        $cliente->load(['tipo', 'contactos.emails', 'contactos.telefonos']);
+        $cliente->load(['tipo', 'contactos.emails', 'contactos.telefonos', 'datos_facturacion']);
         $tab = ($request->has('contactos')) ? 1 : 0;
 
         return view('catalogos.clientes.edit', compact(['cliente', 'tipos', 'usuarios', 'tab']));
