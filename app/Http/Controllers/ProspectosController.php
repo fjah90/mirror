@@ -367,6 +367,7 @@ class ProspectosController extends Controller
                 $query->withTrashed()->with('proveedor.contactos', 'descripciones', 'descripciones.descripcionNombre');
             }],
             'cliente.contactos.emails',
+            'cliente.datos_facturacion',
             'cotizaciones.cuentaCobrar'
         );
         $productos = Producto::with('categoria', 'proveedor', 'descripciones.descripcionNombre', 'proveedor.contactos')
@@ -385,7 +386,8 @@ class ProspectosController extends Controller
             $numero_siguiente = 0;
         }
 
-        $rfcs        = $this->getDatosFacturacion($prospecto->cliente_id);
+        $rfcs = $prospecto->cliente->datos_facturacion->reduce(function ($carry, $key) {$carry[$key->rfc] = $key;return $carry;});
+
         $direcciones = $prospecto->cotizaciones->reduce(function ($datos, $cotizacion) {
             if ($cotizacion->direccion) {
                 $datos[$cotizacion->direccion_entrega] = [

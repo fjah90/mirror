@@ -3,28 +3,27 @@
 namespace App\Models;
 
 use App\Model;
-use Carbon\Carbon;
 
 class Cliente extends Model
 {
     protected $table = 'clientes';
 
     protected $fillable = [
-      'usuario_id','tipo_id','nombre','rfc','razon_social',
-      'calle','nexterior','ninterior',
-      'colonia', 'delegacion', 'cp','ciudad','estado', 'pais',
-      'pagina_web','adicionales','nacional','usuario_nombre'
+        'usuario_id', 'tipo_id', 'nombre', 'rfc', 'razon_social',
+        'calle', 'nexterior', 'ninterior',
+        'colonia', 'delegacion', 'cp', 'ciudad', 'estado', 'pais',
+        'pagina_web', 'adicionales', 'nacional', 'usuario_nombre',
     ];
 
     protected $casts = [
-      'nacional' => 'boolean'
+        'nacional' => 'boolean',
     ];
 
-    protected $appends = ['direccion','internacional'];
+    protected $appends = ['direccion', 'internacional'];
 
     public function setNacionalAttribute($nacional)
     {
-      $this->attributes['nacional'] = ($nacional)?1:0;
+        $this->attributes['nacional'] = ($nacional) ? 1 : 0;
     }
 
     /**
@@ -33,15 +32,17 @@ class Cliente extends Model
      * ---------------------------------------------------------------------------
      */
 
-    public function getDireccionAttribute(){
-      return 
-      $this->calle." ".$this->nexterior.(($this->ninterior)?" Int. ".$this->ninterior:"")." ".
-      (($this->colonia)?$this->colonia." ":"").(($this->delegacion)?$this->delegacion." ":"")
-      .$this->cp." ".$this->ciudad." ".$this->estado." ".$this->pais;
+    public function getDireccionAttribute()
+    {
+        return
+        $this->calle . " " . $this->nexterior . (($this->ninterior) ? " Int. " . $this->ninterior : "") . " " .
+        (($this->colonia) ? $this->colonia . " " : "") . (($this->delegacion) ? $this->delegacion . " " : "")
+        . $this->cp . " " . $this->ciudad . " " . $this->estado . " " . $this->pais;
     }
 
-    public function getInternacionalAttribute(){
-      return !$this->nacional;
+    public function getInternacionalAttribute()
+    {
+        return !$this->nacional;
     }
 
     /**
@@ -50,16 +51,24 @@ class Cliente extends Model
      * ---------------------------------------------------------------------------
      */
 
-    public function tipo(){
-      return $this->belongsTo('App\Models\TipoCliente', 'tipo_id', 'id');
+    public function tipo()
+    {
+        return $this->belongsTo('App\Models\TipoCliente', 'tipo_id', 'id');
     }
 
-    public function usuario(){
-      return $this->belongsTo('App\User', 'usuario_id', 'id');
+    public function usuario()
+    {
+        return $this->belongsTo('App\User', 'usuario_id', 'id');
     }
 
-    public function contactos(){
-      return $this->hasMany('App\Models\ClienteContacto', 'cliente_id', 'id');
+    public function contactos()
+    {
+        return $this->hasMany('App\Models\ClienteContacto', 'cliente_id', 'id');
+    }
+
+    public function datos_facturacion()
+    {
+        return $this->hasMany('App\Models\DatoFacturacion', 'cliente_id', 'id');
     }
 
 }

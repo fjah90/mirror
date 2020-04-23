@@ -239,6 +239,114 @@
           </div>
         </div>
       </tab>
+
+
+      <tab title="Datos Facturacion">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="panel ">
+              <div class="panel-heading">
+                <h3 class="panel-title">Datos de Facturacion</h3>
+              </div>
+              <div class="panel-body">
+                <form class="" @submit.prevent="agregarDatoFacturacion()">
+                  <div class="row form-group" >
+                    <div class="col-md-6" >
+                      <label class="control-label">RFC</label>
+                      <input type="text" name="rfc" required class="form-control text-uppercase" v-model="datoFacturacion.rfc" />
+                    </div>
+                  </div>
+                <div class="row form-group" >
+                  <div class="col-md-12">
+                    <label class="control-label">Razon Social</label>
+                    <input type="text" name="razon_social" required class="form-control" v-model="datoFacturacion.razon_social" />
+                  </div>
+                </div>
+                <div class="row form-group" >
+                  <div class="col-md-4">
+                    <label class="control-label">Calle</label>
+                    <input type="text" name="calle" class="form-control" v-model="datoFacturacion.calle" />
+                  </div>
+                  <div class="col-md-2">
+                    <label class="control-label">No. Ext.</label>
+                    <input type="text" name="nexterior" class="form-control" v-model="datoFacturacion.nexterior" />
+                  </div>
+                  <div class="col-md-2">
+                    <label class="control-label">No. Int.</label>
+                    <input type="text" name="ninterior" class="form-control" v-model="datoFacturacion.ninterior" />
+                  </div>
+                  <div class="col-md-4">
+                    <label class="control-label">Colonia</label>
+                    <input type="text" name="colonia" class="form-control" v-model="datoFacturacion.colonia" />
+                  </div>
+                </div>
+                <div class="row form-group" >
+                  <div class="col-md-4">
+                    <label class="control-label">CP</label>
+                    <input type="text" name="cp" class="form-control" v-model="datoFacturacion.cp" />
+                  </div>
+                  <div class="col-md-4">
+                    <label class="control-label">Ciudad</label>
+                    <input type="text" name="ciudad" class="form-control" v-model="datoFacturacion.ciudad" />
+                  </div>
+                  <div class="col-md-4">
+                    <label class="control-label">Estado</label>
+                    <input type="text" name="estado" class="form-control" v-model="datoFacturacion.estado" />
+                  </div>
+                </div>
+                <div class="row" style="margin-top:40px;">
+                  <div class="col-md-12 text-center">
+                    <button v-if="datoFacturacion.id" type="submit" class="btn btn-success" :disabled="cargando">
+                      Actualizar Dato de Facturacion
+                    </button>
+                    <button v-else type="submit" class="btn btn-primary" :disabled="cargando">
+                      Guardar Dato de Facturacion
+                    </button>
+                  </div>
+                </div>
+                </form>
+                <hr />
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="table-responsive">
+                      <table class="table">
+                        <thead>
+                          <tr>
+                            <th>RFC</th>
+                            <th>Razon social</th>
+                            <th>Direccion</th>
+                            <th></th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr v-for="(datoFacturacion, index) in cliente.datos_facturacion">
+                            <td>@{{datoFacturacion.rfc}}</td>
+                            <td>@{{datoFacturacion.razon_social}}</td>
+                            <td>
+                              @{{datoFacturacion.direccion}}
+                            </td>
+                            
+                            <td class="text-right">
+                              <button class="btn btn-xs btn-success" data-toggle="tooltip" title="Editar"
+                                @click="editarDatoFacturacion(datoFacturacion, index)">
+                                <i class="fas fa-pencil-alt"></i>
+                              </button>
+                              <button class="btn btn-xs btn-danger" data-toggle="tooltip" title="Borrar"
+                                @click="borrarDatoFacturacion(datoFacturacion, index)">
+                                <i class="fas fa-times"></i>
+                              </button>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </tab>
     </tabs>
   </section>
   <!-- /.content -->
@@ -261,6 +369,18 @@ const app = new Vue({
         cargo: '',
         emails: [],
         telefonos: []
+      },
+      datoFacturacion:{
+        rfc: '',
+        razon_social: '',
+        calle: '',
+        nexterior: '',
+        ninterior: '',
+        colonia: '',
+        cp: '',
+        ciudad: '',
+        estado: '',
+        cliente_id: {{$cliente->id}},
       },
       cargando: false,
     },
@@ -299,6 +419,7 @@ const app = new Vue({
           });
         });
       }, //guardarContacto
+      
       actualizarContacto(){
         this.cargando = true;
         axios.put('/contactos/'+this.contacto.id, 
@@ -339,7 +460,6 @@ const app = new Vue({
           this.cliente.contactos.splice(index, 1);
           return true;
         }
-
         this.cargando = true;
         axios.delete('/contactos/'+contacto.id, {params: {tipo:'cliente'}})
         .then(({data}) => {
@@ -361,6 +481,118 @@ const app = new Vue({
           });
         });
       },
+
+
+      //-----------------------------------------DATOS DE FACTURACION---------------------
+      agregarDatoFacturacion(){
+        if(this.datoFacturacion.id) this.actualizarDatoFacturacion();
+        else this.guardarDatoFacturacion();
+      },
+      guardarDatoFacturacion(){
+        this.cargando = true;
+        axios.post('/datosFacturacion', this.datoFacturacion)
+        .then(({data}) => {
+          this.cliente.datos_facturacion.push(data.dato);
+          this.datoFacturacion = {
+            rfc: '',
+            razon_social: '',
+            calle: '',
+            nexterior: '',
+            ninterior: '',
+            colonia: '',
+            cp: '',
+            ciudad: '',
+            estado: '',
+            cliente_id: {{$cliente->id}},
+          };
+          this.cargando = false;
+          swal({
+            title: "Dato de Facturacion Guardado",
+            text: "",
+            type: "success"
+          });
+        })
+        .catch(({response}) => {
+          console.error(response);
+          this.cargando = false;
+          swal({
+            title: "Error",
+            text: response.data.message || "Ocurrio un error inesperado, intente mas tarde",
+            type: "error"
+          });
+        });
+      },
+      actualizarDatoFacturacion(){
+        this.cargando = true;
+        axios.put('/datosFacturacion/'+this.datoFacturacion.id, 
+        this.datoFacturacion)
+        .then(({data}) => {
+          this.cliente.datos_facturacion.push(this.datoFacturacion);
+          this.datoFacturacion = {
+            rfc: '',
+            razon_social: '',
+            calle: '',
+            nexterior: '',
+            ninterior: '',
+            colonia: '',
+            cp: '',
+            ciudad: '',
+            estado: '',
+            cliente_id: {{$cliente->id}},
+          };
+          this.cargando = false;
+          swal({
+            title: "Dato de Facturacion Actualizado",
+            text: "",
+            type: "success"
+          });
+        })
+        .catch(({response}) => {
+          console.error(response);
+          this.cargando = false;
+          swal({
+            title: "Error",
+            text: response.data.message || "Ocurrio un error inesperado, intente mas tarde",
+            type: "error"
+          });
+        });
+      },
+      editarDatoFacturacion(datoFacturacion, index){
+        this.datoFacturacion = datoFacturacion;
+        this.cliente.datos_facturacion.splice(index, 1);
+      },
+      borrarDatoFacturacion(datoFacturacion, index){
+        if(datoFacturacion.id == undefined){
+          this.cliente.datos_facturacion.splice(index, 1);
+          return true;
+        }
+        this.cargando = true;
+        axios.delete('/datosFacturacion/'+datoFacturacion.id)
+        .then(({data}) => {
+          this.cliente.datos_facturacion.splice(index, 1);
+          this.cargando = false;
+          swal({
+            title: "Dato de Facturacion Borrado",
+            text: "",
+            type: "success"
+          });
+        })
+        .catch(({response}) => {
+          console.error(response);
+          this.cargando = false;
+          swal({
+            title: "Error",
+            text: response.data.message || "Ocurrio un error inesperado, intente mas tarde",
+            type: "error"
+          });
+        });
+      },
+
+
+
+
+
+
       guardar(){
         this.cargando = true;
         axios.put('/clientes/{{$cliente->id}}', this.cliente)
