@@ -130,7 +130,7 @@ class ClientesController extends Controller
         $cliente->load(['tipo', 'contactos.emails', 'contactos.telefonos', 'datos_facturacion']);
         $tab = ($request->has('contactos')) ? 1 : 0;
 
-        return view('catalogos.clientes.edit', compact(['cliente', 'tipos', 'usuarios', 'tab']));
+        return view('catalogos.clientes.edit', compact(['cliente', 'tipos', 'usuarios', 'tab', '']));
     }
 
     /**
