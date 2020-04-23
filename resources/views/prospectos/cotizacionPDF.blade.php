@@ -530,16 +530,11 @@
             <tr>
               <td class="bordered">
                 <p class="text-uppercase">{{$cotizacion->prospecto->cliente->nombre}}</p>
-                {{--<p class="text-uppercase">
-                  {{$cotizacion->prospecto->cliente->calle}}
-                  {{$cotizacion->prospecto->cliente->numero}}
-                </p>
-                <p class="text-uppercase">{{$cotizacion->prospecto->cliente->colonia}}</p>--}}
                 <p class="text-uppercase">{{$cotizacion->prospecto->cliente->direccion}}</p>
-                <p class="text-uppercase">T. {{$cotizacion->contacto->telefono}}</p>
                 <p class="text-uppercase">ATN: {{$cotizacion->contacto->nombre}}</p>
+                <p class="text-uppercase">T. {{$cotizacion->contacto->telefono}}</p>
                 <p>
-                  email:
+                  Email:
                   <a href="mailto:{{$cotizacion->contacto->email}}">
                     {{$cotizacion->contacto->email}}
                   </a>

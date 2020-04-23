@@ -529,23 +529,18 @@
           <tbody>
             <tr>
               <td class="bordered">
-                <p class="text-uppercase">{{$cotizacion->prospecto->cliente->nombre}}</p>
-                {{--<p class="text-uppercase">
-                  {{$cotizacion->prospecto->cliente->calle}}
-                  {{$cotizacion->prospecto->cliente->numero}}
-                </p>
-                <p class="text-uppercase">{{$cotizacion->prospecto->cliente->colonia}}</p>--}}
+                <p class="text-uppercase">{{$cotizacion->prospecto->cliente->razon_social}}</p>
                 <p class="text-uppercase">{{$cotizacion->prospecto->cliente->direccion}}</p>
-                @if($cotizacion->prospecto->cliente->telefono)
+                {{--@if($cotizacion->prospecto->cliente->telefono)--}}
+                <p class="text-uppercase">TO: {{$cotizacion->contacto->nombre}}</p>
                 <p class="text-uppercase">P. {{$cotizacion->contacto->telefono}}</p>
-                <p class="text-uppercase">ATN: {{$cotizacion->contacto->nombre}}</p>
                 <p>
-                  email:
+                  Email:
                   <a href="mailto:{{$cotizacion->contacto->email}}">
                     {{$cotizacion->contacto->email}}
                   </a>
                 </p>
-                @endif
+                {{--@endif--}}
               </td>
               <td class="bordered text-uppercase">
                 @if($cotizacion->facturar)
