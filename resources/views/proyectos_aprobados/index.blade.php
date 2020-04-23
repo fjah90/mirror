@@ -24,7 +24,7 @@
         <div class="panel-heading">
           <h3 class="panel-title">
             <div class="p-10">
-              Cotizaciones realizadas
+              Lista de Proyectos
               @role('Administrador')
                 de 
                 <select class="form-control" @change="cargar()" v-model="usuarioCargado" style="width:auto;display:inline-block;">
