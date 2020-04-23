@@ -535,7 +535,7 @@
                   {{$cotizacion->prospecto->cliente->numero}}
                 </p>
                 <p class="text-uppercase">{{$cotizacion->prospecto->cliente->colonia}}</p>--}}
-                <p class="text-uppercase">{{$cotizacion->prospecto->cliente->direccion}}}}</p>
+                <p class="text-uppercase">{{$cotizacion->prospecto->cliente->direccion}}</p>
                 @if($cotizacion->prospecto->cliente->telefono)
                 <p class="text-uppercase">P. {{$cotizacion->contacto->telefono}}</p>
                 <p class="text-uppercase">ATN: {{$cotizacion->contacto->nombre}}</p>
