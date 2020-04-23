@@ -507,7 +507,7 @@
       </div>
       <div class="col-lg-7">
         <p class="text-uppercase text-right">Intercorp Contract Resources, s.a. de c.v.</p>
-        <p class=" text-right font-small">Av. Juan Salvador Agraz 50, Oficina 702, Santa Fe Cuajimalpa.</p>
+        <p class=" text-right font-small">Av. Juan Salvador Agraz 50, Oficina 702,  Lomas de Santa Fe.</p>
         <p class=" text-right font-small">Ciudad de Mexico, 05348 Mexico</p>
         <p class="text-right font-small">T. +52 (55) 5557-5214 intercorp.com.mx</p>
       </div>
@@ -549,7 +549,7 @@
               <td class="bordered text-uppercase">
                 @if($cotizacion->facturar)
                 <p class="text-uppercase">RFC: {{$cotizacion->rfc}}</p>
-                <p class="text-uppercase">razon social: {{$cotizacion->razon_social}}</p>
+                <p class="text-uppercase">Razon social: {{$cotizacion->razon_social}}</p>
                 <p class="text-uppercase">
                   {{$cotizacion->calle}} {{$cotizacion->nexterior}}
                   @if($cotizacion->ninterior) Int. {{$cotizacion->ninterior}} @endif
