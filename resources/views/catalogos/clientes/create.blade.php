@@ -75,9 +75,9 @@
                         </div>
                         <div class="panel-body">
                             <div class="row form-group">
-                                <div class="col-md-4">
-                                    <label class="control-label">Calle</label>
-                                    <input type="text" class="form-control" name="calle" v-model="cliente.calle"/>
+                                <div class="{{($nacional) ? 'col-md-4' : 'col-md-8'}}">
+                                    <label class="control-label">{{($nacional) ? 'Calle' : 'Dirección'}}</label>
+                                    <input type="text" class="form-control" name="calle" v-model="cliente.calle" maxlength="191"/>
                                 </div>
                                 @if($nacional)
                                     <div class="col-md-4">
@@ -91,10 +91,10 @@
                                                v-model="cliente.ninterior"/>
                                     </div>
                                 @endif
-                            {{--</div>
-                            <div class="row form-group">--}}
+                                {{--</div>
+                                <div class="row form-group">--}}
                                 <div class="col-md-4">
-                                    <label class="control-label">Colonia</label>
+                                    <label class="control-label">Colonia  {{($nacional) ? '' : '(opcional)'}}</label>
                                     <input type="text" class="form-control" name="colonia" v-model="cliente.colonia"/>
                                 </div>
                                 @if($nacional)
