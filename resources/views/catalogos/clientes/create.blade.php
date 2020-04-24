@@ -75,7 +75,7 @@
                         </div>
                         <div class="panel-body">
                             <div class="row form-group">
-                                <div class="{{($nacional) ? 'col-md-4' : 'col-md-8'}}">
+                                <div class="{{($nacional) ? 'col-md-4' : 'col-md-12'}}">
                                     <label class="control-label">{{($nacional) ? 'Calle' : 'Dirección'}}</label>
                                     <input type="text" class="form-control" name="calle" v-model="cliente.calle" maxlength="191"/>
                                 </div>
