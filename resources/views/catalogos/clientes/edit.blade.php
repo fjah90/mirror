@@ -56,10 +56,11 @@
                                     </div>
                                     <div class="row form-group">
                                         @if($cliente->nacional)
-                                        <div class="col-md-4">
-                                            <label class="control-label">RFC</label>
-                                            <input type="text" class="form-control" name="rfc" v-model="cliente.rfc"/>
-                                        </div>
+                                            <div class="col-md-4">
+                                                <label class="control-label">RFC</label>
+                                                <input type="text" class="form-control" name="rfc"
+                                                       v-model="cliente.rfc"/>
+                                            </div>
                                         @endif
                                         <div class="col-md-8">
                                             <label class="control-label">Razon Social</label>
@@ -76,10 +77,10 @@
                                 </div>
                                 <div class="panel-body">
                                     <div class="row form-group">
-                                        <div class="col-md-4">
-                                            <label class="control-label">Calle</label>
-                                            <input type="text" class="form-control" name="calle"
-                                                   v-model="cliente.calle"/>
+                                        <div class="{{($cliente->nacional) ? 'col-md-4' : 'col-md-12'}}">
+                                            <label class="control-label">{{($cliente->nacional) ? 'Calle' : 'Dirección'}}</label>
+                                            <input type="text" class="form-control" name="calle" v-model="cliente.calle"
+                                                   maxlength="191"/>
                                         </div>
                                         @if($cliente->nacional)
                                             <div class="col-md-4">
@@ -276,14 +277,14 @@
                             <div class="panel-body">
                                 <form class="" @submit.prevent="agregarDatoFacturacion()">
 
-                                        <div class="row form-group">
-                                            <div class="col-md-6">
-                                                <label class="control-label">RFC</label>
-                                                <input type="text" name="rfc" required
-                                                       class="form-control text-uppercase"
-                                                       v-model="datoFacturacion.rfc"/>
-                                            </div>
+                                    <div class="row form-group">
+                                        <div class="col-md-6">
+                                            <label class="control-label">RFC</label>
+                                            <input type="text" name="rfc" required
+                                                   class="form-control text-uppercase"
+                                                   v-model="datoFacturacion.rfc"/>
                                         </div>
+                                    </div>
                                     <div class="row form-group">
                                         <div class="col-md-12">
                                             <label class="control-label">Razon Social</label>
@@ -308,7 +309,7 @@
                                                    v-model="datoFacturacion.ninterior"/>
                                         </div>
                                         <div class="col-md-4">
-                                            <label class="control-label">Colonia</label>
+                                            <label class="control-label">Colonia {{($cliente->nacional) ? '' : '(opcional)'}}</label>
                                             <input type="text" name="colonia" class="form-control"
                                                    v-model="datoFacturacion.colonia"/>
                                         </div>
