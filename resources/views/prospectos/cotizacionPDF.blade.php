@@ -582,7 +582,7 @@
               </td>
               <td class="bordered">
                 <p class="text-center font-small "><strong>Enviar a:</strong></p>
-                <p class="text-uppercase">{{$cotizacion->contacto_nombre}} {{$cotizacion->contacto->contacto_telefono}} {{$cotizacion->contacto->contacto_email}}</p>
+                <p class="text-uppercase">{{$cotizacion->contacto_nombre}} {{$cotizacion->contacto_telefono}} {{$cotizacion->contacto_email}}</p>
                 <p class="text-uppercase">
                   {{$cotizacion->dircalle}} {{$cotizacion->dirnexterior}}
                   @if($cotizacion->dirninterior) Int. {{$cotizacion->dirninterior}} @endif

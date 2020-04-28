@@ -584,6 +584,7 @@
               </td>
               <td class="bordered">
                 <p class="text-center font-small "><strong>Deliver to:</strong></p>
+                <p class="text-uppercase">{{$cotizacion->contacto_nombre}} {{$cotizacion->contacto_telefono}} {{$cotizacion->contacto_email}}</p>
                 <p class="text-uppercase">
                   {{$cotizacion->dircalle}} {{$cotizacion->dirnexterior}}
                   @if($cotizacion->dirninterior) Int. {{$cotizacion->dirninterior}} @endif
