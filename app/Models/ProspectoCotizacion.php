@@ -25,7 +25,7 @@ class ProspectoCotizacion extends Model
     ];
 
     protected $appends = [
-        'fecha_formated', 'direccion_facturacion', 'direccion_entrega',
+        'fecha_formated', 'direccion_facturacion', 'direccion_entrega', 'contacto_direccion_entrega'
     ];
 
     public function getFechaFormatedAttribute()
@@ -43,6 +43,12 @@ class ProspectoCotizacion extends Model
     {
         return $this->dircalle . " " . $this->dirnexterior . (($this->dirninterior) ? " Int. " . $this->dirninterior : "") . " "
         . $this->dircolonia . " " . $this->dircp . " " . $this->dirciudad . " " . $this->direstado . " " . $this->dirpais;
+    }
+
+    public function getContactoDireccionEntregaAttribute()
+    {
+        return $this->contacto_nombre . " " . $this->contacto_email . " " . $this->contacto_telefono . " " . $this->dircalle . " " . $this->dirnexterior . (($this->dirninterior) ? " Int. " . $this->dirninterior : "") . " "
+            . $this->dircolonia . " " . $this->dircp . " " . $this->dirciudad . " " . $this->direstado . " " . $this->dirpais;
     }
 
     /**
