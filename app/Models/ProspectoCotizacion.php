@@ -47,7 +47,7 @@ class ProspectoCotizacion extends Model
 
     public function getContactoDireccionEntregaAttribute()
     {
-        return $this->contacto_nombre . " " . $this->contacto_email . " " . $this->contacto_telefono . " " . $this->dircalle . " " . $this->dirnexterior . (($this->dirninterior) ? " Int. " . $this->dirninterior : "") . " "
+        return $this->contacto_nombre . " " . $this->contacto_telefono . " " . $this->contacto_email . " " . $this->dircalle . " " . $this->dirnexterior . (($this->dirninterior) ? " Int. " . $this->dirninterior : "") . " "
             . $this->dircolonia . " " . $this->dircp . " " . $this->dirciudad . " " . $this->direstado . " " . $this->dirpais;
     }
 
