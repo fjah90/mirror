@@ -290,7 +290,7 @@
                 <div class="col-sm-4">
                   <label class="control-label">Teléfono de Contacto</label>
                   <input type="text" class="form-control" name="telefono" v-model="cotizacion.contacto_telefono"
-                    v-mask="['(###) ###-####','+#(###)###-####','+##(###)###-####']" required 
+                    v-mask="['(###) ###-####','+#(###)###-####','+##(###)###-####']"
                   />
                 </div>
                 <div class="col-sm-4">
