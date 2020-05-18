@@ -196,7 +196,7 @@
                 </div>
                 <div class="col-sm-6" v-if="cotizacion.facturar!='0'">
                   <label class="control-label">RFC</label>
-                  <input type="text" name="rfc" class="form-control" v-model="cotizacion.rfc" />
+                  <input type="text" name="rfc" class="form-control" v-model="cotizacion.rfc" required />
                 </div>
               </div>
               <div class="row form-group" v-if="cotizacion.facturar!='0'">
