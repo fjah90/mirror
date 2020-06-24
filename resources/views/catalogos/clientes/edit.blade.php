@@ -55,13 +55,13 @@
                                         </div>
                                     </div>
                                     <div class="row form-group">
-                                        @if($cliente->nacional)
+                                        {{--@if($cliente->nacional)
                                             <div class="col-md-4">
                                                 <label class="control-label">RFC</label>
                                                 <input type="text" class="form-control" name="rfc"
                                                        v-model="cliente.rfc"/>
                                             </div>
-                                        @endif
+                                        @endif--}}
                                         <div class="col-md-8">
                                             <label class="control-label">Razon Social</label>
                                             <input type="text" class="form-control" name="razon_social"
