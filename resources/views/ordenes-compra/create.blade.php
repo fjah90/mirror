@@ -73,6 +73,18 @@
               </div>
               <div class="row form-group">
                 <div class="col-md-4">
+                  <label class="control-label">Punto Entrega</label>
+                  <input type="text" class="form-control" name="punto_entrega"
+                         v-model="orden.punto_entrega" />
+                </div>
+                <div class="col-md-4">
+                  <label class="control-label">Carga</label>
+                  <input type="text" class="form-control" name="carga"
+                         v-model="orden.carga" />
+                </div>
+              </div>
+              <div class="row form-group">
+                <div class="col-md-4">
                   <label class="control-label">Moneda</label>
                   <input type="text" class="form-control" name="moneda"
                     v-model="orden.moneda" required disabled />
@@ -281,6 +293,8 @@ const app = new Vue({
       aduana_compañia: '',
       numero: '',
       numero_proyecto: '',
+      punto_entrega: '',
+      carga: '',
       tiempo: {
         id: '',
         valor: ''

@@ -585,7 +585,7 @@
                 <p class="text-center font-small "><strong>SHIP TO:</strong></p>
                 <p class="text-uppercase">{{$orden->delivery}}</p>
                 @if($orden->aduana)
-                <p class="text-uppercase">By: {{$orden->aduana->compañia}}</p>
+                <p class="text-uppercase">ATTN PHONE MAIL: {{$orden->aduana->compañia}}</p>
                 <p class="text-uppercase">{{$orden->aduana->contacto}}</p>
                 <p class="text-uppercase">{{$orden->aduana->telefono}}</p>
                 <p class="text-uppercase">{{$orden->aduana->email}}</p>
