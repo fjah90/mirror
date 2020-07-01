@@ -558,18 +558,19 @@
                   </tr>
                   <tr>
                     <td>DELIVERY:</td>
-                    <td class="text-uppercase">{{$orden->proyecto->cotizacion->entrega}}</td>
+                    <td class="text-uppercase">{{$orden->tiempo_entrega}}</td>
                   </tr>
                   <tr>
                     <td>D. POINT:</td>
                     <td class="text-uppercase">
-                      {{$orden->proyecto->cliente->ciudad}}
-                      {{$orden->proyecto->cliente->estado}}
+                      {{--{{$orden->proyecto->cliente->ciudad}}
+                      {{$orden->proyecto->cliente->estado}}--}}
+                      {{$orden->punto_entrega}}
                     </td>
                   </tr>
                   <tr>
                     <td>FREIGHT:</td>
-                    <td></td>
+                    <td>{{$orden->carga}}</td>
                   </tr>
                   <tr>
                     <td>PRICES:</td>

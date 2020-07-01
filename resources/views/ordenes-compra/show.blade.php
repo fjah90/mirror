@@ -48,6 +48,16 @@
                 <span class="form-control">{{$orden->tiempo_entrega}}</span>
               </div>
             </div>
+              <div class="row form-group">
+                <div class="col-md-4">
+                  <label class="control-label">Punto Entrega</label>
+                  <span class="form-control">{{$orden->punto_entrega}}</span>
+                </div>
+                <div class="col-md-4">
+                  <label class="control-label">Carga</label>
+                  <span class="form-control">{{$orden->carga}}</span>
+                </div>
+              </div>
             <div class="row form-group">
               <div class="col-md-12">
                 <label class="control-label">Cliente</label>
