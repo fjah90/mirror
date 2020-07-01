@@ -20,6 +20,8 @@ Route::get('/', function () {
     return redirect('/dashboard');
 });
 
+Route::get('check-session', 'Auth\LoginController@checkSession');
+
 Auth::routes();
 
 Route::middleware('auth')->group(function () {

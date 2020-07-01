@@ -369,6 +369,24 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.7.2/dist/Chart.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@0.4.0/dist/chartjs-plugin-datalabels.min.js"></script>
 <script src="{{ mix('js/app.js') }}"></script>
+@if (Auth::user())
+  <script>
+    $(function() {
+      setInterval(function checkSession() {
+        $.get('/check-session', function(data) {
+          // if session was expired
+          if (data.guest) {
+            // redirect to login page
+            // location.assign('/auth/login');
+
+            // or, may be better, just reload page
+            location.reload();
+          }
+        });
+      }, 60000); // every minute
+    });
+  </script>
+  @endif
 <script>
 $(function() {
   $('#logout-anchor').on('click', function(){

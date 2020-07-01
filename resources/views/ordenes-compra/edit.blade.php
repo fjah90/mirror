@@ -88,6 +88,18 @@
                   v-model="orden.tiempo.valor" :disabled="orden.tiempo.id!='0'" />
               </div>
             </div>
+              <div class="row form-group">
+                <div class="col-md-4">
+                  <label class="control-label">Punto Entrega</label>
+                  <input type="text" class="form-control" name="punto_entrega"
+                         v-model="orden.punto_entrega" />
+                </div>
+                <div class="col-md-4">
+                  <label class="control-label">Carga</label>
+                  <input type="text" class="form-control" name="carga"
+                         v-model="orden.carga" />
+                </div>
+              </div>
             <div class="row form-group">
               <div class="col-md-4">
                 <label class="control-label">Moneda</label>

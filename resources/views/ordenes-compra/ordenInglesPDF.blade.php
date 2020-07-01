@@ -558,18 +558,19 @@
                   </tr>
                   <tr>
                     <td>DELIVERY:</td>
-                    <td class="text-uppercase">{{$orden->proyecto->cotizacion->entrega}}</td>
+                    <td class="text-uppercase">{{$orden->tiempo_entrega}}</td>
                   </tr>
                   <tr>
                     <td>D. POINT:</td>
                     <td class="text-uppercase">
-                      {{$orden->proyecto->cliente->ciudad}}
-                      {{$orden->proyecto->cliente->estado}}
+                      {{--{{$orden->proyecto->cliente->ciudad}}
+                      {{$orden->proyecto->cliente->estado}}--}}
+                      {{$orden->punto_entrega}}
                     </td>
                   </tr>
                   <tr>
                     <td>FREIGHT:</td>
-                    <td></td>
+                    <td>{{$orden->carga}}</td>
                   </tr>
                   <tr>
                     <td>PRICES:</td>
@@ -585,11 +586,11 @@
                 <p class="text-center font-small "><strong>SHIP TO:</strong></p>
                 <p class="text-uppercase">{{$orden->delivery}}</p>
                 @if($orden->aduana)
-                <p class="text-uppercase">By: {{$orden->aduana->compañia}}</p>
-                <p class="text-uppercase">{{$orden->aduana->contacto}}</p>
-                <p class="text-uppercase">{{$orden->aduana->telefono}}</p>
-                <p class="text-uppercase">{{$orden->aduana->email}}</p>
-                <p class="text-uppercase">{{$orden->aduana->direccion}}</p>
+                <p class="text-uppercase">{{$orden->aduana->compañia}}</p>
+                <p class="text-uppercase">ATTN : {{$orden->aduana->contacto}}</p>
+                <p class="text-uppercase">PHONE : {{$orden->aduana->telefono}}</p>
+                <p class="text-uppercase">MAIL : {{$orden->aduana->email}}</p>
+                <p class="text-uppercase">ADDRESS : {{$orden->aduana->direccion}}</p>
                 @endif
               </td>
             </tr>
