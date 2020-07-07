@@ -553,14 +553,6 @@
               </td>
             </tr>
             <tr>
-              <p class="text-uppercase">ATN: {{$cotizacion->contacto_nombre}}</p>
-              <p class="text-uppercase">T. {{$cotizacion->contacto_telefono}}</p>
-              <p>
-                Email:
-                <a href="mailto:{{$cotizacion->contacto_email}}">
-                  {{$cotizacion->contacto_email}}
-                </a>
-              </p>
               <td class="bordered" style="padding:0;">
                 <table style="margin:0; width:100%;">
                   <tr>
@@ -589,7 +581,8 @@
               </td>
               <td class="bordered">
                 <p class="text-center font-small "><strong>Enviar a:</strong></p>
-                <p class="text-uppercase">{{$cotizacion->contacto_nombre}} {{$cotizacion->contacto_telefono}} {{$cotizacion->contacto_email}}</p>
+                <p class="text-uppercase">{{$cotizacion->contacto_nombre}} {{$cotizacion->contacto_telefono}}</p>
+                <p>Email: <a href="mailto:{{$cotizacion->contacto_email}}">{{$cotizacion->contacto_email}}</a>
                 <p class="text-uppercase">
                   {{$cotizacion->dircalle}} {{$cotizacion->dirnexterior}}
                   @if($cotizacion->dirninterior) Int. {{$cotizacion->dirninterior}} @endif
