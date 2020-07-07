@@ -539,7 +539,6 @@
                     {{$cotizacion->contacto->email}}
                   </a>
                 </p>
-              </td>
               <td class="bordered text-uppercase">
                 @if($cotizacion->facturar)
                 <p class="text-uppercase">RFC: {{$cotizacion->rfc}}</p>
@@ -554,6 +553,14 @@
               </td>
             </tr>
             <tr>
+              <p class="text-uppercase">ATN: {{$cotizacion->contacto_nombre}}</p>
+              <p class="text-uppercase">T. {{$cotizacion->contacto_telefono}}</p>
+              <p>
+                Email:
+                <a href="mailto:{{$cotizacion->contacto_email}}">
+                  {{$cotizacion->contacto_email}}
+                </a>
+              </p>
               <td class="bordered" style="padding:0;">
                 <table style="margin:0; width:100%;">
                   <tr>
