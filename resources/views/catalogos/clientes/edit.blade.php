@@ -110,18 +110,18 @@
                                         @endif
                                         <div class="col-md-4">
                                             <label class="control-label">C. Postal</label>
-                                            <input type="text" class="form-control" name="cp" v-model="cliente.cp"/>
+                                            <input type="text" class="form-control cp" name="cp" v-model="cliente.cp"/>
                                         </div>
                                         {{--</div>
                                         <div class="row form-group">--}}
                                         <div class="col-md-4">
                                             <label class="control-label">Ciudad</label>
-                                            <input type="text" class="form-control" name="ciudad"
+                                            <input type="text" class="form-control municipio" name="ciudad"
                                                    v-model="cliente.ciudad"/>
                                         </div>
                                         <div class="col-md-4">
                                             <label class="control-label">Estado</label>
-                                            <input type="text" class="form-control" name="estado"
+                                            <input type="text" class="form-control estado" name="estado"
                                                    v-model="cliente.estado"/>
                                         </div>
                                         <div class="col-md-4">
@@ -652,6 +652,20 @@
                             });
                         });
                 },//fin cargarPresupuesto
+            }
+        });
+
+        $('.cp').on('keyup', function (e) {
+            var cp = $(this).val();
+            if(cp.length >= 5) {
+                $.get('http://sepomex.789.mx/' + cp, function (data) {
+                    if(data.estados.length >= 1) {
+                        $('.estado').val(data.estados[0]);
+                    }
+                    if(data.municipios.length >= 1) {
+                        $('.municipio').val(data.municipios[0]);
+                    }
+                });
             }
         });
     </script>
