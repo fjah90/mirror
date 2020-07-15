@@ -1091,41 +1091,45 @@
             methods: {
                 cp() {
                     this.cargando = true;
-                    axios.get('http://sepomex.789.mx/' + this.cotizacion.cp, {})
-                        .then(({data}) => {
-                            this.cotizacion.estado = data.estados[0]
-                            this.cotizacion.ciudad = data.municipios[0]
-                            this.cargando = false;
+                    if(this.this.cotizacion.cp.length > 4){
+                        axios.get('http://sepomex.789.mx/' + this.cotizacion.cp, {})
+                            .then(({data}) => {
+                                this.cotizacion.estado = data.estados[0]
+                                this.cotizacion.ciudad = data.municipios[0]
+                                this.cargando = false;
 
-                        })
-                        .catch(({response}) => {
-                            console.error(response);
-                            this.cargando = false;
-                            swal({
-                                title: "Error",
-                                text: response.data.message || "Ocurrio un error inesperado, intente mas tarde",
-                                type: "error"
+                            })
+                            .catch(({response}) => {
+                                console.error(response);
+                                this.cargando = false;
+                                swal({
+                                    title: "Error",
+                                    text: response.data.message || "Ocurrio un error inesperado, intente mas tarde",
+                                    type: "error"
+                                });
                             });
-                        });
+                    }
                 },
                 cp1() {
                     this.cargando = true;
-                    axios.get('http://sepomex.789.mx/' + this.cotizacion.dircp, {})
-                        .then(({data}) => {
-                            this.cotizacion.dirciudad = data.municipios[0]
-                            this.cotizacion.direstado = data.estados[0]
-                            this.cargando = false;
+                    if(this.cotizacion.dircp.length > 4){
+                        axios.get('http://sepomex.789.mx/' + this.cotizacion.dircp, {})
+                            .then(({data}) => {
+                                this.cotizacion.dirciudad = data.municipios[0]
+                                this.cotizacion.direstado = data.estados[0]
+                                this.cargando = false;
 
-                        })
-                        .catch(({response}) => {
-                            console.error(response);
-                            this.cargando = false;
-                            swal({
-                                title: "Error",
-                                text: response.data.message || "Ocurrio un error inesperado, intente mas tarde",
-                                type: "error"
+                            })
+                            .catch(({response}) => {
+                                console.error(response);
+                                this.cargando = false;
+                                swal({
+                                    title: "Error",
+                                    text: response.data.message || "Ocurrio un error inesperado, intente mas tarde",
+                                    type: "error"
+                                });
                             });
-                        });
+                    }
                 },
                 dateParser(value) {
                     return moment(value, 'DD/MM/YYYY').toDate().getTime();
