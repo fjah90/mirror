@@ -833,10 +833,10 @@
     if(cp.length >= 5) {
       $.get('http://sepomex.789.mx/' + cp, function (data) {
         if(data.estados.length >= 1) {
-          $('.estado').first().val(data.estados[0]);
+          $('.estado').first().val(data.estados[0]).change();
         }
         if(data.municipios.length >= 1) {
-          $('.ciudad').first().val(data.municipios[0]);
+          $('.ciudad').first().val(data.municipios[0]).change();
         }
       });
     }
@@ -847,10 +847,10 @@
     if(cp1.length >= 5) {
       $.get('http://sepomex.789.mx/' + cp1, function (data) {
         if(data.estados.length >= 1) {
-          $('.estado1').first().val(data.estados[0]);
+          $('.estado1').first().val(data.estados[0]).change();
         }
         if(data.municipios.length >= 1) {
-          $('.ciudad1').first().val(data.municipios[0]);
+          $('.ciudad1').first().val(data.municipios[0]).change();
         }
       });
     }

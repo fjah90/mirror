@@ -88,7 +88,7 @@
                 </div>
                 <div class="col-md-4">
                   <label class="control-label">C. Postal</label>
-                  <input type="text" class="form-control cp" name="colonia" v-model="proveedor.cp" />
+                  <input type="text" class="form-control cp" name="cp" v-model="proveedor.cp" />
                 </div>
               </div>
               <div class="row form-group">
@@ -357,10 +357,10 @@ $('.cp').on('keyup', function (e) {
   if(cp.length >= 5) {
     $.get('http://sepomex.789.mx/' + cp, function (data) {
       if(data.estados.length >= 1) {
-        $('.estado').first().val(data.estados[0]);
+        $('.estado').first().val(data.estados[0]).change();
       }
       if(data.municipios.length >= 1) {
-        $('.municipio').first().val(data.municipios[0]);
+        $('.municipio').first().val(data.municipios[0]).change();
       }
     });
   }
@@ -371,10 +371,10 @@ $('.cp1').on('keyup', function (e) {
   if(cp1.length >= 5) {
     $.get('http://sepomex.789.mx/' + cp1, function (data) {
       if(data.estados.length >= 1) {
-        $('.estado1').first().val(data.estados[0]);
+        $('.estado1').first().val(data.estados[0]).change();
       }
       if(data.municipios.length >= 1) {
-        $('.municipio1').first().val(data.municipios[0]);
+        $('.municipio1').first().val(data.municipios[0]).change();
       }
     });
   }
