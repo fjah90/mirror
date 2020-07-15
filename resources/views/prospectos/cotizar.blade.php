@@ -1091,7 +1091,7 @@
             methods: {
                 cp() {
                     this.cargando = true;
-                    axios.get('http://sepomex.789.mx/' + this.condicion.id, {})
+                    axios.get('http://sepomex.789.mx/' + this.cotizacion.cp, {})
                         .then(({data}) => {
                             this.cotizacion.estado = data.estados[0]
                             this.cotizacion.ciudad = data.municipios[0]
@@ -1110,7 +1110,7 @@
                 },
                 cp1() {
                     this.cargando = true;
-                    axios.get('http://sepomex.789.mx/' + this.condicion.id, {})
+                    axios.get('http://sepomex.789.mx/' + this.cotizacion.dircp, {})
                         .then(({data}) => {
                             this.cotizacion.dirciudad = data.municipios[0]
                             this.cotizacion.direstado = data.estados[0]
