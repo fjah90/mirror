@@ -235,7 +235,7 @@
                                 <div class="col-sm-4">
                                     <label class="control-label">CP</label>
                                     <input type="text" name="cp" class="form-control cp text-uppercase"
-                                           v-model="cotizacion.cp"/>
+                                           @keyup="cp()" v-model="cotizacion.cp"/>
                                 </div>
                                 <div class="col-sm-4">
                                     <label class="control-label">Ciudad</label>
@@ -290,7 +290,7 @@
                                 <div class="col-sm-4">
                                     <label class="control-label">CP</label>
                                     <input type="text" name="cp" class="form-control cp1 text-uppercase"
-                                           @change="cp1()" v-model="cotizacion.dircp"/>
+                                           @keyup="cp1()" v-model="cotizacion.dircp"/>
                                 </div>
                                 <div class="col-sm-4">
                                     <label class="control-label">Ciudad</label>
@@ -307,7 +307,7 @@
                                 <div class="col-sm-4">
                                     <label class="control-label">Nombre de Contacto</label>
                                     <input type="text" name="cp" class="form-control "
-                                           @change="cp()" v-model="cotizacion.contacto_nombre"/>
+                                           v-model="cotizacion.contacto_nombre"/>
                                 </div>
                                 <div class="col-sm-4">
                                     <label class="control-label">Teléfono de Contacto</label>
