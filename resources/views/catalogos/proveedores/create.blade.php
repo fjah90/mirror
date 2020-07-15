@@ -357,24 +357,24 @@ $('.cp').on('keyup', function (e) {
   if(cp.length >= 5) {
     $.get('http://sepomex.789.mx/' + cp, function (data) {
       if(data.estados.length >= 1) {
-        $('.estado').val(data.estados[0]);
+        $('.estado').first().val(data.estados[0]);
       }
       if(data.municipios.length >= 1) {
-        $('.municipio').val(data.municipios[0]);
+        $('.municipio').first().val(data.municipios[0]);
       }
     });
   }
 });
 
 $('.cp1').on('keyup', function (e) {
-  var cp = $(this).val();
-  if(cp.length >= 5) {
-    $.get('http://sepomex.789.mx/' + cp, function (data) {
+  var cp1 = $(this).val();
+  if(cp1.length >= 5) {
+    $.get('http://sepomex.789.mx/' + cp1, function (data) {
       if(data.estados.length >= 1) {
-        $('.estado1').val(data.estados[0]);
+        $('.estado1').first().val(data.estados[0]);
       }
       if(data.municipios.length >= 1) {
-        $('.municipio1').val(data.municipios[0]);
+        $('.municipio1').first().val(data.municipios[0]);
       }
     });
   }

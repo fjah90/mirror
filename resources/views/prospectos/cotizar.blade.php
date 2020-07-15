@@ -828,6 +828,33 @@
 @section('footer_scripts')
 <script type="text/javascript">
 
+  $('.cp').on('keyup', function (e) {
+    var cp = $(this).val();
+    if(cp.length >= 5) {
+      $.get('http://sepomex.789.mx/' + cp, function (data) {
+        if(data.estados.length >= 1) {
+          $('.estado').first().val(data.estados[0]);
+        }
+        if(data.municipios.length >= 1) {
+          $('.ciudad').first().val(data.municipios[0]);
+        }
+      });
+    }
+  });
+
+  $('.cp1').on('keyup', function (e) {
+    var cp1 = $(this).val();
+    if(cp1.length >= 5) {
+      $.get('http://sepomex.789.mx/' + cp1, function (data) {
+        if(data.estados.length >= 1) {
+          $('.estado1').first().val(data.estados[0]);
+        }
+        if(data.municipios.length >= 1) {
+          $('.ciudad1').first().val(data.municipios[0]);
+        }
+      });
+    }
+  });
 // Used for creating a new FileList in a round-about way
 function FileListItem(a) {
   a = [].slice.call(Array.isArray(a) ? a : arguments)
@@ -1768,34 +1795,6 @@ const app = new Vue({
           } //if confirmacion
         });
       },
-  }
-});
-
-$('.cp').on('keyup', function (e) {
-  var cp = $(this).val();
-  if(cp.length >= 5) {
-    $.get('http://sepomex.789.mx/' + cp, function (data) {
-      if(data.municipios.length >= 1) {
-        $('.ciudad').val(data.municipios[0]);
-      }
-      if(data.estados.length >= 1) {
-        $('.estado').val(data.estados[0]);
-      }
-    });
-  }
-});
-
-$('.cp1').on('keyup', function (e) {
-  var cp = $(this).val();
-  if(cp.length >= 5) {
-    $.get('http://sepomex.789.mx/' + cp, function (data) {
-      if(data.municipios.length >= 1) {
-        $('.ciudad1').val(data.municipios[0]);
-      }
-      if(data.estados.length >= 1) {
-        $('.estado1').val(data.estados[0]);
-      }
-    });
   }
 });
 </script>
