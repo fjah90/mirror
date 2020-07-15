@@ -226,15 +226,15 @@
               <div class="row form-group" v-if="cotizacion.facturar!='0'">
                 <div class="col-sm-4">
                   <label class="control-label">CP</label>
-                  <input type="text" name="cp" class="form-control text-uppercase" v-model="cotizacion.cp" />
+                  <input type="text" name="cp" class="form-control cp text-uppercase" v-model="cotizacion.cp" />
                 </div>
                 <div class="col-sm-4">
                   <label class="control-label">Ciudad</label>
-                  <input type="text" name="ciudad" class="form-control text-uppercase" v-model="cotizacion.ciudad" />
+                  <input type="text" name="ciudad" class="form-control ciudad text-uppercase" v-model="cotizacion.ciudad" />
                 </div>
                 <div class="col-sm-4">
                   <label class="control-label">Estado</label>
-                  <input type="text" name="estado" class="form-control text-uppercase" v-model="cotizacion.estado" />
+                  <input type="text" name="estado" class="form-control estado text-uppercase" v-model="cotizacion.estado" />
                 </div>
               </div>
               <div class="row">
@@ -271,15 +271,15 @@
               <div class="row form-group" v-if="cotizacion.direccion!='0'">
                 <div class="col-sm-4">
                   <label class="control-label">CP</label>
-                  <input type="text" name="cp" class="form-control text-uppercase" v-model="cotizacion.dircp" />
+                  <input type="text" name="cp" class="form-control cp1 text-uppercase" v-model="cotizacion.dircp" />
                 </div>
                 <div class="col-sm-4">
                   <label class="control-label">Ciudad</label>
-                  <input type="text" name="ciudad" class="form-control text-uppercase" v-model="cotizacion.dirciudad" />
+                  <input type="text" name="ciudad" class="form-control ciudad1 text-uppercase" v-model="cotizacion.dirciudad" />
                 </div>
                 <div class="col-sm-4">
                   <label class="control-label">Estado</label>
-                  <input type="text" name="estado" class="form-control text-uppercase" v-model="cotizacion.direstado" />
+                  <input type="text" name="estado" class="form-control estado1 text-uppercase" v-model="cotizacion.direstado" />
                 </div>
               </div>
               <div class="row form-group" v-if="cotizacion.direccion!='0'">
@@ -922,7 +922,7 @@ const app = new Vue({
           @endforeach
         @endforeach
       ],
-      mensaje: "Buenas tardes  .\n\nAnexo a la presente encontrarán la cotización solicitada de   para  .\n\nEsperamos esta información les sea de utilidad y quedamos a sus órdenes para cualquier duda o comentario.\n\nSaludos,\n\n{{auth()->user()->name}}.\n{{auth()->user()->email}}\nIntercorp Contract Resources"
+      mensaje: "Buenas tardes  .\n\nAnexo a la presente encontrarán la cotización solicitada de {{$prospecto->descripcion}}  para {{$prospecto->nombre}} .\n\nEsperamos esta información les sea de utilidad y quedamos a sus órdenes para cualquier duda o comentario.\n\nSaludos,\n\n{{auth()->user()->name}}.\n{{auth()->user()->email}}\nIntercorp Contract Resources"
     },
     aceptar: {
       cotizacion_id: 0,
@@ -1768,6 +1768,34 @@ const app = new Vue({
           } //if confirmacion
         });
       },
+  }
+});
+
+$('.cp').on('keyup', function (e) {
+  var cp = $(this).val();
+  if(cp.length >= 5) {
+    $.get('http://sepomex.789.mx/' + cp, function (data) {
+      if(data.municipios.length >= 1) {
+        $('.ciudad').val(data.municipios[0]);
+      }
+      if(data.estados.length >= 1) {
+        $('.estado').val(data.estados[0]);
+      }
+    });
+  }
+});
+
+$('.cp1').on('keyup', function (e) {
+  var cp = $(this).val();
+  if(cp.length >= 5) {
+    $.get('http://sepomex.789.mx/' + cp, function (data) {
+      if(data.municipios.length >= 1) {
+        $('.ciudad1').val(data.municipios[0]);
+      }
+      if(data.estados.length >= 1) {
+        $('.estado1').val(data.estados[0]);
+      }
+    });
   }
 });
 </script>
