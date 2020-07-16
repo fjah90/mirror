@@ -685,6 +685,7 @@ class ProspectosController extends Controller
         } else {
             $update['total'] = $update['subtotal'];
         }
+
         $observaciones = "<ul>";
         foreach ($request->observaciones as $obs) {
             $observaciones .= "<li>$obs</li>";
@@ -809,6 +810,17 @@ class ProspectosController extends Controller
                 }
             }
         } //foreach $request->entradas
+
+
+        //recalculate subtotal
+        $update['subtotal']   = round($cotizacion->entradas()->sum('importe'),2);
+        if ($request->iva == "1") {
+            $update['iva']   = bcmul($update['subtotal'], 0.16, 2);
+            $update['total'] = bcmul($update['subtotal'], 1.16, 2);
+        } else {
+            $update['total'] = $update['subtotal'];
+        }
+        $cotizacion->update($update);
 
         $cotizacion->load(
             'prospecto.cliente',
