@@ -503,7 +503,7 @@
     <div class="row margTop10">
       <div class="col-lg-5">
         <p>Cotizacion # {{$cotizacion->numero}}</p>
-        <p>Fecha: {{$cotizacion->fecha}}</p>
+        <p>Fecha: {{$cotizacion->fechaPDF}}</p>
       </div>
       <div class="col-lg-7">
         <p class="text-uppercase text-right">Intercorp Contract Resources, s.a. de c.v.</p>
