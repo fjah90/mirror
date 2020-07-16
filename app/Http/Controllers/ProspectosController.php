@@ -482,7 +482,7 @@ class ProspectosController extends Controller
         }
 
         $create['user_id'] = $user->id;
-        //$create['fecha']   = date('Y-m-d');
+        $create['fecha']   = date('Y-m-d');
         if ($request->condicion['id'] == 0) { //nueva condicion, dar de alta
             $condicion              = CondicionCotizacion::create(['nombre' => $request->condicion['nombre']]);
             $create['condicion_id'] = $condicion->id;
@@ -671,7 +671,7 @@ class ProspectosController extends Controller
         }
 
         $update['user_id'] = $user->id;
-        $update['fecha']   = date('Y-m-d');
+        //$update['fecha']   = date('Y-m-d');
         if ($request->condicion['id'] == 0) { //nueva condicion, dar de alta
             $condicion              = CondicionCotizacion::create(['nombre' => $request->condicion['nombre']]);
             $update['condicion_id'] = $condicion->id;
