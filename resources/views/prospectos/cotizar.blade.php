@@ -94,12 +94,18 @@
                                             </td>
                                             <td>
                                                 {{$prospecto->en}}
-                                                <template v-for="(entradas, i) in cotizacion.entradas_proveedor">
-                                                    <template v-for="(entrada, index) in entradas">
-                                                        <span>@{{entrada.importe * (cotizacion.iva == 0 ? 1 : 1.16) | formatoMoneda}}</span><br/>
+                                                <table>
+                                                    <template v-for="(total, proveedor) in cotizacion.entradas_proveedor_totales">
+                                                        <tr>
+                                                            <td align="right">@{{ proveedor }} |</td>
+                                                            <td align="right">@{{total * (cotizacion.iva == 0 ? 1 : 1.16) | formatoMoneda}}</td>
+                                                        </tr>
                                                     </template>
-                                                </template>
-                                                Total @{{cotizacion.total | formatoMoneda}} @{{ cotizacion.moneda }}
+                                                    <tr>
+                                                        <td align="right">Total @{{ cotizacion.moneda }}|</td>
+                                                        <td align="right">@{{cotizacion.total | formatoMoneda}} </td>
+                                                    </tr>
+                                                </table>
                                             </td>
                                             <td class="text-right">
                                                 <button class="btn btn-xs btn-default" title="Notas"
