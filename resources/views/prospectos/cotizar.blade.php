@@ -89,16 +89,21 @@
                                             <td>@{{cotizacion.fecha_formated}}</td>
                                             <td>
                                                 <template v-for="(entrada, index) in cotizacion.entradas">
-                                                    <span>@{{index+1}}.- @{{entrada.producto.nombre}}</span><br/>
+                                                    <span>@{{index+1}}.- @{{entrada.producto.nombre}} - @{{entrada.producto.proveedor.empresa}}</span><br/>
                                                 </template>
                                             </td>
-                                            <td>@{{cotizacion.total | formatoMoneda}} @{{ cotizacion.moneda }}</td>
+                                            <td>
+                                                {{$prospecto->en}}
+                                                <template v-for="(entradas, i) in cotizacion.entradas_proveedor">
+                                                    <template v-for="(entrada, index) in entradas">
+                                                        <span>@{{entrada.importe * (cotizacion.iva == 0 ? 1 : 1.16) | formatoMoneda}}</span><br/>
+                                                    </template>
+                                                </template>
+                                                Total @{{cotizacion.total | formatoMoneda}} @{{ cotizacion.moneda }}
+                                            </td>
                                             <td class="text-right">
                                                 <button class="btn btn-xs btn-default" title="Notas"
-                                                        @click="notas.cotizacion_id=cotizacion.id;
-                              notas.mensaje=cotizacion.notas2;
-                              openNotas=true;"
-                                                >
+                                                        @click="notas.cotizacion_id=cotizacion.id;notas.mensaje=cotizacion.notas2;openNotas=true;">
                                                     <i class="far fa-sticky-note"></i>
                                                 </button>
                                                 <a class="btn btn-xs btn-success" title="PDF" :href="cotizacion.archivo"
@@ -934,6 +939,7 @@
                     fletes: '',
                     moneda: '{{ ($prospecto->cliente->nacional)?"Pesos":"Dolares" }}',
                     entradas: [],
+                    entradas_proveedor: [],
                     subtotal: 0,
                     iva: '{{ ($prospecto->cliente->nacional)?"1":"0" }}',
                     total: 0,
@@ -1091,7 +1097,7 @@
             methods: {
                 cp() {
                     this.cargando = true;
-                    if(this.cotizacion.cp && this.cotizacion.cp.length > 4){
+                    if (this.cotizacion.cp && this.cotizacion.cp.length > 4) {
                         axios.get('http://sepomex.789.mx/' + this.cotizacion.cp, {})
                             .then(({data}) => {
                                 this.cotizacion.estado = data.estados[0]
@@ -1128,7 +1134,7 @@
                 },
                 cp1() {
                     this.cargando = true;
-                    if(this.cotizacion.dircp && this.cotizacion.dircp.length > 4){
+                    if (this.cotizacion.dircp && this.cotizacion.dircp.length > 4) {
                         axios.get('http://sepomex.789.mx/' + this.cotizacion.dircp, {})
                             .then(({data}) => {
                                 this.cotizacion.dirciudad = data.municipios[0]
@@ -1509,6 +1515,7 @@
                         fletes: cotizacion.fletes,
                         moneda: cotizacion.moneda,
                         entradas: cotizacion.entradas,
+                        entradas_proveedor: cotizacion.entradas_proveedor,
                         subtotal: cotizacion.subtotal,
                         iva: (cotizacion.iva == 0) ? 0 : 1,
                         total: cotizacion.total,
@@ -1601,6 +1608,7 @@
                         fletes: cotizacion.fletes,
                         moneda: cotizacion.moneda,
                         entradas: cotizacion.entradas,
+                        entradas_proveedor: cotizacion.entradas_proveedor,
                         subtotal: cotizacion.subtotal,
                         iva: (cotizacion.iva == 0) ? 0 : 1,
                         total: cotizacion.total,
@@ -1707,6 +1715,7 @@
                                 fletes: '',
                                 moneda: '{{ ($prospecto->cliente->nacional)?"Pesos":"Dolares" }}',
                                 entradas: [],
+                                entradas_proveedor: [],
                                 subtotal: 0,
                                 iva: '{{ ($prospecto->cliente->nacional)?"1":"0" }}',
                                 total: 0,

@@ -421,6 +421,11 @@ class ProspectosController extends Controller
             if ($cotizacion->cuentaCobrar) {
                 $cotizacion->comprobante_confirmacion = asset('storage/' . $cotizacion->cuentaCobrar->comprobante_confirmacion);
             }
+
+            $cotizacion->entradas_proveedor = $cotizacion->entradas->groupBy(function($entrada){
+                return $entrada->producto->proveedor->empresa;
+            });
+
         }
         foreach ($productos as $producto) {
             if ($producto->foto) {
