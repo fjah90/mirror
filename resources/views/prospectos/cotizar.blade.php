@@ -97,13 +97,13 @@
                                                 <table>
                                                     <template v-for="(total, proveedor) in cotizacion.entradas_proveedor_totales">
                                                         <tr>
-                                                            <td align="right">@{{ proveedor }} |</td>
-                                                            <td align="right">@{{total * (cotizacion.iva == 0 ? 1 : 1.16) | formatoMoneda}}</td>
+                                                            <td class="text-right">@{{ proveedor }} |</td>
+                                                            <td class="text-right">@{{total * (cotizacion.iva == 0 ? 1 : 1.16) | formatoMoneda}}</td>
                                                         </tr>
                                                     </template>
                                                     <tr>
-                                                        <td align="right">Total @{{ cotizacion.moneda }}|</td>
-                                                        <td align="right">@{{cotizacion.total | formatoMoneda}} </td>
+                                                        <th class="text-right">Total @{{ cotizacion.moneda }}|</th>
+                                                        <th class="text-right">@{{cotizacion.total | formatoMoneda}} </th>
                                                     </tr>
                                                 </table>
                                             </td>
