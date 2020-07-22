@@ -85,6 +85,12 @@ class ProspectoCotizacion extends Model
             ->orderBy('orden', 'asc');
     }
 
+    public function entradasProveedor()
+    {
+        return $this->hasMany('App\Models\ProspectoCotizacionEntrada', 'cotizacion_id', 'id')
+            ->orderBy('orden', 'asc');
+    }
+
     public function cuentaCobrar()
     {
         return $this->hasOne('App\Models\CuentaCobrar', 'cotizacion_id', 'id');

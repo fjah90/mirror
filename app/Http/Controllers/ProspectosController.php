@@ -421,12 +421,30 @@ class ProspectosController extends Controller
             if ($cotizacion->cuentaCobrar) {
                 $cotizacion->comprobante_confirmacion = asset('storage/' . $cotizacion->cuentaCobrar->comprobante_confirmacion);
             }
+
+            $cotizacion->entradas_proveedor = $cotizacion->entradas->groupBy(function($entrada){
+                return $entrada->producto->proveedor->empresa;
+            });
+
+            $cotizacion->entradas_proveedor_totales = $cotizacion->entradas->groupBy(function($entrada){
+                return $entrada->producto->proveedor->empresa;
+            })->map(function ($entrada) {
+                return $entrada->sum('importe');
+            });
+
         }
         foreach ($productos as $producto) {
             if ($producto->foto) {
                 $producto->foto = asset('storage/' . $producto->foto);
             }
         }
+
+        //$entradas_proveedor = collect($entradas_proveedor);
+
+
+        /*
+        dd($prospecto->toArray());
+        exit;*/
 
         return view('prospectos.cotizar', compact(
             'prospecto',
