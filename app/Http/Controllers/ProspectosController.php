@@ -388,12 +388,13 @@ class ProspectosController extends Controller
 
         $rfcs = $this->getDatosFacturacion($prospecto->cliente_id);
 
-        $rfcs_cat = $prospecto->cliente->datos_facturacion->reduce(function ($carry, $key) {
-            $carry[$key->rfc]  = $key->toArray();
-            return $carry;
-        }, []);
-
-        $rfcs = array_merge($rfcs, $rfcs_cat);
+        if($prospecto->cliente->datos_facturacion->count() > 0){
+            $rfcs_cat = $prospecto->cliente->datos_facturacion->reduce(function ($carry, $key) {
+                $carry[$key->rfc]  = ($key) ? $key->toArray() : [];
+                return $carry;
+            }, []);
+            $rfcs = array_merge($rfcs, $rfcs_cat);
+        }
 
         $direcciones = $prospecto->cotizaciones->reduce(function ($datos, $cotizacion) {
             if ($cotizacion->direccion) {
