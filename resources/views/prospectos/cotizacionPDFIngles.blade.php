@@ -584,10 +584,15 @@
               </td>
               <td class="bordered">
                 <p class="text-center font-small "><strong>Deliver to:</strong></p>
-                <p class="text-uppercase">TO: {{$cotizacion->contacto_nombre}}</p>
-                <p class="text-uppercase">P. {{$cotizacion->contacto_telefono}}</p>
-                <p>Email: <a href="mailto:{{$cotizacion->contacto_email}}">{{$cotizacion->contacto_email}}</a>
-                </p>
+                @if($cotizacion->contacto_nombre)
+                  <p class="text-uppercase">TO: {{$cotizacion->contacto_nombre}}</p>
+                @endif
+                @if($cotizacion->contacto_telefono)
+                  <p class="text-uppercase">P. {{$cotizacion->contacto_telefono}}</p>
+                @endif
+                @if($cotizacion->contacto_email)
+                  <p>Email: <a href="mailto:{{$cotizacion->contacto_email}}">{{$cotizacion->contacto_email}}</a></p>
+                @endif
                 <p class="text-uppercase">
                   {{$cotizacion->dircalle}} {{$cotizacion->dirnexterior}}
                   @if($cotizacion->dirninterior) Int. {{$cotizacion->dirninterior}} @endif
