@@ -775,7 +775,11 @@ class ProspectosController extends Controller
                     //mismo producto, solo actualizar descripciones
                     if (isset($entrada['descripciones'])) {
                         foreach ($entrada['descripciones'] as $descripcion) {
-                            $entradaDescripcion = ProspectoCotizacionEntradaDescripcion::find($descripcion['id']);
+                            $entradaDescripcion = null;
+                            if(isset($descripcion['id'])){
+                                $entradaDescripcion = ProspectoCotizacionEntradaDescripcion::find($descripcion['id']);
+                            }
+
                             if ($entradaDescripcion != null) {
                                 $entradaDescripcion->update(['valor' => $descripcion['valor']]);
                             } else {
