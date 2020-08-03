@@ -36,6 +36,13 @@
                                                     <option value="{{$id}}">{{$nombre}}</option>
                                                 @endforeach
                                             </select>
+
+                                            {{--<select multiple="true" class="form-control" name="usuario_id" v-model='cliente.usuario_id'
+                                                    required>
+                                                @foreach($usuarios as $id => $nombre)
+                                                    <option value="{{$id}}">{{$nombre}}</option>
+                                                @endforeach
+                                            </select>--}}
                                         </div>
                                         <div class="col-md-4">
                                             <label class="control-label">Tipo</label>

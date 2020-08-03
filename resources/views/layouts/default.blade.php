@@ -15,8 +15,10 @@
   <!--[if lt IE 9]>
   <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
   <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+  <script src="{{ url('plugin/select2/select2.full.min.js') }}"></script>
   <![endif]-->
   <!-- global css -->
+  <link href="{{ url('plugin/select2/select2.min.css') }}" rel="stylesheet"/>
   <link href="{{ mix('css/vendor.css') }}" rel="stylesheet" type="text/css">
   <link href="{{ mix('css/app.css')}}" rel="stylesheet" type="text/css">
   <!-- end of global css -->
@@ -392,6 +394,8 @@ $(function() {
   $('#logout-anchor').on('click', function(){
     $('#logout-form').submit();
   });
+
+  $('select').select2();
 });
 var translationsES = {
   countrySelectorLabel: 'Codigo de Pais',
