@@ -66,6 +66,12 @@ class Cliente extends Model
         return $this->hasMany('App\Models\ClienteContacto', 'cliente_id', 'id');
     }
 
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'cliente_users')
+            ->withPivot('id');
+    }
+
     public function datos_facturacion()
     {
         return $this->hasMany('App\Models\DatoFacturacion', 'cliente_id', 'id');

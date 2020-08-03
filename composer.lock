@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "595920ef149d325e6b2e86c0ae533cf2",
+    "content-hash": "94176d354538961a1d69fa6081a62c61",
     "packages": [
         {
             "name": "barryvdh/laravel-dompdf",
@@ -774,6 +774,7 @@
                     "email": "jakub.onderka@gmail.com"
                 }
             ],
+            "abandoned": "php-parallel-lint/php-console-color",
             "time": "2018-09-29T17:23:10+00:00"
         },
         {
@@ -820,6 +821,7 @@
                 }
             ],
             "description": "Highlight PHP code in terminal",
+            "abandoned": "php-parallel-lint/php-console-highlighter",
             "time": "2018-09-29T18:48:56+00:00"
         },
         {
@@ -1223,6 +1225,7 @@
                 "cron",
                 "schedule"
             ],
+            "abandoned": "dragonmantank/cron-expression",
             "time": "2017-01-23T04:29:33+00:00"
         },
         {
@@ -1755,6 +1758,65 @@
                 "uuid"
             ],
             "time": "2018-07-19T23:38:55+00:00"
+        },
+        {
+            "name": "reliese/laravel",
+            "version": "v0.0.16",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/reliese/laravel.git",
+                "reference": "f4a95c8a37d1c0b117939d7d8660119474d1704b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/reliese/laravel/zipball/f4a95c8a37d1c0b117939d7d8660119474d1704b",
+                "reference": "f4a95c8a37d1c0b117939d7d8660119474d1704b",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/dbal": ">=2.5",
+                "illuminate/console": ">=5.1",
+                "illuminate/contracts": ">=5.1",
+                "illuminate/database": ">=5.1",
+                "illuminate/filesystem": ">=5.1",
+                "illuminate/support": ">=5.1",
+                "php": ">=5.6.4"
+            },
+            "require-dev": {
+                "fzaninotto/faker": "~1.4",
+                "mockery/mockery": "0.9.*",
+                "phpunit/phpunit": "~5.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Reliese\\Coders\\CodersServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Reliese\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Cristian Llanos",
+                    "email": "cristianllanos@outlook.com"
+                }
+            ],
+            "description": "Reliese Components for Laravel Framework code generation.",
+            "homepage": "http://cristianllanos.com",
+            "keywords": [
+                "laravel",
+                "reliese"
+            ],
+            "time": "2020-05-31T04:46:47+00:00"
         },
         {
             "name": "rguedes/pdfmerger",

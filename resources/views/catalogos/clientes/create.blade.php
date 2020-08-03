@@ -29,13 +29,15 @@
                         <div class="panel-body">
                             <div class="row form-group">
                                 <div class="col-md-4">
-                                    <label class="control-label">Usuario</label>
+                                    {{--<label class="control-label">Usuario</label>
                                     <select class="form-control" name="usuario_id" v-model='cliente.usuario_id'
                                             required>
                                         @foreach($usuarios as $id => $nombre)
                                             <option value="{{$id}}">{{$nombre}}</option>
                                         @endforeach
-                                    </select>
+                                    </select>--}}
+                                    {{--{!! Form::label('usuarios', 'Usuarios', ['class' => 'control-label']) !!}
+                                    {!! Form::select('usuarios[]', $usuarios, old('usuarios'), ['class' => 'form-control select2', 'multiple' => 'multiple']) !!}--}}
                                 </div>
                                 <div class="col-md-4">
                                     <label class="control-label">Tipo</label>
