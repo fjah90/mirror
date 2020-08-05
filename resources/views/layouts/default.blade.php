@@ -395,7 +395,7 @@ $(function() {
     $('#logout-form').submit();
   });
 
-  $('select').select2();
+  $('.select2').select2();
 });
 var translationsES = {
   countrySelectorLabel: 'Codigo de Pais',

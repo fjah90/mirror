@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Model;
+use App\User;
 
 class Cliente extends Model
 {

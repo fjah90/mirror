@@ -36,8 +36,8 @@
                                             <option value="{{$id}}">{{$nombre}}</option>
                                         @endforeach
                                     </select>--}}
-                                    {{--{!! Form::label('usuarios', 'Usuarios', ['class' => 'control-label']) !!}
-                                    {!! Form::select('usuarios[]', $usuarios, old('usuarios'), ['class' => 'form-control select2', 'multiple' => 'multiple']) !!}--}}
+                                    {!! Form::label('usuarios', 'Usuarios', ['class' => 'control-label']) !!}
+                                    {!! Form::select('usuarios[]', $usuarios, old('usuarios'), ['class' => 'form-control select2', 'multiple' => 'multiple']) !!}
                                 </div>
                                 <div class="col-md-4">
                                     <label class="control-label">Tipo</label>

@@ -113,7 +113,8 @@ class ClientesController extends Controller
      */
     public function show(Cliente $cliente)
     {
-        $cliente->load(['tipo', 'contactos', 'datos_facturacion']);
+        $cliente->load(['tipo', 'contactos', 'datos_facturacion', 'users']);
+
         return view('catalogos.clientes.show', compact('cliente'));
     }
 
@@ -127,7 +128,7 @@ class ClientesController extends Controller
     {
         $tipos    = TipoCliente::all();
         $usuarios = User::all()->pluck('name', 'id');
-        $cliente->load(['tipo', 'contactos.emails', 'contactos.telefonos', 'datos_facturacion']);
+        $cliente->load(['tipo', 'contactos.emails', 'contactos.telefonos', 'datos_facturacion','users']);
         $tab = ($request->has('contactos')) ? 1 : 0;
 
         return view('catalogos.clientes.edit', compact(['cliente', 'tipos', 'usuarios', 'tab', '']));
@@ -146,6 +147,9 @@ class ClientesController extends Controller
             'tipo_id' => 'required',
             'nombre'  => 'required',
         ]);
+
+        dd($request->all());
+        exit;
 
         if ($validator->fails()) {
             $errors = $validator->errors()->all();

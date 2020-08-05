@@ -30,15 +30,25 @@
                                     <div class="row form-group">
                                         <div class="col-md-4">
                                             <label class="control-label">Usuario</label>
-                                            <select class="form-control" name="usuario_id" v-model='cliente.usuario_id'
-                                                    required>
+                                            <select class="form-control" name="usuario_id" v-model='cliente.usuario_id' required>
                                                 @foreach($usuarios as $id => $nombre)
                                                     <option value="{{$id}}">{{$nombre}}</option>
                                                 @endforeach
                                             </select>
-
-                                            {{--{!! Form::label('usuarios', 'Usuarios', ['class' => 'control-label']) !!}
-                                            {!! Form::select('usuarios[]', $usuarios, old('usuarios') ? old('usuarios') : $cliente->usuarios()->pluck('id', 'name'), ['class' => 'form-control select2', 'multiple' => 'multiple']) !!}--}}
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label class="control-label">Usuarios</label>
+                                            <select class="form-control select2" name="users" v-model='cliente.users' required multiple>
+                                                @foreach($usuarios as $id => $nombre)
+                                                    <option value="{{$id}}">{{$nombre}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                {!! Form::label('usuarios', 'Usuarios', ['class' => 'control-label']) !!}
+                                                {!! Form::select('usuarios', $usuarios, old('usuarios') ? old('usuarios') : $cliente->users()->pluck('user_id', 'cliente_id'), ['class' => 'form-control select2', 'multiple' => 'multiple']) !!}
+                                            </div>
                                         </div>
                                         <div class="col-md-4">
                                             <label class="control-label">Tipo</label>
@@ -634,6 +644,8 @@
 
                 guardar() {
                     this.cargando = true;
+                    console.log(this.cliente)
+                    console.log(this.cliente.users)
                     axios.put('/clientes/{{$cliente->id}}', this.cliente)
                         .then(({data}) => {
                             this.cargando = false;
