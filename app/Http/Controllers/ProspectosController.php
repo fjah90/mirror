@@ -33,7 +33,7 @@ class ProspectosController extends Controller
      */
     public function index()
     {
-        $prospectos = auth()->user()->prospectos()->with('cliente', 'ultima_actividad.tipo', 'proxima_actividad.tipo')
+        $prospectos = auth()->user()->prospectos()->with('cliente', 'ultima_actividad.tipo', 'proxima_actividad.tipo', 'user')
             ->has('cliente')->orderBy('id', 'desc')->get();
 
         if (auth()->user()->tipo == 'Administrador') {
