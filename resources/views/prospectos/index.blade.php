@@ -100,7 +100,12 @@
               <tbody>
                 <tr v-for="(prospecto, index) in prospectos">
                   <td>@{{index+1}}</td>
-                  <td>@{{prospecto.cliente.usuario_nombre}}</td>
+                  <template v-if="prospecto.user">
+                    <td>@{{prospecto.user.name}}</td>
+                  </template>
+                  <template v-else>
+                    <td>@{{prospecto.cliente.usuario_nombre}} </td>
+                  </template>
                   <td>@{{prospecto.cliente.nombre}}</td>
                   <td>@{{prospecto.nombre}}</td>
                   <template v-if="prospecto.ultima_actividad">
