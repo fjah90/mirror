@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cliente;
+use App\Models\ClienteUser;
 use App\Models\TipoCliente;
 use App\User;
 use Illuminate\Http\Request;
@@ -102,6 +103,15 @@ class ClientesController extends Controller
             });
         }
 
+        if(!empty($request->userIds)){
+            foreach ($request->userIds as $userId){
+                $clienteUser =new ClienteUser();
+                $clienteUser->user_id = $userId;
+                $clienteUser->cliente_id = $cliente->id;
+                $clienteUser->save();
+            }
+        }
+
         return response()->json(['success' => true, "error" => false, "cliente" => $cliente], 200);
     }
 
@@ -148,9 +158,6 @@ class ClientesController extends Controller
             'nombre'  => 'required',
         ]);
 
-        dd($request->all());
-        exit;
-
         if ($validator->fails()) {
             $errors = $validator->errors()->all();
             return response()->json([
@@ -160,6 +167,16 @@ class ClientesController extends Controller
 
         $cliente->update($request->except('contactos'));
         $cliente->update(['usuario_nombre' => $cliente->usuario->name]);
+
+        $cliente->users()->detach();
+        if(!empty($request->userIds)){
+            foreach ($request->userIds as $userId){
+                $clienteUser =new ClienteUser();
+                $clienteUser->user_id = $userId;
+                $clienteUser->cliente_id = $cliente->id;
+                $clienteUser->save();
+            }
+        }
 
         return response()->json(['success' => true, "error" => false], 200);
     }

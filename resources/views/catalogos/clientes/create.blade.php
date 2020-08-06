@@ -29,15 +29,20 @@
                         <div class="panel-body">
                             <div class="row form-group">
                                 <div class="col-md-4">
-                                    {{--<label class="control-label">Usuario</label>
+                                    <label class="control-label">Usuario</label>
                                     <select class="form-control" name="usuario_id" v-model='cliente.usuario_id'
                                             required>
                                         @foreach($usuarios as $id => $nombre)
                                             <option value="{{$id}}">{{$nombre}}</option>
                                         @endforeach
-                                    </select>--}}
-                                    {!! Form::label('usuarios', 'Usuarios', ['class' => 'control-label']) !!}
-                                    {!! Form::select('usuarios[]', $usuarios, old('usuarios'), ['class' => 'form-control select2', 'multiple' => 'multiple']) !!}
+                                    </select>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="control-label">Usuario(s) adicional</label>
+                                        <select2multags :options="user.userOptions" v-model="user.users" style="width:100%;" required>
+                                        </select2multags>
+                                    </div>
                                 </div>
                                 <div class="col-md-4">
                                     <label class="control-label">Tipo</label>
@@ -200,11 +205,22 @@
                     pagina_web: '',
                     adicionales: ''
                 },
+                user: {
+                    users: [],
+                    userOptions: [
+                        @foreach($usuarios as $id => $nombre)
+                        {
+                            id: "{{$id}}", text: "{{$nombre}}"
+                        },
+                        @endforeach
+                    ],
+                },
                 cargando: false,
             },
             methods: {
                 guardar() {
                     this.cargando = true;
+                    this.cliente['userIds'] = this.user.users;
                     axios.post('/clientes', this.cliente)
                         .then(({data}) => {
                             this.cargando = false;
