@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Model;
+use App\User;
 
 class Cliente extends Model
 {
@@ -64,6 +65,12 @@ class Cliente extends Model
     public function contactos()
     {
         return $this->hasMany('App\Models\ClienteContacto', 'cliente_id', 'id');
+    }
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'cliente_users')
+            ->withPivot('id');
     }
 
     public function datos_facturacion()

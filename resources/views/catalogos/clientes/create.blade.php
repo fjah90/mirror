@@ -38,6 +38,13 @@
                                     </select>
                                 </div>
                                 <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="control-label">Usuario(s) adicional</label>
+                                        <select2multags :options="user.userOptions" v-model="user.users" style="width:100%;">
+                                        </select2multags>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
                                     <label class="control-label">Tipo</label>
                                     <select class="form-control" name="tipo_id" v-model='cliente.tipo_id' required>
                                         @foreach($tipos as $tipo)
@@ -198,11 +205,22 @@
                     pagina_web: '',
                     adicionales: ''
                 },
+                user: {
+                    users: [],
+                    userOptions: [
+                        @foreach($usuarios as $id => $nombre)
+                        {
+                            id: "{{$id}}", text: "{{$nombre}}"
+                        },
+                        @endforeach
+                    ],
+                },
                 cargando: false,
             },
             methods: {
                 guardar() {
                     this.cargando = true;
+                    this.cliente['userIds'] = this.user.users;
                     axios.post('/clientes', this.cliente)
                         .then(({data}) => {
                             this.cargando = false;

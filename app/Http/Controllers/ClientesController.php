@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cliente;
+use App\Models\ClienteUser;
 use App\Models\TipoCliente;
 use App\User;
 use Illuminate\Http\Request;
@@ -31,8 +32,18 @@ class ClientesController extends Controller
         $clientesNacionales  = Cliente::with('tipo')->where('nacional', 1);
         $clientesExtranjeros = Cliente::with('tipo')->where('nacional', 0);
         if ($request->id != 'Todos') {
-            $clientesNacionales  = $clientesNacionales->where('usuario_id', $request->id);
-            $clientesExtranjeros = $clientesExtranjeros->where('usuario_id', $request->id);
+
+            $clientesNacionales = $clientesNacionales->whereHas("users", function($query) use ($request) {
+                $query->where("user_id", $request->id);
+            });
+
+            $clientesNacionales  = $clientesNacionales->orWhere('usuario_id', $request->id);
+
+            $clientesExtranjeros = $clientesExtranjeros->whereHas("users", function($query) use ($request) {
+                $query->where("user_id", $request->id);
+            });
+
+            $clientesExtranjeros = $clientesExtranjeros->orWhere('usuario_id', $request->id);
         }
         if ($request->tipo != 'Todos') {
             $clientesNacionales  = $clientesNacionales->where('tipo_id', $request->tipo);
@@ -102,6 +113,15 @@ class ClientesController extends Controller
             });
         }
 
+        if(!empty($request->userIds)){
+            foreach ($request->userIds as $userId){
+                $clienteUser =new ClienteUser();
+                $clienteUser->user_id = $userId;
+                $clienteUser->cliente_id = $cliente->id;
+                $clienteUser->save();
+            }
+        }
+
         return response()->json(['success' => true, "error" => false, "cliente" => $cliente], 200);
     }
 
@@ -113,7 +133,8 @@ class ClientesController extends Controller
      */
     public function show(Cliente $cliente)
     {
-        $cliente->load(['tipo', 'contactos', 'datos_facturacion']);
+        $cliente->load(['tipo', 'contactos', 'datos_facturacion', 'users']);
+
         return view('catalogos.clientes.show', compact('cliente'));
     }
 
@@ -127,7 +148,7 @@ class ClientesController extends Controller
     {
         $tipos    = TipoCliente::all();
         $usuarios = User::all()->pluck('name', 'id');
-        $cliente->load(['tipo', 'contactos.emails', 'contactos.telefonos', 'datos_facturacion']);
+        $cliente->load(['tipo', 'contactos.emails', 'contactos.telefonos', 'datos_facturacion','users']);
         $tab = ($request->has('contactos')) ? 1 : 0;
 
         return view('catalogos.clientes.edit', compact(['cliente', 'tipos', 'usuarios', 'tab', '']));
@@ -156,6 +177,16 @@ class ClientesController extends Controller
 
         $cliente->update($request->except('contactos'));
         $cliente->update(['usuario_nombre' => $cliente->usuario->name]);
+
+        $cliente->users()->detach();
+        if(!empty($request->userIds)){
+            foreach ($request->userIds as $userId){
+                $clienteUser =new ClienteUser();
+                $clienteUser->user_id = $userId;
+                $clienteUser->cliente_id = $cliente->id;
+                $clienteUser->save();
+            }
+        }
 
         return response()->json(['success' => true, "error" => false], 200);
     }

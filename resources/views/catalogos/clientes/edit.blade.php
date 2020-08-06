@@ -29,13 +29,19 @@
                                 <div class="panel-body">
                                     <div class="row form-group">
                                         <div class="col-md-4">
-                                            <label class="control-label">Usuario</label>
-                                            <select class="form-control" name="usuario_id" v-model='cliente.usuario_id'
-                                                    required>
+                                            <label class="control-label">Usuario Default</label>
+                                            <select class="form-control" name="usuario_id" v-model='cliente.usuario_id' required>
                                                 @foreach($usuarios as $id => $nombre)
                                                     <option value="{{$id}}">{{$nombre}}</option>
                                                 @endforeach
                                             </select>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label class="control-label">Usuario(s) adicional</label>
+                                                <select2multags :options="user.userOptions" v-model="user.users" style="width:100%;">
+                                                </select2multags>
+                                            </div>
                                         </div>
                                         <div class="col-md-4">
                                             <label class="control-label">Tipo</label>
@@ -410,6 +416,20 @@
                     emails: [],
                     telefonos: []
                 },
+                user: {
+                    users: [
+                            @foreach($cliente->users as $user)
+                                {{$user->id}},
+                            @endforeach
+                    ],
+                    userOptions: [
+                            @foreach($usuarios as $id => $nombre)
+                                {
+                                    id: "{{$id}}", text: "{{$nombre}}"
+                                },
+                            @endforeach
+                    ],
+                },
                 datoFacturacion: {
                     rfc: '',
                     razon_social: '',
@@ -631,6 +651,7 @@
 
                 guardar() {
                     this.cargando = true;
+                    this.cliente['userIds'] = this.user.users;
                     axios.put('/clientes/{{$cliente->id}}', this.cliente)
                         .then(({data}) => {
                             this.cargando = false;
