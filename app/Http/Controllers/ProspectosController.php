@@ -51,13 +51,18 @@ class ProspectosController extends Controller
             $prospectos = Prospecto::with('cliente', 'ultima_actividad.tipo', 'proxima_actividad.tipo')
                 ->has('cliente')->orderBy('id', 'desc')->get();
         } else {
-            $user = User::with('prospectos.cliente', 'prospectos.ultima_actividad.tipo', 'prospectos.proxima_actividad.tipo')
+            /*$user = User::with('prospectos.cliente', 'prospectos.ultima_actividad.tipo', 'prospectos.proxima_actividad.tipo')
                 ->has('prospectos.cliente')->find($request->id);
             if (is_null($user)) {
                 $prospectos = [];
             } else {
                 $prospectos = $user->prospectos;
-            }
+            }*/
+
+            $prospectos = Prospecto::with('cliente', 'ultima_actividad.tipo', 'proxima_actividad.tipo', 'user')
+                ->where('user_id', $request->id)->orWhereHas("cliente", function($query) use ($request) {
+                $query->where("usuario_id", $request->id);
+            })->get();
         }
 
         return response()->json(['success' => true, "error" => false, 'prospectos' => $prospectos], 200);
@@ -105,10 +110,12 @@ class ProspectosController extends Controller
             ], 422);
         }
 
+        $user = auth()->user();
         $prospecto = Prospecto::create([
             'cliente_id'  => $request->cliente_id,
             'nombre'      => $request->nombre,
             'descripcion' => $request->descripcion,
+            'user_id' => $user->id,
         ]);
 
         //Actividad de alta de proyecto

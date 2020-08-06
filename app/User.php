@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Models\Prospecto;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Spatie\Permission\Traits\HasRoles;
@@ -43,11 +44,16 @@ class User extends Authenticatable
     }
 
     public function prospectos(){
-      return $this->hasManyThrough('App\Models\Prospecto', 'App\Models\Cliente', 'usuario_id', 'cliente_id')
+      return $this->hasManyThrough('App\Models\Prospecto', 'App\Models\Cliente', 'user_id', 'cliente_id')
       ->orderBy('id','desc');
     }
 
     public function proyectos_aprobados(){
       return $this->hasManyThrough('App\Models\ProyectoAprobado', 'App\Models\Cliente', 'usuario_id', 'cliente_id');
     }
+
+    /*public function prospectos()
+    {
+        return $this->hasMany(Prospecto::class);
+    }*/
 }
