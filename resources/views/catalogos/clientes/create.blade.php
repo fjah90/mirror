@@ -40,7 +40,7 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label class="control-label">Usuario(s) adicional</label>
-                                        <select2multags :options="user.userOptions" v-model="user.users" style="width:100%;" required>
+                                        <select2multags :options="user.userOptions" v-model="user.users" style="width:100%;">
                                         </select2multags>
                                     </div>
                                 </div>
