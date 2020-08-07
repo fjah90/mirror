@@ -102,6 +102,7 @@ class ClientesController extends Controller
             ], 422);
         }
 
+
         $cliente = Cliente::create($request->all());
         $cliente->update(['usuario_nombre' => $cliente->usuario->name]);
 

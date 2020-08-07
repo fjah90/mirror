@@ -48,7 +48,7 @@ class ProspectosController extends Controller
     public function listado(Request $request)
     {
         if ($request->id == 'Todos') {
-            $prospectos = Prospecto::with('cliente', 'ultima_actividad.tipo', 'proxima_actividad.tipo')
+            $prospectos = Prospecto::with('cliente', 'ultima_actividad.tipo', 'proxima_actividad.tipo', 'user')
                 ->has('cliente')->orderBy('id', 'desc')->get();
         } else {
             /*$user = User::with('prospectos.cliente', 'prospectos.ultima_actividad.tipo', 'prospectos.proxima_actividad.tipo')
