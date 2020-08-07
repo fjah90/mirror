@@ -21,7 +21,6 @@
         <form @submit.prevent=guardar()>
             <div class="row">
                 <div class="col-lg-12">
-
                     <div class="panel">
                         <div class="panel-heading">
                             <h3 class="panel-title">Datos Generales</h3>
@@ -159,6 +158,39 @@
             </div>
 
             <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel ">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Contactos del Cliente</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row form-group">
+                                <div class="col-md-6">
+                                    <label class="control-label">Nombre</label>
+                                    <input type="text" class="form-control" name="nombre"
+                                           v-model="contacto.nombre" required/>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="control-label">Cargo</label>
+                                    <input type="text" class="form-control" name="cargo"
+                                           v-model="contacto.cargo" required/>
+                                </div>
+                            </div>
+                            <contacto-emails :emails="contacto.emails"
+                                             :contacto_id="(contacto.id)?contacto.id:0"
+                                             contacto_type="ClienteContacto">
+                            </contacto-emails>
+                            <contacto-telefonos :telefonos="contacto.telefonos"
+                                                :contacto_id="(contacto.id)?contacto.id:0"
+                                                contacto_type="ClienteContacto"
+                                                :nacional="cliente.nacional">
+                            </contacto-telefonos>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
                 <div class="col-md-12 text-center">
                     @if($layout !=='iframe')
                         <a class="btn btn-default" href="{{route('clientes.index')}}" style="margin-right: 20px;">
@@ -203,7 +235,17 @@
                     pais: '{{ (($nacional)?"México":"") }}',
                     nacional: {{ (($nacional)?"true":"false") }},
                     pagina_web: '',
-                    adicionales: ''
+                    adicionales: '',
+                    contactos: [],
+                    userIds: []
+                },
+                contacto: {
+                    tipo: 'cliente',
+                    cliente_id: 0,
+                    nombre: '',
+                    cargo: '',
+                    emails: [],
+                    telefonos: []
                 },
                 user: {
                     users: [],
@@ -220,7 +262,9 @@
             methods: {
                 guardar() {
                     this.cargando = true;
-                    this.cliente['userIds'] = this.user.users;
+                    this.cliente.contactos.push(this.contacto);
+                    this.cliente.userIds = this.user.users;
+                    console.log(this.contacto)
                     axios.post('/clientes', this.cliente)
                         .then(({data}) => {
                             this.cargando = false;

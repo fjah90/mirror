@@ -3,13 +3,13 @@
 namespace App\Models;
 
 use App\Model;
-use Carbon\Carbon;
+use App\User;
 
 class Prospecto extends Model
 {
     protected $table = 'prospectos';
 
-    protected $fillable = ['cliente_id','nombre','descripcion'];
+    protected $fillable = ['cliente_id','nombre','descripcion', 'user_id'];
 
     /**
      * ---------------------------------------------------------------------------
@@ -37,6 +37,11 @@ class Prospecto extends Model
     public function proxima_actividad(){
       return $this->hasOne('App\Models\ProspectoActividad', 'prospecto_id', 'id')
         ->where('realizada', 0)->orderBy('id', 'desc');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 
 }

@@ -31,23 +31,32 @@ class User extends Authenticatable
 
     protected $appends = ['tipo'];
 
-    public function getTipoAttribute(){
-      $roles = $this->getRoleNames();
-      if(count($roles)) return $roles[0];
-      else return "";
+    public function getTipoAttribute()
+    {
+        $roles = $this->getRoleNames();
+        if (count($roles)) return $roles[0];
+        else return "";
     }
 
 
-    public function clientes(){
-      return $this->hasMany('App\Models\Cliente', 'usuario_id', 'id');
+    public function clientes()
+    {
+        return $this->hasMany('App\Models\Cliente', 'usuario_id', 'id');
     }
 
-    public function prospectos(){
-      return $this->hasManyThrough('App\Models\Prospecto', 'App\Models\Cliente', 'usuario_id', 'cliente_id')
-      ->orderBy('id','desc');
+    public function prospectos()
+    {
+        return $this->hasManyThrough('App\Models\Prospecto', 'App\Models\Cliente', 'usuario_id', 'cliente_id')
+            ->orderBy('id', 'desc');
     }
 
-    public function proyectos_aprobados(){
-      return $this->hasManyThrough('App\Models\ProyectoAprobado', 'App\Models\Cliente', 'usuario_id', 'cliente_id');
+    public function proyectos_aprobados()
+    {
+        return $this->hasManyThrough('App\Models\ProyectoAprobado', 'App\Models\Cliente', 'usuario_id', 'cliente_id');
     }
+
+    /*public function prospectos()
+    {
+        return $this->hasMany(Prospecto::class);
+    }*/
 }
