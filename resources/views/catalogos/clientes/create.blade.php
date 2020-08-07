@@ -264,7 +264,6 @@
                     this.cargando = true;
                     this.cliente.contactos.push(this.contacto);
                     this.cliente.userIds = this.user.users;
-                    console.log(this.contacto)
                     axios.post('/clientes', this.cliente)
                         .then(({data}) => {
                             this.cargando = false;
