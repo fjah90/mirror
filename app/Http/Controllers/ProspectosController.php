@@ -33,8 +33,11 @@ class ProspectosController extends Controller
      */
     public function index()
     {
-        $prospectos = auth()->user()->prospectos()->with('cliente', 'ultima_actividad.tipo', 'proxima_actividad.tipo', 'user')
-            ->has('cliente')->orderBy('id', 'desc')->get();
+        $user = auth()->user();
+        $prospectos = Prospecto::with('cliente', 'ultima_actividad.tipo', 'proxima_actividad.tipo', 'user')
+            ->where('user_id', $user->id)->orWhereHas("cliente", function($query) use ($user) {
+                $query->where("usuario_id", $user->id);
+            })->get();
 
         if (auth()->user()->tipo == 'Administrador') {
             $usuarios = User::all();
