@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cliente;
+use App\Models\ClienteContacto;
 use App\Models\ClienteUser;
+use App\Models\ContactoEmail;
+use App\Models\ProveedorContacto;
 use App\Models\TipoCliente;
 use App\User;
 use Illuminate\Http\Request;
@@ -112,6 +115,24 @@ class ClientesController extends Controller
             Mail::send('email', ['mensaje' => $mensaje], function ($message) {
                 $message->to('abraham@intercorp.mx')->subject('Nueva Alta de Cliente');
             });
+        }
+
+        if (!empty($request->contactos)) {
+            foreach ($request->contactos as $contacto_item){
+                $contacto_item['cliente_id'] = $cliente->id;
+                if ($contacto_item['tipo'] == 'cliente') {
+                    $contacto = ClienteContacto::create($contacto_item);
+                } else {
+                    $contacto = ProveedorContacto::create($contacto_item);
+                }
+
+                if (!empty($contacto_item['emails'])) {
+                    $contacto->emails()->createMany($contacto_item['emails']);
+                }
+                if (!empty($contacto_item['telefonos'])) {
+                    $contacto->telefonos()->createMany($contacto_item['telefonos']);
+                }   
+            }
         }
 
         if(!empty($request->userIds)){
