@@ -28,17 +28,17 @@
             <form class="" @submit.prevent="agregarEntrada()">
               <div class="row form-group">
                 <div class="col-md-4">
-                  <label class="control-label">Numero Orden</label>
+                  <label class="control-label">Número Orden / Order</label>
                   <input type="number" step="1" min="1" class="form-control" name="numero"
                     v-model="orden.numero" required />
                 </div>
                 <div class="col-md-4">
-                  <label class="control-label">Numero Proyecto</label>
+                  <label class="control-label">Número Proyecto / Project Number</label>
                   <input type="number" step="1" min="1" class="form-control" name="numero_proyecto"
                     v-model="orden.numero_proyecto" />
                 </div>
                 <div class="col-md-4">
-                  <label class="control-label">Proveedor</label>
+                  <label class="control-label">Proveedor / To</label>
                   <select class="form-control" name="proveedor_id" v-model='orden.proveedor_id'
                     required :disabled="orden.entradas.length>0" @change="fijarProveedor()">
                     @foreach($proveedores as $proveedor)
@@ -49,7 +49,7 @@
               </div>
               <div class="row form-group">
                 <div class="col-md-4">
-                  <label class="control-label">Agente Aduanal</label>
+                  <label class="control-label">Agente Aduanal / Ship To</label>
                   <select class="form-control" name="aduana_id" v-model='orden.aduana_id' @change="fijarAduana()">
                     @foreach($aduanas as $aduana)
                     <option value="{{$aduana->id}}">{{$aduana->compañia}}</option>
@@ -57,7 +57,7 @@
                   </select>
                 </div>
                 <div class="col-md-4">
-                  <label class="control-label">Tiempo de Entrega</label>
+                  <label class="control-label">Tiempo de Entrega / Delivery</label>
                   <select class="form-control" name="tiempo.id" v-model='orden.tiempo.id'>
                     @foreach($tiempos_entrega as $tiempo)
                     <option value="{{$tiempo->id}}">{{$tiempo->valor}}</option>
@@ -73,12 +73,12 @@
               </div>
               <div class="row form-group">
                 <div class="col-md-4">
-                  <label class="control-label">Punto Entrega</label>
+                  <label class="control-label">Punto Entrega / D. Point</label>
                   <input type="text" class="form-control" name="punto_entrega"
                          v-model="orden.punto_entrega" />
                 </div>
                 <div class="col-md-4">
-                  <label class="control-label">Carga</label>
+                  <label class="control-label">Carga Flete / Freight</label>
                   <input type="text" class="form-control" name="carga"
                          v-model="orden.carga" />
                 </div>
@@ -97,7 +97,7 @@
                   </select>
                 </div>
                 <div class="col-md-4">
-                  <label class="control-label">Contacto Proveedor</label>
+                  <label class="control-label">Contacto Proveedor / ATTN</label>
                   <select class="form-control" name="proveedor_contacto_id" v-model='orden.proveedor_contacto_id'
                     required>
                     @foreach($contactos as $contacto)
