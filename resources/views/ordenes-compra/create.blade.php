@@ -34,7 +34,7 @@
                 </div>
                 <div class="col-md-4">
                   <label class="control-label">Número Proyecto / Project Number</label>
-                  <input type="number" step="1" min="1" class="form-control" name="numero_proyecto"
+                  <input type="text" step="1" min="1" class="form-control" name="numero_proyecto"
                     v-model="orden.numero_proyecto" />
                 </div>
                 <div class="col-md-4">
