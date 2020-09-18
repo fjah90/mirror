@@ -247,9 +247,9 @@
                     <thead>
                       <tr>
                         <th>Producto</th>
+                        <th>Comentarios</th>
                         <th>Cantidad</th>
                         <th>Conversión</th>
-                        <th>Fecha</th>
                         <th>Cant. en conversión</th>
                         <th>Precio</th>
                         <th>Importe</th>
@@ -260,9 +260,9 @@
                       <tr v-for="(entrada, index) in orden.entradas" v-if="entrada.borrar!=true"
                         :class="(entrada.conversion)?'bg-warning':''">
                         <td>@{{entrada.producto.nombre}}</td>
+                        <td>@{{entrada.comentarios}}</td>
                         <td>@{{entrada.cantidad}} @{{entrada.medida}}</td>
                         <td>@{{entrada.conversion}}</td>
-                        <td>@{{entrada.fecha_compra}}</td>
                         <td>@{{entrada.cantidad_convertida}}</td>
                         <td>@{{entrada.precio | formatoMoneda}}</td>
                         <td>@{{entrada.importe | formatoMoneda}}</td>
