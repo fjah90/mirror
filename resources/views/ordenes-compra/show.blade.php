@@ -36,25 +36,25 @@
             @endif
             <div class="row form-group">
               <div class="col-md-4">
-                <label class="control-label">Numero Orden</label>
+                <label class="control-label">Número Orden / Order</label>
                 <span class="form-control">{{$orden->numero}}</span>
               </div>
               <div class="col-md-4">
-                <label class="control-label">Numero Proyecto</label>
+                <label class="control-label">Número Proyecto / Project Number</label>
                 <span class="form-control">{{$orden->numero_proyecto}}</span>
               </div>
               <div class="col-md-4">
-                <label class="control-label">Tiempo de Entrega</label>
+                <label class="control-label">Tiempo de Entrega / Delivery</label>
                 <span class="form-control">{{$orden->tiempo_entrega}}</span>
               </div>
             </div>
               <div class="row form-group">
                 <div class="col-md-4">
-                  <label class="control-label">Punto Entrega</label>
+                  <label class="control-label">Punto Entrega / D. Point</label>
                   <span class="form-control">{{$orden->punto_entrega}}</span>
                 </div>
                 <div class="col-md-4">
-                  <label class="control-label">Carga</label>
+                  <label class="control-label">Carga Flete / Freight</label>
                   <span class="form-control">{{$orden->carga}}</span>
                 </div>
               </div>
@@ -66,13 +66,13 @@
             </div>
             <div class="row form-group">
               <div class="col-md-12">
-                <label class="control-label">Proveedor</label>
+                <label class="control-label">Proveedor / To</label>
                 <span class="form-control">{{$orden->proveedor_empresa}}</span>
               </div>
             </div>
             <div class="row form-group">
               <div class="col-md-12">
-                <label class="control-label">Agente Aduanal</label>
+                <label class="control-label">Agente Aduanal / Ship To</label>
                 <span class="form-control">{{$orden->aduana_compañia}}</span>
               </div>
             </div>
