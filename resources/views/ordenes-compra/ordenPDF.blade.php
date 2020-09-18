@@ -489,7 +489,7 @@
       <div class="col-lg-5">
         <p class="font-bold">Compra</p>
         <p>Orden: {{$orden->numero}}</p>
-        <p>Fecha: {{$orden->fechaPDF}}</p>
+        <p>Fecha: {{$orden->fecha_compra}}</p>
       </div>
       <div class="col-lg-7">
         <p class="text-uppercase text-right">Intercorp Contract Resources, s.a. de c.v.</p>
