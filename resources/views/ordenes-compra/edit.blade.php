@@ -99,6 +99,29 @@
                   <input type="text" class="form-control" name="carga"
                          v-model="orden.carga" />
                 </div>
+                <div class="col-md-4">
+                  <label class="control-label">Fecha de Orden de Compra</label>
+                  <br />
+                  <dropdown style="width:100%;">
+                    <div class="input-group" >
+                      <div class="input-group-btn">
+                        <btn class="dropdown-toggle" style="background-color:#fff;">
+                          <i class="fas fa-calendar"></i>
+                        </btn>
+                      </div>
+                      <input class="form-control" type="text" name="fecha_compra"
+                             v-model="orden.fecha_compra_formated" placeholder="DD/MM/YYYY"
+                             readonly
+                      />
+                    </div>
+                    <template slot="dropdown">
+                      <li>
+                        <date-picker :locale="locale" :today-btn="false" :clear-btn="false"
+                                     format="dd/MM/yyyy" :date-parser="dateParser" v-model="orden.fecha_compra_formated"/>
+                      </li>
+                    </template>
+                  </dropdown>
+                </div>
               </div>
             <div class="row form-group">
               <div class="col-md-4">
@@ -132,6 +155,8 @@
               </div>
             </div>
             @endif
+
+              <div class="col-md-12"><hr></div>
             <form class="" @submit.prevent="agregarEntrada()">
               <div class="row">
                 <div class="col-md-4">
@@ -198,6 +223,12 @@
                   </div>
                 </div>
               </div>
+              <div class="row form-group">
+                <div class="col-md-6">
+                  <label class="control-label">Comentarios</label>
+                  <textarea rows="2" class="form-control" v-model="entrada.comentarios"></textarea>
+                </div>
+              </div>
               <div class="row">
                 <div class="col-md-12 text-right">
                   <div class="form-group" style="margin-top:25px;">
@@ -218,6 +249,7 @@
                         <th>Producto</th>
                         <th>Cantidad</th>
                         <th>Conversión</th>
+                        <th>Fecha</th>
                         <th>Cant. en conversión</th>
                         <th>Precio</th>
                         <th>Importe</th>
@@ -230,6 +262,7 @@
                         <td>@{{entrada.producto.nombre}}</td>
                         <td>@{{entrada.cantidad}} @{{entrada.medida}}</td>
                         <td>@{{entrada.conversion}}</td>
+                        <td>@{{entrada.fecha_compra}}</td>
                         <td>@{{entrada.cantidad_convertida}}</td>
                         <td>@{{entrada.precio | formatoMoneda}}</td>
                         <td>@{{entrada.importe | formatoMoneda}}</td>
@@ -381,6 +414,7 @@ const app = new Vue({
     productos: {!! json_encode($productos) !!},
     orden: {!! json_encode($orden) !!},
     proyecto: {!! json_encode($proyecto) !!},
+    locale: localeES,
     entrada: {
       producto: {},
       cantidad: 0,
@@ -388,7 +422,8 @@ const app = new Vue({
       conversion: "",
       cantidad_convertida: "",
       precio: 0,
-      importe: 0
+      importe: 0,
+      comentarios: '',
     },
     conversiones:{
       @foreach($unidades_medida as $unidad)
@@ -422,6 +457,9 @@ const app = new Vue({
     this.tablaProductos = $("#tablaProductos").DataTable({dom: 'ftp'});
   },
   methods: {
+    dateParser(value){
+      return moment(value, 'DD/MM/YYYY').toDate().getTime();
+    },
     fijarProveedor(){
       this.proveedores.find(function(proveedor){
         if(proveedor.id == this.orden.proveedor_id){
@@ -485,17 +523,20 @@ const app = new Vue({
         conversion: "",
         cantidad_convertida: "",
         precio: 0,
-        importe: 0
+        importe: 0,
+        comentarios: '',
       };
     },
     editarEntrada(entrada, index){
       this.orden.subtotal-= entrada.importe;
+      //this.orden.fecha_compra = this.orden.fecha_compra_formated;
       this.orden.entradas.splice(index, 1);
       if(entrada.conversion==undefined){
         entrada.conversion = "";
         entrada.cantidad_convertida = "";
       }
       this.entrada = entrada;
+      console.log(this.entrada)
     },
     removerEntrada(entrada, index){
       this.orden.subtotal-= entrada.importe;
