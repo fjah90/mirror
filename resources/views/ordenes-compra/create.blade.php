@@ -188,6 +188,7 @@
                     <thead>
                       <tr>
                         <th>Producto</th>
+                        <th>Comentarios</th>
                         <th>Cantidad</th>
                         <th>Precio</th>
                         <th>Importe</th>
@@ -197,6 +198,7 @@
                     <tbody>
                       <tr v-for="(entrada, index) in orden.entradas">
                         <td>@{{entrada.producto.nombre}}</td>
+                        <td>@{{entrada.comentarios}}</td>
                         <td>@{{entrada.cantidad}} @{{entrada.medida}}</td>
                         <td>@{{entrada.precio | formatoMoneda}}</td>
                         <td>@{{entrada.importe | formatoMoneda}}</td>
