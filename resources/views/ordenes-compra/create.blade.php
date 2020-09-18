@@ -82,6 +82,29 @@
                   <input type="text" class="form-control" name="carga"
                          v-model="orden.carga" />
                 </div>
+                <div class="col-md-4">
+                  <label class="control-label">Fecha de Orden de Compra</label>
+                  <br />
+                  <dropdown style="width:100%;">
+                    <div class="input-group" >
+                      <div class="input-group-btn">
+                        <btn class="dropdown-toggle" style="background-color:#fff;">
+                          <i class="fas fa-calendar"></i>
+                        </btn>
+                      </div>
+                      <input class="form-control" type="text" name="fecha_compra"
+                             v-model="orden.fecha_compra" placeholder="DD/MM/YYYY"
+                             readonly
+                      />
+                    </div>
+                    <template slot="dropdown">
+                      <li>
+                        <date-picker :locale="locale" :today-btn="false" :clear-btn="false"
+                                     format="dd/MM/yyyy" :date-parser="dateParser" v-model="orden.fecha_compra"/>
+                      </li>
+                    </template>
+                  </dropdown>
+                </div>
               </div>
               <div class="row form-group">
                 <div class="col-md-4">
@@ -108,6 +131,7 @@
                   </select>
                 </div>
               </div>
+              <div class="col-md-12"><hr></div>
               <div class="row form-group">
                 <div class="col-md-4">
                   <label class="control-label">Producto</label>
@@ -140,6 +164,12 @@
                   <label class="control-label">Precio Unitario</label>
                   <input type="number" step="0.01" min="0.01" name="precio" class="form-control"
                     v-model="entrada.precio" required />
+                </div>
+              </div>
+              <div class="row form-group">
+                <div class="col-md-6">
+                  <label class="control-label">Comentarios</label>
+                  <textarea rows="2" class="form-control" v-model="entrada.comentarios"></textarea>
                 </div>
               </div>
               <div class="row form-group">
@@ -284,6 +314,7 @@ const app = new Vue({
     proveedores: {!! json_encode($proveedores) !!},
     aduanas: {!! json_encode($aduanas) !!},
     productos: {!! json_encode($productos) !!},
+    locale: localeES,
     orden: {
       proyecto_id: {{$proyecto->id}},
       proveedor_id: '',
@@ -294,6 +325,7 @@ const app = new Vue({
       numero: '',
       numero_proyecto: '',
       punto_entrega: '',
+      fecha_compra: moment().format('DD/MM/YYYY'),
       carga: '',
       tiempo: {
         id: '',
@@ -310,7 +342,8 @@ const app = new Vue({
       cantidad: 0,
       medida: "",
       precio: 0,
-      importe: 0
+      importe: 0,
+      comentarios: '',
     },
     openCatalogo: false,
     cargando: false
@@ -331,6 +364,9 @@ const app = new Vue({
     this.tablaProductos = $("#tablaProductos").DataTable({dom: 'ftp'});
   },
   methods: {
+    dateParser(value){
+      return moment(value, 'DD/MM/YYYY').toDate().getTime();
+    },
     fijarProveedor(){
       this.proveedores.find(function(proveedor){
         if(proveedor.id == this.orden.proveedor_id){
@@ -385,7 +421,8 @@ const app = new Vue({
         cantidad: 0,
         medida: "",
         precio: 0,
-        importe: 0
+        importe: 0,
+        comentarios: '',
       };
     },
     editarEntrada(entrada, index){

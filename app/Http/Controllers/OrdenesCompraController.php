@@ -64,8 +64,11 @@ class OrdenesCompraController extends Controller
         $tiempos_entrega = TiempoEntrega::all();
         $productos       = Producto::with('categoria', 'proveedor')->has('categoria')->get();
 
+        $now = date("d/m/Y");
+
+
         return view('ordenes-compra.create',
-            compact('proyecto', 'proveedores', 'contactos', 'productos', 'unidades_medida', 'aduanas', 'tiempos_entrega')
+            compact('proyecto', 'proveedores', 'contactos', 'productos', 'unidades_medida', 'aduanas', 'tiempos_entrega', 'now')
         );
     }
 
@@ -387,7 +390,7 @@ class OrdenesCompraController extends Controller
 
         $update = $request->only(
             'proveedor_id', 'proveedor_empresa', 'moneda', 'numero', 'subtotal', 'numero_proyecto',
-            'aduana_id', 'aduana_compañia', 'proveedor_contacto_id', 'punto_entrega', 'carga'
+            'aduana_id', 'aduana_compañia', 'proveedor_contacto_id', 'punto_entrega', 'carga', 'fecha_compra'
         );
 
         if (!is_null($request->tiempo['id'])) {
@@ -412,6 +415,7 @@ class OrdenesCompraController extends Controller
             $update['status'] = OrdenCompra::STATUS_POR_AUTORIZAR;
         }
         $update['delivery'] = $request->delivery;
+        $update['fecha_compra'] = $request->fecha_compra_formated;
         $orden->update($update);
 
         //sincronizar entradas
