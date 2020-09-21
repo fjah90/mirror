@@ -114,6 +114,7 @@
                     <thead>
                       <tr>
                         <th>Producto</th>
+                        <th>Comentarios</th>
                         <th>Cantidad</th>
                         <th>Conversión</th>
                         <th>Cant. en Conversión</th>
@@ -125,6 +126,7 @@
                       @foreach($orden->entradas as $entrada)
                       <tr>
                         <td>{{$entrada->producto->nombre}}</td>
+                        <td>{{$entrada->comentarios}}</td>
                         <td>{{$entrada->cantidad}} {{$entrada->medida}}</td>
                         <td>{{$entrada->conversion}}</td>
                         <td>{{$entrada->cantidad_convertida}}</td>

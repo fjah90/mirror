@@ -173,7 +173,7 @@ class OrdenesCompraController extends Controller
             ], 400);
         }
 
-        //$this->avisarOrdenPorAprobar($orden);
+        $this->avisarOrdenPorAprobar($orden);
 
         //generar PDF de orden
         $orden->load('proveedor', 'contacto', 'proyecto.cotizacion',
@@ -413,6 +413,7 @@ class OrdenesCompraController extends Controller
         }
         if ($orden->status == OrdenCompra::STATUS_RECHAZADA) {
             $update['status'] = OrdenCompra::STATUS_POR_AUTORIZAR;
+            $this->avisarOrdenPorAprobar($orden);
         }
         $update['delivery'] = $request->delivery;
         $update['fecha_compra'] = $request->fecha_compra_formated;
@@ -443,9 +444,9 @@ class OrdenesCompraController extends Controller
             OrdenCompraEntrada::create($entrada);
         }
 
-        if ($orden->status == OrdenCompra::STATUS_RECHAZADA) {
+        /*if ($orden->status == OrdenCompra::STATUS_RECHAZADA) {
             $this->avisarOrdenPorAprobar($orden);
-        }
+        }*/
 
         return response()->json(['success' => true, "error" => false], 200);
     }
@@ -578,6 +579,7 @@ class OrdenesCompraController extends Controller
         $mensaje .= ", para el proyecto " . $orden->proyecto_nombre;
         Mail::send('email', ['mensaje' => $mensaje], function ($message) {
             $message->to('abraham@intercorp.mx')
+            //$message->to('edmar.gomez@tigears.com')
                 ->subject('Nueva orden por autorizar');
         });
     }
