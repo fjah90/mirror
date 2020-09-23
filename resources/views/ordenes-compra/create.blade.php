@@ -153,10 +153,12 @@
                     v-model="entrada.cantidad" required />
                 </div>
                 <div class="col-md-2">
-                  <label class="control-label">Unidad Medida</label>
+                  <label class="control-label">Unidad Medida <span v-if="orden.moneda=='Dolares'"> / Unidad Medida dolares</span><span v-else></span></label>
                   <select class="form-control" name="medida" v-model="entrada.medida" required>
                     @foreach($unidades_medida as $unidad)
-                    <option value="{{ $unidad->simbolo }}">{{ $unidad->simbolo }}</option>
+                        <option v-if="orden.moneda=='Dolares'" value="{{ !empty($unidad->simbolo_ingles) ? $unidad->simbolo_ingles : $unidad->simbolo }}">{{ $unidad->simbolo }}
+                          / {{ $unidad->simbolo_ingles }}</option>
+                        <option v-else value="{{ $unidad->simbolo }}">{{ $unidad->simbolo }}</option>
                     @endforeach
                   </select>
                 </div>
