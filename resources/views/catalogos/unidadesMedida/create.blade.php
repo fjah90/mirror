@@ -37,6 +37,18 @@
                     <input type="text" class="form-control" name="nombre" v-model="unidad.nombre" />
                   </div>
                 </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="control-label">Simbolo Ingles</label>
+                    <input type="text" class="form-control" name="simbolo_ingles" v-model="unidad.simbolo_ingles" required />
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="control-label">Nombre Ingles</label>
+                    <input type="text" class="form-control" name="nombre_ingles" v-model="unidad.nombre_ingles" />
+                  </div>
+                </div>
               </div>
               <div class="row" style="margin-top:25px;">
                 <div class="col-md-12 text-right">
@@ -140,6 +152,8 @@ const app = new Vue({
       unidad: {
         simbolo: '',
         nombre: '',
+        simbolo_ingles: '',
+        nombre_ingles: '',
         conversiones: []
       },
       unidades: {!! json_encode($unidades) !!},

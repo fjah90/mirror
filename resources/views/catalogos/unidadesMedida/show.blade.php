@@ -36,6 +36,18 @@
                     <span class="form-control">{{ $unidad->nombre }}</span>
                   </div>
                 </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="control-label">Simbolo Ingles</label>
+                    <span class="form-control">{{ $unidad->simbolo_ingles }}</span>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="control-label">Nombre Ingles</label>
+                    <span class="form-control">{{ $unidad->nombre_ingles }}</span>
+                  </div>
+                </div>
               </div>
               <div class="row">
                 <div class="col-md-12 text-right">
