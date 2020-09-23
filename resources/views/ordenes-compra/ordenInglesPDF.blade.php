@@ -640,6 +640,7 @@
                         @format_number($entrada->cantidad_convertida) {{$entrada->conversion_ingles}}
                       </p>
                       @endif
+                      <p>{{$entrada->comentarios}}</p>
                     </td>
                     <td style="width:100px;">
                       @if ($entrada->producto->foto)
