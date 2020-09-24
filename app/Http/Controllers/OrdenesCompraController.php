@@ -62,7 +62,7 @@ class OrdenesCompraController extends Controller
         $unidades_medida = UnidadMedida::orderBy('simbolo')->get();
         $aduanas         = AgenteAduanal::all();
         $tiempos_entrega = TiempoEntrega::all();
-        $productos       = Producto::with('categoria', 'proveedor')->has('categoria')->get();
+        $productos       = Producto::with('categoria', 'proveedor', 'descripciones.descripcionNombre', 'proveedor.contactos')->has('categoria')->get();
 
         $now = date("d/m/Y");
 
