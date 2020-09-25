@@ -174,6 +174,40 @@
                   <textarea rows="2" class="form-control" v-model="entrada.comentarios"></textarea>
                 </div>
               </div>
+              <div class="row hide">
+                <div class="col-md-12">
+                  <div class="table-responsive">
+                    <table class="table table-bordred">
+                      <thead>
+                      <tr>
+                        <th colspan="3">Descripciones</th>
+                      </tr>
+                      <tr>
+                        <th>Nombre</th>
+                        <th>Name</th>
+                        <th>Valor</th>
+                        <th>Valor Inglés</th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                      <tr v-for="(descripcion, index) in entrada.descripciones">
+                        <td>@{{descripcion.nombre}}</td>
+                        <td>@{{descripcion.name}}</td>
+                        <td>
+                          <input type="text" class="form-control"
+                                 v-model="descripcion.valor"/>
+                        </td>
+                        <td>
+                          <input v-if="entrada.producto.descripciones[index].descripcion_nombre.valor_ingles"
+                                 type="text" class="form-control"
+                                 v-model="descripcion.valor_ingles"/>
+                        </td>
+                      </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
               <div class="row form-group">
                 <div class="col-md-12 text-right">
                   <button type="submit" class="btn btn-info">
@@ -366,6 +400,19 @@ const app = new Vue({
       }
     );
     this.tablaProductos = $("#tablaProductos").DataTable({dom: 'ftp'});
+
+    //escuchar Iframe
+    window.addEventListener('message', function (e) {
+      if (e.data.tipo == "producto") {
+        vueInstance.tablaProductos.destroy();
+        vueInstance.productos.push(e.data.object);
+        vueInstance.seleccionarProduco(e.data.object);
+        vueInstance.modalProducto = false;
+        Vue.nextTick(function () {
+          vueInstance.tablaProductos = $("#tablaProductos").DataTable({dom: 'ftp'});
+        });
+      }
+    }, false);
   },
   methods: {
     dateParser(value){
@@ -377,6 +424,7 @@ const app = new Vue({
           this.orden.proveedor_empresa = proveedor.empresa;
           this.orden.proveedor_contacto_id = '';
           this.orden.moneda = proveedor.moneda;
+          this.entrada.descripciones = [];
           if(proveedor.moneda=='Dolares') this.orden.iva = 0;
           else this.orden.iva = 1;
           return true;
@@ -406,6 +454,23 @@ const app = new Vue({
     },
     seleccionarProduco(prod){
       this.entrada.producto = prod;
+      this.entrada.descripciones = [];
+      prod.descripciones.forEach(function (desc) {
+        this.entrada.descripciones.push({
+          nombre: desc.descripcion_nombre.nombre,
+          name: desc.descripcion_nombre.name,
+          valor: desc.valor,
+          valor_ingles: desc.valor_ingles
+        });
+      }, this);
+
+      if (prod.foto) {
+        $("button.fileinput-remove").click();
+        $("div.file-default-preview img")[0].src = prod.foto;
+      }
+
+      console.log(prod.descripciones)
+
       this.openCatalogo = false;
     },
     agregarEntrada(){
