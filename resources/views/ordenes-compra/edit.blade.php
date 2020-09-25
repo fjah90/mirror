@@ -184,11 +184,15 @@
                 </div>
                 <div class="col-md-4">
                   <div class="form-group">
-                    <label class="control-label">Unidad Medida</label>
+                    <label class="control-label">Unidad Medida {{$orden->moneda == 'Dolares' ? '/ Unidad Medida Ingles' : '' }}</label>
                     <select class="form-control" name="medida" v-model="entrada.medida" required
                       @change="reiniciarConversion()">
                       @foreach($unidades_medida as $unidad)
-                      <option value="{{ $unidad->simbolo }}">{{ $unidad->simbolo }}</option>
+                        @if($orden->moneda == 'Dolares')
+                          <option value="{{ !empty($unidad->simbolo_ingles) ? $unidad->simbolo_ingles : $unidad->simbolo }}">{{ $unidad->simbolo }} / {{ $unidad->simbolo_ingles }}</option>
+                        @else
+                          <option value="{{ $unidad->simbolo }}">{{ $unidad->simbolo }}</option>
+                        @endif
                       @endforeach
                     </select>
                   </div>

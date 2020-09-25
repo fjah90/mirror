@@ -40,6 +40,7 @@
                 <tr>
                   <th>#</th>
                   <th>Unidad</th>
+                  <th>Unidad Ingles</th>
                   <th>Conversiones</th>
                   <th></th>
                 </tr>
@@ -48,6 +49,7 @@
                 <tr v-for="(unidad, index) in unidades">
                   <td>@{{index+1}}</td>
                   <td>@{{unidad.simbolo}} - @{{unidad.nombre}}</td>
+                  <td>@{{unidad.simbolo_ingles}} - @{{unidad.nombre_ingles}}</td>
                   <td>
                     <div v-for="(conversion, indice) in unidad.conversiones">
                       @{{indice+1}}. @{{conversion.unidad_conversion_simbolo}}: @{{conversion.factor_conversion}}
