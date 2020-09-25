@@ -174,7 +174,7 @@
                   <textarea rows="2" class="form-control" v-model="entrada.comentarios"></textarea>
                 </div>
               </div>
-              <div class="row">
+              <div class="row hide">
                 <div class="col-md-12">
                   <div class="table-responsive">
                     <table class="table table-bordred">
