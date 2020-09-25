@@ -15,7 +15,7 @@
 @section('content')
 <!-- Content Header (Page header) -->
 <section class="content-header">
-  <h1>Proyectos</h1>
+  <h1>Proyectos en proceso</h1>
 </section>
 <!-- Main content -->
 <section class="content" id="content">
@@ -25,7 +25,7 @@
         <div class="panel-heading">
           <h3 class="panel-title">
             <div class="p-10">
-              Cotizaciones realizadas
+              Proyectos
               @role('Administrador')
                 de
                 <select class="form-control" @change="cargar()" v-model="usuarioCargado" style="width:auto;display:inline-block;">
@@ -86,7 +86,7 @@
               data-page-length="100">
               <thead>
                 <tr>
-                  <th>#</th>
+                  <th class="hide">#</th>
                   <th>Usuario</th>
                   <th>Cliente</th>
                   <th>Nombre de Proyecto</th>
@@ -99,7 +99,7 @@
               </thead>
               <tbody>
                 <tr v-for="(prospecto, index) in prospectos">
-                  <td>@{{index+1}}</td>
+                  <td class="hide">@{{index+1}}</td>
                   <template v-if="prospecto.user">
                     <td>@{{prospecto.user.name}}</td>
                   </template>
