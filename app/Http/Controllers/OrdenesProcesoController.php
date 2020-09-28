@@ -50,7 +50,7 @@ class OrdenesProcesoController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\OrdenProceso  $orden
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function updateStatus(Request $request, OrdenProceso $orden)
     {
@@ -114,7 +114,7 @@ class OrdenesProcesoController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\OrdenProceso  $orden
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function fijarFechasEstimadas(Request $request, OrdenProceso $orden)
     {
@@ -184,7 +184,7 @@ class OrdenesProcesoController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\OrdenProceso  $orden
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function embarcar(Request $request, OrdenProceso $orden)
     {
@@ -262,7 +262,7 @@ class OrdenesProcesoController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\OrdenProceso  $orden
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function frontera(Request $request, OrdenProceso $orden)
     {
@@ -311,7 +311,7 @@ class OrdenesProcesoController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\OrdenProceso  $orden
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function aduana(Request $request, OrdenProceso $orden)
     {
@@ -369,7 +369,7 @@ class OrdenesProcesoController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\OrdenProceso  $orden
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function entrega(Request $request, OrdenProceso $orden)
     {

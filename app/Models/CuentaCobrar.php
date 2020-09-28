@@ -11,7 +11,7 @@ class CuentaCobrar extends Model
 
     protected $fillable = ['cliente_id','cotizacion_id','cliente','proyecto',
       'moneda','condiciones','total','facturado','pagado','pendiente','pagada',
-      'comprobante_confirmacion'
+      'comprobante_confirmacion','fecha_comprobante'
     ];
 
     protected $casts = [
@@ -28,6 +28,14 @@ class CuentaCobrar extends Model
      * ---------------------------------------------------------------------------
      */
 
+    public function setFechaComprobanteAttribute($value){
+        list($dia, $mes, $ano) = explode('/', $value);
+        $this->attributes['fecha_comprobante'] = "$ano-$mes-$dia";
+    }
+
+    public function getFechaComprobanteFormatedAttribute(){
+        return Carbon::parse($this->fecha_comprobante)->format('d/m/Y');
+    }
     public function cliente(){
       return $this->belongsTo('App\Models\Cliente', 'cliente_id', 'id');
     }

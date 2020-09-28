@@ -1009,13 +1009,14 @@ class ProspectosController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Prospecto  $prospecto
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function aceptarCotizacion(Request $request, Prospecto $prospecto)
     {
         $validator = Validator::make($request->all(), [
             'cotizacion_id' => 'required',
             'comprobante'   => 'required|file|mimes:jpeg,jpg,png,pdf',
+            'fecha_comprobante'   => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -1055,6 +1056,7 @@ class ProspectosController extends Controller
             'total'                    => $cotizacion->total,
             'pendiente'                => $cotizacion->total,
             'comprobante_confirmacion' => '',
+            'fecha_comprobante' => '',
         ];
 
         $comprobante = Storage::putFileAs(
@@ -1064,6 +1066,7 @@ class ProspectosController extends Controller
         );
         $comprobante                        = str_replace('public/', '', $comprobante);
         $create['comprobante_confirmacion'] = $comprobante;
+        $create['fecha_comprobante'] = $request->fecha_comprobante;
 
         CuentaCobrar::create($create);
         $cotizacion->update(['aceptada' => true]);
