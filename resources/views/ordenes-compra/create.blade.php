@@ -174,7 +174,7 @@
                   <textarea rows="2" class="form-control" v-model="entrada.comentarios"></textarea>
                 </div>
               </div>
-              <div class="row hide">
+              <div class="row">
                 <div class="col-md-12">
                   <div class="table-responsive">
                     <table class="table table-bordred">
@@ -382,6 +382,7 @@ const app = new Vue({
       precio: 0,
       importe: 0,
       comentarios: '',
+      descripciones:[]
     },
     openCatalogo: false,
     cargando: false
@@ -468,9 +469,6 @@ const app = new Vue({
         $("button.fileinput-remove").click();
         $("div.file-default-preview img")[0].src = prod.foto;
       }
-
-      console.log(prod.descripciones)
-
       this.openCatalogo = false;
     },
     agregarEntrada(){

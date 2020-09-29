@@ -6,6 +6,7 @@ use App\Models\AgenteAduanal;
 use App\Models\CuentaPagar;
 use App\Models\OrdenCompra;
 use App\Models\OrdenCompraEntrada;
+use App\Models\OrdenCompraEntradaDescripcion;
 use App\Models\OrdenProceso;
 use App\Models\Producto;
 use App\Models\Proveedor;
@@ -126,7 +127,18 @@ class OrdenesCompraController extends Controller
         //guardar entradas
         foreach ($request->entradas as $entrada) {
             $entrada['orden_id'] = $orden->id;
-            OrdenCompraEntrada::create($entrada);
+            $ordenCompraEntrada = OrdenCompraEntrada::create($entrada);
+
+            //save descriptions
+            foreach ($entrada["descripciones"] as $descripcion) {
+                OrdenCompraEntradaDescripcion::create([
+                    'entrada_id'   => $ordenCompraEntrada->id,
+                    'nombre'       => $descripcion["nombre"] ?? '',
+                    'name'         => $descripcion["name"] ?? '',
+                    'valor'        => $descripcion["valor"],
+                    'valor_ingles' => $descripcion["valor_ingles"],
+                ]);
+            }
         }
 
         return response()->json(['success' => true, "error" => false], 200);
@@ -339,10 +351,10 @@ class OrdenesCompraController extends Controller
         $proveedores     = Proveedor::all();
         $contactos       = ProveedorContacto::all();
         $aduanas         = AgenteAduanal::all();
-        $productos       = Producto::with('categoria', 'proveedor')->has('categoria')->get();
+        $productos       = Producto::with('categoria', 'proveedor', 'descripciones.descripcionNombre', 'proveedor.contactos')->has('categoria')->get();
         $unidades_medida = UnidadMedida::with('conversiones')->orderBy('simbolo')->get();
         $tiempos_entrega = TiempoEntrega::all();
-        $orden->load('proveedor', 'contacto', 'entradas.producto');
+        $orden->load('proveedor', 'contacto', 'entradas.producto', 'entradas.descripciones');
         if ($orden->iva > 0) {
             $orden->iva = 1;
         }
@@ -436,12 +448,23 @@ class OrdenesCompraController extends Controller
                     unset($entrada['cantidad_convertida']);
                 }
                 $ent->update($entrada);
+                //$ent->descripciones()->delete();
                 continue;
             }
 
             //crear nueva entrada
             $entrada['orden_id'] = $orden->id;
-            OrdenCompraEntrada::create($entrada);
+            $ordenCompraEntrada = OrdenCompraEntrada::create($entrada);
+            //save descriptions
+            foreach ($entrada["descripciones"] as $descripcion) {
+                OrdenCompraEntradaDescripcion::create([
+                    'entrada_id'   => $ordenCompraEntrada->id,
+                    'nombre'       => $descripcion["nombre"] ?? '',
+                    'name'         => $descripcion["name"] ?? '',
+                    'valor'        => $descripcion["valor"],
+                    'valor_ingles' => $descripcion["valor_ingles"],
+                ]);
+            }
         }
 
         /*if ($orden->status == OrdenCompra::STATUS_RECHAZADA) {
