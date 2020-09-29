@@ -26,7 +26,7 @@ class OrdenesCompraController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @param  string  $proyecto
+     * @param string $proyecto
      * @return \Illuminate\Http\Response
      */
     public function index($proyecto)
@@ -53,17 +53,17 @@ class OrdenesCompraController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @param  \App\Models\ProyectoAprobado  $proyecto
+     * @param \App\Models\ProyectoAprobado $proyecto
      * @return \Illuminate\Http\Response
      */
     public function create(ProyectoAprobado $proyecto)
     {
-        $proveedores     = Proveedor::all();
-        $contactos       = ProveedorContacto::all();
+        $proveedores = Proveedor::all();
+        $contactos = ProveedorContacto::all();
         $unidades_medida = UnidadMedida::orderBy('simbolo')->get();
-        $aduanas         = AgenteAduanal::all();
+        $aduanas = AgenteAduanal::all();
         $tiempos_entrega = TiempoEntrega::all();
-        $productos       = Producto::with('categoria', 'proveedor', 'descripciones.descripcionNombre', 'proveedor.contactos')->has('categoria')->get();
+        $productos = Producto::with('categoria', 'proveedor', 'descripciones.descripcionNombre', 'proveedor.contactos')->has('categoria')->get();
 
         $now = date("d/m/Y");
 
@@ -76,22 +76,22 @@ class OrdenesCompraController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\ProyectoAprobado  $proyecto
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\ProyectoAprobado $proyecto
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request, ProyectoAprobado $proyecto)
     {
         $validator = Validator::make($request->all(), [
-            'proyecto_id'           => 'required',
-            'proveedor_id'          => 'required',
+            'proyecto_id' => 'required',
+            'proveedor_id' => 'required',
             'proveedor_contacto_id' => 'required',
-            'numero'                => 'required',
-            'moneda'                => 'required',
-            'subtotal'              => 'required',
-            'iva'                   => 'required',
-            'total'                 => 'required',
-            'entradas'              => 'required',
+            'numero' => 'required',
+            'moneda' => 'required',
+            'subtotal' => 'required',
+            'iva' => 'required',
+            'total' => 'required',
+            'entradas' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -101,9 +101,9 @@ class OrdenesCompraController extends Controller
             ], 422);
         }
 
-        $create                    = $request->except('entradas', 'tiempo');
-        $create['cliente_id']      = $proyecto->cliente_id;
-        $create['cliente_nombre']  = $proyecto->cliente_nombre;
+        $create = $request->except('entradas', 'tiempo');
+        $create['cliente_id'] = $proyecto->cliente_id;
+        $create['cliente_nombre'] = $proyecto->cliente_nombre;
         $create['proyecto_nombre'] = $proyecto->proyecto;
 
         if (!is_null($request->tiempo['id'])) {
@@ -116,7 +116,7 @@ class OrdenesCompraController extends Controller
         }
 
         if ($request->iva == "1") {
-            $create['iva']   = bcmul($create['subtotal'], 0.16, 2);
+            $create['iva'] = bcmul($create['subtotal'], 0.16, 2);
             $create['total'] = bcmul($create['subtotal'], 1.16, 2);
         } else {
             $create['total'] = $create['subtotal'];
@@ -132,10 +132,10 @@ class OrdenesCompraController extends Controller
             //save descriptions
             foreach ($entrada["descripciones"] as $descripcion) {
                 OrdenCompraEntradaDescripcion::create([
-                    'entrada_id'   => $ordenCompraEntrada->id,
-                    'nombre'       => $descripcion["nombre"] ?? '',
-                    'name'         => $descripcion["name"] ?? '',
-                    'valor'        => $descripcion["valor"],
+                    'entrada_id' => $ordenCompraEntrada->id,
+                    'nombre' => $descripcion["nombre"] ?? '',
+                    'name' => $descripcion["name"] ?? '',
+                    'valor' => $descripcion["valor"],
                     'valor_ingles' => $descripcion["valor_ingles"],
                 ]);
             }
@@ -147,8 +147,8 @@ class OrdenesCompraController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\ProyectoAprobado  $proyecto
-     * @param  \App\Models\OrdenCompra  $orden
+     * @param \App\Models\ProyectoAprobado $proyecto
+     * @param \App\Models\OrdenCompra $orden
      * @return \Illuminate\Http\Response
      */
     public function show(ProyectoAprobado $proyecto, OrdenCompra $orden)
@@ -165,23 +165,23 @@ class OrdenesCompraController extends Controller
     /**
      * Cambia status a Por Autorizar.
      *
-     * @param  \App\Models\ProyectoAprobado  $proyecto
-     * @param  \App\Models\OrdenCompra  $orden
+     * @param \App\Models\ProyectoAprobado $proyecto
+     * @param \App\Models\OrdenCompra $orden
      * @return \Illuminate\Http\Response
      */
     public function comprar(ProyectoAprobado $proyecto, OrdenCompra $orden)
     {
         if (is_null($orden->proveedor_id)) {
             return response()->json(['success' => false, "error" => true,
-                'message'                          => 'Falta agregar proveedor a la orden',
+                'message' => 'Falta agregar proveedor a la orden',
             ], 400);
         }
 
         if ($orden->status != OrdenCompra::STATUS_PENDIENTE) {
             return response()->json(['success' => false, "error" => true,
-                'message'                          => 'La orden debe estar en estatus ' .
-                OrdenCompra::STATUS_PENDIENTE .
-                ' para poder ser comprada',
+                'message' => 'La orden debe estar en estatus ' .
+                    OrdenCompra::STATUS_PENDIENTE .
+                    ' para poder ser comprada',
             ], 400);
         }
 
@@ -211,17 +211,17 @@ class OrdenesCompraController extends Controller
         if ($orden->proveedor->nacional) {
             $meses = ['ENERO', 'FEBRERO', 'MARZO', 'ABRIL', 'MAYO', 'JUNIO', 'JULIO',
                 'AGOSTO', 'SEPTIEMBRE', 'OCTUBRE', 'NOVIEMBRE', 'DICIEMBRE'];
-            $mes             = $meses[+$mes - 1];
+            $mes = $meses[+$mes - 1];
             $orden->fechaPDF = "$dia DE $mes DEL $ano";
-            $vista           = 'ordenes-compra.ordenPDF';
-            $nombre          = "nombre";
+            $vista = 'ordenes-compra.ordenPDF';
+            $nombre = "nombre";
         } else {
             $meses = ['JANUARY', 'FEBRUARY', 'MARCH', 'APRIL', 'MAY', 'JUNE', 'JULY',
                 'AUGUST', 'SEPTEMBER', 'OCTOBER', 'NOVEMBER', 'DECEMBER'];
-            $mes             = $meses[+$mes - 1];
+            $mes = $meses[+$mes - 1];
             $orden->fechaPDF = "$mes $dia, $ano";
-            $vista           = 'ordenes-compra.ordenInglesPDF';
-            $nombre          = "name";
+            $vista = 'ordenes-compra.ordenInglesPDF';
+            $nombre = "name";
         }
 
         $ordenPDF = PDF::loadView($vista, compact('orden', 'nombre'));
@@ -236,9 +236,9 @@ class OrdenesCompraController extends Controller
     /**
      * Guarda archivo enviado para autorizacion.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\ProyectoAprobado  $proyecto
-     * @param  \App\Models\OrdenCompra  $orden
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\ProyectoAprobado $proyecto
+     * @param \App\Models\OrdenCompra $orden
      * @return \Illuminate\Http\Response
      */
     public function agregarArchivo(Request $request, ProyectoAprobado $proyecto, OrdenCompra $orden)
@@ -274,9 +274,9 @@ class OrdenesCompraController extends Controller
     /**
      * Eliminar archivo de carpeta de autorizacion.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\ProyectoAprobado  $proyecto
-     * @param  \App\Models\OrdenCompra  $orden
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\ProyectoAprobado $proyecto
+     * @param \App\Models\OrdenCompra $orden
      * @return \Illuminate\Http\Response
      */
     public function borrarArchivo(Request $request, ProyectoAprobado $proyecto, OrdenCompra $orden)
@@ -300,9 +300,9 @@ class OrdenesCompraController extends Controller
     /**
      * Cambiar a status Confirmada.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\ProyectoAprobado  $proyecto
-     * @param  \App\Models\OrdenCompra  $orden
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\ProyectoAprobado $proyecto
+     * @param \App\Models\OrdenCompra $orden
      * @return \Illuminate\Http\Response
      */
     public function confirmar(Request $request, ProyectoAprobado $proyecto, OrdenCompra $orden)
@@ -311,8 +311,8 @@ class OrdenesCompraController extends Controller
             return response()->json([
                 'success' => false, "error" => true,
                 'message' => 'La orden debe estar en estatus '
-                . OrdenCompra::STATUS_APROBADA
-                . ' para poder ser confirmada',
+                    . OrdenCompra::STATUS_APROBADA
+                    . ' para poder ser confirmada',
             ], 400);
         }
 
@@ -342,16 +342,16 @@ class OrdenesCompraController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\ProyectoAprobado  $proyecto
-     * @param  \App\Models\OrdenCompra  $orden
+     * @param \App\Models\ProyectoAprobado $proyecto
+     * @param \App\Models\OrdenCompra $orden
      * @return \Illuminate\Http\Response
      */
     public function edit(ProyectoAprobado $proyecto, OrdenCompra $orden)
     {
-        $proveedores     = Proveedor::all();
-        $contactos       = ProveedorContacto::all();
-        $aduanas         = AgenteAduanal::all();
-        $productos       = Producto::with('categoria', 'proveedor', 'descripciones.descripcionNombre', 'proveedor.contactos')->has('categoria')->get();
+        $proveedores = Proveedor::all();
+        $contactos = ProveedorContacto::all();
+        $aduanas = AgenteAduanal::all();
+        $productos = Producto::with('categoria', 'proveedor', 'descripciones.descripcionNombre', 'proveedor.contactos')->has('categoria')->get();
         $unidades_medida = UnidadMedida::with('conversiones')->orderBy('simbolo')->get();
         $tiempos_entrega = TiempoEntrega::all();
         $orden->load('proveedor', 'contacto', 'entradas.producto', 'entradas.descripciones');
@@ -375,22 +375,22 @@ class OrdenesCompraController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\ProyectoAprobado  $proyecto
-     * @param  \App\Models\OrdenCompra  $orden
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\ProyectoAprobado $proyecto
+     * @param \App\Models\OrdenCompra $orden
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, ProyectoAprobado $proyecto, OrdenCompra $orden)
     {
         $validator = Validator::make($request->all(), [
-            'proyecto_id'  => 'required',
+            'proyecto_id' => 'required',
             'proveedor_id' => 'required',
-            'numero'       => 'required',
-            'moneda'       => 'required',
-            'subtotal'     => 'required',
-            'iva'          => 'required',
-            'total'        => 'required',
-            'entradas'     => 'required',
+            'numero' => 'required',
+            'moneda' => 'required',
+            'subtotal' => 'required',
+            'iva' => 'required',
+            'total' => 'required',
+            'entradas' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -417,10 +417,10 @@ class OrdenesCompraController extends Controller
         }
 
         if ($request->iva == "1") {
-            $update['iva']   = bcmul($update['subtotal'], 0.16, 2);
+            $update['iva'] = bcmul($update['subtotal'], 0.16, 2);
             $update['total'] = bcmul($update['subtotal'], 1.16, 2);
         } else {
-            $update['iva']   = 0;
+            $update['iva'] = 0;
             $update['total'] = $update['subtotal'];
         }
         if ($orden->status == OrdenCompra::STATUS_RECHAZADA) {
@@ -449,6 +449,16 @@ class OrdenesCompraController extends Controller
                 }
                 $ent->update($entrada);
                 //$ent->descripciones()->delete();
+
+                foreach ($entrada["descripciones"] as $descripcion) {
+                    $orderCopraEntrantDescription = OrdenCompraEntradaDescripcion::find($descripcion['id']);
+                    $orderCopraEntrantDescription->update([
+                        'nombre' => $descripcion["nombre"] ?? '',
+                        'name' => $descripcion["name"] ?? '',
+                        'valor' => $descripcion["valor"],
+                        'valor_ingles' => $descripcion["valor_ingles"],
+                    ]);
+                }
                 continue;
             }
 
@@ -458,10 +468,10 @@ class OrdenesCompraController extends Controller
             //save descriptions
             foreach ($entrada["descripciones"] as $descripcion) {
                 OrdenCompraEntradaDescripcion::create([
-                    'entrada_id'   => $ordenCompraEntrada->id,
-                    'nombre'       => $descripcion["nombre"] ?? '',
-                    'name'         => $descripcion["name"] ?? '',
-                    'valor'        => $descripcion["valor"],
+                    'entrada_id' => $ordenCompraEntrada->id,
+                    'nombre' => $descripcion["nombre"] ?? '',
+                    'name' => $descripcion["name"] ?? '',
+                    'valor' => $descripcion["valor"],
                     'valor_ingles' => $descripcion["valor_ingles"],
                 ]);
             }
@@ -477,16 +487,16 @@ class OrdenesCompraController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\ProyectoAprobado  $proyecto
-     * @param  \App\Models\OrdenCompra  $orden
+     * @param \App\Models\ProyectoAprobado $proyecto
+     * @param \App\Models\OrdenCompra $orden
      * @return \Illuminate\Http\Response
      */
     public function destroy(ProyectoAprobado $proyecto, OrdenCompra $orden)
     {
         if ($orden->status == OrdenCompra::STATUS_APROBADA) {
             return response()->json(['success' => false, "error" => true,
-                'message'                          => 'No se puede cancelar la orden porque esta en estatus '
-                . OrdenCompra::STATUS_APROBADA,
+                'message' => 'No se puede cancelar la orden porque esta en estatus '
+                    . OrdenCompra::STATUS_APROBADA,
             ], 400);
         }
         $orden->update(['status' => OrdenCompra::STATUS_CANCELADA]);
@@ -497,59 +507,59 @@ class OrdenesCompraController extends Controller
     /**
      * Cambia status a Aprobada.
      *
-     * @param  \App\Models\ProyectoAprobado  $proyecto
-     * @param  \App\Models\OrdenCompra  $orden
+     * @param \App\Models\ProyectoAprobado $proyecto
+     * @param \App\Models\OrdenCompra $orden
      * @return \Illuminate\Http\Response
      */
     public function aprobar(ProyectoAprobado $proyecto, OrdenCompra $orden)
     {
         if ($orden->status != OrdenCompra::STATUS_POR_AUTORIZAR) {
             return response()->json(['success' => false, "error" => true,
-                'message'                          => 'La orden debe estar en estatus '
-                . OrdenCompra::STATUS_POR_AUTORIZAR
-                . ' para poder ser aprobada',
+                'message' => 'La orden debe estar en estatus '
+                    . OrdenCompra::STATUS_POR_AUTORIZAR
+                    . ' para poder ser aprobada',
             ], 400);
         }
 
         //generar numero de orden (proceso)
         if ($orden->proveedor->nacional) {
-            $hoy           = date('d/m/Y');
-            $hoy2          = date('Y-m-d');
+            $hoy = date('d/m/Y');
+            $hoy2 = date('Y-m-d');
             $orden_proceso = OrdenProceso::create([
-                'orden_compra_id'                => $orden->id,
-                'numero'                         => $orden->numero,
-                'status'                         => OrdenProceso::STATUS_DESCARGA,
-                'fecha_estimada_fabricacion'     => $hoy, 'fecha_real_fabricacion'     => $hoy2,
-                'fecha_estimada_embarque'        => $hoy, 'fecha_real_embarque'        => $hoy2,
-                'fecha_estimada_frontera'        => $hoy, 'fecha_real_frontera'        => $hoy2,
-                'fecha_estimada_aduana'          => $hoy, 'fecha_real_aduana'          => $hoy2,
-                'fecha_estimada_importacion'     => $hoy, 'fecha_real_importacion'     => $hoy2,
+                'orden_compra_id' => $orden->id,
+                'numero' => $orden->numero,
+                'status' => OrdenProceso::STATUS_DESCARGA,
+                'fecha_estimada_fabricacion' => $hoy, 'fecha_real_fabricacion' => $hoy2,
+                'fecha_estimada_embarque' => $hoy, 'fecha_real_embarque' => $hoy2,
+                'fecha_estimada_frontera' => $hoy, 'fecha_real_frontera' => $hoy2,
+                'fecha_estimada_aduana' => $hoy, 'fecha_real_aduana' => $hoy2,
+                'fecha_estimada_importacion' => $hoy, 'fecha_real_importacion' => $hoy2,
                 'fecha_estimada_liberado_aduana' => $hoy, 'fecha_real_liberado_aduana' => $hoy2,
-                'fecha_estimada_embarque_final'  => $hoy, 'fecha_real_embarque_final'  => $hoy2,
+                'fecha_estimada_embarque_final' => $hoy, 'fecha_real_embarque_final' => $hoy2,
             ]);
         } else {
             $orden_proceso = OrdenProceso::create([
                 'orden_compra_id' => $orden->id,
-                'numero'          => $orden->numero,
+                'numero' => $orden->numero,
             ]);
         }
 
         //generar cuenta por pagar
         $create = [
-            'proveedor_id'      => $orden->proveedor_id,
-            'orden_compra_id'   => $orden->id,
+            'proveedor_id' => $orden->proveedor_id,
+            'orden_compra_id' => $orden->id,
             'proveedor_empresa' => $orden->proveedor_empresa,
-            'proyecto_nombre'   => $orden->proyecto_nombre,
-            'moneda'            => $orden->moneda,
-            'dias_credito'      => $orden->proveedor->dias_credito,
-            'total'             => $orden->total,
-            'pendiente'         => $orden->total,
+            'proyecto_nombre' => $orden->proyecto_nombre,
+            'moneda' => $orden->moneda,
+            'dias_credito' => $orden->proveedor->dias_credito,
+            'total' => $orden->total,
+            'pendiente' => $orden->total,
         ];
         CuentaPagar::create($create);
 
         //actualizar orden
         $orden->update([
-            'status'           => OrdenCompra::STATUS_APROBADA,
+            'status' => OrdenCompra::STATUS_APROBADA,
             'orden_proceso_id' => $orden_proceso->id,
         ]);
 
@@ -559,9 +569,9 @@ class OrdenesCompraController extends Controller
     /**
      * Cambia status a Rechazada.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\ProyectoAprobado  $proyecto
-     * @param  \App\Models\OrdenCompra  $orden
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\ProyectoAprobado $proyecto
+     * @param \App\Models\OrdenCompra $orden
      * @return \Illuminate\Http\Response
      */
     public function rechazar(Request $request, ProyectoAprobado $proyecto, OrdenCompra $orden)
@@ -576,13 +586,13 @@ class OrdenesCompraController extends Controller
 
         if ($orden->status != OrdenCompra::STATUS_POR_AUTORIZAR) {
             return response()->json(['success' => false, "error" => true,
-                'message'                          => 'La orden debe estar en estatus '
-                . OrdenCompra::STATUS_POR_AUTORIZAR
-                . ' para poder ser rechazada',
+                'message' => 'La orden debe estar en estatus '
+                    . OrdenCompra::STATUS_POR_AUTORIZAR
+                    . ' para poder ser rechazada',
             ], 400);
         }
         $orden->update([
-            'status'         => OrdenCompra::STATUS_RECHAZADA,
+            'status' => OrdenCompra::STATUS_RECHAZADA,
             'motivo_rechazo' => $request->motivo_rechazo,
         ]);
 
@@ -602,7 +612,7 @@ class OrdenesCompraController extends Controller
         $mensaje .= ", para el proyecto " . $orden->proyecto_nombre;
         Mail::send('email', ['mensaje' => $mensaje], function ($message) {
             $message->to('abraham@intercorp.mx')
-            //$message->to('edmar.gomez@tigears.com')
+                //$message->to('edmar.gomez@tigears.com')
                 ->subject('Nueva orden por autorizar');
         });
     }
@@ -654,19 +664,19 @@ class OrdenesCompraController extends Controller
                 'ENERO', 'FEBRERO', 'MARZO', 'ABRIL', 'MAYO', 'JUNIO', 'JULIO',
                 'AGOSTO', 'SEPTIEMBRE', 'OCTUBRE', 'NOVIEMBRE', 'DICIEMBRE',
             ];
-            $mes             = $meses[+$mes - 1];
+            $mes = $meses[+$mes - 1];
             $orden->fechaPDF = "$dia DE $mes DEL $ano";
-            $vista           = 'ordenes-compra.ordenPDF';
-            $nombre          = 'nombre';
+            $vista = 'ordenes-compra.ordenPDF';
+            $nombre = 'nombre';
         } else {
             $meses = [
                 'JANUARY', 'FEBRUARY', 'MARCH', 'APRIL', 'MAY', 'JUNE', 'JULY',
                 'AUGUST', 'SEPTEMBER', 'OCTOBER', 'NOVEMBER', 'DECEMBER',
             ];
-            $mes             = $meses[+$mes - 1];
+            $mes = $meses[+$mes - 1];
             $orden->fechaPDF = "$mes $dia, $ano";
-            $vista           = 'ordenes-compra.ordenInglesPDF';
-            $nombre          = 'name';
+            $vista = 'ordenes-compra.ordenInglesPDF';
+            $nombre = 'name';
         }
 
         // return view($vista, compact('orden'));
@@ -681,7 +691,7 @@ class OrdenesCompraController extends Controller
 
     public function checarDescripciones()
     {
-        $proyectos          = ProyectoAprobado::with('ordenes', 'ordenes.entradas', 'ordenes.entradas.descripciones')->get();
+        $proyectos = ProyectoAprobado::with('ordenes', 'ordenes.entradas', 'ordenes.entradas.descripciones')->get();
         $tieneDescripciones = [];
         foreach ($proyectos as $proyecto) {
             foreach ($proyecto->ordenes as $orden) {
