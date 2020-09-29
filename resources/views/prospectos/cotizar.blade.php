@@ -857,6 +857,26 @@
                     </div>
                     <div id="comprobante-file-errors"></div>
                 </div>
+                <div class="form-group">
+                    <label class="control-label">Fecha Comprobante</label>
+                    <br />
+                    <dropdown style="width:100%;">
+                        <div class="input-group" >
+                            <div class="input-group-btn">
+                                <btn class="dropdown-toggle" style="background-color:#fff;">
+                                    <i class="fas fa-calendar"></i>
+                                </btn>
+                            </div>
+                            <input class="form-control" type="text" name="fecha_comprobante" placeholder="DD/MM/YYYY" v-model="aceptar.fecha_comprobante" readonly/>
+                        </div>
+                        <template slot="dropdown">
+                            <li>
+                                <date-picker :locale="locale" :today-btn="false" :clear-btn="false"
+                                             format="dd/MM/yyyy" :date-parser="dateParser" v-model="aceptar.fecha_comprobante"/>
+                            </li>
+                        </template>
+                    </dropdown>
+                </div>
                 <div class="form-group text-right">
                     <button type="submit" class="btn btn-primary" :disabled="cargando">Aceptar</button>
                     <button type="button" class="btn btn-default"
@@ -985,7 +1005,8 @@
                 },
                 aceptar: {
                     cotizacion_id: 0,
-                    comprobante: ""
+                    comprobante: "",
+                    fecha_comprobante: ""
                 },
                 notas: {
                     cotizacion_id: 0,
@@ -1803,7 +1824,8 @@
 
                             this.aceptar = {
                                 cotizacion_id: 0,
-                                comprobante: ""
+                                comprobante: "",
+                                fecha_comprobante: ""
                             };
                             $("#comprobante").fileinput('clear');
                             this.openAceptar = false;
