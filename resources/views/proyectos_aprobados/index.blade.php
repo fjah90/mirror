@@ -118,7 +118,7 @@ const app = new Vue({
           this.tabla.destroy();
           this.proyectos = data.proyectos;
           swal({
-            title: "Exitoo",
+            title: "Exito",
             text: "Datos Cargados",
             type: "success"
           }).then(()=>{

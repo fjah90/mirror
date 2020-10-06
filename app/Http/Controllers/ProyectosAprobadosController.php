@@ -34,7 +34,7 @@ class ProyectosAprobadosController extends Controller
       if ($request->id == 'Todos') {
         $proyectos = ProyectoAprobado::with('cotizacion','cliente')->get();
       } else {
-        $user = User::with('proyectos_aprobados.cotizacion', 'proyectos_aprobados.cliente')->find($request->id);
+        $user = User::with('proyectos_aprobados.cotizacion', 'proyectos_aprobados.cliente','proyectos_aprobados.cotizacion.cuenta_cobrar')->find($request->id);
         if (is_null($user)) $proyectos = [];
         else $proyectos = $user->proyectos_aprobados;
       }
