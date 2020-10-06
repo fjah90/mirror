@@ -97,4 +97,9 @@ class ProspectoCotizacion extends Model
         return $this->hasOne('App\Models\CuentaCobrar', 'cotizacion_id', 'id');
     }
 
+    public function cuenta_cobrar()
+    {
+        return $this->hasOne('App\Models\CuentaCobrar', 'cotizacion_id', 'id');
+    }
+
 }
