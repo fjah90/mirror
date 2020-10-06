@@ -60,7 +60,7 @@
                   <td>@{{proyecto.cotizacion_id}}</td>
                   {{--<td>@{{proyecto.created_at|date}}</td>--}}
                   <td v-if="proyecto.cotizacion.cuenta_cobrar !== undefined">@{{proyecto.cotizacion.cuenta_cobrar}}</td>
-                  <td v-if="proyecto.cotizacion.cuenta_cobrar === undefined ||  proyecto.cotizacion.cuenta_cobrar.fecha_comprobante === undefined">@{{proyecto.created_at|date}}</td>
+                  <td v-if="proyecto.cotizacion.cuenta_cobrar === undefined ||  proyecto.cotizacion.cuenta_cobrar.fecha_comprobante === undefined">@{{proyecto.cotizacion.cuenta_cobrar}}</td>
 
                   <td>
                     <span v-for="(proveedor, index) in proyecto.proveedores">
