@@ -87,5 +87,15 @@ class ProyectosAprobadosController extends Controller
       echo "Ordenes Creadas";
     }
 
+    public function destroy(ProyectoAprobado $proyecto)
+    {
+        $proyecto->load('cotizacion.cuenta_cobrar');
+        $cuenta_cobrar = $proyecto->cotizacion->cuenta_cobrar;
+
+        $proyecto->delete();
+        $cuenta_cobrar->delete();
+        return response()->json(['success' => true, "error" => false], 200);
+    }
+
 
 }
