@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\ProyectoAprobado;
 use App\Models\OrdenCompra;
 use App\Models\OrdenCompraEntrada;
+use App\Models\ProspectoActividad;
+use DateTime;
 use App\User;
 
 class ProyectosAprobadosController extends Controller
@@ -91,6 +93,18 @@ class ProyectosAprobadosController extends Controller
     {
         $proyecto->load('cotizacion.cuenta_cobrar');
         $cuenta_cobrar = $proyecto->cotizacion->cuenta_cobrar;
+        $today = new DateTime();
+        $cotizacion = $proyecto->cotizacion;
+
+        $cotizacion->aceptada = 0;
+        $cotizacion->save();
+        ProspectoActividad::create([
+            'prospecto_id' => $proyecto->cotizacion->prospecto_id,
+            'tipo_id'      => 7,
+            'fecha'        => $today->format('d/m/Y'),
+            'descripcion'  => 'Cotizacion realizada',
+            'realizada'    => true,
+        ]);
 
         $proyecto->delete();
         $cuenta_cobrar->delete();
