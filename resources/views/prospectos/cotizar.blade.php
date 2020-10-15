@@ -858,7 +858,7 @@
                     <div id="comprobante-file-errors"></div>
                 </div>
                 <div class="form-group">
-                    <label class="control-label">Fecha Comprobante</label>
+                    <label class="control-label">Fecha Aceptación</label>
                     <br />
                     <dropdown style="width:100%;">
                         <div class="input-group" >
