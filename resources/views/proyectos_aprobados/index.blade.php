@@ -78,6 +78,9 @@
                       :href="'/proyectos-aprobados/'+proyecto.id+'/ordenes-compra'">
                       <i class="fas fa-file-invoice-dollar"></i>
                     </a>
+                    <button class="btn btn-xs btn-danger" title="Borrar" @click="borrar(proyecto, index)">
+                      <i class="fas fa-times"></i>
+                    </button>
                   </td>
                 </tr>
               </tbody>
@@ -136,6 +139,38 @@ const app = new Vue({
           });
         });
       },
+      borrar(proyecto, index){
+        swal({
+          title: 'Cuidado',
+          text: "Desaprobar el proyecto "+proyecto.proyecto+"?",
+          type: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Si, Borrar',
+          cancelButtonText: 'No, Cancelar',
+        }).then((result) => {
+          if (result.value) {
+            axios.delete('/proyectos-aprobados/'+proyecto.id, {})
+            .then(({data}) => {
+              this.proyectos.splice(index, 1);
+              swal({
+                title: "Exito",
+                text: "El Proyecto ha sido desaprobado",
+                type: "success"
+              });
+            })
+            .catch(({response}) => {
+              console.error(response);
+              swal({
+                title: "Error",
+                text: response.data.message || "Ocurrio un error inesperado, intente mas tarde",
+                type: "error"
+              });
+            });
+          } //if confirmacion
+        });
+      },//fin borrar
     }
 });
 </script>
