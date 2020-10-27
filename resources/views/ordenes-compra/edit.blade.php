@@ -381,6 +381,7 @@
                     <th>Fecha de Precio</th>
                     <th>Precio de Compra</th>
                     <th>contacto de proveedor</th>
+                    <th>Unidad de Medida</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -389,6 +390,7 @@
                     <td>@{{entrada.fecha_precio_compra}}</td>
                     <td>@{{entrada.precio_compra | formatoMoneda}}</td>
                     <td>@{{entrada.contacto && entrada.contacto.nombre}}</td>
+                    <td>@{{entrada.medida}}</td>
                   </tr>
                 </tbody>
               </table>
