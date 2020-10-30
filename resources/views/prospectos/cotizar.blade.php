@@ -208,10 +208,10 @@
                                         </select>
                                     </div>
                                 </div>
-                                {{--<div class="col-sm-6" v-if="cotizacion.facturar!='0'">
+                                <div class="col-sm-6" v-if="cotizacion.facturar!='0'">
                                   <label class="control-label">RFC</label>
                                   <input type="text" name="rfc" class="form-control" v-model="cotizacion.rfc" required />
-                                </div>--}}
+                                </div>
                             </div>
                             <div class="row form-group" v-if="cotizacion.facturar!='0'">
                                 <div class="col-sm-12">
@@ -237,16 +237,22 @@
                                            v-model="cotizacion.ninterior"/>
                                 </div>
                                 <div class="col-sm-4">
-                                    <label class="control-label">Colonia</label>
-                                    <input type="text" name="colonia" class="form-control text-uppercase"
-                                           v-model="cotizacion.colonia"/>
-                                </div>
-                            </div>
-                            <div class="row form-group" v-if="cotizacion.facturar!='0'">
-                                <div class="col-sm-4">
                                     <label class="control-label">CP</label>
                                     <input type="text" name="cp" class="form-control cp text-uppercase"
                                            @keyup="cp()" v-model="cotizacion.cp"/>
+                                </div>
+                                
+                            </div>
+                            <div class="row form-group" v-if="cotizacion.facturar!='0'">
+                                <div class="col-sm-4">
+                                    <label class="control-label">Colonia</label>
+                                    <select class="form-control" name="colonia" v-model="cotizacion.colonia" text-uppercase required>
+                                        <option v-for="(colonia,index) in colonias" v-bind:value="colonia">@{{colonia}}</option>
+                                    </select>
+                                    <!--
+                                    <input type="text" name="colonia" class="form-control text-uppercase"
+                                           v-model="cotizacion.colonia"/>
+                                    -->
                                 </div>
                                 <div class="col-sm-4">
                                     <label class="control-label">Ciudad</label>
@@ -292,16 +298,23 @@
                                            v-model="cotizacion.dirninterior"/>
                                 </div>
                                 <div class="col-sm-4">
-                                    <label class="control-label">Colonia</label>
-                                    <input type="text" name="colonia" class="form-control text-uppercase"
-                                           v-model="cotizacion.dircolonia"/>
-                                </div>
-                            </div>
-                            <div class="row form-group" v-if="cotizacion.direccion!='0'">
-                                <div class="col-sm-4">
                                     <label class="control-label">CP</label>
                                     <input type="text" name="cp" class="form-control cp1 text-uppercase"
                                            @keyup="cp1()" v-model="cotizacion.dircp"/>
+                                </div>
+                                
+                            </div>
+                            <div class="row form-group" v-if="cotizacion.direccion!='0'">
+                                
+                                <div class="col-sm-4">
+                                    <label class="control-label">Colonia</label>
+                                    <select class="form-control" name="colonia" v-model="cotizacion.dircolonia" text-uppercase required>
+                                        <option v-for="(colonia,index) in colonias2" v-bind:value="colonia">@{{colonia}}</option>
+                                    </select>
+                                    <!--
+                                    <input type="text" name="colonia" class="form-control text-uppercase"
+                                           v-model="cotizacion.dircolonia"/>
+                                        -->
                                 </div>
                                 <div class="col-sm-4">
                                     <label class="control-label">Ciudad</label>
@@ -917,6 +930,8 @@
         const app = new Vue({
             el: '#content',
             data: {
+                colonias:[],
+                colonias2:[],
                 edicionEntradaActiva: false,
                 locale: localeES,
                 prospecto: {!! json_encode($prospecto) !!},
@@ -1126,6 +1141,8 @@
                     if (this.cotizacion.cp && this.cotizacion.cp.length > 4) {
                         axios.get('http://sepomex.789.mx/' + this.cotizacion.cp, {})
                             .then(({data}) => {
+                                
+                                this.colonias = data.asentamientos;
                                 this.cotizacion.estado = data.estados[0]
                                 this.cotizacion.ciudad = data.municipios[0]
                                 this.cargando = false;
@@ -1163,6 +1180,7 @@
                     if (this.cotizacion.dircp && this.cotizacion.dircp.length > 4) {
                         axios.get('http://sepomex.789.mx/' + this.cotizacion.dircp, {})
                             .then(({data}) => {
+                                this.colonias2 = data.asentamientos;
                                 this.cotizacion.dirciudad = data.municipios[0]
                                 this.cotizacion.direstado = data.estados[0]
                                 this.cargando = false;
@@ -1184,6 +1202,8 @@
                 },
                 seleccionarRFC() {
                     if (this.cotizacion.facturar != "0" && this.cotizacion.facturar != "1") {
+                        this.colonias = [this.rfcs[this.cotizacion.facturar].colonia];
+                        
                         this.cotizacion.rfc = this.rfcs[this.cotizacion.facturar].rfc;
                         this.cotizacion.razon_social = this.rfcs[this.cotizacion.facturar].razon_social;
                         this.cotizacion.calle = this.rfcs[this.cotizacion.facturar].calle;
@@ -1197,6 +1217,7 @@
                 },
                 seleccionarDireccion() {
                     if (this.cotizacion.direccion != "0" && this.cotizacion.direccion != "1") {
+                        this.colonias2 = [this.direcciones[this.cotizacion.direccion].dircolonia];
                         this.cotizacion.dircalle = this.direcciones[this.cotizacion.direccion].dircalle;
                         this.cotizacion.dirnexterior = this.direcciones[this.cotizacion.direccion].dirnexterior;
                         this.cotizacion.dirninterior = this.direcciones[this.cotizacion.direccion].dirninterior;

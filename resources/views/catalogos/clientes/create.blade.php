@@ -100,8 +100,16 @@
                                 {{--</div>
                                 <div class="row form-group">--}}
                                 <div class="col-md-4">
+                                    <label class="control-label">C. Postal</label>
+                                    <input type="text" class="form-control cp" name="cp" v-model="cliente.cp" />
+                                </div>
+                                <div class="col-md-4">
                                     <label class="control-label">Colonia  {{($nacional) ? '' : '(opcional)'}}</label>
-                                    <input type="text" class="form-control" name="colonia" v-model="cliente.colonia"/>
+                                    <select id="coloniaid" class="form-control" name="colonia" v-model="cliente.colonia" text-uppercase >
+                                        
+                                    </select>
+                                    <!--<input id="coloniaid" type="text" class="form-control" name="colonia" v-model="cliente.colonia"/>
+                                    -->
                                 </div>
                                 @if($nacional)
                                     <div class="col-md-4">
@@ -110,10 +118,7 @@
                                                v-model="cliente.delegacion"/>
                                     </div>
                                 @endif
-                                <div class="col-md-4">
-                                    <label class="control-label">C. Postal</label>
-                                    <input type="text" class="form-control cp" name="cp" v-model="cliente.cp" />
-                                </div>
+                                
                             </div>
                             <div class="row form-group">
                                 <div class="col-md-4">
@@ -297,6 +302,14 @@
             var cp = $(this).val();
             if(cp.length >= 5) {
                 $.get('http://sepomex.789.mx/' + cp, function (data) {
+                    
+                    if(data.asentamientos.length >= 1) {
+                    $('#coloniaid').empty();
+                        data['asentamientos'].forEach(function(colonia) {
+                            $('#coloniaid').append('<option value="'+colonia+'">'+colonia+'</option>');
+                        });
+                    }
+
                     if(data.estados.length >= 1) {
                         $('.estado').val(data.estados[0]);
                     }
