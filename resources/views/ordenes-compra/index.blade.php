@@ -74,7 +74,7 @@
                         <i class="far fa-file-pdf"></i>
                       </a>
                     </template>
-                    <a v-if="orden.status=='Pendiente' || orden.status=='Rechazada' || orden.status=='Por Autorizar'"
+                    <a v-if="orden.status=='Pendiente' || orden.status=='Rechazada'"
                       class="btn btn-xs btn-success" title="Editar"
                       :href="'/proyectos-aprobados/'+orden.proyecto_id+'/ordenes-compra/'+orden.id+'/editar'">
                       <i class="fas fa-pencil-alt"></i>
