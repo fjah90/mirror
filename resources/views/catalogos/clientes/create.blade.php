@@ -114,7 +114,7 @@
                                 @if($nacional)
                                     <div class="col-md-4">
                                         <label class="control-label">Delegacion</label>
-                                        <input type="text" class="form-control" name="delagacion"
+                                        <input type="text" class="form-control delegacion" name="delagacion"
                                                v-model="cliente.delegacion"/>
                                     </div>
                                 @endif
@@ -315,6 +315,7 @@
                     }
                     if(data.municipios.length >= 1) {
                         $('.municipio').val(data.municipios[0]);
+                        $('.delegacion').val(data.municipios[0]);
                     }
                 });
             }
