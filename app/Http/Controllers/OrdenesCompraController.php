@@ -426,6 +426,53 @@ class OrdenesCompraController extends Controller
         if ($orden->status == OrdenCompra::STATUS_RECHAZADA) {
             $update['status'] = OrdenCompra::STATUS_POR_AUTORIZAR;
             $this->avisarOrdenPorAprobar($orden);
+
+
+            //crear el pfd de nuevo 
+
+            //generar PDF de orden
+            $orden->load('proveedor', 'contacto', 'proyecto.cotizacion',
+                'proyecto.cliente', 'entradas.producto.descripciones.descripcionNombre', 'aduana');
+            $firmaAbraham = User::select('firma')->where('id', 2)->first()->firma;
+            if ($firmaAbraham) {
+                $firmaAbraham = storage_path('app/public/' . $firmaAbraham);
+            } else {
+                $firmaAbraham = public_path('images/firma_vacia.png');
+            }
+
+            $orden->firmaAbraham = $firmaAbraham;
+
+            $url = 'ordenes_compra/' . $orden->id . '/orden_' . $orden->numero . '.pdf';
+            foreach ($orden->entradas as $entrada) {
+                if ($entrada->producto->foto) {
+                    $entrada->producto->foto = asset('storage/' . $entrada->producto->foto);
+                }
+
+            }
+
+            list($ano, $mes, $dia) = explode('-', date('Y-m-d'));
+            if ($orden->proveedor->nacional) {
+                $meses = ['ENERO', 'FEBRERO', 'MARZO', 'ABRIL', 'MAYO', 'JUNIO', 'JULIO',
+                    'AGOSTO', 'SEPTIEMBRE', 'OCTUBRE', 'NOVIEMBRE', 'DICIEMBRE'];
+                $mes = $meses[+$mes - 1];
+                $orden->fechaPDF = "$dia DE $mes DEL $ano";
+                $vista = 'ordenes-compra.ordenPDF';
+                $nombre = "nombre";
+            } else {
+                $meses = ['JANUARY', 'FEBRUARY', 'MARCH', 'APRIL', 'MAY', 'JUNE', 'JULY',
+                    'AUGUST', 'SEPTEMBER', 'OCTOBER', 'NOVEMBER', 'DECEMBER'];
+                $mes = $meses[+$mes - 1];
+                $orden->fechaPDF = "$mes $dia, $ano";
+                $vista = 'ordenes-compra.ordenInglesPDF';
+                $nombre = "name";
+            }
+
+            $ordenPDF = PDF::loadView($vista, compact('orden', 'nombre'));
+            Storage::disk('public')->put($url, $ordenPDF->output());
+            unset($orden->fechaPDF);
+            unset($orden->firmaAbraham);
+            $orden->update(['status' => 'Por Autorizar', 'archivo' => $url]);
+            
         }
         $update['delivery'] = $request->delivery;
         $update['fecha_compra'] = $request->fecha_compra_formated;

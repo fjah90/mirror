@@ -682,6 +682,10 @@
       </div>
     </div> --}}
 
+    <div class="page-break">
+        
+    </div>
+
     {{-- <div class="row footer" style="page-break-inside: avoid;"> --}}
     <div class="row" style="page-break-inside: avoid;">
       <div class="bordered" style="margin:5px 15px; 0">

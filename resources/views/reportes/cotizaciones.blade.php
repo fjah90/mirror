@@ -111,6 +111,7 @@ Reportes | @parent
                           <th class="text-center"><strong>Cliente</strong></th>
                           <th class="text-center"><strong>Proyecto</strong></th>
                           <th class="text-center"><strong>Marca</strong></th>
+                          <th class="text-center"><strong>Proveedores</strong></th>
                           <th class="text-center"><strong>Monto</strong></th>
                           <th class="text-center"><strong>Moneda</strong></th>
                           <th class="text-center"><strong>Usuario</strong></th>
@@ -125,6 +126,11 @@ Reportes | @parent
                           <td>
                             <template v-for="(entrada, index) in cotizacion.entradas">
                               <span > @{{(entrada.producto ? entrada.producto.proveedor.empresa:'')}}</span><br/>
+                            </template>
+                          </td>
+                          <td>
+                            <template v-for="(entrada, index) in cotizacion.entradas">
+                              <span > @{{entrada.importe | formatoMoneda}}</span><br/>
                             </template>
                           </td>
                           <td>@{{cotizacion.total | formatoMoneda}}</td>
