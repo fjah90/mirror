@@ -246,13 +246,15 @@
                             <div class="row form-group" v-if="cotizacion.facturar!='0'">
                                 <div class="col-sm-4">
                                     <label class="control-label">Colonia</label>
+                                    <!--
                                     <select class="form-control" name="colonia" v-model="cotizacion.colonia" text-uppercase required>
                                         <option v-for="(colonia,index) in colonias" v-bind:value="colonia">@{{colonia}}</option>
                                     </select>
-                                    <!--
+                                    -->
+                                    
                                     <input type="text" name="colonia" class="form-control text-uppercase"
                                            v-model="cotizacion.colonia"/>
-                                    -->
+                                    
                                 </div>
                                 <div class="col-sm-4">
                                     <label class="control-label">Ciudad</label>
@@ -308,13 +310,14 @@
                                 
                                 <div class="col-sm-4">
                                     <label class="control-label">Colonia</label>
+                                    <!--
                                     <select class="form-control" name="colonia" v-model="cotizacion.dircolonia" text-uppercase required>
                                         <option v-for="(colonia,index) in colonias2" v-bind:value="colonia">@{{colonia}}</option>
                                     </select>
-                                    <!--
+                                    -->
                                     <input type="text" name="colonia" class="form-control text-uppercase"
                                            v-model="cotizacion.dircolonia"/>
-                                        -->
+                                    
                                 </div>
                                 <div class="col-sm-4">
                                     <label class="control-label">Ciudad</label>
