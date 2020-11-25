@@ -370,6 +370,7 @@ class ProspectosController extends Controller
      */
     public function cotizar(Prospecto $prospecto)
     {
+        $proyectos = Prospecto::all();
         $prospecto->load(
             ['cotizaciones' => function ($query) {
                 $query->orderBy('fecha', 'asc');
@@ -458,6 +459,7 @@ class ProspectosController extends Controller
         exit;*/
 
         return view('prospectos.cotizar', compact(
+            'proyectos',
             'prospecto',
             'productos',
             'condiciones',
@@ -1107,6 +1109,78 @@ class ProspectosController extends Controller
 
         $cotizacion = ProspectoCotizacion::findOrFail($request->cotizacion_id);
         $cotizacion->update(['notas2' => $request->mensaje]);
+
+        return response()->json(['success' => true, 'error' => false], 200);
+    }
+
+
+    public function copiarCotizacion(Request $request, Prospecto $prospecto)
+    {
+        $validator = Validator::make($request->all(), [
+            'cotizacion_id' => 'required',
+            'proyecto_id'       => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            $errors = $validator->errors()->all();
+            return response()->json([
+                "success" => false, "error" => true, "message" => $errors[0],
+            ], 422);
+        }
+        $proyecto = Prospecto::findOrFail($request->proyecto_id);
+        $cotizacion = ProspectoCotizacion::findOrFail($request->cotizacion_id);
+        $numero_siguiente = ProspectoCotizacion::select('id')->orderBy('id', 'desc')->first()->id + 1;
+
+        $cotizacion_nueva = ProspectoCotizacion::create([
+                'prospecto_id' => $request->proyecto_id,
+                'fecha'      => $cotizacion->fecha,
+                'subtotal'        => $cotizacion->subtotal,
+                'iva' => $cotizacion->iva,
+                'total'   => $cotizacion->total,
+                'observaciones' => $cotizacion->observaciones,
+                'entrega' => $cotizacion->entrega,
+                'moneda' => $cotizacion->moneda,
+                'lugar' => $cotizacion->lugar,
+                'condicion_id' => $cotizacion->condicion_id,
+                'user_id' => $cotizacion->user_id,
+                'numero' => $numero_siguiente,
+        ]);
+
+        foreach ($cotizacion->entradas as $key => $entrada) {
+            
+            if (count($entrada->fotos) == 0) {
+                $fotos = "";
+            }
+            else{
+                $fotos = json_encode($entrada->fotos);
+            }
+            $entrada_nueva = ProspectoCotizacionEntrada::create([
+                    'cotizacion_id' => $cotizacion_nueva->id,
+                    'producto_id'      => $entrada->producto_id,
+                    'cantidad'        => $entrada->cantidad,
+                    'medida'  => $entrada->medida,
+                    'precio'    => $entrada->precio,
+                    'importe' => $entrada->importe,
+                    'fotos' => $fotos,
+                    'observaciones' => $entrada->observaciones,
+                    'orden' => $entrada->orden,
+                    'precio_compra' => $entrada->precio_compra,
+                    'fecha_precio_compra' => $entrada->fecha_precio_compra,
+                    'proveedor_contacto_id' => $entrada->proveedor_contacto_id,
+                    'medida_compra' => $entrada->medida_compra,
+                    'soporte_precio_compra' => $entrada->soporte_precio_compra,
+                    'moneda_referencia' => $entrada->moneda_referencia,
+            ]);
+            foreach ($entrada->descripciones as $key => $descripcion) {
+               $descripcion_nueva = ProspectoCotizacionEntradaDescripcion::create([
+                        'entrada_id' => $entrada_nueva->id,
+                        'nombre'      => $descripcion->nombre,
+                        'name'        => $descripcion->name,
+                        'valor'  => $descripcion->valor,
+                        'valor_ingles'    => $descripcion->valor_ingles,
+                ]); 
+            }
+        }
 
         return response()->json(['success' => true, 'error' => false], 200);
     }

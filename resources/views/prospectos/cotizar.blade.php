@@ -146,6 +146,10 @@
                                                         @click="copiar(index, cotizacion)">
                                                     <i class="far fa-copy"></i>
                                                 </button>
+                                                <button class="btn btn-xs btn-green" title="Copiar a otro proyecto"
+                                                        @click="copiar2(index, cotizacion); openCopiar=true ">
+                                                    <i class="far fa-copy"></i>
+                                                </button>
 
                                             </td>
                                         </tr>
@@ -842,6 +846,29 @@
         </modal>
         <!-- /.Enviar Modal -->
 
+        <!-- Copiar Modal -->
+        <modal v-model="openCopiar" :title="'Copiar Cotizacion'" :footer="false">
+            <form class="" @submit.prevent="copiarCotizacion()">
+                <div class="form-group">
+                    <label class="control-label">Proyecto Destino</label>
+                    <select name="proyecto_id" v-model="copiar_cotizacion.proyecto_id"
+                            class="form-control" required>
+                        @foreach($proyectos as $proyecto)
+                            <option value="{{$proyecto->id}}">{{$proyecto->nombre}}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="form-group text-right">
+                    <button type="submit" class="btn btn-primary" :disabled="cargando">Guardar</button>
+                    <button type="button" class="btn btn-default"
+                            @click="openCopiar=false;">
+                        Cancelar
+                    </button>
+                </div>
+            </form>
+        </modal>
+        <!-- /.Copiar Modal -->
+
         <!-- Enviar Modal -->
         <modal v-model="openEnviar" :title="'Enviar Cotizacion '+enviar.numero" :footer="false">
             <form class="" @submit.prevent="enviarCotizacion()">
@@ -949,6 +976,10 @@
                 tablaProductos: {},
                 modalProducto: false,
                 contactos_proveedor: "",
+                copiar_cotizacion: {
+                    proyecto_id : '',
+                    cotizacion_id :'',
+                },
                 cotizacion: {
                     prospecto_id: {{$prospecto->id}},
                     cliente_contacto_id: '',
@@ -1035,6 +1066,7 @@
                 openEnviar: false,
                 openAceptar: false,
                 openNotas: false,
+                openCopiar : false,
                 cargando: false
             },
             computed: {
@@ -1523,8 +1555,10 @@
 
                     this.resetDataTables();
                 },
+                copiar2(index,cotizacion){
+                    this.copiar_cotizacion.cotizacion_id = cotizacion.id;
+                },
                 copiar(index, cotizacion) {
-
                     //reiniciar observaciones
                     this.observaciones.forEach(function (observacion) {
                         observacion.activa = false;
@@ -1904,6 +1938,29 @@
                             });
                         });
                 },//fin notasCotizacion
+                copiarCotizacion() {
+                    this.cargando = true;
+                    console.log(this.copiar_cotizacion);
+                    axios.post('/prospectos/{{$prospecto->id}}/copiarCotizacion', this.copiar_cotizacion)
+                        .then(({data}) => {
+                            this.openCopiar = false;
+                            this.cargando = false;
+                            swal({
+                                title: "Copia Guardada",
+                                text: "La cotizaciones de ha copiado correctamente",
+                                type: "success"
+                            });
+                        })
+                        .catch(({response}) => {
+                            console.error(response);
+                            this.cargando = false;
+                            swal({
+                                title: "Error",
+                                text: response.data.message || "Ocurrio un error inesperado, intente mas tarde",
+                                type: "error"
+                            });
+                        });
+                },//fin CopiarCotizacion
                 borrar(index, cotizacion) {
                     swal({
                         title: 'Cuidado',
