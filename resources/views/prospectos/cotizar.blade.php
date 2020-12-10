@@ -852,9 +852,9 @@
                 <div class="form-group">
                     <label class="control-label">Proyecto Destino</label>
                     <select name="proyecto_id" v-model="copiar_cotizacion.proyecto_id"
-                            class="form-control" required>
+                            class="form-control" required id="proyecto-select" style="width: 300px;">
                         @foreach($proyectos as $proyecto)
-                            <option value="{{$proyecto->id}}">{{$proyecto->nombre}}</option>
+                            <option value="{{$proyecto->id}}" @click="copiar3(index,{{$proyecto->id}});">{{$proyecto->nombre}}</option>
                         @endforeach
                     </select>
                 </div>
@@ -947,6 +947,8 @@
 {{-- footer_scripts --}}
 @section('footer_scripts')
     <script type="text/javascript">
+        
+
         // Used for creating a new FileList in a round-about way
         function FileListItem(a) {
             a = [].slice.call(Array.isArray(a) ? a : arguments)
@@ -1085,6 +1087,29 @@
                 },
             },
             mounted() {
+
+                let self = this; // ámbito de vue
+
+                // inicializas select2
+                $('#proyecto-select')
+                  .select2({ 
+                    placeholder: 'Selecciona un proyecto',
+                    //data: self.options, // cargas los datos en vez de usar el loop
+                   })
+                   // nos hookeamos en el evento tal y como puedes leer en su documentación
+                   .on('select2:select', function () {       
+                    var value = $("#proyecto-select").select2('data');
+                    
+                    // nos devuelve un array
+                    
+                    // ahora simplemente asignamos el valor a tu variable selected de VUE
+                    self.copiar_cotizacion.proyecto_id = value[0].id
+                    
+                  });
+
+
+
+
                 $("#fotos").fileinput({
                     language: 'es',
                     overwriteInitial: true,
@@ -1940,7 +1965,7 @@
                 },//fin notasCotizacion
                 copiarCotizacion() {
                     this.cargando = true;
-                    console.log(this.copiar_cotizacion);
+                    
                     axios.post('/prospectos/{{$prospecto->id}}/copiarCotizacion', this.copiar_cotizacion)
                         .then(({data}) => {
                             this.openCopiar = false;
@@ -1950,6 +1975,8 @@
                                 text: "La cotizaciones de ha copiado correctamente",
                                 type: "success"
                             });
+                            
+                            window.location.href = "/prospectos/"+this.copiar_cotizacion.Proyectos_id+"/cotizar";
                         })
                         .catch(({response}) => {
                             console.error(response);
