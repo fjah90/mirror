@@ -625,11 +625,15 @@
           </thead>
           <tbody>
             @foreach($cotizacion->entradas as $entrada)
+            @if($loop->index == 6)
+            <tr class="page-break">
+            @else
             <tr>
+            @endif
               <td class="text-center">@format_number($entrada->cantidad) <br /> {{$entrada->medida}}</td>
               <td>
                 <table style="width:100%; margin:0;">
-                  <tr>
+                  <tr style="height: 120px;">
                     <td style="vertical-align: top;">
                       @foreach($entrada->descripciones as $descripcion)
                       @if($descripcion->valor)
