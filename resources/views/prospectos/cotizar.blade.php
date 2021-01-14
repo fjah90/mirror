@@ -146,6 +146,10 @@
                                                         @click="copiar(index, cotizacion)">
                                                     <i class="far fa-copy"></i>
                                                 </button>
+                                                <button class="btn btn-xs btn-green" title="Copiar a otro proyecto"
+                                                        @click="copiar2(index, cotizacion); openCopiar=true ">
+                                                    <i class="far fa-copy"></i>
+                                                </button>
 
                                             </td>
                                         </tr>
@@ -842,6 +846,29 @@
         </modal>
         <!-- /.Enviar Modal -->
 
+        <!-- Copiar Modal -->
+        <modal v-model="openCopiar" :title="'Copiar Cotizacion'" :footer="false">
+            <form class="" @submit.prevent="copiarCotizacion()">
+                <div class="form-group">
+                    <label class="control-label">Proyecto Destino</label>
+                    <select name="proyecto_id" v-model="copiar_cotizacion.proyecto_id"
+                            class="form-control" required id="proyecto-select" style="width: 300px;">
+                        @foreach($proyectos as $proyecto)
+                            <option value="{{$proyecto->id}}" @click="copiar3(index,{{$proyecto->id}});">{{$proyecto->nombre}}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="form-group text-right">
+                    <button type="submit" class="btn btn-primary" :disabled="cargando">Guardar</button>
+                    <button type="button" class="btn btn-default"
+                            @click="openCopiar=false;">
+                        Cancelar
+                    </button>
+                </div>
+            </form>
+        </modal>
+        <!-- /.Copiar Modal -->
+
         <!-- Enviar Modal -->
         <modal v-model="openEnviar" :title="'Enviar Cotizacion '+enviar.numero" :footer="false">
             <form class="" @submit.prevent="enviarCotizacion()">
@@ -920,6 +947,8 @@
 {{-- footer_scripts --}}
 @section('footer_scripts')
     <script type="text/javascript">
+        
+
         // Used for creating a new FileList in a round-about way
         function FileListItem(a) {
             a = [].slice.call(Array.isArray(a) ? a : arguments)
@@ -949,6 +978,10 @@
                 tablaProductos: {},
                 modalProducto: false,
                 contactos_proveedor: "",
+                copiar_cotizacion: {
+                    proyecto_id : '',
+                    cotizacion_id :'',
+                },
                 cotizacion: {
                     prospecto_id: {{$prospecto->id}},
                     cliente_contacto_id: '',
@@ -1035,6 +1068,7 @@
                 openEnviar: false,
                 openAceptar: false,
                 openNotas: false,
+                openCopiar : false,
                 cargando: false
             },
             computed: {
@@ -1053,6 +1087,29 @@
                 },
             },
             mounted() {
+
+                let self = this; // ámbito de vue
+
+                // inicializas select2
+                $('#proyecto-select')
+                  .select2({ 
+                    placeholder: 'Selecciona un proyecto',
+                    //data: self.options, // cargas los datos en vez de usar el loop
+                   })
+                   // nos hookeamos en el evento tal y como puedes leer en su documentación
+                   .on('select2:select', function () {       
+                    var value = $("#proyecto-select").select2('data');
+                    
+                    // nos devuelve un array
+                    
+                    // ahora simplemente asignamos el valor a tu variable selected de VUE
+                    self.copiar_cotizacion.proyecto_id = value[0].id
+                    
+                  });
+
+
+
+
                 $("#fotos").fileinput({
                     language: 'es',
                     overwriteInitial: true,
@@ -1523,8 +1580,10 @@
 
                     this.resetDataTables();
                 },
+                copiar2(index,cotizacion){
+                    this.copiar_cotizacion.cotizacion_id = cotizacion.id;
+                },
                 copiar(index, cotizacion) {
-
                     //reiniciar observaciones
                     this.observaciones.forEach(function (observacion) {
                         observacion.activa = false;
@@ -1904,6 +1963,31 @@
                             });
                         });
                 },//fin notasCotizacion
+                copiarCotizacion() {
+                    this.cargando = true;
+                    
+                    axios.post('/prospectos/{{$prospecto->id}}/copiarCotizacion', this.copiar_cotizacion)
+                        .then(({data}) => {
+                            this.openCopiar = false;
+                            this.cargando = false;
+                            swal({
+                                title: "Copia Guardada",
+                                text: "La cotizaciones de ha copiado correctamente",
+                                type: "success"
+                            });
+                            
+                            window.location.href = "/prospectos/"+this.copiar_cotizacion.Proyectos_id+"/cotizar";
+                        })
+                        .catch(({response}) => {
+                            console.error(response);
+                            this.cargando = false;
+                            swal({
+                                title: "Error",
+                                text: response.data.message || "Ocurrio un error inesperado, intente mas tarde",
+                                type: "error"
+                            });
+                        });
+                },//fin CopiarCotizacion
                 borrar(index, cotizacion) {
                     swal({
                         title: 'Cuidado',

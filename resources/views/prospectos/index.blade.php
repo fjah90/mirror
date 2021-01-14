@@ -36,6 +36,15 @@
                 </select>
               @endrole
             </div>
+            <div class="p-10">
+              Año  
+                <select class="form-control" @change="cargar()" v-model="anio" style="width:auto;display:inline-block;">
+                  <option value="Todos">Todos</option>
+                  <option value="2019-12-31">2019</option>
+                  <option value="2020-12-31">2020</option>
+                  <option value="2021-12-31">2021</option>
+                </select>
+            </div>
           </h3>
         </div>
         <div class="panel-body">
@@ -160,6 +169,7 @@ const app = new Vue({
     data: {
       prospectos: {!! json_encode($prospectos) !!},
       usuarioCargado: {{auth()->user()->id}},
+      anio:'Todos',
       tabla: {},
       locale: localeES,
       fecha_ini: '',
@@ -207,7 +217,7 @@ const app = new Vue({
   			return moment(value, 'DD/MM/YYYY').toDate().getTime();
       },
       cargar(){
-        axios.post('/prospectos/listado', {id: this.usuarioCargado})
+        axios.post('/prospectos/listado', {id: this.usuarioCargado , anio:this.anio})
         .then(({data}) => {
           $("#oculto").append($("#fecha_ini_control"));
           $("#oculto").append($("#fecha_fin_control"));

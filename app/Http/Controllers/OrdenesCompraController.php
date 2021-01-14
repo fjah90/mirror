@@ -424,7 +424,7 @@ class OrdenesCompraController extends Controller
             $update['total'] = $update['subtotal'];
         }
         if ($orden->status == OrdenCompra::STATUS_RECHAZADA) {
-            $update['status'] = OrdenCompra::STATUS_POR_AUTORIZAR;
+            $update['status'] = OrdenCompra::STATUS_PENDIENTE;
             $this->avisarOrdenPorAprobar($orden);
         }
         $update['delivery'] = $request->delivery;
