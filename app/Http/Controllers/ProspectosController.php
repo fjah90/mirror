@@ -15,6 +15,7 @@ use App\Models\ProspectoCotizacionEntradaDescripcion;
 use App\Models\ProspectoTipoActividad;
 use App\Models\ProyectoAprobado;
 use App\Models\UnidadMedida;
+use Carbon\Carbon;
 use App\User;
 use DateTime;
 use Illuminate\Http\Request;
@@ -50,9 +51,29 @@ class ProspectosController extends Controller
 
     public function listado(Request $request)
     {
+     
+        if ($request->anio == '2019-12-31') {
+            $inicio = Carbon::parse('2019-01-01');    
+        }
+        elseif ($request->anio == '2020-12-31') {
+            $inicio = Carbon::parse('2020-01-01');    
+        }
+        else{
+            $inicio = Carbon::parse('2021-01-01');
+        }
+        
         if ($request->id == 'Todos') {
-            $prospectos = Prospecto::with('cliente', 'ultima_actividad.tipo', 'proxima_actividad.tipo', 'user')
+
+            if ($request->anio == 'Todos') {
+                $prospectos = Prospecto::with('cliente', 'ultima_actividad.tipo', 'proxima_actividad.tipo', 'user')
                 ->has('cliente')->orderBy('id', 'desc')->get();
+            }
+            else{
+                $anio = Carbon::parse($request->anio);
+                $prospectos = Prospecto::whereBetween('created_at', [$inicio, $anio])
+                ->with('cliente', 'ultima_actividad.tipo', 'proxima_actividad.tipo', 'user')
+                ->has('cliente')->orderBy('id', 'desc')->get();
+            }
         } else {
             /*$user = User::with('prospectos.cliente', 'prospectos.ultima_actividad.tipo', 'prospectos.proxima_actividad.tipo')
                 ->has('prospectos.cliente')->find($request->id);
@@ -62,10 +83,28 @@ class ProspectosController extends Controller
                 $prospectos = $user->prospectos;
             }*/
 
-            $prospectos = Prospecto::with('cliente', 'ultima_actividad.tipo', 'proxima_actividad.tipo', 'user')
+            if ($request->anio == 'Todos') {
+                $prospectos = Prospecto::with('cliente', 'ultima_actividad.tipo', 'proxima_actividad.tipo', 'user')
                 ->where('user_id', $request->id)->orWhereHas("cliente", function($query) use ($request) {
                 $query->where("usuario_id", $request->id);
-            })->get();
+                })->get();
+            }
+            else{
+                $anio = Carbon::parse($request->anio);
+                $prospectos = Prospecto::with('cliente', 'ultima_actividad.tipo', 'proxima_actividad.tipo', 'user')
+                ->where('user_id', $request->id)
+                ->whereBetween('prospectos.created_at', [$inicio, $anio])
+                ->has('cliente')
+                ->get();
+                /*
+                ->where('user_id', $request->id)->orWhereHas("cliente", function($query) use ($request,$inicio,$anio) {
+                $query->where("usuario_id", $request->id)->whereBetween('created_at', [$inicio, $anio]);
+                })
+                
+                ->get();
+                */
+            }
+            
         }
 
         return response()->json(['success' => true, "error" => false, 'prospectos' => $prospectos], 200);
