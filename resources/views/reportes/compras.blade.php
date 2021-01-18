@@ -100,6 +100,7 @@ Reportes | @parent
                         <tr>
                           <th class="text-center">Fecha Aprobación</th>
                           <th class="text-center"><strong>Número Compra</strong></th>
+                          <th class="text-center"><strong>Cotizacion</strong></th>
                           <th class="text-center"><strong>Proveedor</strong></th>
                           <th class="text-center"><strong>Cliente</strong></th>
                           <th class="text-center"><strong>Proyecto</strong></th>                    
@@ -111,6 +112,7 @@ Reportes | @parent
                         <tr v-for="(compra, index) in compras">
                           <td>@{{compra.created_at | date}}</td>
                           <td>@{{compra.id}}</td>
+                          <td>@{{compra.cotizacion_id}}</td>
                           <td>@{{compra.proveedor_razon_social}}</td>
                           <td>@{{compra.cliente_nombre}}</td>
                           <td>@{{compra.proyecto_nombre}}</td>

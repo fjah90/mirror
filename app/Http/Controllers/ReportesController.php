@@ -8,6 +8,8 @@ use App\Models\OrdenCompra;
 use App\Models\Pago;
 use App\Models\PagoCuentaPagar;
 use App\Models\ProspectoCotizacion;
+use App\Models\ProspectoCotizacionEntrada;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
 class ReportesController extends Controller
@@ -19,7 +21,13 @@ class ReportesController extends Controller
 
     public function cotizaciones()
     {
+        $entradas = ProspectoCotizacionEntrada::leftjoin('productos','producto_id','=','productos.id')
+        ->leftjoin('proveedores','productos.proveedor_id','=','proveedores.id')
+        ->select('proveedores.empresa', DB::raw('sum(prospectos_cotizaciones_entradas.importe) as total_importe') )->groupBy('proveedores.empresa')
+        ->where('prospectos_cotizaciones_entradas.cotizacion_id','=',14252)
+        ->get();
 
+        //dd($entradas);
         $cotizaciones = ProspectoCotizacion::with('prospecto:id,nombre,cliente_id', 'prospecto.cliente:id,nombre', 'user:id,name', 'entradas:id,cantidad,producto_id,cotizacion_id,importe', 'entradas.producto:id,proveedor_id', 'entradas.producto.proveedor:id,empresa')
             ->has('prospecto')
             ->has('entradas.producto')
@@ -42,10 +50,10 @@ class ReportesController extends Controller
 
     public function compras()
     {
-        $compras = OrdenCompra::leftjoin('proyectos', 'ordenes_compra.proyecto_id', '=', 'proyectos.id')
+        $compras = OrdenCompra::leftjoin('proyectos_aprobados', 'ordenes_compra.proyecto_id', '=', 'proyectos_aprobados.id')
             ->leftjoin('clientes', 'ordenes_compra.cliente_id', '=', 'clientes.id')
             ->leftjoin('proveedores', 'ordenes_compra.proveedor_id', '=', 'proveedores.id')
-            ->select('ordenes_compra.*', 'proyectos.nombre as proyecto_nombre', 'proyectos.id as proyecto_id', 'clientes.nombre as cliente_nombre', 'proveedores.razon_social as proveedor_razon_social')
+            ->select('ordenes_compra.*', 'proyectos_aprobados.proyecto as proyecto_nombre', 'proyectos_aprobados.id as proyecto_id','proyectos_aprobados.cotizacion_id as cotizacion_id', 'clientes.nombre as cliente_nombre', 'proveedores.razon_social as proveedor_razon_social')
             ->orderBy('created_at', 'desc')
             ->get();
 
@@ -131,6 +139,7 @@ class ReportesController extends Controller
             ->leftjoin('clientes', 'proyectos_aprobados.cliente_id', '=', 'clientes.id')
             ->select('ordenes_compra.*', 'proyectos_aprobados.proyecto as proyecto_nombre', 'clientes.nombre as cliente_nombre',
                 'prospectos_cotizaciones.id as cotizaciones_id', 'prospectos_cotizaciones.moneda as cotizaciones_moneda', 'prospectos_cotizaciones.total as cotizaciones_total')
+            ->where('ordenes_compra.status','Confirmada')
             ->orderBy('prospectos_cotizaciones.id', 'asc')
             ->get();
 

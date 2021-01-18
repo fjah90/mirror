@@ -18,7 +18,7 @@ class OrdenesProcesoController extends Controller
      */
     public function index()
     {
-      $ordenes = OrdenProceso::with('ordenCompra')->get();
+      $ordenes = OrdenProceso::with('ordenCompra','ordenCompra.cliente','ordenCompra.cliente.usuario')->get();
 
       foreach ($ordenes as $orden) {
         if($orden->ordenCompra->archivo)

@@ -4,6 +4,8 @@ namespace App\Models;
 
 use App\Model;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
+use App\Models\ProspectoCotizacionEntrada;
 
 class ProspectoCotizacion extends Model
 {
@@ -84,6 +86,17 @@ class ProspectoCotizacion extends Model
     {
         return $this->hasMany('App\Models\ProspectoCotizacionEntrada', 'cotizacion_id', 'id')
             ->orderBy('orden', 'asc');
+    }
+
+    public function entradas2()
+    {
+        $entradas = ProspectoCotizacionEntrada::leftjoin('productos','producto_id','=','productos.id')
+        ->leftjoin('proveedores','productos.proveedor_id','=','proveedores.id')
+        ->select('proveedores.empresa', DB::raw('sum(prospectos_cotizaciones_entradas.importe) as total_importe') )->groupBy('proveedores.empresa')
+        ->where('prospectos_cotizaciones_entradas.cotizacion_id',$this->id)->get();  
+
+        return $entradas;
+
     }
 
     public function entradasProveedor()
