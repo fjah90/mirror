@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Cliente;
 use App\Models\CondicionCotizacion;
 use App\Models\CuentaCobrar;
+use App\Models\DatoFacturacion;
 use App\Models\ObservacionCotizacion;
 use App\Models\Producto;
 use App\Models\Prospecto;
@@ -435,7 +436,6 @@ class ProspectosController extends Controller
         } else {
             $numero_siguiente = 0;
         }
-
         $rfcs = $this->getDatosFacturacion($prospecto->cliente_id);
 
         if($prospecto->cliente->datos_facturacion->count() > 0){
@@ -532,6 +532,7 @@ class ProspectosController extends Controller
             'subtotal'            => 'required',
             'total'               => 'required',
         ]);
+        
 
         if ($validator->fails()) {
             $errors = $validator->errors()->all();
@@ -541,6 +542,20 @@ class ProspectosController extends Controller
         }
 
         $user = auth()->user();
+
+        $datos_facturacion = DatoFacturacion::where('rfc',$request->facturar)->first();
+
+        $datos_facturacion->update([
+            'rfc' => $request->rfc,
+            'razon_social' => $request->razon_social,
+            'calle' => $request->calle,
+            'nexterior' => $request->nexterior,
+            'ninterior' => $request->ninterior,
+            'colonia' => $request->colonia,
+            'cp' => $request->cp,
+            'ciudad' => $request->ciudad,
+            'estado' => $request->estado,
+        ]);
 
         $create = $request->except('entradas', 'condicion', 'observaciones');
         if ($create['facturar'] != "0") {
@@ -730,6 +745,20 @@ class ProspectosController extends Controller
         }
 
         $user = auth()->user();
+
+        $datos_facturacion = DatoFacturacion::where('rfc',$request->facturar)->first();
+
+        $datos_facturacion->update([
+            'rfc' => $request->rfc,
+            'razon_social' => $request->razon_social,
+            'calle' => $request->calle,
+            'nexterior' => $request->nexterior,
+            'ninterior' => $request->ninterior,
+            'colonia' => $request->colonia,
+            'cp' => $request->cp,
+            'ciudad' => $request->ciudad,
+            'estado' => $request->estado,
+        ]);
 
         $update = $request->except('entradas', 'condicion', 'observaciones', 'prospecto_id', 'cotizacion_id');
         if ($update['facturar'] != "0") {

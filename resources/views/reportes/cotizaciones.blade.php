@@ -118,25 +118,39 @@ Reportes | @parent
                         </tr>
                       </thead>
                       <tbody>
-                        <tr v-for="(cotizacion, index) in cotizaciones">
-                          <td>@{{cotizacion.fecha_formated}}</td>
-                          <td>@{{cotizacion.id}}</td>
-                          <td>@{{cotizacion.prospecto.cliente.nombre}}</td>
-                          <td>@{{cotizacion.prospecto.nombre}}</td>
+                        @foreach($cotizaciones as $cotizacion)
+                        <tr>
+                          <td>{{$cotizacion->fecha_formated}}</td>
+                          <td>{{$cotizacion->id}}</td>
+                          <td>{{$cotizacion->prospecto->cliente->nombre}}</td>
+                          <td>{{$cotizacion->prospecto->nombre}}</td>
                           <td>
-                            <template v-for="(entrada, index) in cotizacion.entradas">
-                              <span > @{{(entrada.producto ? entrada.producto.proveedor.empresa:'')}}</span><br/>
+                            <template>
+                              @foreach($cotizacion->entradas2() as $entrada)
+
+                              <span > 
+                                @if($entrada->empresa == null || $entrada->empresa == '')
+                                Por Definir
+                                @else
+                                {{$entrada->empresa}}
+                                @endif
+                              </span><br/>
+                              @endforeach
                             </template>
                           </td>
                           <td>
-                            <template v-for="(entrada, index) in cotizacion.entradas">
-                              <span > @{{entrada.importe | formatoMoneda}}</span><br/>
+                            <template>
+                              @foreach($cotizacion->entradas2() as $entrada)
+                              <span > {{$entrada->total_importe}}</span><br/>
+                              @endforeach
                             </template>
                           </td>
-                          <td>@{{cotizacion.total | formatoMoneda}}</td>
-                          <td>@{{cotizacion.moneda}}</td>
-                          <td>@{{cotizacion.user.name}}</td>
+                          <td>{{$cotizacion->total}}</td>
+                          <td>{{$cotizacion->moneda}}</td>
+                          <td>{{$cotizacion->user->name}}</td>
+                          
                         </tr>
+                        @endforeach
                         
                       </tbody>
                       <tfoot>

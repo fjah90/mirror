@@ -177,6 +177,15 @@ Dashboard | @parent
                 @endforeach
               </select>
             </div>
+            <div class="p-10">
+              Año  
+                <select class="form-control" @change="cargar()" v-model="anio" style="width:auto;display:inline-block;">
+                  <option value="Todos">Todos</option>
+                  <option value="2019-12-31">2019</option>
+                  <option value="2020-12-31">2020</option>
+                  <option value="2021-12-31">2021</option>
+                </select>
+            </div>
         </div>
       </div>
     </div>
@@ -645,6 +654,7 @@ Dashboard | @parent
     data: {
       prospectos: {},
       usuarioCargado: {{auth()->user()->id}},
+      anio:'Todos',
       tablaCotizaciones: {},
       tablaAceptadas: {},
       tablaActividades: {},
@@ -902,7 +912,7 @@ Dashboard | @parent
         }  
       },
       cargar(){
-        axios.post('/dashboard/listado', {id: this.usuarioCargado})
+        axios.post('/dashboard/listado', {id: this.usuarioCargado, anio:this.anio})
         .then(({data}) => {
           console.log(data);
           this.restarControls();
