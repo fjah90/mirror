@@ -112,6 +112,7 @@ Reportes | @parent
                           <th class="text-center"><strong>Proyecto</strong></th>
                           <th class="text-center"><strong>Marca</strong></th>
                           <th class="text-center"><strong>Proveedores</strong></th>
+                          <th class="text-center"><strong>IVA</strong></th>
                           <th class="text-center"><strong>Monto</strong></th>
                           <th class="text-center"><strong>Moneda</strong></th>
                           <th class="text-center"><strong>Usuario</strong></th>
@@ -145,6 +146,7 @@ Reportes | @parent
                               @endforeach
                             </template>
                           </td>
+                          <td>${{number_format($cotizacion->iva, 2, '.', ',')}}</td>
                           <td>${{number_format($cotizacion->total, 2, '.', ',')}}</td>
                           <td>{{$cotizacion->moneda}}</td>
                           <td>{{$cotizacion->user->name}}</td>
@@ -235,7 +237,7 @@ const app = new Vue({
           
         "footerCallback": function ( row, data, start, end, display ) {
             var api = this.api(), data;
-
+            
             var formato = function ( i ) {
                 return typeof i === 'string' ?
                     i.replace(/[\$,]/g, '')*1 :
@@ -243,7 +245,7 @@ const app = new Vue({
                         i : 0;
             };
             //datos de la tabla con filtros aplicados
-            var datos= api.columns([5,6], {search: 'applied'}).data();
+            var datos= api.columns([7,8], {search: 'applied'}).data();
             var totalMxn = 0;
             var totalUsd = 0;
             //suma de montos
@@ -254,7 +256,7 @@ const app = new Vue({
                     totalMxn+=formato(element)
                 }
             });
- 
+  
             // Actualizar
             var nCells = row.getElementsByTagName('th');
             nCells[1].innerHTML = accounting.formatMoney(totalMxn, "$", 2);
