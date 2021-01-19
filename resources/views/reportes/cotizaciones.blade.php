@@ -141,11 +141,11 @@ Reportes | @parent
                           <td>
                             <template>
                               @foreach($cotizacion->entradas2() as $entrada)
-                              <span > {{$entrada->total_importe}}</span><br/>
+                              <span > ${{number_format($entrada->total_importe, 2, '.', '')}}</span><br/>
                               @endforeach
                             </template>
                           </td>
-                          <td>{{$cotizacion->total}}</td>
+                          <td>{{number_format($cotizacion->total, 2, '.', '')}}</td>
                           <td>{{$cotizacion->moneda}}</td>
                           <td>{{$cotizacion->user->name}}</td>
                           
