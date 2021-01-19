@@ -545,17 +545,20 @@ class ProspectosController extends Controller
 
         $datos_facturacion = DatoFacturacion::where('rfc',$request->facturar)->first();
 
-        $datos_facturacion->update([
-            'rfc' => $request->rfc,
-            'razon_social' => $request->razon_social,
-            'calle' => $request->calle,
-            'nexterior' => $request->nexterior,
-            'ninterior' => $request->ninterior,
-            'colonia' => $request->colonia,
-            'cp' => $request->cp,
-            'ciudad' => $request->ciudad,
-            'estado' => $request->estado,
-        ]);
+        if (!empty($datos_facturacion)) {
+            
+            $datos_facturacion->update([
+                'rfc' => $request->rfc,
+                'razon_social' => $request->razon_social,
+                'calle' => $request->calle,
+                'nexterior' => $request->nexterior,
+                'ninterior' => $request->ninterior,
+                'colonia' => $request->colonia,
+                'cp' => $request->cp,
+                'ciudad' => $request->ciudad,
+                'estado' => $request->estado,
+            ]);
+        }
 
         $create = $request->except('entradas', 'condicion', 'observaciones');
         if ($create['facturar'] != "0") {
@@ -748,17 +751,19 @@ class ProspectosController extends Controller
 
         $datos_facturacion = DatoFacturacion::where('rfc',$request->facturar)->first();
 
-        $datos_facturacion->update([
-            'rfc' => $request->rfc,
-            'razon_social' => $request->razon_social,
-            'calle' => $request->calle,
-            'nexterior' => $request->nexterior,
-            'ninterior' => $request->ninterior,
-            'colonia' => $request->colonia,
-            'cp' => $request->cp,
-            'ciudad' => $request->ciudad,
-            'estado' => $request->estado,
-        ]);
+        if (!empty($datos_facturacion)) {
+            $datos_facturacion->update([
+                'rfc' => $request->rfc,
+                'razon_social' => $request->razon_social,
+                'calle' => $request->calle,
+                'nexterior' => $request->nexterior,
+                'ninterior' => $request->ninterior,
+                'colonia' => $request->colonia,
+                'cp' => $request->cp,
+                'ciudad' => $request->ciudad,
+                'estado' => $request->estado,
+            ]);
+        }
 
         $update = $request->except('entradas', 'condicion', 'observaciones', 'prospecto_id', 'cotizacion_id');
         if ($update['facturar'] != "0") {

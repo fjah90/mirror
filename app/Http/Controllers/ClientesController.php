@@ -7,6 +7,8 @@ use App\Models\ClienteContacto;
 use App\Models\ClienteUser;
 use App\Models\ContactoEmail;
 use App\Models\ProveedorContacto;
+use App\Models\DatoFacturacion;
+use App\Models\Prospecto;
 use App\Models\TipoCliente;
 use App\User;
 use Illuminate\Http\Request;
@@ -168,12 +170,81 @@ class ClientesController extends Controller
      */
     public function edit(Cliente $cliente, Request $request)
     {
+
+        $rfcs = $this->getDatosFacturacion($cliente->id);
+
+        foreach ($rfcs as $rfc) {
+            $rfc_verificacion = DatoFacturacion::where('rfc',$rfc['rfc'])->first();
+
+            if (empty($rfc_verificacion)) {
+                $nuevo_rfc = DatoFacturacion::create([
+                    'rfc'          => $rfc['rfc'],
+                    'razon_social' => $rfc['razon_social'],
+                    'calle'        => $rfc['calle'],
+                    'nexterior'    => $rfc['nexterior'],
+                    'ninterior'    => $rfc['ninterior'],
+                    'colonia'      => $rfc['colonia'],
+                    'cp'           => $rfc['cp'],
+                    'ciudad'       => $rfc['ciudad'],
+                    'estado'       => $rfc['estado'],
+                    'cliente_id'   => $cliente->id,
+                ]);
+                $nuevo_rfc->save();
+            }
+            
+        }    
+
         $tipos    = TipoCliente::all();
         $usuarios = User::all()->pluck('name', 'id');
         $cliente->load(['tipo', 'contactos.emails', 'contactos.telefonos', 'datos_facturacion','users']);
         $tab = ($request->has('contactos')) ? 1 : 0;
 
         return view('catalogos.clientes.edit', compact(['cliente', 'tipos', 'usuarios', 'tab', '']));
+    }
+
+
+
+    private function getDatosFacturacion($cliente_id)
+    {
+        $prospectos = Prospecto::with('cotizaciones')->where('cliente_id', $cliente_id)->get();
+        $cliente1   = Cliente::where('id', $cliente_id)->first();
+        $datos      = [];
+
+        foreach ($prospectos as $prospecto) {
+            $datos2 = $prospecto->cotizaciones->reduce(function ($rfcs, $cotizacion) {
+                if ($cotizacion->facturar && !isset($rfcs[$cotizacion->rfc])) {
+                    $rfcs[$cotizacion->rfc] = [
+                        'rfc'          => $cotizacion->rfc,
+                        'razon_social' => $cotizacion->razon_social,
+                        'calle'        => $cotizacion->calle,
+                        'nexterior'    => $cotizacion->nexterior,
+                        'ninterior'    => $cotizacion->ninterior,
+                        'colonia'      => $cotizacion->colonia,
+                        'cp'           => $cotizacion->cp,
+                        'ciudad'       => $cotizacion->ciudad,
+                        'estado'       => $cotizacion->estado,
+                    ];
+                }
+                return $rfcs;
+            }, $datos);
+
+            $datos = array_merge($datos, $datos2);
+            if (isset($cliente1->rfc) && !isset($datos[$cliente1->rfc])) {
+                $datos[$cliente1->rfc] = [
+                    'rfc'          => $cliente1->rfc,
+                    'razon_social' => $cliente1->razon_social,
+                    'calle'        => $cliente1->calle,
+                    'nexterior'    => $cliente1->nexterior,
+                    'ninterior'    => $cliente1->ninterior,
+                    'colonia'      => $cliente1->colonia,
+                    'cp'           => $cliente1->cp,
+                    'ciudad'       => $cliente1->ciudad,
+                    'estado'       => $cliente1->estado,
+                ];
+            }
+        }
+
+        return $datos;
     }
 
     /**
