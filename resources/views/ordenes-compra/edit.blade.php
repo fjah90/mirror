@@ -281,9 +281,10 @@
             <div class="row">
               <div class="col-md-12">
                 <div class="table-responsive">
-                  <table class="table table-bordred">
+                  <table class="table table-bordred" id="tablaEntradas">
                     <thead>
                       <tr>
+                        <th>Orden</th>
                         <th>Producto</th>
                         <th>Comentarios</th>
                         <th>Cantidad</th>
@@ -297,6 +298,7 @@
                     <tbody>
                       <tr v-for="(entrada, index) in orden.entradas" v-if="entrada.borrar!=true"
                         :class="(entrada.conversion)?'bg-warning':''">
+                        <td><span class="fas fa-grip-vertical"></span> @{{entrada.orden}}</td>
                         <td>@{{entrada.producto.nombre}}</td>
                         <td>@{{entrada.comentarios}}</td>
                         <td>@{{entrada.cantidad}} @{{entrada.medida}}</td>
@@ -305,7 +307,7 @@
                         <td>@{{entrada.precio | formatoMoneda}}</td>
                         <td>@{{entrada.importe | formatoMoneda}}</td>
                         <td class="text-right">
-                          <button class="btn btn-success" title="Editar"
+                          <button class="btn btn-success" title="Editar" data-index="{{@index}}"
                             @click="editarEntrada(entrada, index)">
                             <i class="fas fa-edit"></i>
                           </button>
@@ -476,6 +478,7 @@ const app = new Vue({
       @endforeach
     },
     tablaProductos: {},
+    dataTableEntradas: {},
     openCatalogo: false,
     cargando: false
   },
@@ -496,6 +499,42 @@ const app = new Vue({
       }
     );
     this.tablaProductos = $("#tablaProductos").DataTable({dom: 'ftp'});
+
+    //tabla reordenable
+    this.dataTableEntradas = $("#tablaEntradas").DataTable({
+          searching: false,
+          info: false,
+          columnDefs: [
+              {"orderable": true, "targets": 0},
+              {"orderable": false, "targets": '_all'}
+          ],
+          processing: false,
+          paging: false,
+          lengthChange: false,
+          rowReorder: {
+              selector: 'td:first-child span.fa-grip-vertical',
+              snapX: true
+          }
+      });
+    var vueInstance = this;
+
+      //handler para reordenamiento
+      this.dataTableEntradas.on('row-reorder', function (e, diff, edit) {
+          // console.log(diff);
+          //console.log(edit);
+          var i = 0, j = diff.length;
+          var nuevo_ordenamiento = 0;
+          var indice_descripcion
+          for (; i < j; i++) {
+              nuevo_ordenamiento = diff[i].newPosition + 1; //+1 Por que empieza en 1
+               console.log(edit.nodes[i].cells[5].childNodes[0]); //Boton
+              indice_entrada = $(edit.nodes[i].cells[4].childNodes[0]).data('index');
+              console.log(indice_entrada);
+              vueInstance.entrada[indice_entrada].actualizar = true;
+              vueInstance.entrada[indice_entrada].orden = nuevo_ordenamiento;
+          }
+      });
+
     //escuchar Iframe
     window.addEventListener('message', function (e) {
       if (e.data.tipo == "producto") {

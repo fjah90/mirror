@@ -9,7 +9,7 @@ class OrdenCompraEntrada extends Model
     protected $table = 'ordenes_compra_entradas';
 
     protected $fillable = ['orden_id', 'producto_id', 'cantidad', 'medida', 'conversion',
-        'cantidad_convertida', 'precio', 'importe', 'comentarios'];
+        'cantidad_convertida', 'precio', 'importe', 'comentarios','orden'];
 
     protected $casts = [
         'cantidad'            => 'float',
