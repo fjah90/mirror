@@ -159,6 +159,11 @@
                       Agregar
                     </button>
                   </div>
+                  <div class="col-sm-2" style="padding-top: 25px;">
+                    <button type="button" class="btn btn-primary" @click="modalProducto=true">
+                      Registrar producto
+                    </button>
+                  </div>
                 </div>
                 <div class="row">
                   <div class="col-sm-12">
@@ -276,6 +281,13 @@
     </modal>
     <!-- /.Catalogo Productos Modal -->
 
+    <!-- Nuevo Producto Modal-->
+    <modal v-model="modalProducto" title="Registrar Producto" :footer="false">
+      <iframe id="theFrame" src="../productos/crear?layout=iframe" style="width:100%; height:700px;" frameborder="0">
+      </iframe>
+    </modal>
+    <!-- /.Nuevo Producto Modal -->
+
   </section>
   <!-- /.content -->
 @stop
@@ -293,9 +305,29 @@ const app = new Vue({
     ofrecido: {nombre:''},
     openCatalogo: false,
     cargando: false,
+    modalProducto:false,
   },
   mounted(){
     $("#tablaProductos").DataTable({dom: 'ftp'});
+
+    //escuchar Iframe
+      window.addEventListener('message',function(e) {
+          if(e.data.tipo=="cliente"){
+            vue.clientes.push({id:e.data.object.id, nombre:e.data.object.nombre});
+            vue.prospecto.cliente_id=e.data.object.id;
+            vue.modalCliente=false;
+            vue.clienteSelect.select2('destroy');
+            vue.clienteSelect.select2({ width: '100%'});
+          }
+          if(e.data.tipo=="producto"){
+            vue.tablaProductos.destroy();
+            vue.productos.push(e.data.object);
+            vue.ofrecido=e.data.object;    
+            vue.modalProducto=false;
+            Vue.nextTick(function() {vue.tablaProductos=$("#tablaProductos").DataTable({"order": [[ 0, "asc" ]]})});
+            
+          }
+      },false);
   },
   methods: {
     formatoMoneda(numero){
