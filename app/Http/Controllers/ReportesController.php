@@ -58,7 +58,6 @@ class ReportesController extends Controller
             ->leftjoin('clientes', 'ordenes_compra.cliente_id', '=', 'clientes.id')
             ->leftjoin('proveedores', 'ordenes_compra.proveedor_id', '=', 'proveedores.id')
             ->select('ordenes_compra.*', 'proyectos_aprobados.proyecto as proyecto_nombre', 'proyectos_aprobados.id as proyecto_id','proyectos_aprobados.cotizacion_id as cotizacion_id', 'clientes.nombre as cliente_nombre', 'proveedores.razon_social as proveedor_razon_social')
-            ->whereBetween('ordenes_compra.created_at', [$inicio, $fin])
             ->orderBy('created_at', 'desc')
             ->get();
 
