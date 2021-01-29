@@ -581,15 +581,13 @@
               </td>
               <td class="bordered">
                 <p class="text-center font-small "><strong>Enviar a:</strong></p>
+                @if($cotizacion->enviar_a)
+                  <p class="text-uppercase">{{$cotizacion->enviar_a}}</p>
+                @endif
                 @if($cotizacion->contacto_nombre)
                   <p class="text-uppercase">ATN: {{$cotizacion->contacto_nombre}}</p>
                 @endif
-                @if($cotizacion->enviar_a)
-                  <p class="text-uppercase">Enviar A: {{$cotizacion->enviar_a}}</p>
-                @endif
-                @if($cotizacion->instrucciones)
-                  <p class="text-uppercase">Instrucciones Especiales: {{$cotizacion->instrucciones}}</p>
-                @endif
+                
                 @if($cotizacion->contacto_telefono)
                   <p class="text-uppercase">T. {{$cotizacion->contacto_telefono}}</p>
                 @endif
@@ -602,6 +600,9 @@
                 </p>
                 <p class="text-uppercase">{{$cotizacion->dircolonia}} {{$cotizacion->dircp}}</p>
                 <p class="text-uppercase">{{$cotizacion->dirciudad}} {{$cotizacion->direstado}}</p>
+                @if($cotizacion->instrucciones)
+                  <p class="text-uppercase">Instrucciones Especiales: {{$cotizacion->instrucciones}}</p>
+                @endif
               </td>
             </tr>
             @if($cotizacion->notas)
