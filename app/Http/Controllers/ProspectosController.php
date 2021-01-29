@@ -591,7 +591,10 @@ class ProspectosController extends Controller
         $observaciones .= "</ul>";
         $create['observaciones'] = $observaciones;
 
+
+
         $cotizacion = ProspectoCotizacion::create($create);
+
         if (!$cotizacion->numero) {
             $cotizacion->numero = $cotizacion->id;
         }

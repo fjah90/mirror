@@ -16,7 +16,7 @@ class ProspectoCotizacion extends Model
         'user_id', 'idioma', 'aceptada', 'notas2', 'numero', 'rfc', 'razon_social', 'calle',
         'nexterior', 'ninterior', 'colonia', 'cp', 'ciudad', 'estado', 'fletes', 'cliente_contacto_id',
         'direccion', 'dircalle', 'dirnexterior', 'dirninterior', 'dircolonia', 'dircp', 'dirciudad', 'direstado',
-        'contacto_email', 'contacto_telefono', 'contacto_nombre',
+        'contacto_email', 'contacto_telefono', 'contacto_nombre','instrucciones','enviar_a'
     ];
 
     protected $casts = [

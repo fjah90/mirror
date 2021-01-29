@@ -168,6 +168,13 @@
                     v-model="entrada.precio" required />
                 </div>
               </div>
+              <div class="row">
+                  <div class="col-md-2">
+                      <button type="button" class="btn btn-primary" @click="modalProducto=true">
+                          Registrar producto
+                      </button>
+                  </div>
+              </div>
               <div class="row form-group">
                 <div class="col-md-6">
                   <label class="control-label">Comentarios</label>
@@ -338,6 +345,14 @@
     </modal>
     <!-- /.Catalogo Productos Modal -->
 
+    <!-- Nuevo Producto Modal-->
+    <modal v-model="modalProducto" title="Registrar Producto" :footer="false">
+        <iframe id="theFrame" src="{{url("/")}}/productos/crear?layout=iframe" style="width:100%; height:700px;"
+                frameborder="0">
+        </iframe>
+    </modal>
+    <!-- /.Nuevo Producto Modal -->
+
   </section>
   <!-- /.content -->
 
@@ -353,6 +368,7 @@ const app = new Vue({
     aduanas: {!! json_encode($aduanas) !!},
     productos: {!! json_encode($productos) !!},
     locale: localeES,
+    modalProducto: false,
     orden: {
       proyecto_id: {{$proyecto->id}},
       proveedor_id: '',
