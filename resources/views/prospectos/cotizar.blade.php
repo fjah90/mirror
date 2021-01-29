@@ -241,14 +241,7 @@
                                            v-model="cotizacion.ninterior"/>
                                 </div>
                                 <div class="col-sm-4">
-                                    <label class="control-label">CP</label>
-                                    <input type="text" name="cp" class="form-control cp text-uppercase"
-                                           @keyup="cp()" v-model="cotizacion.cp"/>
-                                </div>
-                                
-                            </div>
-                            <div class="row form-group" v-if="cotizacion.facturar!='0'">
-                                <div class="col-sm-4">
+
                                     <label class="control-label">Colonia</label>
                                     <!--
                                     <select class="form-control" name="colonia" v-model="cotizacion.colonia" text-uppercase required>
@@ -258,6 +251,15 @@
                                     
                                     <input type="text" name="colonia" class="form-control text-uppercase"
                                            v-model="cotizacion.colonia"/>
+                                    
+                                </div>
+                                
+                            </div>
+                            <div class="row form-group" v-if="cotizacion.facturar!='0'">
+                                <div class="col-sm-4">
+                                    <label class="control-label">CP</label>
+                                    <input type="text" name="cp" class="form-control cp text-uppercase"
+                                           @keyup="cp()" v-model="cotizacion.cp"/>
                                     
                                 </div>
                                 <div class="col-sm-4">
@@ -272,7 +274,7 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-sm-12">
+                                <div class="col-sm-6">
                                     <div class="form-group">
                                         <label class="control-label">Dirección de Entrega</label>
                                         <select class="form-control text-uppercase" name="direccion"
@@ -285,6 +287,11 @@
                                             </option>
                                         </select>
                                     </div>
+                                </div>
+                                <div class="col-sm-6" v-if="cotizacion.direccion!='0'">
+                                    <label class="control-label">Enviar a:</label>
+                                    <input type="text" name="enviar_a" class="form-control text-uppercase"
+                                           v-model="cotizacion.enviar_a"/>
                                 </div>
                             </div>
                             <div class="row form-group" v-if="cotizacion.direccion!='0'">
@@ -304,15 +311,7 @@
                                            v-model="cotizacion.dirninterior"/>
                                 </div>
                                 <div class="col-sm-4">
-                                    <label class="control-label">CP</label>
-                                    <input type="text" name="cp" class="form-control cp1 text-uppercase"
-                                           @keyup="cp1()" v-model="cotizacion.dircp"/>
-                                </div>
-                                
-                            </div>
-                            <div class="row form-group" v-if="cotizacion.direccion!='0'">
-                                
-                                <div class="col-sm-4">
+
                                     <label class="control-label">Colonia</label>
                                     <!--
                                     <select class="form-control" name="colonia" v-model="cotizacion.dircolonia" text-uppercase required>
@@ -321,6 +320,18 @@
                                     -->
                                     <input type="text" name="colonia" class="form-control text-uppercase"
                                            v-model="cotizacion.dircolonia"/>
+
+                                </div>
+                                
+                            </div>
+                            <div class="row form-group" v-if="cotizacion.direccion!='0'">
+                                
+                                <div class="col-sm-4">
+
+                                    <label class="control-label">CP</label>
+                                    <input type="text" name="cp" class="form-control cp1 text-uppercase"
+                                           @keyup="cp1()" v-model="cotizacion.dircp"/>
+                                    
                                     
                                 </div>
                                 <div class="col-sm-4">
@@ -332,6 +343,13 @@
                                     <label class="control-label">Estado</label>
                                     <input type="text" name="estado" class="form-control estado1 text-uppercase"
                                            v-model="cotizacion.direstado"/>
+                                </div>
+                            </div>
+                            <div class="row form-group" v-if="cotizacion.direccion!='0'">
+                                <div class="col-sm-12">
+                                    <label class="control-label">Instrucciones Especiales:</label>
+                                    <input type="text" name="instrucciones" class="form-control text-uppercase"
+                                           v-model="cotizacion.instrucciones"/>
                                 </div>
                             </div>
                             <div class="row form-group" v-if="cotizacion.direccion!='0'">
@@ -1002,6 +1020,8 @@
                     estado: '',
                     direccion: 0,
                     dircalle: '',
+                    instrucciones:'',
+                    enviar_a:'',
                     dirnexterior: '',
                     dirninterior: '',
                     dircolonia: '',
@@ -1611,6 +1631,8 @@
                         estado: cotizacion.estado,
                         direccion: (cotizacion.direccion) ? 1 : 0,
                         dircalle: cotizacion.dircalle,
+                        instrucciones: cotizacion.instrucciones,
+                        enviar_a: cotizacion.enviar_a,
                         dirnexterior: cotizacion.dirnexterior,
                         dirninterior: cotizacion.dirninterior,
                         dircolonia: cotizacion.dircolonia,
@@ -1703,6 +1725,8 @@
                         estado: cotizacion.estado,
                         direccion: (cotizacion.direccion) ? 1 : 0,
                         dircalle: cotizacion.dircalle,
+                        instrucciones: cotizacion.instrucciones,
+                        enviar_a: cotizacion.enviar_a,
                         dirnexterior: cotizacion.dirnexterior,
                         dirninterior: cotizacion.dirninterior,
                         dircolonia: cotizacion.dircolonia,
@@ -1809,6 +1833,8 @@
                                 estado: '',
                                 direccion: 0,
                                 dircalle: '',
+                                instrucciones: '',
+                                enviar_a: '',
                                 dirnexterior: '',
                                 dirninterior: '',
                                 dircolonia: '',

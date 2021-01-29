@@ -27,7 +27,7 @@ class ReportesController extends Controller
         $cotizaciones = ProspectoCotizacion::with('prospecto:id,nombre,cliente_id', 'prospecto.cliente:id,nombre', 'user:id,name', 'entradas:id,cantidad,producto_id,cotizacion_id,importe', 'entradas.producto:id,proveedor_id', 'entradas.producto.proveedor:id,empresa')
             ->has('prospecto')
             ->has('entradas.producto')
-            ->whereBetween('prospectos_cotizaciones.created_at', [$inicio, $fin])
+            //->whereBetween('prospectos_cotizaciones.created_at', [$inicio, $fin])
             ->orderBy('fecha', 'desc')
             ->get();
         return view('reportes.cotizaciones', compact('cotizaciones'));
@@ -42,7 +42,7 @@ class ReportesController extends Controller
             ->leftjoin('cuentas_cobrar', 'facturas.cuenta_id', '=', 'cuentas_cobrar.id')
             ->leftjoin('clientes', 'cuentas_cobrar.cliente_id', '=', 'clientes.id')
             ->select('cuentas_cobrar.*', 'clientes.nombre as cliente_nombre', 'facturas.documento', 'pagos.fecha as pago_fecha', 'pagos.monto as pago_monto','pagos.created_at')
-            ->whereBetween('pagos.created_at', [$inicio, $fin])
+            //->whereBetween('pagos.created_at', [$inicio, $fin])
             ->orderBy('pagos.fecha', 'desc')
             ->get();
 
@@ -77,7 +77,7 @@ class ReportesController extends Controller
             ->leftjoin('clientes', 'ordenes_compra.cliente_id', '=', 'clientes.id')
             ->select('cuentas_pagar.*', 'clientes.nombre as cliente_nombre', 'proveedores.razon_social as proveedor_nombre', 'ordenes_compra.proyecto_nombre as proyecto_nombre',
                 'facturas_cuentas_pagar.documento', 'pagos_cuentas_pagar.fecha as pago_fecha', 'pagos_cuentas_pagar.monto as pago_monto', 'ordenes_compra.numero as numero_compra','pagos_cuentas_pagar.created_at')
-            ->whereBetween('pagos_cuentas_pagar.created_at', [$inicio, $fin])
+            //->whereBetween('pagos_cuentas_pagar.created_at', [$inicio, $fin])
             ->orderBy('pagos_cuentas_pagar.fecha', 'desc')
             ->get();
 
@@ -96,7 +96,7 @@ class ReportesController extends Controller
             ->leftjoin('clientes', 'ordenes_compra.cliente_id', '=', 'clientes.id')
             ->select('cuentas_pagar.*', 'clientes.nombre as cliente_nombre', 'proveedores.razon_social as proveedor_nombre', 'ordenes_compra.proyecto_nombre as proyecto_nombre',
                 'facturas_cuentas_pagar.documento', 'facturas_cuentas_pagar.monto as facturas_monto', 'facturas_cuentas_pagar.vencimiento as facturas_fecha_vencimiento', 'pagos_cuentas_pagar.fecha as pago_fecha', 'pagos_cuentas_pagar.monto as pago_monto', 'ordenes_compra.numero as numero_compra','pagos_cuentas_pagar.created_at')
-            ->whereBetween('pagos_cuentas_pagar.created_at', [$inicio, $fin])
+            //->whereBetween('pagos_cuentas_pagar.created_at', [$inicio, $fin])
             ->orderBy('facturas_cuentas_pagar.vencimiento', 'desc')
             ->get();
 
@@ -159,7 +159,7 @@ class ReportesController extends Controller
             ->select('ordenes_compra.*', 'proyectos_aprobados.proyecto as proyecto_nombre', 'clientes.nombre as cliente_nombre',
                 'prospectos_cotizaciones.id as cotizaciones_id', 'prospectos_cotizaciones.moneda as cotizaciones_moneda', 'prospectos_cotizaciones.total as cotizaciones_total')
             ->where('ordenes_compra.status','Confirmada')
-            ->whereBetween('ordenes_compra.created_at', [$inicio, $fin])
+            //->whereBetween('ordenes_compra.created_at', [$inicio, $fin])
             ->orderBy('prospectos_cotizaciones.id', 'asc')
             ->get();
 

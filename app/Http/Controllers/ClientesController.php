@@ -177,19 +177,29 @@ class ClientesController extends Controller
             $rfc_verificacion = DatoFacturacion::where('rfc',$rfc['rfc'])->first();
 
             if (empty($rfc_verificacion)) {
-                $nuevo_rfc = DatoFacturacion::create([
-                    'rfc'          => $rfc['rfc'],
-                    'razon_social' => $rfc['razon_social'],
-                    'calle'        => $rfc['calle'],
-                    'nexterior'    => $rfc['nexterior'],
-                    'ninterior'    => $rfc['ninterior'],
-                    'colonia'      => $rfc['colonia'],
-                    'cp'           => $rfc['cp'],
-                    'ciudad'       => $rfc['ciudad'],
-                    'estado'       => $rfc['estado'],
-                    'cliente_id'   => $cliente->id,
-                ]);
-                $nuevo_rfc->save();
+
+                $rfc_verificacion2 = DatoFacturacion::where('rfc',$rfc['rfc'])->withTrashed()->first();
+
+                if (!empty($rfc_verificacion2)) {
+                    $rfc_verificacion2 = DatoFacturacion::where('rfc',$rfc['rfc'])->withTrashed()->first()->restore();                    
+                }
+                else{
+
+                    $nuevo_rfc = DatoFacturacion::create([
+                        'rfc'          => $rfc['rfc'],
+                        'razon_social' => $rfc['razon_social'],
+                        'calle'        => $rfc['calle'],
+                        'nexterior'    => $rfc['nexterior'],
+                        'ninterior'    => $rfc['ninterior'],
+                        'colonia'      => $rfc['colonia'],
+                        'cp'           => $rfc['cp'],
+                        'ciudad'       => $rfc['ciudad'],
+                        'estado'       => $rfc['estado'],
+                        'cliente_id'   => $cliente->id,
+                    ]);
+                    $nuevo_rfc->save();
+
+                }     
             }
             
         }    
