@@ -587,6 +587,12 @@
                 @if($cotizacion->contacto_nombre)
                   <p class="text-uppercase">TO: {{$cotizacion->contacto_nombre}}</p>
                 @endif
+                @if($cotizacion->enviar_a)
+                  <p class="text-uppercase">Send to: {{$cotizacion->enviar_a}}</p>
+                @endif
+                @if($cotizacion->instrucciones)
+                  <p class="text-uppercase">Special Instructions: {{$cotizacion->instrucciones}}</p>
+                @endif
                 @if($cotizacion->contacto_telefono)
                   <p class="text-uppercase">P. {{$cotizacion->contacto_telefono}}</p>
                 @endif
