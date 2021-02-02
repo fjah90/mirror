@@ -590,12 +590,7 @@
                 @if($cotizacion->contacto_nombre)
                   <p class="text-uppercase">TO: {{$cotizacion->contacto_nombre}}</p>
                 @endif
-                @if($cotizacion->contacto_telefono)
-                  <p class="text-uppercase">P. {{$cotizacion->contacto_telefono}}</p>
-                @endif
-                @if($cotizacion->contacto_email)
-                  <p>Email: <a href="mailto:{{$cotizacion->contacto_email}}">{{$cotizacion->contacto_email}}</a></p>
-                @endif
+
                 <p class="text-uppercase">
                   {{$cotizacion->dircalle}} {{$cotizacion->dirnexterior}}
                   @if($cotizacion->dirninterior) Int. {{$cotizacion->dirninterior}} @endif
@@ -605,6 +600,14 @@
                 @if($cotizacion->instrucciones)
                   <p class="text-uppercase">Special Instructions: {{$cotizacion->instrucciones}}</p>
                 @endif
+
+                @if($cotizacion->contacto_telefono)
+                  <p class="text-uppercase">P. {{$cotizacion->contacto_telefono}}</p>
+                @endif
+                @if($cotizacion->contacto_email)
+                  <p>Email: <a href="mailto:{{$cotizacion->contacto_email}}">{{$cotizacion->contacto_email}}</a></p>
+                @endif
+                
               </td>
             </tr>
             @if($cotizacion->notas)
