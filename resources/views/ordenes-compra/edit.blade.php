@@ -284,7 +284,6 @@
                   <table class="table table-bordred" id="tablaEntradas">
                     <thead>
                       <tr>
-                        <th>Orden</th>
                         <th>Producto</th>
                         <th>Comentarios</th>
                         <th>Cantidad</th>
@@ -298,7 +297,6 @@
                     <tbody>
                       <tr v-for="(entrada, index) in orden.entradas" v-if="entrada.borrar!=true"
                         :class="(entrada.conversion)?'bg-warning':''">
-                        <td><span class="fas fa-grip-vertical"></span> @{{entrada.orden}}</td>
                         <td>@{{entrada.producto.nombre}}</td>
                         <td>@{{entrada.comentarios}}</td>
                         <td>@{{entrada.cantidad}} @{{entrada.medida}}</td>
@@ -307,7 +305,7 @@
                         <td>@{{entrada.precio | formatoMoneda}}</td>
                         <td>@{{entrada.importe | formatoMoneda}}</td>
                         <td class="text-right">
-                          <button class="btn btn-success" title="Editar" data-index="{{@index}}"
+                          <button class="btn btn-success" title="Editar"
                             @click="editarEntrada(entrada, index)">
                             <i class="fas fa-edit"></i>
                           </button>
@@ -501,6 +499,7 @@ const app = new Vue({
     this.tablaProductos = $("#tablaProductos").DataTable({dom: 'ftp'});
 
     //tabla reordenable
+    /*
     this.dataTableEntradas = $("#tablaEntradas").DataTable({
           searching: false,
           info: false,
@@ -534,6 +533,7 @@ const app = new Vue({
               vueInstance.entrada[indice_entrada].orden = nuevo_ordenamiento;
           }
       });
+    */
 
     //escuchar Iframe
     window.addEventListener('message', function (e) {

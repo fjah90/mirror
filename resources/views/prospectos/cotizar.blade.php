@@ -1174,15 +1174,15 @@
                 //handler para reordenamiento
                 this.dataTableEntradas.on('row-reorder', function (e, diff, edit) {
                     // console.log(diff);
-                     console.log(edit);
+                    // console.log(edit);
                     var i = 0, j = diff.length;
                     var nuevo_ordenamiento = 0;
                     var indice_descripcion
                     for (; i < j; i++) {
                         nuevo_ordenamiento = diff[i].newPosition + 1; //+1 Por que empieza en 1
-                         console.log(edit.nodes[i].cells[5].childNodes[0]); //Boton
+                        // console.log(edit.nodes[i].cells[5].childNodes[0]); //Boton
                         indice_entrada = $(edit.nodes[i].cells[5].childNodes[0]).data('index');
-                        console.log(indice_entrada);
+                        //console.log(indice_entrada);
                         vueInstance.cotizacion.entradas[indice_entrada].actualizar = true;
                         vueInstance.cotizacion.entradas[indice_entrada].orden = nuevo_ordenamiento;
                     }
@@ -1791,94 +1791,107 @@
                 },
                 guardar() {
                     var cotizacion = $.extend(true, {}, this.cotizacion);
+                    //console.log(cotizacion.subtotal);
+                    var totalf = 0;
                     cotizacion.entradas.forEach(function (entrada) {
-                        entrada.producto_id = entrada.producto.id;
-                        delete entrada.producto;
+                        totalf += entrada.importe;
                     });
-                    var formData = objectToFormData(cotizacion, {indices: true});
-                    var url = "", numero_siguiente = false;
 
-                    if (this.cotizacion.cotizacion_id) {
-                        url = '/prospectos/{{$prospecto->id}}/cotizacion/' + this.cotizacion.cotizacion_id;
-                        numero_siguiente = {{$numero_siguiente}};
-                    } else url = '/prospectos/{{$prospecto->id}}/cotizacion';
+                    if(cotizacion.subtotal != totalf){
+                        alert('OCURRIO UN ERROR INESPERADO EL SUBTOTAL NO COINCIDE FAVOR DE RECARGAR LA PAGINA');
+                    }
+                    else{
 
-                    this.cargando = true;
-                    axios.post(url, formData, {
-                        headers: {'Content-Type': 'multipart/form-data'}
-                    })
-                        .then(({data}) => {
-                            this.prospecto.cotizaciones.push(data.cotizacion);
-                            this.cotizacion = {
-                                prospecto_id: {{$prospecto->id}},
-                                cliente_contacto_id: '',
-                                @can('editar numero cotizacion')
-                                numero: (numero_siguiente) ? numero_siguiente : data.cotizacion.id + 1,
-                                @else
-                                numero: 0,
-                                @endcan
-                                condicion: {
-                                    id: 0,
-                                    nombre: ''
-                                },
-                                facturar: 0,
-                                rfc: '',
-                                razon_social: '',
-                                calle: '',
-                                nexterior: '',
-                                ninterior: '',
-                                colonia: '',
-                                cp: '',
-                                ciudad: '',
-                                estado: '',
-                                direccion: 0,
-                                dircalle: '',
-                                instrucciones: '',
-                                enviar_a: '',
-                                dirnexterior: '',
-                                dirninterior: '',
-                                dircolonia: '',
-                                dircp: '',
-                                contacto_nombre: '',
-                                contacto_telefono: '',
-                                contacto_email: '',
-                                dirciudad: '',
-                                direstado: '',
-                                entrega: '',
-                                lugar: '',
-                                fletes: '',
-                                moneda: '{{ ($prospecto->cliente->nacional)?"Pesos":"Dolares" }}',
-                                entradas: [],
-                                subtotal: 0,
-                                iva: '{{ ($prospecto->cliente->nacional)?"1":"0" }}',
-                                total: 0,
-                                notas: "",
-                                idioma: '{{ ($prospecto->cliente->nacional)?"español":"ingles" }}',
-                                observaciones: []
-                            };
-                            this.observaciones.forEach(function (observacion) {
-                                observacion.activa = false;
-                            });
-                            this.resetDataTables();
-                            this.cargando = false;
-                            swal({
-                                title: "Cotizacion Guardada",
-                                text: "",
-                                type: "success"
-                            }).then(() => {
-                                $('a[download="C ' + data.cotizacion.numero + ' Intercorp ' + this.prospecto.nombre + '.pdf"]')[0].click();
-                                window.location.reload(true);
-                            });
-                        })
-                        .catch(({response}) => {
-                            console.error(response);
-                            this.cargando = false;
-                            swal({
-                                title: "Error",
-                                text: response.data.message || "Ocurrio un error inesperado, intente mas tarde",
-                                type: "error"
-                            });
+                    
+                        cotizacion.entradas.forEach(function (entrada) {
+                            entrada.producto_id = entrada.producto.id;
+                            delete entrada.producto;
                         });
+                        var formData = objectToFormData(cotizacion, {indices: true});
+                        var url = "", numero_siguiente = false;
+
+                        if (this.cotizacion.cotizacion_id) {
+                            url = '/prospectos/{{$prospecto->id}}/cotizacion/' + this.cotizacion.cotizacion_id;
+                            numero_siguiente = {{$numero_siguiente}};
+                        } else url = '/prospectos/{{$prospecto->id}}/cotizacion';
+
+                        this.cargando = true;
+                        axios.post(url, formData, {
+                            headers: {'Content-Type': 'multipart/form-data'}
+                        })
+                            .then(({data}) => {
+                                this.prospecto.cotizaciones.push(data.cotizacion);
+                                this.cotizacion = {
+                                    prospecto_id: {{$prospecto->id}},
+                                    cliente_contacto_id: '',
+                                    @can('editar numero cotizacion')
+                                    numero: (numero_siguiente) ? numero_siguiente : data.cotizacion.id + 1,
+                                    @else
+                                    numero: 0,
+                                    @endcan
+                                    condicion: {
+                                        id: 0,
+                                        nombre: ''
+                                    },
+                                    facturar: 0,
+                                    rfc: '',
+                                    razon_social: '',
+                                    calle: '',
+                                    nexterior: '',
+                                    ninterior: '',
+                                    colonia: '',
+                                    cp: '',
+                                    ciudad: '',
+                                    estado: '',
+                                    direccion: 0,
+                                    dircalle: '',
+                                    instrucciones: '',
+                                    enviar_a: '',
+                                    dirnexterior: '',
+                                    dirninterior: '',
+                                    dircolonia: '',
+                                    dircp: '',
+                                    contacto_nombre: '',
+                                    contacto_telefono: '',
+                                    contacto_email: '',
+                                    dirciudad: '',
+                                    direstado: '',
+                                    entrega: '',
+                                    lugar: '',
+                                    fletes: '',
+                                    moneda: '{{ ($prospecto->cliente->nacional)?"Pesos":"Dolares" }}',
+                                    entradas: [],
+                                    subtotal: 0,
+                                    iva: '{{ ($prospecto->cliente->nacional)?"1":"0" }}',
+                                    total: 0,
+                                    notas: "",
+                                    idioma: '{{ ($prospecto->cliente->nacional)?"español":"ingles" }}',
+                                    observaciones: []
+                                };
+                                this.observaciones.forEach(function (observacion) {
+                                    observacion.activa = false;
+                                });
+                                this.resetDataTables();
+                                this.cargando = false;
+                                swal({
+                                    title: "Cotizacion Guardada",
+                                    text: "",
+                                    type: "success"
+                                }).then(() => {
+                                    $('a[download="C ' + data.cotizacion.numero + ' Intercorp ' + this.prospecto.nombre + '.pdf"]')[0].click();
+                                    window.location.reload(true);
+                                });
+                            })
+                            .catch(({response}) => {
+                                console.error(response);
+                                this.cargando = false;
+                                swal({
+                                    title: "Error",
+                                    text: response.data.message || "Ocurrio un error inesperado, intente mas tarde",
+                                    type: "error"
+                                });
+                            });
+                    }
                 },//fin guardar
                 enviarCotizacion() {
                     this.cargando = true;
