@@ -24,6 +24,15 @@
         <div class="panel-heading">
           <h3 class="panel-title">
             <span class="p-10">Lista de Ordenes</span>
+            <div class="p-10">
+              Año  
+                <select class="form-control" @change="cargar()" v-model="anio" style="width:auto;display:inline-block;">
+                  <option value="Todos">Todos</option>
+                  <option value="2019-12-31">2019</option>
+                  <option value="2020-12-31">2020</option>
+                  <option value="2021-12-31">2021</option>
+                </select>
+            </div>
           </h3>
         </div>
         <div class="panel-body">
@@ -373,6 +382,7 @@
 const app = new Vue({
     el: '#content',
     data: {
+      anio:'Todos',
       locale: localeES,
       ordenes: {!! json_encode($ordenes) !!},
       ordenHistorial: {},
@@ -465,7 +475,7 @@ const app = new Vue({
       openEntrega: false
     },
     mounted(){
-      $("#tabla").DataTable({"order": [[ 1, "asc" ]]});
+      this.tabla = $("#tabla").DataTable({"order": [[ 1, "asc" ]]});
       $("#factura").fileinput({
         language: 'es',
         showPreview: false,
@@ -543,6 +553,28 @@ const app = new Vue({
       dateParser(value){
   			return moment(value, 'DD/MM/YYYY').toDate().getTime();
   		},
+      cargar(){
+        axios.post('/ordenes-proceso/listado', {anio:this.anio})
+        .then(({data}) => {
+          this.tabla.destroy();
+          this.ordenes = data.ordenes;
+          swal({
+            title: "Exito",
+            text: "Datos Cargados",
+            type: "success"
+          }).then(()=>{
+            this.tabla = $("#tabla").DataTable();
+          });
+        })
+        .catch(({response}) => {
+          console.error(response);
+          swal({
+            title: "Error",
+            text: response.data.message || "Ocurrio un error inesperado, intente mas tarde",
+            type: "error"
+          });
+        });
+      },
       embarcarModal(orden){
         this.embarcar.orden_id=orden.id;
         this.embarcar.numero=orden.numero;

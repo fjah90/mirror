@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\CuentaPagar;
 use App\Models\FacturaCuentaPagar;
 use App\Models\PagoCuentaPagar;
+use Carbon\Carbon;
 use Validator;
 use Storage;
 
@@ -21,6 +22,30 @@ class CuentasPagarController extends Controller
       $cuentas = CuentaPagar::all();
 
       return view('cuentas-pagar.index', compact('cuentas'));
+    }
+
+    public function listado(Request $request)
+    {
+
+      if ($request->anio == '2019-12-31') {
+          $inicio = Carbon::parse('2019-01-01');    
+      }
+      elseif ($request->anio == '2020-12-31') {
+          $inicio = Carbon::parse('2020-01-01');    
+      }
+      else{
+          $inicio = Carbon::parse('2021-01-01');
+      }
+
+      if ($request->anio == 'Todos') {
+          $cuentas = CuentaPagar::all();
+      }
+      else{
+          $anio = Carbon::parse($request->anio);
+          $cuentas = CuentaPagar::whereBetween('created_at', [$inicio, $anio])->get();
+      }
+
+      return response()->json(['success' => true, "error" => false, 'cuentas' => $cuentas], 200);
     }
 
     /**

@@ -6,6 +6,7 @@ use Validator;
 use Illuminate\Http\Request;
 use App\Models\OrdenProceso;
 use App\User;
+use Carbon\Carbon;
 use Storage;
 
 class OrdenesProcesoController extends Controller
@@ -42,6 +43,51 @@ class OrdenesProcesoController extends Controller
       }
 
       return view('ordenes-proceso.index', compact('ordenes'));
+    }
+
+    public function listado(Request $request)
+    {
+      
+      if ($request->anio == '2019-12-31') {
+          $inicio = Carbon::parse('2019-01-01');    
+      }
+      elseif ($request->anio == '2020-12-31') {
+          $inicio = Carbon::parse('2020-01-01');    
+      }
+      else{
+          $inicio = Carbon::parse('2021-01-01');
+      }
+
+      if ($request->anio == 'Todos') {
+          $ordenes = OrdenProceso::with('ordenCompra','ordenCompra.cliente','ordenCompra.cliente.usuario')->get();
+      }
+      else{
+          $anio = Carbon::parse($request->anio);
+          $ordenes = OrdenProceso::whereBetween('created_at', [$inicio, $anio])->with('ordenCompra','ordenCompra.cliente','ordenCompra.cliente.usuario')->get();
+      }
+
+      foreach ($ordenes as $orden) {
+        if($orden->ordenCompra->archivo)
+          $orden->ordenCompra->archivo = asset('storage/'.$orden->ordenCompra->archivo);
+        if($orden->factura){
+          $orden->factura = asset('storage/'.$orden->factura);
+          $orden->packing = asset('storage/'.$orden->packing);
+          if($orden->bl) $orden->bl = asset('storage/'.$orden->bl);
+          if($orden->certificado) $orden->certificado = asset('storage/'.$orden->certificado);
+        }
+        if($orden->deposito_warehouse){
+          $orden->deposito_warehouse = asset('storage/'.$orden->deposito_warehouse);
+        }
+        if($orden->gastos){
+          $orden->gastos = asset('storage/'.$orden->gastos);
+          $orden->pago = asset('storage/'.$orden->pago);
+        }
+        if($orden->carta_entrega){
+          $orden->carta_entrega = asset('storage/'.$orden->carta_entrega);
+        }
+      }
+
+      return response()->json(['success' => true, "error" => false, 'ordenes' => $ordenes], 200);
     }
 
 
