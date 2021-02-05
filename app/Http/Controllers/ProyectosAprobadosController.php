@@ -7,6 +7,7 @@ use App\Models\ProyectoAprobado;
 use App\Models\OrdenCompra;
 use App\Models\OrdenCompraEntrada;
 use App\Models\ProspectoActividad;
+use Carbon\Carbon;
 use DateTime;
 use App\User;
 
@@ -33,12 +34,49 @@ class ProyectosAprobadosController extends Controller
 
     public function listado(Request $request)
     {
+
+      if ($request->anio == '2019-12-31') {
+          $inicio = Carbon::parse('2019-01-01');    
+      }
+      elseif ($request->anio == '2020-12-31') {
+          $inicio = Carbon::parse('2020-01-01');    
+      }
+      else{
+          $inicio = Carbon::parse('2021-01-01');
+      }
+
+
       if ($request->id == 'Todos') {
-        $proyectos = ProyectoAprobado::with('cotizacion','cliente','cotizacion.cuenta_cobrar')->get();
+
+        if ($request->anio == 'Todos') {
+            $proyectos = ProyectoAprobado::with('cotizacion','cliente','cotizacion.cuenta_cobrar')->get();
+        }
+        else{
+            $anio = Carbon::parse($request->anio);
+            $proyectos = ProyectoAprobado::whereBetween('created_at', [$inicio, $anio])->with('cotizacion','cliente','cotizacion.cuenta_cobrar')->get();
+        }
+
+        
       } else {
-        $user = User::with('proyectos_aprobados.cotizacion', 'proyectos_aprobados.cliente','proyectos_aprobados.cotizacion.cuenta_cobrar')->find($request->id);
-        if (is_null($user)) $proyectos = [];
-        else $proyectos = $user->proyectos_aprobados;
+
+        if ($request->anio == 'Todos') {
+            $user = User::with('proyectos_aprobados.cotizacion', 'proyectos_aprobados.cliente','proyectos_aprobados.cotizacion.cuenta_cobrar')->find($request->id);
+            if (is_null($user)) $proyectos = [];
+            else $proyectos = $user->proyectos_aprobados;
+        }
+        else{
+            $anio = Carbon::parse($request->anio);
+            $user = User::with('proyectos_aprobados.cotizacion', 'proyectos_aprobados.cliente','proyectos_aprobados.cotizacion.cuenta_cobrar')->find($request->id);
+            if (is_null($user)) $proyectos = [];
+            else {
+
+              $proyectos = $user->proyectos_aprobados->where('created_at','>',$inicio);
+
+            }
+        }
+        
+        
+        
       }
 
       return response()->json(['success' => true, "error" => false, 'proyectos' => $proyectos], 200);
