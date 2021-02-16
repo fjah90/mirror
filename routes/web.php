@@ -91,6 +91,9 @@ Route::middleware('auth')->group(function () {
         Route::resource('/unidadesMedida', 'UnidadesMedidaController', ['only' => ['create', 'store', 'edit', 'update', 'delete']]);
 
         Route::post('/prospectos/listado', 'ProspectosController@listado');
+        Route::post('/cuentas-cobrar/listado', 'CuentasCobrarController@listado');
+        Route::post('/cuentas-pagar/listado', 'CuentasPagarController@listado');
+        Route::post('/ordenes-proceso/listado', 'OrdenesProcesoController@listado');
         Route::post('/dashboard/listado', 'DashboardController@listado');
         Route::post('/proyectos-aprobados/listado', 'ProyectosAprobadosController@listado');
 

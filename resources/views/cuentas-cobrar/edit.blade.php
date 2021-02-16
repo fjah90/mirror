@@ -368,7 +368,7 @@ const app = new Vue({
       else this.factura[campo] = this.$refs[campo].files[0];
     },
     fijarMontoFactura(){
-      this.factura.monto = this.cuenta.total * (this.factura.porcentaje/100);
+      this.factura.monto = (this.cuenta.total * (this.factura.porcentaje/100)).toFixed(2);;
     },
     agregarFactura(){
       var formData = objectToFormData(this.factura, {indices:true});
