@@ -164,8 +164,8 @@ const app = new Vue({
     el: '#content',
     data: {
       datos: {!! json_encode($datos) !!},
-      fecha_ini: '',
-      fecha_fin: '',
+      fecha_ini: '01-01-2021',
+      fecha_fin: '31-12-2021',
       valor_cotizaciones:'Cotizaciones',
       valor_proyectos:'Proyectos',
       valor_clientes:'Clientes',
