@@ -1797,10 +1797,12 @@
                         totalf += entrada.importe;
                     });
 
+                    /*
                     if(cotizacion.subtotal != totalf){
                         alert('OCURRIO UN ERROR INESPERADO EL SUBTOTAL NO COINCIDE FAVOR DE RECARGAR LA PAGINA');
                     }
                     else{
+                    */
 
                     
                         cotizacion.entradas.forEach(function (entrada) {
@@ -1891,7 +1893,7 @@
                                     type: "error"
                                 });
                             });
-                    }
+                    //}
                 },//fin guardar
                 enviarCotizacion() {
                     this.cargando = true;
