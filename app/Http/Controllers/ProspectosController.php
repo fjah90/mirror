@@ -1258,6 +1258,17 @@ class ProspectosController extends Controller
             }
         }
 
+
+        // Guardar activiad de cotizar
+        $today = new DateTime();
+        ProspectoActividad::create([
+            'prospecto_id' => $request->proyecto_id,
+            'tipo_id'      => 7,
+            'fecha'        => $today->format('d/m/Y'),
+            'descripcion'  => 'Cotizacion realizada',
+            'realizada'    => true,
+        ]);
+
         return response()->json(['success' => true, 'error' => false], 200);
     }
 

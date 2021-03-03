@@ -1797,12 +1797,18 @@
                         totalf += entrada.importe;
                     });
 
-                    /*
+                    totalf = totalf.toFixed(2)
+
+                    console.log(cotizacion.subtotal);
+                    console.log(totalf);
+                    console.log()
+
+                    
                     if(cotizacion.subtotal != totalf){
                         alert('OCURRIO UN ERROR INESPERADO EL SUBTOTAL NO COINCIDE FAVOR DE RECARGAR LA PAGINA');
                     }
                     else{
-                    */
+                    
 
                     
                         cotizacion.entradas.forEach(function (entrada) {
@@ -1893,7 +1899,7 @@
                                     type: "error"
                                 });
                             });
-                    //}
+                    }
                 },//fin guardar
                 enviarCotizacion() {
                     this.cargando = true;
@@ -2018,7 +2024,7 @@
                                 type: "success"
                             });
                             
-                            window.location.href = "/prospectos/"+this.copiar_cotizacion.Proyectos_id+"/cotizar";
+                            window.location.href = "/prospectos/"+this.copiar_cotizacion.proyecto_id+"/cotizar";
                         })
                         .catch(({response}) => {
                             console.error(response);
