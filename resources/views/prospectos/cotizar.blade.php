@@ -1797,6 +1797,8 @@
                         totalf += entrada.importe;
                     });
 
+                    totalf = totalf.toFixed(2)
+
                     console.log(cotizacion.subtotal);
                     console.log(totalf);
                     console.log()
