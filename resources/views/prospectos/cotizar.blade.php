@@ -1797,6 +1797,7 @@
                         totalf += entrada.importe;
                     });
 
+                    totalcotizacion = cotizacion.subtotal.toFixed(2);
                     totalf = totalf.toFixed(2)
 
                     console.log(cotizacion.subtotal);
@@ -1804,7 +1805,7 @@
                     console.log()
 
                     
-                    if(cotizacion.subtotal != totalf){
+                    if(totalcotizacion != totalf){
                         alert('OCURRIO UN ERROR INESPERADO EL SUBTOTAL NO COINCIDE FAVOR DE RECARGAR LA PAGINA');
                     }
                     else{
