@@ -1800,7 +1800,7 @@
                     totalcotizacion = cotizacion.subtotal.toFixed(2);
                     totalf = totalf.toFixed(2)
 
-                    console.log(cotizacion.subtotal);
+                    console.log(totalcotizacion);
                     console.log(totalf);
                     console.log()
 
