@@ -1807,6 +1807,7 @@
                     console.log(totalf);
                     console.log(totalff);
                     console.log(totalim);
+                    console.log(totalim.toFixed(2));
 
 
                     
