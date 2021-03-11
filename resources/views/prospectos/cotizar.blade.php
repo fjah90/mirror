@@ -1795,10 +1795,10 @@
                     var totalf = 0;
                     cotizacion.entradas.forEach(function (entrada) {
                         totalf += entrada.importe.toFixed(2);
+                        cosole.log(entrada.importe);
                     });
 
                     totalcotizacion = cotizacion.subtotal.toFixed(2);
-                    totalf = totalf.toFixed(2);
 
                     console.log(totalcotizacion);
                     console.log(totalf);
