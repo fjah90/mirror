@@ -1798,7 +1798,7 @@
                     });
 
                     totalcotizacion = cotizacion.subtotal.toFixed(2);
-                    totalf = totalf.toFixed(2)
+                    totalf = totalf.toFixed(2);
 
                     console.log(totalcotizacion);
                     console.log(totalf);
