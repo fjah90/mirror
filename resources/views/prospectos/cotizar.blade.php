@@ -1793,21 +1793,17 @@
                     var cotizacion = $.extend(true, {}, this.cotizacion);
                     //console.log(cotizacion.subtotal);
                     var totalf = 0;
-                    var totalim = 0;
                     cotizacion.entradas.forEach(function (entrada) {
-                        totalf += entrada.cantidad * entrada.precio;
-                        totalim += entrada.importe;
+                        totalf += entrada.cantidad.toFixed(2) * entrada.precio.toFixed(2);
                     });
 
                     totalcotizacion = cotizacion.subtotal.toFixed(2);
-                    var totalff = totalf.toFixed(2);
+                    
 
                     console.log(cotizacion.subtotal);
                     console.log(totalcotizacion);
                     console.log(totalf);
-                    console.log(totalff);
-                    console.log(totalim);
-                    console.log(totalim.toFixed(2));
+                    console.log(totalcotizacion - totalf);
 
 
                     
