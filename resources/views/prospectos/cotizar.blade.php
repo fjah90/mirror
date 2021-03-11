@@ -1805,13 +1805,8 @@
 
                     var dif = totalcotizacion - totalf;
 
-                    if (dif > 0.1 || dif < 0.1) {
-                        console.log('muy grande');
-                    }
-
-
                     
-                    if(totalcotizacion != 3000){
+                    if(dif > 0.01){
                         alert('OCURRIO UN ERROR INESPERADO EL SUBTOTAL NO COINCIDE FAVOR DE RECARGAR LA PAGINA');
                     }
                     else{
