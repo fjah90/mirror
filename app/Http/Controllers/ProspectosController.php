@@ -1220,16 +1220,28 @@ class ProspectosController extends Controller
                 'condicion_id' => $cotizacion->condicion_id,
                 'user_id' => $cotizacion->user_id,
                 'numero' => $numero_siguiente,
+                'fotos' => $cotizacion->fotos,
         ]);
 
         foreach ($cotizacion->entradas as $key => $entrada) {
             
-            if (count($entrada->fotos) == 0) {
+            if ($entrada['fotos']) { //hay fotos
+                $fotos     = "";
+                $separador = "";
+                foreach ($entrada['fotos'] as $foto_index => $foto) {
+                    $extencion = pathinfo(asset($foto), PATHINFO_EXTENSION);
+                    $rutafoto = explode('storage',$foto);
+                    $rutafoto = 'storage'.$rutafoto[1];
+                    $ruta      = "cotizaciones/" . $cotizacion->id . "/entrada_" . ($key + 1) . "_foto_1." . $extencion;
+                    Storage::copy("public/" . $rutafoto, "public/$ruta");
+
+                    $fotos .= $separador . $ruta;
+                    $separador = "|";
+                }
+            }else {
                 $fotos = "";
             }
-            else{
-                $fotos = json_encode($entrada->fotos);
-            }
+
             $entrada_nueva = ProspectoCotizacionEntrada::create([
                     'cotizacion_id' => $cotizacion_nueva->id,
                     'producto_id'      => $entrada->producto_id,
