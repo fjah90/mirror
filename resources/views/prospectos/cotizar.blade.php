@@ -1794,12 +1794,13 @@
                     //console.log(cotizacion.subtotal);
                     var totalf = 0;
                     cotizacion.entradas.forEach(function (entrada) {
-                        var valor  = parseFloat(entrada.importe);
-                        totalf += valor.toFixed(2);
+                        totalf += entrada.importe;
+                        console.log(entrada.importe);
                     });
 
                     totalcotizacion = cotizacion.subtotal.toFixed(2);
 
+                    console.log(cotizacion.subtotal);
                     console.log(totalcotizacion);
                     console.log(totalf);
 
