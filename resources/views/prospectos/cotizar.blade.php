@@ -1799,10 +1799,13 @@
                     });
 
                     totalcotizacion = cotizacion.subtotal.toFixed(2);
+                    var totalff = totalf.toFixed(2);
 
                     console.log(cotizacion.subtotal);
                     console.log(totalcotizacion);
                     console.log(totalf);
+                    console.log(totalff);
+
 
                     
                     if(totalcotizacion != 3000){
