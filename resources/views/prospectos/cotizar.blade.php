@@ -1801,7 +1801,13 @@
 
                     console.log(totalcotizacion);
                     console.log(totalf);
-                    console.log(totalcotizacion - totalff);
+                    console.log(totalcotizacion - totalf);
+
+                    var dif = totalcotizacion - totalf;
+
+                    if (dif > 0.1 || dif < 0.1) {
+                        console.log('muy grande');
+                    }
 
 
                     
