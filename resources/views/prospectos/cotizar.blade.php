@@ -1793,6 +1793,7 @@
                     var cotizacion = $.extend(true, {}, this.cotizacion);
                     //console.log(cotizacion.subtotal);
                     var totalf = 0;
+                    var totalim = 0;
                     cotizacion.entradas.forEach(function (entrada) {
                         totalf += entrada.cantidad * entrada.precio;
                         totalim += entrada.importe;
