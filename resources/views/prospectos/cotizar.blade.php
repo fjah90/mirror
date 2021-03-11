@@ -1794,8 +1794,7 @@
                     //console.log(cotizacion.subtotal);
                     var totalf = 0;
                     cotizacion.entradas.forEach(function (entrada) {
-                        totalf += entrada.importe;
-                        console.log(entrada.importe);
+                        totalf += entrada.cantidad * entrada.precio;
                     });
 
                     totalcotizacion = cotizacion.subtotal.toFixed(2);
