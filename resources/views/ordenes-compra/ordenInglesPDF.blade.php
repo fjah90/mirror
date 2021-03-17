@@ -570,7 +570,7 @@
                   </tr>
                   <tr>
                     <td>FREIGHT:</td>
-                    <td>{{$orden->carga}}</td>
+                    <td class="text-uppercase">{{$orden->carga}}</td>
                   </tr>
                   <tr>
                     <td>PRICES:</td>
@@ -587,10 +587,10 @@
                 <p class="text-uppercase">{{$orden->delivery}}</p>
                 @if($orden->aduana)
                 <p class="text-uppercase">{{$orden->aduana->compañia}}</p>
+                <p class="text-uppercase">ADDRESS : {{$orden->aduana->direccion}}</p>
                 <p class="text-uppercase">ATTN : {{$orden->aduana->contacto}}</p>
                 <p class="text-uppercase">PHONE : {{$orden->aduana->telefono}}</p>
                 <p class="text-uppercase">MAIL : {{$orden->aduana->email}}</p>
-                <p class="text-uppercase">ADDRESS : {{$orden->aduana->direccion}}</p>
                 @endif
               </td>
             </tr>
