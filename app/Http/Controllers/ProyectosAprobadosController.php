@@ -20,7 +20,7 @@ class ProyectosAprobadosController extends Controller
      */
     public function index()
     {
-      $proyectos = auth()->user()->proyectos_aprobados()->with('cotizacion.cuentaCobrar','cliente')->get();
+      $proyectos = auth()->user()->proyectos_aprobados()->with('cotizacion.cuentaCobrar','cliente','cotizacion.user')->get();
       foreach ($proyectos as $proyecto) {
         $proyecto->cotizacion->archivo = asset('storage/'.$proyecto->cotizacion->archivo);
       }
