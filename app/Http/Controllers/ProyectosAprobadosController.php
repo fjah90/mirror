@@ -49,24 +49,24 @@ class ProyectosAprobadosController extends Controller
       if ($request->id == 'Todos') {
 
         if ($request->anio == 'Todos') {
-            $proyectos = ProyectoAprobado::with('cotizacion','cliente','cotizacion.cuenta_cobrar')->get();
+            $proyectos = ProyectoAprobado::with('cotizacion','cliente','cotizacion.cuenta_cobrar','user')->get();
         }
         else{
             $anio = Carbon::parse($request->anio);
-            $proyectos = ProyectoAprobado::whereBetween('created_at', [$inicio, $anio])->with('cotizacion','cliente','cotizacion.cuenta_cobrar')->get();
+            $proyectos = ProyectoAprobado::whereBetween('created_at', [$inicio, $anio])->with('cotizacion','cliente','cotizacion.cuenta_cobrar','user')->get();
         }
 
         
       } else {
 
         if ($request->anio == 'Todos') {
-            $user = User::with('proyectos_aprobados.cotizacion', 'proyectos_aprobados.cliente','proyectos_aprobados.cotizacion.cuenta_cobrar')->find($request->id);
+            $user = User::with('proyectos_aprobados.cotizacion', 'proyectos_aprobados.cliente','proyectos_aprobados.cotizacion.cuenta_cobrar','user')->find($request->id);
             if (is_null($user)) $proyectos = [];
             else $proyectos = $user->proyectos_aprobados;
         }
         else{
             $anio = Carbon::parse($request->anio);
-            $user = User::with('proyectos_aprobados.cotizacion', 'proyectos_aprobados.cliente','proyectos_aprobados.cotizacion.cuenta_cobrar')->find($request->id);
+            $user = User::with('proyectos_aprobados.cotizacion', 'proyectos_aprobados.cliente','proyectos_aprobados.cotizacion.cuenta_cobrar','user')->find($request->id);
             if (is_null($user)) $proyectos = [];
             else {
 
