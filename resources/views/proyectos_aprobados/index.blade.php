@@ -63,11 +63,7 @@
               </thead>
               <tbody>
                 <tr v-for="(proyecto,index) in proyectos">
-                  <td>
-                    @if(proyecto.cotizacion.user)
-                      @{{proyecto.cotizacion.user.name}}
-                    @endif
-                  </td>
+                  <td>@{{proyecto.cotizacion.user}}</td>
                   <td>@{{proyecto.cliente_nombre}}</td>
                   <td>@{{proyecto.proyecto}}</td>
                   <td>@{{proyecto.cotizacion_id}}</td>
