@@ -64,7 +64,7 @@
               <tbody>
                 <tr v-for="(proyecto,index) in proyectos">
                   <td>
-                    @if(isset(proyecto.cotizacion.user))
+                    @if(proyecto.cotizacion.user)
                       @{{proyecto.cotizacion.user.name}}
                     @endif
                   </td>
