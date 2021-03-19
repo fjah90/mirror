@@ -189,7 +189,7 @@
                       @change="reiniciarConversion()">
                       @foreach($unidades_medida as $unidad)
                         @if($orden->moneda == 'Dolares')
-                          <option value="{{ !empty($unidad->simbolo_ingles) ? $unidad->simbolo_ingles : $unidad->simbolo }}">{{ $unidad->simbolo }} / {{ $unidad->simbolo_ingles }}</option>
+                          <option value="{{ $unidad->simbolo }}">{{ $unidad->simbolo }} / {{ $unidad->simbolo_ingles }}</option>
                         @else
                           <option value="{{ $unidad->simbolo }}">{{ $unidad->simbolo }}</option>
                         @endif
