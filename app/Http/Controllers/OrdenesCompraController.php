@@ -433,6 +433,13 @@ class OrdenesCompraController extends Controller
 
         //sincronizar entradas
         foreach ($request->entradas as $entrada) {
+            if ($orden->moneda == 'Dolares') {
+                $Uni = UnidadMedida::where('simbolo',$entrada['medida'])->first();
+                if (!empty($Uni->simbolo_ingles)) {
+                    $entrada['medida'] = $Uni->simbolo_ingles;    
+                }
+            }
+
             if (isset($entrada['id'])) {
                 $ent = OrdenCompraEntrada::find($entrada['id']);
 
