@@ -839,6 +839,13 @@ class ProspectosController extends Controller
                 }
                 $entrada['fotos'] = $fotos;
             } else if ($entradaGuardada && $entradaGuardada->producto_id == $producto->id) {
+                if ($entrada['fotos']) {
+                    
+                }
+                else{
+                    $entrada['fotos']='';
+                    $entradaGuardada->fotos = '';
+                }
                 unset($entrada['fotos']); //no se actualzan fotos
             } else if ($producto->foto) {
                 $extencion = pathinfo(asset($producto->foto), PATHINFO_EXTENSION);
