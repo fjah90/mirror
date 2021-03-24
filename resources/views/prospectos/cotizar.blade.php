@@ -1514,6 +1514,9 @@
                         for (var i = 0; i < this.$refs['fotos'].files.length; i++)
                             this.entrada.fotos.push(this.$refs['fotos'].files[i]);
                     }
+                    else{
+                        console.log('no hay fotos');
+                    }
 
                     this.entrada.importe = this.entrada.cantidad * this.entrada.precio;
                     this.cotizacion.subtotal += this.entrada.importe;
