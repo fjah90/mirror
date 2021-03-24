@@ -1136,7 +1136,7 @@
                     maxFileSize: 5000,
                     showCaption: false,
                     showBrowse: false,
-                    showRemove: false,
+                    showRemove: true,
                     showUpload: false,
                     browseOnZoneClick: true,
                     defaultPreviewContent: '<img src="{{asset('images/camara.png')}}" style="width:200px; height:auto;" alt="foto"><h6>Click para seleccionar</h6>',
@@ -1509,6 +1509,7 @@
                     }
 
                     if (this.$refs['fotos'].files.length) {//hay fotos
+                        console.log('hay fotos');
                         this.entrada.fotos = [];
                         for (var i = 0; i < this.$refs['fotos'].files.length; i++)
                             this.entrada.fotos.push(this.$refs['fotos'].files[i]);
