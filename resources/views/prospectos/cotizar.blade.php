@@ -1515,7 +1515,7 @@
                             this.entrada.fotos.push(this.$refs['fotos'].files[i]);
                     }
                     else{
-                        console.log('no hay fotos');
+                        this.entrada.fotos = [];
                     }
 
                     this.entrada.importe = this.entrada.cantidad * this.entrada.precio;
