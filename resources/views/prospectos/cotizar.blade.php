@@ -1806,7 +1806,7 @@
                     var dif = totalcotizacion - totalf;
 
                     
-                    if(dif > 0.1){
+                    if(dif > 0.05){
                         alert('OCURRIO UN ERROR INESPERADO EL SUBTOTAL NO COINCIDE FAVOR DE RECARGAR LA PAGINA');
                     }
                     else{
