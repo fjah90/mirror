@@ -1238,8 +1238,8 @@ class ProspectosController extends Controller
                 foreach ($entrada['fotos'] as $foto_index => $foto) {
                     $extencion = pathinfo(asset($foto), PATHINFO_EXTENSION);
                     $rutafoto = explode('storage',$foto);
-                    dd($rutafoto[1]);
-                    $rutafoto = 'storage'.$rutafoto[1];
+                    //dd($rutafoto[1]);
+                    $rutafoto = $rutafoto[1];
                     $ruta      = "cotizaciones/" . $cotizacion->id . "/entrada_" . ($key + 1) . "_foto_1." . $extencion;
                     Storage::copy("public/" . $rutafoto, "public/$ruta");
 
