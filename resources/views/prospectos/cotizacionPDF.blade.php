@@ -633,7 +633,7 @@
           </thead>
           <tbody>
             @foreach($cotizacion->entradas as $entrada)
-            @if($loop->index == 6)
+            @if($loop->index == 5)
             <tr class="page-break">
             @else
             <tr>
@@ -748,6 +748,14 @@
     </div>
 
   </div><!-- Container -->
+
+  <script type="text/php">
+      if ( isset($pdf) ) {
+          $font = $fontMetrics->getFont('helvetica');
+          $pdf->page_text(536, 86, "{PAGE_NUM} de {PAGE_COUNT}", $font, 8, array(0,0,0));
+      }
+  </script>
+  
 </body>
 
 </html>
