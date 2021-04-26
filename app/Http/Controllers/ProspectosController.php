@@ -419,7 +419,8 @@ class ProspectosController extends Controller
             }],
             'cliente.contactos.emails',
             'cliente.datos_facturacion',
-            'cotizaciones.cuentaCobrar'
+            'cotizaciones.cuentaCobrar',
+            'cliente'
         );
         $productos = Producto::with('categoria', 'proveedor', 'descripciones.descripcionNombre', 'proveedor.contactos')
             ->has('categoria')->get();
@@ -463,6 +464,25 @@ class ProspectosController extends Controller
             }
             return $datos;
         }, []);
+
+
+        
+        if (isset($prospecto->cliente1->calle) && !isset($direcciones[$prospecto->cliente->calle])) {
+            $direccion['Direccion del cliente'] = [
+                'dircalle'          => $prospecto->cliente->calle,
+                'dirnexterior'      => $prospecto->cliente->nexterior,
+                'dirninterior'      => '',
+                'dircolonia'        => $prospecto->cliente->colonia,
+                'dircp'             => $prospecto->cliente->cp,
+                'dirciudad'         => $prospecto->cliente->ciudad,
+                'direstado'         => $prospecto->cliente->estado,
+                'contacto_nombre'   => '',
+                'contacto_email'    => '',
+                'contacto_telefono' => '',
+            ];
+        }
+
+        $direcciones = array_merge($direcciones, $direccion);
 
         foreach ($prospecto->cotizaciones as $cotizacion) {
             if ($cotizacion->archivo) {
