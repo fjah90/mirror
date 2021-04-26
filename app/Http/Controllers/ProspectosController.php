@@ -468,7 +468,7 @@ class ProspectosController extends Controller
 
         
         if (isset($prospecto->cliente->calle) && !isset($direcciones[$prospecto->cliente->calle])) {
-            $direccion['Direccion del cliente'] = [
+            $direccion[$prospecto->cliente->calle." ".$prospecto->cliente->nexterior." ". $prospecto->cliente->colonia." ".$prospecto->cliente->cp." ".$prospecto->cliente->ciudad." ".$prospecto->cliente->estado."."] = [
                 'dircalle'          => $prospecto->cliente->calle,
                 'dirnexterior'      => $prospecto->cliente->nexterior,
                 'dirninterior'      => '',
