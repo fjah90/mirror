@@ -23,6 +23,7 @@ class ProspectoCotizacionEntrada extends Model
 
     protected $appends = [
         'fecha_precio_compra_formated',
+        'area'
     ];
 
     public function setFechaPrecioCompraAttribute($value)
@@ -55,6 +56,21 @@ class ProspectoCotizacionEntrada extends Model
         return $fotos;
     }
 
+     public function getAreaAttribute()
+    {
+        $descripciones = $this->hasMany('App\Models\ProspectoCotizacionEntradaDescripcion', 'entrada_id', 'id');
+
+        $r = '';
+
+        foreach ($descripciones as $key => $descripcion) {
+            if ($descripcion->nombre == 'Area') {
+                $r = $descripcion->valor;
+            }
+        }
+
+        return $r;
+    }
+
     /**
      * ---------------------------------------------------------------------------
      *                             Relationships
@@ -75,6 +91,7 @@ class ProspectoCotizacionEntrada extends Model
     {
         return $this->hasMany('App\Models\ProspectoCotizacionEntradaDescripcion', 'entrada_id', 'id');
     }
+
 
     public function contacto()
     {

@@ -227,9 +227,10 @@ const app = new Vue({
               vue.datos_select.ids.push(d);
             });
 
+
             vue.datos_select.usuarios.push('Usuarios')
             vue.datos_select.usuarios.push('');
-            this.api().column(7).data().sort().unique().each(function(d,j){   
+            this.api().column(9).data().sort().unique().each(function(d,j){   
               vue.datos_select.usuarios.push(d);
             });
           },
@@ -308,7 +309,7 @@ const app = new Vue({
         this.tabla.columns(1).search(this.valor_ids).draw();
       },
       valor_usuarios:function(val){
-        this.tabla.columns(7).search(this.valor_usuarios).draw();
+        this.tabla.columns(9).search(this.valor_usuarios).draw();
       },
     },
     filters:{
