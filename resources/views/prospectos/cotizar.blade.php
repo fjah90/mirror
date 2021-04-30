@@ -89,7 +89,7 @@
                                             <td>@{{cotizacion.fecha_formated}}</td>
                                             <td>
                                                 <template v-for="(entrada, index) in cotizacion.entradas">
-                                                    <span>@{{index+1}}.- @{{entrada.producto.nombre}} - @{{entrada.producto.proveedor.empresa}}</span><br/>
+                                                    <span>@{{index+1}}.- @{{entrada.producto.nombre}} - @{{entrada.producto.proveedor.empresa}} - Area:@{{entrada.area}}</span><br/>
                                                 </template>
                                             </td>
                                             <td>
@@ -462,6 +462,7 @@
                                             <thead>
                                             <tr>
                                                 <th>Orden</th>
+                                                <th>Area</th>
                                                 <th>Producto</th>
                                                 <th>Cantidad</th>
                                                 <th>Precio</th>
@@ -1046,6 +1047,7 @@
                 entrada: {
                     producto: {"proveedor": {"contactos": {}}},
                     orden: 0,
+                    area: "",
                     cantidad: "",
                     medida: "",
                     precio: "",
@@ -1383,6 +1385,7 @@
                         if (entrada.borrar == true) return true;
                         row = [
                             '<span class="fas fa-grip-vertical"></span> ' + entrada.orden,
+                            entrada.area,
                             entrada.producto.nombre,
                             entrada.cantidad + " " + entrada.medida,
                             accounting.formatMoney(entrada.precio, "$", 2),
@@ -1696,6 +1699,7 @@
                     this.resetDataTables();
                 },
                 editar(index, cotizacion) {
+
                     this.prospecto.cotizaciones.splice(index, 1);
 
                     //reiniciar observaciones
