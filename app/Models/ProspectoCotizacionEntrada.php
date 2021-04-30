@@ -58,7 +58,7 @@ class ProspectoCotizacionEntrada extends Model
 
      public function getAreaAttribute()
     {
-        $descripciones = $this->hasMany('App\Models\ProspectoCotizacionEntradaDescripcion', 'entrada_id', 'id');
+        $descripciones = $this->descripciones;
 
         $r = '';
 
