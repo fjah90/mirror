@@ -159,7 +159,7 @@ class ReportesController extends Controller
             ->select('ordenes_compra.*', 'proyectos_aprobados.proyecto as proyecto_nombre', 'clientes.nombre as cliente_nombre',
                 'prospectos_cotizaciones.id as cotizaciones_id', 'prospectos_cotizaciones.moneda as cotizaciones_moneda', 'prospectos_cotizaciones.total as cotizaciones_total')
             ->where('ordenes_compra.status','Confirmada')
-            ->where('ordenes_compra.status','Pendiente')
+            ->orWhere('ordenes_compra.status','Pendiente')
             //->whereBetween('ordenes_compra.created_at', [$inicio, $fin])
             ->orderBy('prospectos_cotizaciones.id', 'asc')
             ->get();
