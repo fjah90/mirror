@@ -680,14 +680,13 @@ const app = new Vue({
 
       @foreach($proyecto->cotizacion->entradas as $entrada)
 
-        console.log('{{$unidad->simbolo_ingles}}');
+        console.log('{{$entrada}}');
       @endforeach
 
 
       
 
-      console.log(entrada.precio_compra);
-      console.log(entrada.medida_compra);
+      console.log(entrada);
       if (entrada.precio_compra != null){
         this.entrada.conversion = entrada.medida_compra;
       }
