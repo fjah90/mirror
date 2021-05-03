@@ -656,11 +656,26 @@ const app = new Vue({
       this.orden.subtotal-= entrada.importe;
       //this.orden.fecha_compra = this.orden.fecha_compra_formated;
       this.orden.entradas.splice(index, 1);
+      console.log(entrada.conversion);
       if(entrada.conversion==undefined){
         entrada.conversion = "";
         entrada.cantidad_convertida = "";
       }
+      console.log(entrada.medida);
+
+      
       this.entrada = entrada;
+
+      @foreach($unidades_medida as $unidad)
+
+        if ('{{$unidad->simbolo_ingles}}' == entrada.medida) {
+          console.log('entre');
+            this.entrada.medida = '{{$unidad->simbolo}}';    
+        }
+        if ('{{$unidad->simbolo}}' == entrada.medida) {
+            this.entrada.medida = '{{$unidad->simbolo}}';     
+        }
+      @endforeach
 
       var descripciones = [];
       entrada.descripciones.forEach(function (desc) {
