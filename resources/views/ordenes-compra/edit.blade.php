@@ -677,6 +677,12 @@ const app = new Vue({
         }
       @endforeach
 
+      if (entrada.precio_compra != null){
+        this.entrada.conversion = entrada.medida_compra;
+      }
+
+      
+
       var descripciones = [];
       entrada.descripciones.forEach(function (desc) {
         descripciones.push({
