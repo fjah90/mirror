@@ -677,6 +677,15 @@ const app = new Vue({
         }
       @endforeach
 
+
+      @foreach(proyecto.cotizacion.entradas as $entrada)
+
+        console.log('{{$unidad->simbolo_ingles}}');
+      @endforeach
+
+
+      
+
       console.log(entrada.precio_compra);
       console.log(entrada.medida_compra);
       if (entrada.precio_compra != null){
