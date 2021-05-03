@@ -677,6 +677,8 @@ const app = new Vue({
         }
       @endforeach
 
+      console.log(entrada.precio_compra);
+      console.log(entrada.medida_compra);
       if (entrada.precio_compra != null){
         this.entrada.conversion = entrada.medida_compra;
       }
