@@ -656,12 +656,11 @@ const app = new Vue({
       this.orden.subtotal-= entrada.importe;
       //this.orden.fecha_compra = this.orden.fecha_compra_formated;
       this.orden.entradas.splice(index, 1);
-      console.log(entrada.conversion);
+      
       if(entrada.conversion==undefined){
         entrada.conversion = "";
         entrada.cantidad_convertida = "";
       }
-      console.log(entrada.medida);
 
       
       this.entrada = entrada;
@@ -680,17 +679,11 @@ const app = new Vue({
 
       @foreach($proyecto->cotizacion->entradas as $entrada)
 
-        console.log('{{$entrada->producto_id}}');
+        if ('{{$entrada->producto_id}}' == this.entrada.producto_id) {
+          this.entrada.conversion = '{{$entrada->medida_compra}}';
+        }
+        
       @endforeach
-
-
-      
-
-      console.log(entrada);
-      if (entrada.precio_compra != null){
-        this.entrada.conversion = entrada.medida_compra;
-      }
-
       
 
       var descripciones = [];
