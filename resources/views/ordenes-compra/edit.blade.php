@@ -678,7 +678,7 @@ const app = new Vue({
       @endforeach
 
 
-      @foreach($proyecto.cotizacion.entradas as $entrada)
+      @foreach($proyecto->cotizacion->entradas as $entrada)
 
         console.log('{{$unidad->simbolo_ingles}}');
       @endforeach
