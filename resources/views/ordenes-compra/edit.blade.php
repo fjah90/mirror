@@ -680,7 +680,7 @@ const app = new Vue({
 
       @foreach($proyecto->cotizacion->entradas as $entrada)
 
-        console.log('{{$entrada}}');
+        console.log('{{$entrada->producto_id}}');
       @endforeach
 
 
