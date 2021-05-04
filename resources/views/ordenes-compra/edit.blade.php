@@ -681,6 +681,9 @@ const app = new Vue({
 
         if ('{{$entrada->producto_id}}' == this.entrada.producto_id) {
           this.entrada.conversion = '{{$entrada->medida_compra}}';
+
+          this.convertirCantidad();
+
         }
         
       @endforeach
