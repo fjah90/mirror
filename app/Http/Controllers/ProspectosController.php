@@ -431,7 +431,8 @@ class ProspectosController extends Controller
         }
         $condiciones     = CondicionCotizacion::all();
         $observaciones   = ObservacionCotizacion::all();
-        $unidades_medida = UnidadMedida::orderBy('simbolo')->get();
+        //$unidades_medida = UnidadMedida::orderBy('simbolo')->get();
+        $unidades_medida = UnidadMedida::with('conversiones')->orderBy('simbolo')->get();
         if (auth()->user()->can('editar numero cotizacion')) {
             $numero_siguiente = ProspectoCotizacion::select('id')->orderBy('id', 'desc')->first()->id + 1;
         } else {
@@ -539,6 +540,8 @@ class ProspectosController extends Controller
      */
     public function cotizacion(Request $request, Prospecto $prospecto)
     {
+        dd($request->entradas);
+
         $validator = Validator::make($request->all(), [
             'prospecto_id'        => 'required',
             'cliente_contacto_id' => 'required',

@@ -14,6 +14,7 @@ use App\Models\ProveedorContacto;
 use App\Models\ProyectoAprobado;
 use App\Models\TiempoEntrega;
 use App\Models\UnidadMedida;
+use App\Models\UnidadMedidaConversion;
 use App\User;
 use Illuminate\Http\Request;
 use Mail;
@@ -94,6 +95,29 @@ class OrdenesCompraController extends Controller
             'entradas' => 'required',
         ]);
 
+        $proyecto->load('cotizacion', 'cotizacion.entradas', 'cotizacion.entradas.producto', 'cotizacion.entradas.contacto');
+
+
+        foreach ($proyecto->cotizacion->entradas as $key => $e) {
+
+
+            foreach ($request->entradas as $key => $ent) {
+                
+                if ($ent['producto_id'] == $e->producto_id) {
+                    if ($e->medida_compra != null) {
+                        $unidad_entrada  = UnidadMedida::where('simbolo',$ent['medida'])->first();
+                        $unidad_convertir = UnidadMedida::where('simbolo',$e->medida_compra)->first();
+                        $conversion = UnidadMedidaConversion::where('unidad_medida_id',$unidad_entrada->id)->where('unidad_conversion_id',$unidad_convertir->id)->first();
+                        
+                        if ($conversion != null) {
+                            $ent['conversion'] = $e->medida_compra;
+                            $ent['cantidad_convertida'] = $e->cantidad * $conversion->factor_conversion;                            
+                        }
+                    }
+                }
+            }
+        }
+
         if ($validator->fails()) {
             $errors = $validator->errors()->all();
             return response()->json([
@@ -126,6 +150,23 @@ class OrdenesCompraController extends Controller
 
         //guardar entradas
         foreach ($request->entradas as $entrada) {
+
+            foreach ($proyecto->cotizacion->entradas as $key => $e) {
+                    
+                if ($entrada['producto_id'] == $e->producto_id) {
+                    if ($e->medida_compra != null) {
+                        $unidad_entrada  = UnidadMedida::where('simbolo',$entrada['medida'])->first();
+                        $unidad_convertir = UnidadMedida::where('simbolo',$e->medida_compra)->first();
+                        $conversion = UnidadMedidaConversion::where('unidad_medida_id',$unidad_entrada->id)->where('unidad_conversion_id',$unidad_convertir->id)->first();
+
+                        if ($conversion != null) {
+                            $entrada['conversion'] = $e->medida_compra;
+                            $entrada['cantidad_convertida'] = $e->cantidad * $conversion->factor_conversion;                            
+                        }
+                    }
+                }
+            }
+
             $entrada['orden_id'] = $orden->id;
             $ordenCompraEntrada = OrdenCompraEntrada::create($entrada);
 
