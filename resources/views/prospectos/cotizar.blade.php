@@ -1052,7 +1052,6 @@
                     medida: "",
                     precio: "",
                     precio_compra: "",
-                    cantidad_convertida:"",
                     fecha_precio_compra: "",
                     medida_compra: "",
                     moneda_referencia: "",
