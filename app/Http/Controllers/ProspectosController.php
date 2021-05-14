@@ -481,9 +481,11 @@ class ProspectosController extends Controller
                 'contacto_email'    => '',
                 'contacto_telefono' => '',
             ];
+            $direcciones = array_merge($direcciones, $direccion);
         }
 
-        $direcciones = array_merge($direcciones, $direccion);
+
+        
 
         foreach ($prospecto->cotizaciones as $cotizacion) {
             if ($cotizacion->archivo) {
