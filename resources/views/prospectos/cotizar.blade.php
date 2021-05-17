@@ -1502,6 +1502,7 @@
                     this.openCatalogo = false;
                 },
                 agregarEntrada() {
+                    console.log(this.entrada);
                     if (this.entrada.producto.id == undefined) {
                         swal({
                             title: "Error",
@@ -1528,6 +1529,7 @@
                     this.entrada = {
                         producto: {"proveedor": {"contactos": {}}},
                         orden: 0,
+                        area:"",
                         cantidad: "",
                         medida: "",
                         medida_compra: "",
