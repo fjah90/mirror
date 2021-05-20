@@ -1175,15 +1175,14 @@
                 var vueInstance = this;
                 //handler para reordenamiento
                 this.dataTableEntradas.on('row-reorder', function (e, diff, edit) {
-                    // console.log(diff);
-                    // console.log(edit);
                     var i = 0, j = diff.length;
                     var nuevo_ordenamiento = 0;
                     var indice_descripcion
                     for (; i < j; i++) {
                         nuevo_ordenamiento = diff[i].newPosition + 1; //+1 Por que empieza en 1
-                        // console.log(edit.nodes[i].cells[5].childNodes[0]); //Boton
-                        indice_entrada = $(edit.nodes[i].cells[5].childNodes[0]).data('index');
+                        //console.log('nuevo_ordenamiento',nuevo_ordenamiento);
+                        //console.log('index_entrada',$(edit.nodes[i].cells[6].childNodes[0]).data('index')); //Boton
+                        indice_entrada = $(edit.nodes[i].cells[6].childNodes[0]).data('index');
                         //console.log(indice_entrada);
                         vueInstance.cotizacion.entradas[indice_entrada].actualizar = true;
                         vueInstance.cotizacion.entradas[indice_entrada].orden = nuevo_ordenamiento;
