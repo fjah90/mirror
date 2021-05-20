@@ -175,6 +175,7 @@ class ClientesController extends Controller
 
         foreach ($rfcs as $rfc) {
             $rfc_verificacion = DatoFacturacion::where('rfc',$rfc['rfc'])->first();
+            dd($rfc_verificacion);
 
             if (empty($rfc_verificacion)) {
 
