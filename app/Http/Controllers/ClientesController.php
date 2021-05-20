@@ -181,7 +181,7 @@ class ClientesController extends Controller
 
                 $rfc_verificacion2 = DatoFacturacion::where('rfc',$rfc['rfc'])->withTrashed()->first();
 
-                dd($rfc_verificacion2);
+                dd($rfc);
 
                 if (!empty($rfc_verificacion2)) {
                     $rfc_verificacion2 = DatoFacturacion::where('rfc',$rfc['rfc'])->withTrashed()->first()->restore();                    
