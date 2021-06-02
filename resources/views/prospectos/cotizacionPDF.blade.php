@@ -752,7 +752,7 @@
   <script type="text/php">
       if ( isset($pdf) ) {
           $font = $fontMetrics->getFont('helvetica');
-          $pdf->page_text(536, 86, "{PAGE_NUM} de {PAGE_COUNT}", $font, 8, array(0,0,0));
+          $pdf->page_text(550, 986, "{PAGE_NUM} de {PAGE_COUNT}", $font, 8, array(0,0,0));
       }
   </script>
   
