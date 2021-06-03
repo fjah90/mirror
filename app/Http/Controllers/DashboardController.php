@@ -72,6 +72,7 @@ class DashboardController extends Controller
             ->whereIn('prospectos_cotizaciones.prospecto_id', $prospectosId)
             ->groupBy('prospectos_cotizaciones.moneda')
             ->get();
+        $compras = OrdenCompra::with('entradas.producto')->where('status','Por Autorizar')->get();
 
         $data = [
             'clientes'            => $clientes,
@@ -79,6 +80,7 @@ class DashboardController extends Controller
             'proyectosAprobados'  => $proyectosAprobados,
             'ordenesProceso'      => $ordenesProceso,
             'cotizaciones'        => $cotizaciones,
+            'compras'             => $compras,
             'aceptadas'           => $cotizacionesAceptadas,
             'proximasActividades' => $proximasActividades,
             'usuarios'            => $usuarios,

@@ -455,6 +455,125 @@ Dashboard | @parent
     </div>
   </div>
 
+
+  <!--Compras pendiente de Aprobar -->
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="panel product-details">
+        <div class="panel-heading">
+          <h3 class="panel-title">Compras Pendientes De Aprobar</h3>
+        </div>
+        <div class="panel-body">
+            <div id="oculto_compras" class="hide">
+                <dropdown id="compras_fecha_ini_control" class="marg025">
+                  <div class="input-group">
+                    <div class="input-group-btn">
+                      <btn class="dropdown-toggle" style="background-color:#fff;">
+                        <i class="fas fa-calendar"></i>
+                      </btn>
+                    </div>
+                    <input class="form-control" type="text" placeholder="DD/MM/YYYY"
+                      v-model="compras_fecha_ini" readonly
+                      style="width:120px;"
+                    />
+                  </div>
+                  <template slot="dropdown">
+                    <li>
+                      <date-picker :locale="locale" :today-btn="false"
+                      format="dd/MM/yyyy" :date-parser="dateParser"
+                      v-model="compras_fecha_ini"/>
+                    </li>
+                  </template>
+                </dropdown>
+                <dropdown id="compras_fecha_fin_control" class="marg025">
+                  <div class="input-group">
+                    <div class="input-group-btn">
+                      <btn class="dropdown-toggle" style="background-color:#fff;">
+                        <i class="fas fa-calendar"></i>
+                      </btn>
+                    </div>
+                    <input class="form-control" type="text" placeholder="DD/MM/YYYY"
+                      v-model="compras_fecha_fin" readonly
+                      style="width:120px;"
+                    />
+                  </div>
+                  <template slot="dropdown">
+                    <li>
+                      <date-picker :locale="locale" :today-btn="false"
+                      format="dd/MM/yyyy" :date-parser="dateParser"
+                      v-model="compras_fecha_fin"/>
+                    </li>
+                  </template>
+                </dropdown>
+                <!--
+                <div class="marg025 btn-group" id="cotizaciones_clientes" >
+                    <select name="proxDias" class="form-control" size="1" v-model="valor_compras_clientes" id="select_compras_clientes">
+                    <option v-for="(option, index) in datos_select_compras.clientes" v-bind:value="option" >
+                        @{{ option }}
+                      </option>
+                      
+                    </select>
+                </div>
+                <div class="marg025 btn-group" id="compras_proyectos" >
+                    <select name="proxDias" class="form-control" size="1" v-model="valor_compras_proyectos" id="select_compras_proyectos">
+                      <option v-for="option in datos_select_compras.proyectos" v-bind:value="option">
+                        @{{ option }}
+                      </option>
+                      
+                    </select>
+                </div>
+              -->
+              </div>
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="table-responsive">
+                
+                <table class="table table-striped text-center" id="tablaCompras">
+                  <thead>
+                    <tr>
+                      <th class="text-center">#</th>
+                      <th class="text-center">Numero</th>
+                      <th class="text-center"><strong>Proveedor</strong></th>
+                      <th class="text-center"><strong>Producto</strong></th>
+                      <th class="text-center"><strong>Cantidad</strong></th>
+                      <th class="text-center"><strong>Status</strong></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr v-for="(compra, index) in data.compras">
+                      <td>@{{index+1}}</td>
+                      <td>@{{compra.numero}}</td>
+                      <td>@{{compra.proveedor_empresa}}</td>
+                      <td>
+                        <span v-for="(entrada, index) in compra.entradas">
+                          @{{index+1}}.- @{{entrada.producto.nombre}} <br />
+                        </span>
+                      </td>
+                      <td>
+                        <span v-for="(entrada, index) in compra.entradas">
+                          @{{index+1}}.-
+                            <span v-if="entrada.conversion">@{{entrada.cantidad_convertida}} @{{entrada.conversion}}</span>
+                            <span v-else>@{{entrada.cantidad}} @{{entrada.medida}}</span>
+                          <br />
+                        </span>
+                      </td>
+                      <td>@{{compra.status}}</td>
+                      
+                    </tr>
+                    
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="col-sm-12 p-0">
+              <span id="product_status"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!--Cotizaciones Acceptadas -->
   <!--Ultimas Cotizaciones -->
   <div class="row">
@@ -656,6 +775,7 @@ Dashboard | @parent
       usuarioCargado: {{auth()->user()->id}},
       anio:'Todos',
       tablaCotizaciones: {},
+      tablaCompras: {},
       tablaAceptadas: {},
       tablaActividades: {},
       data: {!! json_encode($data) !!},
@@ -676,6 +796,16 @@ Dashboard | @parent
       datos_select_cotizaciones:{clientes:[], proyectos:[]},
       datos_select_cotizaciones_clientes:[],
       datos_select_cotizaciones_proyectos:[],
+
+      //variables tabla compras
+      compras_fecha_ini: '',
+      compras_fecha_fin: '',
+      valor_compras_clientes:'Cliente',
+      valor_compras_proyectos:'Proyecto',
+      datos_select_compras:{clientes:[], proyectos:[]},
+      datos_select_compras_clientes:[],
+      datos_select_compras_proyectos:[],
+
       //variables tabla cotizaciones aceptadas
       aceptadas_fecha_ini: '',
       aceptadas_fecha_fin: '',
@@ -684,6 +814,7 @@ Dashboard | @parent
       datos_select_aceptadas:{clientes:[], proyectos:[]},
       datos_select_aceptadas_clientes:[],
       datos_select_aceptadas_proyectos:[],
+
       //variables gráfica cuentas por cobrar
       porCobrar_fecha_ini: '',
       porCobrar_fecha_fin: '',
@@ -693,6 +824,7 @@ Dashboard | @parent
     mounted(){
       //Tabla cotizaciones
       this.tablaCotizaciones = this.tableFactory("#tablaCotizaciones", "cotizaciones", this.datos_select_cotizaciones);
+      this.tablaCompras = this.tableFactory("#tablaCompras", "compras", this.datos_select_compras);
       this.tablaAceptadas = this.tableFactory("#tablaAceptadas", "aceptadas", this.datos_select_aceptadas);
       this.tablaActividades=this.tableFactory("#tablaActividades", "actividades", this.datos_select_actividades);
       var vue = this;
@@ -709,6 +841,10 @@ Dashboard | @parent
           if(settings.nTable.id === 'tablaCotizaciones'){
             var min  = vue.cotizaciones_fecha_ini;
             var max  = vue.cotizaciones_fecha_fin;
+          }
+          if(settings.nTable.id === 'tablaCompras'){
+            var min  = vue.compras_fecha_ini;
+            var max  = vue.compras_fecha_fin;
           }
           if(settings.nTable.id === 'tablaAceptadas'){
             var min  = vue.aceptadas_fecha_ini;
@@ -745,6 +881,22 @@ Dashboard | @parent
       valor_cotizaciones_proyectos: function(val){
         this.tablaCotizaciones.columns(1).search(this.valor_cotizaciones_proyectos).draw();
       },
+
+
+      compras_fecha_ini: function (val) {
+        this.tablaCompras.draw();
+      },
+      compras_fecha_fin: function (val) {
+        this.tablaCompras.draw();
+      },
+      valor_compras_clientes: function(val){
+        this.tablaCompras.columns(0).search(this.valor_compras_clientes).draw();
+      },
+      valor_compras_proyectos: function(val){
+        this.tablaCompras.columns(1).search(this.valor_compras_proyectos).draw();
+      },
+
+
       aceptadas_fecha_ini: function (val) {
         this.tablaAceptadas.draw();
       },
@@ -789,6 +941,7 @@ Dashboard | @parent
           "dom": 'f<"#'+prefix+'_fechas_container.pull-left">ltip',
           "order":[],
           initComplete: function () {
+
             
             //Crear y llenar los select para clientes 
             clientes.push('Clientes')
@@ -821,6 +974,11 @@ Dashboard | @parent
         $("#oculto_cotizaciones").append($("#cotizaciones_fecha_fin_control"));
         $("#oculto_cotizaciones").append($("#cotizaciones_clientes"));
         $("#oculto_cotizaciones").append($("#cotizaciones_proyectos"));
+
+        $("#oculto_compras").append($("#compras_fecha_ini_control"));
+        $("#oculto_compras").append($("#compras_fecha_fin_control"));
+        $("#oculto_compras").append($("#compras_clientes"));
+        $("#oculto_compras").append($("#compras_proyectos"));
 
         $("#oculto_aceptadas").append($("#aceptadas_fecha_ini_control"));
         $("#oculto_aceptadas").append($("#aceptadas_fecha_fin_control"));
@@ -917,6 +1075,7 @@ Dashboard | @parent
           console.log(data);
           this.restarControls();
           this.tablaCotizaciones.destroy();
+          this.tablaCompras.destroy();
           this.tablaAceptadas.destroy();
           this.tablaActividades.destroy();
           this.data=data.data;
@@ -927,6 +1086,7 @@ Dashboard | @parent
             type: "success"
           }).then(()=>{
             this.tablaCotizaciones = this.tableFactory("#tablaCotizaciones", "cotizaciones", this.datos_select_cotizaciones);
+            this.tablaCompras = this.tableFactory("#tablaCompras", "compras", this.datos_select_compras);
             this.tablaAceptadas = this.tableFactory("#tablaAceptadas", "aceptadas", this.datos_select_aceptadas);
             this.tablaActividades=this.tableFactory("#tablaActividades", "actividades", this.datos_select_actividades);
             
