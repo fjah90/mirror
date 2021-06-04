@@ -461,7 +461,7 @@ Dashboard | @parent
     <div class="col-sm-12">
       <div class="panel product-details">
         <div class="panel-heading">
-          <h3 class="panel-title">Compras Pendientes De Aprobar</h3>
+          <h3 class="panel-title">Ordenes de Compra Pendientes De Aprobar</h3>
         </div>
         <div class="panel-body">
             <div id="oculto_compras" class="hide">
@@ -532,16 +532,19 @@ Dashboard | @parent
                   <thead>
                     <tr>
                       <th class="text-center">#</th>
-                      <th class="text-center">Numero</th>
+                      <th class="text-center">Cliente</th>
+                      <th class="text-center">Numero Orden</th>
                       <th class="text-center"><strong>Proveedor</strong></th>
                       <th class="text-center"><strong>Producto</strong></th>
                       <th class="text-center"><strong>Cantidad</strong></th>
                       <th class="text-center"><strong>Status</strong></th>
+                      <th></th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr v-for="(compra, index) in data.compras">
                       <td>@{{index+1}}</td>
+                      <td>@{{compra.cliente.nombre}}</td>
                       <td>@{{compra.numero}}</td>
                       <td>@{{compra.proveedor_empresa}}</td>
                       <td>
@@ -558,6 +561,19 @@ Dashboard | @parent
                         </span>
                       </td>
                       <td>@{{compra.status}}</td>
+                      <td class="text-right">
+                      <template v-if="compra.status!='Pendiente' && compra.status!='Cancelada'">
+                        <a class="btn btn-xs btn-info" title="Ver"
+                          :href="'/proyectos-aprobados/'+compra.proyecto_id+'/ordenes-compra/'+compra.id">
+                          <i class="far fa-eye"></i>
+                        </a>
+                        <a v-if="compra.archivo" class="btn btn-xs btn-warning" title="PDF" :href="compra.archivo"
+                          :download="'INTERCORP-PO '+compra.numero+' '+compra.proyecto_nombre+'.pdf'">
+                          <i class="far fa-file-pdf"></i>
+                        </a>
+                      </template>
+                    
+                  </td>
                       
                     </tr>
                     
