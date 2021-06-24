@@ -679,7 +679,7 @@ const app = new Vue({
             this.entrada.medida = '{{$unidad->simbolo}}';     
         }
 
-        console.log(entrada.media);
+        console.log('entradamedia',entrada.medida);
       @endforeach
 
 
