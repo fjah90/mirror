@@ -672,16 +672,16 @@ const app = new Vue({
 
       @foreach($unidades_medida as $unidad)
 
+        if($entrada.medida == 'YD2'){
+          $entrada.medida = 'SQYD';
+        }
+
         if ('{{$unidad->simbolo_ingles}}' == entrada.medida) {
             this.entrada.medida = '{{$unidad->simbolo}}';    
         }
         if ('{{$unidad->simbolo}}' == entrada.medida) {
             this.entrada.medida = '{{$unidad->simbolo}}';     
         }
-
-        console.log('entradamedia',entrada.medida);
-        console.log('simbolo','{{$unidad->simbolo}}');
-        console.log('simboloing','{{$unidad->simbolo_ingles}}');
       @endforeach
 
 
