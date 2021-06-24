@@ -293,7 +293,7 @@
                     <thead>
                       <tr>
                         <th>Producto</th>
-                        <th>Area</th>
+                        <th>Área</th>
                         <th>Comentarios</th>
                         <th>Cantidad</th>
                         <th>Conversión</th>
