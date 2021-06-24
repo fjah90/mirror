@@ -293,6 +293,7 @@
                     <thead>
                       <tr>
                         <th>Producto</th>
+                        <th>Area</th>
                         <th>Comentarios</th>
                         <th>Cantidad</th>
                         <th>Conversión</th>
@@ -306,6 +307,7 @@
                       <tr v-for="(entrada, index) in orden.entradas" v-if="entrada.borrar!=true"
                         :class="(entrada.conversion)?'bg-warning':''">
                         <td>@{{entrada.producto.nombre}}</td>
+                        <td>@{{entrada.area}}</td>
                         <td>@{{entrada.comentarios}}</td>
                         <td>@{{entrada.cantidad}} @{{entrada.medida}}</td>
                         <td>@{{entrada.conversion}}</td>
@@ -475,6 +477,7 @@ const app = new Vue({
     modalProducto: false,
     entrada: {
       producto: {},
+      area: "",
       cantidad: 0,
       medida: "",
       conversion: "",
