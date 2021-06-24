@@ -661,8 +661,6 @@ const app = new Vue({
       this.orden.entradas.splice(index, 1);
       
 
-      
-      console.log(entrada.conversion);
       if(entrada.conversion==undefined || entrada.conversion==null){
         entrada.conversion = "";
         entrada.cantidad_convertida = "";
@@ -681,7 +679,7 @@ const app = new Vue({
             this.entrada.medida = '{{$unidad->simbolo}}';     
         }
 
-        console.log(this.entrada.media);
+        console.log(entrada.media);
       @endforeach
 
 
