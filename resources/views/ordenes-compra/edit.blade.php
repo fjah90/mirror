@@ -672,8 +672,8 @@ const app = new Vue({
 
       @foreach($unidades_medida as $unidad)
 
-        if($entrada.medida == 'YD2'){
-          $entrada.medida = 'SQYD';
+        if(entrada.medida == 'YD2'){
+          entrada.medida = 'SQYD';
         }
 
         if ('{{$unidad->simbolo_ingles}}' == entrada.medida) {
