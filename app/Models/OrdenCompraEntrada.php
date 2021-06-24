@@ -103,22 +103,7 @@ class OrdenCompraEntrada extends Model
         return $result;
     }
 
-     public function getAreaAttribute()
-    {
-        $orden = OrdenCompra::findOrFail($this->orden_id);
-        $entradascotizacion = $orden->proyecto->cotizacion->entradas;
-
-        $r = '';
-
-        foreach ($entradascotizacion as $key => $entrada) {
-            if ($entrada->producto_id == $this->producto_id) {
-                $r = $entrada->area;
-            }
-        }
-
-        return $r;
-    }
-
+     
     /**
      * ---------------------------------------------------------------------------
      *                             Relationships
