@@ -19,7 +19,7 @@ class OrdenCompraEntrada extends Model
     ];
 
     protected $appends = [
-        'medida_ingles', 'conversion_ingles'
+        'medida_ingles', 'conversion_ingles','area'
     ];
 
     //TODO: esto deberia ser una columna en tabla unidades_medida, pero se guardan Strings en lugar de referencias a la tabla y el cliente quiere el cambio YA
@@ -103,7 +103,30 @@ class OrdenCompraEntrada extends Model
         return $result;
     }
 
-     
+     public function getAreaAttribute()
+    {
+        $orden = OrdenCompra::findOrFail($this->orden_id);
+
+        $r = '';
+
+        if ($orden->proyecto) {
+            if ($orden->proyecto->cotizacion) {
+                if ($orden->proyecto->cotizacion->entradas) {
+                    $entradascotizacion = $orden->proyecto->cotizacion->entradas;
+
+                    foreach ($entradascotizacion as $key => $entrada) {
+                        if ($entrada->producto_id == $this->producto_id) {
+                            $r = $entrada->area;
+                        }
+                    }            
+                }
+            }
+        }
+    
+
+        return $r;
+    }
+
     /**
      * ---------------------------------------------------------------------------
      *                             Relationships
