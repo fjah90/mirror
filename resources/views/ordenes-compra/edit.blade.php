@@ -621,7 +621,7 @@ const app = new Vue({
       if(this.entrada.conversion==""){
         this.entrada.cantidad_convertida="";
       }else{
-      this.entrada.cantidad_convertida =
+        this.entrada.cantidad_convertida =
         (this.entrada.cantidad * this.conversiones[this.entrada.medida][this.entrada.conversion])
         .toFixed(2);
       }
@@ -657,7 +657,10 @@ const app = new Vue({
       //this.orden.fecha_compra = this.orden.fecha_compra_formated;
       this.orden.entradas.splice(index, 1);
       
-      if(entrada.conversion==undefined){
+
+      
+      console.log(entrada.conversion);
+      if(entrada.conversion==undefined || entrada.conversion==null){
         entrada.conversion = "";
         entrada.cantidad_convertida = "";
       }
@@ -665,10 +668,10 @@ const app = new Vue({
       
       this.entrada = entrada;
 
+
       @foreach($unidades_medida as $unidad)
 
         if ('{{$unidad->simbolo_ingles}}' == entrada.medida) {
-          console.log('entre');
             this.entrada.medida = '{{$unidad->simbolo}}';    
         }
         if ('{{$unidad->simbolo}}' == entrada.medida) {
@@ -680,9 +683,12 @@ const app = new Vue({
       @foreach($proyecto->cotizacion->entradas as $entrada)
 
         if ('{{$entrada->producto_id}}' == this.entrada.producto_id) {
-          this.entrada.conversion = '{{$entrada->medida_compra}}';
 
-          this.convertirCantidad();
+          if(this.conversiones[this.entrada.medida]['{{$entrada->medida_compra}}'] != undefined || this.conversiones[this.entrada.medida]['{{$entrada->medida_compra}}'] != null){
+            console.log('entre');
+            this.entrada.conversion = '{{$entrada->medida_compra}}';
+            this.convertirCantidad();
+          }
 
         }
         
@@ -702,7 +708,7 @@ const app = new Vue({
       }, this);
       this.entrada.producto.descripciones = descripciones;
 
-      console.log(this.entrada)
+      
     },
     removerEntrada(entrada, index){
       this.orden.subtotal-= entrada.importe;
