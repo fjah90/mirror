@@ -680,6 +680,8 @@ const app = new Vue({
         }
 
         console.log('entradamedia',entrada.medida);
+        console.log('simbolo','{{$unidad->simbolo}}');
+        console.log('simboloing','{{$unidad->simbolo_ingles}}');
       @endforeach
 
 
