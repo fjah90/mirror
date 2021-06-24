@@ -680,6 +680,8 @@ const app = new Vue({
         if ('{{$unidad->simbolo}}' == entrada.medida) {
             this.entrada.medida = '{{$unidad->simbolo}}';     
         }
+
+        console.log(this.entrada.media);
       @endforeach
 
 
