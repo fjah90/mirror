@@ -19,7 +19,7 @@ class OrdenCompraEntrada extends Model
     ];
 
     protected $appends = [
-        'medida_ingles', 'conversion_ingles','area'
+        'medida_ingles', 'conversion_ingles'
     ];
 
     //TODO: esto deberia ser una columna en tabla unidades_medida, pero se guardan Strings en lugar de referencias a la tabla y el cliente quiere el cambio YA
