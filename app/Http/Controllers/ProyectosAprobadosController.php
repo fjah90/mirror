@@ -20,7 +20,13 @@ class ProyectosAprobadosController extends Controller
      */
     public function index()
     {
-      $proyectos = auth()->user()->proyectos_aprobados()->with('cotizacion.cuentaCobrar','cliente','cotizacion.user')->get();
+      //$proyectos = auth()->user()->proyectos_aprobados()->with('cotizacion.cuentaCobrar','cliente','cotizacion.user')->get();
+
+      
+      $inicio = Carbon::parse('2021-01-01');
+      $anio = Carbon::parse('2021-12-31');
+            $proyectos = ProyectoAprobado::whereBetween('created_at', [$inicio, $anio])->with('cotizacion','cotizacion.cuenta_cobrar','cotizacion.user')->get();
+
       foreach ($proyectos as $proyecto) {
         $proyecto->cotizacion->archivo = asset('storage/'.$proyecto->cotizacion->archivo);
       }

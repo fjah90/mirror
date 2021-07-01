@@ -42,7 +42,8 @@ class User extends Model
 		'email',
 		'password',
 		'firma',
-		'remember_token'
+		'remember_token',
+		'status'
 	];
 
 	public function clientes()

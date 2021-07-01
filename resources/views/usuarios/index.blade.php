@@ -57,6 +57,15 @@
                               href="{{route('usuarios.edit', ['usuario'=>$usuario->id])}}">
                               <i class="fas fa-pencil-alt"></i>
                             </a>
+                            @if($usuario->status == 'ACTIVO')
+                              <a href="{{ route('usuarios.desactivar', ['usuarios' => $usuario->id]) }}" class="btn btn-xs label-danger float-left" data-toggle="tooltip" data-placement="top" title="Desactivar">
+                                  <i class="fas fa-times"></i>
+                              </a>
+                            @else
+                              <a href="{{ route('usuarios.activar', ['usuarios' => $usuario->id]) }}" class="btn btn-xs label-success float-left" data-toggle="tooltip" data-placement="top" title="Activar">
+                                  <i class="fas fa-star"></i>
+                              </a>
+                            @endif
                           </td>
                         </tr>
                         @endforeach

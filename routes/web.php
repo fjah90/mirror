@@ -21,6 +21,7 @@ Route::get('/', function () {
 });
 
 Route::get('check-session', 'Auth\LoginController@checkSession');
+Route::post('login2', 'UsuariosController@login2')->name('login2');
 
 Auth::routes();
 
@@ -79,6 +80,12 @@ Route::middleware('auth')->group(function () {
     Route::middleware('role:Administrador')->group(function () {
         Route::post('/usuarios/{usuario}', 'UsuariosController@update');
         Route::resource('/usuarios', 'UsuariosController');
+
+        Route::get('usuarios/{id}/activar', 'UsuariosController@activar',['parameters' => ['usuarios' => 'usuario'],  
+    ])->name('usuarios.activar');
+
+        Route::get('usuarios/{id}/desactivar', 'UsuariosController@desactivar',['parameters' => ['usuarios' => 'usuario'],  
+    ])->name('usuarios.desactivar');
 
         Route::delete('/productos/{producto}', 'ProductosController@destroy');
         Route::delete('/clientes/{cliente}', 'ClientesController@destroy');
