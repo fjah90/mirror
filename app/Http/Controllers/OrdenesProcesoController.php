@@ -19,7 +19,7 @@ class OrdenesProcesoController extends Controller
      */
     public function index()
     {
-      $ordenes = OrdenProceso::with('ordenCompra','ordenCompra.cliente','ordenCompra.cliente.usuario')->get();
+      $ordenes = OrdenProceso::with('ordenCompra','ordenCompra.proyecto','ordenCompra.proyecto.cotizacion','ordenCompra.proyecto.cotizacion.user')->get();
 
       foreach ($ordenes as $orden) {
         if($orden->ordenCompra->archivo)
@@ -59,11 +59,11 @@ class OrdenesProcesoController extends Controller
       }
 
       if ($request->anio == 'Todos') {
-          $ordenes = OrdenProceso::with('ordenCompra','ordenCompra.cliente','ordenCompra.cliente.usuario')->get();
+          $ordenes = OrdenProceso::with('ordenCompra','ordenCompra.proyecto','ordenCompra.proyecto.cotizacion','ordenCompra.proyecto.cotizacion.user')->get();
       }
       else{
           $anio = Carbon::parse($request->anio);
-          $ordenes = OrdenProceso::whereBetween('created_at', [$inicio, $anio])->with('ordenCompra','ordenCompra.cliente','ordenCompra.cliente.usuario')->get();
+          $ordenes = OrdenProceso::whereBetween('created_at', [$inicio, $anio])->with('ordenCompra','ordenCompra.proyecto','ordenCompra.proyecto.cotizacion','ordenCompra.proyecto.cotizacion.user')->get();
       }
 
       foreach ($ordenes as $orden) {

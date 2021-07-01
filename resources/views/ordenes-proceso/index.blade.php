@@ -55,7 +55,7 @@
                 <tr v-for="(orden,index) in ordenes">
                   <td>@{{index+1}}</td>
                   <td>@{{orden.orden_compra.cliente_nombre}}</td>
-                  <td>@{{orden.orden_compra.cliente.usuario.name}}</td>
+                  <td>@{{orden.orden_compra.proyecto.cotizacion.user.name}}</td>
                   <td>@{{orden.orden_compra.proyecto_nombre}}</td>
                   <td>@{{orden.orden_compra.proveedor_empresa}}</td>
                   <td>@{{orden.numero}}</td>

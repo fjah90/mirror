@@ -8,6 +8,8 @@ use Illuminate\Validation\Rule;
 use Illuminate\Http\Request;
 use App\User;
 use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
 class UsuariosController extends Controller
 {
@@ -175,5 +177,57 @@ class UsuariosController extends Controller
     public function destroy(User $user)
     {
         //
+    }
+
+
+    public function login2(Request $request)
+    {
+
+        $input = $request->all();
+        $user = User::where('email', $input['email'])->first();
+
+        if (!empty($user)) {
+
+            //ver si esta activo
+
+            if ($user->status == 'ACTIVO') {
+                
+                if(Hash::check($input['password'], $user->password)){
+                    Auth::loginUsingId($user->id);
+                   
+                    return response()->redirectTo('/');
+                    
+                } else {
+                    return response()->redirectTo('/login')
+                        ->withErrors('password', "El usuario no se encuentra actvo");
+                }
+            }
+            return response()->redirectTo('/login')->withErrors('password', "Los datos proporcionados no son correctos.");
+        } else {
+            return response()->redirectTo('/login')
+                ->withErrors('email', "El usuario no fue encontrado.");
+        }
+    }
+
+     public function activar($id)
+    {
+        $usuario = User::findOrFail($id);
+        
+        $usuario->status = 'ACTIVO';
+
+        $usuario->save();
+        
+        return redirect()->route('usuarios.index');
+    }
+
+    public function desactivar($id)
+    {
+        $usuario = User::findOrFail($id);
+        
+        $usuario->status = 'NOACTIVO';
+
+        $usuario->save();
+        
+        return redirect()->route('usuarios.index');
     }
 }

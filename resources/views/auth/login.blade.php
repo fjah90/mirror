@@ -67,7 +67,7 @@
             </div>
             <div class="panel-body">
                 <div class="row">
-                    <form id="authentication" class="sign_validator" method="POST" action="{{ route('login') }}">
+                    <form id="authentication" class="sign_validator" method="POST" action="{{ route('login2') }}">
                       {{ csrf_field() }}
                         <div class="col-md-12">
                             @if ($errors->has('email'))

@@ -52,10 +52,10 @@
               data-page-length="-1">
               <thead>
                 <tr>
+                  <th>Numero de Cotización</th>
                   <th>Usuario</th>
                   <th>Cliente</th>
                   <th>Proyecto</th>
-                  <th>Numero de Cotización</th>
                   <th>Fecha aprobación</th>
                   <th>Proveedores</th>
                   <th></th>
@@ -63,10 +63,10 @@
               </thead>
               <tbody>
                 <tr v-for="(proyecto,index) in proyectos">
+                  <td>@{{proyecto.cotizacion_id}}</td>
                   <td>@{{proyecto.cotizacion.user.name}}</td>
                   <td>@{{proyecto.cliente_nombre}}</td>
                   <td>@{{proyecto.proyecto}}</td>
-                  <td>@{{proyecto.cotizacion_id}}</td>
                   {{--<td>@{{proyecto.created_at|date}}</td>--}}
                   <td v-if="proyecto.cotizacion.cuenta_cobrar !== null && proyecto.cotizacion.cuenta_cobrar !== undefined && proyecto.cotizacion.cuenta_cobrar.fecha_comprobante !== undefined && proyecto.cotizacion.cuenta_cobrar.fecha_comprobante !== null">@{{proyecto.cotizacion.cuenta_cobrar.fecha_comprobante|date}}</td>
                   <td v-if="
@@ -110,7 +110,7 @@
 const app = new Vue({
     el: '#content',
     data: {
-      anio:'Todos',
+      anio:'2021-12-31',
       proyectos: {!! json_encode($proyectos) !!},
       usuarioCargado: {{auth()->user()->id}},
       tabla: {}
