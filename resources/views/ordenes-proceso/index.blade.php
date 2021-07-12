@@ -41,24 +41,24 @@
               data-page-length="-1">
               <thead>
                 <tr>
+                  <th>Orden Numero</th>
                   <th>#</th>
                   <th>Cliente</th>
                   <th>Ejecutivo</th>
                   <th>Proyecto</th>
                   <th>Proveedor</th>
-                  <th>Orden Numero</th>
                   <th>Status</th>
                   <th></th>
                 </tr>
               </thead>
               <tbody>
                 <tr v-for="(orden,index) in ordenes">
+                  <td>@{{orden.numero}}</td>
                   <td>@{{index+1}}</td>
                   <td>@{{orden.orden_compra.cliente_nombre}}</td>
                   <td>@{{orden.orden_compra.proyecto.cotizacion.user.name}}</td>
                   <td>@{{orden.orden_compra.proyecto_nombre}}</td>
                   <td>@{{orden.orden_compra.proveedor_empresa}}</td>
-                  <td>@{{orden.numero}}</td>
                   <td>@{{orden.status}}</td>
                   <td class="text-right">
                     {{-- <a class="btn btn-xs btn-info" title="Ver"
