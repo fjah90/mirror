@@ -105,11 +105,13 @@
                                 </div>
                                 <div class="col-md-4">
                                     <label class="control-label">Colonia  {{($nacional) ? '' : '(opcional)'}}</label>
-                                    <select id="coloniaid" class="form-control" name="colonia" v-model="cliente.colonia" text-uppercase >
+                                    <!--<select id="coloniaid" class="form-control" name="colonia" v-model="cliente.colonia" text-uppercase >
+
                                         
                                     </select>
-                                    <!--<input id="coloniaid" type="text" class="form-control" name="colonia" v-model="cliente.colonia"/>
                                     -->
+                                    <input id="coloniaid" type="text" class="form-control" name="colonia" v-model="cliente.colonia"/>
+                                    
                                 </div>
                                 @if($nacional)
                                     <div class="col-md-4">
@@ -304,10 +306,15 @@
                 $.get('http://sepomex.789.mx/' + cp, function (data) {
                     
                     if(data.asentamientos.length >= 1) {
-                    $('#coloniaid').empty();
+                        
+                        /*
+                        $('#coloniaid').empty();
+
                         data['asentamientos'].forEach(function(colonia) {
                             $('#coloniaid').append('<option value="'+colonia+'">'+colonia+'</option>');
                         });
+                        */
+                        $('#coloniaid').val(data.asentamientos[0]);
                     }
 
                     if(data.estados.length >= 1) {
