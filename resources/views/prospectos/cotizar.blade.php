@@ -1502,11 +1502,14 @@
                 },
                 agregarEntrada() {
 
+                    var area  = '';
                     this.entrada.descripciones.forEach(function (descripcion) {
                         if (descripcion.name == 'Area') {
-                            this.entrada.area = descripcion.valor;
+                            area = descripcion.valor;
                         }
                     });
+
+                    this.entrada.area = area;
                     if (this.entrada.producto.id == undefined) {
                         swal({
                             title: "Error",
