@@ -1501,7 +1501,12 @@
                     this.openCatalogo = false;
                 },
                 agregarEntrada() {
-                    console.log(this.entrada);
+
+                    this.entrada.descripciones.forEach(function (descripcion) {
+                        if (descripcion.name == 'Area') {
+                            this.entrada.area = descripcion.valor;
+                        }
+                    });
                     if (this.entrada.producto.id == undefined) {
                         swal({
                             title: "Error",
@@ -1516,6 +1521,7 @@
                         for (var i = 0; i < this.$refs['fotos'].files.length; i++)
                             this.entrada.fotos.push(this.$refs['fotos'].files[i]);
                     }
+
 
                     this.entrada.importe = this.entrada.cantidad * this.entrada.precio;
                     this.cotizacion.subtotal += this.entrada.importe;
