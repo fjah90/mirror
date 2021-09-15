@@ -1138,7 +1138,7 @@
                     maxFileSize: 5000,
                     showCaption: false,
                     showBrowse: false,
-                    showRemove: false,
+                    showRemove: true,
                     showUpload: false,
                     browseOnZoneClick: true,
                     defaultPreviewContent: '<img src="{{asset('images/camara.png')}}" style="width:200px; height:auto;" alt="foto"><h6>Click para seleccionar</h6>',
