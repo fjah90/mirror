@@ -1136,7 +1136,7 @@
                     language: 'es',
                     overwriteInitial: true,
                     maxFileSize: 5000,
-                    showCaption: false,
+                    showCaption: true,
                     showBrowse: false,
                     showRemove: true,
                     showUpload: false,
