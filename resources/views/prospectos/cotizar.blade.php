@@ -1114,10 +1114,6 @@
 
                 let self = this; // ámbito de vue
 
-                $("button.fileinput-remove").click(function(){
-                    console.log('borre');
-                });
-
                 // inicializas select2
                 $('#proyecto-select')
                   .select2({ 
@@ -1265,9 +1261,9 @@
                 },
 
                 borrarfotos(){
-                    console.log('borre');
+                    $("button.fileinput-remove").click();
+                    this.entrada.fotos = [];
                 },
-
                 cp1() {
                     this.cargando = true;
                     if (this.cotizacion.dircp && this.cotizacion.dircp.length > 4) {
