@@ -686,7 +686,7 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label class="control-label" style="display:block;">Foto</label>
-                                        <div class="btn btn-sm btn-danger" v-on:click="borrarfotos">
+                                        <div class="btn btn-sm btn-danger" v-on:click="borrarfotos" title="BORRAR FOTOS">
                                             <i class="fas fa-trash"></i>
                                         </div>
                                         <div class="file-loading">
