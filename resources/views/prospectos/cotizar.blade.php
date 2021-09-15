@@ -966,7 +966,11 @@
 {{-- footer_scripts --}}
 @section('footer_scripts')
     <script type="text/javascript">
-        
+
+        $("button.fileinput-remove").click([
+
+            console.log('borre');
+            ]);
 
         // Used for creating a new FileList in a round-about way
         function FileListItem(a) {
