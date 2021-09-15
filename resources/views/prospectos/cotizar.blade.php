@@ -967,10 +967,6 @@
 @section('footer_scripts')
     <script type="text/javascript">
 
-        $("button.fileinput-remove").onclick() = function(){
-            console.log(borre);
-        };
-
         // Used for creating a new FileList in a round-about way
         function FileListItem(a) {
             a = [].slice.call(Array.isArray(a) ? a : arguments)
@@ -1114,6 +1110,10 @@
             mounted() {
 
                 let self = this; // ámbito de vue
+
+                $("button.fileinput-remove").onclick() = function(){
+                    console.log(borre);
+                };
 
                 // inicializas select2
                 $('#proyecto-select')
