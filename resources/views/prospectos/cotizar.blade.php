@@ -1111,7 +1111,7 @@
 
                 let self = this; // ámbito de vue
 
-                $("button.fileinput-remove").click(function{
+                $("button.fileinput-remove").click(function(){
                     console.log('borre');
                 });
 
