@@ -686,6 +686,9 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label class="control-label" style="display:block;">Foto</label>
+                                        <button class="btn btn-sm btn-danger" v-on:click="borrarfotos">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
                                         <div class="file-loading">
                                             <input id="fotos" name="fotos[]" type="file" ref="fotos" multiple/>
                                         </div>
@@ -1260,6 +1263,11 @@
                             });
                         });
                 },
+
+                borrarfotos(){
+                    console.log('borre');
+                },
+
                 cp1() {
                     this.cargando = true;
                     if (this.cotizacion.dircp && this.cotizacion.dircp.length > 4) {
