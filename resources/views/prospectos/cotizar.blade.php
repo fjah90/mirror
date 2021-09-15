@@ -1111,9 +1111,9 @@
 
                 let self = this; // ámbito de vue
 
-                $("button.fileinput-remove").onclick() = function(){
-                    console.log(borre);
-                };
+                $("button.fileinput-remove").click(function{
+                    console.log('borre');
+                });
 
                 // inicializas select2
                 $('#proyecto-select')
