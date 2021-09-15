@@ -686,9 +686,9 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label class="control-label" style="display:block;">Foto</label>
-                                        <button class="btn btn-sm btn-danger" v-on:click="borrarfotos">
+                                        <div class="btn btn-sm btn-danger" v-on:click="borrarfotos" title="BORRAR FOTOS">
                                             <i class="fas fa-trash"></i>
-                                        </button>
+                                        </div>
                                         <div class="file-loading">
                                             <input id="fotos" name="fotos[]" type="file" ref="fotos" multiple/>
                                         </div>
