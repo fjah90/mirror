@@ -708,7 +708,7 @@
               </ul>
             </td>
             <td class="text-center" style="width:30%; text-transform: none;">
-              <img style="margin-top:1em; width:200px; height:auto;" src="{{$orden->firmaAbraham}}" alt=" " />
+              <img style="margin-top:1em; width:150px; height:auto;" src="{{$orden->firmaAbraham}}" alt=" " />
               <hr style="border:0.5px solid #000; width:70%; margin-top:-5px; margin-bottom:0px;" />
               <img style="width:150px; height:auto;" src="{{public_path().'/images/logo.jpg'}}" alt="INTERCORP" />
             </td>
