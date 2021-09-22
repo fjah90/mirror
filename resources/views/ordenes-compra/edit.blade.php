@@ -620,7 +620,7 @@ const app = new Vue({
       this.entrada.cantidad_convertida = "";
     },
     convertir1(){
-      
+      console.log('prueba');
       if (this.entrada.conversion != "") {
         this.entrada.cantidad_convertida =
         (this.entrada.cantidad * this.conversiones[this.entrada.medida][this.entrada.conversion])
