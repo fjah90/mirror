@@ -526,7 +526,7 @@
                                     <div class="form-group">
                                         <label class="control-label">Cantidad</label>
                                         <input type="number" step="0.01" min="0.01" name="cantidad" class="form-control"
-                                               v-model="entrada.cantidad" required/>
+                                               v-model="entrada.cantidad" required/ @change="convertir">
                                     </div>
                                 </div>
                                 <div class="col-md-2">

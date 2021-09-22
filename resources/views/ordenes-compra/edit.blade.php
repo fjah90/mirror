@@ -179,7 +179,7 @@
                   <div class="form-group">
                     <label class="control-label">Cantidad</label>
                     <input type="number" step="0.01" min="0.01" name="cantidad" class="form-control"
-                      v-model="entrada.cantidad" required />
+                      v-model="entrada.cantidad" @change="convertir()" required />
                   </div>
                 </div>
                 <div class="col-md-4">
@@ -216,7 +216,7 @@
                   <div class="form-group">
                     <label class="control-label">Cant. en conversión</label>
                     <input type="text" class="form-control" name="cantidad_conversion"
-                      v-model="entrada.cantidad_convertida"  />
+                      v-model="entrada.cantidad_convertida" @change="convertir()"  />
                   </div>
                 </div>
                 <div class="col-md-4">
@@ -618,6 +618,20 @@ const app = new Vue({
     reiniciarConversion(){
       this.entrada.conversion = "";
       this.entrada.cantidad_convertida = "";
+    },
+    convertir1(){
+      if (this.entrada.conversion != "") {
+        this.entrada.cantidad =
+        (this.entrada.cantidad * this.conversiones[this.entrada.medida][this.entrada.conversion])
+        .toFixed(2);
+      }
+    },
+    convertir2(){
+      if (this.entrada.conversion != "") {
+        this.entrada.cantidad_convertida =
+        (this.entrada.cantidad_convertida * this.conversiones[this.entrada.conversion][this.entrada.medida])
+        .toFixed(2);
+      }
     },
     convertirCantidad(){
 
