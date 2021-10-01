@@ -1811,6 +1811,15 @@
                     this.resetDataTables();
                 },
                 guardar() {
+
+                    if (this.entrada.producto.id == undefined){
+
+                    }
+                    else{
+                        this.agregarEntrada();    
+                    }
+                    
+
                     var cotizacion = $.extend(true, {}, this.cotizacion);
                     //console.log(cotizacion.subtotal);
                     var totalf = 0;
