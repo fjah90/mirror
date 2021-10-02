@@ -1812,7 +1812,13 @@
                 },
                 guardar() {
 
-                    this.agregarEntrada();
+                    if (this.entrada.producto.id == undefined){
+
+                    }
+                    else{
+                        this.agregarEntrada();    
+                    }
+                    
 
                     var cotizacion = $.extend(true, {}, this.cotizacion);
                     //console.log(cotizacion.subtotal);
