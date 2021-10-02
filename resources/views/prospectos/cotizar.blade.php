@@ -1811,6 +1811,9 @@
                     this.resetDataTables();
                 },
                 guardar() {
+
+                    this.agregarEntrada();
+
                     var cotizacion = $.extend(true, {}, this.cotizacion);
                     //console.log(cotizacion.subtotal);
                     var totalf = 0;
