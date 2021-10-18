@@ -26,6 +26,8 @@ Route::post('login2', 'UsuariosController@login2')->name('login2');
 Auth::routes();
 
 Route::middleware('auth')->group(function () {
+    session(['database_name' => 'mysql2']);
+
     Route::get('/500', function () {return view('500');});
     Route::get('/denied', function () {return view('access_denied');});
 
@@ -102,6 +104,7 @@ Route::middleware('auth')->group(function () {
         Route::post('/cuentas-pagar/listado', 'CuentasPagarController@listado');
         Route::post('/ordenes-proceso/listado', 'OrdenesProcesoController@listado');
         Route::post('/dashboard/listado', 'DashboardController@listado');
+        Route::post('/dashboard/changebdd', 'DashboardController@changebdd');
         Route::post('/proyectos-aprobados/listado', 'ProyectosAprobadosController@listado');
 
         Route::get('/reportes/cotizaciones', 'ReportesController@cotizaciones');

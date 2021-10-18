@@ -166,7 +166,20 @@ Dashboard | @parent
 <section class="content" id="content">
   @role('Administrador')
     <div class="row">
-      <div class="col-md-4 col-md-offset-8 form-horizontal">
+      <div class="col-md-4 form-horizontal">
+        <div class="form-group p-10">
+          BASE DE DATOS
+            <!--
+                <select class="form-control" @change="CHANGEBDD()" v-model="bdd" style="width:auto;display:inline-block;">
+                  <option value="mysql">MX</option>
+                  <option value="mysql2">USA</option>
+                </select>
+              -->
+            </div>
+      </div>
+      <div class="col-md-4 form-horizontal">
+      </div>
+      <div class="col-md-4 form-horizontal">
         <div class="form-group p-10">
             <label class="col-md-3 control-label" for="example-select">Datos de: </label>
             <div class="col-md-9">
@@ -790,6 +803,7 @@ Dashboard | @parent
       prospectos: {},
       usuarioCargado: {{auth()->user()->id}},
       anio:'Todos',
+      bdd: '',
       tablaCotizaciones: {},
       tablaCompras: {},
       tablaAceptadas: {},
@@ -1107,6 +1121,27 @@ Dashboard | @parent
             this.tablaActividades=this.tableFactory("#tablaActividades", "actividades", this.datos_select_actividades);
             
             this.grafica();
+          });
+        })
+        .catch(({response}) => {
+          console.error(response);
+          swal({
+            title: "Error",
+            text: response.data.message || "Ocurrio un error inesperado, intente mas tarde",
+            type: "error"
+          });
+        });
+      },
+      CHANGEBDD(){
+        axios.post('/dashboard/changebdd', {bdd: this.bdd})
+        .then(({data}) => {
+          console.log(this.bdd);
+          swal({
+            title: "Exito",
+            text: "BDD CAMBIADA",
+            type: "success"
+          }).then(()=>{
+
           });
         })
         .catch(({response}) => {

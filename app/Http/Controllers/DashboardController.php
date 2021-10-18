@@ -11,6 +11,7 @@ use App\Models\ProspectoActividad;
 use App\Models\ProspectoCotizacion;
 use App\Models\ProyectoAprobado;
 use App\User;
+use Config;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -24,6 +25,7 @@ class DashboardController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        
     }
 
     /**
@@ -75,6 +77,7 @@ class DashboardController extends Controller
         $compras = OrdenCompra::with('entradas.producto','cliente')->where('status','Por Autorizar')->get();
 
         $data = [
+            'bdd' => session('database_name'),
             'clientes'            => $clientes,
             'prospectos'          => $prospectos,
             'proyectosAprobados'  => $proyectosAprobados,
@@ -89,6 +92,13 @@ class DashboardController extends Controller
         ];
 
         return view('dashboard', compact('data'));
+    }
+
+    public function changebdd(Request $request)
+    {
+        session(['database_name' => $request->bdd]);
+
+        return response()->json(['success' => true, "error" => false], 200);
     }
 
     public function listado(Request $request)

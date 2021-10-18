@@ -740,6 +740,22 @@ const app = new Vue({
     },
     guardar(){
       var orden = $.extend(true, {}, this.orden);
+
+      var totalf = 0;
+      orden.entradas.forEach(function (entrada) {
+          totalf += entrada.importe ;
+      });
+
+      totalcotizacion = orden.subtotal.toFixed(2);
+
+      orden.subtotal = totalf;
+
+      var dif = totalcotizacion - totalf;
+
+
+
+
+
       orden.entradas.forEach(function(entrada){
         entrada.producto_id = entrada.producto.id;
         delete entrada.producto;
