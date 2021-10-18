@@ -130,7 +130,7 @@ Nuevo Producto | @parent
                     Regresar
                   </a>
                 @endif
-                <button type="submit" class="btn btn-primary" :disabled="cargando">
+                <button type="submit" class="btn btn-primary" :disabled="cargando" @click="actualizarlista()">
                   <i class="fas fa-save"></i>
                   Guardar Producto
                 </button>
