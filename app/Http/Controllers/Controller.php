@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\DB;
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
-
+    /*
     public function __construct()
     {
         $this->middleware(function($request,$next){
@@ -22,5 +22,6 @@ class Controller extends BaseController
             return $next($request);
         });
     }
+    */
 
 }
