@@ -577,7 +577,7 @@ Dashboard | @parent
                       <td class="text-right">
                       <template v-if="compra.status!='Pendiente' && compra.status!='Cancelada'">
                         <a class="btn btn-xs btn-info" title="Ver"
-                          :href="'/proyectos-aprobados/'+compra.proyecto_id+'/ordenes-compra/'+compra.id">
+                          :href="'/proyectos-aprobados/'+compra.proyecto_id+'/ordenes-compra/'">
                           <i class="far fa-eye"></i>
                         </a>
                         <a v-if="compra.archivo" class="btn btn-xs btn-warning" title="PDF" :href="compra.archivo"
@@ -967,26 +967,50 @@ Dashboard | @parent
       tableFactory(table, prefix, datos){
         var clientes=[]
         var proyectos=[]
-        newTable=$(table).DataTable({
+        if (table == '#tablaCompras') {
+          newTable=$(table).DataTable({
           "dom": 'f<"#'+prefix+'_fechas_container.pull-left">ltip',
-          "order":[],
-          initComplete: function () {
+            "order":[[0,'desc']],
+            initComplete: function () {
 
-            
-            //Crear y llenar los select para clientes 
-            clientes.push('Clientes')
-            clientes.push('');
-            this.api().column(0).data().sort().unique().each(function(d,j){   
-              clientes.push(d);
-            });
-            //Crear y llenar los select para clientes 
-            proyectos.push('Proyectos')
-            proyectos.push('');
-            this.api().column(1).data().sort().unique().each(function(d,j){   
-              proyectos.push(d);
-            });
-          }
-        });
+              
+              //Crear y llenar los select para clientes 
+              clientes.push('Clientes')
+              clientes.push('');
+              this.api().column(0).data().sort().unique().each(function(d,j){   
+                clientes.push(d);
+              });
+              //Crear y llenar los select para clientes 
+              proyectos.push('Proyectos')
+              proyectos.push('');
+              this.api().column(1).data().sort().unique().each(function(d,j){   
+                proyectos.push(d);
+              });
+            }
+          });
+        }
+        else{
+          newTable=$(table).DataTable({
+            "dom": 'f<"#'+prefix+'_fechas_container.pull-left">ltip',
+            "order":[],
+            initComplete: function () {
+
+              
+              //Crear y llenar los select para clientes 
+              clientes.push('Clientes')
+              clientes.push('');
+              this.api().column(0).data().sort().unique().each(function(d,j){   
+                clientes.push(d);
+              });
+              //Crear y llenar los select para clientes 
+              proyectos.push('Proyectos')
+              proyectos.push('');
+              this.api().column(1).data().sort().unique().each(function(d,j){   
+                proyectos.push(d);
+              });
+            }
+          });
+        }
         
         //LLenar datos en Selects
         datos.clientes=[...clientes]

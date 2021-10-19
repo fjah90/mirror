@@ -615,6 +615,9 @@ const app = new Vue({
       }
       this.openCatalogo = false;
     },
+    actualizarlista(){
+      console.log('entre');
+    },
     reiniciarConversion(){
       this.entrada.conversion = "";
       this.entrada.cantidad_convertida = "";
