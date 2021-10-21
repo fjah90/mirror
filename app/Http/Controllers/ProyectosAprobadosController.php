@@ -55,11 +55,11 @@ class ProyectosAprobadosController extends Controller
       if ($request->id == 'Todos') {
 
         if ($request->anio == 'Todos') {
-            $proyectos = ProyectoAprobado::with('cotizacion','cotizacion.cuenta_cobrar','cotizacion.user')->get();
+            $proyectos = ProyectoAprobado::with('cotizacion','cotizacion.cuenta_cobrar','cotizacion.user','ordenes')->get();
         }
         else{
             $anio = Carbon::parse($request->anio);
-            $proyectos = ProyectoAprobado::whereBetween('created_at', [$inicio, $anio])->with('cotizacion','cotizacion.cuenta_cobrar','cotizacion.user')->get();
+            $proyectos = ProyectoAprobado::whereBetween('created_at', [$inicio, $anio])->with('cotizacion','cotizacion.cuenta_cobrar','cotizacion.user','ordenes')->get();
         }
 
         
