@@ -74,7 +74,7 @@ class DashboardController extends Controller
             ->whereIn('prospectos_cotizaciones.prospecto_id', $prospectosId)
             ->groupBy('prospectos_cotizaciones.moneda')
             ->get();
-        $compras = OrdenCompra::with('entradas.producto','cliente')->where('status','Por Autorizar')->get();
+        $compras = OrdenCompra::with('entradas.producto','cliente','proyecto','proyecto.cotizacion','proyecto.cotizacion.user')->where('status','Por Autorizar')->get();
 
         $data = [
             'bdd' => session('database_name'),
