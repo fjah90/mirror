@@ -586,7 +586,7 @@ Dashboard | @parent
                           :href="'/proyectos-aprobados/'+compra.proyecto_id+'/ordenes-compra/'">
                           <i class="far fa-eye"></i>
                         </a>
-                        <a v-if="compra.archivo" class="btn btn-xs btn-warning" title="PDF" :href="storage/compra.archivo"
+                        <a v-if="compra.archivo" class="btn btn-xs btn-warning" title="PDF" :href="'storage/'+compra.archivo"
                           :download="'INTERCORP-PO '+compra.numero+' '+compra.proyecto_nombre+'.pdf'">
                           <i class="far fa-file-pdf"></i>
                         </a>
