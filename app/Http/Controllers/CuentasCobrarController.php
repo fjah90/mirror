@@ -116,15 +116,13 @@ class CuentasCobrarController extends Controller
       }
 
 
-
+      
       $facturado = $cuenta->facturado + $request->monto;
-      /*
       if ($facturado > $cuenta->total) {
         return response()->json([
           "success" => false, "error" => true, "message" => "La factura supera el monto pendiente de facturar"
         ], 422);
       }
-      */
 
       $create = $request->except(['pdf','xml']);
       $create['pendiente'] = $create['monto'];
