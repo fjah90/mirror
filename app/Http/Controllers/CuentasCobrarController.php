@@ -19,7 +19,7 @@ class CuentasCobrarController extends Controller
      */
     public function index()
     {
-      $cuentas = CuentaCobrar::all();
+      $cuentas = CuentaCobrar::with('cotizacion','cotizacion.user')->all();
 
       return view('cuentas-cobrar.index', compact('cuentas'));
     }
