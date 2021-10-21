@@ -81,11 +81,11 @@
               </tbody>
               <tfoot>
                   <tr>
-                      <th colspan="8" style="text-align:right">Total MXN:</th>
+                      <th colspan="11" style="text-align:right">Total MXN:</th>
                       <th></th>
                   </tr>
                   <tr>
-                      <th colspan="8" style="text-align:right">Total USD:</th>
+                      <th colspan="11" style="text-align:right">Total USD:</th>
                       <th></th>
                   </tr>
               </tfoot>
