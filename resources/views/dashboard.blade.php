@@ -587,7 +587,7 @@ Dashboard | @parent
                           <i class="far fa-eye"></i>
                         </a>
                         <a v-if="compra.archivo" class="btn btn-xs btn-warning" title="PDF" :href="compra.archivo"
-                          :download="'INTERCORP-PO '+compra.numero+' '+compra.proyecto_nombre+'.pdf'">
+                          :download="'/storage/'+compra.numero+' '+compra.proyecto_nombre+'.pdf'">
                           <i class="far fa-file-pdf"></i>
                         </a>
                       </template>
