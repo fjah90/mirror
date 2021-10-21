@@ -544,21 +544,24 @@ Dashboard | @parent
                 <table class="table table-striped text-center" id="tablaCompras">
                   <thead>
                     <tr>
-                      <th class="text-center">#</th>
+                      <th class="text-center"># Orden</th>
+                      <th class="text-center">Ejecutivo</th>
                       <th class="text-center">Cliente</th>
-                      <th class="text-center">Numero Orden</th>
+                      <th class="text-center">Proyecto</th>
                       <th class="text-center"><strong>Proveedor</strong></th>
                       <th class="text-center"><strong>Producto</strong></th>
                       <th class="text-center"><strong>Cantidad</strong></th>
+                      <th class="text-center"><strong>Total</strong></th>
                       <th class="text-center"><strong>Status</strong></th>
                       <th></th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr v-for="(compra, index) in data.compras">
-                      <td>@{{index+1}}</td>
-                      <td>@{{compra.cliente.nombre}}</td>
                       <td>@{{compra.numero}}</td>
+                      <td>@{{compra.proyecto.cotizacion.user.name}}</td>
+                      <td>@{{compra.proyecto.proyecto}}</td>
+                      <td>@{{compra.cliente.nombre}}</td>
                       <td>@{{compra.proveedor_empresa}}</td>
                       <td>
                         <span v-for="(entrada, index) in compra.entradas">
@@ -572,6 +575,9 @@ Dashboard | @parent
                             <span v-else>@{{entrada.cantidad}} @{{entrada.medida}}</span>
                           <br />
                         </span>
+                      </td>
+                      <td>
+                        <td>@{{compra.total}}</td>
                       </td>
                       <td>@{{compra.status}}</td>
                       <td class="text-right">
