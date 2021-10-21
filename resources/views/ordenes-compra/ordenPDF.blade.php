@@ -682,7 +682,7 @@
           </tr>
           <tr>
             <td class="text-right" style="width:90%;"><strong>FLETES:</strong></td>
-            <td class="text-right" style="width:10%;">@format_money()</td>
+            <td class="text-right" style="width:10%;">@format_money(0)</td>
           </tr>
           <tr>
             <td class="text-right" style="width:90%;"><strong>IVA:</strong></td>
