@@ -41,6 +41,7 @@
               <thead>
                 <tr>
                   <th>#</th>
+                  <th># Cotizacion</th>
                   <th>Cliente</th>
                   <th>Proyecto</th>
                   <th>Condiciones Pago</th>
@@ -55,6 +56,7 @@
               <tbody>
                 <tr v-for="(cuenta, index) in cuentas">
                   <td>@{{index+1}}</td>
+                  <td>@{{cuenta.cotizacion.id}}</td>
                   <td>@{{cuenta.cliente}}</td>
                   <td>@{{cuenta.proyecto}}</td>
                   <td>@{{cuenta.condiciones}}</td>
