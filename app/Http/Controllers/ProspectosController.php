@@ -1141,7 +1141,7 @@ class ProspectosController extends Controller
 
         //generar proyecto aprobado
         $proveedores = $cotizacion->entradas->groupBy(function ($entrada) {
-            dd($entrada);
+            dd($entrada->producto->proveedor->empresa);
             return $entrada->producto->proveedor->empresa;
         })->keys()->all();
         $proveedores = implode(",", $proveedores);
