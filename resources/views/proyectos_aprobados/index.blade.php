@@ -74,8 +74,8 @@
                   proyecto.cotizacion.cuenta_cobrar === undefined ||  proyecto.cotizacion.cuenta_cobrar.fecha_comprobante === undefined || proyecto.cotizacion.cuenta_cobrar.fecha_comprobante === null">@{{proyecto.created_at|date}}</td>
 
                   <td>
-                    <span v-for="(proveedor, index) in proyecto.proveedores">
-                      @{{index+1}}.- @{{proveedor}} <br/>
+                    <span v-for="(orden, index) in proyecto.ordenes">
+                      @{{index+1}}.- @{{orden.proveedor_empresa}} ,@{{orden.id}} , @{{orden.status}}  <br/>
                     </span>
                   </td>
                   <td class="text-right">
