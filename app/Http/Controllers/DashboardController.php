@@ -170,10 +170,11 @@ class DashboardController extends Controller
             $totalesCuentas->whereIn('prospectos_cotizaciones.prospecto_id', $prospectosId);
         }
         $totalesCuentas = $totalesCuentas->groupBy('prospectos_cotizaciones.moneda')->get();
-
+        /*
         if ($request->id != "todos") {
             $compras = OrdenCompra::with('entradas.producto','cliente','proyecto','proyecto.cotizacion','proyecto.cotizacion.user')->whereIn('proyecto.cotizacion.user.id', $prospectosId)->where('status','Por Autorizar')->get();
         }
+        */
         $compras = OrdenCompra::with('entradas.producto','cliente','proyecto','proyecto.cotizacion','proyecto.cotizacion.user')->where('status','Por Autorizar')->get();
 
         $data = [
