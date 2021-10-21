@@ -52,7 +52,7 @@
               data-page-length="-1">
               <thead>
                 <tr>
-                  <th>Numero de Cotización</th>
+                  <th># Cotización</th>
                   <th>Usuario</th>
                   <th>Cliente</th>
                   <th>Proyecto</th>
