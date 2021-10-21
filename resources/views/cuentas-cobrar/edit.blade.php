@@ -153,7 +153,7 @@
                   <div class="form-group">
                     <label class="control-label">Monto Factura</label>
                     <input type="number" name="monto" class="form-control"
-                      min="0.01" :max="cuenta.pendiente" step="0.01" v-model="factura.monto" required
+                      min="0.01" step="0.01" v-model="factura.monto" required
                      />
                   </div>
                 </div>
