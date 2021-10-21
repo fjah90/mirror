@@ -81,7 +81,7 @@ class OrdenCompra extends Model
 
     public function proyecto()
     {
-        return $this->belongsTo('App\Models\ProyectoAprobado', 'proyecto_id', 'id')->withTrashed();
+        return $this->belongsTo('App\Models\ProyectoAprobado', 'proyecto_id', 'id');
     }
 
     public function proveedor()
