@@ -79,6 +79,16 @@
                   </td>
                 </tr>
               </tbody>
+              <tfoot>
+                  <tr>
+                      <th colspan="6" style="text-align:right">Total MXN:</th>
+                      <th></th>
+                  </tr>
+                  <tr>
+                      <th colspan="6" style="text-align:right">Total USD:</th>
+                      <th></th>
+                  </tr>
+              </tfoot>
             </table>
           </div>
         </div>
@@ -104,7 +114,39 @@ const app = new Vue({
       }
     },
     mounted(){
-      this.tabla = $("#tabla").DataTable();
+      this.tabla = $("#tabla").DataTable({
+        "footerCallback": function ( row, data, start, end, display ) {
+            var api = this.api(), data;
+
+            var formato = function ( i ) {
+                return typeof i === 'string' ?
+                    i.replace(/[\$,]/g, '')*1 :
+                    typeof i === 'number' ?
+                        i : 0;
+            };
+            //datos de la tabla con filtros aplicados
+            var datos= api.columns([7,6], {search: 'applied'}).data();
+            var totalMxn = 0;
+            var totalUsd = 0;
+            //suma de montos
+            datos[0].forEach(function(element, index){
+                if(datos[1][index]=="Dolares"){
+                    totalUsd+=formato(element)
+                }else{
+                    totalMxn+=formato(element)
+                }
+            });
+ 
+            // Actualizar
+            var nCells = row.getElementsByTagName('th');
+            nCells[1].innerHTML = accounting.formatMoney(totalMxn, "$", 2);
+
+            var secondRow = $(row).next()[0]; 
+            var nCells = secondRow.getElementsByTagName('th');
+            nCells[1].innerHTML = accounting.formatMoney(totalUsd, "$", 2);
+        }
+
+      });
     },
     methods: {
       
