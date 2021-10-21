@@ -1138,10 +1138,8 @@ class ProspectosController extends Controller
         $cotizacion = ProspectoCotizacion::with('condiciones', 'entradas.producto.proveedor')->findOrFail($request->cotizacion_id);
         $prospecto->load('cliente');
 
-
         //generar proyecto aprobado
         $proveedores = $cotizacion->entradas->groupBy(function ($entrada) {
-            dd($entrada->producto->proveedor->empresa);
             return $entrada->producto->proveedor->empresa;
         })->keys()->all();
         $proveedores = implode(",", $proveedores);
