@@ -687,7 +687,7 @@
           </tr>
           <tr>
             <td class="text-right" style="width:90%;"><strong>FREIGHT:</strong></td>
-            <td class="text-right" style="width:10%;">@format_money(0)</td>
+            <td class="text-right" style="width:10%;">@format_money($orden->flete)</td>
           </tr>
           <tr>
             <td class="text-right" style="width:90%;"><strong>OTHER:</strong></td>

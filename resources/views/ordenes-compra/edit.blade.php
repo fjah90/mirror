@@ -100,6 +100,11 @@
                          v-model="orden.carga" />
                 </div>
                 <div class="col-md-4">
+                  <label class="control-label">Costo Flete</label>
+                  <input type="number" class="form-control" name="carga" min='0'
+                         v-model="orden.flete" @change="agregarFlete()" />
+                </div>
+                <div class="col-md-4">
                   <label class="control-label">Fecha de Orden de Compra</label>
                   <br />
                   <dropdown style="width:100%;">
@@ -475,6 +480,7 @@ const app = new Vue({
     proyecto: {!! json_encode($proyecto) !!},
     locale: localeES,
     modalProducto: false,
+    flete2 : {!! json_encode($orden->flete) !!},
     entrada: {
       producto: {},
       area: "",
@@ -596,6 +602,33 @@ const app = new Vue({
           return true;
         }
       }, this);
+    },
+    agregarFlete(){
+      var f = parseFloat(this.orden.flete);   
+      if (typeof (f) != 'number' || isNaN(f)) {
+        this.orden.flete = 0;
+        if (isNaN(f)) {
+          var f = parseFloat(this.orden.flete);   
+          var f2 = parseFloat(this.flete2);   
+          var o = parseFloat(this.orden.subtotal);   
+          o-=f2;
+          o+=f;
+          this.flete2 = this.orden.flete;
+          this.orden.subtotal = o;  
+        }
+      }
+      else{
+        
+        var f = parseFloat(this.orden.flete);   
+        var f2 = parseFloat(this.flete2);   
+        var o = parseFloat(this.orden.subtotal);   
+        o-=f2;
+        o+=f;
+        this.flete2 = this.orden.flete;
+        this.orden.subtotal = o;  
+      }
+      
+
     },
     seleccionarProduco(prod){
       this.entrada.producto = prod;
