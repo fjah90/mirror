@@ -126,6 +126,7 @@ class OrdenesCompraController extends Controller
             $create['total'] = $create['subtotal'];
         }
 
+        $create['flete'] = $request->flete;
         $orden = OrdenCompra::create($create);
 
         //guardar entradas

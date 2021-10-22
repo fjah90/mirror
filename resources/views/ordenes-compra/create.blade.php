@@ -83,6 +83,11 @@
                          v-model="orden.carga" />
                 </div>
                 <div class="col-md-4">
+                  <label class="control-label">Costo Flete</label>
+                  <input type="number" class="form-control" name="carga"
+                         v-model="orden.flete" @change="agregarFlete()"/>
+                </div>
+                <div class="col-md-4">
                   <label class="control-label">Fecha de Orden de Compra</label>
                   <br />
                   <dropdown style="width:100%;">
@@ -369,6 +374,7 @@ const app = new Vue({
     productos: {!! json_encode($productos) !!},
     locale: localeES,
     modalProducto: false,
+    flete2:0,
     orden: {
       proyecto_id: {{$proyecto->id}},
       proveedor_id: '',
@@ -381,6 +387,7 @@ const app = new Vue({
       punto_entrega: '',
       fecha_compra: moment().format('DD/MM/YYYY'),
       carga: '',
+      flete:'',
       tiempo: {
         id: '',
         valor: ''
@@ -507,6 +514,31 @@ const app = new Vue({
         importe: 0,
         comentarios: '',
       };
+    },
+    agregarFlete(){
+      var f = parseFloat(this.orden.flete);   
+      if (typeof (f) != 'number' || isNaN(f)) {
+        this.orden.flete = 0;
+        if (isNaN(f)) {
+          var f = parseFloat(this.orden.flete);   
+          var f2 = parseFloat(this.flete2);   
+          var o = parseFloat(this.orden.subtotal);   
+          o-=f2;
+          o+=f;
+          this.flete2 = this.orden.flete;
+          this.orden.subtotal = o;  
+        }
+      }
+      else{
+        
+        var f = parseFloat(this.orden.flete);   
+        var f2 = parseFloat(this.flete2);   
+        var o = parseFloat(this.orden.subtotal);   
+        o-=f2;
+        o+=f;
+        this.flete2 = this.orden.flete;
+        this.orden.subtotal = o;  
+      }
     },
     editarEntrada(entrada, index){
       this.orden.subtotal-= entrada.importe;
