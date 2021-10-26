@@ -54,7 +54,7 @@ class ProductosController extends Controller
         $validator = Validator::make($request->all(), [
             'proveedor_id' => 'required',
             'categoria_id' => 'required',
-            'nombre'       => 'required|unique:productos,nombre',
+            'nombre'       => 'required',
         ]);
 
         if ($validator->fails()) {

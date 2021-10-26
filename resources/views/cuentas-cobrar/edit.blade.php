@@ -182,6 +182,31 @@
                     </dropdown>
                   </div>
                 </div>
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label class="control-label">Fecha Emisión</label>
+                    <br />
+                    <dropdown style="width:100%;">
+                      <div class="input-group" >
+                        <div class="input-group-btn">
+                          <btn class="dropdown-toggle" style="background-color:#fff;">
+                            <i class="fas fa-calendar"></i>
+                          </btn>
+                        </div>
+                        <input class="form-control" type="text" name="emision"
+                          v-model="factura.emision" placeholder="DD/MM/YYYY"
+                          readonly
+                        />
+                      </div>
+                      <template slot="dropdown">
+                        <li>
+                          <date-picker :locale="locale" :today-btn="false" :clear-btn="false"
+                          format="dd/MM/yyyy" :date-parser="dateParser" v-model="factura.emision"/>
+                        </li>
+                      </template>
+                    </dropdown>
+                  </div>
+                </div>
               </div>
               <div class="row">
                 <div class="col-md-6">
@@ -312,6 +337,7 @@ const app = new Vue({
       porcentaje: '',
       monto: '',
       vencimiento: '',
+      emision: '',
       pdf: '',
       xml: ''
     },
