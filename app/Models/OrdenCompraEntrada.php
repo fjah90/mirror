@@ -108,14 +108,15 @@ class OrdenCompraEntrada extends Model
 
         $r = '';
 
-        if ($orden) {
-            $entradascotizacion = $this->descripciones;
-            foreach ($entradascotizacion as $key => $entrada) {
-                if ($entrada->name == 'Area') {
-                        $r = $entrada->valor;
-                    }
-                }                        
-        }
+    
+        $entradascotizacion = $this->descripciones;
+        foreach ($entradascotizacion as $key => $entrada) {
+            if ($entrada->name == 'Area') {
+                    $r = $entrada->valor;
+            }
+        }                    
+
+        
         /*
         if ($orden->proyecto) {
             if ($orden->proyecto->cotizacion) {
