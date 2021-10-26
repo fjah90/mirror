@@ -271,6 +271,12 @@
                       </tr>
                       <tr>
                         <td colspan="2"></td>
+                        <td class="text-right"><strong>Flete</strong></td>
+                        <td>@{{orden.flete | formatoMoneda}}</td>
+                        <td></td>
+                      </tr>
+                      <tr>
+                        <td colspan="2"></td>
                         <td class="text-right"><strong>IVA</strong></td>
                         <td v-if="orden.iva=='0'">$0.00</td>
                         <td v-else>@{{orden.subtotal * 0.16 | formatoMoneda}}</td>
