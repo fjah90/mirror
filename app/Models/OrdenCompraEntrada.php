@@ -105,12 +105,11 @@ class OrdenCompraEntrada extends Model
 
      public function getAreaAttribute()
     {
-        $orden = OrdenCompra::findOrFail($this->orden_id);
 
         $r = '';
 
         if ($orden) {
-            $entradascotizacion = $orden->entradas->descripciones;
+            $entradascotizacion = $this->descripciones;
             foreach ($entradascotizacion as $key => $entrada) {
                 if ($entrada->name == 'Area') {
                         $r = $entrada->valor;
