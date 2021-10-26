@@ -58,7 +58,7 @@
                   <td>@{{cuenta.proveedor_empresa}}</td>
                   <td>@{{cuenta.proyecto_nombre}}</td>
                   <td>@{{cuenta.dias_credito}}</td>
-                  <td>@{{cuenta.moneda}}</td>
+                  <td><p v-bind:style= "[cuenta.moneda == 'Dolares' ? {'color':'#760e0e'} : {'background-color':'#ff0000a8';}]">@{{cuenta.moneda}}</p></td>
                   <td>@{{cuenta.total | formatoMoneda}}</td>
                   <td>@{{cuenta.facturado | formatoMoneda}}</td>
                   <td>@{{cuenta.pagado | formatoMoneda}}</td>
