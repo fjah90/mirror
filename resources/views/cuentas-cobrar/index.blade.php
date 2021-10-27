@@ -57,7 +57,7 @@
               <tbody>
                 <tr v-for="(cuenta, index) in cuentas">
                   <td>@{{index+1}}</td>
-                  <td>@{{cuenta.cotizacion.id}}</td>
+                  <td>@{{cuenta.cotizacion.numero}}</td>
                   <td>@{{cuenta.cotizacion.user.name}}</td>
                   <td>@{{cuenta.cliente}}</td>
                   <td>@{{cuenta.proyecto}}</td>
