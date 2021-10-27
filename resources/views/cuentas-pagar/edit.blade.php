@@ -32,7 +32,7 @@
               </thead>
               <tbody>
                 <tr>
-                  <td>{{$cuenta->orden->proyecto->cotizacion=>numero}}</td>
+                  <td>{{$cuenta->orden->proyecto->cotizacion->numero}}</td>
                 </tr>
               </tbody>
             </table>
