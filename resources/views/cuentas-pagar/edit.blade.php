@@ -35,8 +35,9 @@
               <tbody>
                 <tr>
                   <td>{{$cuenta->orden->proyecto->cotizacion->numero}}</td>
-                  <td v-for="entrada in cuenta.orden.entradas">
-                    @{{entrada.producto.nombre}} - @{{entrada.cantidad}} = @{{entrada.importe}}
+                  <td>
+                    @foreach($cuenta->orden->entradas as $entrada)
+                    {{$entrada->producto->nombre}} - {{$entrada->cantidad}} - {{$entrada->importe}}
                   </td>
                 </tr>
               </tbody>
