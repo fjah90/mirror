@@ -75,7 +75,7 @@
 
                   <td>
                     <span v-for="(orden, index) in proyecto.ordenes">
-                      @{{index+1}}.- @{{orden.proveedor_empresa}} ,@{{orden.id}} , @{{orden.status}}  <br/>
+                      @{{index+1}}.- @{{orden.proveedor_empresa}} ,@{{orden.numero}} , @{{orden.status}}  <br/>
                     </span>
                   </td>
                   <td class="text-right">
