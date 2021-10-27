@@ -62,7 +62,7 @@
                   <td>@{{cuenta.cliente}}</td>
                   <td>@{{cuenta.proyecto}}</td>
                   <td>@{{cuenta.condiciones}}</td>
-                  <td v-bind:style= "[cuenta.moneda == 'Dolares' ? {'background-color':'red'} : {'background-color':'#6f2d2d'}]">@{{cuenta.moneda}}</td>
+                  <td ><p v-bind:style= "[cuenta.moneda == 'Dolares' ? {'background-color':'green'} : {'background-color':'blue'}]">@{{cuenta.moneda}}</p></td>
                   <td>@{{cuenta.total | formatoMoneda}}</td>
                   <td>@{{cuenta.facturado | formatoMoneda}}</td>
                   <td>@{{cuenta.pagado | formatoMoneda}}</td>
