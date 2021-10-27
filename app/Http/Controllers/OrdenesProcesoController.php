@@ -20,9 +20,11 @@ class OrdenesProcesoController extends Controller
     public function index()
     {
       $ordenes = OrdenProceso::with('ordenCompra','ordenCompra.proyecto','ordenCompra.proyecto.cotizacion','ordenCompra.proyecto.cotizacion.user')->get();
-      dd($ordenes);
 
       foreach ($ordenes as $orden) {
+        if (!$orden->ordenCompra) {
+          dd($orden);
+        }
         if($orden->ordenCompra->archivo)
           $orden->ordenCompra->archivo = asset('storage/'.$orden->ordenCompra->archivo);
         if($orden->factura){
