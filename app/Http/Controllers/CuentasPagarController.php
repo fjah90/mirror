@@ -77,7 +77,7 @@ class CuentasPagarController extends Controller
      */
     public function edit(CuentaPagar $cuenta)
     {
-      $cuenta->load('facturas.pagos');
+      $cuenta->load('facturas.pagos','orden.entradas');
       foreach ($cuenta->facturas as $factura) {
         $factura->pdf = ($factura->pdf)?asset('storage/'.$factura->pdf):"";
         $factura->xml = ($factura->xml)?asset('storage/'.$factura->xml):"";
