@@ -32,7 +32,7 @@
         </div>
         <div class="panel-body">
           <div class="table-responsive">
-            <table id="table" class="table table-bordred">
+            <table id="tabla" class="table table-bordred">
               <thead>
                 <tr>
                   <th>#</th>
