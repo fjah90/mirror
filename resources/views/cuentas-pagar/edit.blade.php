@@ -23,6 +23,20 @@
         <div class="panel">
           <div class="panel-heading">
             <h3 class="panel-title">Facturas Cuenta {{$cuenta->id}}: {{$cuenta->proyecto_nombre}}</h3>
+            <table class="table table-bordred">
+              <thead>
+                <tr>
+                  <th>Cotización</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="factura in cuenta.facturas">
+                  <td>@{{cuenta.orden->proyecto->cotizacion->numero}}</td>
+                </tr>
+              </tbody>
+            </table>
+
           </div>
           <div class="panel-body">
             <div class="row">
