@@ -31,8 +31,8 @@
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="factura in cuenta.facturas">
-                  <td>@{{cuenta.orden->proyecto->cotizacion->numero}}</td>
+                <tr>
+                  <td>{{cuenta->orden->proyecto->cotizacion=>numero}}</td>
                 </tr>
               </tbody>
             </table>
