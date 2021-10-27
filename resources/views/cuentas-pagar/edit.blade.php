@@ -27,12 +27,17 @@
               <thead>
                 <tr>
                   <th>Cotización</th>
+                  <th>Entradas</th>
+
                   <th></th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
                   <td>{{$cuenta->orden->proyecto->cotizacion->numero}}</td>
+                  <td v-for="entrada in cuenta.orden.entradas">
+                    @{{entrada.producto.nombre}} - @{{entrada.cantidad}} = @{{entrada.importe}}
+                  </td>
                 </tr>
               </tbody>
             </table>
