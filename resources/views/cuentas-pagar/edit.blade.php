@@ -37,7 +37,7 @@
                   <td>{{$cuenta->orden->proyecto->cotizacion->numero}}</td>
                   <td>
                     @foreach($cuenta->orden->entradas as $entrada)
-                    {{$entrada->producto->nombre}} - {{$entrada->cantidad}} - {{$entrada->importe  | formatoMoneda}}<br>
+                    {{$entrada->producto->nombre}} - {{$entrada->cantidad}} - @{{$entrada->importe  | formatoMoneda}}<br>
                     @endforeach
                   </td>
                 </tr>
