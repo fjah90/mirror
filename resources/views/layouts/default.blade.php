@@ -250,38 +250,38 @@
           <hr class="divider-menu">
           
           <li {!! (Request::is('productos*') ? 'class="active"' : '') !!} style=" color:blue">
-            <span class="title"><i class="fas fa-parking " ></i> Ventas</span>
+            <span class="title" style="color:blue"><i class="fas fa-parking " ></i> Ventas</span>
           </li>
           <li class="sub" {!! (Request::is('cuentas-cobrar*') ? 'class="active"' : '') !!} style="color:blue">
             <a href="javascript:;">
               <i class="menu-icon fas fa-hand-holding-usd"></i>
-              <span>Facturacion</span>
+              <span style="color:blue">Facturacion</span>
             </a>
           </li>
-          <li class="sub" {!! (Request::is('cuentas-cobrar*') ? 'class="active"' : '') !!} style="color:blue">
+          <li class="sub" {!! (Request::is('cuentas-cobrar*') ? 'class="active"' : '') !!} >
             <a href="{{ URL::to('cuentas-cobrar') }}">
               <i class="menu-icon fas fa-hand-holding-usd"></i>
-              <span>Cuentas por Cobrar</span>
+              <span style="color:blue">Cuentas por Cobrar</span>
             </a>
           </li>
           <hr class="divider-menu">
           
-          <li {!! (Request::is('cuentas-cobrar*') ? 'class="active"' : '') !!} style="color:red" >
-            <span class="title">
+          <li {!! (Request::is('cuentas-cobrar*') ? 'class="active"' : '') !!}  >
+            <span class="title" style="color:red">
               <i class="menu-icon fas fa-hand-holding-usd"></i>
               Ordenes Compra
             </span>
           </li>
-          <li class="sub" {!! (Request::is('ordenes-proceso*') ? 'class="active"' : '') !!} style="color:red">
+          <li class="sub" {!! (Request::is('ordenes-proceso*') ? 'class="active"' : '') !!} >
             <a href="{{ URL::to('ordenes-proceso') }}">
               <i class="menu-icon fas fa-clipboard-list"></i>
-              <span>Ordenes Proceso</span>
+              <span style="color:red">Ordenes Proceso</span>
             </a>
           </li>
-          <li class="sub" {!! (Request::is('cuentas-pagar*') ? 'class="active"' : '') !!} style="color:red">
+          <li class="sub" {!! (Request::is('cuentas-pagar*') ? 'class="active"' : '') !!} >
             <a href="{{ URL::to('cuentas-pagar') }}">
               <i class="menu-icon fas fa-receipt"></i>
-              <span>Cuentas por Pagar</span>
+              <span style="color:red">Cuentas por Pagar</span>
             </a>
           </li>
           <hr class="divider-menu">
