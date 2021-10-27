@@ -250,15 +250,15 @@
           <hr class="divider-menu">
           
           <li {!! (Request::is('productos*') ? 'class="active"' : '') !!}>
-            <span class="title"><i class="fas fa-parking "></i> Ventas</span>
+            <span class="title"><i class="fas fa-parking " style="background-color:red"></i> Ventas</span>
           </li>
-          <li class="sub" {!! (Request::is('cuentas-cobrar*') ? 'class="active"' : '') !!} >
+          <li class="sub" {!! (Request::is('cuentas-cobrar*') ? 'class="active"' : '') !!} style="background-color:ff3933">
             <a href="javascript:;">
               <i class="menu-icon fas fa-hand-holding-usd"></i>
               <span>Facturacion</span>
             </a>
           </li>
-          <li class="sub" {!! (Request::is('cuentas-cobrar*') ? 'class="active"' : '') !!} >
+          <li class="sub" {!! (Request::is('cuentas-cobrar*') ? 'class="active"' : '') !!} style="background-color:ff3933">
             <a href="{{ URL::to('cuentas-cobrar') }}">
               <i class="menu-icon fas fa-hand-holding-usd"></i>
               <span>Cuentas por Cobrar</span>

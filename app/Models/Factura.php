@@ -9,7 +9,7 @@ class Factura extends Model
 {
     protected $table = 'facturas';
 
-    protected $fillable = ['cuenta_id','documento','monto','vencimiento',
+    protected $fillable = ['cuenta_id','documento','monto','vencimiento','emision',
       'pendiente','pagado','pagada','pdf','xml'
     ];
 
@@ -20,7 +20,7 @@ class Factura extends Model
       'pagada' => 'boolean'
     ];
 
-    protected $appends = ['vencimiento_formated'];
+    protected $appends = ['vencimiento_formated','emision_formated'];
 
     /**
      * Convercion a formato de mysql. year-month-day
@@ -41,6 +41,11 @@ class Factura extends Model
 
      public function getVencimientoFormatedAttribute(){
        list($ano, $mes, $dia) = explode('-', $this->vencimiento);
+       return "$dia/$mes/$ano";
+     }
+
+     public function getEmisionFormatedAttribute(){
+       list($ano, $mes, $dia) = explode('-', $this->emision);
        return "$dia/$mes/$ano";
      }
 
