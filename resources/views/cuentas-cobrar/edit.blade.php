@@ -285,7 +285,7 @@
             <div class="form-group">
               <label class="control-label">Monto Pago</label>
               <input type="number" name="monto" class="form-control"
-              min="0.01" :max="pago.maximo" step="0.01" v-model="pago.monto" required
+              min="0.01" step="0.01" v-model="pago.monto" required
               />
             </div>
           </div>
