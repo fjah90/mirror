@@ -124,7 +124,7 @@
               </div>
             </div>
 
-            <form v-if="cuenta.total>cuenta.facturado" class="" @submit.prevent="agregarFactura()">
+            <form  class="" @submit.prevent="agregarFactura()">
               <div class="row">
                 <div class="col-sm-12">
                   <h4>Nueva Factura</h4>
