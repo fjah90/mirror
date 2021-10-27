@@ -254,13 +254,13 @@
           </li>
           <li class="sub" {!! (Request::is('cuentas-cobrar*') ? 'class="active"' : '') !!} style="color:blue">
             <a href="javascript:;">
-              <i class="menu-icon fas fa-hand-holding-usd"></i>
+              <i class="menu-icon fas fa-hand-holding-usd" style="color:blue"></i>
               <span style="color:blue">Facturacion</span>
             </a>
           </li>
           <li class="sub" {!! (Request::is('cuentas-cobrar*') ? 'class="active"' : '') !!} >
             <a href="{{ URL::to('cuentas-cobrar') }}">
-              <i class="menu-icon fas fa-hand-holding-usd"></i>
+              <i class="menu-icon fas fa-hand-holding-usd" style="color:blue"></i>
               <span style="color:blue">Cuentas por Cobrar</span>
             </a>
           </li>
@@ -274,13 +274,13 @@
           </li>
           <li class="sub" {!! (Request::is('ordenes-proceso*') ? 'class="active"' : '') !!} >
             <a href="{{ URL::to('ordenes-proceso') }}">
-              <i class="menu-icon fas fa-clipboard-list"></i>
+              <i class="menu-icon fas fa-clipboard-list" style="color:red"></i>
               <span style="color:red">Ordenes Proceso</span>
             </a>
           </li>
           <li class="sub" {!! (Request::is('cuentas-pagar*') ? 'class="active"' : '') !!} >
             <a href="{{ URL::to('cuentas-pagar') }}">
-              <i class="menu-icon fas fa-receipt"></i>
+              <i class="menu-icon fas fa-receipt" style="color:red"></i>
               <span style="color:red">Cuentas por Pagar</span>
             </a>
           </li>
