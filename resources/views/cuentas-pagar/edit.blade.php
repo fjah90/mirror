@@ -38,6 +38,7 @@
                   <td>
                     @foreach($cuenta->orden->entradas as $entrada)
                     {{$entrada->producto->nombre}} - {{$entrada->cantidad}} - {{$entrada->importe}}
+                    @endforeach
                   </td>
                 </tr>
               </tbody>
