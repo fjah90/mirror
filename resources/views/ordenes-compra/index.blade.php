@@ -209,6 +209,7 @@ const app = new Vue({
       cargando: false
     },
     mounted(){
+      this.tabla = $("#tabla").DataTable({"order": [[ 1, "asc" ]]});
       $("#confirmacion").fileinput({
         language: 'es',
         showPreview: false,
