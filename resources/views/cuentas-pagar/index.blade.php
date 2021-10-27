@@ -37,7 +37,7 @@
         </div>
         <div class="panel-body">
           <div class="table-responsive">
-            <table class="table table-bordred">
+            <table id="tabla" class="table table-bordred">
               <thead>
                 <tr>
                   <th>#</th>
@@ -100,7 +100,7 @@ const app = new Vue({
       }
     },
     mounted(){
-      this.tabla = $("#tabla").DataTable();
+      this.tabla = $("#tabla").DataTable({"order": [[ 0, "desc" ]]});
     },
     methods: {
       
