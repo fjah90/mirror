@@ -131,7 +131,7 @@
                                                title="Orden Compra"
                                                :href="'/proyectos-aprobados/'+ cotizacion.prospecto_id + '/ordenes-compra'"
                                                target="_blank">
-                                                <i class="fas fa-user-check"></i>
+                                                <i class="fas fa-arrow-up"></i>
                                                 </a>
                                                 
                                                 <template v-else>
