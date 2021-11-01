@@ -637,12 +637,13 @@ class OrdenesCompraController extends Controller
      */
     public function avisarOrdenPorAprobar($orden)
     {
-        $mensaje = "Hay una nueva orden por autorizar de parte del usuario: " . auth()->user()->name;
+        $mensaje = "Hay una nueva orden por autorizar de parte del usuario: " . auth()->user()->name ." https://intercorp.789.com.mx/proyectos-aprobados/".$orden->proyecto_id."/ordenes-compra/".$orden->id."editar";
         $mensaje .= ", para el proyecto " . $orden->proyecto_nombre;
-        Mail::send('email', ['mensaje' => $mensaje], function ($message) {
-            $message->to('abraham@intercorp.mx')
+        Mail::send('email', ['mensaje' => $mensaje], function ($message) use($orden) {
+                $message->to('abraham@intercorp.mx')
                 //$message->to('edmar.gomez@tigears.com')
                 ->subject('Nueva orden por autorizar');
+                $message->attach(public_path().$orden->archivo);
         });
     }
 
