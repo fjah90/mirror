@@ -126,6 +126,14 @@
                                                    target="_blank">
                                                     <i class="fas fa-user-check"></i>
                                                 </a>
+                                                <p v-for="(cotizacion.proyecto.ordenes, index) in orden">
+                                                    <a v-if="cotizacion.aceptada" class="btn btn-xs text-warning"
+                                                   title="Orden Compra"
+                                                   :href="/proyectos-aprobados/cotizacion.proyecto.id/ordenes-compra/orden.id/editar"
+                                                   target="_blank">
+                                                    <i class="fas fa-user-check"></i>
+                                                    </a>
+                                                </p>
                                                 <template v-else>
                                                     <button class="btn btn-xs btn-warning" title="Editar"
                                                             @click="editar(index, cotizacion)">
