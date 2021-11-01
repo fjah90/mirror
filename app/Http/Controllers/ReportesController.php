@@ -24,7 +24,7 @@ class ReportesController extends Controller
     {
         $inicio = Carbon::parse('2021-01-01');
         $fin = Carbon::parse('2021-12-31');
-        $cotizaciones = ProspectoCotizacion::with('prospecto:id,nombre,cliente_id', 'prospecto.cliente:id,nombre', 'user:id,name', 'entradas:id,cantidad,producto_id,cotizacion_id,importe', 'entradas.producto:id,proveedor_id', 'entradas.producto.proveedor:id,empresa')
+        $cotizaciones = ProspectoCotizacion::with('prospecto:id,nombre,cliente_id', 'prospecto.cliente:id,nombre', 'user:id,name', 'entradas:id,cantidad,producto_id,cotizacion_id,importe', 'entradas.producto:id,proveedor_id', 'entradas.producto.proveedor:id,empresa','cuenta_cobrar:created_at')
             ->has('prospecto')
             ->has('entradas.producto')
             //->whereBetween('prospectos_cotizaciones.created_at', [$inicio, $fin])
