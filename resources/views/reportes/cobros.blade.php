@@ -74,7 +74,7 @@ Reportes | @parent
                           
                         </select>
                     </div>
-                    <div class="marg025 btn-group" id="select_proyectos" >
+                    <div class="marg025 btn-group" id="select_proyectos2" >
                         <select name="proxDias" class="form-control" size="1" v-model="valor_proyectos" id="select_proyectos">
                           <option v-for="option in datos_select.proyectos" v-bind:value="option">
                             @{{ option }}
@@ -82,7 +82,7 @@ Reportes | @parent
                           
                         </select>
                     </div>
-                    <div class="marg025 btn-group" id="select_clientes" >
+                    <div class="marg025 btn-group" id="select_clientes2" >
                         <select name="proxDias" class="form-control" size="1" v-model="valor_clientes" id="select_clientes">
                           <option v-for="option in datos_select.clientes" v-bind:value="option">
                             @{{ option }}
