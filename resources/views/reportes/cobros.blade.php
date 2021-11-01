@@ -67,7 +67,7 @@ Reportes | @parent
                       </template>
                     </dropdown>
                     <div class="marg025 btn-group" id="select_cotizaciones" >
-                        <select name="proxDias" class="form-control" size="1" v-model="valor_cotizaciones" id="select_cotizaciones">
+                        <select  name="proxDias" class="form-control" size="1" v-model="valor_cotizaciones" id="select_cotizaciones">
                         <option v-for="(option, index) in datos_select.cotizaciones" v-bind:value="option" >
                             @{{ option }}
                           </option>
@@ -221,6 +221,8 @@ const app = new Vue({
             nCells[1].innerHTML = accounting.formatMoney(totalUsd, "$", 2);
         }
       });
+      $('.select_cotizaciones').select2();
+      $('.select_proyectos').select2();
       $("#fechas_container").append($("#fecha_ini_control"));
       $("#fechas_container").append($("#fecha_fin_control"));
       $("#fechas_container").append($("#select_cotizaciones"));

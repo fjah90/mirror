@@ -577,7 +577,7 @@ Dashboard | @parent
                         </span>
                       </td>
                       <td>
-                        @{{compra.total | formatoMoneda}}
+                        @{{compra.total | formatoMoneda}} @{{compra.moneda}}
                       </td>
                       <td>@{{compra.status}}</td>
                       <td class="text-right">
