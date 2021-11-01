@@ -66,15 +66,15 @@ Reportes | @parent
                         </li>
                       </template>
                     </dropdown>
-                    <div class="marg025 btn-group" id="select_cotizaciones" >
-                        <select  name="proxDias" class="form-control" size="1" v-model="valor_cotizaciones" id="select_cotizaciones">
+                    <div class="marg025 btn-group" id="select_cotizaciones1" >
+                        <select name="proxDias" class="form-control" size="1" v-model="valor_cotizaciones" id="select_cotizaciones">
                         <option v-for="(option, index) in datos_select.cotizaciones" v-bind:value="option" >
                             @{{ option }}
                           </option>
                           
                         </select>
                     </div>
-                    <div class="marg025 btn-group" id="select_proyectos2" >
+                    <div class="marg025 btn-group" id="select_proyectos1" >
                         <select name="proxDias" class="form-control" size="1" v-model="valor_proyectos" id="select_proyectos">
                           <option v-for="option in datos_select.proyectos" v-bind:value="option">
                             @{{ option }}
@@ -82,7 +82,7 @@ Reportes | @parent
                           
                         </select>
                     </div>
-                    <div class="marg025 btn-group" id="select_clientes2" >
+                    <div class="marg025 btn-group" id="select_clientes1" >
                         <select name="proxDias" class="form-control" size="1" v-model="valor_clientes" id="select_clientes">
                           <option v-for="option in datos_select.clientes" v-bind:value="option">
                             @{{ option }}
@@ -163,6 +163,8 @@ const app = new Vue({
     },
     mounted(){
         var vue =this;
+        $('#select_clientes').select2();
+        $('#select_proyectos').select2();
       this.tabla = $("#tabla").DataTable({
           "dom": 'f<"#fechas_container.pull-left">ltip',
           "order":[],
@@ -221,8 +223,6 @@ const app = new Vue({
             nCells[1].innerHTML = accounting.formatMoney(totalUsd, "$", 2);
         }
       });
-      $('#select_cotizaciones').select2();
-      $('#select_proyectos').select2();
       $("#fechas_container").append($("#fecha_ini_control"));
       $("#fechas_container").append($("#fecha_fin_control"));
       $("#fechas_container").append($("#select_cotizaciones"));
