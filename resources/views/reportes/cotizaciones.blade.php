@@ -108,6 +108,7 @@ Reportes | @parent
                         <tr>
                           <th class="text-center">Fecha</th>
                           <th class="text-center"><strong>Número Cotización</strong></th>
+                          <th class="text-center"><strong>Fecha Aprobación</strong></th>
                           <th class="text-center"><strong>Cliente</strong></th>
                           <th class="text-center"><strong>Proyecto</strong></th>
                           <th class="text-center"><strong>Marca</strong></th>
@@ -123,6 +124,7 @@ Reportes | @parent
                         <tr>
                           <td>{{$cotizacion->fecha_formated}}</td>
                           <td>{{$cotizacion->id}}</td>
+                          <td>{{$cotizacion->cuenta_cobrar->created_at}}</td>
                           <td>{{$cotizacion->prospecto->cliente->nombre}}</td>
                           <td>{{$cotizacion->prospecto->nombre}}</td>
                           <td>
