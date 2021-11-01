@@ -124,7 +124,7 @@ Reportes | @parent
                         <tr>
                           <td>{{$cotizacion->fecha_formated}}</td>
                           <td>{{$cotizacion->id}}</td>
-                          <td>{{$cotizacion->cuenta_cobrar->created_at}}</td>
+                          <td>{{$cotizacion->proyecto_aprobado->created_at}}</td>
                           <td>{{$cotizacion->prospecto->cliente->nombre}}</td>
                           <td>{{$cotizacion->prospecto->nombre}}</td>
                           <td>
