@@ -129,7 +129,7 @@
                                                 
                                                 <a v-if="cotizacion.aceptada" class="btn btn-xs text-warning"
                                                title="Orden Compra"
-                                               :href="/proyectos-aprobados/cotizacion.proyecto.id/ordenes-compra"
+                                               :href="'/proyectos-aprobados/'+ cotizacion.proyecto.id + '/ordenes-compra'"
                                                target="_blank">
                                                 <i class="fas fa-user-check"></i>
                                                 </a>
