@@ -182,8 +182,8 @@ class OrdenesCompraController extends Controller
      */
     public function show(ProyectoAprobado $proyecto, OrdenCompra $orden)
     {
-        $proyect = ProyectoAprobado::findOrFail($proyecto);
-        $cotizacion = ProspectoCotizacion::findOrFail($proyect->cotizacion_id);
+        
+        $cotizacion = ProspectoCotizacion::findOrFail($proyecto->cotizacion_id);
         $orden->load('proveedor', 'contacto', 'entradas.producto');
         $archivos_autorizacion = Storage::disk('public')->files('ordenes_compra/' . $orden->id . '/archivos_autorizacion');
         $archivos_autorizacion = array_map(function ($archivo) {
@@ -379,8 +379,8 @@ class OrdenesCompraController extends Controller
      */
     public function edit(ProyectoAprobado $proyecto, OrdenCompra $orden)
     {
-        $proyect = ProyectoAprobado::findOrFail($proyecto);
-        $cotizacion = ProspectoCotizacion::findOrFail($proyect->cotizacion_id);
+        
+        $cotizacion = ProspectoCotizacion::findOrFail($proyecto->cotizacion_id);
         $proveedores = Proveedor::all();
         $contactos = ProveedorContacto::all();
         $aduanas = AgenteAduanal::all();
