@@ -10,6 +10,7 @@ use App\Models\OrdenCompraEntradaDescripcion;
 use App\Models\OrdenProceso;
 use App\Models\Producto;
 use App\Models\Proveedor;
+use App\Models\ProspectoCotizacion;
 use App\Models\ProveedorContacto;
 use App\Models\ProyectoAprobado;
 use App\Models\TiempoEntrega;
