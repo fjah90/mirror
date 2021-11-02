@@ -182,8 +182,11 @@ class DashboardController extends Controller
                 });
 
             $compras = $compras->get();
-        }     
-        $compras = OrdenCompra::with('entradas.producto','cliente','proyecto','proyecto.cotizacion','proyecto.cotizacion.user')->where('status','Por Autorizar')->get();
+        }  
+        else{
+            $compras = OrdenCompra::with('entradas.producto','cliente','proyecto','proyecto.cotizacion','proyecto.cotizacion.user')->where('status','Por Autorizar')->get();    
+        }   
+        
 
         $data = [
             'clientes'            => $clientes,
