@@ -176,6 +176,7 @@ class DashboardController extends Controller
                 {       
                     $q->whereHas('cotizacion', function($q) use($prospectosId)
                     {
+                        dd($prospectosId);
                         $q->where('user_id', $prospectosId);
                     });
                 });
