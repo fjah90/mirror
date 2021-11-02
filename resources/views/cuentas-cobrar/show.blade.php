@@ -83,6 +83,7 @@
                         <th>Pagos</th>
                         <th>Monto Pendiente</th>
                         <th>Fecha Vencimiento</th>
+                        <th>Fecha Emisión</th>
                         <th></th>
                       </tr>
                     </thead>
@@ -105,6 +106,7 @@
                         </td>
                         <td>@format_money($factura->pendiente)</td>
                         <td>{{$factura->vencimiento_formated}}</td>
+                        <td>@{{factura.emision_formated}}</td>
                         <td class="text-right">
                           <a class="btn btn-xs btn-warning" title="PDF" href="{{$factura->pdf}}"
                             download="factura {{$factura->documento}}.pdf">
