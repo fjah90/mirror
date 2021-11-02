@@ -63,6 +63,8 @@ class OrdenesCompraController extends Controller
      */
     public function create(ProyectoAprobado $proyecto)
     {
+        $proyect = ProyectoAprobado::findOrFail($proyecto);
+        $cotizacion = ProspectoCotizacion::findOrFail($proyect->cotizacion_id);
         $proveedores = Proveedor::all();
         $contactos = ProveedorContacto::all();
         $unidades_medida = UnidadMedida::orderBy('simbolo')->get();
@@ -74,7 +76,7 @@ class OrdenesCompraController extends Controller
 
 
         return view('ordenes-compra.create',
-            compact('proyecto', 'proveedores', 'contactos', 'productos', 'unidades_medida', 'aduanas', 'tiempos_entrega', 'now')
+            compact('proyecto', 'proveedores', 'contactos', 'productos', 'unidades_medida', 'aduanas', 'tiempos_entrega', 'now','cotizacion')
         );
     }
 
@@ -179,13 +181,15 @@ class OrdenesCompraController extends Controller
      */
     public function show(ProyectoAprobado $proyecto, OrdenCompra $orden)
     {
+        $proyect = ProyectoAprobado::findOrFail($proyecto);
+        $cotizacion = ProspectoCotizacion::findOrFail($proyect->cotizacion_id);
         $orden->load('proveedor', 'contacto', 'entradas.producto');
         $archivos_autorizacion = Storage::disk('public')->files('ordenes_compra/' . $orden->id . '/archivos_autorizacion');
         $archivos_autorizacion = array_map(function ($archivo) {
             return ['liga' => asset("storage/$archivo"), 'nombre' => basename($archivo)];
         }, $archivos_autorizacion);
 
-        return view('ordenes-compra.show', compact('proyecto', 'orden', 'archivos_autorizacion'));
+        return view('ordenes-compra.show', compact('proyecto', 'orden', 'archivos_autorizacion','cotizacion'));
     }
 
     /**
@@ -374,6 +378,8 @@ class OrdenesCompraController extends Controller
      */
     public function edit(ProyectoAprobado $proyecto, OrdenCompra $orden)
     {
+        $proyect = ProyectoAprobado::findOrFail($proyecto);
+        $cotizacion = ProspectoCotizacion::findOrFail($proyect->cotizacion_id);
         $proveedores = Proveedor::all();
         $contactos = ProveedorContacto::all();
         $aduanas = AgenteAduanal::all();
@@ -394,7 +400,7 @@ class OrdenesCompraController extends Controller
         }
 
         return view('ordenes-compra.edit',
-            compact('proyecto', 'orden', 'productos', 'proveedores', 'contactos', 'unidades_medida', 'aduanas', 'tiempos_entrega')
+            compact('proyecto', 'orden', 'productos', 'proveedores', 'contactos', 'unidades_medida', 'aduanas', 'tiempos_entrega','cotizacion')
         );
     }
 
