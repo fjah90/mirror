@@ -63,8 +63,10 @@ class OrdenesCompraController extends Controller
      */
     public function create(ProyectoAprobado $proyecto)
     {
+        dd($proyecto);
         $proyect = ProyectoAprobado::findOrFail($proyecto);
         $cotizacion = ProspectoCotizacion::findOrFail($proyect->cotizacion_id);
+
         $proveedores = Proveedor::all();
         $contactos = ProveedorContacto::all();
         $unidades_medida = UnidadMedida::orderBy('simbolo')->get();
