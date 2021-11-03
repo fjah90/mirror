@@ -22,7 +22,7 @@
       <div class="col-lg-12">
         <div class="panel">
           <div class="panel-heading">
-            <h3 class="panel-title">Editar Orden Proyecto {{$proyecto->proyecto}} // {{$orden->numero}}</h3>
+            <h3 class="panel-title">Editar Orden Proyecto {{$proyecto->proyecto}} // {{$cotizacion->numero}}</h3>
           </div>
           <div class="panel-body">
             @if($orden->status=='Rechazada')
