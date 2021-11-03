@@ -109,7 +109,7 @@ class CuentasCobrarController extends Controller
         'xml' => 'required|file|mimes:xml',
       ]);
 
-      
+
 
       if ($validator->fails()) {
         $errors = $validator->errors()->all();
@@ -150,6 +150,9 @@ class CuentasCobrarController extends Controller
       $factura->pagos = [];
       $factura->pdf = asset('storage/'.$factura->pdf);
       $factura->xml = asset('storage/'.$factura->xml);
+      if ($cuenta->pendiente <= 0) {
+        $cuenta->monto = bcadd($cuenta->monto, $factura->monto, 2);
+      }
       $cuenta->facturado = bcadd($cuenta->facturado, $factura->monto, 2);
       $cuenta->save();
 
