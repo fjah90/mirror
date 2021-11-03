@@ -109,6 +109,8 @@ class CuentasCobrarController extends Controller
         'xml' => 'required|file|mimes:xml',
       ]);
 
+      dd($request);
+
       if ($validator->fails()) {
         $errors = $validator->errors()->all();
         return response()->json([
