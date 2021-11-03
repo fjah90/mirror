@@ -158,7 +158,7 @@ class CuentasCobrarController extends Controller
       $cuenta->facturado = bcadd($cuenta->facturado, $factura->monto, 2);
       $cuenta->save();
 
-      return response()->json(['success'=>true, "error"=>false, 'factura'=>$factura], 200);
+      return response()->json(['success'=>true, "error"=>false, 'factura'=>$factura ,'cuenta' => $cuenta], 200);
     }
 
 
