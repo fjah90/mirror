@@ -151,7 +151,7 @@ class CuentasCobrarController extends Controller
       $factura->pdf = asset('storage/'.$factura->pdf);
       $factura->xml = asset('storage/'.$factura->xml);
       if ($cuenta->pendiente <= 0) {
-        $cuenta->monto = bcadd($cuenta->monto, $factura->monto, 2);
+        $cuenta->total = bcadd($cuenta->total, $factura->monto, 2);
       }
       $cuenta->facturado = bcadd($cuenta->facturado, $factura->monto, 2);
       $cuenta->save();
