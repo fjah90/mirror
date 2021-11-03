@@ -408,6 +408,8 @@ const app = new Vue({
       .then(({data}) => {
         this.cuenta.facturas.push(data.factura);
         this.cuenta.facturado+= data.factura.monto;
+        this.cuenta.total = data.cuenta.total;
+        this.cuenta.pendiente = data.cuenta.pendiente;
         this.factura = {
           cuenta_id: {{$cuenta->id}},
           documento: '',
