@@ -99,6 +99,8 @@ class CuentasCobrarController extends Controller
      */
     public function facturar(Request $request, CuentaCobrar $cuenta)
     {
+
+      dd($request);
       $validator = Validator::make($request->all(), [
         'cuenta_id' => 'required',
         'documento' => 'required',
@@ -109,7 +111,7 @@ class CuentasCobrarController extends Controller
         'xml' => 'required|file|mimes:xml',
       ]);
 
-      dd($request);
+
 
       if ($validator->fails()) {
         $errors = $validator->errors()->all();
