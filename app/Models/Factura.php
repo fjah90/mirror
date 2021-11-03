@@ -33,6 +33,12 @@ class Factura extends Model
         $this->attributes['vencimiento'] = "$ano-$mes-$dia";
     }
 
+    public function setEmisionAttribute($fecha)
+    {
+        list($dia, $mes, $ano) = explode('/', $fecha);
+        $this->attributes['emision'] = "$ano-$mes-$dia";
+    }
+
     /**
      * ---------------------------------------------------------------------------
      *                             Appends
