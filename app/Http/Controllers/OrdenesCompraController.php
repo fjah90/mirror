@@ -36,7 +36,8 @@ class OrdenesCompraController extends Controller
             ->where('proyecto_id', $proyecto)
             ->get();
 
-        $proyect = ProyectoAprobado::with('cotizacion')->findOrFail($proyecto)->get();
+        $proyect = ProyectoAprobado::findOrFail($proyecto);
+        $cotizacion = ProspectoCotizacion::findOrFail($proyect->cotizacion_id);
 
         foreach ($ordenes as $orden) {
             if ($orden->archivo) {
@@ -50,7 +51,7 @@ class OrdenesCompraController extends Controller
             $orden->archivos_autorizacion = $archivos_autorizacion;
         }
 
-        return view('ordenes-compra.index', compact('ordenes','proyect'));
+        return view('ordenes-compra.index', compact('ordenes','cotizacion'));
     }
 
     /**
