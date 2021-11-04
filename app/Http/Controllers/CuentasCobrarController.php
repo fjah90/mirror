@@ -106,7 +106,7 @@ class CuentasCobrarController extends Controller
         'vencimiento' => 'required|date_format:d/m/Y',
         'emision' => 'required|date_format:d/m/Y',
         'pdf' => 'required|file|mimes:pdf',
-        'xml' => 'required|file|mimes:xml',
+        //'xml' => 'required|file|mimes:xml',
       ]);
 
 
@@ -117,6 +117,8 @@ class CuentasCobrarController extends Controller
           "success" => false, "error" => true, "message" => $errors[0]
         ], 400);
       }
+
+
 
 
       
@@ -146,10 +148,25 @@ class CuentasCobrarController extends Controller
       $xml = str_replace('public/', '', $xml);
       $create['xml'] = $xml;
 
-      $factura = Factura::create($create);
-      $factura->pagos = [];
-      $factura->pdf = asset('storage/'.$factura->pdf);
-      $factura->xml = asset('storage/'.$factura->xml);
+
+      if ($request->id != null) {
+        $create['pagada'] = 0;
+        $factura = Factura::findOrFail($request->id);
+        $cuenta->facturado = $cuenta->facturado - $factura->monto;
+        $cuenta->save();
+
+        $factura->update($create);
+        $factura->pagos = [];
+        $factura->pdf = asset('storage/'.$factura->pdf);
+        $factura->xml = asset('storage/'.$factura->xml);
+      }
+      else{
+        $factura = Factura::create($create);
+        $factura->pagos = [];
+        $factura->pdf = asset('storage/'.$factura->pdf);
+        $factura->xml = asset('storage/'.$factura->xml);  
+      }
+      
       if ($cuenta->pendiente <= 0 ) {
         $cuenta->total = bcadd($cuenta->total, $factura->monto, 2);
         $cuenta->pendiente = bcadd($cuenta->pendiente, $factura->monto, 2);
@@ -159,6 +176,27 @@ class CuentasCobrarController extends Controller
       $cuenta->save();
 
       return response()->json(['success'=>true, "error"=>false, 'factura'=>$factura ,'cuenta' => $cuenta], 200);
+    }
+
+    /**
+     * Eliminar una factura a cuenta por cobrar
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\CuentaCobrar  $cuenta
+     * @return \Illuminate\Http\Response
+     */
+    public function deletefactura(Request $request, CuentaCobrar $cuenta)
+    {
+
+      if ($request->id != null) {
+        $factura = Factura::findOrFail($request->id);
+        $cuenta->facturado = $cuenta->facturado - $factura->monto;
+        $cuenta->save();
+
+        $factura->delete();
+      }
+
+      return response()->json(['success'=>true, "error"=>false, 'cuenta' => $cuenta], 200);
     }
 
 

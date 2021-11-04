@@ -104,6 +104,7 @@
                   <th>Próxima Actividad</th>
                   <th>Tipo</th>
                   <th style="min-width:105px;"></th>
+                  <th class="hide">Cotizacion id</th>
                 </tr>
               </thead>
               <tbody>
@@ -146,6 +147,12 @@
                     <button class="btn btn-xs btn-danger" title="Borrar" @click="borrar(prospecto, index)">
                       <i class="fas fa-times"></i>
                     </button>
+                  </td>
+                  <td class="hide">
+                    <template v-for="(cotizacion, index) in prospecto.cotizaciones">
+                        <span>@{{cotizacion.numero}}</span><br/>
+                    </template>
+                    
                   </td>
                 </tr>
               </tbody>

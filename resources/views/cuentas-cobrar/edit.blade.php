@@ -88,12 +88,12 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr v-for="factura in cuenta.facturas">
+                      <tr v-for="(factura, index) in cuenta.facturas">
                         <td>@{{factura.documento}}</td>
                         <td>@{{factura.monto | formatoMoneda}}</td>
                         <td>
                           <template v-for="(pago, index) in factura.pagos">
-                            <span>@{{index+1}}.- @{{pago.monto | formatoMoneda}}</span>
+                            <span>@{{index+1}}.- @{{pago.monto | formatoMoneda}} .- @{{pago.fecha}}</span>
                             <a class="btn btn-xs btn-info"
                               target="_blank" :href="pago.comprobante">
                               <i class="far fa-eye"></i>
@@ -117,6 +117,14 @@
                           <button v-if="!factura.pagada" class="btn btn-xs btn-success" title="Pagar"
                             @click="agregarPago(factura)">
                             <i class="fas fa-hand-holding-usd"></i>
+                          </button>
+                          <button v-if="!factura.pagada" class="btn btn-xs btn-success" title="Editar"
+                            @click="editarFactura(factura, index)">
+                            <i class="fas fa-edit"></i>
+                          </button>
+                          <button v-if="!factura.pagada" class="btn btn-xs btn-danger" title="Remover"
+                            @click="removerFactura(factura, index)">
+                            <i class="fas fa-times"></i>
                           </button>
                         </td>
                       </tr>
@@ -334,6 +342,7 @@ const app = new Vue({
     locale: localeES,
     cuenta: {!! json_encode($cuenta) !!},
     factura: {
+      id:'',
       cuenta_id: {{$cuenta->id}},
       documento: '',
       porcentaje: '',
@@ -407,7 +416,7 @@ const app = new Vue({
       })
       .then(({data}) => {
         this.cuenta.facturas.push(data.factura);
-        this.cuenta.facturado+= data.factura.monto;
+        this.cuenta.facturado = data.cuenta.facturado;
         this.cuenta.total = data.cuenta.total;
         this.cuenta.pendiente = data.cuenta.pendiente;
         this.factura = {
@@ -438,6 +447,56 @@ const app = new Vue({
         });
       });
     },//fin guardar
+    editarFactura(factura, index){
+      
+      this.cuenta.facturas.splice(index, 1);      
+      this.factura = factura; 
+      this.factura.vencimiento = factura.vencimiento_formated;
+      this.factura.emision = factura.emision_formated;     
+      
+    },
+    removerFactura(factura, index){
+      this.cuenta.facturas.splice(index, 1);
+      if(factura.id) {
+        var formData = objectToFormData(factura, {indices:true});
+
+        this.cargando = true;
+        axios.post('/cuentas-cobrar/{{$cuenta->id}}/deletefactura', formData, {
+          headers: { 'Content-Type': 'multipart/form-data'}
+        })
+        .then(({data}) => {
+          this.cuenta.facturado = data.cuenta.facturado;
+          this.factura = {
+            cuenta_id: {{$cuenta->id}},
+            documento: '',
+            monto: '',
+            vencimiento: '',
+            pdf: '',
+            xml: ''
+          };
+          $("#pdf").fileinput('clear');
+          $("#xml").fileinput('clear');
+
+          this.cargando = false;
+          swal({
+            title: "Factura Eliminada",
+            text: "",
+            type: "success"
+          });
+        })
+        .catch(({response}) => {
+          console.error(response);
+          this.cargando = false;
+          swal({
+            title: "Error",
+            text: response.data.message || "Ocurrio un error inesperado, intente mas tarde",
+            type: "error"
+          });
+        });
+
+
+      }
+    },
     agregarPago(factura){
       this.pago.factura_id = factura.id;
       this.pago.documento = factura.documento;

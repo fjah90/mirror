@@ -536,6 +536,7 @@ Dashboard | @parent
                     </select>
                 </div>
               -->
+             
               </div>
           <div class="row">
             <div class="col-sm-12">
@@ -551,6 +552,7 @@ Dashboard | @parent
                       <th class="text-center"><strong>Proveedor</strong></th>
                       <th class="text-center"><strong>Producto</strong></th>
                       <th class="text-center"><strong>Cantidad</strong></th>
+                      <th class="text-center"><strong>Moneda</strong></th>
                       <th class="text-center"><strong>Total</strong></th>
                       <th class="text-center"><strong>Status</strong></th>
                       <th></th>
@@ -577,7 +579,11 @@ Dashboard | @parent
                         </span>
                       </td>
                       <td>
-                        @{{compra.total | formatoMoneda}} @{{compra.moneda}}
+                        @{{compra.moneda}}
+                        
+                      </td>
+                      <td>
+                        @{{compra.total | formatoMoneda}} 
                       </td>
                       <td>@{{compra.status}}</td>
                       <td class="text-right">
@@ -595,6 +601,19 @@ Dashboard | @parent
                   </td>
                       
                     </tr>
+
+                  <tfoot>
+                    <tr>
+                        <td colspan="8" style="text-align:right">Total MXN:</td>
+                        <td>
+                        </td>
+                    </tr>
+                    <tr>
+                      <td colspan="8" style="text-align:right">Total USD:</td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tfoot>
                     
                   </tbody>
                 </table>
@@ -857,6 +876,16 @@ Dashboard | @parent
       porCobrar_data: {},
       graficaPorCobrar:null
     },
+    computed: {
+        totales_cotizaciones() {
+            var dolares = 0, pesos = 0;
+            this.data.compras.forEach(function (compra) {
+                if (compra.moneda == "Pesos") pesos += compra.total;
+                else dolares += compra.total;
+            });
+            return {"dolares": dolares, "pesos": pesos}
+        }
+    },
     mounted(){
       //Tabla cotizaciones
       this.tablaCotizaciones = this.tableFactory("#tablaCotizaciones", "cotizaciones", this.datos_select_cotizaciones);
@@ -977,6 +1006,43 @@ Dashboard | @parent
           newTable=$(table).DataTable({
           "dom": 'f<"#'+prefix+'_fechas_container.pull-left">ltip',
             "order":[[0,'desc']],
+
+            //
+            "footerCallback": function ( row, data, start, end, display ) {
+                var api = this.api(), data;
+
+
+                var formato = function ( i ) {
+                    return typeof i === 'string' ?
+                        i.replace(/[\$,]/g, '')*1 :
+                        typeof i === 'number' ?
+                            i : 0;
+                };
+                //datos de la tabla con filtros aplicados
+                var datos= api.columns([6,5], {search: 'applied'}).data();
+                var totalMxn = 0;
+                var totalUsd = 0;
+                //suma de montos
+                datos[0].forEach(function(element, index){
+                    if(datos[1][index]=="Dolares"){
+                        totalUsd+=formato(element)
+                    }else{
+                        totalMxn+=formato(element)
+                    }
+                });
+     
+                // Actualizar
+                var nCells = row.getElementsByTagName('td');
+                nCells[1].innerHTML = accounting.formatMoney(totalMxn, "$", 2);
+
+                var secondRow = $(row).next()[0]; 
+                var nCells = secondRow.getElementsByTagName('td');
+                nCells[1].innerHTML = accounting.formatMoney(totalUsd, "$", 2);
+            },
+
+            //
+
+
             initComplete: function () {
 
               
