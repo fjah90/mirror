@@ -106,7 +106,7 @@ class CuentasCobrarController extends Controller
         'vencimiento' => 'required|date_format:d/m/Y',
         'emision' => 'required|date_format:d/m/Y',
         'pdf' => 'required|file|mimes:pdf',
-        //'xml' => 'required|file|mimes:xml',
+        'xml' => 'required|file|mimes:xml',
       ]);
 
 

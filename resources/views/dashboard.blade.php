@@ -1019,7 +1019,7 @@ Dashboard | @parent
                             i : 0;
                 };
                 //datos de la tabla con filtros aplicados
-                var datos= api.columns([6,5], {search: 'applied'}).data();
+                var datos= api.columns([8,7], {search: 'applied'}).data();
                 var totalMxn = 0;
                 var totalUsd = 0;
                 //suma de montos
