@@ -151,6 +151,7 @@ Route::middleware('auth')->group(function () {
 
     //Cuentas cobrar
     Route::post('/cuentas-cobrar/{cuenta}/facturar', 'CuentasCobrarController@facturar');
+    Route::post('/cuentas-cobrar/{cuenta}/deletefactura', 'CuentasCobrarController@deletefactura');
     Route::post('/cuentas-cobrar/{cuenta}/pagar', 'CuentasCobrarController@pagar');
     Route::resource('/cuentas-cobrar', 'CuentasCobrarController', [
         'only'       => ['index', 'show', 'edit'],

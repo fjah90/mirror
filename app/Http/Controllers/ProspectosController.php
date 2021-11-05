@@ -36,7 +36,7 @@ class ProspectosController extends Controller
     public function index()
     {
         $user = auth()->user();
-        $prospectos = Prospecto::with('cliente', 'ultima_actividad.tipo', 'proxima_actividad.tipo', 'user')
+        $prospectos = Prospecto::with('cliente', 'ultima_actividad.tipo', 'proxima_actividad.tipo', 'user','cotizaciones')
             ->where('user_id', $user->id)->orWhereHas("cliente", function($query) use ($user) {
                 $query->where("usuario_id", $user->id);
             })->get();
@@ -66,13 +66,13 @@ class ProspectosController extends Controller
         if ($request->id == 'Todos') {
 
             if ($request->anio == 'Todos') {
-                $prospectos = Prospecto::with('cliente', 'ultima_actividad.tipo', 'proxima_actividad.tipo', 'user')
+                $prospectos = Prospecto::with('cliente', 'ultima_actividad.tipo', 'proxima_actividad.tipo', 'user','cotizaciones')
                 ->has('cliente')->orderBy('id', 'desc')->get();
             }
             else{
                 $anio = Carbon::parse($request->anio);
                 $prospectos = Prospecto::whereBetween('created_at', [$inicio, $anio])
-                ->with('cliente', 'ultima_actividad.tipo', 'proxima_actividad.tipo', 'user')
+                ->with('cliente', 'ultima_actividad.tipo', 'proxima_actividad.tipo', 'user','cotizaciones')
                 ->has('cliente')->orderBy('id', 'desc')->get();
             }
         } else {
@@ -85,14 +85,14 @@ class ProspectosController extends Controller
             }*/
 
             if ($request->anio == 'Todos') {
-                $prospectos = Prospecto::with('cliente', 'ultima_actividad.tipo', 'proxima_actividad.tipo', 'user')
+                $prospectos = Prospecto::with('cliente', 'ultima_actividad.tipo', 'proxima_actividad.tipo', 'user','cotizaciones')
                 ->where('user_id', $request->id)->orWhereHas("cliente", function($query) use ($request) {
                 $query->where("usuario_id", $request->id);
                 })->get();
             }
             else{
                 $anio = Carbon::parse($request->anio);
-                $prospectos = Prospecto::with('cliente', 'ultima_actividad.tipo', 'proxima_actividad.tipo', 'user')
+                $prospectos = Prospecto::with('cliente', 'ultima_actividad.tipo', 'proxima_actividad.tipo', 'user','cotizaciones')
                 ->where('user_id', $request->id)
                 ->whereBetween('prospectos.created_at', [$inicio, $anio])
                 ->has('cliente')
