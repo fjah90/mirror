@@ -604,12 +604,12 @@ Dashboard | @parent
 
                   <tfoot>
                     <tr>
-                        <td colspan="8" style="text-align:right">Total MXN:</td>
+                        <td colspan="10" style="text-align:right">Total MXN:</td>
                         <td>
                         </td>
                     </tr>
                     <tr>
-                      <td colspan="8" style="text-align:right">Total USD:</td>
+                      <td colspan="10" style="text-align:right">Total USD:</td>
                       <td>
                       </td>
                     </tr>
