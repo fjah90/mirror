@@ -1152,7 +1152,7 @@ class ProspectosController extends Controller
             'moneda'         => $cotizacion->moneda,
             'proveedores'    => $proveedores,
         ];
-        ProyectoAprobado::create($create1);
+        $proyecto_aprobado = ProyectoAprobado::create($create1);
 
         //generar cuenta por cobrar
         $create = [
@@ -1190,7 +1190,7 @@ class ProspectosController extends Controller
             'realizada'    => true,
         ]);
 
-        return response()->json(['success' => true, 'error' => false], 200);
+        return response()->json(['success' => true, 'error' => false,'proyecto_aprobado'=>$proyecto_aprobado], 200);
     }
 
     /**
