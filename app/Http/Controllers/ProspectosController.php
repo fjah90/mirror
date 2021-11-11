@@ -1004,7 +1004,6 @@ class ProspectosController extends Controller
                 $fichas[] = storage_path('app/public/' . $entrada->producto->ficha_tecnica);
             }
         }
-        /*
         $pdf = new PDFMerger();
         $pdf->addPDF(storage_path("app/public/$url"), 'all');
         $fichas = array_unique($fichas, SORT_STRING);
@@ -1014,11 +1013,9 @@ class ProspectosController extends Controller
 
         $pdf->merge('file', storage_path("app/public/$url"));
 
-
         unset($cotizacion->fechaPDF);
         $cotizacion->update(['archivo' => $url]);
         $cotizacion->archivo = asset('storage/' . $cotizacion->archivo);
-        */
 
         return response()->json(['success' => true, 'error' => false, 'cotizacion' => $cotizacion], 200);
     }
