@@ -435,7 +435,7 @@ class OrdenesCompraController extends Controller
 
         $update = $request->only(
             'proveedor_id', 'proveedor_empresa', 'moneda', 'numero', 'subtotal', 'numero_proyecto',
-            'aduana_id', 'aduana_compañia', 'proveedor_contacto_id', 'punto_entrega', 'carga', 'fecha_compra'
+            'aduana_id', 'aduana_compañia', 'proveedor_contacto_id', 'punto_entrega', 'carga', 'fecha_compra','flete'
         );
 
         if (!is_null($request->tiempo['id'])) {
@@ -456,12 +456,12 @@ class OrdenesCompraController extends Controller
             $update['iva'] = 0;
             $update['total'] = $update['subtotal'];
         }
-        /*
+        
         if ($orden->status == OrdenCompra::STATUS_RECHAZADA) {
             $update['status'] = OrdenCompra::STATUS_PENDIENTE;
-            $this->avisarOrdenPorAprobar($orden);
+           // $this->avisarOrdenPorAprobar($orden);
         }
-        */
+        
         $update['delivery'] = $request->delivery;
         $update['fecha_compra'] = $request->fecha_compra_formated;
         $orden->update($update);
