@@ -93,7 +93,7 @@ class OrdenProceso extends Model
     }
 
     public function ordenCompra(){
-      return $this->belongsTo('App\Models\OrdenCompra', 'orden_compra_id', 'id');
+      return $this->belongsTo('App\Models\OrdenCompra', 'orden_compra_id', 'id')->withTrashed();
     }
 
 }
