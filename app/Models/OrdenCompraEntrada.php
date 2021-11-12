@@ -142,31 +142,20 @@ class OrdenCompraEntrada extends Model
     {
 
         $r = '';
-
-        $entradascotizacion = $this->orden->proyecto->cotizacion->entradas;
-    
-        foreach ($entradascotizacion as $key => $entrada) {
-            if ($entrada->producto_id == $this->producto_id) {
-                    $r = $entrada->fotos;
-            }
-        }                    
-
-        
-        /*
-        if ($orden->proyecto) {
-            if ($orden->proyecto->cotizacion) {
-                if ($orden->proyecto->cotizacion->entradas) {
-                    $entradascotizacion = $orden->proyecto->cotizacion->entradas;
-
-                    foreach ($entradascotizacion as $key => $entrada) {
-                        if ($entrada->producto_id == $this->producto_id) {
-                            $r = $entrada->area;
-                        }
-                    }            
+        if($this->orden){
+            if ($this->orden->proyecto) {
+                if ($this->orden->proyecto->cotizacion) {
+                    if ($this->orden->proyecto->cotizacion->entradas) {
+                        $entradascotizacion = $this->orden->proyecto->cotizacion->entradas;
+                        foreach ($entradascotizacion as $key => $entrada) {
+                            if ($entrada->producto_id == $this->producto_id) {
+                                    $r = $entrada->fotos;
+                            }
+                        }                    
+                    }
                 }
             }
         }
-        */
     
 
         return $r;
