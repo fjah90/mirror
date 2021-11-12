@@ -654,7 +654,7 @@ class OrdenesCompraController extends Controller
                 $message->to('abraham@intercorp.mx')
                 //$message->to('edmar.gomez@tigears.com')
                 ->subject('Nueva orden por autorizar');
-                $message->attach(public_path().$orden->archivo);
+                $message->attach(public_path().'/'.$orden->archivo);
         });
     }
 
