@@ -35,7 +35,7 @@ class ProyectoAprobado extends Model
     }
 
     public function cotizacion(){
-      return $this->belongsTo('App\Models\ProspectoCotizacion', 'cotizacion_id', 'id');
+      return $this->belongsTo('App\Models\ProspectoCotizacion', 'cotizacion_id', 'id')->withTrashed();
     }
 
     public function ordenes(){

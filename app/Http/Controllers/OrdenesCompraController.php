@@ -456,10 +456,12 @@ class OrdenesCompraController extends Controller
             $update['iva'] = 0;
             $update['total'] = $update['subtotal'];
         }
+        /*
         if ($orden->status == OrdenCompra::STATUS_RECHAZADA) {
             $update['status'] = OrdenCompra::STATUS_PENDIENTE;
             $this->avisarOrdenPorAprobar($orden);
         }
+        */
         $update['delivery'] = $request->delivery;
         $update['fecha_compra'] = $request->fecha_compra_formated;
         $orden->update($update);
@@ -654,7 +656,7 @@ class OrdenesCompraController extends Controller
                 $message->to('abraham@intercorp.mx')
                 //$message->to('edmar.gomez@tigears.com')
                 ->subject('Nueva orden por autorizar');
-                $message->attach(public_path().$orden->archivo);
+                $message->attach(public_path().'/'.$orden->archivo);
         });
     }
 
