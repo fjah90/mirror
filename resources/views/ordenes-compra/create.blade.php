@@ -430,6 +430,7 @@ const app = new Vue({
       }
     );
     this.tablaProductos = $("#tablaProductos").DataTable({dom: 'ftp'});
+    var vueInstance = this;
 
     //escuchar Iframe
     window.addEventListener('message', function (e) {
