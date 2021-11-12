@@ -548,7 +548,7 @@ const app = new Vue({
               snapX: true
           }
       });
-    var vueInstance = this;
+    
 
       //handler para reordenamiento
       this.dataTableEntradas.on('row-reorder', function (e, diff, edit) {
@@ -568,6 +568,7 @@ const app = new Vue({
       });
     */
 
+    var vueInstance = this;
     //escuchar Iframe
     window.addEventListener('message', function (e) {
       if (e.data.tipo == "producto") {

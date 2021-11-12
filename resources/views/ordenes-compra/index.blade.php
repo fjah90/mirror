@@ -90,15 +90,16 @@
                       title="Aprobar" @click="ordenModal=orden; openAprobar=true;">
                       <i class="far fa-thumbs-up"></i>
                     </button>
-                    <button v-if="orden.status=='Por Autorizar'" class="btn btn-xs btn-danger"
-                      title="Rechazar" @click="ordenModal=orden; openRechazar=true;">
-                      <i class="far fa-thumbs-down"></i>
-                    </button>
+                    
                     <button v-if="orden.status=='Aprobada'" class="btn btn-xs btn-purple"
                       title="Confirmar" @click="ordenModal=orden; openConfirmar=true;">
                       <i class="fas fa-clipboard-check"></i>
                     </button>
                     @endrole
+                    <button v-if="orden.status=='Por Autorizar'" class="btn btn-xs btn-danger"
+                      title="Rechazar" @click="ordenModal=orden; openRechazar=true;">
+                      <i class="far fa-thumbs-down"></i>
+                    </button>
                     <button v-if="orden.status!='Aprobada' && orden.status!='Confirmada' && orden.status!='Cancelada'" 
                       class="btn btn-xs btn-danger" title="Cancelar" @click="cancelarOrden(orden)">
                       <i class="fas fa-times"></i>
