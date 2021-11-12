@@ -181,7 +181,7 @@ class OrdenCompraEntrada extends Model
 
     public function orden()
     {
-        return $this->belongsTo('App\Models\OrdenCompra', 'orden_id', 'id');
+        return $this->belongsTo('App\Models\OrdenCompra', 'orden_id', 'id')->withTrashed();
     }
 
     public function producto()
