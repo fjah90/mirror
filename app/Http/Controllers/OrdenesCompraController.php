@@ -456,10 +456,12 @@ class OrdenesCompraController extends Controller
             $update['iva'] = 0;
             $update['total'] = $update['subtotal'];
         }
+        /*
         if ($orden->status == OrdenCompra::STATUS_RECHAZADA) {
             $update['status'] = OrdenCompra::STATUS_PENDIENTE;
             $this->avisarOrdenPorAprobar($orden);
         }
+        */
         $update['delivery'] = $request->delivery;
         $update['fecha_compra'] = $request->fecha_compra_formated;
         $orden->update($update);
