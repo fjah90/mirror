@@ -791,7 +791,7 @@ const app = new Vue({
 
       totalcotizacion = orden.subtotal.toFixed(2);
 
-      orden.subtotal = totalf;
+      orden.subtotal = totalf + orden.flete;
 
       var dif = totalcotizacion - totalf;
 
