@@ -784,6 +784,7 @@ const app = new Vue({
     guardar(){
       var orden = $.extend(true, {}, this.orden);
 
+      /*
       var totalf = 0;
       orden.entradas.forEach(function (entrada) {
           totalf += entrada.importe ;
@@ -794,7 +795,7 @@ const app = new Vue({
       orden.subtotal = totalf + orden.flete;
 
       var dif = totalcotizacion - totalf;
-
+      */
 
 
 
