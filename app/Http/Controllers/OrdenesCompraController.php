@@ -132,7 +132,7 @@ class OrdenesCompraController extends Controller
         } else {
             $create['total'] = $create['subtotal'];
         }
-        dd($request->flete);
+        dd($request);
 
         $create['flete'] = $request->flete;
         $orden = OrdenCompra::create($create);
