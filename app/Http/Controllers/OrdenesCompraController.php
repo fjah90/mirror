@@ -696,7 +696,7 @@ class OrdenesCompraController extends Controller
                         $separador = "|";
                     }
                     $entrada['fotos'] = $fotos;
-                } else if ($ent->producto_id == $entrada->producto_id) {
+                } else if ($ent->producto_id == $entrada['producto_id']) {
                     if ($entrada['fotos']) {
                         
                     }
