@@ -489,7 +489,7 @@
 {{-- footer_scripts --}}
 @section('footer_scripts')
 <script type="text/javascript">
-Vue.config.devtools = true;
+//Vue.config.devtools = true;
 const app = new Vue({
   el: '#content',
   data: {
@@ -860,6 +860,7 @@ const app = new Vue({
 
       var formData = objectToFormData(orden);
       console.log(formData);
+      console.log(orden);
 
       this.cargando = true;
       axios.put('/proyectos-aprobados/{{$proyecto->id}}/ordenes-compra/{{$orden->id}}', formData,{headers: {'Content-Type': 'multipart/form-data'}
