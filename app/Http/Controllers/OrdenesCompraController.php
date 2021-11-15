@@ -509,6 +509,8 @@ class OrdenesCompraController extends Controller
                     continue;
                 }
 
+                dd($entrada['fotos'])
+
 
                 if ($entrada['fotos'] && !is_string($entrada['fotos'][0])) { //hay fotos
                     $fotos     = "";
