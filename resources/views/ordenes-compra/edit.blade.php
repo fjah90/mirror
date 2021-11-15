@@ -861,8 +861,11 @@ const app = new Vue({
         delete entrada.producto;
       });
 
+      var formData = objectToFormData(orden, {indices: true});
+
       this.cargando = true;
-      axios.put('/proyectos-aprobados/{{$proyecto->id}}/ordenes-compra/{{$orden->id}}', orden)
+      axios.put('/proyectos-aprobados/{{$proyecto->id}}/ordenes-compra/{{$orden->id}}', formData,{headers: {'Content-Type': 'multipart/form-data'}
+      })
       .then(({data}) => {
         swal({
           title: "Orden Actualizada",

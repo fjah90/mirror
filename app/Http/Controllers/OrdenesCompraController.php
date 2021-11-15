@@ -509,6 +509,36 @@ class OrdenesCompraController extends Controller
                     continue;
                 }
 
+
+                if ($entrada['fotos'] && !is_string($entrada['fotos'][0])) { //hay fotos
+                    $fotos     = "";
+                    $separador = "";
+                    foreach ($entrada['fotos'] as $foto_index => $foto) {
+                        //borrar archivo actual, si existe
+                        Storage::disk('public')->delete('ordenes_compra/' . $orden->id . '/entrada_' . ($index + 1) . '_foto_' . ($foto_index + 1) . '.' . $foto->guessExtension());
+                        $ruta = Storage::putFileAs(
+                            'public/ordenes_compra/' . $orden->id,
+                            $foto,
+                            'entrada_' . ($index + 1) . '_foto_' . ($foto_index + 1) . '.' . $foto->guessExtension()
+                        );
+                        $ruta = str_replace('public/', '', $ruta);
+                        $fotos .= $separador . $ruta;
+                        $separador = "|";
+                    }
+                    $entrada['fotos'] = $fotos;
+                } else if ($ent->producto_id == $producto->id) {
+                    if ($entrada['fotos']) {
+                        
+                    }
+                    else{
+                        $entrada['fotos']='';
+                        $ent->fotos = '';
+                    }
+                    unset($entrada['fotos']); //no se actualzan fotos
+                }else {
+                    $entrada['fotos'] = "";
+                }
+
                 //actualizar entrada ya guardada
                 unset($entrada['id']);
                 if ($entrada['cantidad_convertida'] == "") {
@@ -529,20 +559,46 @@ class OrdenesCompraController extends Controller
                 }
                 continue;
             }
+            else{
+                //crear nueva entrada
+                $entrada['orden_id'] = $orden->id;
 
-            //crear nueva entrada
-            $entrada['orden_id'] = $orden->id;
-            $ordenCompraEntrada = OrdenCompraEntrada::create($entrada);
-            //save descriptions
-            foreach ($entrada["descripciones"] as $descripcion) {
-                OrdenCompraEntradaDescripcion::create([
-                    'entrada_id' => $ordenCompraEntrada->id,
-                    'nombre' => $descripcion["nombre"] ?? '',
-                    'name' => $descripcion["name"] ?? '',
-                    'valor' => $descripcion["valor"],
-                    'valor_ingles' => $descripcion["valor_ingles"],
-                ]);
+                if ($entrada['fotos'] && !is_string($entrada['fotos'][0])) { //hay fotos
+                    $fotos     = "";
+                    $separador = "";
+                    foreach ($entrada['fotos'] as $foto_index => $foto) {
+                        //borrar archivo actual, si existe
+                        Storage::disk('public')->delete('ordenes_compra/' . $orden->id . '/entrada_' . ($index + 1) . '_foto_' . ($foto_index + 1) . '.' . $foto->guessExtension());
+                        $ruta = Storage::putFileAs(
+                            'public/ordenes_compra/' . $orden->id,
+                            $foto,
+                            'entrada_' . ($index + 1) . '_foto_' . ($foto_index + 1) . '.' . $foto->guessExtension()
+                        );
+                        $ruta = str_replace('public/', '', $ruta);
+                        $fotos .= $separador . $ruta;
+                        $separador = "|";
+                    }
+                    $entrada['fotos'] = $fotos;
+                }else {
+                    $entrada['fotos'] = "";
+                }
+
+
+                $ordenCompraEntrada = OrdenCompraEntrada::create($entrada);
+                //save descriptions
+                foreach ($entrada["descripciones"] as $descripcion) {
+                    OrdenCompraEntradaDescripcion::create([
+                        'entrada_id' => $ordenCompraEntrada->id,
+                        'nombre' => $descripcion["nombre"] ?? '',
+                        'name' => $descripcion["name"] ?? '',
+                        'valor' => $descripcion["valor"],
+                        'valor_ingles' => $descripcion["valor_ingles"],
+                    ]);
+                }
+
             }
+
+            
         }
 
         /*if ($orden->status == OrdenCompra::STATUS_RECHAZADA) {
