@@ -154,30 +154,31 @@ class OrdenesCompraController extends Controller
                     }
                 }
 
+            }
 
-                //save fotos
-                if ($entrada['fotos']) { //hay fotos
-                    $fotos     = "";
-                    $separador = "";
-                    foreach ($entrada['fotos'] as $foto_index => $foto) {
-                        if (!is_string($foto)) {
-                            $ruta = Storage::putFileAs(
-                                'public/ordenes_compra/' . $orden->id,
-                                $foto,
-                                'entrada_' . ($index + 1) . '_foto_' . ($foto_index + 1) . '.' . $foto->guessExtension()
-                            );
-                            $ruta = str_replace('public/', '', $ruta);
-                            $fotos .= $separador . $ruta;
-                            $separador = "|";
-                        } else {
-                            $fotos .= $separador . strstr($foto, "ordenes_compra/");
-                        }
+
+            
+            //save fotos
+            if ($entrada['fotos']) { //hay fotos
+                $fotos     = "";
+                $separador = "";
+                foreach ($entrada['fotos'] as $foto_index => $foto) {
+                    if (!is_string($foto)) {
+                        $ruta = Storage::putFileAs(
+                            'public/ordenes_compra/' . $orden->id,
+                            $foto,
+                            'entrada_' . ($index + 1) . '_foto_' . ($foto_index + 1) . '.' . $foto->guessExtension()
+                        );
+                        $ruta = str_replace('public/', '', $ruta);
+                        $fotos .= $separador . $ruta;
+                        $separador = "|";
+                    } else {
+                        $fotos .= $separador . strstr($foto, "ordenes_compra/");
                     }
-                    $entrada['fotos'] = $fotos;
-                }else {
-                    $entrada['fotos'] = "";
                 }
-
+                $entrada['fotos'] = $fotos;
+            }else {
+                $entrada['fotos'] = "";
             }
             
 
