@@ -510,8 +510,6 @@ class OrdenesCompraController extends Controller
                     continue;
                 }
 
-                dd($entrada['fotos'])
-
 
                 if ($entrada['fotos'] && !is_string($entrada['fotos'][0])) { //hay fotos
                     $fotos     = "";
@@ -570,8 +568,6 @@ class OrdenesCompraController extends Controller
                     $fotos     = "";
                     $separador = "";
                     foreach ($entrada['fotos'] as $foto_index => $foto) {
-                        //borrar archivo actual, si existe
-                        Storage::disk('public')->delete('ordenes_compra/' . $orden->id . '/entrada_' . ($index + 1) . '_foto_' . ($foto_index + 1) . '.' . $foto->guessExtension());
                         $ruta = Storage::putFileAs(
                             'public/ordenes_compra/' . $orden->id,
                             $foto,
