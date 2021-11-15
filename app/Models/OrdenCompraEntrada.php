@@ -9,7 +9,7 @@ class OrdenCompraEntrada extends Model
     protected $table = 'ordenes_compra_entradas';
 
     protected $fillable = ['orden_id', 'producto_id', 'cantidad', 'medida', 'conversion',
-        'cantidad_convertida', 'precio', 'importe', 'comentarios','orden'];
+        'cantidad_convertida', 'precio', 'importe', 'comentarios','orden','fotos'];
 
     protected $casts = [
         'cantidad'            => 'float',
@@ -101,6 +101,20 @@ class OrdenCompraEntrada extends Model
         }
 
         return $result;
+    }
+
+    public function getFotosAttribute($value)
+    {
+        if ($value == "") {
+            return [];
+        }
+
+        $fotos = explode('|', $value);
+        foreach ($fotos as &$foto) {
+            $foto = asset('storage/' . $foto);
+        }
+
+        return $fotos;
     }
 
      public function getAreaAttribute()
