@@ -563,7 +563,6 @@ const app = new Vue({
 
       if (this.$refs['fotos'].files.length) {//hay fotos
           this.entrada.fotos = [];
-          console.log(this.$refs['fotos']);
           for (var i = 0; i < this.$refs['fotos'].files.length; i++)
               this.entrada.fotos.push(this.$refs['fotos'].files[i]);
       }
@@ -622,6 +621,8 @@ const app = new Vue({
               });
               $("div.file-default-preview").append('<h6>Click para seleccionar</h6>');
           }
+      }else{
+        console.log(this.entrada.fotos);
       }
 
 
