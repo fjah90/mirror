@@ -858,9 +858,7 @@ const app = new Vue({
         delete entrada.producto;
       });
 
-      console.log(orden);
-
-      var formData = objectToFormData(orden, {indices: true});
+      var formData = objectToFormData(orden.entradas, {indices: true});
       console.log(formData);
 
       this.cargando = true;
