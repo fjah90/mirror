@@ -179,6 +179,31 @@
             @change="fijarConfirmacion()" required />
         </div>
         <div id="confirmacion-file-errors"></div>
+        <div class="col-md-4">
+          <label class="control-label">Monto total del Producto</label>
+          <input type="text" class="form-control" name="monto_total_producto"
+            v-model="orden.monto_total_producto" />
+        </div>
+        <div class="col-md-4">
+          <label class="control-label">Monto total del Flete</label>
+          <input type="text" class="form-control" name="monto_total_flete"
+            v-model="orden.monto_total_flete" />
+        </div>
+        <div class="col-md-4">
+          <label class="control-label">Posibles Aumentos</label>
+          <input type="text" class="form-control" name="posibles_aumentos"
+            v-model="orden.posibles_aumentos" />
+        </div>
+        <div class="col-md-4">
+          <label class="control-label">Tax</label>
+          <input type="text" class="form-control" name="tax"
+            v-model="orden.tax" />
+        </div>
+        <div class="col-md-4">
+          <label class="control-label">Monto total a Pagar</label>
+          <input type="text" class="form-control" name="monto_total_pagar"
+            v-model="orden.monto_total_pagar" />
+        </div>
       </div>
       <div class="form-group text-right">
         <button type="submit" class="btn btn-primary" :disabled="cargando">Aceptar</button>
@@ -303,7 +328,18 @@ const app = new Vue({
         });
       },//cancelar
       confirmarOrden(){
-        var formData = objectToFormData({confirmacion_fabrica:this.ordenModal.confirmacion_fabrica}, {indices:true});
+
+
+        var data = [];
+        data.confirmacion_fabrica = this.ordenModal.confirmacion_fabrica
+        data.monto_total_producto = this.ordenModal.monto_total_producto;
+        data.monto_total_pagar = this.ordenModal.monto_total_pagar;
+        data.monto_total_flete = this.ordenModal.monto_total_flete;
+        data.tax = this.ordenModal.tax;
+        data.posibles_aumentos = this.ordenModal.posibles_aumentos;
+
+
+        var formData = objectToFormData(data, {indices:true});
 
         this.cargando = true;
         axios.post('/proyectos-aprobados/'+this.ordenModal.proyecto_id+'/ordenes-compra/'+this.ordenModal.id+'/confirmar', 

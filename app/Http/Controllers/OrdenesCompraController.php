@@ -385,10 +385,19 @@ class OrdenesCompraController extends Controller
 
         $confirmacion = Storage::putFileAs(
             'public/ordenes_compra/' . $orden->id, $request->confirmacion_fabrica,
-            "confirmacion_fabrica." . $request->confirmacion_fabrica->guessExtension()
+            "confirmacion_fabrica." . $request->confirmacion_fabrica->guessExtension(),
         );
         $confirmacion = str_replace('public/', '', $confirmacion);
-        $orden->update(['confirmacion_fabrica' => $confirmacion, 'status' => OrdenCompra::STATUS_CONFIRMADA]);
+        $orden->update([
+            'confirmacion_fabrica' => $confirmacion, 
+            'status' => OrdenCompra::STATUS_CONFIRMADA,
+            'monto_total_producto' => $request->monto_total_producto,
+            'monto_total_flete' => $request->monto_total_flete,
+            'monto_total_pagar' => $request->monto_total_pagar,
+            'tax' => $request->tax,
+            'posibles_aumentos' => $request->posibles_aumentos,
+
+        ]);
 
         return response()->json([
             'success' => true, "error" => false, "confirmacion" => asset('storage/' . $confirmacion),

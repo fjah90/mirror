@@ -19,6 +19,7 @@ class OrdenesProcesoController extends Controller
      */
     public function index()
     {
+      $usuarios = User::all();
       $ordenes = OrdenProceso::with('ordenCompra','ordenCompra.proyecto','ordenCompra.proyecto.cotizacion','ordenCompra.proyecto.cotizacion.user')->where('orden_compra_id','!=','4361')->get();
 
       foreach ($ordenes as $orden) {
@@ -42,7 +43,7 @@ class OrdenesProcesoController extends Controller
         }
       }
 
-      return view('ordenes-proceso.index', compact('ordenes'));
+      return view('ordenes-proceso.index', compact('ordenes','usuarios'));
     }
 
     public function listado(Request $request)

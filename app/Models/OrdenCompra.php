@@ -20,7 +20,7 @@ class OrdenCompra extends Model
         'cliente_nombre', 'proyecto_nombre', 'proveedor_empresa', 'status', 'moneda', 'subtotal',
         'iva', 'total', 'motivo_rechazo', 'archivo', 'numero', 'tiempo_entrega', 'numero_proyecto',
         'aduana_id', 'aduana_compañia', 'proveedor_contacto_id', 'confirmacion_fabrica', 'delivery',
-        'punto_entrega', 'carga', 'fecha_compra','flete'
+        'punto_entrega', 'carga', 'fecha_compra','flete','monto_total_producto','monto_total_flete','monto_total_pagar','tax','posibles_aumentos'
     ];
 
     /*protected $dates = [
