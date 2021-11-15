@@ -578,6 +578,7 @@ const app = new Vue({
         precio: 0,
         importe: 0,
         comentarios: '',
+        fotos : [],
       };
     },
     agregarFlete(){
