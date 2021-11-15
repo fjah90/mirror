@@ -492,6 +492,7 @@
 Vue.config.devtools = true;
 
  function buildFormData (formData, data, parentKey){
+  console.log(data);
   if (data && typeof data === 'object' && !(data instanceof Date) && !(data instanceof File)) {
     Object.keys(data).forEach(key => {
     this.buildFormData(formData, data[key], parentKey ? `${parentKey}[${key}]` : key);
