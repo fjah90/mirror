@@ -878,7 +878,7 @@ const app = new Vue({
       var formData = objectToFormData(orden, {indices: true});
 
       this.cargando = true;
-      axios.put('/proyectos-aprobados/{{$proyecto->id}}/ordenes-compra/{{$orden->id}}', formData,{headers: {'Content-Type': 'multipart/form-data'}
+      axios.post('/proyectos-aprobados/{{$proyecto->id}}/ordenes-compra/{{$orden->id}}/actualizar', formData,{headers: {'Content-Type': 'multipart/form-data'}
       })
       .then(({data}) => {
         swal({
