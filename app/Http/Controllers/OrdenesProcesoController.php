@@ -74,7 +74,6 @@ class OrdenesProcesoController extends Controller
       }
       else{
         $usuario = $request->id;
-        orden.orden_compra.proyecto.cotizacion.user.name
           $anio = Carbon::parse($request->anio);
           $ordenes = OrdenProceso::whereBetween('created_at', [$inicio, $anio])->with('ordenCompra','ordenCompra.proyecto','ordenCompra.proyecto.cotizacion','ordenCompra.proyecto.cotizacion.user')
           ->whereHas('ordenCompra', function($q) use($usuario)
