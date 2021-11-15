@@ -137,7 +137,7 @@ class OrdenesCompraController extends Controller
         $orden = OrdenCompra::create($create);
 
         //guardar entradas
-        foreach ($request->entradas as $entrada) {
+        foreach ($request->entradas as $index => $entrada) {
 
             foreach ($proyecto->cotizacion->entradas as $key => $e) {
                     
