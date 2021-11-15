@@ -565,8 +565,6 @@ const app = new Vue({
           this.entrada.fotos = [];
           for (var i = 0; i < this.$refs['fotos'].files.length; i++)
               this.entrada.fotos.push(this.$refs['fotos'].files[i]);
-
-          console.log(this.entrada.fotos);
       }
 
       this.entrada.importe = this.entrada.cantidad * this.entrada.precio;
@@ -609,24 +607,21 @@ const app = new Vue({
       }
     },
     editarEntrada(entrada, index){
-
+      
       $("button.fileinput-remove").click();
-      if (this.entrada.fotos.length) {//hay fotos
-          if (typeof this.entrada.fotos[0] == "object") {
-              this.$refs['fotos'].files = FileListItem(this.entrada.fotos);
+      if (entrada.fotos.length) {//hay fotos
+          if (typeof entrada.fotos[0] == "object") {
+              this.$refs['fotos'].files = FileListItem(entrada.fotos);
               this.$refs['fotos'].dispatchEvent(new Event('change', {'bubbles': true}));
-          } else if (typeof this.entrada.fotos[0] == "string") {
+          } else if (typeof entrada.fotos[0] == "string") {
               $("div.file-default-preview").empty();
-              this.entrada.fotos.forEach(function (foto) {
+              entrada.fotos.forEach(function (foto) {
                   $("div.file-default-preview")
                       .append('<img src="' + foto + '" style="width:200px; height:auto;" alt="foto">');
               });
               $("div.file-default-preview").append('<h6>Click para seleccionar</h6>');
           }
-      }else{
-        console.log(this.entrada.fotos);
       }
-
 
       this.orden.subtotal-= entrada.importe;
       this.orden.entradas.splice(index, 1);
