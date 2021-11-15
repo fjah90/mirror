@@ -663,7 +663,7 @@ class OrdenesCompraController extends Controller
         $orden->update($update);
 
         //sincronizar entradas
-        foreach ($request->entradas as $entrada) {
+        foreach ($request->entradas as $index =>  $entrada) {
             if ($orden->moneda == 'Dolares') {
                 $Uni = UnidadMedida::where('simbolo',$entrada['medida'])->first();
                 if (!empty($Uni->simbolo_ingles)) {
