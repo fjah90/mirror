@@ -565,6 +565,8 @@ const app = new Vue({
           this.entrada.fotos = [];
           for (var i = 0; i < this.$refs['fotos'].files.length; i++)
               this.entrada.fotos.push(this.$refs['fotos'].files[i]);
+
+          console.log(this.entrada.fotos);
       }
 
       this.entrada.importe = this.entrada.cantidad * this.entrada.precio;
