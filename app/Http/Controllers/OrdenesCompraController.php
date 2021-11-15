@@ -156,8 +156,6 @@ class OrdenesCompraController extends Controller
 
             }
 
-
-            dd($entrada['fotos']);
             //save fotos
             if ($entrada['fotos']) { //hay fotos
                 $fotos     = "";
