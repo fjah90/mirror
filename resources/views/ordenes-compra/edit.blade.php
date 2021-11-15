@@ -281,6 +281,20 @@
                 </div>
               </div>
               <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="control-label" style="display:block;">Foto</label>
+                        <div class="btn btn-sm btn-danger" v-if="entrada.fotos.length" v-on:click="borrarfotos" title="BORRAR FOTOS">
+                            <i class="fas fa-trash"></i>
+                        </div>
+                        <div class="file-loading">
+                            <input id="fotos" name="fotos[]" type="file" ref="fotos" multiple/>
+                        </div>
+                        <div id="fotos-file-errors"></div>
+                    </div>
+                </div>
+            </div>
+              <div class="row">
                 <div class="col-md-12 text-right">
                   <div class="form-group" style="margin-top:25px;">
                     <button type="submit" class="btn btn-info">
@@ -497,7 +511,8 @@ const app = new Vue({
       precio: 0,
       importe: 0,
       comentarios: '',
-      descripciones:[]
+      descripciones:[],
+      fotos: []
     },
     conversiones:{
       @foreach($unidades_medida as $unidad)
@@ -520,15 +535,30 @@ const app = new Vue({
   },
   mounted(){
     var vue = this;
-    console.log(vue.orden.iva)
+    //console.log(vue.orden.iva)
     vue.orden.iva = vue.orden.proveedor.nacional? 1:0;
-    console.log(vue.orden.iva)
+    //console.log(vue.orden.iva)
     $.fn.dataTableExt.afnFiltering.push(
       function( settings, data, dataIndex ) {
         var prov = data[1] || ""; // Our date column in the table
         return (vue.orden.proveedor.empresa == prov);
       }
     );
+
+    $("#fotos").fileinput({
+        language: 'es',
+        overwriteInitial: true,
+        maxFileSize: 5000,
+        showCaption: false,
+        showBrowse: false,
+        showRemove: false,
+        showUpload: false,
+        browseOnZoneClick: true,
+        defaultPreviewContent: '<img src="{{asset('images/camara.png')}}" style="width:200px; height:auto;" alt="foto"><h6>Click para seleccionar</h6>',
+        allowedFileExtensions: ["jpg", "jpeg", "png"],
+        elErrorContainer: '#fotos-file-errors'
+    });
+
     this.tablaProductos = $("#tablaProductos").DataTable({dom: 'ftp'});
 
     //tabla reordenable
@@ -585,6 +615,10 @@ const app = new Vue({
   methods: {
     dateParser(value){
       return moment(value, 'DD/MM/YYYY').toDate().getTime();
+    },
+    borrarfotos(){
+        $("button.fileinput-remove").click();
+        this.entrada.fotos = [];
     },
     fijarProveedor(){
       this.proveedores.find(function(proveedor){
@@ -700,6 +734,12 @@ const app = new Vue({
         this.entrada.importe = this.entrada.cantidad_convertida * this.entrada.precio;
       else this.entrada.importe = this.entrada.cantidad * this.entrada.precio;
 
+      if (this.$refs['fotos'].files.length) {//hay fotos
+          this.entrada.fotos = [];
+          for (var i = 0; i < this.$refs['fotos'].files.length; i++)
+              this.entrada.fotos.push(this.$refs['fotos'].files[i]);
+      }
+
       this.orden.subtotal+= this.entrada.importe;
       this.orden.entradas.push(this.entrada);
       this.entrada = {
@@ -711,6 +751,7 @@ const app = new Vue({
         precio: 0,
         importe: 0,
         comentarios: '',
+        fotos:[]
       };
     },
     editarEntrada(entrada, index){
@@ -722,6 +763,21 @@ const app = new Vue({
       if(entrada.conversion==undefined || entrada.conversion==null){
         entrada.conversion = "";
         entrada.cantidad_convertida = "";
+      }
+
+      $("button.fileinput-remove").click();
+      if (entrada.fotos.length) {//hay fotos
+          if (typeof entrada.fotos[0] == "object") {
+              this.$refs['fotos'].files = FileListItem(entrada.fotos);
+              this.$refs['fotos'].dispatchEvent(new Event('change', {'bubbles': true}));
+          } else if (typeof entrada.fotos[0] == "string") {
+              $("div.file-default-preview").empty();
+              entrada.fotos.forEach(function (foto) {
+                  $("div.file-default-preview")
+                      .append('<img src="' + foto + '" style="width:200px; height:auto;" alt="foto">');
+              });
+              $("div.file-default-preview").append('<h6>Click para seleccionar</h6>');
+          }
       }
 
       
