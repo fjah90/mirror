@@ -580,6 +580,7 @@ const app = new Vue({
         comentarios: '',
         fotos : [],
       };
+      $("button.fileinput-remove").click();
     },
     agregarFlete(){
       var f = parseFloat(this.orden.flete);   
@@ -607,6 +608,23 @@ const app = new Vue({
       }
     },
     editarEntrada(entrada, index){
+
+      $("button.fileinput-remove").click();
+      if (this.entrada.fotos.length) {//hay fotos
+          if (typeof this.entrada.fotos[0] == "object") {
+              this.$refs['fotos'].files = FileListItem(this.entrada.fotos);
+              this.$refs['fotos'].dispatchEvent(new Event('change', {'bubbles': true}));
+          } else if (typeof this.entrada.fotos[0] == "string") {
+              $("div.file-default-preview").empty();
+              this.entrada.fotos.forEach(function (foto) {
+                  $("div.file-default-preview")
+                      .append('<img src="' + foto + '" style="width:200px; height:auto;" alt="foto">');
+              });
+              $("div.file-default-preview").append('<h6>Click para seleccionar</h6>');
+          }
+      }
+
+
       this.orden.subtotal-= entrada.importe;
       this.orden.entradas.splice(index, 1);
       this.entrada = entrada;
