@@ -873,6 +873,8 @@ const app = new Vue({
         delete entrada.producto;
       });
 
+      delete orden.proveedor;
+
       var formData = objectToFormData(orden, {indices: true});
       console.log(orden);
 
