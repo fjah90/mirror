@@ -132,6 +132,7 @@ class OrdenesCompraController extends Controller
         } else {
             $create['total'] = $create['subtotal'];
         }
+        dd($request->flete);
 
         $create['flete'] = $request->flete;
         $orden = OrdenCompra::create($create);
@@ -157,7 +158,7 @@ class OrdenesCompraController extends Controller
             }
 
 
-            
+
             //save fotos
             if ($entrada['fotos']) { //hay fotos
                 $fotos     = "";
