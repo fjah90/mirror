@@ -876,7 +876,6 @@ const app = new Vue({
       delete orden.proveedor;
 
       var formData = objectToFormData(orden, {indices: true});
-      console.log(formData);
 
       this.cargando = true;
       axios.put('/proyectos-aprobados/{{$proyecto->id}}/ordenes-compra/{{$orden->id}}', formData,{headers: {'Content-Type': 'multipart/form-data'}
