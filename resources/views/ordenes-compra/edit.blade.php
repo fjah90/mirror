@@ -853,13 +853,12 @@ const app = new Vue({
       var dif = totalcotizacion - totalf;
       */
 
-
-
-
       orden.entradas.forEach(function(entrada){
         entrada.producto_id = entrada.producto.id;
         delete entrada.producto;
       });
+
+      console.log(orden);
 
       var formData = objectToFormData(orden, {indices: true});
       console.log(formData);
