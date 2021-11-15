@@ -440,7 +440,7 @@ class OrdenesCompraController extends Controller
      */
     public function update(Request $request, ProyectoAprobado $proyecto, OrdenCompra $orden)
     {
-        dd($request->entradas);
+        dd($orden);
         
         $validator = Validator::make($request->all(), [
             'proyecto_id' => 'required',
