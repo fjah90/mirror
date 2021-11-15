@@ -393,6 +393,7 @@ const app = new Vue({
     el: '#content',
     data: {
       anio:'Todos',
+      usuarioCargado: {{auth()->user()->id}},
       locale: localeES,
       ordenes: {!! json_encode($ordenes) !!},
       ordenHistorial: {},
@@ -564,7 +565,7 @@ const app = new Vue({
   			return moment(value, 'DD/MM/YYYY').toDate().getTime();
   		},
       cargar(){
-        axios.post('/ordenes-proceso/listado', {anio:this.anio})
+        axios.post('/ordenes-proceso/listado', {id: this.usuarioCargado,anio:this.anio})
         .then(({data}) => {
           this.tabla.destroy();
           this.ordenes = data.ordenes;
