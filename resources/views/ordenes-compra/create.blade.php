@@ -637,9 +637,10 @@ const app = new Vue({
         entrada.producto_id = entrada.producto.id;
         delete entrada.producto;
       });
-
+      var formData = objectToFormData(orden, {indices: true});
       this.cargando = true;
-      axios.post('/proyectos-aprobados/{{$proyecto->id}}/ordenes-compra', orden)
+      axios.post('/proyectos-aprobados/{{$proyecto->id}}/ordenes-compra', formData,{headers: {'Content-Type': 'multipart/form-data'}
+      })
       .then(({data}) => {
         swal({
           title: "Orden Guardada",
