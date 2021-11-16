@@ -27,6 +27,7 @@ class CuentasCobrarController extends Controller
     public function listado(Request $request)
     {
      
+        $usuario = $request->id;
         if ($request->anio == '2019-12-31') {
             $inicio = Carbon::parse('2019-01-01');    
         }
@@ -38,11 +39,30 @@ class CuentasCobrarController extends Controller
         }
         
         if ($request->anio == 'Todos') {
-            $cuentas = CuentaCobrar::all();
+            if ($request->id == 'Todos') {
+              $cuentas = CuentaCobrar::all();  
+            }
+            else{
+              $cuentas = CuentaCobrar::whereHas('cotizacion', function($q) use($usuario)
+                {
+                  $q->where('user_id', $usuario);
+                
+                })->get();
+            }
+            
         }
         else{
-            $anio = Carbon::parse($request->anio);
-            $cuentas = CuentaCobrar::whereBetween('created_at', [$inicio, $anio])->get();
+            $anio = Carbon::parse($request->anio);  
+            if ($request->id == 'Todos') {  
+              $cuentas = CuentaCobrar::whereBetween('created_at', [$inicio, $anio])->get();
+            }
+            else{
+              $cuentas = CuentaCobrar::whereBetween('created_at', [$inicio, $anio])whereHas('cotizacion', function($q) use($usuario)
+                {
+                  $q->where('user_id', $usuario);
+                
+                })->get();
+            }
         }
 
         return response()->json(['success' => true, "error" => false, 'cuentas' => $cuentas], 200);

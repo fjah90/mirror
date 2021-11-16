@@ -393,7 +393,7 @@ const app = new Vue({
     el: '#content',
     data: {
       anio:'Todos',
-      usuarioCargado: {{auth()->user()->id}},
+      usuarioCargado: 'Todos',
       locale: localeES,
       ordenes: {!! json_encode($ordenes) !!},
       ordenHistorial: {},
