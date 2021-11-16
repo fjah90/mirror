@@ -25,6 +25,16 @@
           <h3 class="panel-title">
             <span class="p-10">Lista de Cuentas</span>
             <div class="p-10">
+              Ejecutivo  
+              <select class="form-control" @change="cargar()" v-model="usuarioCargado" style="width:auto;display:inline-block;">
+                <option value="Todos">Todos</option>
+                @foreach($usuarios as $usuario)
+                <option value="{{$usuario->id}}">{{$usuario->name}}</option>
+                @endforeach
+              </select>
+              
+            </div>
+            <div class="p-10">
               Año  
                 <select class="form-control" @change="cargar()" v-model="anio" style="width:auto;display:inline-block;">
                   <option value="Todos">Todos</option>
@@ -91,6 +101,7 @@
 const app = new Vue({
     el: '#content',
     data: {
+      usuarioCargado: 'Todos',
       anio:'Todos',
       cuentas: {!! json_encode($cuentas) !!},
     },
@@ -105,7 +116,7 @@ const app = new Vue({
     methods: {
       
       cargar(){
-        axios.post('/cuentas-pagar/listado', {anio:this.anio})
+        axios.post('/cuentas-pagar/listado', {id: this.usuarioCargado,anio:this.anio})
         .then(({data}) => {
           this.tabla.destroy();
           this.cuentas = data.cuentas;
