@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\CuentaCobrar;
 use App\Models\Factura;
 use App\Models\Pago;
+use App\User;
 use Carbon\Carbon;
 use Validator;
 use Storage;
@@ -19,9 +20,10 @@ class CuentasCobrarController extends Controller
      */
     public function index()
     {
+      $usuarios = User::all();
       $cuentas = CuentaCobrar::with('cotizacion','cotizacion.user')->get();
 
-      return view('cuentas-cobrar.index', compact('cuentas'));
+      return view('cuentas-cobrar.index', compact('cuentas','usuarios'));
     }
 
     public function listado(Request $request)
