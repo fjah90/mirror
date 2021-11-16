@@ -46,7 +46,7 @@ class CuentasCobrarController extends Controller
             }
             else{
 
-              $cuentas = CuentaCobrar::with('cotizacion')->whereHas('cotizacion', function($q) use($usuario)
+              $cuentas = CuentaCobrar::with('cotizacion','cotizacion.user')->whereHas('cotizacion', function($q) use($usuario)
                 {
                   $q->where('user_id', $usuario);
                 
@@ -60,7 +60,7 @@ class CuentasCobrarController extends Controller
               $cuentas = CuentaCobrar::whereBetween('created_at', [$inicio, $anio])->get();
             }
             else{
-              $cuentas = CuentaCobrar::whereBetween('created_at', [$inicio, $anio])->whereHas('cotizacion', function($q) use($usuario)
+              $cuentas = CuentaCobrar::with('cotizacion','cotizacion.user')->whereBetween('created_at', [$inicio, $anio])->whereHas('cotizacion', function($q) use($usuario)
                 {
                   $q->where('user_id', $usuario);
                 
