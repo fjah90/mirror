@@ -385,7 +385,7 @@ class OrdenesCompraController extends Controller
 
         $confirmacion = Storage::putFileAs(
             'public/ordenes_compra/' . $orden->id, $request->confirmacion_fabrica,
-            "confirmacion_fabrica." . $request->confirmacion_fabrica->guessExtension(),
+            "confirmacion_fabrica." . $request->confirmacion_fabrica->guessExtension()
         );
         $confirmacion = str_replace('public/', '', $confirmacion);
         $orden->update([
