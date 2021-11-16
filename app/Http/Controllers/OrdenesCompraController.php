@@ -233,6 +233,7 @@ class OrdenesCompraController extends Controller
             ], 400);
         }
 
+        /*
         if ($orden->status != OrdenCompra::STATUS_PENDIENTE) {
             return response()->json(['success' => false, "error" => true,
                 'message' => 'La orden debe estar en estatus ' .
@@ -240,6 +241,7 @@ class OrdenesCompraController extends Controller
                     ' para poder ser comprada',
             ], 400);
         }
+        */
 
         //$this->avisarOrdenPorAprobar($orden);
 
