@@ -54,7 +54,7 @@ class CuentasPagarController extends Controller
                 
                 });
               });
-            })->get()
+            })->get();
           }
           
       }
@@ -71,7 +71,7 @@ class CuentasPagarController extends Controller
                 
                 });
               });
-            })->get()
+            })->get();
           }
           else{
             $cuentas = CuentaPagar::whereBetween('created_at', [$inicio, $anio])->get();
