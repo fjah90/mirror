@@ -182,27 +182,27 @@
         <div class="col-md-4">
           <label class="control-label">Monto total del Producto</label>
           <input type="text" class="form-control" name="monto_total_producto"
-            v-model="orden.monto_total_producto" />
+             />
         </div>
         <div class="col-md-4">
           <label class="control-label">Monto total del Flete</label>
           <input type="text" class="form-control" name="monto_total_flete"
-            v-model="orden.monto_total_flete" />
+             />
         </div>
         <div class="col-md-4">
           <label class="control-label">Posibles Aumentos</label>
           <input type="text" class="form-control" name="posibles_aumentos"
-            v-model="orden.posibles_aumentos" />
+             />
         </div>
         <div class="col-md-4">
           <label class="control-label">Tax</label>
           <input type="text" class="form-control" name="tax"
-            v-model="orden.tax" />
+             />
         </div>
         <div class="col-md-4">
           <label class="control-label">Monto total a Pagar</label>
           <input type="text" class="form-control" name="monto_total_pagar"
-            v-model="orden.monto_total_pagar" />
+             />
         </div>
       </div>
       <div class="form-group text-right">
