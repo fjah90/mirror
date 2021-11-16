@@ -104,7 +104,7 @@
                       class="btn btn-xs btn-danger" title="Cancelar" @click="cancelarOrden(orden)">
                       <i class="fas fa-times"></i>
                     </button>
-                    <a v-if="orden.status=='Confirmada'" class="btn btn-xs text-primary" title="Confirmación Fabrica" 
+                    <a  class="btn btn-xs text-primary" title="Confirmación Fabrica" 
                       :href="orden.confirmacion_fabrica"
                       target="_blank">
                       <i class="fas fa-clipboard-check"></i>
