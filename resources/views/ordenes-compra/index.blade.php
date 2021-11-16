@@ -91,11 +91,12 @@
                       <i class="far fa-thumbs-up"></i>
                     </button>
                     
-                    <button v-if="orden.status=='Aprobada'" class="btn btn-xs btn-purple"
+                    
+                    @endrole
+                    <button class="btn btn-xs btn-purple"
                       title="Confirmar" @click="ordenModal=orden; openConfirmar=true;">
                       <i class="fas fa-clipboard-check"></i>
                     </button>
-                    @endrole
                     <button v-if="orden.status=='Por Autorizar'" class="btn btn-xs btn-danger"
                       title="Rechazar" @click="ordenModal=orden; openRechazar=true;">
                       <i class="far fa-thumbs-down"></i>
@@ -104,7 +105,7 @@
                       class="btn btn-xs btn-danger" title="Cancelar" @click="cancelarOrden(orden)">
                       <i class="fas fa-times"></i>
                     </button>
-                    <a  class="btn btn-xs text-primary" title="Confirmación Fabrica" 
+                    <a v-if="orden.status=='Confirmada'" class="btn btn-xs text-primary" title="Confirmación Fabrica" 
                       :href="orden.confirmacion_fabrica"
                       target="_blank">
                       <i class="fas fa-clipboard-check"></i>
