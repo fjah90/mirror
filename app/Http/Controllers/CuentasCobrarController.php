@@ -45,6 +45,7 @@ class CuentasCobrarController extends Controller
               $cuentas = CuentaCobrar::all();  
             }
             else{
+              dd($entre);
               $cuentas = CuentaCobrar::whereHas('cotizacion', function($q) use($usuario)
                 {
                   $q->where('user_id', $usuario);
