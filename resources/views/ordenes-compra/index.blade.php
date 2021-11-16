@@ -91,12 +91,11 @@
                       <i class="far fa-thumbs-up"></i>
                     </button>
                     
-                    
-                    @endrole
-                    <button class="btn btn-xs btn-purple"
+                    <button v-if="orden.status=='Aprobada'" class="btn btn-xs btn-purple"
                       title="Confirmar" @click="ordenModal=orden; openConfirmar=true;">
                       <i class="fas fa-clipboard-check"></i>
                     </button>
+                    @endrole
                     <button v-if="orden.status=='Por Autorizar'" class="btn btn-xs btn-danger"
                       title="Rechazar" @click="ordenModal=orden; openRechazar=true;">
                       <i class="far fa-thumbs-down"></i>
