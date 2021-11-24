@@ -181,7 +181,7 @@
         <div id="confirmacion-file-errors"></div>
         <div class="col-md-4">
           <label class="control-label">Monto total del Producto</label>
-          <input type="text" class="form-control" @change="sumartotal()" name="monto_total_producto"
+          <input type="text" class="form-control" name="monto_total_producto" @change="sumartotal()"
              />
         </div>
         <div class="col-md-4">
