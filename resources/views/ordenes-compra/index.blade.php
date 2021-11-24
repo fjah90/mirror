@@ -363,7 +363,7 @@ const app = new Vue({
 
         var data = [];
         data.confirmacion_fabrica = [];
-        datal.confirmacion_fabrica.push(this.ordenModal.confirmacion_fabrica);
+        data.confirmacion_fabrica.push(this.ordenModal.confirmacion_fabrica);
         data.monto_total_producto = this.ordenModal.monto_total_producto;
         data.monto_total_pagar = this.ordenModal.monto_total_pagar;
         data.monto_total_flete = this.ordenModal.monto_total_flete;
