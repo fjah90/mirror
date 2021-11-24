@@ -181,22 +181,22 @@
         <div id="confirmacion-file-errors"></div>
         <div class="col-md-4">
           <label class="control-label">Monto total del Producto</label>
-          <input type="number" class="form-control" name="monto_total_producto" v-model="ordenModal.monto_total_producto" min="0.0" @change="sumartotal()"
+          <input type="number" class="form-control" name="monto_total_producto" v-model="ordenModal.monto_total_producto" min="0.0" @change="sumartotal('monto_producto')"
              />
         </div>
         <div class="col-md-4">
           <label class="control-label">Monto total del Flete</label>
-          <input type="number" class="form-control" name="monto_total_flete" v-model="ordenModal.monto_total_flete" min="0.0" @change="sumartotal()"
+          <input type="number" class="form-control" name="monto_total_flete" v-model="ordenModal.monto_total_flete" min="0.0" @change="sumartotal('monto_flete')"
              />
         </div>
         <div class="col-md-4">
           <label class="control-label">Posibles Aumentos</label>
-          <input type="number" class="form-control" name="posibles_aumentos"  v-model="ordenModal.posibles_aumentos" min="0.0" @change="sumartotal()"
+          <input type="number" class="form-control" name="posibles_aumentos"  v-model="ordenModal.posibles_aumentos" min="0.0" @change="sumartotal('posibles')"
              />
         </div>
         <div class="col-md-4">
           <label class="control-label">Tax</label>
-          <input type="number" class="form-control" name="tax" v-model="ordenModal.tax" min="0.0" @change="sumartotal()"
+          <input type="number" class="form-control" name="tax" v-model="ordenModal.tax" min="0.0" @change="sumartotal('tax')"
              />
         </div>
         <div class="col-md-4">
@@ -328,6 +328,8 @@ const app = new Vue({
         });
       },//cancelar
       sumartotal(valor){
+
+        console.log()
         if (this.ordenModal.monto_total_pagar == NaN || this.ordenModal.monto_total_pagar == undefined) {
           this.ordenModal.monto_total_pagar = 0;
         }
@@ -336,19 +338,19 @@ const app = new Vue({
               this.ordenModal.monto_total_pagar += this.ordenModal.monto_total_producto;  
           }  
         }
-        if (valor == 'monto_producto') {
+        if (valor == 'monto_felte') {
             if (this.ordenModal.monto_total_flete != null || this.ordenModal.monto_total_flete != "" ) {
                 this.ordenModal.monto_total_pagar += this.ordenModal.monto_total_flete;  
             }
         }
 
-        if (valor == 'monto_producto') {
+        if (valor == 'tax') {
             if (this.ordenModal.tax != null || this.ordenModal.tax != "" ) {
               this.ordenModal.monto_total_pagar += this.ordenModal.tax;  
           }
         }
 
-        if (valor == 'monto_producto') {
+        if (valor == 'posibles') {
             if (this.ordenModal.posibles_aumentos != null || this.ordenModal.posibles_aumentos != "" ) {
               this.ordenModal.monto_total_pagar += this.ordenModal.posibles_aumentos  
           }
