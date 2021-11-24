@@ -738,7 +738,7 @@ const app = new Vue({
     },
     agregarEntrada(){
 
-      console.log(this.$refs['fotos']);
+      console.log(this.$refs['fotos'].files.length);
       if(this.entrada.producto.id==undefined){
         swal({
           title: "Error",
