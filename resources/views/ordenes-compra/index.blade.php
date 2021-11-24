@@ -181,27 +181,27 @@
         <div id="confirmacion-file-errors"></div>
         <div class="col-md-4">
           <label class="control-label">Monto total del Producto</label>
-          <input type="text" class="form-control" name="monto_total_producto" v-model="ordenModal.monto_total_producto" @change="sumartotal()"
+          <input type="number" class="form-control" name="monto_total_producto" v-model="ordenModal.monto_total_producto" min="0.0" @change="sumartotal()"
              />
         </div>
         <div class="col-md-4">
           <label class="control-label">Monto total del Flete</label>
-          <input type="text" class="form-control" name="monto_total_flete" v-model="ordenModal.monto_total_flete" @change="sumartotal()"
+          <input type="number" class="form-control" name="monto_total_flete" v-model="ordenModal.monto_total_flete" min="0.0" @change="sumartotal()"
              />
         </div>
         <div class="col-md-4">
           <label class="control-label">Posibles Aumentos</label>
-          <input type="text" class="form-control" name="posibles_aumentos"  v-model="ordenModal.posibles_aumentos" @change="sumartotal()"
+          <input type="number" class="form-control" name="posibles_aumentos"  v-model="ordenModal.posibles_aumentos" min="0.0" @change="sumartotal()"
              />
         </div>
         <div class="col-md-4">
           <label class="control-label">Tax</label>
-          <input type="text" class="form-control" name="tax" v-model="ordenModal.tax" @change="sumartotal()"
+          <input type="number" class="form-control" name="tax" v-model="ordenModal.tax" min="0.0" @change="sumartotal()"
              />
         </div>
         <div class="col-md-4">
           <label class="control-label">Monto total a Pagar</label>
-          <input type="text" class="form-control" name="monto_total_pagar" v-model="ordenModal.monto_total_pagar" default ='0'
+          <input type="number" class="form-control" name="monto_total_pagar" v-model="ordenModal.monto_total_pagar" min="0.0" 
              />
         </div>
       </div>
@@ -327,22 +327,37 @@ const app = new Vue({
           } //if confirmacion
         });
       },//cancelar
-      sumartotal(){
+      sumartotal(valor){
         if (this.ordenModal.monto_total_pagar == NaN || this.ordenModal.monto_total_pagar == undefined) {
           this.ordenModal.monto_total_pagar = 0;
         }
-        if (this.ordenModal.monto_total_producto != null || this.ordenModal.monto_total_producto != "" ) {
-            this.ordenModal.monto_total_pagar += this.ordenModal.monto_total_producto;  
+        if (valor == 'monto_producto') {
+          if (this.ordenModal.monto_total_producto != null || this.ordenModal.monto_total_producto != "" ) {
+              this.ordenModal.monto_total_pagar += this.ordenModal.monto_total_producto;  
+          }  
         }
-        if (this.ordenModal.monto_total_flete != null || this.ordenModal.monto_total_flete != "" ) {
-            this.ordenModal.monto_total_pagar += this.ordenModal.monto_total_flete;  
+        if (valor == 'monto_producto') {
+            if (this.ordenModal.monto_total_flete != null || this.ordenModal.monto_total_flete != "" ) {
+                this.ordenModal.monto_total_pagar += this.ordenModal.monto_total_flete;  
+            }
         }
-        if (this.ordenModal.tax != null || this.ordenModal.tax != "" ) {
-            this.ordenModal.monto_total_pagar += this.ordenModal.tax;  
+
+        if (valor == 'monto_producto') {
+            if (this.ordenModal.tax != null || this.ordenModal.tax != "" ) {
+              this.ordenModal.monto_total_pagar += this.ordenModal.tax;  
+          }
         }
-        if (this.ordenModal.posibles_aumentos != null || this.ordenModal.posibles_aumentos != "" ) {
-            this.ordenModal.monto_total_pagar += this.ordenModal.posibles_aumentos  
+
+        if (valor == 'monto_producto') {
+            if (this.ordenModal.posibles_aumentos != null || this.ordenModal.posibles_aumentos != "" ) {
+              this.ordenModal.monto_total_pagar += this.ordenModal.posibles_aumentos  
+          }
+
         }
+        
+        
+        
+        
         
       },
       confirmarOrden(){
