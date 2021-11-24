@@ -737,6 +737,7 @@ const app = new Vue({
       }
     },
     agregarEntrada(){
+
       if(this.entrada.producto.id==undefined){
         swal({
           title: "Error",
@@ -745,6 +746,7 @@ const app = new Vue({
         });
         return false;
       }
+      $("button.fileinput-remove").click();
       if(this.entrada.cantidad_convertida!="")
         this.entrada.importe = this.entrada.cantidad_convertida * this.entrada.precio;
       else this.entrada.importe = this.entrada.cantidad * this.entrada.precio;
