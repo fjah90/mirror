@@ -181,27 +181,27 @@
         <div id="confirmacion-file-errors"></div>
         <div class="col-md-4">
           <label class="control-label">Monto total del Producto</label>
-          <input type="text" class="form-control" name="monto_total_producto" @change="sumartotal()"
+          <input type="text" class="form-control" name="monto_total_producto" v-model="ordenModal.monto_total_producto" @change="sumartotal()"
              />
         </div>
         <div class="col-md-4">
           <label class="control-label">Monto total del Flete</label>
-          <input type="text" class="form-control" name="monto_total_flete" @change="sumartotal()"
+          <input type="text" class="form-control" name="monto_total_flete" v-model="ordenModal.monto_total_flete" @change="sumartotal()"
              />
         </div>
         <div class="col-md-4">
           <label class="control-label">Posibles Aumentos</label>
-          <input type="text" class="form-control" name="posibles_aumentos" @change="sumartotal()"
+          <input type="text" class="form-control" name="posibles_aumentos"  v-model="ordenModal.posibles_aumentos" @change="sumartotal()"
              />
         </div>
         <div class="col-md-4">
           <label class="control-label">Tax</label>
-          <input type="text" class="form-control" name="tax"  @change="sumartotal()"
+          <input type="text" class="form-control" name="tax" v-model="ordenModal.tax" @change="sumartotal()"
              />
         </div>
         <div class="col-md-4">
           <label class="control-label">Monto total a Pagar</label>
-          <input type="text" class="form-control" name="monto_total_pagar" @change="sumartotal()"
+          <input type="text" class="form-control" v-model="ordenModal.monto_total_pagar" name="monto_total_pagar" @change="sumartotal()"
              />
         </div>
       </div>
