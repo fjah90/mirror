@@ -328,6 +328,7 @@ const app = new Vue({
         });
       },//cancelar
       sumartotal(){
+        console.log(this.ordenModal);
         if (this.ordenModal.monto_total_pagar == null || this.ordenModal.monto_total_pagar == "") {
           this.ordenModal.monto_total_pagar = 0;
         }
