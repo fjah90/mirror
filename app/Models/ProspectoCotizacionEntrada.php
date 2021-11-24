@@ -23,7 +23,8 @@ class ProspectoCotizacionEntrada extends Model
 
     protected $appends = [
         'fecha_precio_compra_formated',
-        'area'
+        'area',
+        'fotos2'
     ];
 
     public function setFechaPrecioCompraAttribute($value)
@@ -40,6 +41,11 @@ class ProspectoCotizacionEntrada extends Model
     public function getFechaPrecioCompraFormatedAttribute()
     {
         return Carbon::parse($this->fecha_precio_compra)->format('d/m/Y');
+    }
+
+    public function getFotos2Attribute()
+    {
+        return $this->fotos;
     }
 
     public function getFotosAttribute($value)
