@@ -201,7 +201,7 @@
         </div>
         <div class="col-md-4">
           <label class="control-label">Monto total a Pagar</label>
-          <input type="text" class="form-control" name="monto_total_pagar"
+          <input type="text" class="form-control" name="monto_total_pagar" v-model="ordenModal.monto_total_pagar" default ='0'
              />
         </div>
       </div>
@@ -328,7 +328,7 @@ const app = new Vue({
         });
       },//cancelar
       sumartotal(){
-        
+        console.log(this.ordenModal.monto_total_pagar);
         if (this.ordenModal.monto_total_pagar == NaN ) {
           this.ordenModal.monto_total_pagar = 0;
         }
