@@ -228,7 +228,13 @@ const app = new Vue({
     el: '#content',
     data: {
       ordenes: {!! json_encode($ordenes) !!},
-      ordenModal : {},
+      ordenModal : {
+        monto_total_pagar:0,
+        monto_total_flete:0,
+        monto_total_producto:0,
+        tax:0,
+        posibles_aumentos:0
+      },
       openAprobar: false,
       openRechazar: false,
       openConfirmar: false,
