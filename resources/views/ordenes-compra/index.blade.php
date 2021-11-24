@@ -186,22 +186,22 @@
         </div>
         <div class="col-md-4">
           <label class="control-label">Monto total del Flete</label>
-          <input type="text" class="form-control" @change="sumartotal()" name="monto_total_flete"
+          <input type="text" class="form-control" name="monto_total_flete" @change="sumartotal()"
              />
         </div>
         <div class="col-md-4">
           <label class="control-label">Posibles Aumentos</label>
-          <input type="text" class="form-control" @change="sumartotal()" name="posibles_aumentos"
+          <input type="text" class="form-control" name="posibles_aumentos" @change="sumartotal()"
              />
         </div>
         <div class="col-md-4">
           <label class="control-label">Tax</label>
-          <input type="text" class="form-control" @change="sumartotal()" name="tax"
+          <input type="text" class="form-control" name="tax"  @change="sumartotal()"
              />
         </div>
         <div class="col-md-4">
           <label class="control-label">Monto total a Pagar</label>
-          <input type="text" class="form-control" @change="sumartotal()" name="monto_total_pagar"
+          <input type="text" class="form-control" name="monto_total_pagar" @change="sumartotal()"
              />
         </div>
       </div>
