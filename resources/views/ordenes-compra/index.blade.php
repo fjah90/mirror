@@ -228,13 +228,7 @@ const app = new Vue({
     el: '#content',
     data: {
       ordenes: {!! json_encode($ordenes) !!},
-      ordenModal : {
-        monto_total_pagar:0,
-        monto_total_flete:0,
-        monto_total_producto:0,
-        tax:0,
-        posibles_aumentos:0
-      },
+      ordenModal : {},
       openAprobar: false,
       openRechazar: false,
       openConfirmar: false,
@@ -334,32 +328,27 @@ const app = new Vue({
         });
       },//cancelar
       sumartotal(valor){
-
-        console.log(valor);
-        console.log(this.ordenModal);
-        if (this.ordenModal.monto_total_pagar == NaN || this.ordenModal.monto_total_pagar == undefined) {
-          this.ordenModal.monto_total_pagar = 0;
-        }
+       
         if (valor == 'monto_producto') {
           if (this.ordenModal.monto_total_producto != null || this.ordenModal.monto_total_producto != "" ) {
-              this.ordenModal.monto_total_pagar += this.ordenModal.monto_total_producto; 
+              this.ordenModal.monto_total_pagar = parseFloat(this.ordenModal.monto_total_pagar) + parseFloat(this.ordenModal.monto_total_producto); 
           }  
         }
-        if (valor == 'monto_felte') {
+        if (valor == 'monto_flete') {
             if (this.ordenModal.monto_total_flete != null || this.ordenModal.monto_total_flete != "" ) {
-                this.ordenModal.monto_total_pagar += this.ordenModal.monto_total_flete;  
+                this.ordenModal.monto_total_pagar =parseFloat(this.ordenModal.monto_total_pagar) +  parseFloat(this.ordenModal.monto_total_flete);  
             }
         }
 
         if (valor == 'tax') {
             if (this.ordenModal.tax != null || this.ordenModal.tax != "" ) {
-              this.ordenModal.monto_total_pagar += this.ordenModal.tax;  
+              this.ordenModal.monto_total_pagar = parseFloat(this.ordenModal.monto_total_pagar) +  parseFloat(this.ordenModal.tax);  
           }
         }
 
         if (valor == 'posibles') {
             if (this.ordenModal.posibles_aumentos != null || this.ordenModal.posibles_aumentos != "" ) {
-              this.ordenModal.monto_total_pagar += this.ordenModal.posibles_aumentos  
+              this.ordenModal.monto_total_pagar = parseFloat(this.ordenModal.monto_total_pagar) +  parseFloat(this.ordenModal.posibles_aumentos);  
           }
 
         }
