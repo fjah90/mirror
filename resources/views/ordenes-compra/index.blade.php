@@ -329,13 +329,14 @@ const app = new Vue({
       },//cancelar
       sumartotal(valor){
 
-        console.log()
+        console.log(valor);
+        console.log(this.ordenModal);
         if (this.ordenModal.monto_total_pagar == NaN || this.ordenModal.monto_total_pagar == undefined) {
           this.ordenModal.monto_total_pagar = 0;
         }
         if (valor == 'monto_producto') {
           if (this.ordenModal.monto_total_producto != null || this.ordenModal.monto_total_producto != "" ) {
-              this.ordenModal.monto_total_pagar += this.ordenModal.monto_total_producto;  
+              this.ordenModal.monto_total_pagar += this.ordenModal.monto_total_producto; 
           }  
         }
         if (valor == 'monto_felte') {
