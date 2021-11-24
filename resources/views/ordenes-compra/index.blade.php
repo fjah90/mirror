@@ -181,27 +181,27 @@
         <div id="confirmacion-file-errors"></div>
         <div class="col-md-4">
           <label class="control-label">Monto total del Producto</label>
-          <input type="number" class="form-control" name="monto_total_producto" v-model="ordenModal.monto_total_producto" min="0.0" @change="sumartotal('monto_producto')"
+          <input type="number" class="form-control" v-model="ordenModal.monto_total_producto" min="0.0" @change="sumartotal('monto_producto')"
              />
         </div>
         <div class="col-md-4">
           <label class="control-label">Monto total del Flete</label>
-          <input type="number" class="form-control" name="monto_total_flete" v-model="ordenModal.monto_total_flete" min="0.0" @change="sumartotal('monto_flete')"
+          <input type="number" class="form-control" v-model="ordenModal.monto_total_flete" min="0.0" @change="sumartotal('monto_flete')"
              />
         </div>
         <div class="col-md-4">
           <label class="control-label">Posibles Aumentos</label>
-          <input type="number" class="form-control" name="posibles_aumentos"  v-model="ordenModal.posibles_aumentos" min="0.0" @change="sumartotal('posibles')"
+          <input type="number" class="form-control" v-model="ordenModal.posibles_aumentos" min="0.0" @change="sumartotal('posibles')"
              />
         </div>
         <div class="col-md-4">
           <label class="control-label">Tax</label>
-          <input type="number" class="form-control" name="tax" v-model="ordenModal.tax" min="0.0" @change="sumartotal('tax')"
+          <input type="number" class="form-control" v-model="ordenModal.tax" min="0.0" @change="sumartotal('tax')"
              />
         </div>
         <div class="col-md-4">
           <label class="control-label">Monto total a Pagar</label>
-          <input type="number" class="form-control" name="monto_total_pagar" v-model="ordenModal.monto_total_pagar" min="0.0" 
+          <input type="number" class="form-control" v-model="ordenModal.monto_total_pagar" min="0.0" 
              />
         </div>
       </div>
