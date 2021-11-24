@@ -434,7 +434,7 @@ class OrdenesCompraController extends Controller
                 if ($entrada->producto_id == $entrada_cotizacion->producto_id) {
                     if ($entrada->fotos == null) {
                         $entradaf = OrdenCompraEntrada::findOrFail($entrada->id);
-                        dd($entrada_cotizacion->attributes);
+                        dd($entrada_cotizacion->fotos2);
                         $entradaf->fotos = $entrada_cotizacion['fotos'];    
                         $entradaf->update();
                     }
