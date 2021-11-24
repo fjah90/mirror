@@ -738,7 +738,6 @@ const app = new Vue({
     },
     agregarEntrada(){
 
-      console.log(this.$refs['fotos'].files.length);
       if(this.entrada.producto.id==undefined){
         swal({
           title: "Error",
@@ -747,7 +746,7 @@ const app = new Vue({
         });
         return false;
       }
-      $("button.fileinput-remove").click();
+      
       if(this.entrada.cantidad_convertida!="")
         this.entrada.importe = this.entrada.cantidad_convertida * this.entrada.precio;
       else this.entrada.importe = this.entrada.cantidad * this.entrada.precio;
@@ -757,9 +756,8 @@ const app = new Vue({
           this.entrada.fotos = [];
           for (var i = 0; i < this.$refs['fotos'].files.length; i++)
               this.entrada.fotos.push(this.$refs['fotos'].files[i]);
-
-          console.log(this.entrada.fotos);
       }
+      $("button.fileinput-remove").click();
 
       this.orden.subtotal+= this.entrada.importe;
       this.orden.entradas.push(this.entrada);
