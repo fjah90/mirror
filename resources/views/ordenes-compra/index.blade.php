@@ -328,8 +328,7 @@ const app = new Vue({
         });
       },//cancelar
       sumartotal(){
-        console.log(this.ordenModal.monto_total_pagar);
-        if (this.ordenModal.monto_total_pagar == NaN ) {
+        if (this.ordenModal.monto_total_pagar == NaN || this.ordenModal.monto_total_pagar == undefined) {
           this.ordenModal.monto_total_pagar = 0;
         }
         if (this.ordenModal.monto_total_producto != null || this.ordenModal.monto_total_producto != "" ) {
