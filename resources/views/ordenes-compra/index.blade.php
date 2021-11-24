@@ -362,7 +362,7 @@ const app = new Vue({
 
 
         var data = [];
-        data.confirmacion_fabrica = this.ordenModal.confirmacion_fabrica
+        data.confirmacion_fabrica = this.ordenModal.confirmacion_fabrica;
         data.monto_total_producto = this.ordenModal.monto_total_producto;
         data.monto_total_pagar = this.ordenModal.monto_total_pagar;
         data.monto_total_flete = this.ordenModal.monto_total_flete;
@@ -371,8 +371,6 @@ const app = new Vue({
 
 
         var formData = objectToFormData(data, {indices:true});
-
-        console.log(formData);
 
         this.cargando = true;
         axios.post('/proyectos-aprobados/'+this.ordenModal.proyecto_id+'/ordenes-compra/'+this.ordenModal.id+'/confirmar', 
@@ -383,11 +381,11 @@ const app = new Vue({
           
           $("#confirmacion").fileinput('clear');
 
-          this.ordenModal.monto_total_producto = "";
-          this.ordenModal.monto_total_pagar= "";
-          this.ordenModal.monto_total_flete= "";
-          this.ordenModal.tax= "";
-          this.ordenModal.posibles_aumentos= "";
+          this.ordenModal.monto_total_producto = 0.0;
+          this.ordenModal.monto_total_pagar= 0.0;
+          this.ordenModal.monto_total_flete= 0.0;
+          this.ordenModal.tax= 0.0;
+          this.ordenModal.posibles_aumentos= 0.0;
 
           this.openConfirmar = false;
           this.cargando = false;
