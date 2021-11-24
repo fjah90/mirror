@@ -332,6 +332,7 @@ const app = new Vue({
           this.ordenModal.monto_total_pagar = 0;
         }
         if (this.ordenModal.monto_total_producto != null || this.ordenModal.monto_total_producto != "" ) {
+            console.log(this.ordenModal.monto_total_producto);
             this.ordenModal.monto_total_pagar += this.ordenModal.monto_total_producto;  
         }
         if (this.ordenModal.monto_total_flete != null || this.ordenModal.monto_total_flete != "" ) {
