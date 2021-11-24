@@ -422,10 +422,24 @@ class OrdenesCompraController extends Controller
         $unidades_medida = UnidadMedida::with('conversiones')->orderBy('simbolo')->get();
         $tiempos_entrega = TiempoEntrega::all();
         $orden->load('proveedor', 'contacto', 'entradas.producto', 'entradas.descripciones');
+
+
         if ($orden->iva > 0) {
             $orden->iva = 1;
         }
         $proyecto->load('cotizacion', 'cotizacion.entradas', 'cotizacion.entradas.producto', 'cotizacion.entradas.contacto');
+
+        foreach($orden->entradas as $entrada){
+            foreach($proyecto->cotizacion->entradas as $entrada_cotizacion){
+                if ($entrada->producto_id == $entrada_cotizacion->producto_id) {
+                    if ($entrada->fotos == null) {
+                        $entradaf = OrdenCompraEntrada::findOrFail($entrada->id);
+                        $entradaf->fotos = $entrada_cotizacion->fotos;    
+                        $entradaf->update();
+                    }
+                }
+            }
+        }
 
         $tiempo_entrega = TiempoEntrega::where('valor', $orden->tiempo_entrega)->first();
         if (is_null($tiempo_entrega)) {
