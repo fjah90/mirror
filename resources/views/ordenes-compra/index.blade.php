@@ -181,27 +181,27 @@
         <div id="confirmacion-file-errors"></div>
         <div class="col-md-4">
           <label class="control-label">Monto total del Producto</label>
-          <input type="text" class="form-control" name="monto_total_producto"
+          <input type="text" class="form-control" @change="sumartotal()" name="monto_total_producto"
              />
         </div>
         <div class="col-md-4">
           <label class="control-label">Monto total del Flete</label>
-          <input type="text" class="form-control" name="monto_total_flete"
+          <input type="text" class="form-control" @change="sumartotal()" name="monto_total_flete"
              />
         </div>
         <div class="col-md-4">
           <label class="control-label">Posibles Aumentos</label>
-          <input type="text" class="form-control" name="posibles_aumentos"
+          <input type="text" class="form-control" @change="sumartotal()" name="posibles_aumentos"
              />
         </div>
         <div class="col-md-4">
           <label class="control-label">Tax</label>
-          <input type="text" class="form-control" name="tax"
+          <input type="text" class="form-control" @change="sumartotal()" name="tax"
              />
         </div>
         <div class="col-md-4">
           <label class="control-label">Monto total a Pagar</label>
-          <input type="text" class="form-control" name="monto_total_pagar"
+          <input type="text" class="form-control" @change="sumartotal()" name="monto_total_pagar"
              />
         </div>
       </div>
@@ -327,6 +327,24 @@ const app = new Vue({
           } //if confirmacion
         });
       },//cancelar
+      sumartotal(){
+        if (this.ordenModal.monto_total_pagar == null || this.ordenModal.monto_total_pagar == "") {
+          this.ordenModal.monto_total_pagar = 0;
+        }
+        if (this.ordenModal.monto_total_producto != null || this.ordenModal.monto_total_producto != "" ) {
+            this.ordenModal.monto_total_pagar += this.ordenModal.monto_total_producto;  
+        }
+        if (this.ordenModal.monto_total_flete != null || this.ordenModal.monto_total_flete != "" ) {
+            this.ordenModal.monto_total_pagar += this.ordenModal.monto_total_flete;  
+        }
+        if (this.ordenModal.tax != null || this.ordenModal.tax != "" ) {
+            this.ordenModal.monto_total_pagar += this.ordenModal.tax;  
+        }
+        if (this.ordenModal.posibles_aumentos != null || this.ordenModal.posibles_aumentos != "" ) {
+            this.ordenModal.monto_total_pagar += this.ordenModal.posibles_aumentos  
+        }
+        
+      },
       confirmarOrden(){
 
 
@@ -349,6 +367,13 @@ const app = new Vue({
           this.ordenModal.confirmacion_fabrica = data.confirmacion;
           
           $("#confirmacion").fileinput('clear');
+
+          this.ordenModal.monto_total_producto = "";
+          this.ordenModal.monto_total_pagar= "";
+          this.ordenModal.monto_total_flete= "";
+          this.ordenModal.tax= "";
+          this.ordenModal.posibles_aumentos= "";
+
           this.openConfirmar = false;
           this.cargando = false;
           swal({
@@ -367,6 +392,8 @@ const app = new Vue({
             type: "error"
           });
         });
+
+
       },//fin confirmarOrden
     }
 });
