@@ -372,7 +372,7 @@ class OrdenesCompraController extends Controller
             ], 400);
         }
 
-        dd($request->all());
+        dd($request);
 
         $validator = Validator::make($request->all(), [
             'confirmacion_fabrica' => 'required|file|mimes:jpeg,jpg,png,pdf',
