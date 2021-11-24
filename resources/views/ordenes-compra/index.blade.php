@@ -368,13 +368,15 @@ const app = new Vue({
         data.monto_total_flete = this.ordenModal.monto_total_flete;
         data.tax = this.ordenModal.tax;
         data.posibles_aumentos = this.ordenModal.posibles_aumentos;
+        console.log(data);
 
 
         var formData = objectToFormData(data, {indices:true});
 
         this.cargando = true;
         axios.post('/proyectos-aprobados/'+this.ordenModal.proyecto_id+'/ordenes-compra/'+this.ordenModal.id+'/confirmar', 
-        formData, { headers: { 'Content-Type': 'multipart/form-data'}})
+        formData, { headers: { 'Content-Type': 'multipart/form-data'}
+      })
         .then(({data}) => {
           this.ordenModal.status = 'Confirmada';
           this.ordenModal.confirmacion_fabrica = data.confirmacion;
