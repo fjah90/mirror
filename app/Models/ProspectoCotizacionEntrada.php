@@ -43,11 +43,6 @@ class ProspectoCotizacionEntrada extends Model
         return Carbon::parse($this->fecha_precio_compra)->format('d/m/Y');
     }
 
-    public function getFotos2Attribute()
-    {
-        return $this->fotos;
-    }
-
     public function getFotosAttribute($value)
     {
         if ($value == "") {
