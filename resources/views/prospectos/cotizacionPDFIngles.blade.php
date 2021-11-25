@@ -631,7 +631,7 @@
             <tr>
               <th class="text-center" style="width:10%; padding:3px 0 1px;">Quantity</th>
               <th class="text-center" style="width:74%; padding:3px 0 1px;">Description</th>
-              <th class="text-center" style="width:13%; padding:3px 0 1px;">Unit Price Unitario</th>
+              <th class="text-center" style="width:13%; padding:3px 0 1px;">Unit Price</th>
               <th class="text-center" style="width:13%; padding:3px 0 1px;">Total</th>
             </tr>
           </thead>
@@ -691,82 +691,6 @@
         </table>
       </div>
     </div>
-
-    <div class="row">
-      <div class="col-lg-12">
-        {{-- <div class="cuadro_magico"></div> --}}
-        <table class="table table-cotizacion">
-          <thead>
-            <tr>
-              <th class="text-center" style="width:10%; padding:3px 0 1px;">Quantity</th>
-              <th class="text-center" style="width:74%; padding:3px 0 1px;">Description</th>
-              <th class="text-center" style="width:13%; padding:3px 0 1px;">Unit Price</th>
-              <th class="text-center" style="width:13%; padding:3px 0 1px;">Total</th>
-            </tr>
-          </thead>
-          <tbody>
-            @foreach($cotizacion->entradas as $entrada)
-            @if($loop->index == 5)
-            <tr class="page-break">
-            @else
-            <tr>
-            @endif
-            <tr>
-              <td class="text-center">@format_number($entrada->cantidad) <br /> {{$entrada->medida}}</td>
-              <td>
-                <table style="width:100%; margin:0;">
-                  <tr>
-                    <td style="vertical-align: top;">
-                      @foreach($entrada->descripciones as $descripcion)
-                      @if($descripcion->valor_ingles)
-                      <p>
-                        <span>@text_capitalize($descripcion->{$nombre}): </span>
-                        <span class="text-uppercase">{{$descripcion->valor_ingles}}</span>
-                      </p>
-                      @elseif($descripcion->valor)
-                      <p>
-                        <span>@text_capitalize($descripcion->{$nombre}): </span>
-                        <span class="text-uppercase">{{$descripcion->valor}}</span>
-                      </p>
-                      @endif
-                      @endforeach
-                      @if($entrada->observaciones && $entrada->observaciones!='<ul></ul>')
-                      <p>
-                        <span>Remarks: </span>
-                        {!! $entrada->observaciones !!}
-                      </p>
-                      @endif
-                    </td>
-                    <td style="width:100px;">
-                      @foreach($entrada->fotos as $foto)
-                      <img src="{{$foto}}" alt="foto" style="width:100px; height:100px;" />
-                      <br />
-                      @endforeach
-                    </td>
-                  </tr>
-                </table>
-              </td>
-              <td class="text-right">@format_money($entrada->precio)</td>
-              <td class="text-right">@format_money($entrada->importe)</td>
-            </tr>
-            @endforeach
-            <tr>
-              <td></td>
-              <td>
-                @if($cotizacion->entradas->count()==1)
-                <div style="height: 200px; background-color:white;"></div>
-                @elseif($cotizacion->entradas->count()==2)
-                <div style="height: 0px; background-color:white;"></div>
-                @endif
-              </td>
-              <td></td>
-              <td></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-
     <!-- Espacio para que el footer no se sobreponga a la tabla -->
     {{-- <div class="row">
       <div class="col-lg-12" style="height:180px;">
