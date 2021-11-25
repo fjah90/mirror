@@ -89,7 +89,6 @@ class ProyectosAprobadosController extends Controller
     }
 
     public function generarOrdenes(ProyectoAprobado $proyecto){
-      dd('algo');
       $proyecto->load('cotizacion.entradas.producto.proveedor');
 
       //se va a crear una orden por cada proveedor involucrado en el proyecto

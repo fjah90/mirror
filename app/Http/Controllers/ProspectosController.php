@@ -1122,6 +1122,7 @@ class ProspectosController extends Controller
      */
     public function aceptarCotizacion(Request $request, Prospecto $prospecto)
     {
+        dd("hola");
         $validator = Validator::make($request->all(), [
             'cotizacion_id' => 'required',
             'comprobante'   => 'required|file|mimes:jpeg,jpg,png,pdf',
