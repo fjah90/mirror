@@ -638,15 +638,15 @@
                         <p>{{$entrada->comentarios}}</p>
                     </td>
                     <td style="width:100px;">
-                      @if ($entrada->foto_cotizacion)
-                        @foreach($entrada->foto_cotizacion as $foto)
-                          <img src="{{$foto}}" alt="foto" style="width:100px; height:100px;" />
-                          <br />
-                        @endforeach
-
+                      @foreach($entrada->fotos as $foto)
+                        <img src="{{$foto}}" alt="foto" style="width:100px; height:100px;" />
+                        <br />
+                      @endforeach
+                      <!--
                       @elseif ($entrada->producto->foto)
                       <img src="{{$entrada->producto->foto}}" alt="foto" style="width:100px; height:100px;" />
                       @endif
+                      -->
                     </td>
                   </tr>
                 </table>
