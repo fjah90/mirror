@@ -394,6 +394,7 @@ class OrdenesCompraController extends Controller
             'monto_total_producto' => $request->monto_total_producto,
             'monto_total_flete' => $request->monto_total_flete,
             'monto_total_pagar' => $request->monto_total_pagar,
+            'total' => $request->monto_total_pagar,
             'tax' => $request->tax,
             'posibles_aumentos' => $request->posibles_aumentos,
 
