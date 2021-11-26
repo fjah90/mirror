@@ -1177,20 +1177,18 @@ class ProspectosController extends Controller
         $create['comprobante_confirmacion'] = $comprobante;
         $create['fecha_comprobante'] = $request->fecha_comprobante;
 
-
         CuentaCobrar::create($create);
-        //$cotizacion->update(['aceptada' => true]);
+        $cotizacion->update(['aceptada' => true]);
 
         // Guardar activiad de aprobar
-        //$today = new DateTime();
-        /*ProspectoActividad::create([
+        $today = new DateTime();
+        ProspectoActividad::create([
             'prospecto_id' => $cotizacion->prospecto_id,
             'tipo_id'      => 10,
             'fecha'        => $today->format('d/m/Y'),
             'descripcion'  => 'Cotización aceptada',
             'realizada'    => true,
         ]);
-        */
 
         return response()->json(['success' => true, 'error' => false,'proyecto_aprobado'=>$proyecto_aprobado], 200);
     }
