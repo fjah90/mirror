@@ -33,7 +33,7 @@ class CuentaPagar extends Model
     }
 
     public function orden(){
-      return $this->belongsTo('App\Models\OrdenCompra', 'orden_compra_id', 'id');
+      return $this->belongsTo('App\Models\OrdenCompra', 'orden_compra_id', 'id')->withTrashed();
     }
 
     public function facturas(){
