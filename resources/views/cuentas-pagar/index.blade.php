@@ -53,6 +53,8 @@
                   <th>#</th>
                   <th>Proveedor</th>
                   <th>Proyecto</th>
+                  <th>#Orden</th>
+                  <th>#Cotizacion</th>
                   <th>Dias Credito</th>
                   <th>Moneda</th>
                   <th>Total</th>
@@ -67,6 +69,8 @@
                   <td>@{{index+1}}</td>
                   <td>@{{cuenta.proveedor_empresa}}</td>
                   <td>@{{cuenta.proyecto_nombre}}</td>
+                  <td>@{{cuenta.orden.numero}}</td>
+                  <td>@{{cuenta.orden.proyecto.cotizacion.numero}}</td>
                   <td>@{{cuenta.dias_credito}}</td>
                   <td><p v-bind:style= "[cuenta.moneda == 'Dolares' ? {'color':'#760e0e'} : {'color':'#ff0000a8'}]">@{{cuenta.moneda}}</p></td>
                   <td><p v-bind:style= "[cuenta.moneda == 'Dolares' ? {'color':'#760e0e'} : {'color':'#ff0000a8'}]">@{{cuenta.total | formatoMoneda}}</p></td>

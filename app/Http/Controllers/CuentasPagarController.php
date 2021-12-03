@@ -21,7 +21,7 @@ class CuentasPagarController extends Controller
     public function index()
     {
       $usuarios = User::all();
-      $cuentas = CuentaPagar::all();
+      $cuentas = CuentaPagar::with('orden','orden.proyecto.cotizacion')->get();
 
       return view('cuentas-pagar.index', compact('cuentas','usuarios'));
     }
