@@ -416,6 +416,11 @@ class OrdenesCompraController extends Controller
             'posibles_aumentos' => $request->posibles_aumentos,
 
         ]);
+        $cuenta_pagar  = CuentasPagar::where('orden_compra_id',$orden->id)->first();
+        $cuenta_pagar->total = $request->monto_total_pagar;
+        $cuenta_pagar->pendiente = $request->monto_total_pagar;
+
+        $cuenta_pagar->save();
 
         return response()->json([
             'success' => true, "error" => false, "confirmacion" => asset('storage/' . $confirmacion),
