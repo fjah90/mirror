@@ -92,7 +92,7 @@
                     </button>
                     
                     <button v-if="orden.status=='Aprobada'" class="btn btn-xs btn-purple"
-                      title="Confirmar" @click="ordenModal=orden; openConfirmar=true; ordenModal.monto_total_flete=orden.flete;ordenModal.monto_total_producto=orden.subtotal;ordenModal.tax=orden.iva;ordenModal.monto_total_pagar=orden.total + orden.flete;">
+                      title="Confirmar" @click="ordenModal=orden; openConfirmar=true; ordenModal.monto_total_flete=orden.flete;ordenModal.monto_total_producto=orden.subtotal;ordenModal.tax=orden.iva;sumartot()">
                       <i class="fas fa-clipboard-check"></i>
                     </button>
                     @endrole
@@ -248,6 +248,9 @@ const app = new Vue({
     methods: {
       fijarConfirmacion(){
         this.ordenModal.confirmacion_fabrica = this.$refs['confirmacion'].files[0];
+      },
+      sumartotal(){
+        this.ordenModal.monto_total_pagar = this.ordenModal.monto_total_flete + ordenModal.monto_total_producto;
       },
       rechazarOrden(){
         this.cargando = true;
