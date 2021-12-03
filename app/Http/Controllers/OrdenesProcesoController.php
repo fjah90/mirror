@@ -19,6 +19,7 @@ class OrdenesProcesoController extends Controller
      */
     public function index()
     {
+      $usuarios = User::all();
       $ordenes = OrdenProceso::with('ordenCompra','ordenCompra.proyecto','ordenCompra.proyecto.cotizacion','ordenCompra.proyecto.cotizacion.user')->where('orden_compra_id','!=','4361')->get();
 
       foreach ($ordenes as $orden) {
@@ -42,7 +43,7 @@ class OrdenesProcesoController extends Controller
         }
       }
 
-      return view('ordenes-proceso.index', compact('ordenes'));
+      return view('ordenes-proceso.index', compact('ordenes','usuarios'));
     }
 
     public function listado(Request $request)
@@ -59,11 +60,34 @@ class OrdenesProcesoController extends Controller
       }
 
       if ($request->anio == 'Todos') {
-          $ordenes = OrdenProceso::with('ordenCompra','ordenCompra.proyecto','ordenCompra.proyecto.cotizacion','ordenCompra.proyecto.cotizacion.user')->get();
+        $usuario = $request->id;
+          $ordenes = OrdenProceso::with('ordenCompra','ordenCompra.proyecto','ordenCompra.proyecto.cotizacion','ordenCompra.proyecto.cotizacion.user')->whereHas('ordenCompra', function($q) use($usuario)
+            {       
+              $q->whereHas('proyecto', function($q) use($usuario)
+              {
+                $q->whereHas('cotizacion', function($q) use($usuario)
+                {
+                  $q->where('user_id', $usuario);
+                
+                });
+              });
+            })->get();
       }
       else{
+        $usuario = $request->id;
           $anio = Carbon::parse($request->anio);
-          $ordenes = OrdenProceso::whereBetween('created_at', [$inicio, $anio])->with('ordenCompra','ordenCompra.proyecto','ordenCompra.proyecto.cotizacion','ordenCompra.proyecto.cotizacion.user')->get();
+          $ordenes = OrdenProceso::whereBetween('created_at', [$inicio, $anio])->with('ordenCompra','ordenCompra.proyecto','ordenCompra.proyecto.cotizacion','ordenCompra.proyecto.cotizacion.user')
+          ->whereHas('ordenCompra', function($q) use($usuario)
+            {       
+              $q->whereHas('proyecto', function($q) use($usuario)
+              {
+                $q->whereHas('cotizacion', function($q) use($usuario)
+                {
+                  $q->where('user_id', $usuario);
+                
+                });
+              });
+            })->get();
       }
 
       foreach ($ordenes as $orden) {

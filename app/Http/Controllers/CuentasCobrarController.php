@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\CuentaCobrar;
 use App\Models\Factura;
 use App\Models\Pago;
+use App\User;
 use Carbon\Carbon;
 use Validator;
 use Storage;
@@ -19,14 +20,16 @@ class CuentasCobrarController extends Controller
      */
     public function index()
     {
+      $usuarios = User::all();
       $cuentas = CuentaCobrar::with('cotizacion','cotizacion.user')->get();
 
-      return view('cuentas-cobrar.index', compact('cuentas'));
+      return view('cuentas-cobrar.index', compact('cuentas','usuarios'));
     }
 
     public function listado(Request $request)
     {
      
+        $usuario = $request->id;
         if ($request->anio == '2019-12-31') {
             $inicio = Carbon::parse('2019-01-01');    
         }
@@ -38,11 +41,31 @@ class CuentasCobrarController extends Controller
         }
         
         if ($request->anio == 'Todos') {
-            $cuentas = CuentaCobrar::all();
+            if ($request->id == 'Todos') {
+              $cuentas = CuentaCobrar::all();  
+            }
+            else{
+
+              $cuentas = CuentaCobrar::with('cotizacion','cotizacion.user')->whereHas('cotizacion', function($q) use($usuario)
+                {
+                  $q->where('user_id', $usuario);
+                
+                })->get();
+            }
+            
         }
         else{
-            $anio = Carbon::parse($request->anio);
-            $cuentas = CuentaCobrar::whereBetween('created_at', [$inicio, $anio])->get();
+            $anio = Carbon::parse($request->anio);  
+            if ($request->id == 'Todos') {  
+              $cuentas = CuentaCobrar::whereBetween('created_at', [$inicio, $anio])->get();
+            }
+            else{
+              $cuentas = CuentaCobrar::with('cotizacion','cotizacion.user')->whereBetween('created_at', [$inicio, $anio])->whereHas('cotizacion', function($q) use($usuario)
+                {
+                  $q->where('user_id', $usuario);
+                
+                })->get();
+            }
         }
 
         return response()->json(['success' => true, "error" => false, 'cuentas' => $cuentas], 200);

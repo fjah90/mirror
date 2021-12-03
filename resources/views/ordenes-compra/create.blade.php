@@ -220,6 +220,20 @@
                   </div>
                 </div>
               </div>
+              <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="control-label" style="display:block;">Foto</label>
+                        <div class="btn btn-sm btn-danger" v-if="entrada.fotos.length" v-on:click="borrarfotos" title="BORRAR FOTOS">
+                            <i class="fas fa-trash"></i>
+                        </div>
+                        <div class="file-loading">
+                            <input id="fotos" name="fotos[]" type="file" ref="fotos" multiple/>
+                        </div>
+                        <div id="fotos-file-errors"></div>
+                    </div>
+                </div>
+            </div>
               <div class="row form-group">
                 <div class="col-md-12 text-right">
                   <button type="submit" class="btn btn-info">
@@ -372,6 +386,16 @@
 {{-- footer_scripts --}}
 @section('footer_scripts')
 <script type="text/javascript">
+
+  // Used for creating a new FileList in a round-about way
+    function FileListItem(a) {
+        a = [].slice.call(Array.isArray(a) ? a : arguments)
+        for (var c, b = c = a.length, d = !0; b-- && d;) d = a[b] instanceof File
+        if (!d) throw new TypeError("expected argument to FileList is File or array of File objects")
+        for (b = (new ClipboardEvent("")).clipboardData || new DataTransfer; c--;) b.items.add(a[c])
+        return b.files
+    }
+
 const app = new Vue({
   el: '#content',
   data: {
@@ -411,7 +435,8 @@ const app = new Vue({
       precio: 0,
       importe: 0,
       comentarios: '',
-      descripciones:[]
+      descripciones:[],
+      fotos: []
     },
     openCatalogo: false,
     cargando: false
@@ -429,8 +454,27 @@ const app = new Vue({
         return (vue.orden.proveedor_empresa == prov);
       }
     );
+
+    $("#fotos").fileinput({
+        language: 'es',
+        overwriteInitial: true,
+        maxFileSize: 5000,
+        showCaption: false,
+        showBrowse: false,
+        showRemove: false,
+        showUpload: false,
+        browseOnZoneClick: true,
+        defaultPreviewContent: '<img src="{{asset('images/camara.png')}}" style="width:200px; height:auto;" alt="foto"><h6>Click para seleccionar</h6>',
+        allowedFileExtensions: ["jpg", "jpeg", "png"],
+        elErrorContainer: '#fotos-file-errors'
+    });
+
     this.tablaProductos = $("#tablaProductos").DataTable({dom: 'ftp'});
     var vueInstance = this;
+
+
+
+
 
     //escuchar Iframe
     window.addEventListener('message', function (e) {
@@ -444,6 +488,8 @@ const app = new Vue({
         });
       }
     }, false);
+
+
   },
   methods: {
     dateParser(value){
@@ -501,6 +547,10 @@ const app = new Vue({
       }
       this.openCatalogo = false;
     },
+    borrarfotos(){
+        $("button.fileinput-remove").click();
+        this.entrada.fotos = [];
+    },
     agregarEntrada(){
       if(this.entrada.producto.id==undefined){
         swal({
@@ -510,6 +560,13 @@ const app = new Vue({
         });
         return false;
       }
+
+      if (this.$refs['fotos'].files.length) {//hay fotos
+          this.entrada.fotos = [];
+          for (var i = 0; i < this.$refs['fotos'].files.length; i++)
+              this.entrada.fotos.push(this.$refs['fotos'].files[i]);
+      }
+
       this.entrada.importe = this.entrada.cantidad * this.entrada.precio;
       this.orden.subtotal+= this.entrada.importe;
       this.orden.entradas.push(this.entrada);
@@ -520,7 +577,9 @@ const app = new Vue({
         precio: 0,
         importe: 0,
         comentarios: '',
+        fotos : [],
       };
+      $("button.fileinput-remove").click();
     },
     agregarFlete(){
       var f = parseFloat(this.orden.flete);   
@@ -548,6 +607,22 @@ const app = new Vue({
       }
     },
     editarEntrada(entrada, index){
+      
+      $("button.fileinput-remove").click();
+      if (entrada.fotos.length) {//hay fotos
+          if (typeof entrada.fotos[0] == "object") {
+              this.$refs['fotos'].files = FileListItem(entrada.fotos);
+              this.$refs['fotos'].dispatchEvent(new Event('change', {'bubbles': true}));
+          } else if (typeof entrada.fotos[0] == "string") {
+              $("div.file-default-preview").empty();
+              entrada.fotos.forEach(function (foto) {
+                  $("div.file-default-preview")
+                      .append('<img src="' + foto + '" style="width:200px; height:auto;" alt="foto">');
+              });
+              $("div.file-default-preview").append('<h6>Click para seleccionar</h6>');
+          }
+      }
+
       this.orden.subtotal-= entrada.importe;
       this.orden.entradas.splice(index, 1);
       this.entrada = entrada;
@@ -562,9 +637,13 @@ const app = new Vue({
         entrada.producto_id = entrada.producto.id;
         delete entrada.producto;
       });
+      console.log(orden);
 
+      //var formData = objectToFormData(orden, {indices: true});
+      console.log(formData);
       this.cargando = true;
-      axios.post('/proyectos-aprobados/{{$proyecto->id}}/ordenes-compra', orden)
+      axios.post('/proyectos-aprobados/{{$proyecto->id}}/ordenes-compra', formData,{headers: {'Content-Type': 'multipart/form-data'}
+      })
       .then(({data}) => {
         swal({
           title: "Orden Guardada",

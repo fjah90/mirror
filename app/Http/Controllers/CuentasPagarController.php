@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\CuentaPagar;
 use App\Models\FacturaCuentaPagar;
 use App\Models\PagoCuentaPagar;
+use App\User;
 use Carbon\Carbon;
 use Validator;
 use Storage;
@@ -19,14 +20,15 @@ class CuentasPagarController extends Controller
      */
     public function index()
     {
-      $cuentas = CuentaPagar::all();
+      $usuarios = User::all();
+      $cuentas = CuentaPagar::with('orden','orden.proyecto.cotizacion')->get();
 
-      return view('cuentas-pagar.index', compact('cuentas'));
+      return view('cuentas-pagar.index', compact('cuentas','usuarios'));
     }
 
     public function listado(Request $request)
     {
-
+      $usuario = $request->id;
       if ($request->anio == '2019-12-31') {
           $inicio = Carbon::parse('2019-01-01');    
       }
@@ -38,11 +40,42 @@ class CuentasPagarController extends Controller
       }
 
       if ($request->anio == 'Todos') {
-          $cuentas = CuentaPagar::all();
+          if ($usuario == 'Todos') {
+            $cuentas = CuentaPagar::all();
+          }
+          else{
+            $cuentas = CuentaPagar::with('orden')->whereHas('orden', function($q) use($usuario)
+            {       
+              $q->whereHas('proyecto', function($q) use($usuario)
+              {
+                $q->whereHas('cotizacion', function($q) use($usuario)
+                {
+                  $q->where('user_id', $usuario);
+                
+                });
+              });
+            })->get();
+          }
+          
       }
       else{
           $anio = Carbon::parse($request->anio);
-          $cuentas = CuentaPagar::whereBetween('created_at', [$inicio, $anio])->get();
+          if ($usuario == 'Todos') {
+            $cuentas = CuentaPagar::with('orden')->whereBetween('created_at', [$inicio, $anio])->whereHas('orden', function($q) use($usuario)
+            {       
+              $q->whereHas('proyecto', function($q) use($usuario)
+              {
+                $q->whereHas('cotizacion', function($q) use($usuario)
+                {
+                  $q->where('user_id', $usuario);
+                
+                });
+              });
+            })->get();
+          }
+          else{
+            $cuentas = CuentaPagar::whereBetween('created_at', [$inicio, $anio])->get();
+          }
       }
 
       return response()->json(['success' => true, "error" => false, 'cuentas' => $cuentas], 200);

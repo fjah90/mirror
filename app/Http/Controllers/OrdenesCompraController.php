@@ -137,7 +137,7 @@ class OrdenesCompraController extends Controller
         $orden = OrdenCompra::create($create);
 
         //guardar entradas
-        foreach ($request->entradas as $entrada) {
+        foreach ($request->entradas as $index => $entrada) {
 
             foreach ($proyecto->cotizacion->entradas as $key => $e) {
                     
@@ -153,7 +153,32 @@ class OrdenesCompraController extends Controller
                         }
                     }
                 }
+
             }
+
+            //save fotos
+            if ($entrada['fotos']) { //hay fotos
+                $fotos     = "";
+                $separador = "";
+                foreach ($entrada['fotos'] as $foto_index => $foto) {
+                    if (!is_string($foto)) {
+                        $ruta = Storage::putFileAs(
+                            'public/ordenes_compra/' . $orden->id,
+                            $foto,
+                            'entrada_' . ($index + 1) . '_foto_' . ($foto_index + 1) . '.' . $foto->guessExtension()
+                        );
+                        $ruta = str_replace('public/', '', $ruta);
+                        $fotos .= $separador . $ruta;
+                        $separador = "|";
+                    } else {
+                        $fotos .= $separador . strstr($foto, "ordenes_compra/");
+                    }
+                }
+                $entrada['fotos'] = $fotos;
+            }else {
+                $entrada['fotos'] = "";
+            }
+            
 
             $entrada['orden_id'] = $orden->id;
             $ordenCompraEntrada = OrdenCompraEntrada::create($entrada);
@@ -221,6 +246,23 @@ class OrdenesCompraController extends Controller
         //generar PDF de orden
         $orden->load('proveedor', 'contacto', 'proyecto.cotizacion',
             'proyecto.cliente', 'entradas.producto.descripciones.descripcionNombre', 'aduana');
+
+        $proyecto->load('cotizacion', 'cotizacion.entradas', 'cotizacion.entradas.producto', 'cotizacion.entradas.contacto');
+
+        foreach($orden->entradas as $entrada_index => $entrada){
+            if ($entrada->fotos == null) {
+            
+                $entrada_cotizacion = $proyecto->cotizacion->entradas[$entrada_index];
+                $entradaf = OrdenCompraEntrada::findOrFail($entrada->id);
+                $entradaf->fotos = $entrada_cotizacion->fotos2;    
+                $entradaf->update();
+                
+            }
+        }
+
+        $orden->load('proveedor', 'contacto', 'proyecto.cotizacion',
+            'proyecto.cliente', 'entradas.producto.descripciones.descripcionNombre', 'aduana');
+
         $firmaAbraham = User::select('firma')->where('id', 2)->first()->firma;
         if ($firmaAbraham) {
             $firmaAbraham = storage_path('app/public/' . $firmaAbraham);
@@ -363,7 +405,22 @@ class OrdenesCompraController extends Controller
             "confirmacion_fabrica." . $request->confirmacion_fabrica->guessExtension()
         );
         $confirmacion = str_replace('public/', '', $confirmacion);
-        $orden->update(['confirmacion_fabrica' => $confirmacion, 'status' => OrdenCompra::STATUS_CONFIRMADA]);
+        $orden->update([
+            'confirmacion_fabrica' => $confirmacion, 
+            'status' => OrdenCompra::STATUS_CONFIRMADA,
+            'monto_total_producto' => $request->monto_total_producto,
+            'monto_total_flete' => $request->monto_total_flete,
+            'monto_total_pagar' => $request->monto_total_pagar,
+            'total' => $request->monto_total_pagar,
+            'tax' => $request->tax,
+            'posibles_aumentos' => $request->posibles_aumentos,
+
+        ]);
+        $cuenta_pagar  = CuentaPagar::where('orden_compra_id',$orden->id)->first();
+        $cuenta_pagar->total = $request->monto_total_pagar;
+        $cuenta_pagar->pendiente = $request->monto_total_pagar;
+
+        $cuenta_pagar->save();
 
         return response()->json([
             'success' => true, "error" => false, "confirmacion" => asset('storage/' . $confirmacion),
@@ -388,10 +445,27 @@ class OrdenesCompraController extends Controller
         $unidades_medida = UnidadMedida::with('conversiones')->orderBy('simbolo')->get();
         $tiempos_entrega = TiempoEntrega::all();
         $orden->load('proveedor', 'contacto', 'entradas.producto', 'entradas.descripciones');
+
+        $proyecto->load('cotizacion', 'cotizacion.entradas', 'cotizacion.entradas.producto', 'cotizacion.entradas.contacto');
+
+        foreach($orden->entradas as $entrada_index => $entrada){
+            if ($entrada->fotos == null) {
+                
+                $entrada_cotizacion = $proyecto->cotizacion->entradas[$entrada_index];
+                $entradaf = OrdenCompraEntrada::findOrFail($entrada->id);
+                $entradaf->fotos = $entrada_cotizacion->fotos2;    
+                $entradaf->update();
+                
+            }
+        }
+
+        $orden->load('proveedor', 'contacto', 'entradas.producto', 'entradas.descripciones');
         if ($orden->iva > 0) {
             $orden->iva = 1;
         }
+
         $proyecto->load('cotizacion', 'cotizacion.entradas', 'cotizacion.entradas.producto', 'cotizacion.entradas.contacto');
+        
 
         $tiempo_entrega = TiempoEntrega::where('valor', $orden->tiempo_entrega)->first();
         if (is_null($tiempo_entrega)) {
@@ -415,6 +489,8 @@ class OrdenesCompraController extends Controller
      */
     public function update(Request $request, ProyectoAprobado $proyecto, OrdenCompra $orden)
     {
+        dd($request->orden);
+        
         $validator = Validator::make($request->all(), [
             'proyecto_id' => 'required',
             'proveedor_id' => 'required',
@@ -483,6 +559,36 @@ class OrdenesCompraController extends Controller
                     continue;
                 }
 
+
+                if ($entrada['fotos'] && !is_string($entrada['fotos'][0])) { //hay fotos
+                    $fotos     = "";
+                    $separador = "";
+                    foreach ($entrada['fotos'] as $foto_index => $foto) {
+                        //borrar archivo actual, si existe
+                        Storage::disk('public')->delete('ordenes_compra/' . $orden->id . '/entrada_' . ($index + 1) . '_foto_' . ($foto_index + 1) . '.' . $foto->guessExtension());
+                        $ruta = Storage::putFileAs(
+                            'public/ordenes_compra/' . $orden->id,
+                            $foto,
+                            'entrada_' . ($index + 1) . '_foto_' . ($foto_index + 1) . '.' . $foto->guessExtension()
+                        );
+                        $ruta = str_replace('public/', '', $ruta);
+                        $fotos .= $separador . $ruta;
+                        $separador = "|";
+                    }
+                    $entrada['fotos'] = $fotos;
+                } else if ($ent->producto_id == $producto->id) {
+                    if ($entrada['fotos']) {
+                        
+                    }
+                    else{
+                        $entrada['fotos']='';
+                        $ent->fotos = '';
+                    }
+                    unset($entrada['fotos']); //no se actualzan fotos
+                }else {
+                    $entrada['fotos'] = "";
+                }
+
                 //actualizar entrada ya guardada
                 unset($entrada['id']);
                 if ($entrada['cantidad_convertida'] == "") {
@@ -503,20 +609,213 @@ class OrdenesCompraController extends Controller
                 }
                 continue;
             }
+            else{
+                //crear nueva entrada
+                $entrada['orden_id'] = $orden->id;
 
-            //crear nueva entrada
-            $entrada['orden_id'] = $orden->id;
-            $ordenCompraEntrada = OrdenCompraEntrada::create($entrada);
-            //save descriptions
-            foreach ($entrada["descripciones"] as $descripcion) {
-                OrdenCompraEntradaDescripcion::create([
-                    'entrada_id' => $ordenCompraEntrada->id,
-                    'nombre' => $descripcion["nombre"] ?? '',
-                    'name' => $descripcion["name"] ?? '',
-                    'valor' => $descripcion["valor"],
-                    'valor_ingles' => $descripcion["valor_ingles"],
-                ]);
+                if ($entrada['fotos'] && !is_string($entrada['fotos'][0])) { //hay fotos
+                    $fotos     = "";
+                    $separador = "";
+                    foreach ($entrada['fotos'] as $foto_index => $foto) {
+                        $ruta = Storage::putFileAs(
+                            'public/ordenes_compra/' . $orden->id,
+                            $foto,
+                            'entrada_' . ($index + 1) . '_foto_' . ($foto_index + 1) . '.' . $foto->guessExtension()
+                        );
+                        $ruta = str_replace('public/', '', $ruta);
+                        $fotos .= $separador . $ruta;
+                        $separador = "|";
+                    }
+                    $entrada['fotos'] = $fotos;
+                }else {
+                    $entrada['fotos'] = "";
+                }
+
+
+                $ordenCompraEntrada = OrdenCompraEntrada::create($entrada);
+                //save descriptions
+                foreach ($entrada["descripciones"] as $descripcion) {
+                    OrdenCompraEntradaDescripcion::create([
+                        'entrada_id' => $ordenCompraEntrada->id,
+                        'nombre' => $descripcion["nombre"] ?? '',
+                        'name' => $descripcion["name"] ?? '',
+                        'valor' => $descripcion["valor"],
+                        'valor_ingles' => $descripcion["valor_ingles"],
+                    ]);
+                }
+
             }
+
+            
+        }
+
+        /*if ($orden->status == OrdenCompra::STATUS_RECHAZADA) {
+            $this->avisarOrdenPorAprobar($orden);
+        }*/
+
+        return response()->json(['success' => true, "error" => false], 200);
+    }
+
+
+    public function actualizar(Request $request, ProyectoAprobado $proyecto, OrdenCompra $orden)
+    {
+        
+        $validator = Validator::make($request->all(), [
+            'proyecto_id' => 'required',
+            'proveedor_id' => 'required',
+            'numero' => 'required',
+            'moneda' => 'required',
+            'subtotal' => 'required',
+            'iva' => 'required',
+            'total' => 'required',
+            'entradas' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            $errors = $validator->errors()->all();
+            return response()->json([
+                "success" => false, "error" => true, "message" => $errors[0],
+            ], 422);
+        }
+
+        $update = $request->only(
+            'proveedor_id', 'proveedor_empresa', 'moneda', 'numero', 'subtotal', 'numero_proyecto',
+            'aduana_id', 'aduana_compañia', 'proveedor_contacto_id', 'punto_entrega', 'carga', 'fecha_compra','flete'
+        );
+
+        if (!is_null($request->tiempo['id'])) {
+            if ($request->tiempo['id'] > 0) {
+                $update['tiempo_entrega'] = TiempoEntrega::find($request->tiempo['id'])->valor;
+            } else if ($request->tiempo['id'] == 0 && $request->tiempo['valor']) {
+                TiempoEntrega::create(['valor' => $request->tiempo['valor']]);
+                $update['tiempo_entrega'] = $request->tiempo['valor'];
+            }
+        } else {
+            $update['tiempo_entrega'] = '';
+        }
+
+        if ($request->iva == "1") {
+            $update['iva'] = bcmul($update['subtotal'], 0.16, 2);
+            $update['total'] = bcmul($update['subtotal'], 1.16, 2);
+        } else {
+            $update['iva'] = 0;
+            $update['total'] = $update['subtotal'];
+        }
+        
+        if ($orden->status == OrdenCompra::STATUS_RECHAZADA) {
+            $update['status'] = OrdenCompra::STATUS_PENDIENTE;
+           // $this->avisarOrdenPorAprobar($orden);
+        }
+        
+        $update['delivery'] = $request->delivery;
+        $update['fecha_compra'] = $request->fecha_compra_formated;
+        $orden->update($update);
+
+        //sincronizar entradas
+        foreach ($request->entradas as $index =>  $entrada) {
+            if ($orden->moneda == 'Dolares') {
+                $Uni = UnidadMedida::where('simbolo',$entrada['medida'])->first();
+                if (!empty($Uni->simbolo_ingles)) {
+                    $entrada['medida'] = $Uni->simbolo_ingles;    
+                }
+            }
+
+            if (isset($entrada['id'])) {
+                $ent = OrdenCompraEntrada::find($entrada['id']);
+
+                if (isset($entrada['borrar'])) { //borrar entrada
+                    $ent->delete();
+                    continue;
+                }
+
+
+                if ($entrada['fotos'] && !is_string($entrada['fotos'][0])) { //hay fotos
+                    $fotos     = "";
+                    $separador = "";
+                    foreach ($entrada['fotos'] as $foto_index => $foto) {
+                        //borrar archivo actual, si existe
+                        Storage::disk('public')->delete('ordenes_compra/' . $orden->id . '/entrada_' . ($index + 1) . '_foto_' . ($foto_index + 1) . '.' . $foto->guessExtension());
+                        $ruta = Storage::putFileAs(
+                            'public/ordenes_compra/' . $orden->id,
+                            $foto,
+                            'entrada_' . ($index + 1) . '_foto_' . ($foto_index + 1) . '.' . $foto->guessExtension()
+                        );
+                        $ruta = str_replace('public/', '', $ruta);
+                        $fotos .= $separador . $ruta;
+                        $separador = "|";
+                    }
+                    $entrada['fotos'] = $fotos;
+                } else if ($ent->producto_id == $entrada['producto_id']) {
+                    if ($entrada['fotos']) {
+                        
+                    }
+                    else{
+                        $entrada['fotos']='';
+                        $ent->fotos = '';
+                    }
+                    unset($entrada['fotos']); //no se actualzan fotos
+                }else {
+                    $entrada['fotos'] = "";
+                }
+
+                //actualizar entrada ya guardada
+                unset($entrada['id']);
+                if ($entrada['cantidad_convertida'] == "") {
+                    unset($entrada['conversion']);
+                    unset($entrada['cantidad_convertida']);
+                }
+                $ent->update($entrada);
+                //$ent->descripciones()->delete();
+
+                foreach ($entrada["descripciones"] as $descripcion) {
+                    $orderCopraEntrantDescription = OrdenCompraEntradaDescripcion::find($descripcion['id']);
+                    $orderCopraEntrantDescription->update([
+                        'nombre' => $descripcion["nombre"] ?? '',
+                        'name' => $descripcion["name"] ?? '',
+                        'valor' => $descripcion["valor"],
+                        'valor_ingles' => $descripcion["valor_ingles"],
+                    ]);
+                }
+                continue;
+            }
+            else{
+                //crear nueva entrada
+                $entrada['orden_id'] = $orden->id;
+
+                if ($entrada['fotos'] && !is_string($entrada['fotos'][0])) { //hay fotos
+                    $fotos     = "";
+                    $separador = "";
+                    foreach ($entrada['fotos'] as $foto_index => $foto) {
+                        $ruta = Storage::putFileAs(
+                            'public/ordenes_compra/' . $orden->id,
+                            $foto,
+                            'entrada_' . ($index + 1) . '_foto_' . ($foto_index + 1) . '.' . $foto->guessExtension()
+                        );
+                        $ruta = str_replace('public/', '', $ruta);
+                        $fotos .= $separador . $ruta;
+                        $separador = "|";
+                    }
+                    $entrada['fotos'] = $fotos;
+                }else {
+                    $entrada['fotos'] = "";
+                }
+
+
+                $ordenCompraEntrada = OrdenCompraEntrada::create($entrada);
+                //save descriptions
+                foreach ($entrada["descripciones"] as $descripcion) {
+                    OrdenCompraEntradaDescripcion::create([
+                        'entrada_id' => $ordenCompraEntrada->id,
+                        'nombre' => $descripcion["nombre"] ?? '',
+                        'name' => $descripcion["name"] ?? '',
+                        'valor' => $descripcion["valor"],
+                        'valor_ingles' => $descripcion["valor_ingles"],
+                    ]);
+                }
+
+            }
+
+            
         }
 
         /*if ($orden->status == OrdenCompra::STATUS_RECHAZADA) {

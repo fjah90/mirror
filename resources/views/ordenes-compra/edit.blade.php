@@ -281,6 +281,20 @@
                 </div>
               </div>
               <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="control-label" style="display:block;">Foto</label>
+                        <div class="btn btn-sm btn-danger" v-if="entrada.fotos.length" v-on:click="borrarfotos" title="BORRAR FOTOS">
+                            <i class="fas fa-trash"></i>
+                        </div>
+                        <div class="file-loading">
+                            <input id="fotos" name="fotos[]" type="file" ref="fotos" multiple/>
+                        </div>
+                        <div id="fotos-file-errors"></div>
+                    </div>
+                </div>
+            </div>
+              <div class="row">
                 <div class="col-md-12 text-right">
                   <div class="form-group" style="margin-top:25px;">
                     <button type="submit" class="btn btn-info">
@@ -476,6 +490,30 @@
 @section('footer_scripts')
 <script type="text/javascript">
 Vue.config.devtools = true;
+
+ function buildFormData (formData, data, parentKey){
+  console.log(data);
+  if (data && typeof data === 'object' && !(data instanceof Date) && !(data instanceof File)) {
+    Object.keys(data).forEach(key => {
+    this.buildFormData(formData, data[key], parentKey ? `${parentKey}[${key}]` : key);
+    });
+  } else {
+    const value = data == null ? '' : data;
+  
+    formData.append(parentKey, value);
+  }
+}
+
+// Used for creating a new FileList in a round-about way
+    function FileListItem(a) {
+        a = [].slice.call(Array.isArray(a) ? a : arguments)
+        for (var c, b = c = a.length, d = !0; b-- && d;) d = a[b] instanceof File
+        if (!d) throw new TypeError("expected argument to FileList is File or array of File objects")
+        for (b = (new ClipboardEvent("")).clipboardData || new DataTransfer; c--;) b.items.add(a[c])
+        return b.files
+    }
+
+
 const app = new Vue({
   el: '#content',
   data: {
@@ -497,7 +535,8 @@ const app = new Vue({
       precio: 0,
       importe: 0,
       comentarios: '',
-      descripciones:[]
+      descripciones:[],
+      fotos: []
     },
     conversiones:{
       @foreach($unidades_medida as $unidad)
@@ -520,15 +559,30 @@ const app = new Vue({
   },
   mounted(){
     var vue = this;
-    console.log(vue.orden.iva)
+    //console.log(vue.orden.iva)
     vue.orden.iva = vue.orden.proveedor.nacional? 1:0;
-    console.log(vue.orden.iva)
+    //console.log(vue.orden.iva)
     $.fn.dataTableExt.afnFiltering.push(
       function( settings, data, dataIndex ) {
         var prov = data[1] || ""; // Our date column in the table
         return (vue.orden.proveedor.empresa == prov);
       }
     );
+
+    $("#fotos").fileinput({
+        language: 'es',
+        overwriteInitial: true,
+        maxFileSize: 5000,
+        showCaption: false,
+        showBrowse: false,
+        showRemove: false,
+        showUpload: false,
+        browseOnZoneClick: true,
+        defaultPreviewContent: '<img src="{{asset('images/camara.png')}}" style="width:200px; height:auto;" alt="foto"><h6>Click para seleccionar</h6>',
+        allowedFileExtensions: ["jpg", "jpeg", "png"],
+        elErrorContainer: '#fotos-file-errors'
+    });
+
     this.tablaProductos = $("#tablaProductos").DataTable({dom: 'ftp'});
 
     //tabla reordenable
@@ -585,6 +639,10 @@ const app = new Vue({
   methods: {
     dateParser(value){
       return moment(value, 'DD/MM/YYYY').toDate().getTime();
+    },
+    borrarfotos(){
+        $("button.fileinput-remove").click();
+        this.entrada.fotos = [];
     },
     fijarProveedor(){
       this.proveedores.find(function(proveedor){
@@ -688,6 +746,7 @@ const app = new Vue({
       }
     },
     agregarEntrada(){
+
       if(this.entrada.producto.id==undefined){
         swal({
           title: "Error",
@@ -696,9 +755,18 @@ const app = new Vue({
         });
         return false;
       }
+      
       if(this.entrada.cantidad_convertida!="")
         this.entrada.importe = this.entrada.cantidad_convertida * this.entrada.precio;
       else this.entrada.importe = this.entrada.cantidad * this.entrada.precio;
+
+      if (this.$refs['fotos'].files.length) {//hay fotos
+
+          this.entrada.fotos = [];
+          for (var i = 0; i < this.$refs['fotos'].files.length; i++)
+              this.entrada.fotos.push(this.$refs['fotos'].files[i]);
+      }
+      $("button.fileinput-remove").click();
 
       this.orden.subtotal+= this.entrada.importe;
       this.orden.entradas.push(this.entrada);
@@ -711,6 +779,7 @@ const app = new Vue({
         precio: 0,
         importe: 0,
         comentarios: '',
+        fotos:[]
       };
     },
     editarEntrada(entrada, index){
@@ -722,6 +791,21 @@ const app = new Vue({
       if(entrada.conversion==undefined || entrada.conversion==null){
         entrada.conversion = "";
         entrada.cantidad_convertida = "";
+      }
+
+      $("button.fileinput-remove").click();
+      if (entrada.fotos.length) {//hay fotos
+          if (typeof entrada.fotos[0] == "object") {
+              this.$refs['fotos'].files = FileListItem(entrada.fotos);
+              this.$refs['fotos'].dispatchEvent(new Event('change', {'bubbles': true}));
+          } else if (typeof entrada.fotos[0] == "string") {
+              $("div.file-default-preview").empty();
+              entrada.fotos.forEach(function (foto) {
+                  $("div.file-default-preview")
+                      .append('<img src="' + foto + '" style="width:200px; height:auto;" alt="foto">');
+              });
+              $("div.file-default-preview").append('<h6>Click para seleccionar</h6>');
+          }
       }
 
       
@@ -784,6 +868,7 @@ const app = new Vue({
     guardar(){
       var orden = $.extend(true, {}, this.orden);
 
+      /*
       var totalf = 0;
       orden.entradas.forEach(function (entrada) {
           totalf += entrada.importe ;
@@ -791,21 +876,23 @@ const app = new Vue({
 
       totalcotizacion = orden.subtotal.toFixed(2);
 
-      orden.subtotal = totalf;
+      orden.subtotal = totalf + orden.flete;
 
       var dif = totalcotizacion - totalf;
-
-
-
-
+      */
 
       orden.entradas.forEach(function(entrada){
         entrada.producto_id = entrada.producto.id;
         delete entrada.producto;
       });
 
+      delete orden.proveedor;
+
+      var formData = objectToFormData(orden, {indices: true});
+
       this.cargando = true;
-      axios.put('/proyectos-aprobados/{{$proyecto->id}}/ordenes-compra/{{$orden->id}}', orden)
+      axios.post('/proyectos-aprobados/{{$proyecto->id}}/ordenes-compra/{{$orden->id}}/actualizar', formData,{headers: {'Content-Type': 'multipart/form-data'}
+      })
       .then(({data}) => {
         swal({
           title: "Orden Actualizada",

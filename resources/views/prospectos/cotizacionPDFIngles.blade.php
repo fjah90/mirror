@@ -534,8 +534,7 @@
                 {{--@if($cotizacion->prospecto->cliente->telefono)--}}
                 <p class="text-uppercase">TO: {{$cotizacion->contacto->nombre}}</p>
                 <p class="text-uppercase">P. {{$cotizacion->contacto->telefono}}</p>
-                <p>
-                  Email:
+                <p> Email:
                   <a href="mailto:{{$cotizacion->contacto->email}}">
                     {{$cotizacion->contacto->email}}
                   </a>
@@ -623,6 +622,7 @@
       </div>
     </div>
 
+
     <div class="row">
       <div class="col-lg-12">
         {{-- <div class="cuadro_magico"></div> --}}
@@ -642,19 +642,13 @@
             @else
             <tr>
             @endif
-            <tr>
               <td class="text-center">@format_number($entrada->cantidad) <br /> {{$entrada->medida}}</td>
               <td>
                 <table style="width:100%; margin:0;">
-                  <tr>
+                  <tr style="height: 120px;">
                     <td style="vertical-align: top;">
                       @foreach($entrada->descripciones as $descripcion)
-                      @if($descripcion->valor_ingles)
-                      <p>
-                        <span>@text_capitalize($descripcion->{$nombre}): </span>
-                        <span class="text-uppercase">{{$descripcion->valor_ingles}}</span>
-                      </p>
-                      @elseif($descripcion->valor)
+                      @if($descripcion->valor)
                       <p>
                         <span>@text_capitalize($descripcion->{$nombre}): </span>
                         <span class="text-uppercase">{{$descripcion->valor}}</span>
@@ -663,7 +657,7 @@
                       @endforeach
                       @if($entrada->observaciones && $entrada->observaciones!='<ul></ul>')
                       <p>
-                        <span>Remarks: </span>
+                        <span>Remarks:</span>
                         {!! $entrada->observaciones !!}
                       </p>
                       @endif
@@ -697,7 +691,6 @@
         </table>
       </div>
     </div>
-
     <!-- Espacio para que el footer no se sobreponga a la tabla -->
     {{-- <div class="row">
       <div class="col-lg-12" style="height:180px;">

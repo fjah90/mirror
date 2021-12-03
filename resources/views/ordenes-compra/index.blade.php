@@ -92,7 +92,7 @@
                     </button>
                     
                     <button v-if="orden.status=='Aprobada'" class="btn btn-xs btn-purple"
-                      title="Confirmar" @click="ordenModal=orden; openConfirmar=true;">
+                      title="Confirmar" @click="ordenModal=orden; openConfirmar=true; ordenModal.monto_total_flete=orden.flete;ordenModal.monto_total_producto=orden.subtotal;ordenModal.tax=orden.iva;sumartot()">
                       <i class="fas fa-clipboard-check"></i>
                     </button>
                     @endrole
@@ -179,6 +179,31 @@
             @change="fijarConfirmacion()" required />
         </div>
         <div id="confirmacion-file-errors"></div>
+        <div class="col-md-4">
+          <label class="control-label">Monto total del Producto</label>
+          <input type="number" step=0.01 class="form-control" v-model="ordenModal.monto_total_producto" min="0.0" @change="sumartotal('monto_producto')"
+             />
+        </div>
+        <div class="col-md-4">
+          <label class="control-label">Monto total del Flete</label>
+          <input type="number" step=0.01 class="form-control" v-model="ordenModal.monto_total_flete" min="0.0" @change="sumartotal('monto_flete')"
+             />
+        </div>
+        <div class="col-md-4">
+          <label class="control-label">Posibles Aumentos</label>
+          <input type="number" step=0.01 class="form-control" v-model="ordenModal.posibles_aumentos" min="0.0" @change="sumartotal('posibles')"
+             />
+        </div>
+        <div class="col-md-4">
+          <label class="control-label">Tax</label>
+          <input type="number" step=0.01 class="form-control" v-model="ordenModal.tax" min="0.0" @change="sumartotal('tax')"
+             />
+        </div>
+        <div class="col-md-4">
+          <label class="control-label">Monto total a Pagar</label>
+          <input type="number" step=0.01 class="form-control" v-model="ordenModal.monto_total_pagar" min="0.0" readonly 
+             />
+        </div>
       </div>
       <div class="form-group text-right">
         <button type="submit" class="btn btn-primary" :disabled="cargando">Aceptar</button>
@@ -223,6 +248,9 @@ const app = new Vue({
     methods: {
       fijarConfirmacion(){
         this.ordenModal.confirmacion_fabrica = this.$refs['confirmacion'].files[0];
+      },
+      sumartot(){
+        this.ordenModal.monto_total_pagar = parseFloat(this.ordenModal.monto_total_flete) + parseFloat(this.ordenModal.monto_total_producto);
       },
       rechazarOrden(){
         this.cargando = true;
@@ -302,17 +330,68 @@ const app = new Vue({
           } //if confirmacion
         });
       },//cancelar
+      sumartotal(valor){
+       
+        if (valor == 'monto_producto') {
+          if (this.ordenModal.monto_total_producto != null || this.ordenModal.monto_total_producto != "" ) {
+              this.ordenModal.monto_total_pagar = parseFloat(this.ordenModal.monto_total_pagar) + parseFloat(this.ordenModal.monto_total_producto); 
+          }  
+        }
+        if (valor == 'monto_flete') {
+            if (this.ordenModal.monto_total_flete != null || this.ordenModal.monto_total_flete != "" ) {
+                this.ordenModal.monto_total_pagar =parseFloat(this.ordenModal.monto_total_pagar) +  parseFloat(this.ordenModal.monto_total_flete);  
+            }
+        }
+
+        if (valor == 'tax') {
+            if (this.ordenModal.tax != null || this.ordenModal.tax != "" ) {
+              this.ordenModal.monto_total_pagar = parseFloat(this.ordenModal.monto_total_pagar) +  parseFloat(this.ordenModal.tax);  
+          }
+        }
+
+        if (valor == 'posibles') {
+            if (this.ordenModal.posibles_aumentos != null || this.ordenModal.posibles_aumentos != "" ) {
+              this.ordenModal.monto_total_pagar = parseFloat(this.ordenModal.monto_total_pagar) +  parseFloat(this.ordenModal.posibles_aumentos);  
+          }
+
+        }
+        
+        
+        
+        
+        
+      },
       confirmarOrden(){
-        var formData = objectToFormData({confirmacion_fabrica:this.ordenModal.confirmacion_fabrica}, {indices:true});
+
+
+        var data = {};
+        data.confirmacion_fabrica = this.ordenModal.confirmacion_fabrica;
+        data.monto_total_producto = this.ordenModal.monto_total_producto;
+        data.monto_total_pagar = this.ordenModal.monto_total_pagar;
+        data.monto_total_flete = this.ordenModal.monto_total_flete;
+        data.tax = this.ordenModal.tax;
+        data.posibles_aumentos = this.ordenModal.posibles_aumentos;
+        console.log(data);
+
+
+        var formData = objectToFormData(data, {indices:true});
 
         this.cargando = true;
         axios.post('/proyectos-aprobados/'+this.ordenModal.proyecto_id+'/ordenes-compra/'+this.ordenModal.id+'/confirmar', 
-        formData, { headers: { 'Content-Type': 'multipart/form-data'}})
+        formData, { headers: { 'Content-Type': 'multipart/form-data'}
+      })
         .then(({data}) => {
           this.ordenModal.status = 'Confirmada';
           this.ordenModal.confirmacion_fabrica = data.confirmacion;
           
           $("#confirmacion").fileinput('clear');
+
+          this.ordenModal.monto_total_producto = 0.0;
+          this.ordenModal.monto_total_pagar= 0.0;
+          this.ordenModal.monto_total_flete= 0.0;
+          this.ordenModal.tax= 0.0;
+          this.ordenModal.posibles_aumentos= 0.0;
+
           this.openConfirmar = false;
           this.cargando = false;
           swal({
@@ -331,6 +410,8 @@ const app = new Vue({
             type: "error"
           });
         });
+
+
       },//fin confirmarOrden
     }
 });

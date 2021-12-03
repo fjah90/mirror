@@ -25,6 +25,16 @@
           <h3 class="panel-title">
             <span class="p-10">Lista de Cuentas</span>
             <div class="p-10">
+              Ejecutivo  
+              <select class="form-control" @change="cargar()" v-model="usuarioCargado" style="width:auto;display:inline-block;">
+                <option value="Todos">Todos</option>
+                @foreach($usuarios as $usuario)
+                <option value="{{$usuario->id}}">{{$usuario->name}}</option>
+                @endforeach
+              </select>
+              
+            </div>
+            <div class="p-10">
               Año  
                 <select class="form-control" @change="cargar()" v-model="anio" style="width:auto;display:inline-block;">
                   <option value="Todos">Todos</option>
@@ -43,6 +53,8 @@
                   <th>#</th>
                   <th>Proveedor</th>
                   <th>Proyecto</th>
+                  <th>#Orden</th>
+                  <th>#Cotizacion</th>
                   <th>Dias Credito</th>
                   <th>Moneda</th>
                   <th>Total</th>
@@ -57,6 +69,8 @@
                   <td>@{{index+1}}</td>
                   <td>@{{cuenta.proveedor_empresa}}</td>
                   <td>@{{cuenta.proyecto_nombre}}</td>
+                  <td>@{{cuenta.orden.numero}}</td>
+                  <td>@{{cuenta.orden.proyecto.cotizacion.numero}}</td>
                   <td>@{{cuenta.dias_credito}}</td>
                   <td><p v-bind:style= "[cuenta.moneda == 'Dolares' ? {'color':'#760e0e'} : {'color':'#ff0000a8'}]">@{{cuenta.moneda}}</p></td>
                   <td><p v-bind:style= "[cuenta.moneda == 'Dolares' ? {'color':'#760e0e'} : {'color':'#ff0000a8'}]">@{{cuenta.total | formatoMoneda}}</p></td>
@@ -91,6 +105,7 @@
 const app = new Vue({
     el: '#content',
     data: {
+      usuarioCargado: 'Todos',
       anio:'Todos',
       cuentas: {!! json_encode($cuentas) !!},
     },
@@ -105,7 +120,7 @@ const app = new Vue({
     methods: {
       
       cargar(){
-        axios.post('/cuentas-pagar/listado', {anio:this.anio})
+        axios.post('/cuentas-pagar/listado', {id: this.usuarioCargado,anio:this.anio})
         .then(({data}) => {
           this.tabla.destroy();
           this.cuentas = data.cuentas;
