@@ -92,7 +92,7 @@
                     </button>
                     
                     <button v-if="orden.status=='Aprobada'" class="btn btn-xs btn-purple"
-                      title="Confirmar" @click="ordenModal=orden; openConfirmar=true; ordenModal.monto_flete=orden.flete;ordenModal.monto_total_producto=orden.total;">
+                      title="Confirmar" @click="ordenModal=orden; openConfirmar=true; ordenModal.monto_flete=orden.flete;ordenModal.monto_total_producto=orden.total;ordenModal.tax=orden.iva;">
                       <i class="fas fa-clipboard-check"></i>
                     </button>
                     @endrole
