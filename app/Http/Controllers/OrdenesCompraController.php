@@ -249,7 +249,7 @@ class OrdenesCompraController extends Controller
 
         $proyecto->load('cotizacion', 'cotizacion.entradas', 'cotizacion.entradas.producto', 'cotizacion.entradas.contacto');
 
-        foreach($orden->entradas as $entrada){
+        foreach($orden->entradas as $entrada_index => $entrada){
             if ($entrada->fotos == null) {
             
                 $entrada_cotizacion = $proyecto->cotizacion->entradas[$entrada_index];
