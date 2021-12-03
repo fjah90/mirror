@@ -250,7 +250,7 @@ const app = new Vue({
         this.ordenModal.confirmacion_fabrica = this.$refs['confirmacion'].files[0];
       },
       sumartot(){
-        this.ordenModal.monto_total_pagar = this.ordenModal.monto_total_flete + ordenModal.monto_total_producto;
+        this.ordenModal.monto_total_pagar = this.ordenModal.monto_total_flete + this.ordenModal.monto_total_producto;
       },
       rechazarOrden(){
         this.cargando = true;
