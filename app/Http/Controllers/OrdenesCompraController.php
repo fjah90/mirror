@@ -446,17 +446,14 @@ class OrdenesCompraController extends Controller
 
         $proyecto->load('cotizacion', 'cotizacion.entradas', 'cotizacion.entradas.producto', 'cotizacion.entradas.contacto');
 
-        foreach($orden->entradas as $entrada){
+        foreach($orden->entradas as $entrada_index => $entrada){
             if ($entrada->fotos == null) {
-                foreach($proyecto->cotizacion->entradas as $entrada_cotizacion){
-                    if ($entrada->producto_id == $entrada_cotizacion->producto_id) {
-                        
-                        $entradaf = OrdenCompraEntrada::findOrFail($entrada->id);
-                        $entradaf->fotos = $entrada_cotizacion->fotos2;    
-                        $entradaf->update();
                 
-                    }
-                }
+                $entrada_cotizacion = $proyecto->cotizacion->entradas[$entrada_index];
+                $entradaf = OrdenCompraEntrada::findOrFail($entrada->id);
+                $entradaf->fotos = $entrada_cotizacion->fotos2;    
+                $entradaf->update();
+                
             }
         }
 
