@@ -81,6 +81,10 @@
                   <td class="text-right">
                     <a class="btn btn-xs btn-info" title="Ver Cotización"
                       target="_blank" :href="proyecto.cotizacion.archivo">
+                      <i class="far fa-file"></i>
+                    </a>
+                    <a class="btn btn-xs btn-info" title="Ver Proyecto"
+                      target="_blank" :href="'/proyectos-aprobados/'+proyecto.id+'/show'">
                       <i class="far fa-eye"></i>
                     </a>
                     <a class="btn btn-xs btn-success" title="Ordenes Compra"
