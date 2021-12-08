@@ -752,7 +752,7 @@ class ProspectosController extends Controller
      */
     public function cotizacionUpdate(Request $request, Prospecto $prospecto, ProspectoCotizacion $cotizacion)
     {
-        dd($request->iva);
+        dd($request);
         $validator = Validator::make($request->all(), [
             'prospecto_id'        => 'required',
             'cliente_contacto_id' => 'required',
