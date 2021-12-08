@@ -133,6 +133,17 @@ class ProyectosAprobadosController extends Controller
       echo "Ordenes Creadas";
     }
 
+    public function show(ProyectoAprobado $proyecto)
+    {
+      $proyecto->load('cotizacion','ordenes','cliente','cotizacion.prospecto');
+
+      $prospecto = $proyecto->cotizacion->prospecto;
+      $prospecto->load('cotizaciones','cotizaciones.proyecto_aprobado');
+      //dd($prospecto);
+
+      return view('proyectos_aprobados.show', compact('proyecto','prospecto'));
+    }
+
     public function destroy(ProyectoAprobado $proyecto)
     {
         $proyecto->load('cotizacion.cuenta_cobrar');

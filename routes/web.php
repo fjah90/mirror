@@ -134,6 +134,7 @@ Route::middleware('auth')->group(function () {
     //Proyectos Aprobados
     Route::get('/proyectos-aprobados', 'ProyectosAprobadosController@index')->name('proyectos-aprobados.index');
     Route::delete('/proyectos-aprobados/{proyecto}', 'ProyectosAprobadosController@destroy');
+    Route::get('/proyectos-aprobados/{proyecto}/show', 'ProyectosAprobadosController@show');
     // Route::get('/proyectos-aprobados/{proyecto}/generarOrdenes', 'ProyectosAprobadosController@generarOrdenes');
 
     //Ordenes de Compra
