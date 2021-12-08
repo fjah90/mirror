@@ -1983,9 +1983,7 @@
 
                     this.cargando = true;
                     axios.post('/prospectos/{{$prospecto->id}}/aceptarCotizacion', formData, {
-                        headers: {'Content-Type': 'multipart/form-data'},
-                        maxContentLength: Infinity,
-                        maxBodyLength: Infinity
+                        headers: {'Content-Type': 'multipart/form-data'}
                     })
                         .then(({data}) => {
                             this.prospecto.cotizaciones.find(function (cotizacion) {
