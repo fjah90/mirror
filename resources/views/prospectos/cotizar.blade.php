@@ -1982,7 +1982,7 @@
                     var formData = objectToFormData(this.aceptar, {indices: true});
 
                     this.cargando = true;
-                    axios.post('/prospectos/{{$prospecto->id}}/aceptarCotizacion', formData, {
+                    axios.post('/prospectos/{{$prospecto->id}}/aceptarCotizacion', formData,'maxContentLength': Infinity,'maxBodyLength': Infinity ,{
                         headers: {'Content-Type': 'multipart/form-data'}
                     })
                         .then(({data}) => {
