@@ -123,13 +123,6 @@
                                                     <i class="fas fa-user-check"></i>
                                                 </a>
                                                 
-                                                <a v-if="cotizacion.aceptada" class="btn btn-xs text-warning"
-                                               title="Orden Compra"
-                                               :href="'/proyectos-aprobados/'+ cotizacion.proyecto_aprobado.id + '/ordenes-compra'"
-                                               target="_blank">
-                                                <i class="fas fa-arrow-up"></i>
-                                                </a>
-                                                
                                                 <template v-else>
                                                     <button class="btn btn-xs btn-warning" title="Editar"
                                                             @click="editar(index, cotizacion)">
@@ -175,6 +168,8 @@
                 </div>
             </div>
         </div>
+
+        
     </section>
 
 
@@ -191,7 +186,26 @@
             el: '#content',
             data: {
                 prospecto: {!! json_encode($prospecto) !!},
-            }
+                prospecto2: {!! json_encode($prospecto) !!},
+            },
+            computed: {
+                totales_cotizaciones() {
+                    var dolares = 0, pesos = 0;
+                    this.prospecto.cotizaciones.forEach(function (cotizacion) {
+                        if (cotizacion.moneda == "Pesos") pesos += cotizacion.total;
+                        else dolares += cotizacion.total;
+                    });
+                    return {"dolares": dolares, "pesos": pesos}
+                },
+                totales_cotizaciones2() {
+                    var dolares = 0, pesos = 0;
+                    this.prospecto2.cotizaciones.forEach(function (cotizacion) {
+                        if (cotizacion.moneda == "Pesos") pesos += cotizacion.total;
+                        else dolares += cotizacion.total;
+                    });
+                    return {"dolares": dolares, "pesos": pesos}
+                }
+            },
         });
 
 

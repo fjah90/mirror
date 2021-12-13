@@ -16,6 +16,7 @@ class AgentesAduanalesController extends Controller
   public function index()
   {
     $agentes = AgenteAduanal::all();
+    
 
     return view('catalogos.agentesAduanales.index', compact('agentes'));
   }

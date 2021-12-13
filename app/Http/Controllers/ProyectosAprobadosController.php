@@ -138,8 +138,33 @@ class ProyectosAprobadosController extends Controller
       $proyecto->load('cotizacion','ordenes','cliente','cotizacion.prospecto');
 
       $prospecto = $proyecto->cotizacion->prospecto;
-      $prospecto->load('cotizaciones','cotizaciones.proyecto_aprobado');
+      $prospecto->load('cotizaciones','cotizaciones.proyecto_aprobado','cotizaciones.entradas','cotizaciones.entradas.producto.proveedor');
       //dd($prospecto);
+
+      /*
+      $cotizaciones_aceptadas = ProyectoAprobado::
+      with(['cotizaciones' => function($q) use ($proyecto) {
+        $q->where('cotizaciones.aceptada','1')
+      }])->get();
+
+
+      
+      [
+            'children' => function ($child) use ($SpecificID) {
+                return $child->with([
+                    'products' => function ($product) use ($SpecificID) {
+                        return $product->with([
+                            'types' => function ($type) use ($SpecificID) {
+                                return $type->where('id', $SpecificID);
+                            }
+                        ]);
+                    }
+                ]);
+            }
+        ])->get();
+        */
+
+      //dd($cotizaciones_aceptadas);
 
       return view('proyectos_aprobados.show', compact('proyecto','prospecto'));
     }
