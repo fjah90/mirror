@@ -14,7 +14,7 @@
 @section('content')
 
 <section class="content-header">
-  <h1>Proyecto {{$proyecto->cotizacion->prospecto->nombre}}</h1>
+  <h1>Proyecto {{$prospecto->nombre}}</h1>
 </section>
 <!-- Main content -->
     <section class="content" id="content">
@@ -29,7 +29,7 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label class="control-label">Cliente</label>
-                                    <span class="form-control">{{$proyecto->cliente->nombre}}</span>
+                                    <span class="form-control">{{$prospecto->cliente->nombre}}</span>
                                 </div>
                             </div>
                         </div>
@@ -37,7 +37,7 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label class="control-label">Nombre de Proyecto</label>
-                                    <span class="form-control text-uppercase">{{$proyecto->cotizacion->prospecto->nombre}}</span>
+                                    <span class="form-control">{{$prospecto->nombre}}</span>
                                 </div>
                             </div>
                         </div>
@@ -45,8 +45,7 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label class="control-label">Descripción</label>
-                                    <span class="form-control"
-                                          style="min-height:68px;">{{$proyecto->cotizacion->prospecto->descripcion}}</span>
+                                    <span class="form-control" style="min-height:68px;">{{$prospecto->descripcion}}</span>
                                 </div>
                             </div>
                         </div>
@@ -54,6 +53,51 @@
                 </div>
             </div>
         </div>
+
+        <div class="row">
+          <div class="col-sm-12">
+            <h4>Actividades</h4>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="table-responsive">
+              <table class="table table-bordred">
+                <thead>
+                  <tr>
+                    <th>Fecha</th>
+                    <th>Tipo</th>
+                    <th>Productos Ofrecidos</th>
+                    <th>Descripción</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @foreach($prospecto->actividades as $actividad)
+                  <tr>
+                    <td>{{$actividad->fecha_formated}}</td>
+                    <td>{{$actividad->tipo->nombre}}</td>
+                    <td>
+                      @foreach($actividad->productos_ofrecidos as $index => $ofrecido)
+                      <span>{{$index+1}}.- {{$ofrecido->nombre}}</span><br />
+                      @endforeach
+                    </td>
+                    @if($actividad->tipo->id==4) <!-- Cotización enviada -->
+                    <td>
+                      <a class="btn btn-warning" title="PDF" href="{{$actividad->descripcion}}" target="_blank">
+                        <i class="far fa-file-pdf"></i>
+                      </a>
+                    </td>
+                    @else
+                    <td>{{$actividad->descripcion}}</td>
+                    @endif
+                  </tr>
+                  @endforeach
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        
 
         <div class="row">
             <div class="col-lg-12">
@@ -603,6 +647,14 @@
               </div>
             </div>
           </div>
+
+          <div class="row">
+              <div class="col-md-12 text-right">
+                <a href="{{route('prospectos.index')}}" style="margin-top:25px;" class="btn btn-default">
+                  Regresar
+                </a>
+              </div>
+            </div>
 
 
           <!-- Enviar Modal -->

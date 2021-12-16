@@ -89,6 +89,7 @@
                       <i class="far fa-eye"></i>
                     </a>
                   -->
+                
                     <a class="btn btn-xs btn-success" title="Ordenes Compra"
                       :href="'/proyectos-aprobados/'+proyecto.id+'/ordenes-compra'">
                       <i class="fas fa-file-invoice-dollar"></i>
