@@ -7,9 +7,13 @@ use App\Models\ProyectoAprobado;
 use App\Models\OrdenCompra;
 use App\Models\OrdenCompraEntrada;
 use App\Models\ProspectoActividad;
+use App\Models\ProspectoCotizacion;
+use App\Models\CuentaCobrar;
+use App\Models\OrdenProceso;
 use Carbon\Carbon;
 use DateTime;
 use App\User;
+use Storage;
 
 class ProyectosAprobadosController extends Controller
 {
@@ -138,35 +142,57 @@ class ProyectosAprobadosController extends Controller
       $proyecto->load('cotizacion','ordenes','cliente','cotizacion.prospecto');
 
       $prospecto = $proyecto->cotizacion->prospecto;
-      $prospecto->load('cotizaciones','cotizaciones.proyecto_aprobado','cotizaciones.entradas','cotizaciones.entradas.producto.proveedor');
-      //dd($prospecto);
+      $prospecto->load('cotizaciones','cotizaciones.proyecto_aprobado','cotizaciones.entradas','cotizaciones.entradas.producto.proveedor','cotizaciones_aprobadas','cotizaciones_aprobadas.proyecto_aprobado','cotizaciones_aprobadas.entradas','cotizaciones_aprobadas.entradas.producto.proveedor');
 
-      /*
-      $cotizaciones_aceptadas = ProyectoAprobado::
-      with(['cotizaciones' => function($q) use ($proyecto) {
-        $q->where('cotizaciones.aceptada','1')
-      }])->get();
+      $ordenes = OrdenCompra::with('entradas.producto')
+            ->where('proyecto_id', $proyecto->id)
+            ->get();
+
+      $proyect = ProyectoAprobado::findOrFail($proyecto->id);
+      $cotizacion = ProspectoCotizacion::findOrFail($proyect->cotizacion_id);
+
+      foreach ($ordenes as $orden) {
+          if ($orden->archivo) {
+              $orden->archivo = asset('storage/' . $orden->archivo);
+          }
+
+          $archivos_autorizacion = Storage::disk('public')->files('ordenes_compra/' . $orden->id . '/archivos_autorizacion');
+          $archivos_autorizacion = array_map(function ($archivo) {
+              return ['liga' => asset("storage/$archivo"), 'nombre' => basename($archivo)];
+          }, $archivos_autorizacion);
+          $orden->archivos_autorizacion = $archivos_autorizacion;
+      }
+
+      $cuentas = CuentaCobrar::with('cotizacion','cotizacion.user')->where('proyecto',$proyecto->proyecto)->get();
 
 
-      
-      [
-            'children' => function ($child) use ($SpecificID) {
-                return $child->with([
-                    'products' => function ($product) use ($SpecificID) {
-                        return $product->with([
-                            'types' => function ($type) use ($SpecificID) {
-                                return $type->where('id', $SpecificID);
-                            }
-                        ]);
-                    }
-                ]);
-            }
-        ])->get();
-        */
+      $ordenes_proceso = OrdenProceso::whereHas('ordenCompra', function ($query) use($proyecto) {
+          return $query->where('proyecto_nombre', '=', $proyecto->proyecto);
+      })->with('ordenCompra','ordenCompra.proyecto','ordenCompra.proyecto.cotizacion','ordenCompra.proyecto.cotizacion.user')->get();
 
-      //dd($cotizaciones_aceptadas);
+      foreach ($ordenes_proceso as $orden) {
+        if($orden->ordenCompra->archivo)
+          $orden->ordenCompra->archivo = asset('storage/'.$orden->ordenCompra->archivo);
+        if($orden->factura){
+          $orden->factura = asset('storage/'.$orden->factura);
+          $orden->packing = asset('storage/'.$orden->packing);
+          if($orden->bl) $orden->bl = asset('storage/'.$orden->bl);
+          if($orden->certificado) $orden->certificado = asset('storage/'.$orden->certificado);
+        }
+        if($orden->deposito_warehouse){
+          $orden->deposito_warehouse = asset('storage/'.$orden->deposito_warehouse);
+        }
+        if($orden->gastos){
+          $orden->gastos = asset('storage/'.$orden->gastos);
+          $orden->pago = asset('storage/'.$orden->pago);
+        }
+        if($orden->carta_entrega){
+          $orden->carta_entrega = asset('storage/'.$orden->carta_entrega);
+        }
+      }
+     
 
-      return view('proyectos_aprobados.show', compact('proyecto','prospecto'));
+      return view('proyectos_aprobados.show', compact('proyecto','prospecto','ordenes','cuentas','ordenes_proceso'));
     }
 
     public function destroy(ProyectoAprobado $proyecto)
