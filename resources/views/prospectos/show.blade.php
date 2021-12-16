@@ -12,7 +12,7 @@
 @section('content')
   <!-- Content Header (Page header) -->
   <section class="content-header">
-    <h1>Proyectos</h1>
+    <h1>Proyecto {{$prospecto->nombre}}</h1>
   </section>
   <!-- Main content -->
   <section class="content" id="content">
