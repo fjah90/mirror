@@ -148,7 +148,7 @@ class ProyectosAprobadosController extends Controller
 
       $ordenes = OrdenCompra::wherehas('proyecto.cotizacion', function($query) use ($prospecto) {
             $query->where('cotizacion.prospecto_id', $prospecto_id);
-        })->with('entradas.producto',)
+        })->with('entradas.producto')
             ->get();
 
       $proyect = ProyectoAprobado::findOrFail($proyecto->id);
