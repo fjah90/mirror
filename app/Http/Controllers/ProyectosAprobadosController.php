@@ -147,7 +147,7 @@ class ProyectosAprobadosController extends Controller
       $prospecto->load('cotizaciones','cotizaciones.proyecto_aprobado','cotizaciones.entradas','cotizaciones.entradas.producto.proveedor','cotizaciones_aprobadas','cotizaciones_aprobadas.proyecto_aprobado','cotizaciones_aprobadas.entradas','cotizaciones_aprobadas.entradas.producto.proveedor');
 
       $ordenes = OrdenCompra::wherehas('proyecto.cotizacion', function($query) use ($prospecto) {
-            $query->where('cotizacion.prospecto_id', $prospecto->id);
+           // $query->where('cotizacion.prospecto_id', $prospecto->id);
         })->with('entradas.producto')
             ->get();
 
