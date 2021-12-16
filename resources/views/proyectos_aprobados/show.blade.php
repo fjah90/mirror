@@ -295,7 +295,7 @@
             <div class="col-lg-12">
               <div class="panel">
                 <div class="panel-heading">
-                    <h4 class="panel-title">Lista de Ordenes</h4>
+                    <h4 class="panel-title">Lista de Ordenes de Compra</h4>
                 </div>
                 <div class="panel-body">
                     <div class="row">
@@ -338,7 +338,7 @@
                               <td class="text-right">
                                 <template v-if="orden.status!='Pendiente' && orden.status!='Cancelada'">
                                   <a class="btn btn-xs btn-info" title="Ver"
-                                    :href="'/proyectos-aprobados/'+orden.proyecto_id+'/ordenes-compra/'+orden.id">
+                                    :href="'/proyectos-aprobados/'+orden.proyecto_id+'/ordenes-compra/'+orden.id" target="_blank">
                                     <i class="far fa-eye"></i>
                                   </a>
                                   <a v-if="orden.archivo" class="btn btn-xs btn-warning" title="PDF" :href="orden.archivo"
@@ -398,7 +398,7 @@
               <div class="panel">
                 <div class="panel-heading">
                   <h3 class="panel-title">
-                    <span class="p-10">Lista de Cuentas</span>
+                    <span class="p-10">Lista de Cuentas por Cobrar</span>
                   </h3>
                 </div>
                 <div class="panel-body">
@@ -435,7 +435,7 @@
                           <td v-bind:style= "[cuenta.moneda == 'Dolares' ? {'color':'#2bd32ba1'} : {'color':'#3ecbe7c4'}]">@{{cuenta.pendiente | formatoMoneda}}</td>
                           <td class="text-right">
                             <a class="btn btn-xs btn-info" data-toggle="tooltip" title="Ver"
-                              :href="'/cuentas-cobrar/'+cuenta.id">
+                              :href="'/cuentas-cobrar/'+cuenta.id" target="_blank">
                               <i class="far fa-eye"></i>
                             </a>
                             <a class="btn btn-xs btn-success" data-toggle="tooltip" title="Facturas"
@@ -497,7 +497,7 @@
                           <td>@{{orden.status}}</td>
                           <td class="text-right">
                             {{-- <a class="btn btn-xs btn-info" title="Ver"
-                              :href="'/proyectos-aprobados/'+orden.proyecto_id+'/ordenes-compra/'+orden.id">
+                              :href="'/proyectos-aprobados/'+orden.proyecto_id+'/ordenes-compra/'+orden.id" target="_blank">
                               <i class="far fa-eye"></i>
                             </a> --}}
                             <button class="btn btn-xs btn-unique"

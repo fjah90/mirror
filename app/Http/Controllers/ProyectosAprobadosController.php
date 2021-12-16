@@ -165,11 +165,11 @@ class ProyectosAprobadosController extends Controller
           $orden->archivos_autorizacion = $archivos_autorizacion;
       }
 
-      $cuentas = CuentaCobrar::with('cotizacion','cotizacion.user')->where('proyecto',$proyecto->proyecto)->get();
+      $cuentas = CuentaCobrar::with('cotizacion','cotizacion.user')->where('cotizacion_id',$proyecto->cotizacion_id)->get();
 
 
       $ordenes_proceso = OrdenProceso::whereHas('ordenCompra', function ($query) use($proyecto) {
-          return $query->where('proyecto_nombre', '=', $proyecto->proyecto);
+          return $query->where('proyecto_id', '=', $proyecto->id);
       })->with('ordenCompra','ordenCompra.proyecto','ordenCompra.proyecto.cotizacion','ordenCompra.proyecto.cotizacion.user')->get();
 
       foreach ($ordenes_proceso as $orden) {
