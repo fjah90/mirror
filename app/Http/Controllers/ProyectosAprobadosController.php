@@ -146,8 +146,9 @@ class ProyectosAprobadosController extends Controller
       $prospecto = $proyecto->cotizacion->prospecto;
       $prospecto->load('cotizaciones','cotizaciones.proyecto_aprobado','cotizaciones.entradas','cotizaciones.entradas.producto.proveedor','cotizaciones_aprobadas','cotizaciones_aprobadas.proyecto_aprobado','cotizaciones_aprobadas.entradas','cotizaciones_aprobadas.entradas.producto.proveedor');
 
-      $ordenes = OrdenCompra::with('entradas.producto')
-            ->where('proyecto_id', $proyecto->id)
+      $ordenes = OrdenCompra::wherehas('proyecto.cotizacion', function($query) use ($prospecto) {
+            $query->where('cotizacion.prospecto_id', $prospecto_id);
+        })->with('entradas.producto',)
             ->get();
 
       $proyect = ProyectoAprobado::findOrFail($proyecto->id);
@@ -165,11 +166,13 @@ class ProyectosAprobadosController extends Controller
           $orden->archivos_autorizacion = $archivos_autorizacion;
       }
 
-      $cuentas = CuentaCobrar::with('cotizacion','cotizacion.user')->where('cotizacion_id',$proyecto->cotizacion_id)->get();
+      $cuentas = CuentaCobrar::whereHas('cotizacion', function ($query) use($prospecto) {
+          return $query->where('cotizacion.prospecto_id', '=', $prospecto->id);
+      })->with('cotizacion','cotizacion.user')->get();
 
 
       $ordenes_proceso = OrdenProceso::whereHas('ordenCompra', function ($query) use($proyecto) {
-          return $query->where('proyecto_id', '=', $proyecto->id);
+          return $query->where('proyecto_nombre', '=', $proyecto->proyecto);
       })->with('ordenCompra','ordenCompra.proyecto','ordenCompra.proyecto.cotizacion','ordenCompra.proyecto.cotizacion.user')->get();
 
       foreach ($ordenes_proceso as $orden) {
