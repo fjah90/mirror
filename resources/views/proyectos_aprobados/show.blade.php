@@ -124,10 +124,12 @@
                                                 </a>
                                                 
                                                 <template v-else>
+                                                    <!--
                                                     <button class="btn btn-xs btn-warning" title="Editar"
                                                             @click="editar(index, cotizacion)">
                                                         <i class="fas fa-pencil-alt"></i>
                                                     </button>
+                                                    -->
                                                     <button class="btn btn-xs btn-primary" title="Aceptar"
                                                             @click="aceptar.cotizacion_id=cotizacion.id; openAceptar=true;">
                                                         <i class="fas fa-user-check"></i>
@@ -139,10 +141,12 @@
                                                     </button>
                                                     @endrole
                                                 </template>
+                                                <!--
                                                 <button class="btn btn-xs btn-white" title="Copiar"
                                                         @click="copiar(index, cotizacion)">
                                                     <i class="far fa-copy"></i>
                                                 </button>
+                                                -->
                                                 <button class="btn btn-xs btn-green" title="Copiar a otro proyecto"
                                                         @click="copiar2(index, cotizacion); openCopiar=true ">
                                                     <i class="far fa-copy"></i>
@@ -238,10 +242,12 @@
                                                 </a>
                                                 
                                                 <template v-else>
+                                                    <!--
                                                     <button class="btn btn-xs btn-warning" title="Editar"
                                                             @click="editar(index, cotizacion)">
                                                         <i class="fas fa-pencil-alt"></i>
                                                     </button>
+                                                    -->
                                                     <button class="btn btn-xs btn-primary" title="Aceptar"
                                                             @click="aceptar.cotizacion_id=cotizacion.id; openAceptar=true;">
                                                         <i class="fas fa-user-check"></i>
@@ -253,10 +259,12 @@
                                                     </button>
                                                     @endrole
                                                 </template>
+                                                <!--
                                                 <button class="btn btn-xs btn-white" title="Copiar"
                                                         @click="copiar(index, cotizacion)">
                                                     <i class="far fa-copy"></i>
                                                 </button>
+                                                -->
                                                 <button class="btn btn-xs btn-green" title="Copiar a otro proyecto"
                                                         @click="copiar2(index, cotizacion); openCopiar=true ">
                                                     <i class="far fa-copy"></i>
@@ -595,6 +603,109 @@
             </div>
           </div>
 
+
+          <!-- Enviar Modal -->
+        <modal v-model="openNotas" :title="'Notas Cotización '+notas.cotizacion_id" :footer="false">
+            <form class="" @submit.prevent="notasCotizacion()">
+                <div class="form-group">
+                    <label class="control-label">Notas</label>
+                    <textarea name="mensaje" class="form-control" v-model="notas.mensaje" rows="8" cols="80">
+          </textarea>
+                </div>
+                <div class="form-group text-right">
+                    <button type="submit" class="btn btn-primary" :disabled="cargando">Guardar</button>
+                    <button type="button" class="btn btn-default"
+                            @click="notas.cotizacion_id=0; notas.mensaje=''; openNotas=false;">
+                        Cancelar
+                    </button>
+                </div>
+            </form>
+        </modal>
+        <!-- /.Enviar Modal -->
+
+        <!-- Enviar Modal -->
+        <modal v-model="openEnviar" :title="'Enviar Cotizacion '+enviar.numero" :footer="false">
+            <form class="" @submit.prevent="enviarCotizacion()">
+                <div class="form-group">
+                    <label class="control-label">Email(s)</label>
+                    <select2multags :options="enviar.emailOpciones" v-model="enviar.email" style="width:100%;" required>
+                    </select2multags>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Mensaje</label>
+                    <textarea name="mensaje" class="form-control" v-model="enviar.mensaje" rows="6" cols="80" required>
+          </textarea>
+                </div>
+                <div class="form-group text-right">
+                    <button type="submit" class="btn btn-primary" :disabled="cargando">Enviar</button>
+                </div>
+            </form>
+        </modal>
+        <!-- /.Enviar Modal -->
+        <!-- Aceptar Modal -->
+        <modal v-model="openAceptar" :title="'Aceptar Cotizacion '+aceptar.cotizacion_id" :footer="false">
+            <form class="" @submit.prevent="aceptarCotizacion()">
+                <div class="form-group">
+                    <label class="control-label">Comprobante Confirmacion</label>
+                    <div class="file-loading">
+                        <input id="comprobante" name="comprobante" type="file" ref="comprobante"
+                               @change="fijarComprobante()" required/>
+                    </div>
+                    <div id="comprobante-file-errors"></div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Fecha Aceptación</label>
+                    <br />
+                    <dropdown style="width:100%;">
+                        <div class="input-group" >
+                            <div class="input-group-btn">
+                                <btn class="dropdown-toggle" style="background-color:#fff;">
+                                    <i class="fas fa-calendar"></i>
+                                </btn>
+                            </div>
+                            <input class="form-control" type="text" name="fecha_comprobante" placeholder="DD/MM/YYYY" v-model="aceptar.fecha_comprobante" readonly/>
+                        </div>
+                        <template slot="dropdown">
+                            <li>
+                                <date-picker :locale="locale" :today-btn="false" :clear-btn="false"
+                                             format="dd/MM/yyyy" :date-parser="dateParser" v-model="aceptar.fecha_comprobante"/>
+                            </li>
+                        </template>
+                    </dropdown>
+                </div>
+                <div class="form-group text-right">
+                    <button type="submit" class="btn btn-primary" :disabled="cargando">Aceptar</button>
+                    <button type="button" class="btn btn-default"
+                            @click="aceptar.cotizacion_id=0; openAceptar=false;">
+                        Cancelar
+                    </button>
+                </div>
+            </form>
+        </modal>
+        <!-- /.Aceptar Modal -->
+        <!-- Copiar Modal -->
+        <modal v-model="openCopiar" :title="'Copiar Cotizacion'" :footer="false">
+            <form class="" @submit.prevent="copiarCotizacion()">
+                <div class="form-group">
+                    <label class="control-label">Proyecto Destino</label>
+                    <select name="proyecto_id" v-model="copiar_cotizacion.proyecto_id"
+                            class="form-control" required id="proyecto-select" style="width: 300px;">
+                        @foreach($proyectos as $proyecto)
+                            <option value="{{$proyecto->id}}" >{{$proyecto->nombre}}--{{$proyecto->cliente->nombre}}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="form-group text-right">
+                    <button type="submit" class="btn btn-primary" :disabled="cargando">Guardar</button>
+                    <button type="button" class="btn btn-default"
+                            @click="openCopiar=false;">
+                        Cancelar
+                    </button>
+                </div>
+            </form>
+        </modal>
+        <!-- /.Copiar Modal -->
+
         
     </section>
 
@@ -607,15 +718,60 @@
 <script src="{{ URL::asset('js/plugins/date-time/datetime-moment.js') }}" ></script>
 <script>
 
+    // Used for creating a new FileList in a round-about way
+        function FileListItem(a) {
+            a = [].slice.call(Array.isArray(a) ? a : arguments)
+            for (var c, b = c = a.length, d = !0; b-- && d;) d = a[b] instanceof File
+            if (!d) throw new TypeError("expected argument to FileList is File or array of File objects")
+            for (b = (new ClipboardEvent("")).clipboardData || new DataTransfer; c--;) b.items.add(a[c])
+            return b.files
+        }
+
   Vue.config.devtools = true;
         const app = new Vue({
             el: '#content',
             data: {
+                locale: localeES,
                 prospecto: {!! json_encode($prospecto) !!},
                 ordenes: {!! json_encode($ordenes) !!},
                  cuentas: {!! json_encode($cuentas) !!},
                  ordenes_proceso: {!! json_encode($ordenes_proceso) !!},
+                 notas: {
+                    cotizacion_id: 0,
+                    mensaje: ""
+                },
+                enviar_a:'',
+                enviar: {
+                    cotizacion_id: 0,
+                    numero: 0,
+                    email: [],
+                    emailOpciones: [
+                            @foreach($prospecto->cliente->contactos as $contacto)
+                            @foreach($contacto->emails as $email)
+                        {
+                            id: "{{$email->email}}", text: "{{$email->email}}"
+                        },
+                        @endforeach
+                        @endforeach
+                    ],
+                    mensaje: "Buenas tardes  .\n\nAnexo a la presente encontrarán la cotización solicitada de {{$prospecto->descripcion}}  para {{$prospecto->nombre}} .\n\nEsperamos esta información les sea de utilidad y quedamos a sus órdenes para cualquier duda o comentario.\n\nSaludos,\n\n{{auth()->user()->name}}.\n{{auth()->user()->email}}\nIntercorp Contract Resources"
+                },
+                aceptar: {
+                    cotizacion_id: 0,
+                    comprobante: "",
+                    fecha_comprobante: ""
+                },
+                copiar_cotizacion: {
+                    proyecto_id : '',
+                    cotizacion_id :'',
+                },
+                openNotas: false,
+                openAceptar: false,
+                openEnviar: false,
+                openCopiar : false,
+                cargando: false
             },
+            
             filters: {
               formatoMoneda(numero){
                 return accounting.formatMoney(numero, "$", 2);
@@ -640,6 +796,15 @@
                 }
             },
             mounted(){
+                $("#comprobante").fileinput({
+                    language: 'es',
+                    showPreview: false,
+                    showUpload: false,
+                    showRemove: false,
+                    allowedFileExtensions: ["jpg", "jpeg", "png", "pdf"],
+                    elErrorContainer: '#comprobante-file-errors',
+                });
+
               this.tabla = $("#tabla_cuentas").DataTable({
                 "footerCallback": function ( row, data, start, end, display ) {
                     var api = this.api(), data;
@@ -674,6 +839,185 @@
 
               });
             },
+            methods :{
+                borrar(index, cotizacion) {
+                    swal({
+                        title: 'Cuidado',
+                        text: "Borrar Cotizacion " + cotizacion.numero + "?",
+                        type: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Si, Borrar',
+                        cancelButtonText: 'No, Cancelar',
+                    }).then((result) => {
+                        if (result.value) {
+                            axios.delete('/prospectos/{{$prospecto->id}}/cotizacion/' + cotizacion.id, {})
+                                .then(({data}) => {
+                                    this.prospecto.cotizaciones.splice(index, 1);
+                                    swal({
+                                        title: "Exito",
+                                        text: "La cotizacion ha sido borrado",
+                                        type: "success"
+                                    });
+                                })
+                                .catch(({response}) => {
+                                    console.error(response);
+                                    swal({
+                                        title: "Error",
+                                        text: response.data.message || "Ocurrio un error inesperado, intente mas tarde",
+                                        type: "error"
+                                    });
+                                });
+                        } //if confirmacion
+                    });
+                },
+                copiarCotizacion() {
+                    this.cargando = true;
+                    
+                    axios.post('/prospectos/{{$prospecto->id}}/copiarCotizacion', this.copiar_cotizacion)
+                        .then(({data}) => {
+                            this.openCopiar = false;
+                            this.cargando = false;
+                            swal({
+                                title: "Copia Guardada",
+                                text: "La cotizaciones de ha copiado correctamente",
+                                type: "success"
+                            });
+                            
+                            window.location.href = "/prospectos/"+this.copiar_cotizacion.proyecto_id+"/cotizar";
+                        })
+                        .catch(({response}) => {
+                            console.error(response);
+                            this.cargando = false;
+                            swal({
+                                title: "Error",
+                                text: response.data.message || "Ocurrio un error inesperado, intente mas tarde",
+                                type: "error"
+                            });
+                        });
+                },//fin CopiarCotizacion
+                copiar2(index,cotizacion){
+                    this.copiar_cotizacion.cotizacion_id = cotizacion.id;
+                },
+                fijarComprobante() {
+                    this.aceptar.comprobante = this.$refs['comprobante'].files[0];
+                },
+                dateParser(value) {
+                    return moment(value, 'DD/MM/YYYY').toDate().getTime();
+                },
+                notasCotizacion() {
+                    this.cargando = true;
+                    axios.post('/prospectos/{{$prospecto->id}}/notasCotizacion', this.notas)
+                        .then(({data}) => {
+                            this.prospecto.cotizaciones.find(function (cotizacion) {
+                                if (this.notas.cotizacion_id == cotizacion.id) {
+                                    cotizacion.notas2 = this.notas.mensaje;
+                                    return true;
+                                }
+                            }, this);
+
+                            this.notas = {
+                                cotizacion_id: 0,
+                                mensaje: ""
+                            };
+                            $("#comprobante").fileinput('clear');
+                            this.openNotas = false;
+                            this.cargando = false;
+                            swal({
+                                title: "Notas Guardadas",
+                                text: "La notas de la cotización se han guardado correctamente",
+                                type: "success"
+                            });
+                        })
+                        .catch(({response}) => {
+                            console.error(response);
+                            this.cargando = false;
+                            swal({
+                                title: "Error",
+                                text: response.data.message || "Ocurrio un error inesperado, intente mas tarde",
+                                type: "error"
+                            });
+                        });
+                },//fin notasCotizacion
+                enviarCotizacion() {
+                    this.cargando = true;
+                    axios.post('/prospectos/{{$prospecto->id}}/enviarCotizacion', this.enviar)
+                        .then(({data}) => {
+                            this.enviar = {
+                                cotizacion_id: 0,
+                                numero: 0,
+                                email: [],
+                                emailOpciones: [
+                                        @foreach($prospecto->cliente->contactos as $contacto)
+                                        @foreach($contacto->emails as $email)
+                                    {
+                                        id: "{{$email->email}}", text: "{{$email->email}}"
+                                    },
+                                    @endforeach
+                                    @endforeach
+                                ],
+                                mensaje: "Buen día.\n\nLe envió cotización para su consideración.\n\n{{auth()->user()->name}}.\nAtención del Cliente\nIntercorp Contract Resources"
+                            };
+                            this.openEnviar = false;
+                            this.cargando = false;
+                            swal({
+                                title: "Cotizacion Enviada",
+                                text: "",
+                                type: "success"
+                            });
+                        })
+                        .catch(({response}) => {
+                            console.error(response);
+                            this.cargando = false;
+                            swal({
+                                title: "Error",
+                                text: response.data.message || "Ocurrio un error inesperado, intente mas tarde",
+                                type: "error"
+                            });
+                        });
+                },//fin enviarCotizacion
+                aceptarCotizacion() {
+                    var formData = objectToFormData(this.aceptar, {indices: true});
+
+                    this.cargando = true;
+                    axios.post('/prospectos/{{$prospecto->id}}/aceptarCotizacion', formData, {
+                        headers: {'Content-Type': 'multipart/form-data'}
+                    })
+                        .then(({data}) => {
+                            this.prospecto.cotizaciones.find(function (cotizacion) {
+                                if (this.aceptar.cotizacion_id == cotizacion.id) {
+                                    cotizacion.proyecto_aprobado = data.proyecto_aprobado;
+                                    cotizacion.aceptada = true;
+                                    return true;
+                                }
+                            }, this);
+
+                            this.aceptar = {
+                                cotizacion_id: 0,
+                                comprobante: "",
+                                fecha_comprobante: ""
+                            };
+                            $("#comprobante").fileinput('clear');
+                            this.openAceptar = false;
+                            this.cargando = false;
+                            swal({
+                                title: "Cotizacion Aceptada",
+                                text: "La cotización ha sido aceptada y se ha generado una cuenta por cobrar",
+                                type: "success"
+                            });
+                        })
+                        .catch(({response}) => {
+                            console.error(response);
+                            this.cargando = false;
+                            swal({
+                                title: "Error",
+                                text: response.data.message || "Ocurrio un error inesperado, intente mas tarde",
+                                type: "error"
+                            });
+                        });
+                },//fin aceptarCotizacion
+            }
         });
 
 

@@ -9,6 +9,7 @@ use App\Models\OrdenCompraEntrada;
 use App\Models\ProspectoActividad;
 use App\Models\ProspectoCotizacion;
 use App\Models\CuentaCobrar;
+use App\Models\Prospecto;
 use App\Models\OrdenProceso;
 use Carbon\Carbon;
 use DateTime;
@@ -139,6 +140,7 @@ class ProyectosAprobadosController extends Controller
 
     public function show(ProyectoAprobado $proyecto)
     {
+      $proyectos = Prospecto::all();
       $proyecto->load('cotizacion','ordenes','cliente','cotizacion.prospecto');
 
       $prospecto = $proyecto->cotizacion->prospecto;
@@ -192,7 +194,7 @@ class ProyectosAprobadosController extends Controller
       }
      
 
-      return view('proyectos_aprobados.show', compact('proyecto','prospecto','ordenes','cuentas','ordenes_proceso'));
+      return view('proyectos_aprobados.show', compact('proyecto','prospecto','ordenes','cuentas','ordenes_proceso','proyectos'));
     }
 
     public function destroy(ProyectoAprobado $proyecto)
