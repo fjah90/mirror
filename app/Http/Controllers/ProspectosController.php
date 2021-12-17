@@ -1240,7 +1240,7 @@ class ProspectosController extends Controller
         $create['fecha_comprobante'] = $request->fecha_comprobante;
 
         CuentaCobrar::create($create);
-        $cotizacion->update(['aceptada' => true]);
+        //$cotizacion->update(['aceptada' => true]);
 
         // Guardar activiad de aprobar
         $today = new DateTime();
