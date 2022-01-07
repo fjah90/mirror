@@ -39,7 +39,8 @@ class ProyectoAprobadoObserver
             foreach ($entradas as $entrada) {
 
 
-                if ($entrada->medida_compra != null) {
+                if ($entrada->medida_compra != $entrada->medida) {
+
                     $unidad_medida = UnidadMedida::where('simbolo',$entrada->medida)->first();
                     $unidad_convertir = UnidadMedida::where('simbolo',$entrada->medida_compra)->first();
                     $conversion = UnidadMedidaConversion::where('unidad_medida_id',$unidad_medida->id)->where('unidad_conversion_id',$unidad_convertir->id)->first();
