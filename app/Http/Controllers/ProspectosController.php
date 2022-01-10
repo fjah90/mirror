@@ -61,6 +61,9 @@ class ProspectosController extends Controller
         elseif ($request->anio == '2020-12-31') {
             $inicio = Carbon::parse('2020-01-01');    
         }
+        elseif ($request->anio == '2022-12-31') {
+            $inicio = Carbon::parse('2022-01-01');    
+        }
         else{
             $inicio = Carbon::parse('2021-01-01');
         }
