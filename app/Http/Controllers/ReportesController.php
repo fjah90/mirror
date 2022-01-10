@@ -23,7 +23,7 @@ class ReportesController extends Controller
     public function cotizaciones()
     {
         $inicio = Carbon::parse('2021-01-01');
-        $fin = Carbon::parse('2021-12-31');
+        $fin = Carbon::parse('2022-12-31');
         $cotizaciones = ProspectoCotizacion::with('prospecto:id,nombre,cliente_id', 'prospecto.cliente:id,nombre', 'user:id,name', 'entradas:id,cantidad,producto_id,cotizacion_id,importe', 'entradas.producto:id,proveedor_id', 'entradas.producto.proveedor:id,empresa','proyecto_aprobado')
             ->has('prospecto')
             ->has('entradas.producto')
@@ -36,7 +36,7 @@ class ReportesController extends Controller
     public function cobros()
     {
         $inicio = Carbon::parse('2021-01-01');
-        $fin = Carbon::parse('2021-12-31');
+        $fin = Carbon::parse('2022-12-31');
 
         $cobros = Pago::leftjoin('facturas', 'pagos.factura_id', '=', 'facturas.id')
             ->leftjoin('cuentas_cobrar', 'facturas.cuenta_id', '=', 'cuentas_cobrar.id')
@@ -52,7 +52,7 @@ class ReportesController extends Controller
     public function compras()
     {
         $inicio = Carbon::parse('2021-01-01');
-        $fin = Carbon::parse('2021-12-31');
+        $fin = Carbon::parse('2022-12-31');
 
         $compras = OrdenCompra::leftjoin('proyectos_aprobados', 'ordenes_compra.proyecto_id', '=', 'proyectos_aprobados.id')
             ->leftjoin('clientes', 'ordenes_compra.cliente_id', '=', 'clientes.id')
@@ -68,7 +68,7 @@ class ReportesController extends Controller
     public function pagos()
     {
         $inicio = Carbon::parse('2021-01-01');
-        $fin = Carbon::parse('2021-12-31');
+        $fin = Carbon::parse('2022-12-31');
 
         $pagos = PagoCuentaPagar::leftjoin('facturas_cuentas_pagar', 'pagos_cuentas_pagar.factura_id', '=', 'facturas_cuentas_pagar.id')
             ->leftjoin('cuentas_pagar', 'facturas_cuentas_pagar.cuenta_id', '=', 'cuentas_pagar.id')
@@ -87,7 +87,7 @@ class ReportesController extends Controller
     public function saldoProveedores()
     {
         $inicio = Carbon::parse('2021-01-01');
-        $fin = Carbon::parse('2021-12-31');
+        $fin = Carbon::parse('2022-12-31');
 
         $saldos = PagoCuentaPagar::leftjoin('facturas_cuentas_pagar', 'pagos_cuentas_pagar.factura_id', '=', 'facturas_cuentas_pagar.id')
             ->leftjoin('cuentas_pagar', 'facturas_cuentas_pagar.cuenta_id', '=', 'cuentas_pagar.id')
@@ -106,7 +106,7 @@ class ReportesController extends Controller
     public function cuentaCliente(Request $request)
     {
         $inicio = Carbon::parse('2021-01-01');
-        $fin = Carbon::parse('2021-12-31');
+        $fin = Carbon::parse('2022-12-31');
 
         $datos    = [];
         $clientes = Cliente::get();
@@ -151,7 +151,7 @@ class ReportesController extends Controller
     public function utilidades()
     {
         $inicio = Carbon::parse('2021-01-01');
-        $fin = Carbon::parse('2021-12-31');
+        $fin = Carbon::parse('2022-12-31');
 
         $datos = OrdenCompra::leftjoin('proyectos_aprobados', 'ordenes_compra.proyecto_id', '=', 'proyectos_aprobados.id')
             ->leftjoin('prospectos_cotizaciones', 'proyectos_aprobados.cotizacion_id', '=', 'prospectos_cotizaciones.id')
