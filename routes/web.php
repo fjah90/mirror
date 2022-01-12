@@ -78,6 +78,9 @@ Route::middleware('auth')->group(function () {
     Route::resource('/categorias', 'CategoriasController');
     Route::resource('/subcategorias', 'SubcategoriasController');
 
+
+    Route::post('/proyectos-aprobados/listado', 'ProyectosAprobadosController@listado');
+
     //Administracion
     Route::middleware('role:Administrador')->group(function () {
         Route::post('/usuarios/{usuario}', 'UsuariosController@update');
@@ -105,7 +108,6 @@ Route::middleware('auth')->group(function () {
         Route::post('/ordenes-proceso/listado', 'OrdenesProcesoController@listado');
         Route::post('/dashboard/listado', 'DashboardController@listado');
         Route::post('/dashboard/changebdd', 'DashboardController@changebdd');
-        Route::post('/proyectos-aprobados/listado', 'ProyectosAprobadosController@listado');
 
         Route::get('/reportes/cotizaciones', 'ReportesController@cotizaciones');
         Route::get('/reportes/cobros', 'ReportesController@cobros');

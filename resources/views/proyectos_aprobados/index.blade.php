@@ -25,6 +25,7 @@
           <h3 class="panel-title">
             <div class="p-10">
               Lista de Proyectos
+              @role('Administrador')
                 de 
                 <select class="form-control" @change="cargar()" v-model="usuarioCargado" style="width:auto;display:inline-block;">
                   <option value="Todos">Todos</option>
@@ -32,6 +33,7 @@
                   <option value="{{$usuario->id}}">{{$usuario->name}}</option>
                   @endforeach
                 </select>
+              @endrole
             </div>
             <div class="p-10">
               Año  
@@ -118,7 +120,7 @@ const app = new Vue({
     data: {
       anio:'2021-12-31',
       proyectos: {!! json_encode($proyectos) !!},
-      usuarioCargado: 5,
+      usuarioCargado: {{auth()->user()->id}},
       tabla: {}
     },
     mounted(){
