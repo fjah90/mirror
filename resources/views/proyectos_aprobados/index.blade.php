@@ -118,7 +118,7 @@ const app = new Vue({
     data: {
       anio:'2021-12-31',
       proyectos: {!! json_encode($proyectos) !!},
-      usuarioCargado: {{auth()->user()->id}},
+      usuarioCargado: 5,
       tabla: {}
     },
     mounted(){
