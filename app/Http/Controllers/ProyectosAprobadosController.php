@@ -43,7 +43,7 @@ class ProyectosAprobadosController extends Controller
       return view('proyectos_aprobados.index', compact('proyectos','usuarios'));
     }
 
-    public function listado(Request $request)
+    public function listado2(Request $request)
     {
 
       if ($request->anio == '2019-12-31') {

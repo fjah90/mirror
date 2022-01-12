@@ -136,9 +136,8 @@ const app = new Vue({
   			return moment(value, 'DD/MM/YYYY').toDate().getTime();
       },
       cargar(){
-        axios.post('/proyectos-aprobados/listado2', {id: this.usuarioCargado, anio:this.anio})
+        axios.post('/proyectos-aprobados/listado', {id: this.usuarioCargado, anio:this.anio})
         .then(({data}) => {
-          console.log(data);
           this.tabla.destroy();
           this.proyectos = data.proyectos;
           swal({
