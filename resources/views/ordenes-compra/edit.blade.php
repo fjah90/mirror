@@ -760,8 +760,6 @@ const app = new Vue({
         this.entrada.importe = this.entrada.cantidad_convertida * this.entrada.precio;
       else this.entrada.importe = this.entrada.cantidad * this.entrada.precio;
 
-      console.log(this.entrada.conversion);
-
       if (this.$refs['fotos'].files.length) {//hay fotos
 
           this.entrada.fotos = [];
@@ -793,6 +791,10 @@ const app = new Vue({
       if(entrada.conversion==undefined || entrada.conversion==null){
         entrada.conversion = "";
         entrada.cantidad_convertida = "";
+      }
+      if (entrada.conversion == entrada.medida) {
+        entrada.conversion = "";
+        entrada.cantidad_convertida = ""; 
       }
 
       $("button.fileinput-remove").click();
