@@ -105,7 +105,7 @@ Route::middleware('auth')->group(function () {
         Route::post('/ordenes-proceso/listado', 'OrdenesProcesoController@listado');
         Route::post('/dashboard/listado', 'DashboardController@listado');
         Route::post('/dashboard/changebdd', 'DashboardController@changebdd');
-        Route::post('/proyectos-aprobados/listado2', 'ProyectosAprobadosController@listado');
+        Route::post('/proyectos-aprobados/listado', 'ProyectosAprobadosController@listado2');
 
         Route::get('/reportes/cotizaciones', 'ReportesController@cotizaciones');
         Route::get('/reportes/cobros', 'ReportesController@cobros');
