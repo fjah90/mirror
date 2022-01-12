@@ -760,7 +760,7 @@ const app = new Vue({
         this.entrada.importe = this.entrada.cantidad_convertida * this.entrada.precio;
       else this.entrada.importe = this.entrada.cantidad * this.entrada.precio;
 
-      console.log(this.entrada.importe);
+      console.log(this.entrada.conversion);
 
       if (this.$refs['fotos'].files.length) {//hay fotos
 
