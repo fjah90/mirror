@@ -75,14 +75,12 @@ class ProyectosAprobadosController extends Controller
 
         if ($request->anio == 'Todos') {
             $user = User::with('proyectos_aprobados.cotizacion','proyectos_aprobados.cotizacion.cuenta_cobrar','proyectos_aprobados.cotizacion.user')->find($request->id);
-            dd($request->id);
             if (is_null($user)) $proyectos = [];
             else $proyectos = $user->proyectos_aprobados;
         }
         else{
             $anio = Carbon::parse($request->anio);
             $user = User::with('proyectos_aprobados.cotizacion','proyectos_aprobados.cotizacion.cuenta_cobrar','proyectos_aprobados.cotizacion.user')->find($request->id);
-            dd($request->id);
             if (is_null($user)) $proyectos = [];
             else {
 
