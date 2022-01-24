@@ -152,7 +152,7 @@
                                                         @click="notas.cotizacion_id=cotizacion.id;notas.mensaje=cotizacion.notas2;openNotas=true;">
                                                     <i class="far fa-sticky-note"></i>
                                                 </button>
-                                                <a class="btn btn-xs btn-success" title="PDF" :href="cotizacion.archivo"
+                                                <a class="btn btn-xs btn-success" title="PDF" :href="/cotizacion.archivo"
                                                    :download="'C '+cotizacion.numero+' Intercorp '+prospecto.nombre+'.pdf'">
                                                     <i class="far fa-file-pdf"></i>
                                                 </a>
@@ -270,7 +270,7 @@
                                                         @click="notas.cotizacion_id=cotizacion.id;notas.mensaje=cotizacion.notas2;openNotas=true;">
                                                     <i class="far fa-sticky-note"></i>
                                                 </button>
-                                                <a class="btn btn-xs btn-success" title="PDF" :href="cotizacion.archivo"
+                                                <a class="btn btn-xs btn-success" title="PDF" :href="/cotizacion.archivo"
                                                    :download="'C '+cotizacion.numero+' Intercorp '+prospecto.nombre+'.pdf'">
                                                     <i class="far fa-file-pdf"></i>
                                                 </a>
