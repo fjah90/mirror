@@ -93,7 +93,7 @@
 
                     <button v-if="orden.status=='Aprobada'" class="btn btn-xs btn-primary"
                       title="Des Aprobar" @click="ordenModal=orden; openDesAprobar=true;">
-                      <i class="far fa-arrow-down"></i>
+                      <i class="fa fa-arrow-down"></i>
                     </button>
                     
                     <button v-if="orden.status=='Aprobada'" class="btn btn-xs btn-purple"
