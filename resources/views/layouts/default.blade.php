@@ -299,7 +299,7 @@
               <i class="fas fa-user"></i> Usuarios
             </a>
           </li>
-          @hasanyrole
+          @endhasanyrole
           <li class="sub" {!! (Request::is('tiposClientes*') ? 'class="active"' : '') !!}>
             <a href="{{ URL::to('tiposClientes') }}">
               <i class="fas fa-address-book"></i> Tipo de Clientes
