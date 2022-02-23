@@ -912,6 +912,33 @@ class OrdenesCompraController extends Controller
         return response()->json(['success' => true, "error" => false], 200);
     }
 
+
+    /**
+     * Cambia status a Por Autorizar.
+     *
+     * @param \App\Models\ProyectoAprobado $proyecto
+     * @param \App\Models\OrdenCompra $orden
+     * @return \Illuminate\Http\Response
+     */
+    public function desaprobar(ProyectoAprobado $proyecto, OrdenCompra $orden)
+    {
+        if ($orden->status != OrdenCompra::STATUS_APROBADA) {
+            return response()->json(['success' => false, "error" => true,
+                'message' => 'La orden debe estar en estatus '
+                    . OrdenCompra::STATUS_APROBADA
+                    . ' para poder ser aprobada',
+            ], 400);
+        }
+
+        //actualizar orden
+        $orden->update([
+            'status' => OrdenCompra::STATUS_POR_AUTORIZAR,
+            //'orden_proceso_id' => $orden_proceso->id,
+        ]);
+
+        return response()->json(['success' => true, "error" => false], 200);
+    }
+
     /**
      * Cambia status a Rechazada.
      *

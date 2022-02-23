@@ -90,6 +90,11 @@
                       title="Aprobar" @click="ordenModal=orden; openAprobar=true;">
                       <i class="far fa-thumbs-up"></i>
                     </button>
+
+                    <button v-if="orden.status=='Aprobada'" class="btn btn-xs btn-primary"
+                      title="Des Aprobar" @click="ordenModal=orden; openDesAprobar=true;">
+                      <i class="far fa-arrow-down"></i>
+                    </button>
                     
                     <button v-if="orden.status=='Aprobada'" class="btn btn-xs btn-purple"
                       title="Confirmar" @click="ordenModal=orden; openConfirmar=true; ordenModal.monto_total_flete=orden.flete;ordenModal.monto_total_producto=orden.subtotal;ordenModal.tax=orden.iva;sumartot()">
@@ -143,6 +148,21 @@
         <button type="submit" class="btn btn-primary" :disabled="cargando">Aprobar</button>
         <button type="button" class="btn btn-default"
           @click="ordenModal={}; openAprobar=false;">
+          Cancelar
+        </button>
+      </div>
+    </form>
+  </modal>
+  <!-- /.Aprobar Modal -->
+
+  <!-- Des Aprobar Modal -->
+  <modal v-model="openDesAprobar" :title="'Des Aprobar orden '+ordenModal.numero" :footer="false">
+    <form class="" @submit.prevent="desaprobarOrden()">
+      <h4>Desaprobar</h4>
+      <div class="form-group text-right">
+        <button type="submit" class="btn btn-primary" :disabled="cargando">Desaprobar</button>
+        <button type="button" class="btn btn-default"
+          @click="ordenModal={}; openDesAprobar=false;">
           Cancelar
         </button>
       </div>
@@ -286,6 +306,28 @@ const app = new Vue({
           swal({
             title: "Exito",
             text: "La orden ha sido aprobada",
+            type: "success"
+          });
+        })
+        .catch(({response}) => {
+          console.error(response);
+          swal({
+            title: "Error",
+            text: response.data.message || "Ocurrio un error inesperado, intente mas tarde",
+            type: "error"
+          });
+        });
+      },//aceptar
+      desaprobarOrden(){
+        this.cargando = true;
+        axios.get('/proyectos-aprobados/'+this.ordenModal.proyecto_id+'/ordenes-compra/'+this.ordenModal.id+'/desaprobar', {})
+        .then(({data}) => {
+          this.ordenModal.status = 'Por Autorizar';
+          this.openDesAprobar = false;
+          this.cargando = false;
+          swal({
+            title: "Exito",
+            text: "La orden ha sido desaprobada",
             type: "success"
           });
         })
