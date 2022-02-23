@@ -227,8 +227,10 @@
           <!-- ordenes compra-->
           <li {!! (Request::is('cuentas-cobrar*') ? 'class="active"' : '') !!}  >
             <span class="title" style="color:red">
+            <a href="{{ URL::to('proyectos-aprobados') }}">
               <i class="menu-icon fas fa-hand-holding-usd"></i>
               Ordenes Compra
+            </a>
             </span>
           </li>
           <li class="sub" {!! (Request::is('ordenes-proceso*') ? 'class="active"' : '') !!} >

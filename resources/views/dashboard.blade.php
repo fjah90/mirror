@@ -197,6 +197,7 @@ Dashboard | @parent
                   <option value="2019-12-31">2019</option>
                   <option value="2020-12-31">2020</option>
                   <option value="2021-12-31">2021</option>
+                  <option value="2022-12-31">2022</option>
                 </select>
             </div>
         </div>
