@@ -217,13 +217,13 @@ const app = new Vue({
             //Crear y llenar los select para clientes 
             vue.datos_select.clientes.push('Clientes')
             vue.datos_select.clientes.push('');
-            this.api().column(2).data().sort().unique().each(function(d,j){   
+            this.api().column(3).data().sort().unique().each(function(d,j){   
               vue.datos_select.clientes.push(d);
             });
             //Crear y llenar los select para clientes 
             vue.datos_select.proyectos.push('Proyectos')
             vue.datos_select.proyectos.push('');
-            this.api().column(3).data().sort().unique().each(function(d,j){   
+            this.api().column(4).data().sort().unique().each(function(d,j){   
               vue.datos_select.proyectos.push(d);
             });
 
@@ -236,7 +236,7 @@ const app = new Vue({
 
             vue.datos_select.usuarios.push('Usuarios')
             vue.datos_select.usuarios.push('');
-            this.api().column(9).data().sort().unique().each(function(d,j){   
+            this.api().column(10).data().sort().unique().each(function(d,j){   
               vue.datos_select.usuarios.push(d);
             });
           },
@@ -306,16 +306,16 @@ const app = new Vue({
         this.tabla.draw();
       },
       valor_clientes:function(val){
-        this.tabla.columns(2).search(this.valor_clientes).draw();
+        this.tabla.columns(3).search(this.valor_clientes).draw();
       },
       valor_proyectos:function(val){
-        this.tabla.columns(3).search(this.valor_proyectos).draw();
+        this.tabla.columns(4).search(this.valor_proyectos).draw();
       },
       valor_ids:function(val){
         this.tabla.columns(1).search(this.valor_ids).draw();
       },
       valor_usuarios:function(val){
-        this.tabla.columns(9).search(this.valor_usuarios).draw();
+        this.tabla.columns(10).search(this.valor_usuarios).draw();
       },
     },
     filters:{
