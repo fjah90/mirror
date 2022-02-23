@@ -45,7 +45,7 @@ class ProspectoCotizacionEntrada extends Model
 
     public function getFotos2Attribute()
     {
-        return $this->attributes['fotos'];
+        return $this->fotos;
     }
 
     public function getFotosAttribute($value)
