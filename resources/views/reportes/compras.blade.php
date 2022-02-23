@@ -69,7 +69,12 @@ Reportes | @parent
                     <div class="marg025 btn-group" id="select_proveedores" >
                         <select name="proxDias" class="form-control" size="1" v-model="valor_proveedores" id="select_proveedores">
                         <option v-for="(option, index) in datos_select.proveedores" v-bind:value="option" >
-                            @{{ option }}
+                            <p v-if="(option == '')">
+                              TODOS  
+                            </p>
+                            <p v-else>
+                              @{{ option }}
+                            </p>
                           </option>
                           
                         </select>
