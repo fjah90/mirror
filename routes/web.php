@@ -147,6 +147,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/proyectos-aprobados/{proyecto}/ordenes-compra/{orden}/borrarArchivo', 'OrdenesCompraController@borrarArchivo');
     Route::post('/proyectos-aprobados/{proyecto}/ordenes-compra/{orden}/rechazar', 'OrdenesCompraController@rechazar');
     Route::get('/proyectos-aprobados/{proyecto}/ordenes-compra/{orden}/aprobar', 'OrdenesCompraController@aprobar');
+    Route::get('/proyectos-aprobados/{proyecto}/ordenes-compra/{orden}/desaprobar', 'OrdenesCompraController@desaprobar');
     Route::post('/proyectos-aprobados/{proyecto}/ordenes-compra/{orden}/confirmar', 'OrdenesCompraController@confirmar');
     Route::post('/proyectos-aprobados/{proyecto}/ordenes-compra/{orden}/actualizar', 'OrdenesCompraController@actualizar');
     Route::resource('/proyectos-aprobados.ordenes-compra', 'OrdenesCompraController', [
