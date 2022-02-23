@@ -250,6 +250,7 @@ const app = new Vue({
       ordenes: {!! json_encode($ordenes) !!},
       ordenModal : {},
       openAprobar: false,
+      openDesAprobar: false,
       openRechazar: false,
       openConfirmar: false,
       cargando: false
