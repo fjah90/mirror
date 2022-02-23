@@ -216,26 +216,26 @@ const app = new Vue({
             
             //Crear y llenar los select para clientes 
             vue.datos_select.clientes.push('Clientes')
-            vue.datos_select.clientes.push('');
+            vue.datos_select.clientes.push('Todos');
             this.api().column(3).data().sort().unique().each(function(d,j){   
               vue.datos_select.clientes.push(d);
             });
             //Crear y llenar los select para clientes 
             vue.datos_select.proyectos.push('Proyectos')
-            vue.datos_select.proyectos.push('');
+            vue.datos_select.proyectos.push('Todos');
             this.api().column(4).data().sort().unique().each(function(d,j){   
               vue.datos_select.proyectos.push(d);
             });
 
             vue.datos_select.ids.push('Cotización')
-            vue.datos_select.ids.push('');
+            vue.datos_select.ids.push('Todos');
             this.api().column(1).data().sort().unique().each(function(d,j){   
               vue.datos_select.ids.push(d);
             });
 
 
             vue.datos_select.usuarios.push('Usuarios')
-            vue.datos_select.usuarios.push('');
+            vue.datos_select.usuarios.push('Todos');
             this.api().column(10).data().sort().unique().each(function(d,j){   
               vue.datos_select.usuarios.push(d);
             });
