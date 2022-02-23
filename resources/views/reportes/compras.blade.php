@@ -172,20 +172,20 @@ const app = new Vue({
             
             //Crear y llenar los select para proveedores 
             vue.datos_select.proveedores.push('Proveedores')
-            vue.datos_select.proveedores.push('');
-            this.api().column(2).data().sort().unique().each(function(d,j){
+            vue.datos_select.proveedores.push('Todos');
+            this.api().column(3).data().sort().unique().each(function(d,j){
               console.log(d);     
               vue.datos_select.proveedores.push((d.replace("&amp;", " &")));
             });
             //Crear y llenar los select para proyecto 
             vue.datos_select.proyectos.push('Proyectos')
-            vue.datos_select.proyectos.push('');
-            this.api().column(4).data().sort().unique().each(function(d,j){   
+            vue.datos_select.proyectos.push('Todos');
+            this.api().column(5).data().sort().unique().each(function(d,j){   
               vue.datos_select.proyectos.push(d);
             });
 
             vue.datos_select.ids.push('Compra')
-            vue.datos_select.ids.push('');
+            vue.datos_select.ids.push('Todos');
             this.api().column(1).data().sort().unique().each(function(d,j){   
               vue.datos_select.ids.push(d);
             });
@@ -255,10 +255,10 @@ const app = new Vue({
         this.tabla.draw();
       },
       valor_proveedores:function(val){
-        this.tabla.columns(2).search(this.valor_proveedores).draw();
+        this.tabla.columns(3).search(this.valor_proveedores).draw();
       },
       valor_proyectos:function(val){
-        this.tabla.columns(4).search(this.valor_proyectos).draw();
+        this.tabla.columns(5).search(this.valor_proyectos).draw();
       },
       valor_ids:function(val){
         this.tabla.columns(1).search(this.valor_ids).draw();
