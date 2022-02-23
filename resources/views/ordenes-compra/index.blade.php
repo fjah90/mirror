@@ -91,7 +91,7 @@
                       <i class="far fa-thumbs-up"></i>
                     </button>
 
-                    <button v-if="orden.status=='Aprobada'" class="btn btn-xs btn-primary"
+                    <button v-if="orden.status=='Aprobada'" class="btn btn-xs btn-danger"
                       title="Des Aprobar" @click="ordenModal=orden; openDesAprobar=true;">
                       <i class="fa fa-arrow-down"></i>
                     </button>
