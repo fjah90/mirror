@@ -229,7 +229,7 @@
             <a href="{{ URL::to('proyectos-aprobados') }}" style="padding:0;">
             <span class="title" style="color:red">
             
-              <i class="menu-icon fas fa-hand-holding-usd"></i>
+              <i class="menu-icon fas fa-hand-holding-usd" style="color:red"></i>
               Ordenes Compra
             
             </span>

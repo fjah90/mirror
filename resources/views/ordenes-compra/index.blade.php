@@ -155,7 +155,7 @@
   </modal>
   <!-- /.Aprobar Modal -->
 
-  <!-- Des Aprobar Modal -->
+  <!-- DesAprobar Modal -->
   <modal v-model="openDesAprobar" :title="'Des Aprobar orden '+ordenModal.numero" :footer="false">
     <form class="" @submit.prevent="desaprobarOrden()">
       <h4>Desaprobar</h4>
@@ -168,7 +168,7 @@
       </div>
     </form>
   </modal>
-  <!-- /.Aprobar Modal -->
+  <!-- /.DesAprobar Modal -->
 
   <!-- Rechazar Modal -->
   <modal v-model="openRechazar" :title="'Rechazar orden '+ordenModal.numero" :footer="false">
