@@ -171,21 +171,21 @@ const app = new Vue({
           initComplete: function () {
             
             //Crear y llenar los select para proveedores 
-            vue.datos_select.proveedores.push('Proveedores')
-            vue.datos_select.proveedores.push('Todos');
+            //vue.datos_select.proveedores.push('Proveedores')
+            //vue.datos_select.proveedores.push('');
             this.api().column(3).data().sort().unique().each(function(d,j){
               console.log(d);     
               vue.datos_select.proveedores.push((d.replace("&amp;", " &")));
             });
             //Crear y llenar los select para proyecto 
-            vue.datos_select.proyectos.push('Proyectos')
-            vue.datos_select.proyectos.push('Todos');
+            //vue.datos_select.proyectos.push('Proyectos')
+            //vue.datos_select.proyectos.push('');
             this.api().column(5).data().sort().unique().each(function(d,j){   
               vue.datos_select.proyectos.push(d);
             });
 
-            vue.datos_select.ids.push('Compra')
-            vue.datos_select.ids.push('Todos');
+            //vue.datos_select.ids.push('Compra')
+            //vue.datos_select.ids.push('');
             this.api().column(1).data().sort().unique().each(function(d,j){   
               vue.datos_select.ids.push(d);
             });
