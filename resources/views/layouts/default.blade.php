@@ -169,7 +169,7 @@
 
           <!-- Cotizaciones -->
           <li {!! (Request::is('cotizaciones*') ? 'class="active"' : '') !!}>
-            <a href="{{ URL::to('prospectos') }}">
+            <a href="{{ URL::to('prospectos') }}" style="padding:0;">
             <span class="title"><i class="fas fa-address-book"></i> Cotizaciones</span>
             </a>
           </li>
@@ -190,7 +190,7 @@
 
           <!-- Proyectos -->
           <li {!! (Request::is('proyectos*') ? 'class="active"' : '') !!}>
-            <a href="{{ URL::to('prospectos') }}">
+            <a href="{{ URL::to('prospectos') }}" style="padding:0;">
             <span class="title"><i class="fas fa-address-book"></i> Proyectos</span>
             </a>
           </li>
