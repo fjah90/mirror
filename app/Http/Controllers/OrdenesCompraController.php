@@ -929,11 +929,12 @@ class OrdenesCompraController extends Controller
                     . ' para poder ser aprobada',
             ], 400);
         }
+        $orden->ordenProceso->delete();
 
         //actualizar orden
         $orden->update([
             'status' => OrdenCompra::STATUS_POR_AUTORIZAR,
-            //'orden_proceso_id' => $orden_proceso->id,
+            'orden_proceso_id' => null,
         ]);
 
         return response()->json(['success' => true, "error" => false], 200);
