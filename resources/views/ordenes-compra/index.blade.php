@@ -332,6 +332,9 @@ const app = new Vue({
       },//cancelar
       sumartotal(valor){
        
+       this.ordenModal.monto_total_pagar = parseFloat(this.ordenModal.monto_total_flete) + parseFloat(this.ordenModal.monto_total_producto) + parseFloat(this.ordenModal.tax) + parseFloat(this.ordenModal.posibles_aumentos);
+
+       /*
         if (valor == 'monto_producto') {
           if (this.ordenModal.monto_total_producto != null || this.ordenModal.monto_total_producto != "" ) {
               this.ordenModal.monto_total_pagar = parseFloat(this.ordenModal.monto_total_pagar) + parseFloat(this.ordenModal.monto_total_producto); 
@@ -355,10 +358,8 @@ const app = new Vue({
           }
 
         }
-        
-        
-        
-        
+        */
+           
         
       },
       confirmarOrden(){
