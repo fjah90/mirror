@@ -169,11 +169,11 @@
           <hr class="divider-menu">
 
           <!-- Cotizaciones -->
-          <li {!! (Request::is('cotizaciones*') ? 'class="active"' : '') !!}>
-            <a href="{{ URL::to('prospectos') }}" style="padding:0;">
-            <span ><i class="fas fa-address-book"></i> Cotizaciones</span>
-            </a>
-          </li>
+           <li {!! (Request::is('cotizaciones*') ? 'class="active"' : '') !!}><a class="title"><i class="fa fa-book"></i>  Cotizaciones <span class="fa fa-chevron-down"></span></a>
+
+            </li>
+
+      
           <!--
           <li class="sub" {!! (Request::is('tiposClientes*') ? 'class="active"' : '') !!}>
             <a href="{{route('prospectos.create')}}">
@@ -190,10 +190,8 @@
           <hr class="divider-menu">
 
           <!-- Proyectos -->
-          <li {!! (Request::is('proyectos*') ? 'class="active"' : '') !!}>
-            <a href="{{ URL::to('prospectos') }}" style="padding:0;">
-            <span ><i class="fas fa-address-book"></i> Proyectos</span>
-            </a>
+          <li {!! (Request::is('proyectos*') ? 'class="active"' : '') !!}><a class="title"><i class="fa fa-book"></i>  Proyectos <span class="fa fa-chevron-down"></span></a>
+
           </li>
           
           <hr class="divider-menu">
