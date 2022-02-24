@@ -305,46 +305,46 @@
 
           <!--Catalogos de Apoyo-->
 
-          <li {!! (Request::is('tiposClientes*') ? 'class="active"' : '') !!} {!! (Request::is('proyectos*') ? 'class="active"' : '') !!} {!! (Request::is('subproyectos*') ? 'class="active"' : '') !!} {!! (Request::is('tiposProveedores*') ? 'class="active"' : '') !!} {!! (Request::is('unidadesMedida*') ? 'class="active"' : '') !!} {!! (Request::is('subcategorias*') ? 'class="active"' : '') !!} {!! (Request::is('categorias*') ? 'class="active"' : '') !!}><a class="title"><i class="fa fa-book"></i>  Catálogos de Apoyo <span class="fa fa-chevron-down"></span></a>
+          <li {!! (Request::is('Usuarios*') ? 'class="active"' : '') !!} {!! (Request::is('tiposClientes*') ? 'class="active"' : '') !!} {!! (Request::is('proyectos*') ? 'class="active"' : '') !!} {!! (Request::is('subproyectos*') ? 'class="active"' : '') !!} {!! (Request::is('tiposProveedores*') ? 'class="active"' : '') !!} {!! (Request::is('unidadesMedida*') ? 'class="active"' : '') !!} {!! (Request::is('subcategorias*') ? 'class="active"' : '') !!} {!! (Request::is('categorias*') ? 'class="active"' : '') !!}><a class="title"><i class="fa fa-book"></i>  Catálogos de Apoyo <span class="fa fa-chevron-down"></span></a>
            <ul class="nav child_menu">
               @hasanyrole('Administrador')
-          <li class="sub {!! (Request::is('usuarios*') ? 'active' : '') !!}">
+          <li {!! (Request::is('Usuarios*') ? 'class="active"' : '') !!} class="sub {!! (Request::is('usuarios*') ? 'active' : '') !!}">
             <a href="{{ URL::to('usuarios') }}">
               <i class="fas fa-user"></i> Usuarios
             </a>
           </li>
           @endhasanyrole
-          <li class="sub" {!! (Request::is('tiposClientes*') ? 'class="active"' : '') !!}>
+          <li  {!! (Request::is('tiposClientes*') ? 'class="active"' : '') !!}>
             <a href="{{ URL::to('tiposClientes') }}">
               <i class="fas fa-address-book"></i> Tipo de Clientes
             </a>
           </li>
-          <li class="sub" {!! (Request::is('proyectos*') ? 'class="active"' : '') !!}>
+          <li  {!! (Request::is('proyectos*') ? 'class="active"' : '') !!}>
             <a href="{{ URL::to('proyectos') }}">
               <i class="fas fa-folder-open "></i> Categoría de Proyectos
             </a>
           </li>
-          <li class="sub" {!! (Request::is('subproyectos*') ? 'class="active"' : '') !!}>
+          <li  {!! (Request::is('subproyectos*') ? 'class="active"' : '') !!}>
             <a href="{{ URL::to('subproyectos') }}">
               <i class="far fa-folder-open "></i> Tipo de Proyecto
             </a>
           </li>
-          <li class="sub" {!! (Request::is('tiposProveedores*') ? 'class="active"' : '') !!}>
+          <li  {!! (Request::is('tiposProveedores*') ? 'class="active"' : '') !!}>
             <a href="{{URL::to('tiposProveedores')}}">
               <i class="fas fa-address-book"></i> Tipos de Proveedores
             </a>
           </li>
-          <li class="sub" {!! (Request::is('unidadesMedida*') ? 'class="active"' : '') !!}>
+          <li  {!! (Request::is('unidadesMedida*') ? 'class="active"' : '') !!}>
             <a href="{{ URL::to('unidadesMedida') }}">
               <i class="fas fa-ruler-combined"></i> Unidades de Medida
             </a>
           </li>
-          <li class="sub" {!! (Request::is('subcategorias*') ? 'class="active"' : '') !!}>
+          <li  {!! (Request::is('subcategorias*') ? 'class="active"' : '') !!}>
             <a href="{{ URL::to('subcategorias') }}">
               <i class="fas fa-cubes "></i> Categoría de Productos
             </a>
           </li>
-          <li class="sub" {!! (Request::is('categorias*') ? 'class="active"' : '') !!}>
+          <li  {!! (Request::is('categorias*') ? 'class="active"' : '') !!}>
             <a href="{{ URL::to('categorias') }}">
               <i class="fas fa-cubes "></i> Tipo de Producto
             </a>
