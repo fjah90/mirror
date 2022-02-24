@@ -48,7 +48,7 @@
             </div>
             <div class="p-10">
               <button class="btn btn-sm btn-primary">
-                <a href="{{route('prospectos.create')}}">
+                <a href="{{route('prospectos.create')}}" style="color:white;">
                   <i class="fas fa-address-book"></i> Nueva Cotización
                 </a>
               </button>
