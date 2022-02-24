@@ -205,7 +205,7 @@
           <!-- Proyectos -->
           <li {!! (Request::is('prospectos*') ? 'class="active"' : '') !!}><a class="title"><i class="fa fa-building-o"></i>  Proyectos <span class="fa fa-chevron-down"></span></a>
             <ul class="nav child_menu">
-              <li class="sub" {!! (Request::is('prospectos*') ? 'class="active"' : '') !!}>
+              <li {!! (Request::is('prospectos*') ? 'class="active"' : '') !!}>
                 <a href="{{ URL::to('prospectos') }}" >
                 <i class="fas fa-address-book" style="color:#2c42bf"></i>Lista de Proyectos
                 </a>
