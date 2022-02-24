@@ -46,6 +46,13 @@
                   <option value="2022-12-31">2022</option>
                 </select>
             </div>
+            <div class="p-10">
+              <button class="btn btn-sm btn-primary">
+                <a href="{{route('prospectos.create')}}">
+                  <i class="fas fa-address-book"></i> Nueva Cotización
+                </a>
+              </button>
+            </div>
           </h3>
         </div>
         <div class="panel-body">

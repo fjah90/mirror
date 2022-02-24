@@ -203,12 +203,6 @@
             <span class="title"><i class="fas fa-address-book"></i> Administración</span>
             
           </li>
-          <li class="sub" {!! (Request::is('cuentas-cobrar*') ? 'class="active"' : '') !!} style="color:blue">
-            <a href="javascript:;">
-              <i class="menu-icon fas fa-hand-holding-usd" style="color:blue"></i>
-              <span style="color:blue">Facturacion</span>
-            </a>
-          </li>
           <li class="sub" {!! (Request::is('cuentas-cobrar*') ? 'class="active"' : '') !!} >
             <a href="{{ URL::to('cuentas-cobrar') }}">
               <i class="menu-icon fas fa-hand-holding-usd" style="color:blue"></i>
