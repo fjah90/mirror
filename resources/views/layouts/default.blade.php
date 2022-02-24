@@ -140,7 +140,7 @@
           -->
 
           <!-- Catalogos -->
-          <li {!! (Request::is('clientes*' ) ? 'class="active"' : '') !!}><a class="title"><i class="fa fa-book"></i>  Catálogos <span class="fa fa-chevron-down"></span></a>
+          <li {!! (Request::is('clientes*' ) ? 'class="active"' : '') !!} {!! (Request::is('proveedores*' ) ? 'class="active"' : '') !!} {!! (Request::is('agentesAduanales*' ) ? 'class="active"' : '') !!} {!! (Request::is('productos*' ) ? 'class="active"' : '') !!}><a class="title"><i class="fa fa-book"></i>  Catálogos <span class="fa fa-chevron-down"></span></a>
             <ul class="nav child_menu">  
               <li  {!! (Request::is('clientes*') ? 'class="active"' : '') !!}>
                 <a href="{{ URL::to('clientes') }}">
