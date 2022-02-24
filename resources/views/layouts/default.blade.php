@@ -140,9 +140,8 @@
           -->
 
           <!-- Catalogos -->
-          <li {!! (Request::is('cotizaciones*') ? 'class="active"' : '') !!}>
-            <span class="title"><i class="fas fa-address-book"></i> Catálogos</span>
-            <ul>
+          <li {!! (Request::is('cotizaciones*') ? 'class="active"' : '') !!}><a><i class="fa fa-book"></i>  Catálogos <span class="fa fa-chevron-down"></span></a>
+            <ul class="nav child_menu">  
               <li class="sub" {!! (Request::is('clientes*') ? 'class="active"' : '') !!}>
                 <a href="{{ URL::to('clientes') }}">
                   <i class="fas fa-user-tie"></i> Clientes
