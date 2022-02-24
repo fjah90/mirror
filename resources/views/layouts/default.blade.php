@@ -147,17 +147,17 @@
                   <i class="fas fa-user-tie"style="color:#2283bf;"></i> Clientes
                 </a>
               </li>
-              <li class="sub" {!! (Request::is('proveedores*') ? 'class="active"' : '') !!}>
+              <li {!! (Request::is('proveedores*') ? 'class="active"' : '') !!}>
               <a href="{{ URL::to('proveedores') }}">
                 <i class="fas fa-truck-loading " style="color:#2283bf;"></i> Proveedores
               </a>
             </li>
-            <li class="sub" {!! (Request::is('agentesAduanales*') ? 'class="active"' : '') !!}>
+            <li  {!! (Request::is('agentesAduanales*') ? 'class="active"' : '') !!}>
               <a href="{{ URL::to('agentesAduanales') }}">
                 <i class="fas fa-warehouse" style="color:#2283bf;"></i> Agentes Aduanales
               </a>
             </li>
-            <li class="sub" {!! (Request::is('productos*') ? 'class="active"' : '') !!}>
+            <li {!! (Request::is('productos*') ? 'class="active"' : '') !!}>
               <a href="{{ URL::to('productos') }}">
                 <i class="fas fa-parking " style="color:#2283bf;"></i> Producto
               </a>
@@ -169,15 +169,15 @@
           <hr class="divider-menu">
 
           <!-- Cotizaciones -->
-           <li {!! (Request::is('cotizaciones*') ? 'class="active"' : '') !!}><a class="title"><i class="fa fa-list-alt"></i>  Cotizaciones <span class="fa fa-chevron-down"></span></a>
+           <li {!! (Request::is('prospectos.create*') ? 'class="active"' : '') !!} {!! (Request::is('prospectos*') ? 'class="active"' : '') !!}><a class="title"><i class="fa fa-list-alt"></i>  Cotizaciones <span class="fa fa-chevron-down"></span></a>
 
               <ul class="nav child_menu">
-              <li class="sub" {!! (Request::is('prospectos.create*') ? 'class="active"' : '') !!}>
+              <li {!! (Request::is('prospectos.create*') ? 'class="active"' : '') !!}>
               <a href="{{route('prospectos.create')}}">
                 <i class="fas fa-address-book" style="color:#186e86"></i> Nueva Cotización
               </a>
               </li>
-                <li class="sub" {!! (Request::is('prospectos*') ? 'class="active"' : '') !!}>
+                <li {!! (Request::is('prospectos*') ? 'class="active"' : '') !!}>
                   <a href="{{ URL::to('prospectos') }}" >
                   <i class="fas fa-address-book" style="color:#186e86"></i>Lista de Cotizaciones
                   </a>
@@ -203,11 +203,11 @@
           <hr class="divider-menu">
 
           <!-- Proyectos -->
-          <li {!! (Request::is('proyectos*') ? 'class="active"' : '') !!}><a class="title"><i class="fa fa-building-o"></i>  Proyectos <span class="fa fa-chevron-down"></span></a>
+          <li {!! (Request::is('prospectos*') ? 'class="active"' : '') !!}><a class="title"><i class="fa fa-building-o"></i>  Proyectos <span class="fa fa-chevron-down"></span></a>
             <ul class="nav child_menu">
               <li class="sub" {!! (Request::is('prospectos*') ? 'class="active"' : '') !!}>
                 <a href="{{ URL::to('prospectos') }}" >
-                <i class="fas fa-address-book" style="color:2c42bf"></i>Lista de Proyectos
+                <i class="fas fa-address-book" style="color:#2c42bf"></i>Lista de Proyectos
                 </a>
               </li>
             </ul>
@@ -219,15 +219,15 @@
           <hr class="divider-menu">
 
           <!-- Administracion -->
-          <li {!! (Request::is('administracion*') ? 'class="active"' : '') !!}><a class="title"><i class="fa fa-university"></i>  Administración <span class="fa fa-chevron-down" ></span></a>
+          <li {!! (Request::is('cuentas-cobrar*') ? 'class="active"' : '') !!} {!! (Request::is('cuentas-pagar*') ? 'class="active"' : '') !!}><a class="title"><i class="fa fa-university"></i>  Administración <span class="fa fa-chevron-down" ></span></a>
            <ul class="nav child_menu">  
-              <li >
+              <li {!! (Request::is('cuentas-cobrar*') ? 'class="active"' : '') !!}>
                 <a href="{{ URL::to('cuentas-cobrar') }}">
                   <i class="menu-icon fas fa-hand-holding-usd" style="color:#22007C;"></i>
                   <span >Cuentas por Cobrar</span>
                 </a>
               </li>
-              <li >
+              <li {!! (Request::is('cuentas-pagar*') ? 'class="active"' : '') !!}>
                 <a href="{{ URL::to('cuentas-pagar') }}">
                   <i class="menu-icon fas fa-receipt" style="color:#22007C;"></i>
                   <span >Cuentas por Pagar</span>
@@ -240,9 +240,9 @@
           <hr class="divider-menu">
 
           <!-- ordenes compra-->
-          <li {!! (Request::is('cuentas-cobrar*') ? 'class="active"' : '') !!}  ><a class="title"><i class="fa fa-cart-arrow-down"></i>  Ordenes Compra <span class="fa fa-chevron-down"></span></a>
+          <li {!! (Request::is('ordenes-proceso*') ? 'class="active"' : '') !!}  ><a class="title"><i class="fa fa-cart-arrow-down"></i>  Ordenes Compra <span class="fa fa-chevron-down"></span></a>
            <ul class="nav child_menu">  
-              <li class="sub" {!! (Request::is('ordenes-proceso*') ? 'class="active"' : '') !!} >
+              <li {!! (Request::is('ordenes-proceso*') ? 'class="active"' : '') !!} >
                 <a href="{{ URL::to('ordenes-proceso') }}">
                   <i class="menu-icon fas fa-clipboard-list" style="color:#04052E"></i>
                   <span >Ordenes Proceso</span>
@@ -257,7 +257,7 @@
 
           <!--Reportes-->
 
-          <li ><a class="title"><i class="fa fa-bar-chart"></i>  Reportes <span class="fa fa-chevron-down"></span></a>
+          <li {!! (Request::is('reportes*') ? 'class="active"' : '') !!}><a class="title"><i class="fa fa-bar-chart"></i>  Reportes <span class="fa fa-chevron-down"></span></a>
            <ul class="nav child_menu">
               <li class="sub {!! (Request::is('reportes/cotizaciones') ? 'active' : '') !!}">
             <a href="{{ URL::to('reportes/cotizaciones') }}">
