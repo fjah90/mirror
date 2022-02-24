@@ -171,15 +171,15 @@
           <!-- Cotizaciones -->
            <li {!! (Request::is('cotizaciones*') ? 'class="active"' : '') !!}><a class="title"><i class="fa fa-book"></i>  Cotizaciones <span class="fa fa-chevron-down"></span></a>
 
-              <ul>
+              <ul class="nav child_menu">
               <li class="sub" {!! (Request::is('tiposClientes*') ? 'class="active"' : '') !!}>
               <a href="{{route('prospectos.create')}}">
-                <i class="fas fa-address-book" style="color:#2283bf;"></i> Nueva Cotización
+                <i class="fas fa-address-book" style="color:#186e86"></i> Nueva Cotización
               </a>
               </li>
                 <li {!! (Request::is('proyectos*') ? 'class="active"' : '') !!}>
                   <a href="{{ URL::to('prospectos') }}" style="padding:0;">
-                  <span class="title"><i class="fas fa-address-book" style="color:#2283bf;"></i>Lista de Cotizaciones</span>
+                  <i class="fas fa-address-book" style="color:#186e86"></i>Lista de Cotizaciones
                   </a>
                 </li>
               </ul>
@@ -204,10 +204,10 @@
 
           <!-- Proyectos -->
           <li {!! (Request::is('proyectos*') ? 'class="active"' : '') !!}><a class="title"><i class="fa fa-book"></i>  Proyectos <span class="fa fa-chevron-down"></span></a>
-            <ul>
+            <ul class="nav child_menu">
               <li {!! (Request::is('proyectos*') ? 'class="active"' : '') !!}>
                 <a href="{{ URL::to('prospectos') }}" style="padding:0;">
-                <span class="title"><i class="fas fa-address-book"></i>Lista de Proyectos</span>
+                <i class="fas fa-address-book"></i>Lista de Proyectos
                 </a>
               </li>
             </ul>
