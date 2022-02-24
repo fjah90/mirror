@@ -264,7 +264,7 @@
               <i class="fas fa-file-invoice-dollar" style="color:#04052E;"></i> Cotizaciones
             </a>
           </li>
-          <li >
+          <li {!! (Request::is('reportes/cobros') ? 'class="active"' : '') !!}>
             <a href="{{ URL::to('reportes/cobros') }}">
               <i class="fas fa-file-invoice-dollar" style="color:#04052E;"></i> Cobros
             </a>
@@ -305,7 +305,7 @@
 
           <!--Catalogos de Apoyo-->
 
-          <li {!! (Request::is('cuentas-pagar*') ? 'class="active"' : '') !!} ><a class="title"><i class="fa fa-book"></i>  Catálogos de Apoyo <span class="fa fa-chevron-down"></span></a>
+          <li {!! (Request::is('tiposClientes*') ? 'class="active"' : '') !!} {!! (Request::is('proyectos*') ? 'class="active"' : '') !!} {!! (Request::is('subproyectos*') ? 'class="active"' : '') !!} {!! (Request::is('tiposProveedores*') ? 'class="active"' : '') !!} {!! (Request::is('unidadesMedida*') ? 'class="active"' : '') !!} {!! (Request::is('subcategorias*') ? 'class="active"' : '') !!} {!! (Request::is('categorias*') ? 'class="active"' : '') !!}><a class="title"><i class="fa fa-book"></i>  Catálogos de Apoyo <span class="fa fa-chevron-down"></span></a>
            <ul class="nav child_menu">
               @hasanyrole('Administrador')
           <li class="sub {!! (Request::is('usuarios*') ? 'active' : '') !!}">
