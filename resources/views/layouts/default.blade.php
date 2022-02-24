@@ -172,12 +172,12 @@
            <li {!! (Request::is('cotizaciones*') ? 'class="active"' : '') !!}><a class="title"><i class="fa fa-list-alt"></i>  Cotizaciones <span class="fa fa-chevron-down"></span></a>
 
               <ul class="nav child_menu">
-              <li class="sub" {!! (Request::is('tiposClientes*') ? 'class="active"' : '') !!}>
+              <li class="sub" {!! (Request::is('prospectos.create*') ? 'class="active"' : '') !!}>
               <a href="{{route('prospectos.create')}}">
                 <i class="fas fa-address-book" style="color:#186e86"></i> Nueva Cotización
               </a>
               </li>
-                <li class="sub" {!! (Request::is('proyectos*') ? 'class="active"' : '') !!}>
+                <li class="sub" {!! (Request::is('prospectos*') ? 'class="active"' : '') !!}>
                   <a href="{{ URL::to('prospectos') }}" >
                   <i class="fas fa-address-book" style="color:#186e86"></i>Lista de Cotizaciones
                   </a>
@@ -203,11 +203,11 @@
           <hr class="divider-menu">
 
           <!-- Proyectos -->
-          <li {!! (Request::is('proyectos*') ? 'class="active"' : '') !!}><a class="title"><i class="fa fa-book"></i>  Proyectos <span class="fa fa-chevron-down"></span></a>
+          <li {!! (Request::is('proyectos*') ? 'class="active"' : '') !!}><a class="title"><i class="fa fa-building-o"></i>  Proyectos <span class="fa fa-chevron-down"></span></a>
             <ul class="nav child_menu">
-              <li class="sub" {!! (Request::is('proyectos*') ? 'class="active"' : '') !!}>
+              <li class="sub" {!! (Request::is('prospectos*') ? 'class="active"' : '') !!}>
                 <a href="{{ URL::to('prospectos') }}" >
-                <i class="fas fa-address-book"></i>Lista de Proyectos
+                <i class="fas fa-address-book" style="color:2c42bf"></i>Lista de Proyectos
                 </a>
               </li>
             </ul>
@@ -219,17 +219,17 @@
           <hr class="divider-menu">
 
           <!-- Administracion -->
-          <li {!! (Request::is('administracion*') ? 'class="active"' : '') !!}><a class="title"><i class="fa fa-book"></i>  Administración <span class="fa fa-chevron-down" ></span></a>
+          <li {!! (Request::is('administracion*') ? 'class="active"' : '') !!}><a class="title"><i class="fa fa-university"></i>  Administración <span class="fa fa-chevron-down" ></span></a>
            <ul class="nav child_menu">  
               <li class="sub" {!! (Request::is('cuentas-cobrar*') ? 'class="active"' : '') !!} >
                 <a href="{{ URL::to('cuentas-cobrar') }}">
-                  <i class="menu-icon fas fa-hand-holding-usd" style="color:#2283bf;"></i>
+                  <i class="menu-icon fas fa-hand-holding-usd" style="color:#22007C;"></i>
                   <span >Cuentas por Cobrar</span>
                 </a>
               </li>
               <li class="sub" {!! (Request::is('cuentas-pagar*') ? 'class="active"' : '') !!} >
                 <a href="{{ URL::to('cuentas-pagar') }}">
-                  <i class="menu-icon fas fa-receipt" style="color:#2283bf;"></i>
+                  <i class="menu-icon fas fa-receipt" style="color:#22007C;"></i>
                   <span >Cuentas por Pagar</span>
                 </a>
               </li>  
@@ -240,11 +240,11 @@
           <hr class="divider-menu">
 
           <!-- ordenes compra-->
-          <li {!! (Request::is('cuentas-cobrar*') ? 'class="active"' : '') !!}  ><a class="title"><i class="fa fa-book"></i>  Ordenes Compra <span class="fa fa-chevron-down"></span></a>
+          <li {!! (Request::is('cuentas-cobrar*') ? 'class="active"' : '') !!}  ><a class="title"><i class="fa fa-cart-arrow-down"></i>  Ordenes Compra <span class="fa fa-chevron-down"></span></a>
            <ul class="nav child_menu">  
               <li class="sub" {!! (Request::is('ordenes-proceso*') ? 'class="active"' : '') !!} >
                 <a href="{{ URL::to('ordenes-proceso') }}">
-                  <i class="menu-icon fas fa-clipboard-list" ></i>
+                  <i class="menu-icon fas fa-clipboard-list" style="color:#04052E"></i>
                   <span >Ordenes Proceso</span>
                 </a>
               </li>
@@ -261,7 +261,7 @@
            <ul class="nav child_menu">
               <li class="sub {!! (Request::is('reportes/cotizaciones') ? 'active' : '') !!}">
             <a href="{{ URL::to('reportes/cotizaciones') }}">
-              <i class="fas fa-file-invoice-dollar" ></i> Cotizaciones
+              <i class="fas fa-file-invoice-dollar" style="color:#04052E;"></i> Cotizaciones
             </a>
           </li>
           <li class="sub {!! (Request::is('reportes/cobros') ? 'active' : '') !!}">
