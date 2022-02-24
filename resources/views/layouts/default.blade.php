@@ -140,7 +140,7 @@
           -->
 
           <!-- Catalogos -->
-          <li {!! (Request::is('cotizaciones*') ? 'class="active"' : '') !!}><a><i class="fa fa-book"></i>  Catálogos <span class="fa fa-chevron-down"></span></a>
+          <li {!! (Request::is('cotizaciones*') ? 'class="active"' : '') !!}><a class="title"><i class="fa fa-book"></i>  Catálogos <span class="fa fa-chevron-down"></span></a>
             <ul class="nav child_menu">  
               <li class="sub" {!! (Request::is('clientes*') ? 'class="active"' : '') !!}>
                 <a href="{{ URL::to('clientes') }}">
@@ -199,7 +199,7 @@
           <hr class="divider-menu">
 
           <!-- Administracion -->
-          <li {!! (Request::is('administracion*') ? 'class="active"' : '') !!}><a><i class="fa fa-book"></i>  Administración <span class="fa fa-chevron-down"></span></a>
+          <li {!! (Request::is('administracion*') ? 'class="active"' : '') !!}><a class="title"><i class="fa fa-book"></i>  Administración <span class="fa fa-chevron-down" style="color:#2283bf;"></span></a>
            <ul class="nav child_menu">  
               <li class="sub" {!! (Request::is('cuentas-cobrar*') ? 'class="active"' : '') !!} >
                 <a href="{{ URL::to('cuentas-cobrar') }}">
@@ -220,7 +220,7 @@
           <hr class="divider-menu">
 
           <!-- ordenes compra-->
-          <li {!! (Request::is('cuentas-cobrar*') ? 'class="active"' : '') !!}  ><a><i class="fa fa-book"></i>  Ordenes Compra <span class="fa fa-chevron-down"></span></a>
+          <li {!! (Request::is('cuentas-cobrar*') ? 'class="active"' : '') !!}  ><a class="title"><i class="fa fa-book"></i>  Ordenes Compra <span class="fa fa-chevron-down"></span></a>
            <ul class="nav child_menu">  
               <li class="sub" {!! (Request::is('ordenes-proceso*') ? 'class="active"' : '') !!} >
                 <a href="{{ URL::to('ordenes-proceso') }}">
@@ -237,7 +237,7 @@
 
           <!--Reportes-->
 
-          <li {!! (Request::is('cuentas-pagar*') ? 'class="active"' : '') !!}   ><a><i class="fa fa-book"></i>  Reportes <span class="fa fa-chevron-down"></span></a>
+          <li {!! (Request::is('cuentas-pagar*') ? 'class="active"' : '') !!}   ><a class="title"><i class="fa fa-book"></i>  Reportes <span class="fa fa-chevron-down"></span></a>
            <ul class="nav child_menu">
               <li class="sub {!! (Request::is('reportes/cotizaciones') ? 'active' : '') !!}">
             <a href="{{ URL::to('reportes/cotizaciones') }}">
@@ -285,7 +285,7 @@
 
           <!--Catalogos de Apoyo-->
 
-          <li {!! (Request::is('cuentas-pagar*') ? 'class="active"' : '') !!} ><a><i class="fa fa-book"></i>  Reportes <span class="fa fa-chevron-down"></span></a>
+          <li {!! (Request::is('cuentas-pagar*') ? 'class="active"' : '') !!} ><a class="title"><i class="fa fa-book"></i>  Catálogos de Apoyo <span class="fa fa-chevron-down"></span></a>
            <ul class="nav child_menu">
               @hasanyrole('Administrador')
           <li class="sub {!! (Request::is('usuarios*') ? 'active' : '') !!}">
