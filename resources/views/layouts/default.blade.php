@@ -142,13 +142,16 @@
           <!-- Catalogos -->
           <li {!! (Request::is('cotizaciones*') ? 'class="active"' : '') !!}>
             <span class="title"><i class="fas fa-address-book"></i> Catálogos</span>
+            <ul>
+              <li class="sub" {!! (Request::is('clientes*') ? 'class="active"' : '') !!}>
+                <a href="{{ URL::to('clientes') }}">
+                  <i class="fas fa-user-tie"></i> Clientes
+                </a>
+              </li>
+            </ul>
           </li>
 
-          <li class="sub" {!! (Request::is('clientes*') ? 'class="active"' : '') !!}>
-            <a href="{{ URL::to('clientes') }}">
-              <i class="fas fa-user-tie"></i> Clientes
-            </a>
-          </li>
+          
           <li class="sub" {!! (Request::is('proveedores*') ? 'class="active"' : '') !!}>
             <a href="{{ URL::to('proveedores') }}">
               <i class="fas fa-truck-loading "></i> Proveedores
