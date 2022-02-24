@@ -147,25 +147,24 @@
                   <i class="fas fa-user-tie"></i> Clientes
                 </a>
               </li>
+              <li class="sub" {!! (Request::is('proveedores*') ? 'class="active"' : '') !!}>
+              <a href="{{ URL::to('proveedores') }}">
+                <i class="fas fa-truck-loading "></i> Proveedores
+              </a>
+            </li>
+            <li class="sub" {!! (Request::is('agentesAduanales*') ? 'class="active"' : '') !!}>
+              <a href="{{ URL::to('agentesAduanales') }}">
+                <i class="fas fa-warehouse"></i> Agentes Aduanales
+              </a>
+            </li>
+            <li class="sub" {!! (Request::is('productos*') ? 'class="active"' : '') !!}>
+              <a href="{{ URL::to('productos') }}">
+                <i class="fas fa-parking "></i> Producto
+              </a>
+            </li>
             </ul>
           </li>
-
-          
-          <li class="sub" {!! (Request::is('proveedores*') ? 'class="active"' : '') !!}>
-            <a href="{{ URL::to('proveedores') }}">
-              <i class="fas fa-truck-loading "></i> Proveedores
-            </a>
-          </li>
-          <li class="sub" {!! (Request::is('agentesAduanales*') ? 'class="active"' : '') !!}>
-            <a href="{{ URL::to('agentesAduanales') }}">
-              <i class="fas fa-warehouse"></i> Agentes Aduanales
-            </a>
-          </li>
-          <li class="sub" {!! (Request::is('productos*') ? 'class="active"' : '') !!}>
-            <a href="{{ URL::to('productos') }}">
-              <i class="fas fa-parking "></i> Producto
-            </a>
-          </li>
+                  
 
           <hr class="divider-menu">
 
@@ -200,54 +199,47 @@
           <hr class="divider-menu">
 
           <!-- Administracion -->
-          <li {!! (Request::is('administracion*') ? 'class="active"' : '') !!}>
-            
-            <span class="title"><i class="fas fa-address-book"></i> Administración</span>
-            
+          <li {!! (Request::is('administracion*') ? 'class="active"' : '') !!}><a><i class="fa fa-book"></i>  Administración <span class="fa fa-chevron-down"></span></a>
+           <ul class="nav child_menu">  
+              <li class="sub" {!! (Request::is('cuentas-cobrar*') ? 'class="active"' : '') !!} >
+                <a href="{{ URL::to('cuentas-cobrar') }}">
+                  <i class="menu-icon fas fa-hand-holding-usd" style="color:blue"></i>
+                  <span style="color:blue">Cuentas por Cobrar</span>
+                </a>
+              </li>
+              <li class="sub" {!! (Request::is('cuentas-pagar*') ? 'class="active"' : '') !!} >
+                <a href="{{ URL::to('cuentas-pagar') }}">
+                  <i class="menu-icon fas fa-receipt" style="color:red"></i>
+                  <span style="color:red">Cuentas por Pagar</span>
+                </a>
+              </li>  
+            </ul> 
           </li>
-          <li class="sub" {!! (Request::is('cuentas-cobrar*') ? 'class="active"' : '') !!} >
-            <a href="{{ URL::to('cuentas-cobrar') }}">
-              <i class="menu-icon fas fa-hand-holding-usd" style="color:blue"></i>
-              <span style="color:blue">Cuentas por Cobrar</span>
-            </a>
-          </li>
-          <li class="sub" {!! (Request::is('cuentas-pagar*') ? 'class="active"' : '') !!} >
-            <a href="{{ URL::to('cuentas-pagar') }}">
-              <i class="menu-icon fas fa-receipt" style="color:red"></i>
-              <span style="color:red">Cuentas por Pagar</span>
-            </a>
-          </li>
+          
 
           <hr class="divider-menu">
 
           <!-- ordenes compra-->
-          <li {!! (Request::is('cuentas-cobrar*') ? 'class="active"' : '') !!}  >
-            <a href="{{ URL::to('proyectos-aprobados') }}" style="padding:0;">
-            <span class="title" style="color:red">
-            
-              <i class="menu-icon fas fa-hand-holding-usd" style="color:red"></i>
-              Ordenes Compra
-            
-            </span>
-            </a>
+          <li {!! (Request::is('cuentas-cobrar*') ? 'class="active"' : '') !!}  ><a><i class="fa fa-book"></i>  Ordenes Compra <span class="fa fa-chevron-down"></span></a>
+           <ul class="nav child_menu">  
+              <li class="sub" {!! (Request::is('ordenes-proceso*') ? 'class="active"' : '') !!} >
+                <a href="{{ URL::to('ordenes-proceso') }}">
+                  <i class="menu-icon fas fa-clipboard-list" style="color:red"></i>
+                  <span style="color:red">Ordenes Proceso</span>
+                </a>
+              </li>
+            </ul>
           </li>
-          <li class="sub" {!! (Request::is('ordenes-proceso*') ? 'class="active"' : '') !!} >
-            <a href="{{ URL::to('ordenes-proceso') }}">
-              <i class="menu-icon fas fa-clipboard-list" style="color:red"></i>
-              <span style="color:red">Ordenes Proceso</span>
-            </a>
-          </li>
+
+          
 
           <hr class="divider-menu">
 
           <!--Reportes-->
-          <li {!! (Request::is('cuentas-pagar*') ? 'class="active"' : '') !!} >
-            <span class="title">
-              <i class="menu-icon fas fa-receipt"></i>
-              Reportes
-            </span>
-          </li>
-          <li class="sub {!! (Request::is('reportes/cotizaciones') ? 'active' : '') !!}">
+
+          <li {!! (Request::is('cuentas-pagar*') ? 'class="active"' : '') !!}   ><a><i class="fa fa-book"></i>  Reportes <span class="fa fa-chevron-down"></span></a>
+           <ul class="nav child_menu">
+              <li class="sub {!! (Request::is('reportes/cotizaciones') ? 'active' : '') !!}">
             <a href="{{ URL::to('reportes/cotizaciones') }}">
               <i class="fas fa-file-invoice-dollar"></i> Cotizaciones
             </a>
@@ -282,18 +274,20 @@
               <i class="fas fa-file-invoice-dollar"></i> Utilidades
             </a>
           </li>
+            </ul>
+          </li>
+
+          
+          
           <hr class="divider-menu">
 
 
 
           <!--Catalogos de Apoyo-->
-          <li {!! (Request::is('cuentas-pagar*') ? 'class="active"' : '') !!} >
-            <span class="title">
-              <i class="menu-icon fas fa-receipt"></i>
-              Catálogos de apoyo
-            </span>
-          </li>
-          @hasanyrole('Administrador')
+
+          <li {!! (Request::is('cuentas-pagar*') ? 'class="active"' : '') !!} ><a><i class="fa fa-book"></i>  Reportes <span class="fa fa-chevron-down"></span></a>
+           <ul class="nav child_menu">
+              @hasanyrole('Administrador')
           <li class="sub {!! (Request::is('usuarios*') ? 'active' : '') !!}">
             <a href="{{ URL::to('usuarios') }}">
               <i class="fas fa-user"></i> Usuarios
@@ -335,6 +329,11 @@
               <i class="fas fa-cubes "></i> Tipo de Producto
             </a>
           </li>
+            </ul>
+          </li>
+
+          
+          
 
           <hr class="divider-menu">
 
