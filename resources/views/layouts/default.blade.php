@@ -109,7 +109,7 @@
             </div>
           </div>
         </div>
-        <ul class="navigation">
+        <ul class="navigation nav side-menu">
 
           <!-- Dashboard -->
           <li {!! (Request::is('dashboard') ? 'class="active"' : '') !!}>
@@ -221,13 +221,13 @@
           <!-- Administracion -->
           <li {!! (Request::is('administracion*') ? 'class="active"' : '') !!}><a class="title"><i class="fa fa-university"></i>  Administración <span class="fa fa-chevron-down" ></span></a>
            <ul class="nav child_menu">  
-              <li class="sub" {!! (Request::is('cuentas-cobrar*') ? 'class="active"' : '') !!} >
+              <li >
                 <a href="{{ URL::to('cuentas-cobrar') }}">
                   <i class="menu-icon fas fa-hand-holding-usd" style="color:#22007C;"></i>
                   <span >Cuentas por Cobrar</span>
                 </a>
               </li>
-              <li class="sub" {!! (Request::is('cuentas-pagar*') ? 'class="active"' : '') !!} >
+              <li >
                 <a href="{{ URL::to('cuentas-pagar') }}">
                   <i class="menu-icon fas fa-receipt" style="color:#22007C;"></i>
                   <span >Cuentas por Pagar</span>
@@ -257,39 +257,39 @@
 
           <!--Reportes-->
 
-          <li {!! (Request::is('cuentas-pagar*') ? 'class="active"' : '') !!}   ><a class="title"><i class="fa fa-bar-chart"></i>  Reportes <span class="fa fa-chevron-down"></span></a>
+          <li ><a class="title"><i class="fa fa-bar-chart"></i>  Reportes <span class="fa fa-chevron-down"></span></a>
            <ul class="nav child_menu">
               <li class="sub {!! (Request::is('reportes/cotizaciones') ? 'active' : '') !!}">
             <a href="{{ URL::to('reportes/cotizaciones') }}">
               <i class="fas fa-file-invoice-dollar" style="color:#04052E;"></i> Cotizaciones
             </a>
           </li>
-          <li class="sub {!! (Request::is('reportes/cobros') ? 'active' : '') !!}">
+          <li >
             <a href="{{ URL::to('reportes/cobros') }}">
               <i class="fas fa-file-invoice-dollar" style="color:#04052E;"></i> Cobros
             </a>
           </li>
-          <li class="sub {!! (Request::is('reportes/compras') ? 'active' : '') !!}">
+          <li >
             <a href="{{ URL::to('reportes/compras') }}">
               <i class="fas fa-file-invoice-dollar" style="color:#04052E;"></i> Compras
             </a>
           </li>
-          <li class="sub {!! (Request::is('reportes/pagos') ? 'active' : '') !!}">
+          <li >
             <a href="{{ URL::to('reportes/pagos') }}">
               <i class="fas fa-file-invoice-dollar" style="color:#04052E;"></i> Pagos
             </a>
           </li>
-          <li class="sub {!! (Request::is('reportes/saldoProveedores') ? 'active' : '') !!}">
+          <li >
             <a href="{{ URL::to('reportes/saldoProveedores') }}">
               <i class="fas fa-file-invoice-dollar"style="color:#04052E;"></i> Saldo Proveedores
             </a>
           </li>
-          <li class="sub {!! (Request::is('reportes/cuentaCliente') ? 'active' : '') !!}">
+          <li >
             <a href="{{ URL::to('reportes/cuentaCliente') }}">
               <i class="fas fa-file-invoice-dollar" style="color:#04052E;"></i> Cuenta Cliente
             </a>
           </li>
-          <li class="sub {!! (Request::is('reportes/utilidades') ? 'active' : '') !!}">
+          <li >
             <a href="{{ URL::to('reportes/utilidades') }}">
               <i class="fas fa-file-invoice-dollar" style="color:#04052E;"></i> Utilidades
             </a>
