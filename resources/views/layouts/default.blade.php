@@ -178,7 +178,7 @@
               </a>
               </li>
                 <li class="sub" {!! (Request::is('proyectos*') ? 'class="active"' : '') !!}>
-                  <a href="{{ URL::to('prospectos') }}" style="padding:0;">
+                  <a href="{{ URL::to('prospectos') }}" >
                   <i class="fas fa-address-book" style="color:#186e86"></i>Lista de Cotizaciones
                   </a>
                 </li>
@@ -206,7 +206,7 @@
           <li {!! (Request::is('proyectos*') ? 'class="active"' : '') !!}><a class="title"><i class="fa fa-book"></i>  Proyectos <span class="fa fa-chevron-down"></span></a>
             <ul class="nav child_menu">
               <li class="sub" {!! (Request::is('proyectos*') ? 'class="active"' : '') !!}>
-                <a href="{{ URL::to('prospectos') }}" style="padding:0;">
+                <a href="{{ URL::to('prospectos') }}" >
                 <i class="fas fa-address-book"></i>Lista de Proyectos
                 </a>
               </li>
