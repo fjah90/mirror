@@ -142,7 +142,7 @@
           <!-- Catalogos -->
           <li {!! (Request::is('cotizaciones*') ? 'class="active"' : '') !!}><a class="title"><i class="fa fa-book"></i>  Catálogos <span class="fa fa-chevron-down"></span></a>
             <ul class="nav child_menu">  
-              <li class="sub" {!! (Request::is('clientes*') ? 'class="active"' : '') !!}>
+              <li  {!! (Request::is('clientes*') ? 'class="active"' : '') !!}>
                 <a href="{{ URL::to('clientes') }}">
                   <i class="fas fa-user-tie"style="color:#2283bf;"></i> Clientes
                 </a>
