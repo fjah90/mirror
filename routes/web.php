@@ -80,6 +80,7 @@ Route::middleware('auth')->group(function () {
 
 
     Route::post('/proyectos-aprobados/listado', 'ProyectosAprobadosController@listado');
+    Route::get('/cotizaciones', 'ProspectosController@cotizaciones');
 
     //Administracion
     Route::middleware('role:Administrador')->group(function () {
@@ -103,6 +104,7 @@ Route::middleware('auth')->group(function () {
         Route::resource('/unidadesMedida', 'UnidadesMedidaController', ['only' => ['create', 'store', 'edit', 'update', 'delete']]);
 
         Route::post('/prospectos/listado', 'ProspectosController@listado');
+        Route::post('/prospectos/listadocot', 'ProspectosController@listadocot');
         Route::post('/cuentas-cobrar/listado', 'CuentasCobrarController@listado');
         Route::post('/cuentas-pagar/listado', 'CuentasPagarController@listado');
         Route::post('/ordenes-proceso/listado', 'OrdenesProcesoController@listado');

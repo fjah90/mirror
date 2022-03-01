@@ -52,6 +52,24 @@ class ProspectosController extends Controller
         return view('prospectos.index', compact('prospectos', 'usuarios'));
     }
 
+
+    public function cotizaciones()
+    {
+        $user = auth()->user();
+        $prospectos = Prospecto::with('cliente', 'ultima_actividad.tipo', 'proxima_actividad.tipo', 'user','cotizaciones')
+            ->where('user_id', $user->id)->orWhereHas("cliente", function($query) use ($user) {
+                $query->where("usuario_id", $user->id);
+            })->get();
+
+        if (auth()->user()->tipo == 'Administrador') {
+            $usuarios = User::all();
+        } else {
+            $usuarios = [];
+        }
+
+        return view('prospectos.cotizaciones', compact('prospectos', 'usuarios'));
+    }
+
     public function listado(Request $request)
     {
      

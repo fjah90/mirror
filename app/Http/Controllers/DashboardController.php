@@ -11,6 +11,7 @@ use App\Models\ProspectoActividad;
 use App\Models\ProspectoCotizacion;
 use App\Models\ProyectoAprobado;
 use App\User;
+use Carbon\Carbon;
 use Config;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -111,21 +112,60 @@ class DashboardController extends Controller
         $prospectos         = null;
         $ordenesProceso     = null;
 
+        if ($request->anio == '2019-12-31') {
+            $inicio = Carbon::parse('2019-01-01');    
+        }
+        elseif ($request->anio == '2020-12-31') {
+            $inicio = Carbon::parse('2020-01-01');    
+        }
+        elseif ($request->anio == '2022-12-31') {
+            $inicio = Carbon::parse('2022-01-01');    
+        }
+        else{
+            $inicio = Carbon::parse('2021-01-01');
+        }
+
         if ($request->id != "todos") {
-            $usuario            = User::find($request->id);
-            $clientesId         = $usuario->clientes()->get()->pluck('id');
-            $clientes           = sizeof($clientesId);
-            $proyectosAprobados = ProyectoAprobado::whereIn('cliente_id', $clientesId)->get()->count();
-            $prospectosId       = $usuario->prospectos()->get()->pluck('id');
-            $prospectos         = sizeof($prospectosId);
-            $ordenesProceso     = OrdenProceso::whereIn('orden_compra_id', OrdenCompra::whereIn('cliente_id', $clientesId)->pluck('id'))->get()->count();
+            if ($request->anio == 'Todos') {
+                $usuario            = User::find($request->id);
+                $clientesId         = $usuario->clientes()->get()->pluck('id');
+                $clientes           = sizeof($clientesId);
+                $proyectosAprobados = ProyectoAprobado::whereIn('cliente_id', $clientesId)->get()->count();
+                $prospectosId       = $usuario->prospectos()->get()->pluck('id');
+                $prospectos         = sizeof($prospectosId);
+                $ordenesProceso     = OrdenProceso::whereIn('orden_compra_id', OrdenCompra::whereIn('cliente_id', $clientesId)->pluck('id'))->get()->count();    
+            }
+            else{
+                $anio = Carbon::parse($request->anio);
+                $usuario            = User::find($request->id);
+                $clientesId         = $usuario->clientes()->get()->pluck('id');
+                $clientes           = sizeof($clientesId);
+                $proyectosAprobados = ProyectoAprobado::whereIn('cliente_id', $clientesId)->whereBetween('proyectos_aprobados.created_at', [$inicio, $anio])->get()->count();
+                $prospectosId       = $usuario->prospectos()->whereBetween('prospectos.created_at', [$inicio, $anio])->get()->pluck('id');
+                $prospectos         = sizeof($prospectosId);
+                $ordenesProceso     = OrdenProceso::whereIn('orden_compra_id', OrdenCompra::whereIn('cliente_id', $clientesId)->pluck('id'))->whereBetween('ordenes_proceso.created_at', [$inicio, $anio])->get()->count();
+            }
+            
         } else {
-            $clientesId         = Cliente::get();
-            $clientes           = sizeof($clientesId);
-            $proyectosAprobados = ProyectoAprobado::get()->count();
-            $prospectosId       = Prospecto::get()->pluck('id');
-            $prospectos         = sizeof($prospectosId);
-            $ordenesProceso     = OrdenProceso::get()->count();
+            if ($request->anio == 'Todos') {
+
+                $clientesId         = Cliente::get();
+                $clientes           = sizeof($clientesId);
+                $proyectosAprobados = ProyectoAprobado::get()->count();
+                $prospectosId       = Prospecto::get()->pluck('id');
+                $prospectos         = sizeof($prospectosId);
+                $ordenesProceso     = OrdenProceso::get()->count();
+            }
+            else{
+                $anio = Carbon::parse($request->anio);
+                $clientesId         = Cliente::get();
+                $clientes           = sizeof($clientesId);
+                $proyectosAprobados = ProyectoAprobado::whereBetween('created_at', [$inicio, $anio])->get()->count();
+                $prospectosId       = Prospecto::whereBetween('created_at', [$inicio, $anio])->get()->pluck('id');
+                $prospectos         = sizeof($prospectosId);
+                $ordenesProceso     = OrdenProceso::whereBetween('created_at', [$inicio, $anio])->get()->count();
+            }
+
         }
 
         $cotizaciones = ProspectoCotizacion::leftjoin('prospectos', 'prospectos_cotizaciones.prospecto_id', '=', 'prospectos.id')
@@ -135,6 +175,12 @@ class DashboardController extends Controller
         if ($request->id != "todos") {
             $cotizaciones->where('prospectos_cotizaciones.user_id', '=', $request->id);
         }
+        if ($request->anio != 'Todos') {
+            $anio = Carbon::parse($request->anio);
+            $cotizaciones->whereBetween('prospectos_cotizaciones.created_at', [$inicio, $anio]);
+        }
+
+
         $cotizaciones = $cotizaciones->orderBy('fecha', 'desc')->get();
 
         $cotizacionesAceptadas = ProspectoCotizacion::leftjoin('prospectos', 'prospectos_cotizaciones.prospecto_id', '=', 'prospectos.id')
@@ -144,6 +190,13 @@ class DashboardController extends Controller
         if ($request->id != "todos") {
             $cotizacionesAceptadas->where('prospectos_cotizaciones.user_id', '=', $request->id);
         }
+        if ($request->anio != 'Todos') {
+            $anio = Carbon::parse($request->anio);
+            $cotizacionesAceptadas->whereBetween('prospectos_cotizaciones.created_at', [$inicio, $anio]);
+        }
+
+
+
         $cotizacionesAceptadas = $cotizacionesAceptadas->where('aceptada', true)->orderBy('fecha', 'desc')->get();
 
         $proximasActividades = ProspectoActividad::leftjoin('prospectos', 'prospectos_actividades.prospecto_id', '=', 'prospectos.id')
@@ -152,6 +205,10 @@ class DashboardController extends Controller
             ->select('prospectos_actividades.*', 'prospectos.nombre as prospecto_nombre', 'prospectos.id as prospecto_id', 'clientes.nombre as cliente_nombre', 'prospectos_tipos_actividades.nombre as tipo_actividad');
         if ($request->id != "todos") {
             $proximasActividades->whereIn('prospecto_id', $prospectosId);
+        }
+        if ($request->anio != 'Todos') {
+            $anio = Carbon::parse($request->anio);
+            $proximasActividades->whereBetween('prospectos_actividades.created_at', [$inicio, $anio]);
         }
         $proximasActividades = $proximasActividades->where('realizada', false)->orderBy('fecha', 'desc')->get();
 
@@ -162,6 +219,10 @@ class DashboardController extends Controller
         if ($request->id != "todos") {
             $cuentasCobrar->whereIn('prospectos_cotizaciones.prospecto_id', $prospectosId);
         }
+        if ($request->anio != 'Todos') {
+            $anio = Carbon::parse($request->anio);
+            $cuentasCobrar->whereBetween('cuentas_cobrar.created_at', [$inicio, $anio]);
+        }
         $cuentasCobrar = $cuentasCobrar->get();
 
         $totalesCuentas = CuentaCobrar::leftjoin('prospectos_cotizaciones', 'cuentas_cobrar.cotizacion_id', '=', 'prospectos_cotizaciones.id')
@@ -169,10 +230,15 @@ class DashboardController extends Controller
         if ($request->id != "todos") {
             $totalesCuentas->whereIn('prospectos_cotizaciones.prospecto_id', $prospectosId);
         }
+        if ($request->anio != 'Todos') {
+            $anio = Carbon::parse($request->anio);
+            $totalesCuentas->whereBetween('cuentas_cobrar.created_at', [$inicio, $anio]);
+        }
         $totalesCuentas = $totalesCuentas->groupBy('prospectos_cotizaciones.moneda')->get();
         
         if ($request->id != "todos") {
-            $compras = OrdenCompra::with('entradas.producto','cliente','proyecto','proyecto.cotizacion','proyecto.cotizacion.user')->where('status','Por Autorizar')->whereHas('proyecto', function($q) use($usuario)
+            if ($request->anio == 'Todos') {
+                $compras = OrdenCompra::with('entradas.producto','cliente','proyecto','proyecto.cotizacion','proyecto.cotizacion.user')->where('status','Por Autorizar')->whereHas('proyecto', function($q) use($usuario)
                 {       
                     $q->whereHas('cotizacion', function($q) use($usuario)
                     {
@@ -181,10 +247,32 @@ class DashboardController extends Controller
                     });
                 });
 
-            $compras = $compras->get();
+                $compras = $compras->get();
+            }
+            else{
+                $anio = Carbon::parse($request->anio);
+                $compras = OrdenCompra::with('entradas.producto','cliente','proyecto','proyecto.cotizacion','proyecto.cotizacion.user')->where('status','Por Autorizar')->whereHas('proyecto', function($q) use($usuario)
+                {       
+                    $q->whereHas('cotizacion', function($q) use($usuario)
+                    {
+                        
+                        $q->where('user_id', $usuario->id);
+                    });
+                });
+
+                $compras = $compras->whereBetween('ordenes_compra.created_at', [$inicio, $anio])->get();
+            }
+            
         }  
         else{
-            $compras = OrdenCompra::with('entradas.producto','cliente','proyecto','proyecto.cotizacion','proyecto.cotizacion.user')->where('status','Por Autorizar')->get();    
+            if ($request->anio =='Todos') {
+                $compras = OrdenCompra::with('entradas.producto','cliente','proyecto','proyecto.cotizacion','proyecto.cotizacion.user')->where('status','Por Autorizar')->get();        
+            }
+            else{
+                $anio = Carbon::parse($request->anio);
+                $compras = OrdenCompra::with('entradas.producto','cliente','proyecto','proyecto.cotizacion','proyecto.cotizacion.user')->where('status','Por Autorizar')->whereBetween('ordenes_compra.created_at', [$inicio, $anio])->get();    
+            }
+            
         }   
         
 
