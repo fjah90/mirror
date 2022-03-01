@@ -11,6 +11,21 @@ class Prospecto extends Model
 
     protected $fillable = ['cliente_id','nombre','descripcion', 'user_id'];
 
+    protected $appends = [
+        'num_cotizaciones','num_cotaprobadas'
+    ];
+
+
+    public function getNumCotizacionesAttribute()
+    {
+        return count($this->cotizaciones);
+    }
+
+    public function getNumCotaprobadasAttribute()
+    {
+        return count($this->cotizaciones_aprobadas);
+    }
+
     /**
      * ---------------------------------------------------------------------------
      *                             Relationships
