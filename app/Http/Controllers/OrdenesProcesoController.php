@@ -76,34 +76,60 @@ class OrdenesProcesoController extends Controller
       }
 
       if ($request->anio == 'Todos') {
-        $usuario = $request->id;
-          $ordenes = OrdenProceso::with('ordenCompra','ordenCompra.proyecto','ordenCompra.proyecto.cotizacion','ordenCompra.proyecto.cotizacion.user')->whereHas('ordenCompra', function($q) use($usuario)
-            {       
-              $q->whereHas('proyecto', function($q) use($usuario)
-              {
-                $q->whereHas('cotizacion', function($q) use($usuario)
+         if ($usuario == 'Todos') {
+            $usuario = $request->id;
+            $ordenes = OrdenProceso::with('ordenCompra','ordenCompra.proyecto','ordenCompra.proyecto.cotizacion','ordenCompra.proyecto.cotizacion.user')->whereHas('ordenCompra', function($q) use($usuario)
+              {       
+                $q->whereHas('proyecto', function($q) use($usuario)
                 {
-                  $q->where('user_id', $usuario);
-                
+                  $q->whereHas('cotizacion');
                 });
-              });
-            })->get();
+              })->get();
+          }
+          else{
+            $usuario = $request->id;
+            $ordenes = OrdenProceso::with('ordenCompra','ordenCompra.proyecto','ordenCompra.proyecto.cotizacion','ordenCompra.proyecto.cotizacion.user')->whereHas('ordenCompra', function($q) use($usuario)
+              {       
+                $q->whereHas('proyecto', function($q) use($usuario)
+                {
+                  $q->whereHas('cotizacion', function($q) use($usuario)
+                  {
+                    $q->where('user_id', $usuario);
+                  
+                  });
+                });
+              })->get(); 
+          }
       }
       else{
-        $usuario = $request->id;
-          $anio = Carbon::parse($request->anio);
-          $ordenes = OrdenProceso::whereBetween('created_at', [$inicio, $anio])->with('ordenCompra','ordenCompra.proyecto','ordenCompra.proyecto.cotizacion','ordenCompra.proyecto.cotizacion.user')
-          ->whereHas('ordenCompra', function($q) use($usuario)
-            {       
-              $q->whereHas('proyecto', function($q) use($usuario)
-              {
-                $q->whereHas('cotizacion', function($q) use($usuario)
+        if ($usuario == 'Todos') {
+            $usuario = $request->id;
+            $anio = Carbon::parse($request->anio);
+            $ordenes = OrdenProceso::whereBetween('created_at', [$inicio, $anio])->with('ordenCompra','ordenCompra.proyecto','ordenCompra.proyecto.cotizacion','ordenCompra.proyecto.cotizacion.user')
+            ->whereHas('ordenCompra', function($q) use($usuario)
+              {       
+                $q->whereHas('proyecto', function($q) use($usuario)
                 {
-                  $q->where('user_id', $usuario);
-                
+                  $q->whereHas('cotizacion');
                 });
-              });
-            })->get();
+              })->get();
+          }
+          else{
+            $usuario = $request->id;
+              $anio = Carbon::parse($request->anio);
+              $ordenes = OrdenProceso::whereBetween('created_at', [$inicio, $anio])->with('ordenCompra','ordenCompra.proyecto','ordenCompra.proyecto.cotizacion','ordenCompra.proyecto.cotizacion.user')
+              ->whereHas('ordenCompra', function($q) use($usuario)
+                {       
+                  $q->whereHas('proyecto', function($q) use($usuario)
+                  {
+                    $q->whereHas('cotizacion', function($q) use($usuario)
+                    {
+                      $q->where('user_id', $usuario);
+                    
+                    });
+                  });
+                })->get();
+            }
       }
 
       foreach ($ordenes as $orden) {
