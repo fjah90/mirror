@@ -206,7 +206,7 @@
           <li {!! (Request::is('prospectos/cotizaciones*') ? 'class="active"' : '') !!}><a class="title"><i class="fa fa-building-o"></i>  Proyectos <span class="fa fa-chevron-down"></span></a>
             <ul class="nav child_menu">
               <li {!! (Request::is('prospectos/cotizaciones*') ? 'class="active"' : '') !!}>
-                <a href="{{ URL::to('prospectos.cotizaciones') }}" >
+                <a href="{{ URL::to('prospectos/cotizaciones') }}" >
                 <i class="fas fa-address-book" style="color:#2c42bf"></i>Lista de Proyectos
                 </a>
               </li>
@@ -265,7 +265,7 @@
 
           <li {!! (Request::is('reportes*') ? 'class="active"' : '') !!}><a class="title"><i class="fa fa-bar-chart"></i>  Reportes <span class="fa fa-chevron-down"></span></a>
            <ul class="nav child_menu">
-              <li class="sub {!! (Request::is('reportes/cotizaciones') ? 'active' : '') !!}">
+              <li  {!! (Request::is('reportes/cotizaciones') ? 'active' : '') !!}">
             <a href="{{ URL::to('reportes/cotizaciones') }}">
               <i class="fas fa-file-invoice-dollar" style="color:#04052E;"></i> Cotizaciones
             </a>
