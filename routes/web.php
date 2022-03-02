@@ -33,6 +33,7 @@ Route::middleware('auth')->group(function () {
 
     //Dashboard
     Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
+    Route::get('/cotizaciones', 'ProspectosController@cotizaciones');
 
     //Mi Cuenta
     Route::get('/mi_cuenta', 'MiCuentaController@index')->name('mi_cuenta');
@@ -87,10 +88,10 @@ Route::middleware('auth')->group(function () {
         Route::resource('/usuarios', 'UsuariosController');
 
         Route::get('usuarios/{id}/activar', 'UsuariosController@activar',['parameters' => ['usuarios' => 'usuario'],  
-    ])->name('usuarios.activar');
+        ])->name('usuarios.activar');
 
         Route::get('usuarios/{id}/desactivar', 'UsuariosController@desactivar',['parameters' => ['usuarios' => 'usuario'],  
-    ])->name('usuarios.desactivar');
+        ])->name('usuarios.desactivar');
 
         Route::delete('/productos/{producto}', 'ProductosController@destroy');
         Route::delete('/clientes/{cliente}', 'ClientesController@destroy');
@@ -138,7 +139,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/proyectos-aprobados', 'ProyectosAprobadosController@index')->name('proyectos-aprobados.index');
     Route::delete('/proyectos-aprobados/{proyecto}', 'ProyectosAprobadosController@destroy');
     Route::get('/proyectos-aprobados/{proyecto}/show', 'ProyectosAprobadosController@show');
-    Route::get('/cotizaciones', 'ProspectosController@cotizaciones');
     // Route::get('/proyectos-aprobados/{proyecto}/generarOrdenes', 'ProyectosAprobadosController@generarOrdenes');
 
     //Ordenes de Compra
