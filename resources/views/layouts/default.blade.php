@@ -114,7 +114,7 @@
           <!-- Dashboard -->
           <li {!! (Request::is('dashboard') ? 'class="active"' : '') !!}>
             <a href="{{ URL::to('dashboard') }}">
-              <i class="menu-icon fas fa-dashboard"></i>
+              <i class="menu-icon fas fa-home"></i>
               <span class="mm-text ">INICIO</span>
             </a>
           </li>
@@ -203,7 +203,7 @@
           <hr class="divider-menu">
 
           <!-- Proyectos -->
-          <li {!! (Request::is('prospectos/cotizaciones*') ? 'class="active"' : '') !!}><a class="title"><i class="fa fa-building-o"></i>  Proyectos <span class="fa fa-chevron-down"></span></a>
+          <li {!! (Request::is('prospectos/cotizaciones*') ? 'class="active"' : '') !!}><a class="title"><i class="fas fa-building"></i>  Proyectos <span class="fa fa-chevron-down"></span></a>
             <ul class="nav child_menu">
               <li {!! (Request::is('prospectos/cotizaciones*') ? 'class="active"' : '') !!}>
                 <a href="{{ URL::to('prospectos/cotizaciones') }}" >
@@ -263,7 +263,7 @@
 
           <!--Reportes-->
 
-          <li {!! (Request::is('reportes*') ? 'class="active"' : '') !!}><a class="title"><i class="fa fa-bar-chart"></i>  Reportes <span class="fa fa-chevron-down"></span></a>
+          <li {!! (Request::is('reportes*') ? 'class="active"' : '') !!}><a class="title"><i class="fas fa-file"></i>  Reportes <span class="fa fa-chevron-down"></span></a>
            <ul class="nav child_menu">
               <li  {!! (Request::is('reportes/cotizaciones') ? 'active' : '') !!}">
             <a href="{{ URL::to('reportes/cotizaciones') }}">
