@@ -37,11 +37,16 @@ class ProspectosController extends Controller
      */
     public function index()
     {
+        $inicio = Carbon::parse('2022-01-01');
+        $anio = Carbon::parse('2022-12-31');
+
         $user = auth()->user();
         $prospectos = Prospecto::with('cliente', 'ultima_actividad.tipo', 'proxima_actividad.tipo', 'user','cotizaciones')
             ->where('user_id', $user->id)->orWhereHas("cliente", function($query) use ($user) {
                 $query->where("usuario_id", $user->id);
-            })->get();
+            })
+            ->whereBetween('created_at', [$inicio, $anio])
+            ->get();
 
         if (auth()->user()->tipo == 'Administrador') {
             $usuarios = User::all();

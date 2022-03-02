@@ -828,7 +828,7 @@ Dashboard | @parent
     data: {
       prospectos: {},
       usuarioCargado: {{auth()->user()->id}},
-      anio:'Todos',
+      anio:'2022-12-31',
       bdd: '',
       tablaCotizaciones: {},
       tablaCompras: {},

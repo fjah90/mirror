@@ -117,7 +117,7 @@ const app = new Vue({
     el: '#content',
     data: {
       usuarioCargado: 'Todos',
-      anio:'Todos',
+      anio:'2022-12-31',
       cuentas: {!! json_encode($cuentas) !!},
     },
     filters: {

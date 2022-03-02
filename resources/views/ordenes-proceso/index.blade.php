@@ -393,7 +393,7 @@
 const app = new Vue({
     el: '#content',
     data: {
-      anio:'Todos',
+      anio:'2022-12-31',
       usuarioCargado: 'Todos',
       locale: localeES,
       ordenes: {!! json_encode($ordenes) !!},
