@@ -61,7 +61,7 @@ class OrdenesProcesoController extends Controller
 
     public function listado(Request $request)
     {
-      
+      $usuario = $request->id;
       if ($request->anio == '2019-12-31') {
           $inicio = Carbon::parse('2019-01-01');    
       }
