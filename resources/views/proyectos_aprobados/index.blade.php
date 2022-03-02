@@ -2,7 +2,7 @@
 
 {{-- Page title --}}
 @section('title')
-  Proyectos Aprobados | @parent
+  Lista de Ordenes | @parent
 @stop
 
 @section('header_styles')
@@ -14,7 +14,7 @@
 @section('content')
 <!-- Content Header (Page header) -->
 <section class="content-header">
-  <h1>Proyectos Aprobados</h1>
+  <h1>Lista de Ordenes</h1>
 </section>
 <!-- Main content -->
 <section class="content" id="content">
