@@ -313,7 +313,7 @@
 
           <li {!! (Request::is('Usuarios*') ? 'class="active"' : '') !!} {!! (Request::is('tiposClientes*') ? 'class="active"' : '') !!} {!! (Request::is('proyectos*') ? 'class="active"' : '') !!} {!! (Request::is('subproyectos*') ? 'class="active"' : '') !!} {!! (Request::is('tiposProveedores*') ? 'class="active"' : '') !!} {!! (Request::is('unidadesMedida*') ? 'class="active"' : '') !!} {!! (Request::is('subcategorias*') ? 'class="active"' : '') !!} {!! (Request::is('categorias*') ? 'class="active"' : '') !!}><a class="title"><i class="fa fa-book"></i>  Catálogos de Apoyo <span class="fa fa-chevron-down"></span></a>
            <ul class="nav child_menu">
-              @hasanyrole('Administrador')
+          @hasanyrole('Administrador')
           <li {!! (Request::is('Usuarios*') ? 'class="active"' : '') !!} class="sub {!! (Request::is('usuarios*') ? 'active' : '') !!}">
             <a href="{{ URL::to('usuarios') }}">
               <i class="fas fa-user"></i> Usuarios
