@@ -20,7 +20,18 @@ class OrdenesProcesoController extends Controller
     public function index()
     {
       $usuarios = User::all();
-      $ordenes = OrdenProceso::with('ordenCompra','ordenCompra.proyecto','ordenCompra.proyecto.cotizacion','ordenCompra.proyecto.cotizacion.user')->where('orden_compra_id','!=','4361')->get();
+      /*$ordenes = OrdenProceso::with('ordenCompra','ordenCompra.proyecto','ordenCompra.proyecto.cotizacion','ordenCompra.proyecto.cotizacion.user')->where('orden_compra_id','!=','4361')->get();
+      */
+      $usuario = null;
+      $ordenes = OrdenProceso::whereBetween('created_at', [$inicio, $anio])->with('ordenCompra','ordenCompra.proyecto','ordenCompra.proyecto.cotizacion','ordenCompra.proyecto.cotizacion.user')
+          ->whereHas('ordenCompra', function($q) use($usuario)
+        {       
+          $q->whereHas('proyecto', function($q) use($usuario)
+          {
+            $q->whereHas('cotizacion');
+          });
+        })->get();
+
 
       foreach ($ordenes as $orden) {
         if($orden->ordenCompra->archivo)

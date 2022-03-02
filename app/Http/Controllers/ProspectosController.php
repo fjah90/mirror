@@ -41,12 +41,19 @@ class ProspectosController extends Controller
         $anio = Carbon::parse('2022-12-31');
 
         $user = auth()->user();
-        $prospectos = Prospecto::with('cliente', 'ultima_actividad.tipo', 'proxima_actividad.tipo', 'user','cotizaciones')
+
+        /*$prospectos = Prospecto::with('cliente', 'ultima_actividad.tipo', 'proxima_actividad.tipo', 'user','cotizaciones')
             ->where('user_id', $user->id)->orWhereHas("cliente", function($query) use ($user) {
                 $query->where("usuario_id", $user->id);
             })
             ->whereBetween('created_at', [$inicio, $anio])
             ->get();
+            */
+        $prospectos = Prospecto::with('cliente', 'ultima_actividad.tipo', 'proxima_actividad.tipo', 'user','cotizaciones')
+        ->where('user_id', $request->id)
+        ->whereBetween('prospectos.created_at', [$inicio, $anio])
+        ->has('cliente')
+        ->get();
 
         if (auth()->user()->tipo == 'Administrador') {
             $usuarios = User::all();
@@ -61,10 +68,18 @@ class ProspectosController extends Controller
     public function cotizaciones()
     {
         $user = auth()->user();
-        $prospectos = Prospecto::with('cliente', 'ultima_actividad.tipo', 'proxima_actividad.tipo', 'user','cotizaciones')
+        /*$prospectos = Prospecto::with('cliente', 'ultima_actividad.tipo', 'proxima_actividad.tipo', 'user','cotizaciones')
             ->where('user_id', $user->id)->orWhereHas("cliente", function($query) use ($user) {
                 $query->where("usuario_id", $user->id);
             })->get();
+        */
+        $inicio = Carbon::parse('2022-01-01');
+        $anio = Carbon::parse('2022-12-31');
+        $prospectos = Prospecto::with('cliente', 'ultima_actividad.tipo', 'proxima_actividad.tipo', 'user','cotizaciones')
+        ->where('user_id', $request->id)
+        ->whereBetween('prospectos.created_at', [$inicio, $anio])
+        ->has('cliente')
+        ->get();
 
         if (auth()->user()->tipo == 'Administrador') {
             $usuarios = User::all();
