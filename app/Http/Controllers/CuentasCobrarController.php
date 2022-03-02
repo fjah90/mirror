@@ -25,7 +25,7 @@ class CuentasCobrarController extends Controller
       //$cuentas = CuentaCobrar::with('cotizacion','cotizacion.user')->get();
       $inicio = Carbon::parse('2022-01-01');
       $anio = Carbon::parse('2022-12-31');
-      $cuentas = CuentaCobrar::whereBetween('created_at', [$inicio, $anio])->get();
+      $cuentas = CuentaCobrar::with('cotizacion','cotizacion.user')->whereBetween('created_at', [$inicio, $anio])->get();
 
       return view('cuentas-cobrar.index', compact('cuentas','usuarios'));
     }
