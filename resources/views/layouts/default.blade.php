@@ -169,7 +169,7 @@
           <hr class="divider-menu">
 
           <!-- Cotizaciones -->
-           <li {!! (Request::is('prospectos.create*') ? 'class="active"' : '') !!} {!! (Request::is('cotizaciones*') ? 'class="active"' : '') !!}><a class="title"><i class="fa fa-list-alt"></i>  Cotizaciones <span class="fa fa-chevron-down"></span></a>
+           <li {!! (Request::is('prospectos.create*') ? 'class="active"' : '') !!} {!! (Request::is('prospectos*') ? 'class="active"' : '') !!}><a class="title"><i class="fa fa-list-alt"></i>  Cotizaciones <span class="fa fa-chevron-down"></span></a>
 
               <ul class="nav child_menu">
               <li {!! (Request::is('prospectos.create*') ? 'class="active"' : '') !!}>
@@ -177,8 +177,8 @@
                 <i class="fas fa-address-book" style="color:#186e86"></i> Nueva Cotización
               </a>
               </li>
-                <li {!! (Request::is('cotizaciones*') ? 'class="active"' : '') !!}>
-                  <a href="{{ URL::to('cotizaciones') }}" >
+                <li {!! (Request::is('prospectos*') ? 'class="active"' : '') !!}>
+                  <a href="{{ URL::to('prospectos') }}" >
                   <i class="fas fa-address-book" style="color:#186e86"></i>Lista de Cotizaciones
                   </a>
                 </li>
@@ -203,9 +203,9 @@
           <hr class="divider-menu">
 
           <!-- Proyectos -->
-          <li {!! (Request::is('prospectos*') ? 'class="active"' : '') !!}><a class="title"><i class="fa fa-building-o"></i>  Proyectos <span class="fa fa-chevron-down"></span></a>
+          <li {!! (Request::is('cotizaciones*') ? 'class="active"' : '') !!}><a class="title"><i class="fa fa-building-o"></i>  Proyectos <span class="fa fa-chevron-down"></span></a>
             <ul class="nav child_menu">
-              <li {!! (Request::is('prospectos*') ? 'class="active"' : '') !!}>
+              <li {!! (Request::is('cotizaciones*') ? 'class="active"' : '') !!}>
                 <a href="{{ URL::to('prospectos') }}" >
                 <i class="fas fa-address-book" style="color:#2c42bf"></i>Lista de Proyectos
                 </a>
@@ -240,8 +240,14 @@
           <hr class="divider-menu">
 
           <!-- ordenes compra-->
-          <li {!! (Request::is('ordenes-proceso*') ? 'class="active"' : '') !!}  ><a class="title"><i class="fa fa-cart-arrow-down"></i>  Ordenes Compra <span class="fa fa-chevron-down"></span></a>
+          <li {!! (Request::is('ordenes-proceso*') ? 'class="active"' : '') !!}  {!! (Request::is('proyectos-aprobados*') ? 'class="active"' : '') !!}><a class="title"><i class="fa fa-cart-arrow-down"></i>  Ordenes Compra <span class="fa fa-chevron-down"></span></a>
            <ul class="nav child_menu">  
+              <li  {!! (Request::is('proyectos-aprobados*') ? 'class="active"' : '') !!} >
+                <a href="{{ URL::to('proyectos-aprobados') }}">
+                  <i class="menu-icon fas fa-file-signature"></i>
+                  <span>Lista de Ordenes</span>
+                </a>
+              </li>
               <li {!! (Request::is('ordenes-proceso*') ? 'class="active"' : '') !!} >
                 <a href="{{ URL::to('ordenes-proceso') }}">
                   <i class="menu-icon fas fa-clipboard-list" style="color:#04052E"></i>

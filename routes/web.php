@@ -80,7 +80,6 @@ Route::middleware('auth')->group(function () {
 
 
     Route::post('/proyectos-aprobados/listado', 'ProyectosAprobadosController@listado');
-    Route::get('/cotizaciones', 'ProspectosController@cotizaciones');
 
     //Administracion
     Route::middleware('role:Administrador')->group(function () {
@@ -139,6 +138,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/proyectos-aprobados', 'ProyectosAprobadosController@index')->name('proyectos-aprobados.index');
     Route::delete('/proyectos-aprobados/{proyecto}', 'ProyectosAprobadosController@destroy');
     Route::get('/proyectos-aprobados/{proyecto}/show', 'ProyectosAprobadosController@show');
+    Route::get('/cotizaciones', 'ProspectosController@cotizaciones');
     // Route::get('/proyectos-aprobados/{proyecto}/generarOrdenes', 'ProyectosAprobadosController@generarOrdenes');
 
     //Ordenes de Compra

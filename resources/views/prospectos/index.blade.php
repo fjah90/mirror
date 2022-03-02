@@ -184,7 +184,7 @@ const app = new Vue({
     data: {
       prospectos: {!! json_encode($prospectos) !!},
       usuarioCargado: {{auth()->user()->id}},
-      anio:'Todos',
+      anio:'2022-12-31',
       tabla: {},
       locale: localeES,
       fecha_ini: '',
