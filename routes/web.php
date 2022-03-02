@@ -33,7 +33,7 @@ Route::middleware('auth')->group(function () {
 
     //Dashboard
     Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
-    Route::get('/cotizaciones', 'ProspectosController@cotizaciones');
+
 
     //Mi Cuenta
     Route::get('/mi_cuenta', 'MiCuentaController@index')->name('mi_cuenta');
@@ -104,6 +104,7 @@ Route::middleware('auth')->group(function () {
         Route::resource('/unidadesMedida', 'UnidadesMedidaController', ['only' => ['create', 'store', 'edit', 'update', 'delete']]);
 
         Route::post('/prospectos/listado', 'ProspectosController@listado');
+        Route::get('/prospectos/cotizaciones', 'ProspectosController@cotizaciones');
         Route::post('/prospectos/listadocot', 'ProspectosController@listadocot');
         Route::post('/cuentas-cobrar/listado', 'CuentasCobrarController@listado');
         Route::post('/cuentas-pagar/listado', 'CuentasPagarController@listado');
