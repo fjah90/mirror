@@ -203,10 +203,10 @@
           <hr class="divider-menu">
 
           <!-- Proyectos -->
-          <li {!! (Request::is('cotizaciones*') ? 'class="active"' : '') !!}><a class="title"><i class="fa fa-building-o"></i>  Proyectos <span class="fa fa-chevron-down"></span></a>
+          <li {!! (Request::is('prospectos/cotizaciones*') ? 'class="active"' : '') !!}><a class="title"><i class="fa fa-building-o"></i>  Proyectos <span class="fa fa-chevron-down"></span></a>
             <ul class="nav child_menu">
-              <li {!! (Request::is('cotizaciones*') ? 'class="active"' : '') !!}>
-                <a href="{{ URL::to('cotizaciones') }}" >
+              <li {!! (Request::is('prospectos/cotizaciones*') ? 'class="active"' : '') !!}>
+                <a href="{{ URL::to('prospectos.cotizaciones') }}" >
                 <i class="fas fa-address-book" style="color:#2c42bf"></i>Lista de Proyectos
                 </a>
               </li>

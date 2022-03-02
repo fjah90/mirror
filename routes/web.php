@@ -104,7 +104,7 @@ Route::middleware('auth')->group(function () {
         Route::resource('/unidadesMedida', 'UnidadesMedidaController', ['only' => ['create', 'store', 'edit', 'update', 'delete']]);
 
         Route::post('/prospectos/listado', 'ProspectosController@listado');
-        Route::get('/cotizaciones', 'ProspectosController@cotizaciones')->name('cotizaciones');
+        Route::get('/prospectos/cotizaciones', 'ProspectosController@cotizaciones')->name('prospectos.cotizaciones');
         Route::post('/prospectos/listadocot', 'ProspectosController@listadocot');
         Route::post('/cuentas-cobrar/listado', 'CuentasCobrarController@listado');
         Route::post('/cuentas-pagar/listado', 'CuentasPagarController@listado');
