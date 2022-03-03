@@ -25,7 +25,7 @@ class CuentasPagarController extends Controller
       $inicio = Carbon::parse('2022-01-01');
       $anio = Carbon::parse('2022-12-31');
       $usuario= null;
-      $cuentas = CuentaPagar::with('orden')->whereBetween('created_at', [$inicio, $anio])->whereHas('orden', function($q) use($usuario)
+      $cuentas = CuentaPagar::with('orden','orden.proyecto.cotizacion')->whereBetween('created_at', [$inicio, $anio])->whereHas('orden', function($q) use($usuario)
       {       
         $q->whereHas('proyecto', function($q) use($usuario)
         {
