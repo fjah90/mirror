@@ -76,7 +76,7 @@ class ProspectosController extends Controller
         $inicio = Carbon::parse('2022-01-01');
         $anio = Carbon::parse('2022-12-31');
         $prospectos = Prospecto::with('cliente', 'ultima_actividad.tipo', 'proxima_actividad.tipo', 'user','cotizaciones')
-        ->where('user_id', $request->id)
+        ->where('user_id', $user->id)
         ->whereBetween('prospectos.created_at', [$inicio, $anio])
         ->has('cliente')
         ->get();
