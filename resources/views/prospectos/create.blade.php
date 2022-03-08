@@ -375,6 +375,7 @@ const app = new Vue({
       
       //escuchar Iframe
       window.addEventListener('message',function(e) {
+
           if(e.data.tipo=="cliente"){
             vue.clientes.push({id:e.data.object.id, nombre:e.data.object.nombre});
             vue.prospecto.cliente_id=e.data.object.id;
@@ -383,6 +384,7 @@ const app = new Vue({
             vue.clienteSelect.select2({ width: '100%'});
           }
           if(e.data.tipo=="producto"){
+            console.log(e);
             vue.tablaProductos.destroy();
             vue.productos.push(e.data.object);
             vue.ofrecido=e.data.object;    

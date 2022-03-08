@@ -75,7 +75,7 @@ Reportes | @parent
                         </select>
                     </div>
                     <div class="marg025 btn-group" id="select_proyectos" >
-                        <select name="proxDias" class="form-control" size="1" v-model="valor_proyectos" id="select_proyectos">
+                        <select name="proxDias" class="form-control" size="1" v-model="valor_proyectos" id="selectproyectos" tabindex="-1">
                           <option v-for="option in datos_select.proyectos" v-bind:value="option">
                             @{{ option }}
                           </option>
@@ -188,6 +188,7 @@ Reportes | @parent
 
 {{-- footer_scripts --}}
 @section('footer_scripts')
+<script src="{{ URL::asset('js/plugins/zangdar/zangdar.min.js') }}" ></script>
 <script>
 Vue.config.devtools = true;
 const app = new Vue({
@@ -202,10 +203,21 @@ const app = new Vue({
       valor_usuarios:'Usuarios',
       datos_select:{clientes:[], proyectos:[], ids:[], usuarios:[]},   
       tabla: {},
-      locale: localeES
+      locale: localeES,
+      proyectoSelect:null,
     },
     mounted(){
         var vue =this;
+
+        this.proyectoSelect= $('#selectproyectos').select2({ width: '100%'}).on('select2:select',function () {       
+          var value = $("#selectproyectos").select2('data');
+          vue.valor_proyectos = value[0].id
+          //this.tabla.columns(4).search(this.valor_proyectos).draw();
+        });
+        //console.log(this.valor_proyectos);
+        
+
+
         this.cotizaciones=this.cotizaciones;
         console.log(this.cotizaciones[0].prospecto.cliente.nombre)
         console.log(this.cotizaciones[0].entradas[0].cantidad)
@@ -280,6 +292,8 @@ const app = new Vue({
       $("#fechas_container").append($("#select_ids"));
       $("#fechas_container").append($("#select_usuarios"));
 
+        
+
       $.fn.dataTableExt.afnFiltering.push(
         function( settings, data, dataIndex ) {
           var min  = vue.fecha_ini;
@@ -309,6 +323,7 @@ const app = new Vue({
         this.tabla.columns(3).search(this.valor_clientes).draw();
       },
       valor_proyectos:function(val){
+        console.log(val);
         this.tabla.columns(4).search(this.valor_proyectos).draw();
       },
       valor_ids:function(val){
