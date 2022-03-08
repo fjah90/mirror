@@ -369,7 +369,7 @@ const app = new Vue({
   			return moment(value, 'DD/MM/YYYY').toDate().getTime();
       },
       pdf(){
-        console.log(this.tabla.data());
+        console.log(this.tabla.rows( { search:'applied' } ).data());
       }
       
     }
