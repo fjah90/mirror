@@ -381,7 +381,7 @@ const app = new Vue({
             text: "",
             type: "success"
           }).then(()=>{
-            //window.location = "/proyectos-aprobados/{{$proyecto->id}}/ordenes-compra";
+           
           });
         })
         .catch(({response}) => {
