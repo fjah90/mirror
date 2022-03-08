@@ -217,8 +217,8 @@ const app = new Vue({
           vue.valor_proyectos = value[0].id
           //this.tabla.columns(4).search(this.valor_proyectos).draw();
         });
-        this.cotizacionSelect= $('#selectcotizacion').select2({ width: '100%'}).on('select2:select',function () {       
-          var value = $("#selectcotizacion").select2('data');
+        this.cotizacionSelect= $('#selectids').select2({ width: '100%'}).on('select2:select',function () {       
+          var value = $("#selectids").select2('data');
           vue.valor_ids = value[0].id
           //this.tabla.columns(4).search(this.valor_proyectos).draw();
         });
@@ -246,26 +246,26 @@ const app = new Vue({
             
             //Crear y llenar los select para clientes 
             vue.datos_select.clientes.push('Clientes')
-            vue.datos_select.clientes.push('Todos');
+            vue.datos_select.clientes.push('');
             this.api().column(3).data().sort().unique().each(function(d,j){   
               vue.datos_select.clientes.push(d);
             });
             //Crear y llenar los select para clientes 
             vue.datos_select.proyectos.push('Proyectos')
-            vue.datos_select.proyectos.push('Todos');
+            vue.datos_select.proyectos.push('');
             this.api().column(4).data().sort().unique().each(function(d,j){   
               vue.datos_select.proyectos.push(d);
             });
 
             vue.datos_select.ids.push('Cotización')
-            vue.datos_select.ids.push('Todos');
+            vue.datos_select.ids.push('');
             this.api().column(1).data().sort().unique().each(function(d,j){   
               vue.datos_select.ids.push(d);
             });
 
 
             vue.datos_select.usuarios.push('Usuarios')
-            vue.datos_select.usuarios.push('Todos');
+            vue.datos_select.usuarios.push('');
             this.api().column(10).data().sort().unique().each(function(d,j){   
               vue.datos_select.usuarios.push(d);
             });
