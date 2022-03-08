@@ -373,7 +373,7 @@ const app = new Vue({
 
         var formData = objectToFormData(datos, {indices: true});
 
-        console.log(formData);
+        console.log(datos);
 
         axios.post('/reportes/cotizaciones/pdf', formData,{headers: {'Content-Type': 'multipart/form-data'}
         })
