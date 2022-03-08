@@ -98,6 +98,11 @@ Reportes | @parent
                           
                         </select>
                     </div>
+                    <div class="btn-group">
+                        <button class="btn btn-xs btn-primary" v-on:click="pdf">
+                            PDF
+                        </button>
+                    </div>
                   </div>
               <div class="row">
                 <div class="col-sm-12">
@@ -363,6 +368,9 @@ const app = new Vue({
       dateParser(value){
   			return moment(value, 'DD/MM/YYYY').toDate().getTime();
       },
+      pdf(){
+        console.log(this.tabla.data());
+      }
       
     }
 });
