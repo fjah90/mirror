@@ -369,7 +369,31 @@ const app = new Vue({
   			return moment(value, 'DD/MM/YYYY').toDate().getTime();
       },
       pdf(){
-        console.log(this.tabla.rows( { search:'applied' } ).data());
+        datos = this.tabla.rows( { search:'applied' } ).data();
+
+        var formData = objectToFormData(datos, {indices: true});
+
+        axios.post('/reportes/cotizaciones/pdf', formData,{headers: {'Content-Type': 'multipart/form-data'}
+        })
+        .then(({data}) => {
+          swal({
+            title: "Reporte generado",
+            text: "",
+            type: "success"
+          }).then(()=>{
+            //window.location = "/proyectos-aprobados/{{$proyecto->id}}/ordenes-compra";
+          });
+        })
+        .catch(({response}) => {
+          console.error(response);
+          this.cargando = false;
+          swal({
+            title: "Error",
+            text: response.data.message || "Ocurrio un error inesperado, intente mas tarde",
+            type: "error"
+          });
+        });
+
       }
       
     }

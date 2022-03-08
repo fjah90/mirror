@@ -33,6 +33,10 @@ class ReportesController extends Controller
         return view('reportes.cotizaciones', compact('cotizaciones'));
     }
 
+    public function cotizacionespdf(Request $request){
+        dd($request);
+    }
+
     public function cobros()
     {
         $inicio = Carbon::parse('2021-01-01');

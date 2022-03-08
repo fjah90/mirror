@@ -112,6 +112,7 @@ Route::middleware('auth')->group(function () {
         Route::post('/dashboard/changebdd', 'DashboardController@changebdd');
 
         Route::get('/reportes/cotizaciones', 'ReportesController@cotizaciones');
+        Route::post('/reportes/cotizaciones/pdf', 'ReportesController@cotizacionespdf');
         Route::get('/reportes/cobros', 'ReportesController@cobros');
         Route::get('/reportes/compras', 'ReportesController@compras');
         Route::get('/reportes/pagos', 'ReportesController@pagos');
