@@ -34,7 +34,7 @@ class ReportesController extends Controller
     }
 
     public function cotizacionespdf(Request $request){
-        dd($request);
+        //dd($request);
     }
 
     public function cobros()
