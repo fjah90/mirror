@@ -23,6 +23,11 @@ Reportes | @parent
           <div class="panel product-details">
             <div class="panel-heading">
               <h3 class="panel-title">Reporte de Cotizaciones</h3>
+              <div class="marg025 btn-group">
+                  <button class="btn btn-xs btn-primary" v-on:click="pdf">
+                      PDF
+                  </button>
+              </div>
             </div>
             <div class="panel-body">
                 <div id="oculto_filtros" class="hide">
@@ -97,11 +102,6 @@ Reportes | @parent
                           </option>
                           
                         </select>
-                    </div>
-                    <div class="marg025 btn-group">
-                        <button class="btn btn-xs btn-primary" v-on:click="pdf">
-                            PDF
-                        </button>
                     </div>
                   </div>
               <div class="row">
