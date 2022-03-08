@@ -67,7 +67,7 @@ Reportes | @parent
                       </template>
                     </dropdown>
                     <div class="marg025 btn-group" id="select_clientes" >
-                        <select name="proxDias" class="form-control" size="1" v-model="valor_clientes" id="select_clientes">
+                        <select name="proxDias" class="form-control" size="1" v-model="valor_clientes" id="selectclientes">
                         <option v-for="(option, index) in datos_select.clientes" v-bind:value="option" >
                             @{{ option }}
                           </option>
@@ -83,7 +83,7 @@ Reportes | @parent
                         </select>
                     </div>
                     <div class="marg025 btn-group" id="select_ids" >
-                        <select name="proxDias" class="form-control" size="1" v-model="valor_ids" id="select_ids">
+                        <select name="proxDias" class="form-control" size="1" v-model="valor_ids" id="selectids">
                           <option v-for="option in datos_select.ids" v-bind:value="option">
                             @{{ option }}
                           </option>
@@ -91,7 +91,7 @@ Reportes | @parent
                         </select>
                     </div>
                     <div class="marg025 btn-group" id="select_usuarios" >
-                        <select name="proxDias" class="form-control" size="1" v-model="valor_usuarios" id="select_usuarios">
+                        <select name="proxDias" class="form-control" size="1" v-model="valor_usuarios" id="selectusuarios">
                           <option v-for="option in datos_select.usuarios" v-bind:value="option">
                             @{{ option }}
                           </option>
@@ -205,6 +205,9 @@ const app = new Vue({
       tabla: {},
       locale: localeES,
       proyectoSelect:null,
+      cotizacionSelect:null,
+      clienteSelect:null,
+      usuarioSelect:null,
     },
     mounted(){
         var vue =this;
@@ -212,6 +215,21 @@ const app = new Vue({
         this.proyectoSelect= $('#selectproyectos').select2({ width: '100%'}).on('select2:select',function () {       
           var value = $("#selectproyectos").select2('data');
           vue.valor_proyectos = value[0].id
+          //this.tabla.columns(4).search(this.valor_proyectos).draw();
+        });
+        this.cotizacionSelect= $('#selectcotizacion').select2({ width: '100%'}).on('select2:select',function () {       
+          var value = $("#selectcotizacion").select2('data');
+          vue.valor_ids = value[0].id
+          //this.tabla.columns(4).search(this.valor_proyectos).draw();
+        });
+        this.clienteSelect= $('#selectclientes').select2({ width: '100%'}).on('select2:select',function () {       
+          var value = $("#selectclientes").select2('data');
+          vue.valor_clientes = value[0].id
+          //this.tabla.columns(4).search(this.valor_proyectos).draw();
+        });
+        this.usuarioSelect= $('#selectusuarios').select2({ width: '100%'}).on('select2:select',function () {       
+          var value = $("#selectusuarios").select2('data');
+          vue.valor_usuarios = value[0].id
           //this.tabla.columns(4).search(this.valor_proyectos).draw();
         });
         //console.log(this.valor_proyectos);
