@@ -101,6 +101,17 @@ Reportes | @parent
       data: {!! json_encode($data) !!},
       clienteCargado:'',
       locale: localeES,
+      clienteSelect:null,
+    },
+    mounted(){
+       var vue =this;
+       this.clienteSelect= $('#selectCliente').select2({ width: '100%'}).on('select2:select',function () {       
+          var value = $("#selectCliente").select2('data');
+          vue.clienteCargado = value[0].id
+          vue.cargar();
+          //this.tabla.columns(4).search(this.valor_proyectos).draw();
+        });
+
     },
     watch:{
         data: function(val){

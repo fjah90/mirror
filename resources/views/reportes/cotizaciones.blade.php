@@ -23,6 +23,13 @@ Reportes | @parent
           <div class="panel product-details">
             <div class="panel-heading">
               <h3 class="panel-title">Reporte de Cotizaciones</h3>
+              <!--
+              <div class="marg025 btn-group">
+                  <button class="btn btn-xs btn-primary" v-on:click="pdf">
+                      PDF
+                  </button>
+              </div>
+            -->
             </div>
             <div class="panel-body">
                 <div id="oculto_filtros" class="hide">
@@ -67,7 +74,7 @@ Reportes | @parent
                       </template>
                     </dropdown>
                     <div class="marg025 btn-group" id="select_clientes" >
-                        <select name="proxDias" class="form-control" size="1" v-model="valor_clientes" id="select_clientes">
+                        <select name="proxDias" class="form-control" size="1" v-model="valor_clientes" id="selectclientes">
                         <option v-for="(option, index) in datos_select.clientes" v-bind:value="option" >
                             @{{ option }}
                           </option>
@@ -75,7 +82,7 @@ Reportes | @parent
                         </select>
                     </div>
                     <div class="marg025 btn-group" id="select_proyectos" >
-                        <select name="proxDias" class="form-control" size="1" v-model="valor_proyectos" id="select_proyectos">
+                        <select name="proxDias" class="form-control" size="1" v-model="valor_proyectos" id="selectproyectos" tabindex="-1">
                           <option v-for="option in datos_select.proyectos" v-bind:value="option">
                             @{{ option }}
                           </option>
@@ -83,7 +90,7 @@ Reportes | @parent
                         </select>
                     </div>
                     <div class="marg025 btn-group" id="select_ids" >
-                        <select name="proxDias" class="form-control" size="1" v-model="valor_ids" id="select_ids">
+                        <select name="proxDias" class="form-control" size="1" v-model="valor_ids" id="selectids">
                           <option v-for="option in datos_select.ids" v-bind:value="option">
                             @{{ option }}
                           </option>
@@ -91,7 +98,7 @@ Reportes | @parent
                         </select>
                     </div>
                     <div class="marg025 btn-group" id="select_usuarios" >
-                        <select name="proxDias" class="form-control" size="1" v-model="valor_usuarios" id="select_usuarios">
+                        <select name="proxDias" class="form-control" size="1" v-model="valor_usuarios" id="selectusuarios">
                           <option v-for="option in datos_select.usuarios" v-bind:value="option">
                             @{{ option }}
                           </option>
@@ -188,6 +195,7 @@ Reportes | @parent
 
 {{-- footer_scripts --}}
 @section('footer_scripts')
+<script src="{{ URL::asset('js/plugins/zangdar/zangdar.min.js') }}" ></script>
 <script>
 Vue.config.devtools = true;
 const app = new Vue({
@@ -202,10 +210,39 @@ const app = new Vue({
       valor_usuarios:'Usuarios',
       datos_select:{clientes:[], proyectos:[], ids:[], usuarios:[]},   
       tabla: {},
-      locale: localeES
+      locale: localeES,
+      proyectoSelect:null,
+      cotizacionSelect:null,
+      clienteSelect:null,
+      usuarioSelect:null,
     },
     mounted(){
         var vue =this;
+
+        this.proyectoSelect= $('#selectproyectos').select2({ width: '100%'}).on('select2:select',function () {       
+          var value = $("#selectproyectos").select2('data');
+          vue.valor_proyectos = value[0].id
+          //this.tabla.columns(4).search(this.valor_proyectos).draw();
+        });
+        this.cotizacionSelect= $('#selectids').select2({ width: '100%'}).on('select2:select',function () {       
+          var value = $("#selectids").select2('data');
+          vue.valor_ids = value[0].id
+          //this.tabla.columns(4).search(this.valor_proyectos).draw();
+        });
+        this.clienteSelect= $('#selectclientes').select2({ width: '100%'}).on('select2:select',function () {       
+          var value = $("#selectclientes").select2('data');
+          vue.valor_clientes = value[0].id
+          //this.tabla.columns(4).search(this.valor_proyectos).draw();
+        });
+        this.usuarioSelect= $('#selectusuarios').select2({ width: '100%'}).on('select2:select',function () {       
+          var value = $("#selectusuarios").select2('data');
+          vue.valor_usuarios = value[0].id
+          //this.tabla.columns(4).search(this.valor_proyectos).draw();
+        });
+        //console.log(this.valor_proyectos);
+        
+
+
         this.cotizaciones=this.cotizaciones;
         console.log(this.cotizaciones[0].prospecto.cliente.nombre)
         console.log(this.cotizaciones[0].entradas[0].cantidad)
@@ -216,26 +253,26 @@ const app = new Vue({
             
             //Crear y llenar los select para clientes 
             vue.datos_select.clientes.push('Clientes')
-            vue.datos_select.clientes.push('Todos');
+            vue.datos_select.clientes.push('');
             this.api().column(3).data().sort().unique().each(function(d,j){   
               vue.datos_select.clientes.push(d);
             });
             //Crear y llenar los select para clientes 
             vue.datos_select.proyectos.push('Proyectos')
-            vue.datos_select.proyectos.push('Todos');
+            vue.datos_select.proyectos.push('');
             this.api().column(4).data().sort().unique().each(function(d,j){   
               vue.datos_select.proyectos.push(d);
             });
 
             vue.datos_select.ids.push('Cotización')
-            vue.datos_select.ids.push('Todos');
+            vue.datos_select.ids.push('');
             this.api().column(1).data().sort().unique().each(function(d,j){   
               vue.datos_select.ids.push(d);
             });
 
 
             vue.datos_select.usuarios.push('Usuarios')
-            vue.datos_select.usuarios.push('Todos');
+            vue.datos_select.usuarios.push('');
             this.api().column(10).data().sort().unique().each(function(d,j){   
               vue.datos_select.usuarios.push(d);
             });
@@ -280,6 +317,8 @@ const app = new Vue({
       $("#fechas_container").append($("#select_ids"));
       $("#fechas_container").append($("#select_usuarios"));
 
+        
+
       $.fn.dataTableExt.afnFiltering.push(
         function( settings, data, dataIndex ) {
           var min  = vue.fecha_ini;
@@ -309,6 +348,7 @@ const app = new Vue({
         this.tabla.columns(3).search(this.valor_clientes).draw();
       },
       valor_proyectos:function(val){
+        console.log(val);
         this.tabla.columns(4).search(this.valor_proyectos).draw();
       },
       valor_ids:function(val){
@@ -330,6 +370,35 @@ const app = new Vue({
       dateParser(value){
   			return moment(value, 'DD/MM/YYYY').toDate().getTime();
       },
+      pdf(){
+        datos = this.tabla.rows( { search:'applied' } ).data();
+
+        var formData = objectToFormData(datos, {indices: true});
+
+        console.log(datos);
+
+        axios.post('/reportes/cotizaciones/pdf', formData,{headers: {'Content-Type': 'multipart/form-data'}
+        })
+        .then(({data}) => {
+          swal({
+            title: "Reporte generado",
+            text: "",
+            type: "success"
+          }).then(()=>{
+           
+          });
+        })
+        .catch(({response}) => {
+          console.error(response);
+          this.cargando = false;
+          swal({
+            title: "Error",
+            text: response.data.message || "Ocurrio un error inesperado, intente mas tarde",
+            type: "error"
+          });
+        });
+
+      }
       
     }
 });

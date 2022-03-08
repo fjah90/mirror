@@ -67,7 +67,7 @@ Reportes | @parent
                       </template>
                     </dropdown>
                     <div class="marg025 btn-group" id="select_proveedores" >
-                        <select name="proxDias" class="form-control" size="1" v-model="valor_proveedores" id="select_proveedores">
+                        <select name="proxDias" class="form-control" size="1" v-model="valor_proveedores" id="selectproveedores">
                         <option v-for="(option, index) in datos_select.proveedores" v-bind:value="option" >
                             @{{ option }}
                           </option>
@@ -75,7 +75,7 @@ Reportes | @parent
                         </select>
                     </div>
                     <div class="marg025 btn-group" id="select_proyectos" >
-                        <select name="proxDias" class="form-control" size="1" v-model="valor_proyectos" id="select_proyectos">
+                        <select name="proxDias" class="form-control" size="1" v-model="valor_proyectos" id="selectproyectos">
                           <option v-for="option in datos_select.proyectos" v-bind:value="option">
                             @{{ option }}
                           </option>
@@ -83,7 +83,7 @@ Reportes | @parent
                         </select>
                     </div>
                     <div class="marg025 btn-group" id="select_ids" >
-                        <select name="proxDias" class="form-control" size="1" v-model="valor_ids" id="select_ids">
+                        <select name="proxDias" class="form-control" size="1" v-model="valor_ids" id="selectids">
                           <option v-for="option in datos_select.ids" v-bind:value="option">
                             @{{ option }}
                           </option>
@@ -161,10 +161,29 @@ const app = new Vue({
       valor_ids:'Compra',
       datos_select:{proveedores:[], proyectos:[], ids:[]},   
       tabla: {},
-      locale: localeES
+      locale: localeES,
+      proyectoSelect:null,
+      cotizacionSelect:null,
+      clienteSelect:null,
     },
     mounted(){
         var vue =this;
+        this.proyectoSelect= $('#selectproyectos').select2({ width: '100%'}).on('select2:select',function () {       
+          var value = $("#selectproyectos").select2('data');
+          vue.valor_proyectos = value[0].id
+          //this.tabla.columns(4).search(this.valor_proyectos).draw();
+        });
+        this.cotizacionSelect= $('#selectproveedores').select2({ width: '100%'}).on('select2:select',function () {       
+          var value = $("#selectproveedores").select2('data');
+          vue.valor_proveedores = value[0].id
+          //this.tabla.columns(4).search(this.valor_proyectos).draw();
+        });
+        this.clienteSelect= $('#selectids').select2({ width: '100%'}).on('select2:select',function () {       
+          var value = $("#selectids").select2('data');
+          vue.valor_ids = value[0].id
+          //this.tabla.columns(4).search(this.valor_proyectos).draw();
+        });
+
       this.tabla = $("#tabla").DataTable({
           "dom": 'f<"#fechas_container.pull-left">ltip',
           "order":[],
