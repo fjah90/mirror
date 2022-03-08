@@ -98,7 +98,7 @@ Reportes | @parent
                           
                         </select>
                     </div>
-                    <div class="btn-group">
+                    <div class="marg025 btn-group">
                         <button class="btn btn-xs btn-primary" v-on:click="pdf">
                             PDF
                         </button>
