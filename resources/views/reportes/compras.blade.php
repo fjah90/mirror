@@ -307,7 +307,7 @@ const app = new Vue({
       pdf(){
         datos = this.tabla.rows( { search:'applied' } ).data(); 
         var datosfinal = {
-          datos = []
+          datos : []
         };
         var dat = [];
 
