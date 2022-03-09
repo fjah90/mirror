@@ -294,7 +294,7 @@ class ReportesController extends Controller
             }
         }
 
-        Excel::create('ReporteCuentaCliente', function($excel) use($dataF) {
+        Excel::create('ReporteCuenta', function($excel) use($dataF) {
  
             $excel->sheet('CuentaCliente', function($sheet) use($dataF){
 
