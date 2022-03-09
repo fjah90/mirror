@@ -41,14 +41,14 @@ class ReportesController extends Controller
         $totalUsd = $request->totalUsd;
         $url = $url = 'reportes/cotizaciones.pdf';
 
-        foreach($datos as $dato){
+        foreach($datos as $key => $dato){
             $dato[5] = str_replace("<span>","",$dato[5]);
             $dato[5] = str_replace("</span><br>","",$dato[5]);
             $dato[6] = str_replace("<span>","",$dato[6]);
             $dato[6] = str_replace("</span><br>","",$dato[6]);
-            echo($dato[6]);
+            $datos[$key][5] = $dato[5];
+            $datos[$key][6] = $dato[6];
         }
-        //dd($datos);
 
         $reportePDF = PDF::loadView('reportes.cotizacionesPDF', compact('datos', 'totalUsd','totalMxn'));
         Storage::disk('public')->put($url, $reportePDF->output());
