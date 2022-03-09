@@ -507,7 +507,7 @@
     </div>
 
     <!-- Espacio para que el footer no se sobreponga a la tabla -->
-    {{-- <div class="row">
+     <div class="row">
       <div class="col-lg-12" style="height:180px;">
           <table class="table table-cotizacion">
           <thead>
@@ -546,7 +546,7 @@
         </table>
 
       </div>
-    </div> --}}
+    </div> 
 
     {{-- <div class="row footer" style="page-break-inside: avoid;"> --}}
     <div class="row" style="page-break-inside: avoid;">
