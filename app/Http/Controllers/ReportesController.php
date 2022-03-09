@@ -48,6 +48,7 @@ class ReportesController extends Controller
             $dato[6] = str_replace('</span><br>','',$dato[6]);
 
         }
+        dd($datos);
 
         $reportePDF = PDF::loadView('reportes.cotizacionesPDF', compact('datos', 'totalUsd','totalMxn'));
         Storage::disk('public')->put($url, $reportePDF->output());
