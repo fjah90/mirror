@@ -207,7 +207,6 @@ Reportes | @parent
         });
       },
       pdf(){
-        datos = this.tabla.rows( { search:'applied' } ).data(); 
         var datosfinal = {
           cliente : this.clienteCargado,       
           totalMxnMonto: this.totalmmonto,
