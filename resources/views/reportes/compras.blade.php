@@ -24,7 +24,7 @@ Reportes | @parent
             <div class="panel-heading">
               <h3 class="panel-title">Reporte de Compras</h3>
               <div class="marg025 btn-group">
-                  <button class="btn btn-xs btn-primary" v-on:click="pdf">
+                  <button class="btn btn-primary" v-on:click="pdf">
                       PDF
                   </button>
               </div>
