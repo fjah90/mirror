@@ -107,6 +107,7 @@ Reportes | @parent
       clienteCargado:'',
       locale: localeES,
       clienteSelect:null,
+      tabla:{},
       totalmmonto:'',
       totalmfacturado:'',
       totalmporfacturar:'',
@@ -156,7 +157,17 @@ Reportes | @parent
 
             });
 
-            
+            this.totalmmonto = totalMxn.monto;
+            this.totalmfacturado = totalMxn.facturado;
+            this.totalmporfacturar = totalMxn.porFacturar;
+            this.totalmpagado = totalMxn.pagado;
+            this.totalmpendiente = totalMxn.pendiente;
+
+            this.totaldmonto = totalDolares.monto;
+            this.totaldfacturado = totalDolares.facturado;
+            this.totaldporfacturar = totalDolares.porFacturar;
+            this.totaldpagado = totalDolares.pagado;
+            this.totaldpendiente = totalDolares.pendiente;
         }
      
     },
