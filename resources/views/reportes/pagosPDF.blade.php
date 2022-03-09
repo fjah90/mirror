@@ -502,7 +502,7 @@
 
     <div class="row margTop10">
       <div class="col-lg-12">
-        <h4>REPORTE DE COBROS</h4>
+        <h4>REPORTE DE PAGOS</h4>
       </div>
     </div>
 
