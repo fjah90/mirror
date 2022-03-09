@@ -84,7 +84,7 @@ class ReportesController extends Controller
             );
         }
 
-        $reporte = Excel::store('ReporteCompras', function($excel) use($dataF) {
+        $reporte = Excel::create('ReporteCompras', function($excel) use($dataF) {
  
             $excel->sheet('Compras', function($sheet) use($dataF){
 
@@ -93,6 +93,7 @@ class ReportesController extends Controller
             });
         })->export('xls');
         $url = $url = 'reportes/compras.xls';
+        dd($reporte);
         Storage::disk('public')->put($url, $reporte->output());
 
 
