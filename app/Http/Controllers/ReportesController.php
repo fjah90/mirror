@@ -68,6 +68,7 @@ class ReportesController extends Controller
         $totalMxn = $request->totalMxn;
         $totalUsd = $request->totalUsd;
         $dataF = [];
+        dd($request);
         foreach ($datos as $dato) {
 
             array_push($dataF, 
