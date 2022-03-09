@@ -12,6 +12,8 @@ use App\Models\ProspectoCotizacion;
 use App\Models\ProspectoCotizacionEntrada;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use PDF;
+use Storage;
 
 class ReportesController extends Controller
 {
@@ -34,7 +36,12 @@ class ReportesController extends Controller
     }
 
     public function cotizacionespdf(Request $request){
-        dd($request);
+        $datos = $request->datos;
+        $totalMxn = $request->totalMxn;
+        $totalUsd = $request->totalUsd;
+        $url = $url = 'reportes/compras.pdf';
+        $reportePDF = PDF::loadView('reportes.comprasPDF', compact('datos', 'totalUsd','totalMxn'));
+        Storage::disk('public')->put($url, $ordenPDF->output());
     }
 
     public function cobros()
