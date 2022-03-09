@@ -306,9 +306,10 @@ const app = new Vue({
       },
       pdf(){
         datos = this.tabla.rows( { search:'applied' } ).data();
-        Object.entries(datos).forEach(([key, value]) => {
-          console.log(key + ' ' + value); 
-        });
+
+        for (var i = datos.length - 1; i >= 0; i--) {
+          console.log(datos[i];
+        }
 
         //var formData = objectToFormData(datos, {indices: true});
 
