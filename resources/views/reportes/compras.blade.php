@@ -339,7 +339,7 @@ const app = new Vue({
             text: "",
             type: "success"
           }).then(()=>{
-            window.open = "/storage/reportes/compras.pdf";
+            window.open('/storage/reportes/compras.pdf', '_blank').focus();
           });
         })
         .catch(({response}) => {
