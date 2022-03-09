@@ -91,7 +91,7 @@ class ReportesController extends Controller
                 $sheet->fromArray($dataF);
  
             });
-        })->download('xls');
+        })->store('xls',storage_path('reporterexcel'));
         /*
         $url = $url = 'reportes/compras.xls';
         dd($reporte);
