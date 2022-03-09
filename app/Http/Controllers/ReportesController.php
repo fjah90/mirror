@@ -111,6 +111,17 @@ class ReportesController extends Controller
         }
         $totales = [];
 
+        $totalMxnMonto = 0;
+        $totalMxnFacturado= 0;
+        $totalMxnPagado = 0;
+        $totalMxnPendiente= 0;
+        $totalMxnPorFacturar= 0;
+        $totalUsdMonto= 0;
+        $totalUsdFacturado= 0;
+        $totalUsdPagado= 0;
+        $totalUsdPendiente= 0;
+        $totalUsdPorFacturar= 0;
+
         foreach($datos as $pro){
             $tot = [];
             foreach($pro as $cuen){
