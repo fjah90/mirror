@@ -84,7 +84,7 @@ class ReportesController extends Controller
             );
         }
 
-        dd($dataF);
+        //dd($dataF);
 
         Excel::create('ReporteCompras', function($excel) use($dataF) {
  
@@ -93,7 +93,7 @@ class ReportesController extends Controller
                 $sheet->fromArray($dataF);
  
             });
-        })->store('xls',storage_path('reporterexcel'));
+        })->store('xls',storage_path('reportes'));
         /*
         $url = $url = 'reportes/compras.xls';
         dd($reporte);
