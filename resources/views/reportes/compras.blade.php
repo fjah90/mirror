@@ -306,11 +306,12 @@ const app = new Vue({
       },
       pdf(){
         datos = this.tabla.rows( { search:'applied' } ).data();
-        console.log(datos);
+        console.log(datos.entries());
 
         //var formData = objectToFormData(datos, {indices: true});
 
         //console.log(datos);
+
 
         axios.post('/reportes/cotizaciones/pdf', formData,{headers: {'Content-Type': 'multipart/form-data'}
         })
