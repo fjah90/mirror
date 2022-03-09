@@ -23,6 +23,7 @@ class ConvertArraysWithElementCeroNullToEmptyArrays
     }
 
     private function convertArraysWithElementCeroNullToEmptyArrays($inputs){
+      dd($inputs);
       foreach ($inputs as $key => $input) {
         if(is_array($input)){
           if(count($input)==1 && is_null($input[0])) $inputs[$key] = array();
