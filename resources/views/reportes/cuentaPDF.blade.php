@@ -544,21 +544,21 @@
               <td></td>
               <td>MXN</td>
               <td>Total : {{$totales[$key][0]}}</td>
-              <td>Total Facturado :{{$totales[$key][1]</td>
-              <td>Total Por Facturar :{{$totales[$key][4]</td>
-              <td>Total Pagado :{{$totales[$key][2]</td>
-              <td>Total Pendiente :{{$totales[$key][3]</td>
+              <td>Total Facturado :{{$totales[$key][1]}}</td>
+              <td>Total Por Facturar :{{$totales[$key][4]}}</td>
+              <td>Total Pagado :{{$totales[$key][2]}}</td>
+              <td>Total Pendiente :{{$totales[$key][3]}}</td>
             </tr>
             <tr>
               <td></td>
               <td></td>
               <td></td>
               <td>Dolares</td>
-              <td>Total : {{$totales[$key][5]</td>
-              <td>Total Facturado : {{$totales[$key][6]</td>
-              <td>Total Por Facturar :{{$totales[$key][9]</td>
-              <td>Total Pagado : {{$totales[$key][7]</td>
-              <td>Total Pendiente :{{$totales[$key][8]</td>
+              <td>Total : {{$totales[$key][5]}}</td>
+              <td>Total Facturado : {{$totales[$key][6]}}</td>
+              <td>Total Por Facturar :{{$totales[$key][9]}}</td>
+              <td>Total Pagado : {{$totales[$key][7]}}</td>
+              <td>Total Pendiente :{{$totales[$key][8]}}</td>
             </tr>
           </tbody>
         </table>
