@@ -527,15 +527,15 @@
           <tbody>
             @foreach($proyecto as $cuenta)
             <tr>
-              <td class="text-center">{{$cuenta.cotizacionFecha}}</td>
-              <td class="text-center">{{$cuenta.cotizacion_id}}</td>
-              <td class="text-center">{{$cuenta.aprobadoEn }}</td>
-              <td class="text-center">{{$cuenta.moneda}}</td>
-              <td class="text-center">{{$cuenta.total}}</td>
-              <td class="text-center">{{$cuenta.facturado}}</td>
-              <td class="text-center">{{$cuenta.total - $cuenta.facturado}}</td>
-              <td class="text-center">{{$cuenta.pagado}}</td>
-              <td class="text-center">{{$cuenta.pendiente}}</td>
+              <td class="text-center">{{$cuenta->cotizacionFecha}}</td>
+              <td class="text-center">{{$cuenta->cotizacion_id}}</td>
+              <td class="text-center">{{$cuenta->aprobadoEn }}</td>
+              <td class="text-center">{{$cuenta->moneda}}</td>
+              <td class="text-center">{{$cuenta->total}}</td>
+              <td class="text-center">{{$cuenta->facturado}}</td>
+              <td class="text-center">{{$cuenta->total - $cuenta->facturado}}</td>
+              <td class="text-center">{{$cuenta->pagado}}</td>
+              <td class="text-center">{{$cuenta->pendiente}}</td>
             </tr>
             @endforeach
             <tr>
