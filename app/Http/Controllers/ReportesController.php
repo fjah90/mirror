@@ -109,22 +109,45 @@ class ReportesController extends Controller
                 ->get();
             array_push($datos, $dato);
         }
+        $totales = [];
+
+        foreach($datos as $pro){
+            $tot = [];
+            foreach($pro as $cuen){
+                if ($cuen->moneda == 'Dolares') {
+                    $totalUsdMonto += $cuen->total;             
+                    $totalUsdFacturado = $cuen->facturado;
+                    $totalUsdPagado = $cuen->pagado;
+                    $totalUsdPendiente = $cuen->pendiente;
+                    
+
+                }
+                else{
+                    $totalMxnMonto = $cuen->total;
+                    $totalMxnFacturado = $cuen->facturado;
+                    $totalMxnPagado = $cuen->pagado;
+                    $totalMxnPendiente = $cuen->pendiente;
+                }
+            }
+            $totalUsdPorFacturar = $totalUsdMonto - $totalUsdFacturado;
+            $totalMxnPorFacturar = $totalMxnMonto - $totalMxnFacturado;
+            array_push($tot, $totalMxnMonto);
+            array_push($tot, $totalMxnFacturado);
+            array_push($tot, $totalMxnPagado);
+            array_push($tot, $totalMxnPendiente);
+            array_push($tot, $totalMxnPorFacturar);
+            array_push($tot, $totalUsdMonto);
+            array_push($tot, $totalUsdFacturado);
+            array_push($tot, $totalUsdPagado);
+            array_push($tot, $totalUsdPendiente);
+            array_push($tot, $totalUsdPorFacturar);
+            array_push($totales, $tot);
+        }
 
         $cliente = Cliente::find($request->id);
-
-        $totalMxnMonto = $request->totalMxnMonto;
-        $totalMxnFacturado = $request->totalMxnFacturado;
-        $totalMxnPorFacturar = $request->totalMxnPorFacturar;
-        $totalMxnPagado = $request->totalMxnPagado;
-        $totalMxnPendiente = $request->totalMxnPendiente;
-
-        $totalUsdMonto = $request->totalUsdMonto;
-        $totalUsdFacturado = $request->totalUsdFacturado;
-        $totalUsdPorFacturar = $request->totalUsdPorFacturar;
-        $totalUsdPagado = $request->totalUsdPagado;
-        $totalUsdPendiente = $request->totalUsdPendiente;
+        
         $url = $url = 'reportes/cuenta.pdf';
-        $reportePDF = PDF::loadView('reportes.cuentaPDF', compact('datos', 'totalUsdMonto', 'totalUsdFacturado', 'totalUsdPorFacturar', 'totalUsdPagado', 'totalUsdPendiente','totalMxnMonto' ,'totalMxnFacturado' ,'totalMxnPorFacturar' ,'totalMxnPendiente' ,'totalMxnPagado'));
+        $reportePDF = PDF::loadView('reportes.cuentaPDF', compact('datos','totales' ,'totalUsdMonto', 'totalUsdFacturado', 'totalUsdPorFacturar', 'totalUsdPagado', 'totalUsdPendiente','totalMxnMonto' ,'totalMxnFacturado' ,'totalMxnPorFacturar' ,'totalMxnPendiente' ,'totalMxnPagado'));
         Storage::disk('public')->put($url, $reportePDF->output());
     }
 

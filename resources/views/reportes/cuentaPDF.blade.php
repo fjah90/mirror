@@ -509,7 +509,7 @@
     <!-- Espacio para que el footer no se sobreponga a la tabla -->
      <div class="row">
       <div class="col-lg-12">
-        @foreach($datos as $proyecto)
+        @foreach($datos as $key => $proyecto)
           <table class="table table-cotizacion">
           <thead>
             <tr>
@@ -521,24 +521,45 @@
               <th class="text-center" style=" padding:3px 0 1px;">Facturado</th>
               <th class="text-center" style=" padding:3px 0 1px;">Por Facturar</th>
               <th class="text-center" style=" padding:3px 0 1px;">Pagado</th>
-              <th class="text-center" style=" padding:3px 0 1px;">Pendiente</th>
-              
+              <th class="text-center" style=" padding:3px 0 1px;">Pendiente</th>        
             </tr>
           </thead>
           <tbody>
             @foreach($proyecto as $cuenta)
             <tr>
-              <td class="text-center">{{$cuenta->cotizacionFecha}}</td>
-              <td class="text-center">{{$cuenta->cotizacion_id}}</td>
-              <td class="text-center">{{$cuenta->aprobadoEn }}</td>
-              <td class="text-center">{{$cuenta->moneda}}</td>
-              <td class="text-center">{{$cuenta->total}}</td>
-              <td class="text-center">{{$cuenta->facturado}}</td>
-              <td class="text-center">{{$cuenta->total - $cuenta->facturado}}</td>
-              <td class="text-center">{{$cuenta->pagado}}</td>
-              <td class="text-center">{{$cuenta->pendiente}}</td>
+              <td class="text-center">{{$cuenta.cotizacionFecha}}</td>
+              <td class="text-center">{{$cuenta.cotizacion_id}}</td>
+              <td class="text-center">{{$cuenta.aprobadoEn }}</td>
+              <td class="text-center">{{$cuenta.moneda}}</td>
+              <td class="text-center">{{$cuenta.total}}</td>
+              <td class="text-center">{{$cuenta.facturado}}</td>
+              <td class="text-center">{{$cuenta.total - $cuenta.facturado}}</td>
+              <td class="text-center">{{$cuenta.pagado}}</td>
+              <td class="text-center">{{$cuenta.pendiente}}</td>
             </tr>
             @endforeach
+            <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td>MXN</td>
+              <td>Total : {{$totales[$key][0]}}</td>
+              <td>Total Facturado :{{$totales[$key][1]</td>
+              <td>Total Por Facturar :{{$totales[$key][4]</td>
+              <td>Total Pagado :{{$totales[$key][2]</td>
+              <td>Total Pendiente :{{$totales[$key][3]</td>
+            </tr>
+            <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td>Dolares</td>
+              <td>Total : {{$totales[$key][5]</td>
+              <td>Total Facturado : {{$totales[$key][6]</td>
+              <td>Total Por Facturar :{{$totales[$key][9]</td>
+              <td>Total Pagado : {{$totales[$key][7]</td>
+              <td>Total Pendiente :{{$totales[$key][8]</td>
+            </tr>
           </tbody>
         </table>
         @endforeach
@@ -549,44 +570,6 @@
     <div class="row" style="page-break-inside: avoid;">
       <div class="bordered" style="margin:5px 15px; 0">
         <table class="" style="margin-bottom:0; width:100%;">
-          <tr>
-            <td></td>
-            <td>
-              Total
-            </td>
-            <td>
-              Monto
-            </td>
-            <td>
-              Facturado
-            </td>
-            <td>
-              Por Facturar
-            </td>
-            <td>
-              Pagado
-            </td>
-            <td>
-              Pendiente
-            </td>
-            <th class="text-center" style=" padding:3px 0 1px;">Moneda</th>
-          </tr>
-          <tr>
-            <td class="text-right" style="width:90%;"><strong>Total MXN:</strong></td>
-            <td class="text-right" style="width:10%;">{{$totalMxnMonto}}</td>
-            <td class="text-right" style="width:10%;">{{$totalMxnFacturado}}</td>
-            <td class="text-right" style="width:10%;">{{$totalMxnPorFacturar}}</td>
-            <td class="text-right" style="width:10%;">{{$totalMxnPagado}}</td>
-            <td class="text-right" style="width:10%;">{{$totalMxnPendiente}}</td>
-          </tr>
-          <tr>
-            <td class="text-right" style="width:90%;"><strong>Total Dolares:</strong></td>
-            <td class="text-right" style="width:10%;">{{$totalUsdMonto}}</td>
-            <td class="text-right" style="width:10%;">{{$totalUsdFacturado}}</td>
-            <td class="text-right" style="width:10%;">{{$totalUsdPorFacturar}}</td>
-            <td class="text-right" style="width:10%;">{{$totalUsdPagado}}</td>
-            <td class="text-right" style="width:10%;">{{$totalUsdPendiente}}</td>
-          </tr>
         </table>
       </div>
     </div>
