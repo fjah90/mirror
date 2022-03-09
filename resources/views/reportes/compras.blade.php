@@ -305,11 +305,16 @@ const app = new Vue({
   			return moment(value, 'DD/MM/YYYY').toDate().getTime();
       },
       pdf(){
-        datos = this.tabla.rows( { search:'applied' } ).data();
+        datos = this.tabla.rows( { search:'applied' } ).data(); 
+        var datosfinal = {};
 
         for (var i = datos.length - 1; i >= 0; i--) {
-          console.log(datos[i]);
+          var data = {}
+          Object.assign(data, datos[i]);
+          datosfinal.push(data);
         }
+
+        console.log(datosfinal);
 
         //var formData = objectToFormData(datos, {indices: true});
 
