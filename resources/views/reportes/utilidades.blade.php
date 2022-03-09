@@ -404,7 +404,7 @@ const app = new Vue({
             text: "",
             type: "success"
           }).then(()=>{
-            window.open('/storage/utilidades/compras.pdf', '_blank').focus();
+            window.open('/storage/reportes/utilidades.pdf', '_blank').focus();
           });
         })
         .catch(({response}) => {

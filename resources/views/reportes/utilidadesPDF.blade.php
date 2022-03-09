@@ -561,13 +561,13 @@
             </td>
           </tr>
           <tr>
-            <td class="text-right" style="width:90%;"><strong>MXN:</strong></td>
+            <td class="text-right" style="width:70%;"><strong>MXN:</strong></td>
             <td class="text-right" style="width:10%;">{{$totalMxnVentas}}</td>
             <td class="text-right" style="width:10%;">{{$totalMxnCosto}}</td>
             <td class="text-right" style="width:10%;">{{$totalMxnUtilidad}}</td>
           </tr>
           <tr>
-            <td class="text-right" style="width:90%;"><strong>Dolares:</strong></td>
+            <td class="text-right" style="width:70%;"><strong>Dolares:</strong></td>
             <td class="text-right" style="width:10%;">{{$totalUsdVentas}}</td>
             <td class="text-right" style="width:10%;">{{$totalUsdCosto}}</td>
             <td class="text-right" style="width:10%;">{{$totalUsdUtilidad}}</td>
