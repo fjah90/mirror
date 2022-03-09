@@ -41,7 +41,7 @@ class ReportesController extends Controller
         $totalUsd = $request->totalUsd;
         $url = $url = 'reportes/compras.pdf';
         $reportePDF = PDF::loadView('reportes.comprasPDF', compact('datos', 'totalUsd','totalMxn'));
-        Storage::disk('public')->put($url, $ordenPDF->output());
+        Storage::disk('public')->put($url, $reportePDF->output());
     }
 
     public function cobros()
