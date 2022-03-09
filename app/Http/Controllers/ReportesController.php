@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use PDF;
 use Storage;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ReportesController extends Controller
 {
@@ -66,9 +67,38 @@ class ReportesController extends Controller
         $datos = $request->datos;
         $totalMxn = $request->totalMxn;
         $totalUsd = $request->totalUsd;
+
+        foreach ($datos as $dato) {
+
+            array_push($data, 
+                $data = array(
+                    'FECHA DE APROBACION' => $dato[0],
+                    'NUMERO DE COMPRA' => $dato[1],
+                    'COTIZACION' => $dato[2],
+                    'PROVEEDOR' => $dato[3],
+                    'CLIENTE' => $dato[4],
+                    'PROYECTO' => $dato[5],
+                    'MONTO' => $dato[6],
+                    'MONEDA' => $dato[7],
+                )
+            );
+        }
+
+        Excel::create('ReporteCompras', function($excel) use($data) {
+ 
+            $excel->sheet('Compras', function($sheet) use($data){
+
+                $sheet->fromArray($dataAltas);
+ 
+            });
+        })->export('xls');
+
+
+        /*
         $url = $url = 'reportes/compras.pdf';
         $reportePDF = PDF::loadView('reportes.comprasPDF', compact('datos', 'totalUsd','totalMxn'));
         Storage::disk('public')->put($url, $reportePDF->output());
+        */
     }
     public function  pagospdf(Request $request){
         $datos = $request->datos;
