@@ -67,10 +67,10 @@ class ReportesController extends Controller
         $datos = $request->datos;
         $totalMxn = $request->totalMxn;
         $totalUsd = $request->totalUsd;
-
+        $dataF = [];
         foreach ($datos as $dato) {
 
-            array_push($data, 
+            array_push($dataF, 
                 $data = array(
                     'FECHA DE APROBACION' => $dato[0],
                     'NUMERO DE COMPRA' => $dato[1],
@@ -84,11 +84,11 @@ class ReportesController extends Controller
             );
         }
 
-        Excel::create('ReporteCompras', function($excel) use($data) {
+        Excel::create('ReporteCompras', function($excel) use($dataF) {
  
-            $excel->sheet('Compras', function($sheet) use($data){
+            $excel->sheet('Compras', function($sheet) use($dataF){
 
-                $sheet->fromArray($dataAltas);
+                $sheet->fromArray($dataF);
  
             });
         })->export('xls');
