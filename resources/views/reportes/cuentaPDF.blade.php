@@ -531,34 +531,34 @@
               <td class="text-center">{{$cuenta->cotizacion_id}}</td>
               <td class="text-center">{{$cuenta->aprobadoEn }}</td>
               <td class="text-center">{{$cuenta->moneda}}</td>
-              <td class="text-center">{{number_format($cuenta->total, 2, '.', ' ')}}</td>
-              <td class="text-center">{{number_format($cuenta->facturad, 2, '.', ' ')}}</td>
-              <td class="text-center">{{number_format($cuenta->total - $cuenta->facturado, 2, ',', ' ')}}</td>
-              <td class="text-center">{{number_format($cuenta->pagado, 2, '.', ' ')}}</td>
-              <td class="text-center">{{number_format($cuenta->pendiente, 2, '.', ' ')}}</td>
+              <td class="text-center">${{number_format($cuenta->total, 2, '.', ' ')}}</td>
+              <td class="text-center">${{number_format($cuenta->facturad, 2, '.', ' ')}}</td>
+              <td class="text-center">${{number_format($cuenta->total - $cuenta->facturado, 2, ',', ' ')}}</td>
+              <td class="text-center">${{number_format($cuenta->pagado, 2, '.', ' ')}}</td>
+              <td class="text-center">${{number_format($cuenta->pendiente, 2, '.', ' ')}}</td>
             </tr>
             @endforeach
             <tr>
               <td></td>
               <td></td>
               <td></td>
-              <td>MXN</td>
-              <td>Total : {{number_format($totales[$key][0], 2, '.', ' ')}}</td>
-              <td>Total Facturado :{{number_format($totales[$key][1], 2, '.', ' ')}}</td>
-              <td>Total Por Facturar :{{number_format($totales[$key][4], 2, '.', ' ')}}</td>
-              <td>Total Pagado :{{number_format($totales[$key][2], 2, '.', ' ')}}</td>
-              <td>Total Pendiente :{{number_format($totales[$key][3], 2, '.', ' ')}}</td>
+              <td class="text-dark">MXN</td>
+              <td class="text-dark">Total : ${{number_format($totales[$key][0], 2, '.', ' ')}}</td>
+              <td class="text-dark">Total Facturado : ${{number_format($totales[$key][1], 2, '.', ' ')}}</td>
+              <td class="text-dark">Total Por Facturar : ${{number_format($totales[$key][4], 2, '.', ' ')}}</td>
+              <td class="text-dark">Total Pagado : ${{number_format($totales[$key][2], 2, '.', ' ')}}</td>
+              <td class="text-dark">Total Pendiente : ${{number_format($totales[$key][3], 2, '.', ' ')}}</td>
             </tr>
             <tr>
               <td></td>
               <td></td>
               <td></td>
-              <td>Dolares</td>
-              <td>Total : {{number_format($totales[$key][5])}}</td>
-              <td>Total Facturado : {{number_format($totales[$key][6])}}</td>
-              <td>Total Por Facturar :{{number_format($totales[$key][9])}}</td>
-              <td>Total Pagado : {{number_format($totales[$key][7])}}</td>
-              <td>Total Pendiente :{{number_format($totales[$key][8])}}</td>
+              <td class="text-dark">Dolares</td>
+              <td class="text-dark">Total : ${{number_format($totales[$key][5])}}</td>
+              <td class="text-dark">Total Facturado : ${{number_format($totales[$key][6])}}</td>
+              <td class="text-dark">Total Por Facturar : ${{number_format($totales[$key][9])}}</td>
+              <td class="text-dark">Total Pagado : ${{number_format($totales[$key][7])}}</td>
+              <td class="text-dark">Total Pendiente : ${{number_format($totales[$key][8])}}</td>
             </tr>
           </tbody>
         </table>
