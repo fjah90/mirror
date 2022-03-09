@@ -509,7 +509,7 @@
     <!-- Espacio para que el footer no se sobreponga a la tabla -->
      <div class="row">
       <div class="col-lg-12">
-        @foreach($datos as $proyecto)
+        @foreach($datos->proyectos as $proyecto)
           <table class="table table-cotizacion">
           <thead>
             <tr>
@@ -526,7 +526,7 @@
             </tr>
           </thead>
           <tbody>
-            @foreach($proyecto as $cuenta)
+            @foreach($proyecto->cuentas as $cuenta)
             <tr>
               <td class="text-center">{{$cuenta.cotizacionFecha}}</td>
               <td class="text-center">{{$cuenta.cotizacion_id}}</td>
@@ -541,7 +541,7 @@
             @endforeach
           </tbody>
         </table>
-
+        @endforeach
       </div>
     </div> 
 
