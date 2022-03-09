@@ -114,11 +114,17 @@ Route::middleware('auth')->group(function () {
         Route::get('/reportes/cotizaciones', 'ReportesController@cotizaciones');
         Route::post('/reportes/cotizaciones/pdf', 'ReportesController@cotizacionespdf');
         Route::get('/reportes/cobros', 'ReportesController@cobros');
+        Route::post('/reportes/cobros/pdf', 'ReportesController@cobrospdf');
         Route::get('/reportes/compras', 'ReportesController@compras');
+        Route::post('/reportes/compras/pdf', 'ReportesController@compraspdf');
         Route::get('/reportes/pagos', 'ReportesController@pagos');
+        Route::post('/reportes/pagos/pdf', 'ReportesController@pagospdf');
         Route::get('/reportes/cuentaCliente', 'ReportesController@cuentaCliente');
+        Route::post('/reportes/cuentaCliente/pdf', 'ReportesController@cuentapdf');
         Route::get('/reportes/saldoProveedores', 'ReportesController@saldoProveedores');
+        Route::post('/reportes/saldoProveedores/pdf', 'ReportesController@saldoProveedorespdf');
         Route::get('/reportes/utilidades', 'ReportesController@utilidades');
+        Route::post('/reportes/utilidades/pdf', 'ReportesController@utilidadespdf');
 
     });
 

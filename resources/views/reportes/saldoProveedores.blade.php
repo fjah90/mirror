@@ -23,6 +23,11 @@ Reportes | @parent
           <div class="panel product-details">
             <div class="panel-heading">
               <h3 class="panel-title">Reporte Saldo Proveedores</h3>
+              <div class="marg025 btn-group">
+                  <button class="btn btn-primary" v-on:click="pdf">
+                      PDF
+                  </button>
+              </div>
             </div>
             <div class="panel-body">
                 <div id="oculto_filtros" class="hide">
@@ -169,6 +174,8 @@ const app = new Vue({
       proyectoSelect:null,
       proveedorSelect:null,
       comprasSelect:null,
+      totalm:'',
+      totald:''
     },
     mounted(){
         var vue =this;
@@ -241,6 +248,9 @@ const app = new Vue({
             });
  
             // Actualizar
+            vue.totalm = accounting.formatMoney(totalMxn, "$", 2);
+            vue.totald = accounting.formatMoney(totalUsd, "$", 2);
+
             var nCells = row.getElementsByTagName('th');
             nCells[1].innerHTML = accounting.formatMoney(totalMxn, "$", 2);
 
@@ -313,6 +323,50 @@ const app = new Vue({
       dateParser(value){
   			return moment(value, 'DD/MM/YYYY').toDate().getTime();
       },
+      pdf(){
+        datos = this.tabla.rows( { search:'applied' } ).data(); 
+        var datosfinal = {
+          datos : [],
+          totalMxn: this.totalm,
+          totalUsd: this.totald
+        };
+        var dat = [];
+
+        for (var i = datos.length - 1; i >= 0; i--) {
+          var data = {}
+          Object.assign(data, datos[i]);
+          //console.log(data);
+          datosfinal.datos.push(data);
+        }
+
+        //console.log(datosfinal);
+
+        var formData = objectToFormData(datosfinal, {indices: true});
+
+        //console.log(datos);
+
+        axios.post('/reportes/saldoProveedores/pdf', formData,{headers: {'Content-Type': 'multipart/form-data'}
+        })
+        .then(({data}) => {
+          swal({
+            title: "Reporte generado",
+            text: "",
+            type: "success"
+          }).then(()=>{
+            window.open('/storage/reportes/saldo.pdf', '_blank').focus();
+          });
+        })
+        .catch(({response}) => {
+          console.error(response);
+          this.cargando = false;
+          swal({
+            title: "Error",
+            text: response.data.message || "Ocurrio un error inesperado, intente mas tarde",
+            type: "error"
+          });
+        });
+
+      }
       
     }
 });

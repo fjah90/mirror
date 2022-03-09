@@ -35,7 +35,24 @@ class ReportesController extends Controller
         return view('reportes.cotizaciones', compact('cotizaciones'));
     }
 
-    public function cotizacionespdf(Request $request){
+    public function  cotizacionespdf(Request $request){
+        $datos = $request->datos;
+        $totalMxn = $request->totalMxn;
+        $totalUsd = $request->totalUsd;
+        $url = $url = 'reportes/cotizaciones.pdf';
+        $reportePDF = PDF::loadView('reportes.cotizacionesPDF', compact('datos', 'totalUsd','totalMxn'));
+        Storage::disk('public')->put($url, $reportePDF->output());
+    }
+    public function  cobrospdf(Request $request){
+        $datos = $request->datos;
+        $totalMxn = $request->totalMxn;
+        $totalUsd = $request->totalUsd;
+        $url = $url = 'reportes/cobros.pdf';
+        $reportePDF = PDF::loadView('reportes.cobrosPDF', compact('datos', 'totalUsd','totalMxn'));
+        Storage::disk('public')->put($url, $reportePDF->output());
+    }
+
+    public function  compraspdf(Request $request){
         $datos = $request->datos;
         $totalMxn = $request->totalMxn;
         $totalUsd = $request->totalUsd;
@@ -43,6 +60,55 @@ class ReportesController extends Controller
         $reportePDF = PDF::loadView('reportes.comprasPDF', compact('datos', 'totalUsd','totalMxn'));
         Storage::disk('public')->put($url, $reportePDF->output());
     }
+    public function  pagospdf(Request $request){
+        $datos = $request->datos;
+        $totalMxn = $request->totalMxn;
+        $totalUsd = $request->totalUsd;
+        $url = $url = 'reportes/pagos.pdf';
+        $reportePDF = PDF::loadView('reportes.pagosPDF', compact('datos', 'totalUsd','totalMxn'));
+        Storage::disk('public')->put($url, $reportePDF->output());
+    }
+
+    public function  saldopdf(Request $request){
+        $datos = $request->datos;
+        $totalMxn = $request->totalMxn;
+        $totalUsd = $request->totalUsd;
+        $url = $url = 'reportes/saldo.pdf';
+        $reportePDF = PDF::loadView('reportes.saldoPDF', compact('datos', 'totalUsd','totalMxn'));
+        Storage::disk('public')->put($url, $reportePDF->output());
+    }
+
+    public function  cuentaclientepdf(Request $request){
+        $datos = $request->datos;
+        $totalMxnMonto = $request->totalMxnMonto;
+        $totalMxnFacturado = $request->totalMxnFacturado;
+        $totalMxnPorFacturar = $request->totalMxnPorFacturar;
+        $totalMxnPagado = $request->totalMxnPagado;
+        $totalMxnPendiente = $request->totalMxnPendiente;
+
+        $totalUsdMonto = $request->totalUsdMonto;
+        $totalUsdFacturado = $request->totalUsdFacturado;
+        $totalUsdPorFacturar = $request->totalUsdPorFacturar;
+        $totalUsdPagado = $request->totalUsdPagado;
+        $totalUsdPendiente = $request->totalUsdPendiente;
+        $url = $url = 'reportes/cuenta.pdf';
+        $reportePDF = PDF::loadView('reportes.cuentaPDF', compact('datos', 'totalUsdMonto', 'totalUsdFacturado', 'totalUsdPorFacturar', 'totalUsdPagado', 'totalUsdPendiente','totalMxnMonto' ,'totalMxnFacturado' ,'totalMxnPorFacturar' ,'totalMxnPendiente' ,'totalMxnPagado'));
+        Storage::disk('public')->put($url, $reportePDF->output());
+    }
+
+    public function  utilidadespdf(Request $request){
+        $datos = $request->datos;
+        $totalMxnVentas = $request->totalMxnVentas;
+        $totalMxnCosto = $request->totalMxnCosto;
+        $totalMxnUtilidad = $request->totalMxnUtilidad;
+        $totalUsdVentas = $request->totalUsdVentas;
+        $totalUsdCosto = $request->totalUsdCosto;
+        $totalUsdUtilidad = $request->totalUsdUtilidad;
+        $url = $url = 'reportes/utilidades.pdf';
+        $reportePDF = PDF::loadView('reportes.utilidadesPDF', compact('datos', 'totalUsdVentas', 'totalUsdCosto', 'totalUsdUtilidad','totalMxnVentas','totalMxnCosto','totalMxnUtilidad'));
+        Storage::disk('public')->put($url, $reportePDF->output());
+    }
+
 
     public function cobros()
     {

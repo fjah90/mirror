@@ -331,7 +331,7 @@ const app = new Vue({
 
         //console.log(datos);
 
-        axios.post('/reportes/cotizaciones/pdf', formData,{headers: {'Content-Type': 'multipart/form-data'}
+        axios.post('/reportes/compras/pdf', formData,{headers: {'Content-Type': 'multipart/form-data'}
         })
         .then(({data}) => {
           swal({

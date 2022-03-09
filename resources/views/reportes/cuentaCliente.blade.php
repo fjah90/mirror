@@ -15,6 +15,11 @@ Reportes | @parent
           <div class="form-group p-10">
               <label class="col-md-3 control-label" for="example-select">Datos de: </label>
               <div class="col-md-9">
+                <div class="marg025 btn-group">
+                  <button class="btn btn-primary" v-on:click="pdf">
+                      PDF
+                  </button>
+                </div>
                 <select name="" id="selectCliente" class="form-control" @change="cargar()" v-model="clienteCargado">
                   @foreach($data['clientes'] as $cliente)
                     <option value="{{$cliente->id}}">{{$cliente->nombre}}</option>
@@ -102,6 +107,16 @@ Reportes | @parent
       clienteCargado:'',
       locale: localeES,
       clienteSelect:null,
+      totalmmonto:'',
+      totalmfacturado:'',
+      totalmporfacturar:'',
+      totalmpendiente:'',
+      totalmpagado:'',
+      totaldmonto:'',
+      totaldfacturado:'',
+      totaldporfacturar:'',
+      totaldpendiente:'',
+      totaldpagado:''
     },
     mounted(){
        var vue =this;
@@ -135,7 +150,20 @@ Reportes | @parent
                 totalMxn.porFacturar=+totalMxn.monto-totalMxn.facturado;
                 element['totalDolares']={...totalDolares};
                 element['totalMxn']=totalMxn;
+
             });
+
+            vue.totalmmonto = this.totalMxn.monto;
+            vue.totalmfacturado = this.totalMxn.facturado;
+            vue.totalmporfacturar = this.totalMxn.porFacturar;
+            vue.totalmpagado = this.totalMxn.pagado;
+            vue.totalmpendiente = this.totalMxn.pendiente;
+
+            vue.totaldmonto = this.totalDolares.monto;
+            vue.totaldfacturado = this.totalDolares.facturado;
+            vue.totaldporfacturar = this.totalDolares.porFacturar;
+            vue.totaldpagado = this.totalDolares.pagado;
+            vue.totaldpendiente = this.totalDolares.pendiente;
         }
      
     },
@@ -174,6 +202,58 @@ Reportes | @parent
             type: "error"
           });
         });
+      },
+      pdf(){
+        datos = this.tabla.rows( { search:'applied' } ).data(); 
+        var datosfinal = {
+          datos : [],       
+          totalMxnMonto: this.totalmmonto,
+          totalMxnFacturado: this.totalmfacturado,
+          totalMxnPorfacturar: this.totalmporfacturar,
+          totalMxnPagado: this.totalmpagado,
+          totalMxnPendiente: this.totalmpendiente,
+          totalUsdMonto: this.totaldmonto,
+          totalUsdFacturado: this.totaldfacturado,
+          totalUsdPorFacturar: this.totaldporfacturar,
+          totalUsdPagado: this.totaldpagado,
+          totalUsdPendiente: this.totaldpendiente,
+        };
+        var dat = [];
+
+        for (var i = datos.length - 1; i >= 0; i--) {
+          var data = {}
+          Object.assign(data, datos[i]);
+          //console.log(data);
+          datosfinal.datos.push(data);
+        }
+
+        //console.log(datosfinal);
+
+        var formData = objectToFormData(datosfinal, {indices: true});
+
+        //console.log(datos);
+
+        axios.post('/reportes/cuentaCliente/pdf', formData,{headers: {'Content-Type': 'multipart/form-data'}
+        })
+        .then(({data}) => {
+          swal({
+            title: "Reporte generado",
+            text: "",
+            type: "success"
+          }).then(()=>{
+            window.open('/storage/reportes/cuenta.pdf', '_blank').focus();
+          });
+        })
+        .catch(({response}) => {
+          console.error(response);
+          this.cargando = false;
+          swal({
+            title: "Error",
+            text: response.data.message || "Ocurrio un error inesperado, intente mas tarde",
+            type: "error"
+          });
+        });
+
       }
     }})
 </script>
