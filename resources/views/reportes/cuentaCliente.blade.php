@@ -107,7 +107,6 @@ Reportes | @parent
       clienteCargado:'',
       locale: localeES,
       clienteSelect:null,
-      tabla:{},
       totalmmonto:'',
       totalmfacturado:'',
       totalmporfacturar:'',
@@ -154,6 +153,7 @@ Reportes | @parent
 
             });
 
+            /*
             this.totalmmonto = totalMxn.monto;
             this.totalmfacturado = totalMxn.facturado;
             this.totalmporfacturar = totalMxn.porFacturar;
@@ -165,6 +165,8 @@ Reportes | @parent
             this.totaldporfacturar = totalDolares.porFacturar;
             this.totaldpagado = totalDolares.pagado;
             this.totaldpendiente = totalDolares.pendiente;
+
+            */
         }
      
     },
@@ -188,7 +190,6 @@ Reportes | @parent
         .then(({data}) => {
           console.log(data)
           this.data=data.data;
-          this.tabla.draw();
           swal({
             title: "Exito",
             text: "Datos Cargados",
