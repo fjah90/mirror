@@ -231,9 +231,9 @@ class ReportesController extends Controller
             );
         }
 
-        Excel::create('ReportePagos', function($excel) use($dataF) {
+        Excel::create('ReporteSaldo', function($excel) use($dataF) {
  
-            $excel->sheet('Pagos', function($sheet) use($dataF){
+            $excel->sheet('Saldo', function($sheet) use($dataF){
 
                 $sheet->fromArray($dataF);
  
