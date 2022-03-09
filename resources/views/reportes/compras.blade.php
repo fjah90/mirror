@@ -242,8 +242,8 @@ const app = new Vue({
             });
  
             // Actualizar
-            this.totalm = 10;
-            this.totald = accounting.formatMoney(totalUsd, "$", 2);
+            vue.totalm = accounting.formatMoney(totalMxn, "$", 2);
+            vue.totald = accounting.formatMoney(totalUsd, "$", 2);
 
             var nCells = row.getElementsByTagName('th');
             nCells[1].innerHTML = accounting.formatMoney(totalMxn, "$", 2);
