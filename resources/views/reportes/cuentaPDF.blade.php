@@ -509,6 +509,7 @@
     <!-- Espacio para que el footer no se sobreponga a la tabla -->
      <div class="row">
       <div class="col-lg-12">
+        @foreach($datos as $proyecto)
           <table class="table table-cotizacion">
           <thead>
             <tr>
@@ -525,17 +526,17 @@
             </tr>
           </thead>
           <tbody>
-            @foreach($datos as $entrada)
+            @foreach($proyecto as $cuenta)
             <tr>
-              <td class="text-center">{{$entrada[0]}}</td>
-              <td class="text-center">{{$entrada[1]}}</td>
-              <td class="text-center">{{$entrada[2]}}</td>
-              <td class="text-center">{{$entrada[3]}}</td>
-              <td class="text-center">{{$entrada[4]}}</td>
-              <td class="text-center">{{$entrada[5]}}</td>
-              <td class="text-center">{{$entrada[6]}}</td>
-              <td class="text-center">{{$entrada[7]}}</td>
-              <td class="text-center">{{$entrada[8]}}</td>
+              <td class="text-center">{{$cuenta.cotizacionFecha}}</td>
+              <td class="text-center">{{$cuenta.cotizacion_id}}</td>
+              <td class="text-center">{{$cuenta.aprobadoEn }}</td>
+              <td class="text-center">{{$cuenta.moneda}}</td>
+              <td class="text-center">{{$cuenta.total}}</td>
+              <td class="text-center">{{$cuenta.facturado}}</td>
+              <td class="text-center">{{$cuenta.total - $cuenta.facturado}}</td>
+              <td class="text-center">{{$cuenta.pagado}}</td>
+              <td class="text-center">{{$cuenta.pendiente}}</td>
             </tr>
             @endforeach
           </tbody>
