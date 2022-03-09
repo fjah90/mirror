@@ -84,7 +84,7 @@ class ReportesController extends Controller
             );
         }
 
-        $reporte = Excel::create('ReporteCompras', function($excel) use($dataF) {
+        $reporte = Excel::store('ReporteCompras', function($excel) use($dataF) {
  
             $excel->sheet('Compras', function($sheet) use($dataF){
 
