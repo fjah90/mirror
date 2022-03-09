@@ -40,6 +40,11 @@ class ReportesController extends Controller
         $dataF = [];
         foreach ($datos as $dato) {
 
+            $dato[5] = str_replace("<span>","",$dato[5]);
+            $dato[5] = str_replace("</span><br>","",$dato[5]);
+            $dato[6] = str_replace("<span>","",$dato[6]);
+            $dato[6] = str_replace("</span><br>","",$dato[6]);
+
             array_push($dataF, 
                 $data = array(
                     'FECHA ' => $dato[0],
@@ -205,7 +210,7 @@ class ReportesController extends Controller
         Storage::disk('public')->put($url, $reportePDF->output());
     }
 
-    public function  saldosexcel(Request $request){
+    public function  saldoexcel(Request $request){
         $datos = $request->datos;
         $dataF = [];
         foreach ($datos as $dato) {
