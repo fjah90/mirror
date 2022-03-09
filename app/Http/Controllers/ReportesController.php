@@ -285,7 +285,7 @@ class ReportesController extends Controller
                         'MONEDA' => $cuen->moneda,
                         'MONTO' => number_format($cuen->total, 2, '.', ' '),
                         'FACTURADO' => number_format($cuen->facturado, 2, '.', ' '),
-                        'POR FACTURAR' => number_format($cuen->total - $cuenta->facturado, 2, '.', ' '),
+                        'POR FACTURAR' => number_format($cuen->total - $cuen->facturado, 2, '.', ' '),
                         'PAGADO' => number_format($cuen->pagado, 2, '.', ' '),
                         'PENDIENTE' => number_format($cuen->pendiente, 2, '.', ' '),
                     )
