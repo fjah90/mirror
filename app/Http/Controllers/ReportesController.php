@@ -90,8 +90,28 @@ class ReportesController extends Controller
 
     public function  cuentapdf(Request $request){
 
-        dd($request);
-        $datos = $request->datos;
+        //datos
+        $datos    = [];
+        $cliente  = [];
+        
+        $proyectos = CuentaCobrar::leftjoin('prospectos_cotizaciones', 'cuentas_cobrar.cotizacion_id', '=', 'prospectos_cotizaciones.id')
+            ->select('cuentas_cobrar.proyecto')
+            ->where('cliente_id', "=", $request->cliente)
+            ->groupBy('proyecto')
+            ->get();
+
+        foreach ($proyectos as $value) {
+            $dato = CuentaCobrar::leftjoin('prospectos_cotizaciones', 'cuentas_cobrar.cotizacion_id', '=', 'prospectos_cotizaciones.id')
+                ->leftjoin('proyectos_aprobados', 'cuentas_cobrar.cotizacion_id', '=', 'proyectos_aprobados.cotizacion_id')
+                ->select('cuentas_cobrar.*', 'prospectos_cotizaciones.moneda', 'proyectos_aprobados.created_at as aprobadoEn', 'prospectos_cotizaciones.fecha as cotizacionFecha')
+                ->where('cuentas_cobrar.proyecto', "=", $value->proyecto)
+                ->orderBy('prospectos_cotizaciones.fecha', 'desc')
+                ->get();
+            array_push($datos, $dato);
+        }
+
+        $cliente = Cliente::find($request->id);
+
         $totalMxnMonto = $request->totalMxnMonto;
         $totalMxnFacturado = $request->totalMxnFacturado;
         $totalMxnPorFacturar = $request->totalMxnPorFacturar;
@@ -104,6 +124,7 @@ class ReportesController extends Controller
         $totalUsdPagado = $request->totalUsdPagado;
         $totalUsdPendiente = $request->totalUsdPendiente;
         $url = $url = 'reportes/cuenta.pdf';
+        dd($datos);
         $reportePDF = PDF::loadView('reportes.cuentaPDF', compact('datos', 'totalUsdMonto', 'totalUsdFacturado', 'totalUsdPorFacturar', 'totalUsdPagado', 'totalUsdPendiente','totalMxnMonto' ,'totalMxnFacturado' ,'totalMxnPorFacturar' ,'totalMxnPendiente' ,'totalMxnPagado'));
         Storage::disk('public')->put($url, $reportePDF->output());
     }
