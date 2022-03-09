@@ -308,7 +308,7 @@ const app = new Vue({
         datos = this.tabla.rows( { search:'applied' } ).data();
 
         for (var i = datos.length - 1; i >= 0; i--) {
-          console.log(datos[i];
+          console.log(datos[i]);
         }
 
         //var formData = objectToFormData(datos, {indices: true});
