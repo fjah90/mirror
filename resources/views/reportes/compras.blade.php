@@ -242,7 +242,7 @@ const app = new Vue({
             });
  
             // Actualizar
-            this.totalm = accounting.formatMoney(totalMxn, "$", 2);
+            this.totalm = 10;
             this.totald = accounting.formatMoney(totalUsd, "$", 2);
 
             var nCells = row.getElementsByTagName('th');
