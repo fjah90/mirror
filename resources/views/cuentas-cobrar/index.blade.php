@@ -24,7 +24,9 @@
         <div class="panel-heading">
           <h3 class="panel-title">
             <span class="p-10">Lista de Cuentas</span>
+
             <div class="p-10">
+              @role('Administrador')
               Ejecutivo  
               <select class="form-control" @change="cargar()" v-model="usuarioCargado" style="width:auto;display:inline-block;">
                 <option value="Todos">Todos</option>
@@ -32,7 +34,7 @@
                 <option value="{{$usuario->id}}">{{$usuario->name}}</option>
                 @endforeach
               </select>
-              
+              @endrole
             </div>
             <div class="p-10">
               Año  
