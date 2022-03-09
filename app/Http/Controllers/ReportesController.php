@@ -88,7 +88,7 @@ class ReportesController extends Controller
         Storage::disk('public')->put($url, $reportePDF->output());
     }
 
-    public function  cuentaclientepdf(Request $request){
+    public function  cuentapdf(Request $request){
         $datos = $request->datos;
         $totalMxnMonto = $request->totalMxnMonto;
         $totalMxnFacturado = $request->totalMxnFacturado;
