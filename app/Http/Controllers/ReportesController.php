@@ -280,14 +280,14 @@ class ReportesController extends Controller
                 array_push($dataF, 
                     $data = array(
                         'FECHA' => $cuen->cotizacionFecha,
-                        'NUMERO DE COTIZACION' => $cuenta->cotizacion_id,
-                        'FECHA DE APROBACION' => $cuenta->aprobadoEn ,
-                        'MONEDA' => $cuenta->moneda,
-                        'MONTO' => number_format($cuenta->total, 2, '.', ' '),
-                        'FACTURADO' => number_format($cuenta->facturado, 2, '.', ' '),
-                        'POR FACTURAR' => number_format($cuenta->total - $cuenta->facturado, 2, '.', ' '),
-                        'PAGADO' => number_format($cuenta->pagado, 2, '.', ' '),
-                        'PENDIENTE' => number_format($cuenta->pendiente, 2, '.', ' '),
+                        'NUMERO DE COTIZACION' => $cuen->cotizacion_id,
+                        'FECHA DE APROBACION' => $cuen->aprobadoEn ,
+                        'MONEDA' => $cuen->moneda,
+                        'MONTO' => number_format($cuen->total, 2, '.', ' '),
+                        'FACTURADO' => number_format($cuen->facturado, 2, '.', ' '),
+                        'POR FACTURAR' => number_format($cuen->total - $cuenta->facturado, 2, '.', ' '),
+                        'PAGADO' => number_format($cuen->pagado, 2, '.', ' '),
+                        'PENDIENTE' => number_format($cuen->pendiente, 2, '.', ' '),
                     )
                 );
                 
