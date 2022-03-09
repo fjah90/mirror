@@ -20,6 +20,11 @@ Reportes | @parent
                       PDF
                   </button>
                 </div>
+                <div class="marg025 btn-group">
+                  <button class="btn btn-success" v-on:click="excel">
+                      EXCEL
+                  </button>
+              </div>
                 <select name="" id="selectCliente" class="form-control" @change="cargar()" v-model="clienteCargado">
                   @foreach($data['clientes'] as $cliente)
                     <option value="{{$cliente->id}}">{{$cliente->nombre}}</option>
@@ -233,6 +238,46 @@ Reportes | @parent
             type: "success"
           }).then(()=>{
             window.open('/storage/reportes/cuenta.pdf', '_blank').focus();
+          });
+        })
+        .catch(({response}) => {
+          console.error(response);
+          this.cargando = false;
+          swal({
+            title: "Error",
+            text: response.data.message || "Ocurrio un error inesperado, intente mas tarde",
+            type: "error"
+          });
+        });
+
+      },
+      excel(){
+        var datosfinal = {
+          cliente : this.clienteCargado,       
+          totalMxnMonto: this.totalmmonto,
+          totalMxnFacturado: this.totalmfacturado,
+          totalMxnPorfacturar: this.totalmporfacturar,
+          totalMxnPagado: this.totalmpagado,
+          totalMxnPendiente: this.totalmpendiente,
+          totalUsdMonto: this.totaldmonto,
+          totalUsdFacturado: this.totaldfacturado,
+          totalUsdPorFacturar: this.totaldporfacturar,
+          totalUsdPagado: this.totaldpagado,
+          totalUsdPendiente: this.totaldpendiente,
+        };
+        var dat = [];
+
+        var formData = objectToFormData(datosfinal, {indices: true});
+
+        axios.post('/reportes/cuentaCliente/excel', formData,{headers: {'Content-Type': 'multipart/form-data'}
+        })
+        .then(({data}) => {
+          swal({
+            title: "Reporte generado",
+            text: "",
+            type: "success"
+          }).then(()=>{
+            window.open('/storage/reportes/ReporteCuenta.xls', '_blank').focus();
           });
         })
         .catch(({response}) => {

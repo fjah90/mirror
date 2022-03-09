@@ -35,6 +35,38 @@ class ReportesController extends Controller
             ->get();
         return view('reportes.cotizaciones', compact('cotizaciones'));
     }
+    public function  cotizacionesexcel(Request $request){
+        $datos = $request->datos;
+        $dataF = [];
+        foreach ($datos as $dato) {
+
+            array_push($dataF, 
+                $data = array(
+                    'FECHA ' => $dato[0],
+                    'NUMERO DE COTIZACION' => $dato[1],
+                    'FECHA DE APROBACION' => $dato[2],
+                    'CLIENTE' => $dato[3],
+                    'PROYECTO' => $dato[4],
+                    'MARCA' => $dato[5],
+                    'PROVEEDORES' => $dato[6],
+                    'IVA' => $dato[7],
+                    'MONTO' => $dato[8],
+                    'MONEDA' => $dato[9],
+                    'USUARIO' => $dato[10],
+                )
+            );
+        }
+
+        Excel::create('ReporteCotizaciones', function($excel) use($dataF) {
+ 
+            $excel->sheet('Cotizaciones', function($sheet) use($dataF){
+
+                $sheet->fromArray($dataF);
+ 
+            });
+        })->store('xls',storage_path('app/public/reportes'));
+
+    }
 
     public function  cotizacionespdf(Request $request){
         $datos = $request->datos;
@@ -54,6 +86,37 @@ class ReportesController extends Controller
         $reportePDF = PDF::loadView('reportes.cotizacionesPDF', compact('datos', 'totalUsd','totalMxn'));
         Storage::disk('public')->put($url, $reportePDF->output());
     }
+
+    public function  cobrosexcel(Request $request){
+        $datos = $request->datos;
+        $dataF = [];
+        foreach ($datos as $dato) {
+
+            array_push($dataF, 
+                $data = array(
+                    'FECHA DE APROBACION' => $dato[0],
+                    'NUMERO DE COMPRA' => $dato[1],
+                    'CLIENTE' => $dato[2],
+                    'PROYECTO' => $dato[3],
+                    'MONTO' => $dato[4],
+                    'MONEDA' => $dato[5],
+                )
+            );
+        }
+
+        Excel::create('ReporteCobros', function($excel) use($dataF) {
+ 
+            $excel->sheet('Cobros', function($sheet) use($dataF){
+
+                $sheet->fromArray($dataF);
+ 
+            });
+        })->store('xls',storage_path('app/public/reportes'));
+
+    }
+
+
+
     public function  cobrospdf(Request $request){
         $datos = $request->datos;
         $totalMxn = $request->totalMxn;
@@ -63,10 +126,8 @@ class ReportesController extends Controller
         Storage::disk('public')->put($url, $reportePDF->output());
     }
 
-    public function  compraspdf(Request $request){
+    public function  comprasexcel(Request $request){
         $datos = $request->datos;
-        $totalMxn = $request->totalMxn;
-        $totalUsd = $request->totalUsd;
         $dataF = [];
         foreach ($datos as $dato) {
 
@@ -84,7 +145,7 @@ class ReportesController extends Controller
             );
         }
 
-        Excel::create('ReporteC2ompras', function($excel) use($dataF) {
+        Excel::create('ReporteCompras', function($excel) use($dataF) {
  
             $excel->sheet('Compras', function($sheet) use($dataF){
 
@@ -93,13 +154,48 @@ class ReportesController extends Controller
             });
         })->store('xls',storage_path('app/public/reportes'));
 
+    }
 
-        /*
+    public function  compraspdf(Request $request){
+        $datos = $request->datos;
+        $totalMxn = $request->totalMxn;
+        $totalUsd = $request->totalUsd;
+        
         $url = $url = 'reportes/compras.pdf';
         $reportePDF = PDF::loadView('reportes.comprasPDF', compact('datos', 'totalUsd','totalMxn'));
         Storage::disk('public')->put($url, $reportePDF->output());
-        */
     }
+
+    public function  pagosexcel(Request $request){
+        $datos = $request->datos;
+        $dataF = [];
+        foreach ($datos as $dato) {
+
+            array_push($dataF, 
+                $data = array(
+                    'FECHA DE PAGO' => $dato[0],
+                    'NUMERO DE COMPRA' => $dato[1],
+                    'PROVEEDOR' => $dato[2],
+                    'CLIENTE' => $dato[3],
+                    'PROYECTO' => $dato[4],
+                    'DOCUMENTO' => $dato[5],
+                    'MONTO' => $dato[6],
+                    'MONEDA' => $dato[7],
+                )
+            );
+        }
+
+        Excel::create('ReportePagos', function($excel) use($dataF) {
+ 
+            $excel->sheet('Pagos', function($sheet) use($dataF){
+
+                $sheet->fromArray($dataF);
+ 
+            });
+        })->store('xls',storage_path('app/public/reportes'));
+
+    }
+
     public function  pagospdf(Request $request){
         $datos = $request->datos;
         $totalMxn = $request->totalMxn;
@@ -109,6 +205,38 @@ class ReportesController extends Controller
         Storage::disk('public')->put($url, $reportePDF->output());
     }
 
+    public function  saldosexcel(Request $request){
+        $datos = $request->datos;
+        $dataF = [];
+        foreach ($datos as $dato) {
+
+            array_push($dataF, 
+                $data = array(
+                    'NUMERO DE COMPRA' => $dato[0],
+                    'PROVEEDOR' => $dato[1],
+                    'CLIENTE' => $dato[2],
+                    'PROYECTO' => $dato[3],
+                    'DOCUMENTO' => $dato[4],
+                    'MONTO' => $dato[5],
+                    'MONEDA' => $dato[6],
+                    'FECHA DE FACTURA' => $dato[7],
+                    'FECHA DE VENCIMIENTO' => $dato[8],
+                    'DIAS A FAVOR O EN CONTRA' => $dato[9],
+                )
+            );
+        }
+
+        Excel::create('ReportePagos', function($excel) use($dataF) {
+ 
+            $excel->sheet('Pagos', function($sheet) use($dataF){
+
+                $sheet->fromArray($dataF);
+ 
+            });
+        })->store('xls',storage_path('app/public/reportes'));
+
+    }
+
     public function  saldopdf(Request $request){
         $datos = $request->datos;
         $totalMxn = $request->totalMxn;
@@ -116,6 +244,60 @@ class ReportesController extends Controller
         $url = $url = 'reportes/saldo.pdf';
         $reportePDF = PDF::loadView('reportes.saldoPDF', compact('datos', 'totalUsd','totalMxn'));
         Storage::disk('public')->put($url, $reportePDF->output());
+    }
+
+    public function  cuentaexcel(Request $request){
+        
+        //datos
+        $dataF = [];
+        $datos    = [];
+        $cliente  = [];
+        
+        $proyectos = CuentaCobrar::leftjoin('prospectos_cotizaciones', 'cuentas_cobrar.cotizacion_id', '=', 'prospectos_cotizaciones.id')
+            ->select('cuentas_cobrar.proyecto')
+            ->where('cliente_id', "=", $request->cliente)
+            ->groupBy('proyecto')
+            ->get();
+
+        foreach ($proyectos as $value) {
+            $dato = CuentaCobrar::leftjoin('prospectos_cotizaciones', 'cuentas_cobrar.cotizacion_id', '=', 'prospectos_cotizaciones.id')
+                ->leftjoin('proyectos_aprobados', 'cuentas_cobrar.cotizacion_id', '=', 'proyectos_aprobados.cotizacion_id')
+                ->select('cuentas_cobrar.*', 'prospectos_cotizaciones.moneda', 'proyectos_aprobados.created_at as aprobadoEn', 'prospectos_cotizaciones.fecha as cotizacionFecha')
+                ->where('cuentas_cobrar.proyecto', "=", $value->proyecto)
+                ->orderBy('prospectos_cotizaciones.fecha', 'desc')
+                ->get();
+            array_push($datos, $dato);
+        }
+
+        foreach($datos as $pro){
+            foreach($pro as $cuen){
+
+                array_push($dataF, 
+                    $data = array(
+                        'FECHA' => $cuen->cotizacionFecha,
+                        'NUMERO DE COTIZACION' => $cuenta->cotizacion_id,
+                        'FECHA DE APROBACION' => $cuenta->aprobadoEn ,
+                        'MONEDA' => $cuenta->moneda,
+                        'MONTO' => number_format($cuenta->total, 2, '.', ' '),
+                        'FACTURADO' => number_format($cuenta->facturado, 2, '.', ' '),
+                        'POR FACTURAR' => number_format($cuenta->total - $cuenta->facturado, 2, '.', ' '),
+                        'PAGADO' => number_format($cuenta->pagado, 2, '.', ' '),
+                        'PENDIENTE' => number_format($cuenta->pendiente, 2, '.', ' '),
+                    )
+                );
+                
+            }
+        }
+
+        Excel::create('ReporteCuentaCliente', function($excel) use($dataF) {
+ 
+            $excel->sheet('CuentaCliente', function($sheet) use($dataF){
+
+                $sheet->fromArray($dataF);
+ 
+            });
+        })->store('xls',storage_path('app/public/reportes'));
+
     }
 
     public function  cuentapdf(Request $request){
@@ -190,6 +372,36 @@ class ReportesController extends Controller
         $url = $url = 'reportes/cuenta.pdf';
         $reportePDF = PDF::loadView('reportes.cuentaPDF', compact('datos','totales' ,'totalUsdMonto', 'totalUsdFacturado', 'totalUsdPorFacturar', 'totalUsdPagado', 'totalUsdPendiente','totalMxnMonto' ,'totalMxnFacturado' ,'totalMxnPorFacturar' ,'totalMxnPendiente' ,'totalMxnPagado'));
         Storage::disk('public')->put($url, $reportePDF->output());
+    }
+
+    public function  utilidadesexcel(Request $request){
+        $datos = $request->datos;
+        $dataF = [];
+        foreach ($datos as $dato) {
+
+            array_push($dataF, 
+                $data = array(
+                    'NUMERO DE COTIZACION' => $dato[0],
+                    'CLIENTE' => $dato[1],
+                    'PROYECTO' => $dato[2],
+                    'MONTO' => $dato[3],
+                    'MONEDA' => $dato[4],
+                    'NUMERO DE COMPRA' => $dato[5],
+                    'COSTO' => $dato[6],
+                    'UTILIDAD' => $dato[7],
+                )
+            );
+        }
+
+        Excel::create('ReporteUtilidades', function($excel) use($dataF) {
+ 
+            $excel->sheet('Utilidades', function($sheet) use($dataF){
+
+                $sheet->fromArray($dataF);
+ 
+            });
+        })->store('xls',storage_path('app/public/reportes'));
+
     }
 
     public function  utilidadespdf(Request $request){

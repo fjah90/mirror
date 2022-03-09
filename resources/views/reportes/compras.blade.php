@@ -28,6 +28,11 @@ Reportes | @parent
                       PDF
                   </button>
               </div>
+              <div class="marg025 btn-group">
+                  <button class="btn btn-success" v-on:click="excel">
+                      EXCEL
+                  </button>
+              </div>
             
             </div>
             <div class="panel-body">
@@ -352,7 +357,52 @@ const app = new Vue({
           });
         });
 
+      },
+      excel(){
+        datos = this.tabla.rows( { search:'applied' } ).data(); 
+        var datosfinal = {
+          datos : [],
+          totalMxn: this.totalm,
+          totalUsd: this.totald
+        };
+        var dat = [];
+
+        for (var i = datos.length - 1; i >= 0; i--) {
+          var data = {}
+          Object.assign(data, datos[i]);
+          //console.log(data);
+          datosfinal.datos.push(data);
+        }
+
+        //console.log(datosfinal);
+
+        var formData = objectToFormData(datosfinal, {indices: true});
+
+        //console.log(datos);
+
+        axios.post('/reportes/compras/excel', formData,{headers: {'Content-Type': 'multipart/form-data'}
+        })
+        .then(({data}) => {
+          swal({
+            title: "Reporte generado",
+            text: "",
+            type: "success"
+          }).then(()=>{
+            window.open('/storage/reportes/ReporteCompras.xls', '_blank').focus();
+          });
+        })
+        .catch(({response}) => {
+          console.error(response);
+          this.cargando = false;
+          swal({
+            title: "Error",
+            text: response.data.message || "Ocurrio un error inesperado, intente mas tarde",
+            type: "error"
+          });
+        });
+
       }
+
       
     }
 });

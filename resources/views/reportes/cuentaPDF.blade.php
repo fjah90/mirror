@@ -532,7 +532,7 @@
               <td class="text-center">{{$cuenta->aprobadoEn }}</td>
               <td class="text-center">{{$cuenta->moneda}}</td>
               <td class="text-center">${{number_format($cuenta->total, 2, '.', ' ')}}</td>
-              <td class="text-center">${{number_format($cuenta->facturad, 2, '.', ' ')}}</td>
+              <td class="text-center">${{number_format($cuenta->facturado, 2, '.', ' ')}}</td>
               <td class="text-center">${{number_format($cuenta->total - $cuenta->facturado, 2, '.', ' ')}}</td>
               <td class="text-center">${{number_format($cuenta->pagado, 2, '.', ' ')}}</td>
               <td class="text-center">${{number_format($cuenta->pendiente, 2, '.', ' ')}}</td>
