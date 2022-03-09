@@ -572,7 +572,6 @@
           </tr>
           <tr>
             <td class="text-right" style="width:90%;"><strong>Total MXN:</strong></td>
-            <td class="text-right" style="width:10%;">{{$totalMxnTotal}}</td>
             <td class="text-right" style="width:10%;">{{$totalMxnMonto}}</td>
             <td class="text-right" style="width:10%;">{{$totalMxnFacturado}}</td>
             <td class="text-right" style="width:10%;">{{$totalMxnPorFacturar}}</td>
@@ -581,7 +580,6 @@
           </tr>
           <tr>
             <td class="text-right" style="width:90%;"><strong>Total Dolares:</strong></td>
-            <td class="text-right" style="width:10%;">{{$totalUsdTotal}}</td>
             <td class="text-right" style="width:10%;">{{$totalUsdMonto}}</td>
             <td class="text-right" style="width:10%;">{{$totalUsdFacturado}}</td>
             <td class="text-right" style="width:10%;">{{$totalUsdPorFacturar}}</td>
