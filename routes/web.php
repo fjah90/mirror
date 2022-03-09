@@ -116,7 +116,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/reportes/cobros', 'ReportesController@cobros');
         Route::post('/reportes/cobros/pdf', 'ReportesController@cobrospdf');
         Route::get('/reportes/compras', 'ReportesController@compras');
-        Route::post('/reportes/compras/pdf', 'ReportesController@compraspdf');
+        Route::get('/reportes/compras/pdf', 'ReportesController@compraspdf');
         Route::get('/reportes/pagos', 'ReportesController@pagos');
         Route::post('/reportes/pagos/pdf', 'ReportesController@pagospdf');
         Route::get('/reportes/cuentaCliente', 'ReportesController@cuentaCliente');

@@ -84,22 +84,14 @@ class ReportesController extends Controller
             );
         }
 
-        //dd($dataF);
-
-        Excel::create('ReporteCompras', function($excel) use($dataF) {
+        $reporte = Excel::create('ReporteCompras', function($excel) use($dataF) {
  
             $excel->sheet('Compras', function($sheet) use($dataF){
 
                 $sheet->fromArray($dataF);
  
             });
-        })->store('xls','public/reportes',true);
-        /*
-        $url = $url = 'reportes/compras.xls';
-        dd($reporte);
-        Storage::disk('public')->put($url, $reporte->output());
-        */
-
+        })->export('xls');
 
         /*
         $url = $url = 'reportes/compras.pdf';
