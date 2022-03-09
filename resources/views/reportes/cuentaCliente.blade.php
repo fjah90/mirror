@@ -127,12 +127,6 @@ Reportes | @parent
           vue.cargar();
           //this.tabla.columns(4).search(this.valor_proyectos).draw();
         });
-       this.tabla = $("#tablaActividades").DataTable({
-          "dom": 'f<"#fechas_container.pull-left">ltip',
-          "order":[],
-          initComplete: function () {
-          }
-        });
 
     },
     watch:{
@@ -214,7 +208,7 @@ Reportes | @parent
       pdf(){
         datos = this.tabla.rows( { search:'applied' } ).data(); 
         var datosfinal = {
-          datos : [],       
+          cliente : this.clienteCargado,       
           totalMxnMonto: this.totalmmonto,
           totalMxnFacturado: this.totalmfacturado,
           totalMxnPorfacturar: this.totalmporfacturar,
@@ -228,18 +222,7 @@ Reportes | @parent
         };
         var dat = [];
 
-        for (var i = datos.length - 1; i >= 0; i--) {
-          var data = {}
-          Object.assign(data, datos[i]);
-          //console.log(data);
-          datosfinal.datos.push(data);
-        }
-
-        //console.log(datosfinal);
-
         var formData = objectToFormData(datosfinal, {indices: true});
-
-        //console.log(datos);
 
         axios.post('/reportes/cuentaCliente/pdf', formData,{headers: {'Content-Type': 'multipart/form-data'}
         })

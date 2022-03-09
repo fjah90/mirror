@@ -89,6 +89,8 @@ class ReportesController extends Controller
     }
 
     public function  cuentapdf(Request $request){
+
+        dd($request);
         $datos = $request->datos;
         $totalMxnMonto = $request->totalMxnMonto;
         $totalMxnFacturado = $request->totalMxnFacturado;
