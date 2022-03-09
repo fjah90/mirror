@@ -23,6 +23,12 @@ Reportes | @parent
           <div class="panel product-details">
             <div class="panel-heading">
               <h3 class="panel-title">Reporte de Compras</h3>
+              <div class="marg025 btn-group">
+                  <button class="btn btn-xs btn-primary" v-on:click="pdf">
+                      PDF
+                  </button>
+              </div>
+            
             </div>
             <div class="panel-body">
                 <div id="oculto_filtros" class="hide">
@@ -298,6 +304,36 @@ const app = new Vue({
       dateParser(value){
   			return moment(value, 'DD/MM/YYYY').toDate().getTime();
       },
+      pdf(){
+        datos = this.tabla.rows( { search:'applied' } ).data();
+        console.log(datos);
+
+        //var formData = objectToFormData(datos, {indices: true});
+
+        //console.log(datos);
+
+        axios.post('/reportes/cotizaciones/pdf', formData,{headers: {'Content-Type': 'multipart/form-data'}
+        })
+        .then(({data}) => {
+          swal({
+            title: "Reporte generado",
+            text: "",
+            type: "success"
+          }).then(()=>{
+           
+          });
+        })
+        .catch(({response}) => {
+          console.error(response);
+          this.cargando = false;
+          swal({
+            title: "Error",
+            text: response.data.message || "Ocurrio un error inesperado, intente mas tarde",
+            type: "error"
+          });
+        });
+
+      }
       
     }
 });
