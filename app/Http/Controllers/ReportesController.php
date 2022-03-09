@@ -124,7 +124,10 @@ class ReportesController extends Controller
         $totalUsdPagado = $request->totalUsdPagado;
         $totalUsdPendiente = $request->totalUsdPendiente;
         $url = $url = 'reportes/cuenta.pdf';
-        dd($datos[0]);
+        //dd($datos[0]);
+        foreach($datos[0] as $n){
+            dd($n);
+        }
         $reportePDF = PDF::loadView('reportes.cuentaPDF', compact('datos', 'totalUsdMonto', 'totalUsdFacturado', 'totalUsdPorFacturar', 'totalUsdPagado', 'totalUsdPendiente','totalMxnMonto' ,'totalMxnFacturado' ,'totalMxnPorFacturar' ,'totalMxnPendiente' ,'totalMxnPagado'));
         Storage::disk('public')->put($url, $reportePDF->output());
     }
