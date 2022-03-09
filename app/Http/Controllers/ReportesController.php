@@ -93,7 +93,7 @@ class ReportesController extends Controller
                 $sheet->fromArray($dataF);
  
             });
-        })->store('xls','public/reportes');
+        })->store('xls','public/reportes',true);
         /*
         $url = $url = 'reportes/compras.xls';
         dd($reporte);
