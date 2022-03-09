@@ -535,14 +535,6 @@
               <td class="text-center">{{$entrada[7]}}</td>
             </tr>
             @endforeach
-            <tr>
-              <td></td>
-              <td>
-                <div style="height: 200px; background-color:white;"></div>
-              </td>
-              <td></td>
-              <td></td>
-            </tr>
           </tbody>
         </table>
 
