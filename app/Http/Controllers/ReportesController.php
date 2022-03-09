@@ -91,7 +91,7 @@ class ReportesController extends Controller
                 $sheet->fromArray($dataF);
  
             });
-        })->store('xls');
+        })->store('xls','storage/public/reportes');
 
 
         /*
