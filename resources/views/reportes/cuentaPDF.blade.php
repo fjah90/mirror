@@ -543,7 +543,7 @@
               <td></td>
               <td></td>
               <td>MXN</td>
-              <td>Total : {{number_format($totales[$key][0]), 2, ',', ' ')}}</td>
+              <td>Total : {{number_format($totales[$key][0], 2, ',', ' ')}}</td>
               <td>Total Facturado :{{number_format($totales[$key][1], 2, ',', ' ')}}</td>
               <td>Total Por Facturar :{{number_format($totales[$key][4], 2, ',', ' ')}}</td>
               <td>Total Pagado :{{number_format($totales[$key][2], 2, ',', ' ')}}</td>
