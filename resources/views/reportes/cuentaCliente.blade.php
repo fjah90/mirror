@@ -190,6 +190,7 @@ Reportes | @parent
         .then(({data}) => {
           console.log(data)
           this.data=data.data;
+          this.tabla.draw();
           swal({
             title: "Exito",
             text: "Datos Cargados",
