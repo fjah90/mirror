@@ -126,6 +126,9 @@ Reportes | @parent
           vue.cargar();
           //this.tabla.columns(4).search(this.valor_proyectos).draw();
         });
+       this.tabla = $("#tablaActividades").DataTable({
+          "order":[],
+        });
 
     },
     watch:{
@@ -153,17 +156,17 @@ Reportes | @parent
 
             });
 
-            vue.totalmmonto = this.totalMxn.monto;
-            vue.totalmfacturado = this.totalMxn.facturado;
-            vue.totalmporfacturar = this.totalMxn.porFacturar;
-            vue.totalmpagado = this.totalMxn.pagado;
-            vue.totalmpendiente = this.totalMxn.pendiente;
+            this.totalmmonto = this.totalMxn.monto;
+            this.totalmfacturado = this.totalMxn.facturado;
+            this.totalmporfacturar = this.totalMxn.porFacturar;
+            this.totalmpagado = this.totalMxn.pagado;
+            this.totalmpendiente = this.totalMxn.pendiente;
 
-            vue.totaldmonto = this.totalDolares.monto;
-            vue.totaldfacturado = this.totalDolares.facturado;
-            vue.totaldporfacturar = this.totalDolares.porFacturar;
-            vue.totaldpagado = this.totalDolares.pagado;
-            vue.totaldpendiente = this.totalDolares.pendiente;
+            this.totaldmonto = this.totalDolares.monto;
+            this.totaldfacturado = this.totalDolares.facturado;
+            this.totaldporfacturar = this.totalDolares.porFacturar;
+            this.totaldpagado = this.totalDolares.pagado;
+            this.totaldpendiente = this.totalDolares.pendiente;
         }
      
     },
