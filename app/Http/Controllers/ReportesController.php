@@ -41,7 +41,7 @@ class ReportesController extends Controller
         $totalUsd = $request->totalUsd;
         $url = $url = 'reportes/cotizaciones.pdf';
 
-        foreac($datos as $dato){
+        foreach($datos as $dato){
             $dato[5] = str_replace("<span>","",$dato[5]);
             $dato[5] = str_replace("</span><br>","",$dato[5]);
             $dato[6] = str_replace("<span>","",$dato[6]);
