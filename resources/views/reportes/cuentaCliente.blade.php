@@ -156,17 +156,7 @@ Reportes | @parent
 
             });
 
-            this.totalmmonto = this.totalMxn.monto;
-            this.totalmfacturado = this.totalMxn.facturado;
-            this.totalmporfacturar = this.totalMxn.porFacturar;
-            this.totalmpagado = this.totalMxn.pagado;
-            this.totalmpendiente = this.totalMxn.pendiente;
-
-            this.totaldmonto = this.totalDolares.monto;
-            this.totaldfacturado = this.totalDolares.facturado;
-            this.totaldporfacturar = this.totalDolares.porFacturar;
-            this.totaldpagado = this.totalDolares.pagado;
-            this.totaldpendiente = this.totalDolares.pendiente;
+            
         }
      
     },
