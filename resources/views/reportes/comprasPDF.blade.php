@@ -508,22 +508,23 @@
 
     <!-- Espacio para que el footer no se sobreponga a la tabla -->
      <div class="row">
-      <div class="col-lg-12" style="height:180px;">
+      <div class="col-lg-12">
           <table class="table table-cotizacion">
           <thead>
             <tr>
-              <th class="text-center" style="width:10%; padding:3px 0 1px;">Fecha de Aprobacion</th>
-              <th class="text-center" style="width:74%; padding:3px 0 1px;">Numero de Compra</th>
-              <th class="text-center" style="width:13%; padding:3px 0 1px;">Cotizacion</th>
-              <th class="text-center" style="width:13%; padding:3px 0 1px;">Proveedor</th>
-              <th class="text-center" style="width:13%; padding:3px 0 1px;">Cliente</th>
-              <th class="text-center" style="width:13%; padding:3px 0 1px;">Proyecto</th>
-              <th class="text-center" style="width:13%; padding:3px 0 1px;">Monto</th>
-              <th class="text-center" style="width:13%; padding:3px 0 1px;">Moneda</th>
+              <th class="text-center" style=" padding:3px 0 1px;">Fecha de Aprobacion</th>
+              <th class="text-center" style=" padding:3px 0 1px;">Numero de Compra</th>
+              <th class="text-center" style=" padding:3px 0 1px;">Cotizacion</th>
+              <th class="text-center" style=" padding:3px 0 1px;">Proveedor</th>
+              <th class="text-center" style=" padding:3px 0 1px;">Cliente</th>
+              <th class="text-center" style=" padding:3px 0 1px;">Proyecto</th>
+              <th class="text-center" style=" padding:3px 0 1px;">Monto</th>
+              <th class="text-center" style=" padding:3px 0 1px;">Moneda</th>
             </tr>
           </thead>
           <tbody>
             @foreach($datos as $entrada)
+            <tr>
               <td class="text-center">{{$entrada[0]}}</td>
               <td class="text-center">{{$entrada[1]}}</td>
               <td class="text-center">{{$entrada[2]}}</td>
