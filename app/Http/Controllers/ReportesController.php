@@ -84,14 +84,14 @@ class ReportesController extends Controller
             );
         }
 
-        Excel::create('ReporteCompras', function($excel) use($dataF) {
+        Excel::create('ReporteC2ompras', function($excel) use($dataF) {
  
             $excel->sheet('Compras', function($sheet) use($dataF){
 
                 $sheet->fromArray($dataF);
  
             });
-        })->store('xls','storage/public/reportes');
+        })->store('xls','storage/app/public/reportes');
 
 
         /*
