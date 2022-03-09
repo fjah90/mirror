@@ -128,7 +128,10 @@ Reportes | @parent
           //this.tabla.columns(4).search(this.valor_proyectos).draw();
         });
        this.tabla = $("#tablaActividades").DataTable({
+          "dom": 'f<"#fechas_container.pull-left">ltip',
           "order":[],
+          initComplete: function () {
+          }
         });
 
     },
