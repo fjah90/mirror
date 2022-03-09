@@ -68,7 +68,6 @@ class ReportesController extends Controller
         $totalMxn = $request->totalMxn;
         $totalUsd = $request->totalUsd;
         $dataF = [];
-        dd($request);
         foreach ($datos as $dato) {
 
             array_push($dataF, 
@@ -85,14 +84,15 @@ class ReportesController extends Controller
             );
         }
 
-        $reporte = Excel::create('ReporteCompras', function($excel) use($dataF) {
+        Excel::create('ReporteCompras', function($excel) use($dataF) {
  
             $excel->sheet('Compras', function($sheet) use($dataF){
 
                 $sheet->fromArray($dataF);
  
             });
-        })->export('xls');
+        })->store('xls');
+
 
         /*
         $url = $url = 'reportes/compras.pdf';
