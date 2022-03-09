@@ -171,6 +171,8 @@ const app = new Vue({
       proyectoSelect:null,
       cotizacionSelect:null,
       clienteSelect:null,
+      totalm:'',
+      totald:''
     },
     mounted(){
         var vue =this;
@@ -240,6 +242,9 @@ const app = new Vue({
             });
  
             // Actualizar
+            this.totalm = accounting.formatMoney(totalMxn, "$", 2);
+            this.totald = accounting.formatMoney(totalUsd, "$", 2);
+
             var nCells = row.getElementsByTagName('th');
             nCells[1].innerHTML = accounting.formatMoney(totalMxn, "$", 2);
 
@@ -307,7 +312,9 @@ const app = new Vue({
       pdf(){
         datos = this.tabla.rows( { search:'applied' } ).data(); 
         var datosfinal = {
-          datos : []
+          datos : [],
+          totalMxn: this.totalm,
+          totalUsd: this.totald
         };
         var dat = [];
 
