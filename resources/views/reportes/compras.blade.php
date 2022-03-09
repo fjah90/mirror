@@ -306,13 +306,16 @@ const app = new Vue({
       },
       pdf(){
         datos = this.tabla.rows( { search:'applied' } ).data(); 
-        var datosfinal = {};
+        var datosfinal = {
+          datos = []
+        };
+        var dat = [];
 
         for (var i = datos.length - 1; i >= 0; i--) {
           var data = {}
           Object.assign(data, datos[i]);
-          console.log(data);
-          //datosfinal.push(data);
+          //console.log(data);
+          datosfinal.datos.push(data);
         }
 
         console.log(datosfinal);
