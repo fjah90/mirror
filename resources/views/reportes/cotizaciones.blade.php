@@ -25,7 +25,7 @@ Reportes | @parent
               <h3 class="panel-title">Reporte de Cotizaciones</h3>
               
               <div class="marg025 btn-group">
-                  <button class="btn btn-primary" v-on:click="pdf">
+                  <button class="btn btn-primary" v-on:click="pdf" :disabled="cargando">
                       PDF
                   </button>
               </div>
@@ -221,7 +221,8 @@ const app = new Vue({
       clienteSelect:null,
       usuarioSelect:null,
       totalm:'',
-      totald:''
+      totald:'',
+      cargando:false
     },
     mounted(){
         var vue =this;
@@ -381,6 +382,10 @@ const app = new Vue({
   			return moment(value, 'DD/MM/YYYY').toDate().getTime();
       },
       pdf(){
+        cargando:true;
+        var uno = document.getElementById('boton');
+        uno.innerHTML = 'Cargando';
+        
         datos = this.tabla.rows( { search:'applied' } ).data(); 
         var datosfinal = {
           datos : [],
@@ -402,48 +407,29 @@ const app = new Vue({
 
         //console.log(datos);
 
-        swal({
-          title: '¿Exportar a un PDF?',
-          type: 'warning',
-          showSpinner: true,
-          showCancelButton: true,
-          confirmButtonColor: '#DD6B55',
-          confirmButtonText: 'Si, generar',
-          cancelButtonText: 'No, cancelar por favor',
-          closeOnConfirm: false,
-          closeOnCancel: false
-        }, function (yes) {
-          if (yes) {
-
-            axios.post('/reportes/cotizaciones/pdf', formData,{headers: {'Content-Type': 'multipart/form-data'}
-              })
-              .then(({data}) => {
-                swal({
-                  title: "Reporte generado",
-                  text: "",
-                  type: "success"
-                }).then(()=>{
-                  window.open('/storage/reportes/cotizaciones.pdf', '_blank').focus();
-                });
-              })
-              .catch(({response}) => {
-                console.error(response);
-                this.cargando = false;
-                swal({
-                  title: "Error",
-                  text: response.data.message || "Ocurrio un error inesperado, intente mas tarde",
-                  type: "error"
-                });
-              });
-
-            
-          } else {
-            swal('Cancelado', 'No se ha generado', 'error');
-          }
+        axios.post('/reportes/cotizaciones/pdf', formData,{headers: {'Content-Type': 'multipart/form-data'}
+        })
+        .then(({data}) => {
+          swal({
+            title: "Reporte generado",
+            text: "",
+            type: "success"
+          }).then(()=>{
+            cargando:true;
+            var uno = document.getElementById('boton');
+            uno.innerHTML = 'PDF';
+            window.open('/storage/reportes/cotizaciones.pdf', '_blank').focus();
+          });
+        })
+        .catch(({response}) => {
+          console.error(response);
+          this.cargando = false;
+          swal({
+            title: "Error",
+            text: response.data.message || "Ocurrio un error inesperado, intente mas tarde",
+            type: "error"
+          });
         });
-
-
-        
 
       },
       excel(){
