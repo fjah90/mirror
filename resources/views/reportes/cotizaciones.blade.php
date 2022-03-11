@@ -405,6 +405,7 @@ const app = new Vue({
         swal({
           title: '¿Exportar a un PDF?',
           type: 'warning',
+          showSpinner: true,
           showCancelButton: true,
           confirmButtonColor: '#DD6B55',
           confirmButtonText: 'Si, generar',
