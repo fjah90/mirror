@@ -386,7 +386,7 @@ const app = new Vue({
         var uno = document.getElementById('boton');
         uno.innerHTML = 'Cargando';
         
-        datos = this.tabla.rows( { search:'applied' } ).data(); 
+        datos = this.tabla.rows( { search:'applied' , order: 'applied' } ).data(); 
         var datosfinal = {
           datos : [],
           totalMxn: this.totalm,
