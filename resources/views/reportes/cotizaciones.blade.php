@@ -221,7 +221,7 @@ const app = new Vue({
       clienteSelect:null,
       usuarioSelect:null,
       totalm:'',
-      totald:''.
+      totald:'',
       cargando: false
     },
     mounted(){
