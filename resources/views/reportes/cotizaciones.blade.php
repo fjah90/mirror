@@ -221,7 +221,8 @@ const app = new Vue({
       clienteSelect:null,
       usuarioSelect:null,
       totalm:'',
-      totald:''
+      totald:''.
+      cargando: false
     },
     mounted(){
         var vue =this;
@@ -401,7 +402,7 @@ const app = new Vue({
         var formData = objectToFormData(datosfinal, {indices: true});
 
         //console.log(datos);
-
+        this.cargando = true;
         axios.post('/reportes/cotizaciones/pdf', formData,{headers: {'Content-Type': 'multipart/form-data'}
         })
         .then(({data}) => {
@@ -410,7 +411,8 @@ const app = new Vue({
             text: "",
             type: "success"
           }).then(()=>{
-            window.open('/storage/reportes/cotizaciones.pdf', '_blank').focus();
+            window.location.href = "/storage/reportes/cotizaciones.pdf";
+            //window.open('/storage/reportes/cotizaciones.pdf', '_blank').focus();
           });
         })
         .catch(({response}) => {
