@@ -382,7 +382,7 @@ const app = new Vue({
   			return moment(value, 'DD/MM/YYYY').toDate().getTime();
       },
       pdf(){
-        this.cargando:true;
+        this.cargando=true;
         var uno = document.getElementById('boton');
         uno.innerHTML = 'Cargando';
         
@@ -415,7 +415,7 @@ const app = new Vue({
             text: "",
             type: "success"
           }).then(()=>{
-            this.cargando:false;
+            this.cargando=false;
             var uno = document.getElementById('boton');
             uno.innerHTML = 'PDF';
             window.open('/storage/reportes/cotizaciones.pdf', '_blank').focus();
