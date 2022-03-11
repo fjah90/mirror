@@ -25,7 +25,7 @@ Reportes | @parent
               <h3 class="panel-title">Reporte de Cotizaciones</h3>
               
               <div class="marg025 btn-group">
-                  <button class="btn btn-primary" v-on:click="pdf">
+                  <button class="btn btn-primary" v-on:click="pdf" :disabled="cargando">
                       PDF
                   </button>
               </div>
