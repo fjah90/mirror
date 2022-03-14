@@ -77,7 +77,7 @@ Reportes | @parent
                       </template>
                     </dropdown>
                     <div class="marg025 btn-group" id="select_cotizaciones" >
-                        <select name="proxDias" class="form-control" size="1" v-model="valor_cotizaciones" id="selectcotizaciones">
+                        <select name="proxDias" class="form-control" size="1" v-model="valor_cotizaciones" id="selectcotizaciones" style="width:100%">
                         <option v-for="(option, index) in datos_select.cotizaciones" v-bind:value="option" >
                             @{{ option }}
                           </option>
@@ -85,7 +85,7 @@ Reportes | @parent
                         </select>
                     </div>
                     <div class="marg025 btn-group" id="select_proyectos" >
-                        <select name="proxDias" class="form-control" size="1" v-model="valor_proyectos" id="selectproyectos">
+                        <select name="proxDias" class="form-control" size="1" v-model="valor_proyectos" id="selectproyectos" style="width:100%">
                           <option v-for="option in datos_select.proyectos" v-bind:value="option">
                             @{{ option }}
                           </option>
@@ -93,7 +93,7 @@ Reportes | @parent
                         </select>
                     </div>
                     <div class="marg025 btn-group" id="select_clientes" >
-                        <select name="proxDias" class="form-control" size="1" v-model="valor_clientes" id="selectclientes">
+                        <select name="proxDias" class="form-control" size="1" v-model="valor_clientes" id="selectclientes" style="width:100%">
                           <option v-for="option in datos_select.clientes" v-bind:value="option">
                             @{{ option }}
                           </option>

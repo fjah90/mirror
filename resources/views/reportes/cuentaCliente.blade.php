@@ -25,7 +25,7 @@ Reportes | @parent
                       EXCEL
                   </button>
               </div>
-                <select name="" id="selectCliente" class="form-control" @change="cargar()" v-model="clienteCargado">
+                <select name="" id="selectCliente" class="form-control" @change="cargar()" v-model="clienteCargado" style="width:100%">
                   @foreach($data['clientes'] as $cliente)
                     <option value="{{$cliente->id}}">{{$cliente->nombre}}</option>
                   @endforeach

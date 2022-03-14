@@ -48,8 +48,8 @@ class ReportesController extends Controller
             array_push($dataF, 
                 $data = array(
                     'FECHA ' => $dato[0],
-                    'NUMERO DE COTIZACION' => $dato[1],
-                    'FECHA DE APROBACION' => $dato[2],
+                    'NÚMERO DE COTIZACIÓN' => $dato[1],
+                    'FECHA DE APROBACIÓN' => $dato[2],
                     'CLIENTE' => $dato[3],
                     'PROYECTO' => $dato[4],
                     'MARCA' => $dato[5],
@@ -99,12 +99,13 @@ class ReportesController extends Controller
 
             array_push($dataF, 
                 $data = array(
-                    'FECHA DE APROBACION' => $dato[0],
-                    'NUMERO DE COMPRA' => $dato[1],
+                    'FECHA DE APROBACIÓN' => $dato[0],
+                    'NÚMERO DE COMPRA' => $dato[1],
                     'CLIENTE' => $dato[2],
                     'PROYECTO' => $dato[3],
-                    'MONTO' => $dato[4],
-                    'MONEDA' => $dato[5],
+                    'DOCUMENTO' => $dato[4],
+                    'MONTO' => $dato[5],
+                    'MONEDA' => $dato[6],
                 )
             );
         }
@@ -138,9 +139,9 @@ class ReportesController extends Controller
 
             array_push($dataF, 
                 $data = array(
-                    'FECHA DE APROBACION' => $dato[0],
-                    'NUMERO DE COMPRA' => $dato[1],
-                    'COTIZACION' => $dato[2],
+                    'FECHA DE APROBACIÓN' => $dato[0],
+                    'NÚMERO DE COMPRA' => $dato[1],
+                    'COTIZACIÓN' => $dato[2],
                     'PROVEEDOR' => $dato[3],
                     'CLIENTE' => $dato[4],
                     'PROYECTO' => $dato[5],
@@ -179,7 +180,7 @@ class ReportesController extends Controller
             array_push($dataF, 
                 $data = array(
                     'FECHA DE PAGO' => $dato[0],
-                    'NUMERO DE COMPRA' => $dato[1],
+                    'NÚMERO DE COMPRA' => $dato[1],
                     'PROVEEDOR' => $dato[2],
                     'CLIENTE' => $dato[3],
                     'PROYECTO' => $dato[4],
@@ -217,7 +218,7 @@ class ReportesController extends Controller
 
             array_push($dataF, 
                 $data = array(
-                    'NUMERO DE COMPRA' => $dato[0],
+                    'NÚMERO DE COMPRA' => $dato[0],
                     'PROVEEDOR' => $dato[1],
                     'CLIENTE' => $dato[2],
                     'PROYECTO' => $dato[3],
@@ -386,12 +387,12 @@ class ReportesController extends Controller
 
             array_push($dataF, 
                 $data = array(
-                    'NUMERO DE COTIZACION' => $dato[0],
+                    'NÚMERO DE COTIZACIÓN' => $dato[0],
                     'CLIENTE' => $dato[1],
                     'PROYECTO' => $dato[2],
                     'MONTO' => $dato[3],
                     'MONEDA' => $dato[4],
-                    'NUMERO DE COMPRA' => $dato[5],
+                    'NÚMERO DE COMPRA' => $dato[5],
                     'COSTO' => $dato[6],
                     'UTILIDAD' => $dato[7],
                 )

@@ -512,10 +512,11 @@
           <table class="table table-cotizacion">
           <thead>
             <tr>
-              <th class="text-center" style=" padding:3px 0 1px;">Fecha de Aprobacion</th>
-              <th class="text-center" style=" padding:3px 0 1px;">Numero de Compra</th>
+              <th class="text-center" style=" padding:3px 0 1px;">Fecha de Aprobación</th>
+              <th class="text-center" style=" padding:3px 0 1px;">Número de Compra</th>
               <th class="text-center" style=" padding:3px 0 1px;">Cliente</th>
               <th class="text-center" style=" padding:3px 0 1px;">Proyecto</th>
+              <th class="text-center" style=" padding:3px 0 1px;">Documento</th>
               <th class="text-center" style=" padding:3px 0 1px;">Monto</th>
               <th class="text-center" style=" padding:3px 0 1px;">Moneda</th>
             </tr>
@@ -529,6 +530,7 @@
               <td class="text-center">{{$entrada[3]}}</td>
               <td class="text-center">{{$entrada[4]}}</td>
               <td class="text-center">{{$entrada[5]}}</td>
+              <td class="text-center">{{$entrada[6]}}</td>
             </tr>
             @endforeach
           </tbody>

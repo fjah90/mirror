@@ -78,7 +78,7 @@ Reportes | @parent
                       </template>
                     </dropdown>
                     <div class="marg025 btn-group" id="select_proveedores" >
-                        <select name="proxDias" class="form-control" size="1" v-model="valor_proveedores" id="selectproveedores">
+                        <select name="proxDias" class="form-control" size="1" v-model="valor_proveedores" id="selectproveedores" style="width:100%">
                         <option v-for="(option, index) in datos_select.proveedores" v-bind:value="option" >
                             @{{ option }}
                           </option>
@@ -86,7 +86,7 @@ Reportes | @parent
                         </select>
                     </div>
                     <div class="marg025 btn-group" id="select_proyectos" >
-                        <select name="proxDias" class="form-control" size="1" v-model="valor_proyectos" id="selectproyectos">
+                        <select name="proxDias" class="form-control" size="1" v-model="valor_proyectos" id="selectproyectos" style="width:100%">
                           <option v-for="option in datos_select.proyectos" v-bind:value="option">
                             @{{ option }}
                           </option>
@@ -94,7 +94,7 @@ Reportes | @parent
                         </select>
                     </div>
                     <div class="marg025 btn-group" id="select_ids" >
-                        <select name="proxDias" class="form-control" size="1" v-model="valor_ids" id="selectids">
+                        <select name="proxDias" class="form-control" size="1" v-model="valor_ids" id="selectids" style="width:100%">
                           <option v-for="option in datos_select.ids" v-bind:value="option">
                             @{{ option }}
                           </option>
@@ -111,7 +111,7 @@ Reportes | @parent
                         <tr>
                           <th class="text-center">Fecha Aprobación</th>
                           <th class="text-center"><strong>Número Compra</strong></th>
-                          <th class="text-center"><strong>Cotizacion</strong></th>
+                          <th class="text-center"><strong>Cotización</strong></th>
                           <th class="text-center"><strong>Proveedor</strong></th>
                           <th class="text-center"><strong>Cliente</strong></th>
                           <th class="text-center"><strong>Proyecto</strong></th>                    

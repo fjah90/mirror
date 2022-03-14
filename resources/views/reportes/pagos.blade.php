@@ -77,7 +77,7 @@ Reportes | @parent
                       </template>
                     </dropdown>
                     <div class="marg025 btn-group" id="select_proveedores" >
-                        <select name="proxDias" class="form-control" size="1" v-model="valor_proveedores" id="selectproveedores">
+                        <select name="proxDias" class="form-control" size="1" v-model="valor_proveedores" id="selectproveedores" style="width:100%">
                         <option v-for="(option, index) in datos_select.proveedores" v-bind:value="option" >
                             @{{ option }}
                           </option>
@@ -85,7 +85,7 @@ Reportes | @parent
                         </select>
                     </div>
                     <div class="marg025 btn-group" id="select_proyectos" >
-                        <select name="proxDias" class="form-control" size="1" v-model="valor_proyectos" id="selectproyectos">
+                        <select name="proxDias" class="form-control" size="1" v-model="valor_proyectos" id="selectproyectos" style="width:100%">
                           <option v-for="option in datos_select.proyectos" v-bind:value="option">
                             @{{ option }}
                           </option>
@@ -93,7 +93,7 @@ Reportes | @parent
                         </select>
                     </div>
                     <div class="marg025 btn-group" id="select_compras" >
-                        <select name="proxDias" class="form-control" size="1" v-model="valor_compras" id="selectcompras">
+                        <select name="proxDias" class="form-control" size="1" v-model="valor_compras" id="selectcompras" style="width:100%">
                           <option v-for="option in datos_select.compras" v-bind:value="option">
                             @{{ option }}
                           </option>
@@ -359,46 +359,61 @@ const app = new Vue({
       },
       excel(){
         datos = this.tabla.rows( {order:'current' , search:'applied' } ).data(); 
-        var datosfinal = {
-          datos : [],
-          totalMxn: this.totalm,
-          totalUsd: this.totald
-        };
-        var dat = [];
 
-        for (var i = 0; i <= datos.length - 1; i++) {
-          var data = {}
-          Object.assign(data, datos[i]);
-          //console.log(data);
-          datosfinal.datos.push(data);
-        }
+          if (datos.length != 0) {
 
-        //console.log(datosfinal);
+              var datosfinal = {
+            datos : [],
+            totalMxn: this.totalm,
+            totalUsd: this.totald
+          };
+          var dat = [];
 
-        var formData = objectToFormData(datosfinal, {indices: true});
+          for (var i = 0; i <= datos.length - 1; i++) {
+            var data = {}
+            Object.assign(data, datos[i]);
+            //console.log(data);
+            datosfinal.datos.push(data);
+          }
 
-        //console.log(datos);
+          //console.log(datosfinal);
 
-        axios.post('/reportes/pagos/excel', formData,{headers: {'Content-Type': 'multipart/form-data'}
-        })
-        .then(({data}) => {
-          swal({
-            title: "Reporte generado",
-            text: "",
-            type: "success"
-          }).then(()=>{
-            window.open('/storage/reportes/ReportePagos.xls', '_blank').focus();
+          var formData = objectToFormData(datosfinal, {indices: true});
+
+          //console.log(datos);
+
+          axios.post('/reportes/pagos/excel', formData,{headers: {'Content-Type': 'multipart/form-data'}
+          })
+          .then(({data}) => {
+            swal({
+              title: "Reporte generado",
+              text: "",
+              type: "success"
+            }).then(()=>{
+              window.open('/storage/reportes/ReportePagos.xls', '_blank').focus();
+            });
+          })
+          .catch(({response}) => {
+            console.error(response);
+            this.cargando = false;
+            swal({
+              title: "Error",
+              text: response.data.message || "Ocurrio un error inesperado, intente mas tarde",
+              type: "error"
+            });
           });
-        })
-        .catch(({response}) => {
-          console.error(response);
-          this.cargando = false;
+
+        }
+        else{
+
           swal({
             title: "Error",
-            text: response.data.message || "Ocurrio un error inesperado, intente mas tarde",
+            text: response.data.message || "No hay datos para generar reporte",
             type: "error"
           });
-        });
+
+        }
+        
 
       }
       
