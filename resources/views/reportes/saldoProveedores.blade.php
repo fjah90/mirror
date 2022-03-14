@@ -329,7 +329,7 @@ const app = new Vue({
   			return moment(value, 'DD/MM/YYYY').toDate().getTime();
       },
       pdf(){
-        datos = this.tabla.rows( { search:'applied' } ).data(); 
+        datos = this.tabla.rows( {order:'current' , search:'applied' } ).data(); 
         var datosfinal = {
           datos : [],
           totalMxn: this.totalm,
@@ -337,7 +337,7 @@ const app = new Vue({
         };
         var dat = [];
 
-        for (var i = datos.length - 1; i >= 0; i--) {
+        for (var i = 0; i <= datos.length - 1; i++) {
           var data = {}
           Object.assign(data, datos[i]);
           //console.log(data);
@@ -373,7 +373,7 @@ const app = new Vue({
 
       },
       excel(){
-        datos = this.tabla.rows( { search:'applied' } ).data(); 
+        datos = this.tabla.rows( {order:'current' , search:'applied' } ).data(); 
         var datosfinal = {
           datos : [],
           totalMxn: this.totalm,
@@ -381,7 +381,7 @@ const app = new Vue({
         };
         var dat = [];
 
-        for (var i = datos.length - 1; i >= 0; i--) {
+        for (var i = 0; i <= datos.length - 1; i++) {
           var data = {}
           Object.assign(data, datos[i]);
           //console.log(data);
