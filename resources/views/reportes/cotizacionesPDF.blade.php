@@ -513,8 +513,8 @@
           <thead>
             <tr>
               <th class="text-center" style=" padding:3px 0 1px;">Fecha</th>
-              <th class="text-center" style=" padding:3px 0 1px;">Numero de Cotizacion</th>
-              <th class="text-center" style=" padding:3px 0 1px;">Fecha de Aprobacion</th>
+              <th class="text-center" style=" padding:3px 0 1px;">Número de Cotización</th>
+              <th class="text-center" style=" padding:3px 0 1px;">Fecha de Aprobación</th>
               <th class="text-center" style=" padding:3px 0 1px;">Cliente</th>
               <th class="text-center" style=" padding:3px 0 1px;">Proyecto</th>
               <th class="text-center" style=" padding:3px 0 1px;">Marca</th>
@@ -556,7 +556,7 @@
             <td class="text-right" style="width:10%;">{{$totalMxn}}</td>
           </tr>
           <tr>
-            <td class="text-right" style="width:90%;"><strong>Total Dolares:</strong></td>
+            <td class="text-right" style="width:90%;"><strong>Total USD:</strong></td>
             <td class="text-right" style="width:10%;">{{$totalUsd}}</td>
           </tr>
         </table>
