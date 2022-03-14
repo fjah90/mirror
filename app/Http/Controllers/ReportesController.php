@@ -408,17 +408,17 @@ class ReportesController extends Controller
 
             foreach($pro as $key => $cuen){
                 if ($cuen->moneda == 'Dolares') {
-                    $totalUsdMonto += $cuen->monto;
-                    $totalUsdFacturado += $cuen->facturado;
-                    $totalUsdPagado += $cuen->pagado;
-                    $totalUsdPendiente += $cuen->pendiente;
+                    $totalUsdMonto += floatval($cuen->monto);
+                    $totalUsdFacturado += floatval($cuen->facturado);
+                    $totalUsdPagado += floatval($cuen->pagado);
+                    $totalUsdPendiente += floatval($cuen->pendiente);
 
                 }
                 else{
-                    $totalMxnMonto += $cuen->monto;
-                    $totalMxnFacturado += $cuen->facturado;
-                    $totalMxnPagado += $cuen->pagado;
-                    $totalMxnPendiente += $cuen->pendiente;
+                    $totalMxnMonto += floatval($cuen->monto);
+                    $totalMxnFacturado += floatval($cuen->facturado);
+                    $totalMxnPagado += floatval($cuen->pagado);
+                    $totalMxnPendiente += floatval($cuen->pendiente);
 
                 }
 
