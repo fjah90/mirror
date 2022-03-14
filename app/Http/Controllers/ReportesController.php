@@ -38,28 +38,52 @@ class ReportesController extends Controller
     public function  cotizacionesexcel(Request $request){
         $datos = $request->datos;
         $dataF = [];
-        foreach ($datos as $dato) {
+        foreach ($datos as $key => $dato) {
 
             $dato[5] = str_replace("<span>","",$dato[5]);
             $dato[5] = str_replace("</span><br>","",$dato[5]);
             $dato[6] = str_replace("<span>","",$dato[6]);
             $dato[6] = str_replace("</span><br>","",$dato[6]);
 
-            array_push($dataF, 
-                $data = array(
-                    'FECHA ' => $dato[0],
-                    'NÚMERO DE COTIZACIÓN' => $dato[1],
-                    'FECHA DE APROBACIÓN' => $dato[2],
-                    'CLIENTE' => $dato[3],
-                    'PROYECTO' => $dato[4],
-                    'MARCA' => $dato[5],
-                    'PROVEEDORES' => $dato[6],
-                    'IVA' => $dato[7],
-                    'MONTO' => $dato[8],
-                    'MONEDA' => $dato[9],
-                    'USUARIO' => $dato[10],
-                )
-            );
+            if ($key == 0) {
+                array_push($dataF, 
+                    $data = array(
+                        'FECHA ' => $dato[0],
+                        'NÚMERO DE COTIZACIÓN' => $dato[1],
+                        'FECHA DE APROBACIÓN' => $dato[2],
+                        'CLIENTE' => $dato[3],
+                        'PROYECTO' => $dato[4],
+                        'MARCA' => $dato[5],
+                        'PROVEEDORES' => $dato[6],
+                        'IVA' => $dato[7],
+                        'MONTO' => $dato[8],
+                        'MONEDA' => $dato[9],
+                        'USUARIO' => $dato[10],
+                        'TOTAL MXN' => $request->totalMxn,
+                        'TOTAL USD' => $request->totalUsd,
+                    )
+                );    
+            }
+            else{
+                array_push($dataF, 
+                    $data = array(
+                        'FECHA ' => $dato[0],
+                        'NÚMERO DE COTIZACIÓN' => $dato[1],
+                        'FECHA DE APROBACIÓN' => $dato[2],
+                        'CLIENTE' => $dato[3],
+                        'PROYECTO' => $dato[4],
+                        'MARCA' => $dato[5],
+                        'PROVEEDORES' => $dato[6],
+                        'IVA' => $dato[7],
+                        'MONTO' => $dato[8],
+                        'MONEDA' => $dato[9],
+                        'USUARIO' => $dato[10],
+                        'TOTAL MXN' => '',
+                        'TOTAL USD' => '',
+                    )
+                );
+            }
+            
         }
 
         Excel::create('ReporteCotizaciones', function($excel) use($dataF) {
@@ -95,9 +119,10 @@ class ReportesController extends Controller
     public function  cobrosexcel(Request $request){
         $datos = $request->datos;
         $dataF = [];
-        foreach ($datos as $dato) {
+        foreach ($datos as $key =>  $dato) {
 
-            array_push($dataF, 
+            if ($key == 0) {
+                array_push($dataF, 
                 $data = array(
                     'FECHA DE APROBACIÓN' => $dato[0],
                     'NÚMERO DE COMPRA' => $dato[1],
@@ -106,8 +131,29 @@ class ReportesController extends Controller
                     'DOCUMENTO' => $dato[4],
                     'MONTO' => $dato[5],
                     'MONEDA' => $dato[6],
-                )
-            );
+                    'TOTAL MXN' => $request->totalMxn,
+                    'TOTAL USD' => $request->totalUsd,
+                    )
+                );
+                
+            }
+            else{
+                array_push($dataF, 
+                    $data = array(
+                        'FECHA DE APROBACIÓN' => $dato[0],
+                        'NÚMERO DE COMPRA' => $dato[1],
+                        'CLIENTE' => $dato[2],
+                        'PROYECTO' => $dato[3],
+                        'DOCUMENTO' => $dato[4],
+                        'MONTO' => $dato[5],
+                        'MONEDA' => $dato[6],
+                        'TOTAL MXN' => '',
+                        'TOTAL USD' => '',
+                    )
+                );
+            }
+
+            
         }
 
         Excel::create('ReporteCobros', function($excel) use($dataF) {
@@ -135,20 +181,41 @@ class ReportesController extends Controller
     public function  comprasexcel(Request $request){
         $datos = $request->datos;
         $dataF = [];
-        foreach ($datos as $dato) {
+        foreach ($datos as $key => $dato) {
 
-            array_push($dataF, 
-                $data = array(
-                    'FECHA DE APROBACIÓN' => $dato[0],
-                    'NÚMERO DE COMPRA' => $dato[1],
-                    'COTIZACIÓN' => $dato[2],
-                    'PROVEEDOR' => $dato[3],
-                    'CLIENTE' => $dato[4],
-                    'PROYECTO' => $dato[5],
-                    'MONTO' => $dato[6],
-                    'MONEDA' => $dato[7],
-                )
-            );
+            if ($key == 0) {
+                array_push($dataF, 
+                    $data = array(
+                        'FECHA DE APROBACIÓN' => $dato[0],
+                        'NÚMERO DE COMPRA' => $dato[1],
+                        'COTIZACIÓN' => $dato[2],
+                        'PROVEEDOR' => $dato[3],
+                        'CLIENTE' => $dato[4],
+                        'PROYECTO' => $dato[5],
+                        'MONTO' => $dato[6],
+                        'MONEDA' => $dato[7],
+                        'TOTAL MXN' => $request->totalMxn,
+                        'TOTAL USD' => $request->totalUsd,
+                    )
+                );    
+            }
+            else{
+                array_push($dataF, 
+                    $data = array(
+                        'FECHA DE APROBACIÓN' => $dato[0],
+                        'NÚMERO DE COMPRA' => $dato[1],
+                        'COTIZACIÓN' => $dato[2],
+                        'PROVEEDOR' => $dato[3],
+                        'CLIENTE' => $dato[4],
+                        'PROYECTO' => $dato[5],
+                        'MONTO' => $dato[6],
+                        'MONEDA' => $dato[7],
+                        'TOTAL MXN' => '',
+                        'TOTAL USD' => '',
+                    )
+                );
+            }
+            
         }
 
         Excel::create('ReporteCompras', function($excel) use($dataF) {
@@ -175,20 +242,43 @@ class ReportesController extends Controller
     public function  pagosexcel(Request $request){
         $datos = $request->datos;
         $dataF = [];
-        foreach ($datos as $dato) {
+        foreach ($datos as $key => $dato) {
 
-            array_push($dataF, 
-                $data = array(
-                    'FECHA DE PAGO' => $dato[0],
-                    'NÚMERO DE COMPRA' => $dato[1],
-                    'PROVEEDOR' => $dato[2],
-                    'CLIENTE' => $dato[3],
-                    'PROYECTO' => $dato[4],
-                    'DOCUMENTO' => $dato[5],
-                    'MONTO' => $dato[6],
-                    'MONEDA' => $dato[7],
-                )
-            );
+            if ($key == 0) {
+                array_push($dataF, 
+                    $data = array(
+                        'FECHA DE PAGO' => $dato[0],
+                        'NÚMERO DE COMPRA' => $dato[1],
+                        'PROVEEDOR' => $dato[2],
+                        'CLIENTE' => $dato[3],
+                        'PROYECTO' => $dato[4],
+                        'DOCUMENTO' => $dato[5],
+                        'MONTO' => $dato[6],
+                        'MONEDA' => $dato[7],
+                        'TOTAL MXN' => $request->totalMxn,
+                        'TOTAL USD' => $request->totalUsd,
+
+                    )
+                );    
+            }
+            else{
+                array_push($dataF, 
+                    $data = array(
+                        'FECHA DE PAGO' => $dato[0],
+                        'NÚMERO DE COMPRA' => $dato[1],
+                        'PROVEEDOR' => $dato[2],
+                        'CLIENTE' => $dato[3],
+                        'PROYECTO' => $dato[4],
+                        'DOCUMENTO' => $dato[5],
+                        'MONTO' => $dato[6],
+                        'MONEDA' => $dato[7],
+                        'TOTAL MXN' => '',
+                        'TOTAL USD' => '',
+
+                    )
+                );
+            }
+
         }
 
         Excel::create('ReportePagos', function($excel) use($dataF) {
@@ -214,22 +304,46 @@ class ReportesController extends Controller
     public function  saldoexcel(Request $request){
         $datos = $request->datos;
         $dataF = [];
-        foreach ($datos as $dato) {
+        foreach ($datos as $key => $dato) {
 
-            array_push($dataF, 
-                $data = array(
-                    'NÚMERO DE COMPRA' => $dato[0],
-                    'PROVEEDOR' => $dato[1],
-                    'CLIENTE' => $dato[2],
-                    'PROYECTO' => $dato[3],
-                    'DOCUMENTO' => $dato[4],
-                    'MONTO' => $dato[5],
-                    'MONEDA' => $dato[6],
-                    'FECHA DE FACTURA' => $dato[7],
-                    'FECHA DE VENCIMIENTO' => $dato[8],
-                    'DIAS A FAVOR O EN CONTRA' => $dato[9],
-                )
-            );
+            if ($key == 0) {
+                array_push($dataF, 
+                    $data = array(
+                        'NÚMERO DE COMPRA' => $dato[0],
+                        'PROVEEDOR' => $dato[1],
+                        'CLIENTE' => $dato[2],
+                        'PROYECTO' => $dato[3],
+                        'DOCUMENTO' => $dato[4],
+                        'MONTO' => $dato[5],
+                        'MONEDA' => $dato[6],
+                        'FECHA DE FACTURA' => $dato[7],
+                        'FECHA DE VENCIMIENTO' => $dato[8],
+                        'DIAS A FAVOR O EN CONTRA' => $dato[9],
+                        'TOTAL MXN' => $request->totalMxn,
+                        'TOTAL USD' => $request->totalUsd,
+                    )
+                );    
+            }
+
+            else{
+                array_push($dataF, 
+                    $data = array(
+                        'NÚMERO DE COMPRA' => $dato[0],
+                        'PROVEEDOR' => $dato[1],
+                        'CLIENTE' => $dato[2],
+                        'PROYECTO' => $dato[3],
+                        'DOCUMENTO' => $dato[4],
+                        'MONTO' => $dato[5],
+                        'MONEDA' => $dato[6],
+                        'FECHA DE FACTURA' => $dato[7],
+                        'FECHA DE VENCIMIENTO' => $dato[8],
+                        'DIAS A FAVOR O EN CONTRA' => $dato[9],
+                        'TOTAL MXN' => '',
+                        'TOTAL USD' => '',
+                    )
+                );
+            }
+            
         }
 
         Excel::create('ReporteSaldo', function($excel) use($dataF) {
@@ -274,9 +388,39 @@ class ReportesController extends Controller
                 ->get();
             array_push($datos, $dato);
         }
+        
+
 
         foreach($datos as $pro){
-            foreach($pro as $cuen){
+
+            $totalMxnMonto = 0;
+            $totalMxnFacturado = 0;
+            $totalMxnPagado = 0;
+            $totalMxnPorFacturar = 0;
+            $totalMxnPendiente = 0;
+
+
+            $totalUsdMonto = 0;
+            $totalUsdFacturado = 0;
+            $totalUsdPagado = 0;
+            $totalUsdPorFacturar = 0;
+            $totalUsdPendiente = 0;
+
+            foreach($pro as $key => $cuen){
+                if ($cuen->moneda == 'Dolares') {
+                    $totalUsdMonto += $cuen->monto;
+                    $totalUsdFacturado += $cuen->facturado;
+                    $totalUsdPagado += $cuen->pagado;
+                    $totalUsdPendiente += $cuen->pendiente;
+
+                }
+                else{
+                    $totalMxnMonto += $cuen->monto;
+                    $totalMxnFacturado += $cuen->facturado;
+                    $totalMxnPagado += $cuen->pagado;
+                    $totalMxnPendiente += $cuen->pendiente;
+
+                }
 
                 array_push($dataF, 
                     $data = array(
@@ -289,10 +433,50 @@ class ReportesController extends Controller
                         'POR FACTURAR' => number_format($cuen->total - $cuen->facturado, 2, '.', ' '),
                         'PAGADO' => number_format($cuen->pagado, 2, '.', ' '),
                         'PENDIENTE' => number_format($cuen->pendiente, 2, '.', ' '),
+                        'TOTAL MXN MONTO' => '',
+                        'TOTAL MXN FACTURADO' => '',
+                        'TOTAL MXN POR FACTURAR' => '',
+                        'TOTAL MXN PAGADO' => '' ,
+                        'TOTAL MXN PENDIENTE' => '',
+
+                        'TOTAL USD MONTO' => '',
+                        'TOTAL USD FACTURADO' => '',
+                        'TOTAL USD POR FACTURAR' => '',
+                        'TOTAL USD PAGADO' => '',
+                        'TOTAL USD PENDIENTE' => '',
                     )
                 );
                 
             }
+            $totalMxnPorFacturar = $totalMxnMonto - $totalMxnFacturado;
+            
+            $totalUsdPorFacturar = $totalUsdMonto - $totalUsdFacturado;
+
+            array_push($dataF, 
+                $data = array(
+                    'FECHA' => '',
+                    'NÚMERO DE COTIZACIÓN' => '',
+                    'FECHA DE APROBACIÓN' => '',
+                    'MONEDA' => '',
+                    'MONTO' => '',
+                    'FACTURADO' => '',
+                    'POR FACTURAR' => '',
+                    'PAGADO' => '',
+                    'PENDIENTE' => '',
+                    'TOTAL MXN MONTO' => $totalMxnMonto,
+                    'TOTAL MXN FACTURADO' => $totalMxnFacturado,
+                    'TOTAL MXN POR FACTURAR' => $totalMxnPorFacturar,
+                    'TOTAL MXN PAGADO' => $totalMxnPagado,
+                    'TOTAL MXN PENDIENTE' => $totalMxnPendiente,
+
+                    'TOTAL USD MONTO' => $totalUsdMonto,
+                    'TOTAL USD FACTURADO' => $totalUsdFacturado,
+                    'TOTAL USD POR FACTURAR' => $totalUsdPorFacturar,
+                    'TOTAL USD PAGADO' => $totalUsdPagado,
+                    'TOTAL USD PENDIENTE' => $totalUsdPendiente,
+                )
+            );
+            
         }
 
         Excel::create('ReporteCuenta', function($excel) use($dataF) {
