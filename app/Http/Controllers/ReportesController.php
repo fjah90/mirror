@@ -567,20 +567,49 @@ class ReportesController extends Controller
     public function  utilidadesexcel(Request $request){
         $datos = $request->datos;
         $dataF = [];
-        foreach ($datos as $dato) {
+        foreach ($datos as $key => $dato) {
+            if ($key == 0) {
+                array_push($dataF, 
+                    $data = array(
+                        'NÚMERO DE COTIZACIÓN' => $dato[0],
+                        'CLIENTE' => $dato[1],
+                        'PROYECTO' => $dato[2],
+                        'MONTO' => $dato[3],
+                        'MONEDA' => $dato[4],
+                        'NÚMERO DE COMPRA' => $dato[5],
+                        'COSTO' => $dato[6],
+                        'UTILIDAD' => $dato[7],
+                        'TOTAL MXN VENTAS' => $request->totalMxnVentas,
+                        'TOTAL MXN COSTO' => $request->totalMxnCosto,
+                        'TOTAL MXN UTILIDAD' => $request->totalMxnUtilidad,
+                        'TOTAL USD VENTAS' => $request->totalUsdVentas,
+                        'TOTAL USD COSTO' => $request->totalUsdCosto,
+                        'TOTAL USD UTILIDAD' => $request->totalUsdUtilidad,
+                    )
+                );    
+            }
+            else{
+                array_push($dataF, 
+                    $data = array(
+                        'NÚMERO DE COTIZACIÓN' => $dato[0],
+                        'CLIENTE' => $dato[1],
+                        'PROYECTO' => $dato[2],
+                        'MONTO' => $dato[3],
+                        'MONEDA' => $dato[4],
+                        'NÚMERO DE COMPRA' => $dato[5],
+                        'COSTO' => $dato[6],
+                        'UTILIDAD' => $dato[7],
+                        'TOTAL MXN VENTAS' => '',
+                        'TOTAL MXN COSTO' => '',
+                        'TOTAL MXN UTILIDAD' => '',
 
-            array_push($dataF, 
-                $data = array(
-                    'NÚMERO DE COTIZACIÓN' => $dato[0],
-                    'CLIENTE' => $dato[1],
-                    'PROYECTO' => $dato[2],
-                    'MONTO' => $dato[3],
-                    'MONEDA' => $dato[4],
-                    'NÚMERO DE COMPRA' => $dato[5],
-                    'COSTO' => $dato[6],
-                    'UTILIDAD' => $dato[7],
-                )
-            );
+                        'TOTAL USD VENTAS' => '',
+                        'TOTAL USD COSTO' =>'',
+                        'TOTAL USD UTILIDAD' =>'',
+                    )
+                );
+            }
+            
         }
 
         Excel::create('ReporteUtilidades', function($excel) use($dataF) {
