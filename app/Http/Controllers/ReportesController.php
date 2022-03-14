@@ -42,8 +42,12 @@ class ReportesController extends Controller
 
             $dato[5] = str_replace("<span>","",$dato[5]);
             $dato[5] = str_replace("</span><br>","",$dato[5]);
+            $dato[5] = str_replace(" ","",$dato[5]);
+            $dato[5] = str_replace("    ","",$dato[5]);
             $dato[6] = str_replace("<span>","",$dato[6]);
             $dato[6] = str_replace("</span><br>","",$dato[6]);
+            $dato[6] = str_replace(" ","",$dato[6]);
+            $dato[6] = str_replace("    ","",$dato[6]);
 
             if ($key == 0) {
                 array_push($dataF, 
