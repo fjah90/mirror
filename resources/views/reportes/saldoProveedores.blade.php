@@ -128,7 +128,7 @@ Reportes | @parent
                           <td>@{{saldo.proyecto_nombre}}</td>
                           <td>@{{saldo.documento}}</td>
                           <td>@{{saldo.facturas_monto | formatoMoneda}}</td>
-                          <td>@{{{{str_replace('ol','ól',$saldo.moneda)}}}}</td>
+                          <td>@{{saldo.moneda}}</td>
                           <td>@{{saldo.facturas_fecha_vencimiento | formatoFechaInicio}}</td>
                           <td>@{{saldo.facturas_fecha_vencimiento | date}}</td>
                           <td>@{{saldo.facturas_fecha_vencimiento | formatoDiasFavor}}</td>
@@ -245,7 +245,7 @@ const app = new Vue({
             var totalUsd = 0;
             //suma de montos
             datos[0].forEach(function(element, index){
-                if(datos[1][index]=="Dólares"){
+                if(datos[1][index]=="Dolares"){
                     totalUsd+=formato(element)
                 }else{
                     totalMxn+=formato(element)

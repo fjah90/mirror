@@ -127,7 +127,7 @@ Reportes | @parent
                           <td>@{{pago.proyecto_nombre}}</td>
                           <td>@{{pago.documento}}</td>
                           <td>@{{pago.pago_monto | formatoMoneda}}</td>
-                          <td>@{{str_replace('ol','ól',$pago.moneda)}}</td>
+                          <td>@{{pago.moneda}}</td>
                         </tr>
                         
                       </tbody>
@@ -239,7 +239,7 @@ const app = new Vue({
             var totalUsd = 0;
             //suma de montos
             datos[0].forEach(function(element, index){
-                if(datos[1][index]=="Dólares"){
+                if(datos[1][index]=="Dolares"){
                     totalUsd+=formato(element)
                 }else{
                     totalMxn+=formato(element)

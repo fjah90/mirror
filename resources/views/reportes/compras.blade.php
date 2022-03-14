@@ -128,7 +128,7 @@ Reportes | @parent
                           <td>@{{compra.cliente_nombre}}</td>
                           <td>@{{compra.proyecto_nombre}}</td>
                           <td>@{{compra.total | formatoMoneda}}</td>
-                          <td>@{{str_replace('ol','ól',$compra.moneda)}}</td>
+                          <td>@{{compra.moneda}}</td>
                         </tr>
                         
                       </tbody>
@@ -239,7 +239,7 @@ const app = new Vue({
             var totalUsd = 0;
             //suma de montos
             datos[0].forEach(function(element, index){
-                if(datos[1][index]=="Dólares"){
+                if(datos[1][index]=="Dolares"){
                     totalUsd+=formato(element)
                 }else{
                     totalMxn+=formato(element)

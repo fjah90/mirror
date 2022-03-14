@@ -124,7 +124,7 @@ Reportes | @parent
                           <td>@{{dato.cliente_nombre}}</td>
                           <td>@{{dato.proyecto_nombre}}</td>
                           <td>@{{dato.cotizaciones_total | formatoMoneda}}</td>
-                          <td>@{{str_replace('ol','ól',$dato.cotizaciones_moneda)}}</td>
+                          <td>@{{dato.cotizaciones_moneda}}</td>
                           <td>@{{dato.numero}}</td>
                           <td>@{{dato.total | formatoConvertirMoneda(dato.cotizaciones_moneda, dato.moneda)}}</td>
                           <td>@{{dato.total | formatoUtilidad(dato.cotizaciones_moneda, dato.moneda, dato.cotizaciones_total)}}</td>
@@ -250,7 +250,7 @@ const app = new Vue({
             var totalUsd = 0;
             //suma de montos
             datos[0].forEach(function(element, index){
-                if(datos[1][index]=="Dólares"){
+                if(datos[1][index]=="Dolares"){
                     totalUsd+=formato(element)
                 }else{
                     totalMxn+=formato(element)
