@@ -409,7 +409,11 @@ const app = new Vue({
             text: "",
             type: "success"
           }).then(()=>{
-            window.open('/storage/reportes/utilidades.pdf', '_blank').focus();
+            const link = document.createElement("a");
+            link.href = '/storage/reportes/utilidades.pdf';
+            link.download = 'ReporteUtilidades.pdf';
+            link.click();
+            //window.open('/storage/reportes/utilidades.pdf', '_blank').focus();
           });
         })
         .catch(({response}) => {

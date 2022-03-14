@@ -27,8 +27,6 @@ Reportes | @parent
                   <button class="btn btn-primary" v-on:click="pdf">
                       PDF
                   </button>
-                  <a href="/storage/reportes/compras.pdf" download="FileName">Download it!</a>
-
               </div>
               <div class="marg025 btn-group">
                   <button class="btn btn-success" v-on:click="excel">
@@ -348,7 +346,7 @@ const app = new Vue({
           }).then(()=>{
             const link = document.createElement("a");
             link.href = '/storage/reportes/compras.pdf';
-            link.download = 'ReporteComprass.pdf';
+            link.download = 'ReporteCompras.pdf';
             link.click();
 
             //window.open('', '_blank').focus();

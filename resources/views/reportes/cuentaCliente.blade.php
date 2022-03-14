@@ -237,7 +237,11 @@ Reportes | @parent
             text: "",
             type: "success"
           }).then(()=>{
-            window.open('/storage/reportes/cuenta.pdf', '_blank').focus();
+            const link = document.createElement("a");
+            link.href = '/storage/reportes/cuenta.pdf';
+            link.download = 'ReporteCuentaCliente.pdf';
+            link.click();
+            //window.open('/storage/reportes/cuenta.pdf', '_blank').focus();
           });
         })
         .catch(({response}) => {

@@ -417,7 +417,11 @@ const app = new Vue({
             this.cargando=false;
             var uno = document.getElementById('boton');
             uno.innerHTML = 'PDF';
-            window.open('/storage/reportes/cotizaciones.pdf', '_blank').focus();
+            const link = document.createElement("a");
+            link.href = '/storage/reportes/cotizaciones.pdf';
+            link.download = 'ReporteCotizaciones.pdf';
+            link.click();
+            //window.open('/storage/reportes/cotizaciones.pdf', '_blank').focus();
           });
         })
         .catch(({response}) => {

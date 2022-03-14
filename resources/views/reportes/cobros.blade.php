@@ -342,7 +342,11 @@ const app = new Vue({
             text: "",
             type: "success"
           }).then(()=>{
-            window.open('/storage/reportes/cobros.pdf', '_blank').focus();
+            const link = document.createElement("a");
+            link.href = '/storage/reportes/cobros.pdf';
+            link.download = 'ReporteCobros.pdf';
+            link.click();
+            //window.open('/storage/reportes/cobros.pdf', '_blank').focus();
           });
         })
         .catch(({response}) => {

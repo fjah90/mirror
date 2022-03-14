@@ -344,7 +344,11 @@ const app = new Vue({
               text: "",
               type: "success"
             }).then(()=>{
-              window.open('/storage/reportes/pagos.pdf', '_blank').focus();
+              const link = document.createElement("a");
+              link.href = '/storage/reportes/pagos.pdf';
+              link.download = 'ReportePagos.pdf';
+              link.click();
+              //window.open('/storage/reportes/pagos.pdf', '_blank').focus();
             });
           })
           .catch(({response}) => {
