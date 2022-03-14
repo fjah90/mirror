@@ -128,7 +128,7 @@ Reportes | @parent
                           <td>@{{saldo.proyecto_nombre}}</td>
                           <td>@{{saldo.documento}}</td>
                           <td>@{{saldo.facturas_monto | formatoMoneda}}</td>
-                          <td>@{{saldo.moneda}}</td>
+                          <td>@{{{{str_replace('ol','ól',$saldo.moneda)}}}}</td>
                           <td>@{{saldo.facturas_fecha_vencimiento | formatoFechaInicio}}</td>
                           <td>@{{saldo.facturas_fecha_vencimiento | date}}</td>
                           <td>@{{saldo.facturas_fecha_vencimiento | formatoDiasFavor}}</td>
@@ -329,91 +329,113 @@ const app = new Vue({
   			return moment(value, 'DD/MM/YYYY').toDate().getTime();
       },
       pdf(){
-        datos = this.tabla.rows( {order:'current' , search:'applied' } ).data(); 
-        var datosfinal = {
-          datos : [],
-          totalMxn: this.totalm,
-          totalUsd: this.totald
-        };
-        var dat = [];
+        if (datos.length != 0) {
+          datos = this.tabla.rows( {order:'current' , search:'applied' } ).data(); 
+          var datosfinal = {
+            datos : [],
+            totalMxn: this.totalm,
+            totalUsd: this.totald
+          };
+          var dat = [];
 
-        for (var i = 0; i <= datos.length - 1; i++) {
-          var data = {}
-          Object.assign(data, datos[i]);
-          //console.log(data);
-          datosfinal.datos.push(data);
-        }
+          for (var i = 0; i <= datos.length - 1; i++) {
+            var data = {}
+            Object.assign(data, datos[i]);
+            //console.log(data);
+            datosfinal.datos.push(data);
+          }
 
-        //console.log(datosfinal);
+          //console.log(datosfinal);
 
-        var formData = objectToFormData(datosfinal, {indices: true});
+          var formData = objectToFormData(datosfinal, {indices: true});
 
-        //console.log(datos);
+          //console.log(datos);
 
-        axios.post('/reportes/saldoProveedores/pdf', formData,{headers: {'Content-Type': 'multipart/form-data'}
-        })
-        .then(({data}) => {
-          swal({
-            title: "Reporte generado",
-            text: "",
-            type: "success"
-          }).then(()=>{
-            window.open('/storage/reportes/saldo.pdf', '_blank').focus();
+          axios.post('/reportes/saldoProveedores/pdf', formData,{headers: {'Content-Type': 'multipart/form-data'}
+          })
+          .then(({data}) => {
+            swal({
+              title: "Reporte generado",
+              text: "",
+              type: "success"
+            }).then(()=>{
+              window.open('/storage/reportes/saldo.pdf', '_blank').focus();
+            });
+          })
+          .catch(({response}) => {
+            console.error(response);
+            this.cargando = false;
+            swal({
+              title: "Error",
+              text: response.data.message || "Ocurrio un error inesperado, intente mas tarde",
+              type: "error"
+            });
           });
-        })
-        .catch(({response}) => {
-          console.error(response);
-          this.cargando = false;
+        }
+        else{
+
           swal({
             title: "Error",
-            text: response.data.message || "Ocurrio un error inesperado, intente mas tarde",
+            text: "No hay datos para generar reporte",
             type: "error"
           });
-        });
+
+        }
 
       },
       excel(){
         datos = this.tabla.rows( {order:'current' , search:'applied' } ).data(); 
-        var datosfinal = {
-          datos : [],
-          totalMxn: this.totalm,
-          totalUsd: this.totald
-        };
-        var dat = [];
+        if (datos.length != 0) {
+          var datosfinal = {
+            datos : [],
+            totalMxn: this.totalm,
+            totalUsd: this.totald
+          };
+          var dat = [];
 
-        for (var i = 0; i <= datos.length - 1; i++) {
-          var data = {}
-          Object.assign(data, datos[i]);
-          //console.log(data);
-          datosfinal.datos.push(data);
-        }
+          for (var i = 0; i <= datos.length - 1; i++) {
+            var data = {}
+            Object.assign(data, datos[i]);
+            //console.log(data);
+            datosfinal.datos.push(data);
+          }
 
-        //console.log(datosfinal);
+          //console.log(datosfinal);
 
-        var formData = objectToFormData(datosfinal, {indices: true});
+          var formData = objectToFormData(datosfinal, {indices: true});
 
-        //console.log(datos);
+          //console.log(datos);
 
-        axios.post('/reportes/saldoProveedores/excel', formData,{headers: {'Content-Type': 'multipart/form-data'}
-        })
-        .then(({data}) => {
-          swal({
-            title: "Reporte generado",
-            text: "",
-            type: "success"
-          }).then(()=>{
-            window.open('/storage/reportes/ReporteSaldo.xls', '_blank').focus();
+          axios.post('/reportes/saldoProveedores/excel', formData,{headers: {'Content-Type': 'multipart/form-data'}
+          })
+          .then(({data}) => {
+            swal({
+              title: "Reporte generado",
+              text: "",
+              type: "success"
+            }).then(()=>{
+              window.open('/storage/reportes/ReporteSaldo.xls', '_blank').focus();
+            });
+          })
+          .catch(({response}) => {
+            console.error(response);
+            this.cargando = false;
+            swal({
+              title: "Error",
+              text: response.data.message || "Ocurrio un error inesperado, intente mas tarde",
+              type: "error"
+            });
           });
-        })
-        .catch(({response}) => {
-          console.error(response);
-          this.cargando = false;
+        }
+        else{
+
           swal({
             title: "Error",
-            text: response.data.message || "Ocurrio un error inesperado, intente mas tarde",
+            text: "No hay datos para generar reporte",
             type: "error"
           });
-        });
+
+        }
 
       }
       

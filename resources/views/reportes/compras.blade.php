@@ -128,7 +128,7 @@ Reportes | @parent
                           <td>@{{compra.cliente_nombre}}</td>
                           <td>@{{compra.proyecto_nombre}}</td>
                           <td>@{{compra.total | formatoMoneda}}</td>
-                          <td>@{{compra.moneda}}</td>
+                          <td>@{{str_replace('ol','ól',$compra.moneda)}}</td>
                         </tr>
                         
                       </tbody>

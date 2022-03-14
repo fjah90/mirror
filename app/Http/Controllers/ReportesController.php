@@ -281,8 +281,8 @@ class ReportesController extends Controller
                 array_push($dataF, 
                     $data = array(
                         'FECHA' => $cuen->cotizacionFecha,
-                        'NUMERO DE COTIZACION' => $cuen->cotizacion_id,
-                        'FECHA DE APROBACION' => $cuen->aprobadoEn ,
+                        'NÚMERO DE COTIZACIÓN' => $cuen->cotizacion_id,
+                        'FECHA DE APROBACIÓN' => $cuen->aprobadoEn ,
                         'MONEDA' => $cuen->moneda,
                         'MONTO' => number_format($cuen->total, 2, '.', ' '),
                         'FACTURADO' => number_format($cuen->facturado, 2, '.', ' '),

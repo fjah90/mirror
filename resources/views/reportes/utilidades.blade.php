@@ -124,7 +124,7 @@ Reportes | @parent
                           <td>@{{dato.cliente_nombre}}</td>
                           <td>@{{dato.proyecto_nombre}}</td>
                           <td>@{{dato.cotizaciones_total | formatoMoneda}}</td>
-                          <td>@{{dato.cotizaciones_moneda}}</td>
+                          <td>@{{str_replace('ol','ól',$dato.cotizaciones_moneda)}}</td>
                           <td>@{{dato.numero}}</td>
                           <td>@{{dato.total | formatoConvertirMoneda(dato.cotizaciones_moneda, dato.moneda)}}</td>
                           <td>@{{dato.total | formatoUtilidad(dato.cotizaciones_moneda, dato.moneda, dato.cotizaciones_total)}}</td>

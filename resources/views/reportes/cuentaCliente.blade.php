@@ -49,8 +49,8 @@ Reportes | @parent
                       <thead>
                         <tr>
                           <th class="text-center">Fecha</th>
-                          <th class="text-center"><strong>Numero Cotizacion</strong></th>
-                          <th class="text-center"><strong>Fecha Aprobacion</strong></th>
+                          <th class="text-center"><strong>Número Cotización</strong></th>
+                          <th class="text-center"><strong>Fecha Aprobación</strong></th>
                           <th class="text-center"><strong>Moneda</strong></th>
                           <th class="text-center"><strong>Monto</strong></th>
                           <th class="text-center"><strong>Facturado</strong></th>
@@ -64,7 +64,7 @@ Reportes | @parent
                           <td>@{{row.cotizacionFecha | date}}</td>
                           <td>@{{row.cotizacion_id}}</td>
                           <td>@{{row.aprobadoEn | date}}</td>
-                          <td>@{{row.moneda}}</td>
+                          <td>@{{str_replace('ol','ól',$row.moneda)}}</td>
                           <td>@{{row.total | formatoMoneda}}</td>
                           <td>@{{row.facturado | formatoMoneda}}</td>
                           <td>@{{(row.total-row.facturado) | formatoMoneda}}</td>

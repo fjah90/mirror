@@ -125,7 +125,7 @@ Reportes | @parent
                           <td>@{{cobro.proyecto}}</td>
                           <td>@{{cobro.documento}}</td>
                           <td>@{{cobro.pago_monto | formatoMoneda}}</td>
-                          <td>@{{cobro.moneda}}</td>
+                          <td>@{{str_replace('ol','ól',$cobro.moneda)}}</td>
                         </tr>
                         
                       </tbody>

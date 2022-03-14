@@ -127,7 +127,7 @@ Reportes | @parent
                           <td>@{{pago.proyecto_nombre}}</td>
                           <td>@{{pago.documento}}</td>
                           <td>@{{pago.pago_monto | formatoMoneda}}</td>
-                          <td>@{{pago.moneda}}</td>
+                          <td>@{{str_replace('ol','ól',$pago.moneda)}}</td>
                         </tr>
                         
                       </tbody>
@@ -315,46 +315,57 @@ const app = new Vue({
       },
       pdf(){
         datos = this.tabla.rows( { search:'applied' } ).data(); 
-        var datosfinal = {
-          datos : [],
-          totalMxn: this.totalm,
-          totalUsd: this.totald
-        };
-        var dat = [];
+        if (datos.length != 0) {
+          var datosfinal = {
+            datos : [],
+            totalMxn: this.totalm,
+            totalUsd: this.totald
+          };
+          var dat = [];
 
-        for (var i = 0; i <= datos.length - 1; i++) {
-          var data = {}
-          Object.assign(data, datos[i]);
-          //console.log(data);
-          datosfinal.datos.push(data);
-        }
+          for (var i = 0; i <= datos.length - 1; i++) {
+            var data = {}
+            Object.assign(data, datos[i]);
+            //console.log(data);
+            datosfinal.datos.push(data);
+          }
 
-        //console.log(datosfinal);
+          //console.log(datosfinal);
 
-        var formData = objectToFormData(datosfinal, {indices: true});
+          var formData = objectToFormData(datosfinal, {indices: true});
 
-        //console.log(datos);
+          //console.log(datos);
 
-        axios.post('/reportes/pagos/pdf', formData,{headers: {'Content-Type': 'multipart/form-data'}
-        })
-        .then(({data}) => {
-          swal({
-            title: "Reporte generado",
-            text: "",
-            type: "success"
-          }).then(()=>{
-            window.open('/storage/reportes/pagos.pdf', '_blank').focus();
+          axios.post('/reportes/pagos/pdf', formData,{headers: {'Content-Type': 'multipart/form-data'}
+          })
+          .then(({data}) => {
+            swal({
+              title: "Reporte generado",
+              text: "",
+              type: "success"
+            }).then(()=>{
+              window.open('/storage/reportes/pagos.pdf', '_blank').focus();
+            });
+          })
+          .catch(({response}) => {
+            console.error(response);
+            this.cargando = false;
+            swal({
+              title: "Error",
+              text: response.data.message || "Ocurrio un error inesperado, intente mas tarde",
+              type: "error"
+            });
           });
-        })
-        .catch(({response}) => {
-          console.error(response);
-          this.cargando = false;
+        }
+        else{
+
           swal({
             title: "Error",
-            text: response.data.message || "Ocurrio un error inesperado, intente mas tarde",
+            text: "No hay datos para generar reporte",
             type: "error"
           });
-        });
+
+        }
 
       },
       excel(){
