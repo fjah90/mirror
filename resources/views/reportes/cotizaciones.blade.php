@@ -79,7 +79,7 @@ Reportes | @parent
                       </template>
                     </dropdown>
                     <div class="marg025 btn-group" id="select_clientes" >
-                        <select name="proxDias" class="form-control" size="1" v-model="valor_clientes" id="selectclientes">
+                        <select name="proxDias" class="form-control" size="1" v-model="valor_clientes" id="selectclientes" style="width:100%">
                         <option v-for="(option, index) in datos_select.clientes" v-bind:value="option" >
                             @{{ option }}
                           </option>
