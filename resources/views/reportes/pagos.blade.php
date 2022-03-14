@@ -408,7 +408,7 @@ const app = new Vue({
 
           swal({
             title: "Error",
-            text: response.data.message || "No hay datos para generar reporte",
+            text: "No hay datos para generar reporte",
             type: "error"
           });
 
