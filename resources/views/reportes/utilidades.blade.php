@@ -267,7 +267,7 @@ const app = new Vue({
 
                 }else{
                     numeroCotizacion.push(datos[2][index])
-                    if(datos[1][index]=="Dólares"){
+                    if(datos[1][index]=="Dolares"){
                         ventaUsd+=formato(element)
                     }else{
                         ventaMxn+=formato(element)
