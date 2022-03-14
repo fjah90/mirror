@@ -27,7 +27,7 @@ Reportes | @parent
                   <button class="btn btn-primary" v-on:click="pdf">
                       PDF
                   </button>
-                  <a href="/reportes/compras.pdf" download="FileName">Download it!</a>
+                  <a href="/storage/reportes/compras.pdf" download="FileName">Download it!</a>
 
               </div>
               <div class="marg025 btn-group">
