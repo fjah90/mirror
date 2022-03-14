@@ -239,7 +239,7 @@ const app = new Vue({
             var totalUsd = 0;
             //suma de montos
             datos[0].forEach(function(element, index){
-                if(datos[1][index]=="Dolares"){
+                if(datos[1][index]=="Dólares"){
                     totalUsd+=formato(element)
                 }else{
                     totalMxn+=formato(element)
@@ -344,7 +344,12 @@ const app = new Vue({
             text: "",
             type: "success"
           }).then(()=>{
-            window.open('/storage/reportes/compras.pdf', '_blank').focus();
+            const link = document.createElement("a");
+            link.href = '/storage/reportes/compras.pdf';
+            link.download = 'ReporteCompras.pdf';
+            link.click();
+
+            //window.open('', '_blank').focus();
           });
         })
         .catch(({response}) => {
