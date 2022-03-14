@@ -166,7 +166,7 @@ Reportes | @parent
                           </td>
                           <td>${{number_format($cotizacion->iva, 2, '.', ',')}}</td>
                           <td>${{number_format($cotizacion->total, 2, '.', ',')}}</td>
-                          <td>{{$cotizacion->moneda}}</td>
+                          <td>{{str_replace('ol','ól',$cotizacion->moneda)}}</td>
                           <td>{{$cotizacion->user->name}}</td>
                           
                         </tr>
