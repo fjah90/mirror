@@ -346,7 +346,7 @@ const app = new Vue({
           }).then(()=>{
             const link = document.createElement("a");
             link.href = '/storage/reportes/compras.pdf';
-            link.download = 'ReporteCompras.pdf';
+            link.download = 'ReporteComprass.pdf';
             link.click();
 
             //window.open('', '_blank').focus();
