@@ -232,17 +232,17 @@ const app = new Vue({
           vue.valor_proyectos = value[0].id
           //this.tabla.columns(4).search(this.valor_proyectos).draw();
         });
-        this.cotizacionSelect= $('#selectids').select2({ width: '120px%'}).on('select2:select',function () {       
+        this.cotizacionSelect= $('#selectids').select2({ width: '120px'}).on('select2:select',function () {       
           var value = $("#selectids").select2('data');
           vue.valor_ids = value[0].id
           //this.tabla.columns(4).search(this.valor_proyectos).draw();
         });
-        this.clienteSelect= $('#selectclientes').select2({ width: '120px%'}).on('select2:select',function () {       
+        this.clienteSelect= $('#selectclientes').select2({ width: '120px'}).on('select2:select',function () {       
           var value = $("#selectclientes").select2('data');
           vue.valor_clientes = value[0].id
           //this.tabla.columns(4).search(this.valor_proyectos).draw();
         });
-        this.usuarioSelect= $('#selectusuarios').select2({ width: '120px%'}).on('select2:select',function () {       
+        this.usuarioSelect= $('#selectusuarios').select2({ width: '120px'}).on('select2:select',function () {       
           var value = $("#selectusuarios").select2('data');
           vue.valor_usuarios = value[0].id
           //this.tabla.columns(4).search(this.valor_proyectos).draw();
