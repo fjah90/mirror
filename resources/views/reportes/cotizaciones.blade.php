@@ -146,7 +146,9 @@ Reportes | @parent
                           <td>
                             <template>
                               @foreach($cotizacion->entradas2() as $entrada)
-                              <span >@if($entrada->empresa == null || $entrada->empresa == '')Por Definir@else{{$entrada->empresa}}@endif</span><br/>
+                              <span >@if($entrada->empresa == null || $entrada->empresa == '')Por Definir
+                              @else{{$entrada->empresa}}
+                              @endif</span><br/>
                               @endforeach
                             </template>
                           </td>
