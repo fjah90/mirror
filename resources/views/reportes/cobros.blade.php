@@ -125,7 +125,7 @@ Reportes | @parent
                           <td>@{{cobro.proyecto}}</td>
                           <td>@{{cobro.documento}}</td>
                           <td>@{{cobro.pago_monto | formatoMoneda}}</td>
-                          <td>@{{cobro.moneda}}</td>
+                          <td>@{{cobro.moneda | formatodolares}}</td>
                         </tr>
                         
                       </tbody>
@@ -304,6 +304,9 @@ const app = new Vue({
         formatoCurrency(valor){
             return valor=='Dolares'?'USD':'MXN';
         },
+        formatodolares(valor){
+            return valor == 'Dolares'?'Dólares':'Pesos';
+        }
         date(value){
   			return moment(value, 'YYYY-MM-DD  hh:mm:ss').format('DD/MM/YYYY');
       },
