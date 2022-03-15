@@ -602,12 +602,6 @@ class ReportesController extends Controller
                         'NÚMERO DE COMPRA' => $dato[5],
                         'COSTO' => $dato[6],
                         'UTILIDAD' => $dato[7],
-                        'TOTAL MXN VENTAS' => $request->totalMxnVentas,
-                        'TOTAL MXN COSTO' => $request->totalMxnCosto,
-                        'TOTAL MXN UTILIDAD' => $request->totalMxnUtilidad,
-                        'TOTAL USD VENTAS' => $request->totalUsdVentas,
-                        'TOTAL USD COSTO' => $request->totalUsdCosto,
-                        'TOTAL USD UTILIDAD' => $request->totalUsdUtilidad,
                     )
                 );    
         }
