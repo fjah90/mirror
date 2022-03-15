@@ -127,7 +127,7 @@ Reportes | @parent
                           <td>@{{pago.proyecto_nombre}}</td>
                           <td>@{{pago.documento}}</td>
                           <td>@{{pago.pago_monto | formatoMoneda}}</td>
-                          <td>@{{pago.moneda}}</td>
+                          <td>@{{pago.moneda | formatodolares}}</td>
                         </tr>
                         
                       </tbody>
@@ -181,17 +181,17 @@ const app = new Vue({
     mounted(){
         var vue =this;
 
-        this.proyectoSelect= $('#selectproyectos').select2({ width: '100%'}).on('select2:select',function () {       
+        this.proyectoSelect= $('#selectproyectos').select2({ width: '100px'}).on('select2:select',function () {       
           var value = $("#selectproyectos").select2('data');
           vue.valor_proyectos = value[0].id
           //this.tabla.columns(4).search(this.valor_proyectos).draw();
         });
-        this.proveedorSelect= $('#selectproveedores').select2({ width: '100%'}).on('select2:select',function () {       
+        this.proveedorSelect= $('#selectproveedores').select2({ width: '100px'}).on('select2:select',function () {       
           var value = $("#selectproveedores").select2('data');
           vue.valor_proveedores = value[0].id
           //this.tabla.columns(4).search(this.valor_proyectos).draw();
         });
-        this.comprasSelect= $('#selectcompras').select2({ width: '100%'}).on('select2:select',function () {       
+        this.comprasSelect= $('#selectcompras').select2({ width: '100px'}).on('select2:select',function () {       
           var value = $("#selectcompras").select2('data');
           vue.valor_ids = value[0].id
           //this.tabla.columns(4).search(this.valor_proyectos).draw();
@@ -239,7 +239,7 @@ const app = new Vue({
             var totalUsd = 0;
             //suma de montos
             datos[0].forEach(function(element, index){
-                if(datos[1][index]=="Dolares"){
+                if(datos[1][index]=="Dólares"){
                     totalUsd+=formato(element)
                 }else{
                     totalMxn+=formato(element)
@@ -304,6 +304,9 @@ const app = new Vue({
         },
         formatoCurrency(valor){
             return valor=='Dolares'?'USD':'MXN';
+        },
+        formatodolares(valor){
+            return valor == 'Dolares'?'Dólares':'Pesos';
         },
         date(value){
   			return moment(value, 'YYYY-MM-DD  hh:mm:ss').format('DD/MM/YYYY');

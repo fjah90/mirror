@@ -180,17 +180,17 @@ const app = new Vue({
         var vue =this;
 
 
-        this.proyectoSelect= $('#selectproyectos').select2({ width: '100%'}).on('select2:select',function () {       
+        this.proyectoSelect= $('#selectproyectos').select2({ width: '100px'}).on('select2:select',function () {       
           var value = $("#selectproyectos").select2('data');
           vue.valor_proyectos = value[0].id
           //this.tabla.columns(4).search(this.valor_proyectos).draw();
         });
-        this.cotizacionSelect= $('#selectcotizaciones').select2({ width: '100%'}).on('select2:select',function () {       
+        this.cotizacionSelect= $('#selectcotizaciones').select2({ width: '100px'}).on('select2:select',function () {       
           var value = $("#selectcotizaciones").select2('data');
           vue.valor_cotizaciones = value[0].id
           //this.tabla.columns(4).search(this.valor_proyectos).draw();
         });
-        this.clienteSelect= $('#selectclientes').select2({ width: '100%'}).on('select2:select',function () {       
+        this.clienteSelect= $('#selectclientes').select2({ width: '100px'}).on('select2:select',function () {       
           var value = $("#selectclientes").select2('data');
           vue.valor_clientes = value[0].id
           //this.tabla.columns(4).search(this.valor_proyectos).draw();
@@ -237,7 +237,7 @@ const app = new Vue({
             var totalUsd = 0;
             //suma de montos
             datos[0].forEach(function(element, index){
-                if(datos[1][index]=="Dolares"){
+                if(datos[1][index]=="Dólares"){
                     totalUsd+=formato(element)
                 }else{
                     totalMxn+=formato(element)

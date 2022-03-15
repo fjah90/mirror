@@ -64,7 +64,7 @@ Reportes | @parent
                           <td>@{{row.cotizacionFecha | date}}</td>
                           <td>@{{row.cotizacion_id}}</td>
                           <td>@{{row.aprobadoEn | date}}</td>
-                          <td>@{{row.moneda}}</td>
+                          <td>@{{row.moneda | formatodolares}}</td>
                           <td>@{{row.total | formatoMoneda}}</td>
                           <td>@{{row.facturado | formatoMoneda}}</td>
                           <td>@{{(row.total-row.facturado) | formatoMoneda}}</td>
@@ -139,7 +139,7 @@ Reportes | @parent
                 var totalDolares = {monto:0.0, facturado:0.0, porFacturar:0.0, pagado:0.0, pendiente:0.0};
                 var totalMxn     = {monto:0.0, facturado:0.0, porFacturar:0.0, pagado:0.0, pendiente:0.0};
                 element.forEach(element2 => {
-                   if(element2.moneda=="Dolares"){
+                   if(element2.moneda=="Dólares"){
                     totalDolares.monto+=element2.total;
                     totalDolares.facturado+=element2.facturado;
                     totalDolares.pagado+=element2.pagado;
@@ -181,6 +181,9 @@ Reportes | @parent
         },
         formatoCurrency(valor){
         return valor=='Dolares'?'USD':'MXN';
+        },
+        formatodolares(valor){
+            return valor == 'Dolares'?'Dólares':'Pesos';
         },
         date(value){
                 return moment(value, 'YYYY-MM-DD  hh:mm:ss').format('DD/MM/YYYY');

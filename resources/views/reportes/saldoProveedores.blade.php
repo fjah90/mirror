@@ -128,7 +128,7 @@ Reportes | @parent
                           <td>@{{saldo.proyecto_nombre}}</td>
                           <td>@{{saldo.documento}}</td>
                           <td>@{{saldo.facturas_monto | formatoMoneda}}</td>
-                          <td>@{{saldo.moneda}}</td>
+                          <td>@{{saldo.moneda | formatodolares}}</td>
                           <td>@{{saldo.facturas_fecha_vencimiento | formatoFechaInicio}}</td>
                           <td>@{{saldo.facturas_fecha_vencimiento | date}}</td>
                           <td>@{{saldo.facturas_fecha_vencimiento | formatoDiasFavor}}</td>
@@ -185,17 +185,17 @@ const app = new Vue({
     mounted(){
         var vue =this;
 
-        this.proyectoSelect= $('#selectproyectos').select2({ width: '100%'}).on('select2:select',function () {       
+        this.proyectoSelect= $('#selectproyectos').select2({ width: '100px'}).on('select2:select',function () {       
           var value = $("#selectproyectos").select2('data');
           vue.valor_proyectos = value[0].id
           //this.tabla.columns(4).search(this.valor_proyectos).draw();
         });
-        this.proveedorSelect= $('#selectproveedores').select2({ width: '100%'}).on('select2:select',function () {       
+        this.proveedorSelect= $('#selectproveedores').select2({ width: '100px'}).on('select2:select',function () {       
           var value = $("#selectproveedores").select2('data');
           vue.valor_proveedores = value[0].id
           //this.tabla.columns(4).search(this.valor_proyectos).draw();
         });
-        this.comprasSelect= $('#selectcompras').select2({ width: '100%'}).on('select2:select',function () {       
+        this.comprasSelect= $('#selectcompras').select2({ width: '100px'}).on('select2:select',function () {       
           var value = $("#selectcompras").select2('data');
           vue.valor_ids = value[0].id
           //this.tabla.columns(4).search(this.valor_proyectos).draw();
@@ -245,7 +245,7 @@ const app = new Vue({
             var totalUsd = 0;
             //suma de montos
             datos[0].forEach(function(element, index){
-                if(datos[1][index]=="Dolares"){
+                if(datos[1][index]=="Dólares"){
                     totalUsd+=formato(element)
                 }else{
                     totalMxn+=formato(element)
@@ -317,6 +317,9 @@ const app = new Vue({
         },
         formatoFechaInicio(value){
   			return moment(value, 'YYYY-MM-DD').subtract(15,"days").format('DD/MM/YYYY');
+        },
+        formatodolares(valor){
+            return valor == 'Dolares'?'Dólares':'Pesos';
         },
         formatoDiasFavor(value){
             var now = moment(new Date());

@@ -124,7 +124,7 @@ Reportes | @parent
                           <td>@{{dato.cliente_nombre}}</td>
                           <td>@{{dato.proyecto_nombre}}</td>
                           <td>@{{dato.cotizaciones_total | formatoMoneda}}</td>
-                          <td>@{{dato.cotizaciones_moneda}}</td>
+                          <td>@{{dato.cotizaciones_moneda | formatodolares}}</td>
                           <td>@{{dato.numero}}</td>
                           <td>@{{dato.total | formatoConvertirMoneda(dato.cotizaciones_moneda, dato.moneda)}}</td>
                           <td>@{{dato.total | formatoUtilidad(dato.cotizaciones_moneda, dato.moneda, dato.cotizaciones_total)}}</td>
@@ -194,17 +194,17 @@ const app = new Vue({
     },
     mounted(){
         var vue =this;
-        this.proyectoSelect= $('#selectproyectos').select2({ width: '100%'}).on('select2:select',function () {       
+        this.proyectoSelect= $('#selectproyectos').select2({ width: '100px'}).on('select2:select',function () {       
           var value = $("#selectproyectos").select2('data');
           vue.valor_proyectos = value[0].id
           //this.tabla.columns(4).search(this.valor_proyectos).draw();
         });
-        this.cotizacionSelect= $('#selectcotizaciones').select2({ width: '100%'}).on('select2:select',function () {       
+        this.cotizacionSelect= $('#selectcotizaciones').select2({ width: '100px'}).on('select2:select',function () {       
           var value = $("#selectcotizaciones").select2('data');
           vue.valor_cotizaciones = value[0].id
           //this.tabla.columns(4).search(this.valor_proyectos).draw();
         });
-        this.clienteSelect= $('#selectclientes').select2({ width: '100%'}).on('select2:select',function () {       
+        this.clienteSelect= $('#selectclientes').select2({ width: '100px'}).on('select2:select',function () {       
           var value = $("#selectclientes").select2('data');
           vue.valor_clientes = value[0].id
           //this.tabla.columns(4).search(this.valor_proyectos).draw();
@@ -250,7 +250,7 @@ const app = new Vue({
             var totalUsd = 0;
             //suma de montos
             datos[0].forEach(function(element, index){
-                if(datos[1][index]=="Dolares"){
+                if(datos[1][index]=="Dólares"){
                     totalUsd+=formato(element)
                 }else{
                     totalMxn+=formato(element)
@@ -347,6 +347,9 @@ const app = new Vue({
         },
         date(value){
   			return moment(value, 'YYYY-MM-DD  hh:mm:ss').format('DD/MM/YYYY');
+        },
+        formatodolares(valor){
+            return valor == 'Dolares'?'Dólares':'Pesos';
         },
         formatoConvertirMoneda(value, monedaCotizacion, monedaCompra){
   			if(monedaCotizacion == monedaCompra){
