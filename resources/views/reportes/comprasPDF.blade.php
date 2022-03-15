@@ -513,7 +513,7 @@
           <thead>
             <tr>
               <th class="text-center" style=" padding:3px 0 1px;">Fecha de Aprobación</th>
-              <th class="text-center" style=" padding:3px 0 1px;">NÚmero de Compra</th>
+              <th class="text-center" style=" padding:3px 0 1px;">Número de Compra</th>
               <th class="text-center" style=" padding:3px 0 1px;">Cotización</th>
               <th class="text-center" style=" padding:3px 0 1px;">Proveedor</th>
               <th class="text-center" style=" padding:3px 0 1px;">Cliente</th>
