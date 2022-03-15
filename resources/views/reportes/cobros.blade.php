@@ -306,7 +306,7 @@ const app = new Vue({
         },
         formatodolares(valor){
             return valor == 'Dolares'?'Dólares':'Pesos';
-        }
+        },
         date(value){
   			return moment(value, 'YYYY-MM-DD  hh:mm:ss').format('DD/MM/YYYY');
       },
