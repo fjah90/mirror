@@ -514,8 +514,8 @@
           <thead>
             <tr>
               <th class="text-center" style=" padding:3px 0 1px;">Fecha</th>
-              <th class="text-center" style=" padding:3px 0 1px;">Numero de Cotizacion</th>
-              <th class="text-center" style=" padding:3px 0 1px;">Fecha de Aprobacion</th>
+              <th class="text-center" style=" padding:3px 0 1px;">Número de Cotización</th>
+              <th class="text-center" style=" padding:3px 0 1px;">Fecha de Aprobación</th>
               <th class="text-center" style=" padding:3px 0 1px;">Moneda</th>
               <th class="text-center" style=" padding:3px 0 1px;">Monto</th>
               <th class="text-center" style=" padding:3px 0 1px;">Facturado</th>
