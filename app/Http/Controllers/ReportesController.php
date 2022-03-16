@@ -458,7 +458,7 @@ class ReportesController extends Controller
                         'FECHA' => $cuen->cotizacionFecha,
                         'NÚMERO DE COTIZACIÓN' => $cuen->cotizacion_id,
                         'FECHA DE APROBACIÓN' => $cuen->aprobadoEn ,
-                        'MONEDA' => $cuen->moneda,
+                        'MONEDA' => str_replace('ol','ól',$cuen->moneda),
                         'MONTO' => number_format($cuen->total, 2, '.', ' '),
                         'FACTURADO' => number_format($cuen->facturado, 2, '.', ' '),
                         'POR FACTURAR' => number_format($cuen->total - $cuen->facturado, 2, '.', ' '),
