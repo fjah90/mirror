@@ -553,7 +553,7 @@
               <td></td>
               <td></td>
               <td></td>
-              <td style="font-weight:bold">Dolares</td>
+              <td style="font-weight:bold">Dólares</td>
               <td style="font-weight:bold">Total : ${{number_format($totales[$key][5], 2, '.', ' ')}}</td>
               <td style="font-weight:bold">Total Facturado : ${{number_format($totales[$key][6], 2, '.', ' ')}}</td>
               <td style="font-weight:bold">Total Por Facturar : ${{number_format($totales[$key][9], 2, '.', ' ')}}</td>

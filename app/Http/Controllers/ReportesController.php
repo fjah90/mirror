@@ -491,7 +491,7 @@ class ReportesController extends Controller
                     'FECHA' => '',
                     'NÚMERO DE COTIZACIÓN' => '',
                     'FECHA DE APROBACIÓN' => '',
-                    'MONEDA' => 'TOTAL MXN',
+                    'MONEDA' => 'TOTAL DÓLARES',
                     'MONTO' => $totalUsdMonto,
                     'FACTURADO' => $totalUsdFacturado,
                     'POR FACTURAR' => $totalUsdPorFacturar,

@@ -113,7 +113,7 @@ Reportes | @parent
                           <th class="text-center"><strong>Proyecto</strong></th>
                           <th class="text-center"><strong>Monto</strong></th>
                           <th class="text-center"><strong>Moneda</strong></th>
-                          <th class="text-center"><strong>Numero Compra</strong></th>
+                          <th class="text-center"><strong>Número Compra</strong></th>
                           <th class="text-center"><strong>Costo</strong></th>
                           <th class="text-center"><strong>Utilidad</strong></th>
                         </tr>

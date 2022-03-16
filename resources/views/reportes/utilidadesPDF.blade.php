@@ -512,12 +512,12 @@
           <table class="table table-cotizacion">
           <thead>
             <tr>
-              <th class="text-center" style=" padding:3px 0 1px;">Numero de Cotizacion</th>
+              <th class="text-center" style=" padding:3px 0 1px;">Número de Cotización</th>
               <th class="text-center" style=" padding:3px 0 1px;">Cliente</th>
               <th class="text-center" style=" padding:3px 0 1px;">Proyecto</th>
               <th class="text-center" style=" padding:3px 0 1px;">Monto</th>
               <th class="text-center" style=" padding:3px 0 1px;">Moneda</th>
-              <th class="text-center" style=" padding:3px 0 1px;">Numero de Compra</th>
+              <th class="text-center" style=" padding:3px 0 1px;">Número de Compra</th>
               <th class="text-center" style=" padding:3px 0 1px;">Costo</th>
               <th class="text-center" style=" padding:3px 0 1px;">Utilidad</th>
               
@@ -567,7 +567,7 @@
             <td class="text-right" style="width:10%;">{{$totalMxnUtilidad}}</td>
           </tr>
           <tr>
-            <td class="text-right" style="width:30%;"><strong>Dolares:</strong></td>
+            <td class="text-right" style="width:30%;"><strong>Dólares:</strong></td>
             <td class="text-right" style="width:10%;">{{$totalUsdVentas}}</td>
             <td class="text-right" style="width:10%;">{{$totalUsdCosto}}</td>
             <td class="text-right" style="width:10%;">{{$totalUsdUtilidad}}</td>
