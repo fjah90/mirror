@@ -23,17 +23,22 @@ Reportes | @parent
           <div class="panel product-details">
             <div class="panel-heading">
               <h3 class="panel-title">Reporte de Cotizaciones</h3>
-              <!--
+              
               <div class="marg025 btn-group">
-                  <button class="btn btn-xs btn-primary" v-on:click="pdf">
+                  <button id="boton" class="btn btn-primary" v-on:click="pdf" :disabled="cargando">
                       PDF
                   </button>
               </div>
-            -->
+              <div class="marg025 btn-group">
+                  <button class="btn btn-success" v-on:click="excel">
+                      EXCEL
+                  </button>
+              </div>
+            
             </div>
             <div class="panel-body">
                 <div id="oculto_filtros" class="hide">
-                    <dropdown id="fecha_ini_control" class="marg025">
+                    <dropdown id="fecha_ini_control" style="margin:0px 10px">
                       <div class="input-group">
                         <div class="input-group-btn">
                           <btn class="dropdown-toggle" style="background-color:#fff;">
@@ -42,7 +47,7 @@ Reportes | @parent
                         </div>
                         <input class="form-control" type="text" placeholder="DD/MM/YYYY"
                           v-model="fecha_ini" readonly
-                          style="width:120px;"
+                          style="width:100px;"
                         />
                       </div>
                       <template slot="dropdown">
@@ -53,7 +58,7 @@ Reportes | @parent
                         </li>
                       </template>
                     </dropdown>
-                    <dropdown id="fecha_fin_control" class="marg025">
+                    <dropdown id="fecha_fin_control" class="" style="margin:0px 10px">
                       <div class="input-group">
                         <div class="input-group-btn">
                           <btn class="dropdown-toggle" style="background-color:#fff;">
@@ -62,7 +67,7 @@ Reportes | @parent
                         </div>
                         <input class="form-control" type="text" placeholder="DD/MM/YYYY"
                           v-model="fecha_fin" readonly
-                          style="width:120px;"
+                          style="width:100px;"
                         />
                       </div>
                       <template slot="dropdown">
@@ -73,32 +78,32 @@ Reportes | @parent
                         </li>
                       </template>
                     </dropdown>
-                    <div class="marg025 btn-group" id="select_clientes" >
-                        <select name="proxDias" class="form-control" size="1" v-model="valor_clientes" id="selectclientes">
+                    <div class=" btn-group" id="select_clientes" style="margin:0px 10px">
+                        <select name="proxDias" class="form-control" size="1" v-model="valor_clientes" id="selectclientes" style="width:100%">
                         <option v-for="(option, index) in datos_select.clientes" v-bind:value="option" >
                             @{{ option }}
                           </option>
                           
                         </select>
                     </div>
-                    <div class="marg025 btn-group" id="select_proyectos" >
-                        <select name="proxDias" class="form-control" size="1" v-model="valor_proyectos" id="selectproyectos" tabindex="-1">
+                    <div class=" btn-group" id="select_proyectos" style="margin:0px 10px">
+                        <select name="proxDias" class="form-control" size="1" v-model="valor_proyectos" id="selectproyectos" tabindex="-1" style="width:100%">
                           <option v-for="option in datos_select.proyectos" v-bind:value="option">
                             @{{ option }}
                           </option>
                           
                         </select>
                     </div>
-                    <div class="marg025 btn-group" id="select_ids" >
-                        <select name="proxDias" class="form-control" size="1" v-model="valor_ids" id="selectids">
+                    <div class=" btn-group" id="select_ids" style="margin:0px 10px">
+                        <select name="proxDias" class="form-control" size="1" v-model="valor_ids" id="selectids" style="width:100%">
                           <option v-for="option in datos_select.ids" v-bind:value="option">
                             @{{ option }}
                           </option>
                           
                         </select>
                     </div>
-                    <div class="marg025 btn-group" id="select_usuarios" >
-                        <select name="proxDias" class="form-control" size="1" v-model="valor_usuarios" id="selectusuarios">
+                    <div class=" btn-group" id="select_usuarios" style="margin:0px 10px">
+                        <select name="proxDias" class="form-control" size="1" v-model="valor_usuarios" id="selectusuarios" style="width:100%">
                           <option v-for="option in datos_select.usuarios" v-bind:value="option">
                             @{{ option }}
                           </option>
@@ -141,14 +146,9 @@ Reportes | @parent
                           <td>
                             <template>
                               @foreach($cotizacion->entradas2() as $entrada)
-
-                              <span > 
-                                @if($entrada->empresa == null || $entrada->empresa == '')
-                                Por Definir
-                                @else
-                                {{$entrada->empresa}}
-                                @endif
-                              </span><br/>
+                              <span >@if($entrada->empresa == null || $entrada->empresa == '')Por Definir
+                              @else{{$entrada->empresa}}
+                              @endif</span><br/>
                               @endforeach
                             </template>
                           </td>
@@ -161,7 +161,7 @@ Reportes | @parent
                           </td>
                           <td>${{number_format($cotizacion->iva, 2, '.', ',')}}</td>
                           <td>${{number_format($cotizacion->total, 2, '.', ',')}}</td>
-                          <td>{{$cotizacion->moneda}}</td>
+                          <td>{{str_replace('ol','ól',$cotizacion->moneda)}}</td>
                           <td>{{$cotizacion->user->name}}</td>
                           
                         </tr>
@@ -215,26 +215,29 @@ const app = new Vue({
       cotizacionSelect:null,
       clienteSelect:null,
       usuarioSelect:null,
+      totalm:'',
+      totald:'',
+      cargando:false
     },
     mounted(){
         var vue =this;
 
-        this.proyectoSelect= $('#selectproyectos').select2({ width: '100%'}).on('select2:select',function () {       
+        this.proyectoSelect= $('#selectproyectos').select2({ width: '100px'}).on('select2:select',function () {       
           var value = $("#selectproyectos").select2('data');
           vue.valor_proyectos = value[0].id
           //this.tabla.columns(4).search(this.valor_proyectos).draw();
         });
-        this.cotizacionSelect= $('#selectids').select2({ width: '100%'}).on('select2:select',function () {       
+        this.cotizacionSelect= $('#selectids').select2({ width: '100px'}).on('select2:select',function () {       
           var value = $("#selectids").select2('data');
           vue.valor_ids = value[0].id
           //this.tabla.columns(4).search(this.valor_proyectos).draw();
         });
-        this.clienteSelect= $('#selectclientes').select2({ width: '100%'}).on('select2:select',function () {       
+        this.clienteSelect= $('#selectclientes').select2({ width: '100px'}).on('select2:select',function () {       
           var value = $("#selectclientes").select2('data');
           vue.valor_clientes = value[0].id
           //this.tabla.columns(4).search(this.valor_proyectos).draw();
         });
-        this.usuarioSelect= $('#selectusuarios').select2({ width: '100%'}).on('select2:select',function () {       
+        this.usuarioSelect= $('#selectusuarios').select2({ width: '100px'}).on('select2:select',function () {       
           var value = $("#selectusuarios").select2('data');
           vue.valor_usuarios = value[0].id
           //this.tabla.columns(4).search(this.valor_proyectos).draw();
@@ -289,12 +292,12 @@ const app = new Vue({
                         i : 0;
             };
             //datos de la tabla con filtros aplicados
-            var datos= api.columns([7,8], {search: 'applied'}).data();
+            var datos= api.columns([8,9], {search: 'applied'}).data();
             var totalMxn = 0;
             var totalUsd = 0;
             //suma de montos
             datos[0].forEach(function(element, index){
-                if(datos[1][index]=="Dolares"){
+                if(datos[1][index]=="Dólares"){
                     totalUsd+=formato(element)
                 }else{
                     totalMxn+=formato(element)
@@ -302,6 +305,9 @@ const app = new Vue({
             });
   
             // Actualizar
+            vue.totalm = accounting.formatMoney(totalMxn, "$", 2);
+            vue.totald = accounting.formatMoney(totalUsd, "$", 2);
+
             var nCells = row.getElementsByTagName('th');
             nCells[1].innerHTML = accounting.formatMoney(totalMxn, "$", 2);
 
@@ -371,11 +377,29 @@ const app = new Vue({
   			return moment(value, 'DD/MM/YYYY').toDate().getTime();
       },
       pdf(){
-        datos = this.tabla.rows( { search:'applied' } ).data();
+        this.cargando=true;
+        var uno = document.getElementById('boton');
+        uno.innerHTML = 'Cargando';
+        
+        datos = this.tabla.rows( {order:'current' , search:'applied'} ).data(); 
+        var datosfinal = {
+          datos : [],
+          totalMxn: this.totalm,
+          totalUsd: this.totald
+        };
+        var dat = [];
 
-        var formData = objectToFormData(datos, {indices: true});
+        for (var i = 0; i <= datos.length - 1; i++) {
+          var data = {}
+          Object.assign(data, datos[i]);
+          datosfinal.datos.push(data);
+        }
 
-        console.log(datos);
+        //console.log(datosfinal);
+
+        var formData = objectToFormData(datosfinal, {indices: true});
+
+        //console.log(datos);
 
         axios.post('/reportes/cotizaciones/pdf', formData,{headers: {'Content-Type': 'multipart/form-data'}
         })
@@ -385,7 +409,58 @@ const app = new Vue({
             text: "",
             type: "success"
           }).then(()=>{
-           
+            this.cargando=false;
+            var uno = document.getElementById('boton');
+            uno.innerHTML = 'PDF';
+            const link = document.createElement("a");
+            link.href = '/storage/reportes/cotizaciones.pdf';
+            link.download = 'ReporteCotizaciones.pdf';
+            link.click();
+            //window.open('/storage/reportes/cotizaciones.pdf', '_blank').focus();
+          });
+        })
+        .catch(({response}) => {
+          console.error(response);
+          this.cargando = false;
+          swal({
+            title: "Error",
+            text: response.data.message || "Ocurrio un error inesperado, intente mas tarde",
+            type: "error"
+          });
+        });
+
+      },
+      excel(){
+        datos = this.tabla.rows( {order:'current' , search:'applied' } ).data(); 
+        var datosfinal = {
+          datos : [],
+          totalMxn: this.totalm,
+          totalUsd: this.totald
+        };
+        var dat = [];
+
+        for (var i = 0; i <= datos.length - 1; i++) {
+          var data = {}
+          Object.assign(data, datos[i]);
+          //console.log(data);
+          datosfinal.datos.push(data);
+        }
+
+        //console.log(datosfinal);
+
+        var formData = objectToFormData(datosfinal, {indices: true});
+
+        //console.log(datos);
+
+        axios.post('/reportes/cotizaciones/excel', formData,{headers: {'Content-Type': 'multipart/form-data'}
+        })
+        .then(({data}) => {
+          swal({
+            title: "Reporte generado",
+            text: "",
+            type: "success"
+          }).then(()=>{
+            window.open('/storage/reportes/ReporteCotizaciones.xls', '_blank').focus();
           });
         })
         .catch(({response}) => {

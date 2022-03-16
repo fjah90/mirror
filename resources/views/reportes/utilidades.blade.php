@@ -23,6 +23,16 @@ Reportes | @parent
           <div class="panel product-details">
             <div class="panel-heading">
               <h3 class="panel-title">Reporte de Utilidades</h3>
+              <div class="marg025 btn-group">
+                  <button class="btn btn-primary" v-on:click="pdf">
+                      PDF
+                  </button>
+              </div>
+              <div class="marg025 btn-group">
+                  <button class="btn btn-success" v-on:click="excel">
+                      EXCEL
+                  </button>
+              </div>
             </div>
             <div class="panel-body">
                 <div id="oculto_filtros" class="hide">
@@ -67,7 +77,7 @@ Reportes | @parent
                       </template>
                     </dropdown>
                     <div class="marg025 btn-group" id="select_cotizaciones" >
-                        <select name="proxDias" class="form-control" size="1" v-model="valor_cotizaciones" id="selectcotizaciones">
+                        <select name="proxDias" class="form-control" size="1" v-model="valor_cotizaciones" id="selectcotizaciones" style="width:100%">
                         <option v-for="(option, index) in datos_select.cotizaciones" v-bind:value="option" >
                             @{{ option }}
                           </option>
@@ -75,7 +85,7 @@ Reportes | @parent
                         </select>
                     </div>
                     <div class="marg025 btn-group" id="select_proyectos" >
-                        <select name="proxDias" class="form-control" size="1" v-model="valor_proyectos" id="selectproyectos">
+                        <select name="proxDias" class="form-control" size="1" v-model="valor_proyectos" id="selectproyectos" style="width:100%">
                           <option v-for="option in datos_select.proyectos" v-bind:value="option">
                             @{{ option }}
                           </option>
@@ -83,7 +93,7 @@ Reportes | @parent
                         </select>
                     </div>
                     <div class="marg025 btn-group" id="select_clientes" >
-                        <select name="proxDias" class="form-control" size="1" v-model="valor_clientes" id="selectclientes">
+                        <select name="proxDias" class="form-control" size="1" v-model="valor_clientes" id="selectclientes" style="width:100%">
                           <option v-for="option in datos_select.clientes" v-bind:value="option">
                             @{{ option }}
                           </option>
@@ -103,7 +113,7 @@ Reportes | @parent
                           <th class="text-center"><strong>Proyecto</strong></th>
                           <th class="text-center"><strong>Monto</strong></th>
                           <th class="text-center"><strong>Moneda</strong></th>
-                          <th class="text-center"><strong>Numero Compra</strong></th>
+                          <th class="text-center"><strong>Número Compra</strong></th>
                           <th class="text-center"><strong>Costo</strong></th>
                           <th class="text-center"><strong>Utilidad</strong></th>
                         </tr>
@@ -114,7 +124,7 @@ Reportes | @parent
                           <td>@{{dato.cliente_nombre}}</td>
                           <td>@{{dato.proyecto_nombre}}</td>
                           <td>@{{dato.cotizaciones_total | formatoMoneda}}</td>
-                          <td>@{{dato.cotizaciones_moneda}}</td>
+                          <td>@{{dato.cotizaciones_moneda | formatodolares}}</td>
                           <td>@{{dato.numero}}</td>
                           <td>@{{dato.total | formatoConvertirMoneda(dato.cotizaciones_moneda, dato.moneda)}}</td>
                           <td>@{{dato.total | formatoUtilidad(dato.cotizaciones_moneda, dato.moneda, dato.cotizaciones_total)}}</td>
@@ -175,20 +185,26 @@ const app = new Vue({
       proyectoSelect:null,
       cotizacionSelect:null,
       clienteSelect:null,
+      totalmventas:'',
+      totalmcosto:'',
+      totalmutilidad:'',
+      totaldventas:'',
+      totaldcosto:'',
+      totaldutilidad:''
     },
     mounted(){
         var vue =this;
-        this.proyectoSelect= $('#selectproyectos').select2({ width: '100%'}).on('select2:select',function () {       
+        this.proyectoSelect= $('#selectproyectos').select2({ width: '100px'}).on('select2:select',function () {       
           var value = $("#selectproyectos").select2('data');
           vue.valor_proyectos = value[0].id
           //this.tabla.columns(4).search(this.valor_proyectos).draw();
         });
-        this.cotizacionSelect= $('#selectcotizaciones').select2({ width: '100%'}).on('select2:select',function () {       
+        this.cotizacionSelect= $('#selectcotizaciones').select2({ width: '100px'}).on('select2:select',function () {       
           var value = $("#selectcotizaciones").select2('data');
           vue.valor_cotizaciones = value[0].id
           //this.tabla.columns(4).search(this.valor_proyectos).draw();
         });
-        this.clienteSelect= $('#selectclientes').select2({ width: '100%'}).on('select2:select',function () {       
+        this.clienteSelect= $('#selectclientes').select2({ width: '100px'}).on('select2:select',function () {       
           var value = $("#selectclientes").select2('data');
           vue.valor_clientes = value[0].id
           //this.tabla.columns(4).search(this.valor_proyectos).draw();
@@ -234,7 +250,7 @@ const app = new Vue({
             var totalUsd = 0;
             //suma de montos
             datos[0].forEach(function(element, index){
-                if(datos[1][index]=="Dolares"){
+                if(datos[1][index]=="Dólares"){
                     totalUsd+=formato(element)
                 }else{
                     totalMxn+=formato(element)
@@ -260,6 +276,14 @@ const app = new Vue({
             });
  
             // Actualizar
+            vue.totalmventas = accounting.formatMoney(ventaMxn, "$", 2);
+            vue.totalmcosto = accounting.formatMoney(totalMxn, "$", 2);
+            vue.totalmutilidad = accounting.formatMoney(ventaMxn-totalMxn, "$", 2);
+
+            vue.totaldventas = accounting.formatMoney(ventaUsd, "$", 2);
+            vue.totaldcosto = accounting.formatMoney(totalUsd, "$", 2);
+            vue.totaldutilidad = accounting.formatMoney(ventaUsd-totalUsd, "$", 2);
+
             var secondRow =$(row).next()[0];
             var nCells = secondRow.getElementsByTagName('th');
             nCells[1].innerHTML = accounting.formatMoney(ventaMxn, "$", 2);
@@ -324,6 +348,9 @@ const app = new Vue({
         date(value){
   			return moment(value, 'YYYY-MM-DD  hh:mm:ss').format('DD/MM/YYYY');
         },
+        formatodolares(valor){
+            return valor == 'Dolares'?'Dólares':'Pesos';
+        },
         formatoConvertirMoneda(value, monedaCotizacion, monedaCompra){
   			if(monedaCotizacion == monedaCompra){
                   return accounting.formatMoney(value, "$", 2);
@@ -351,6 +378,106 @@ const app = new Vue({
       dateParser(value){
   			return moment(value, 'DD/MM/YYYY').toDate().getTime();
       },
+      pdf(){
+        datos = this.tabla.rows( {order:'current' , search:'applied' } ).data(); 
+        var datosfinal = {
+          datos : [],
+          totalMxnVentas: this.totalmventas,
+          totalMxnCosto: this.totalmcosto,
+          totalMxnUtilidad: this.totalmutilidad,
+          totalUsdCosto: this.totaldcosto,
+          totalUsdVentas: this.totaldventas,
+          totalUsdUtilidad: this.totaldutilidad
+        };
+        var dat = [];
+
+        for (var i = 0; i <= datos.length - 1; i++) {
+          var data = {}
+          Object.assign(data, datos[i]);
+          //console.log(data);
+          datosfinal.datos.push(data);
+        }
+
+        //console.log(datosfinal);
+
+        var formData = objectToFormData(datosfinal, {indices: true});
+
+        //console.log(datos);
+
+        axios.post('/reportes/utilidades/pdf', formData,{headers: {'Content-Type': 'multipart/form-data'}
+        })
+        .then(({data}) => {
+          swal({
+            title: "Reporte generado",
+            text: "",
+            type: "success"
+          }).then(()=>{
+            const link = document.createElement("a");
+            link.href = '/storage/reportes/utilidades.pdf';
+            link.download = 'ReporteUtilidades.pdf';
+            link.click();
+            //window.open('/storage/reportes/utilidades.pdf', '_blank').focus();
+          });
+        })
+        .catch(({response}) => {
+          console.error(response);
+          this.cargando = false;
+          swal({
+            title: "Error",
+            text: response.data.message || "Ocurrio un error inesperado, intente mas tarde",
+            type: "error"
+          });
+        });
+
+      },
+      excel(){
+        datos = this.tabla.rows( {order:'current' , search:'applied' } ).data(); 
+        var datosfinal = {
+          datos : [],
+          totalMxnVentas: this.totalmventas,
+          totalMxnCosto: this.totalmcosto,
+          totalMxnUtilidad: this.totalmutilidad,
+          totalUsdCosto: this.totaldcosto,
+          totalUsdVentas: this.totaldventas,
+          totalUsdUtilidad: this.totaldutilidad
+        };
+        var dat = [];
+
+        for (var i = 0; i <= datos.length - 1; i++) {
+          var data = {}
+          Object.assign(data, datos[i]);
+          //console.log(data);
+          datosfinal.datos.push(data);
+        }
+
+        //console.log(datosfinal);
+
+        var formData = objectToFormData(datosfinal, {indices: true});
+
+        //console.log(datos);
+
+        axios.post('/reportes/utilidades/excel', formData,{headers: {'Content-Type': 'multipart/form-data'}
+        })
+        .then(({data}) => {
+          swal({
+            title: "Reporte generado",
+            text: "",
+            type: "success"
+          }).then(()=>{
+            window.open('/storage/reportes/ReporteUtilidades.xls', '_blank').focus();
+          });
+        })
+        .catch(({response}) => {
+          console.error(response);
+          this.cargando = false;
+          swal({
+            title: "Error",
+            text: response.data.message || "Ocurrio un error inesperado, intente mas tarde",
+            type: "error"
+          });
+        });
+
+      }
       
     }
 });

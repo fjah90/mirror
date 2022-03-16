@@ -113,12 +113,25 @@ Route::middleware('auth')->group(function () {
 
         Route::get('/reportes/cotizaciones', 'ReportesController@cotizaciones');
         Route::post('/reportes/cotizaciones/pdf', 'ReportesController@cotizacionespdf');
+        Route::post('/reportes/cotizaciones/excel', 'ReportesController@cotizacionesexcel');
         Route::get('/reportes/cobros', 'ReportesController@cobros');
+        Route::post('/reportes/cobros/pdf', 'ReportesController@cobrospdf');
+        Route::post('/reportes/cobros/excel', 'ReportesController@cobrosexcel');
         Route::get('/reportes/compras', 'ReportesController@compras');
+        Route::post('/reportes/compras/pdf', 'ReportesController@compraspdf');
+        Route::post('/reportes/compras/excel', 'ReportesController@comprasexcel');
         Route::get('/reportes/pagos', 'ReportesController@pagos');
+        Route::post('/reportes/pagos/pdf', 'ReportesController@pagospdf');
+        Route::post('/reportes/pagos/excel', 'ReportesController@pagosexcel');
         Route::get('/reportes/cuentaCliente', 'ReportesController@cuentaCliente');
+        Route::post('/reportes/cuentaCliente/pdf', 'ReportesController@cuentapdf');
+        Route::post('/reportes/cuentaCliente/excel', 'ReportesController@cuentaexcel');
         Route::get('/reportes/saldoProveedores', 'ReportesController@saldoProveedores');
+        Route::post('/reportes/saldoProveedores/pdf', 'ReportesController@saldopdf');
+        Route::post('/reportes/saldoProveedores/excel', 'ReportesController@saldoexcel');
         Route::get('/reportes/utilidades', 'ReportesController@utilidades');
+        Route::post('/reportes/utilidades/pdf', 'ReportesController@utilidadespdf');
+        Route::post('/reportes/utilidades/excel', 'ReportesController@utilidadesexcel');
 
     });
 

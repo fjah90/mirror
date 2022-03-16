@@ -13,7 +13,8 @@
         "laravelcollective/html": "~5.0",
         "reliese/laravel": "^0.0.16",
         "rguedes/pdfmerger": "^1.0",
-        "spatie/laravel-permission": "^2.36"
+        "spatie/laravel-permission": "^2.36",
+        "maatwebsite/excel": "~2.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

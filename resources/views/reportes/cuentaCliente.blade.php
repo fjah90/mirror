@@ -15,7 +15,17 @@ Reportes | @parent
           <div class="form-group p-10">
               <label class="col-md-3 control-label" for="example-select">Datos de: </label>
               <div class="col-md-9">
-                <select name="" id="selectCliente" class="form-control" @change="cargar()" v-model="clienteCargado">
+                <div class="marg025 btn-group">
+                  <button class="btn btn-primary" v-on:click="pdf">
+                      PDF
+                  </button>
+                </div>
+                <div class="marg025 btn-group">
+                  <button class="btn btn-success" v-on:click="excel">
+                      EXCEL
+                  </button>
+              </div>
+                <select name="" id="selectCliente" class="form-control" @change="cargar()" v-model="clienteCargado" style="width:100%">
                   @foreach($data['clientes'] as $cliente)
                     <option value="{{$cliente->id}}">{{$cliente->nombre}}</option>
                   @endforeach
@@ -39,8 +49,8 @@ Reportes | @parent
                       <thead>
                         <tr>
                           <th class="text-center">Fecha</th>
-                          <th class="text-center"><strong>Numero Cotizacion</strong></th>
-                          <th class="text-center"><strong>Fecha Aprobacion</strong></th>
+                          <th class="text-center"><strong>Número Cotización</strong></th>
+                          <th class="text-center"><strong>Fecha Aprobación</strong></th>
                           <th class="text-center"><strong>Moneda</strong></th>
                           <th class="text-center"><strong>Monto</strong></th>
                           <th class="text-center"><strong>Facturado</strong></th>
@@ -54,7 +64,7 @@ Reportes | @parent
                           <td>@{{row.cotizacionFecha | date}}</td>
                           <td>@{{row.cotizacion_id}}</td>
                           <td>@{{row.aprobadoEn | date}}</td>
-                          <td>@{{row.moneda}}</td>
+                          <td>@{{row.moneda | formatodolares}}</td>
                           <td>@{{row.total | formatoMoneda}}</td>
                           <td>@{{row.facturado | formatoMoneda}}</td>
                           <td>@{{(row.total-row.facturado) | formatoMoneda}}</td>
@@ -102,6 +112,16 @@ Reportes | @parent
       clienteCargado:'',
       locale: localeES,
       clienteSelect:null,
+      totalmmonto:'',
+      totalmfacturado:'',
+      totalmporfacturar:'',
+      totalmpendiente:'',
+      totalmpagado:'',
+      totaldmonto:'',
+      totaldfacturado:'',
+      totaldporfacturar:'',
+      totaldpendiente:'',
+      totaldpagado:''
     },
     mounted(){
        var vue =this;
@@ -135,7 +155,23 @@ Reportes | @parent
                 totalMxn.porFacturar=+totalMxn.monto-totalMxn.facturado;
                 element['totalDolares']={...totalDolares};
                 element['totalMxn']=totalMxn;
+
             });
+
+            /*
+            this.totalmmonto = totalMxn.monto;
+            this.totalmfacturado = totalMxn.facturado;
+            this.totalmporfacturar = totalMxn.porFacturar;
+            this.totalmpagado = totalMxn.pagado;
+            this.totalmpendiente = totalMxn.pendiente;
+
+            this.totaldmonto = totalDolares.monto;
+            this.totaldfacturado = totalDolares.facturado;
+            this.totaldporfacturar = totalDolares.porFacturar;
+            this.totaldpagado = totalDolares.pagado;
+            this.totaldpendiente = totalDolares.pendiente;
+
+            */
         }
      
     },
@@ -145,6 +181,9 @@ Reportes | @parent
         },
         formatoCurrency(valor){
         return valor=='Dolares'?'USD':'MXN';
+        },
+        formatodolares(valor){
+            return valor == 'Dolares'?'Dólares':'Pesos';
         },
         date(value){
                 return moment(value, 'YYYY-MM-DD  hh:mm:ss').format('DD/MM/YYYY');
@@ -174,6 +213,90 @@ Reportes | @parent
             type: "error"
           });
         });
+      },
+      pdf(){
+        var datosfinal = {
+          cliente : this.clienteCargado,       
+          totalMxnMonto: this.totalmmonto,
+          totalMxnFacturado: this.totalmfacturado,
+          totalMxnPorfacturar: this.totalmporfacturar,
+          totalMxnPagado: this.totalmpagado,
+          totalMxnPendiente: this.totalmpendiente,
+          totalUsdMonto: this.totaldmonto,
+          totalUsdFacturado: this.totaldfacturado,
+          totalUsdPorFacturar: this.totaldporfacturar,
+          totalUsdPagado: this.totaldpagado,
+          totalUsdPendiente: this.totaldpendiente,
+        };
+        var dat = [];
+
+        var formData = objectToFormData(datosfinal, {indices: true});
+
+        axios.post('/reportes/cuentaCliente/pdf', formData,{headers: {'Content-Type': 'multipart/form-data'}
+        })
+        .then(({data}) => {
+          swal({
+            title: "Reporte generado",
+            text: "",
+            type: "success"
+          }).then(()=>{
+            const link = document.createElement("a");
+            link.href = '/storage/reportes/cuenta.pdf';
+            link.download = 'ReporteCuentaCliente.pdf';
+            link.click();
+            //window.open('/storage/reportes/cuenta.pdf', '_blank').focus();
+          });
+        })
+        .catch(({response}) => {
+          console.error(response);
+          this.cargando = false;
+          swal({
+            title: "Error",
+            text: response.data.message || "Ocurrio un error inesperado, intente mas tarde",
+            type: "error"
+          });
+        });
+
+      },
+      excel(){
+        var datosfinal = {
+          cliente : this.clienteCargado,       
+          totalMxnMonto: this.totalmmonto,
+          totalMxnFacturado: this.totalmfacturado,
+          totalMxnPorfacturar: this.totalmporfacturar,
+          totalMxnPagado: this.totalmpagado,
+          totalMxnPendiente: this.totalmpendiente,
+          totalUsdMonto: this.totaldmonto,
+          totalUsdFacturado: this.totaldfacturado,
+          totalUsdPorFacturar: this.totaldporfacturar,
+          totalUsdPagado: this.totaldpagado,
+          totalUsdPendiente: this.totaldpendiente,
+        };
+        var dat = [];
+
+        var formData = objectToFormData(datosfinal, {indices: true});
+
+        axios.post('/reportes/cuentaCliente/excel', formData,{headers: {'Content-Type': 'multipart/form-data'}
+        })
+        .then(({data}) => {
+          swal({
+            title: "Reporte generado",
+            text: "",
+            type: "success"
+          }).then(()=>{
+            window.open('/storage/reportes/ReporteCuenta.xls', '_blank').focus();
+          });
+        })
+        .catch(({response}) => {
+          console.error(response);
+          this.cargando = false;
+          swal({
+            title: "Error",
+            text: response.data.message || "Ocurrio un error inesperado, intente mas tarde",
+            type: "error"
+          });
+        });
+
       }
     }})
 </script>
