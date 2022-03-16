@@ -548,7 +548,7 @@
             <td class="text-right" style="width:10%;">{{$totalMxn}}</td>
           </tr>
           <tr>
-            <td class="text-right" style="width:90%;"><strong>Total Dolares:</strong></td>
+            <td class="text-right" style="width:90%;"><strong>Total Dólares:</strong></td>
             <td class="text-right" style="width:10%;">{{$totalUsd}}</td>
           </tr>
         </table>
