@@ -675,7 +675,11 @@
               <td class="text-right">@format_money($entrada->importe)</td>
             </tr>
             @endforeach
+            @if(count($cotizacion->entradas)>1)
             <tr>
+            @else
+            <tr style="border-top : 0px">
+            @endif
               <td></td>
               <td>
                 @if($cotizacion->entradas->count()==1)
