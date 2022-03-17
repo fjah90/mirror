@@ -636,11 +636,7 @@
             @if($loop->index == 5)
             <tr class="page-break">
             @else
-              @if(count($cotizacion->entradas) > 1)
-              <tr>
-              @else
-              <tr style="border-bottom : 0px !important">
-              @endif
+            <tr>
             @endif
               <td class="text-center">@format_number($entrada->cantidad) <br /> {{$entrada->medida}}</td>
               <td>
@@ -675,11 +671,8 @@
               <td class="text-right">@format_money($entrada->importe)</td>
             </tr>
             @endforeach
-            @if(count($cotizacion->entradas)>1)
             <tr>
-            @else
-            <tr style="border-top : 0px">
-            @endif
+              @if(count($cotizacion->entradas)>1)
               <td></td>
               <td>
                 @if($cotizacion->entradas->count()==1)
@@ -689,7 +682,19 @@
                 @endif
               </td>
               <td></td>
-              <td style="border-top: 0px !important; border-bottom: 0px !important;"></td>
+              <td></td>
+              @else
+              <td style="border-top :0px !important"></td>
+              <td style="border-top :0px !important">
+                @if($cotizacion->entradas->count()==1)
+                <div style="height: 200px; background-color:white;"></div>
+                @elseif($cotizacion->entradas->count()==2)
+                <div style="height: 0px; background-color:white;"></div>
+                @endif
+              </td>
+              <td style="border-top :0px !important"></td>
+              <td style="border-top :0px !important"></td>
+              @endif
             </tr>
           </tbody>
         </table>
