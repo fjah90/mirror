@@ -639,7 +639,7 @@
               @if(count($cotizacion->entradas) > 1)
               <tr>
               @else
-              <tr style="border-bottom : 0px">
+              <tr style="border-bottom : 0px !important">
               @endif
             @endif
               <td class="text-center">@format_number($entrada->cantidad) <br /> {{$entrada->medida}}</td>
@@ -689,7 +689,7 @@
                 @endif
               </td>
               <td></td>
-              <td></td>
+              <td style="border-top: 0px !important; border-bottom: 0px !important;"></td>
             </tr>
           </tbody>
         </table>
