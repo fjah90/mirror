@@ -641,12 +641,16 @@
               <td class="text-center">@format_number($entrada->cantidad) <br /> {{$entrada->medida}}</td>
               <td>
                 <table style="width:100%; margin:0;">
+                  @if(count($cotizacion->entrada) > 1)
                   <tr style="height: 120px;">
+                  @else
+                  <tr style="height: 120px; margin-bottom: 0px !important;">
+                  @endif
                     <td style="vertical-align: top;">
                       @foreach($entrada->descripciones as $descripcion)
                       @if($descripcion->valor)
                       <p>
-                        <span>@text_capitalize($descripcion->{$nombre}): </span>
+                        <span>@text_capitalize($descripcion->{$nombre}) </span>
                         <span class="text-uppercase">{{$descripcion->valor}}</span>
                       </p>
                       @endif
