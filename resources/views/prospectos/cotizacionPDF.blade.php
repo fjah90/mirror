@@ -638,7 +638,7 @@
             @else
               @if(count($cotizacion->entradas) > 1)
               <tr>
-              else
+              @else
               <tr style="border-bottom : 0px">
               @endif
             @endif
