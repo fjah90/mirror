@@ -636,16 +636,16 @@
             @if($loop->index == 5)
             <tr class="page-break">
             @else
-            <tr>
+              @if(count($cotizacion->entradas) > 1)
+              <tr>
+              else
+              <tr style="margin-bottom : 0px">
+              @endif
             @endif
               <td class="text-center">@format_number($entrada->cantidad) <br /> {{$entrada->medida}}</td>
               <td>
                 <table style="width:100%; margin:0;">
-                  @if(count($cotizacion->entrada) > 1)
                   <tr style="height: 120px;">
-                  @else
-                  <tr style="height: 120px; margin-bottom: 0px !important;">
-                  @endif
                     <td style="vertical-align: top;">
                       @foreach($entrada->descripciones as $descripcion)
                       @if($descripcion->valor)
