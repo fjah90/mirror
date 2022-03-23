@@ -136,7 +136,7 @@ Reportes | @parent
                                 <th class="text-center">@{{TFMF | formatoMoneda}}</th>
                                 <th class="text-center">@{{TMMF - TFMF | formatoMoneda}}</th>
                                 <th class="text-center">@{{TPaMF | formatoMoneda}}</th>
-                                <th class="text-center">@{{TpeMF | formatoMoneda}}</th>
+                                <th class="text-center">@{{TPeMF | formatoMoneda}}</th>
                             </tr>
                             <tr>
                                 <th colspan="4"  style="text-align:right">Total USD: </th>
