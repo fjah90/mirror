@@ -212,7 +212,7 @@ Reportes | @parent
                     totalDolares.monto+=element2.total;
                     this.TMDF+=element2.total;
                     totalDolares.facturado+=element2.facturado;
-                    this.TFMF+=element2.facturado;
+                    this.TFDF+=element2.facturado;
                     totalDolares.pagado+=element2.pagado;
                     this.TPaDF+=element2.pagado;
                     totalDolares.pendiente+=element2.pendiente;
