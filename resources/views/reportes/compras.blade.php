@@ -79,8 +79,8 @@ Reportes | @parent
                     </dropdown>
                     <div class="marg025 btn-group" id="select_proveedores" >
                         <select name="proxDias" class="form-control" size="1" v-model="valor_proveedores" id="selectproveedores" style="width:100%">
-                        <option v-for="(option, index) in datos_select.proveedores" v-bind:value="option" >
-                            @{{ option }}
+                        <option v-for="(option, index) in datos_select.proveedores" v-bind:value="option.valor" >
+                            @{{ option.opcion }}
                           </option>
                           
                         </select>
@@ -203,17 +203,21 @@ const app = new Vue({
           initComplete: function () {
             
             //Crear y llenar los select para proveedores 
-            vue.datos_select.proveedores.push('Proveedores')
+            vue.datos_select.proveedores.push({opcion :'Proveedores', valor :'Proveedores'})
             //vue.datos_select.proveedores.push('');
             this.api().column(3).data().sort().unique().each(function(d,j){
               //console.log(d);     
               var b = d.replace("&amp;", " &");
 
-              var a = {
-                opcion : b,
-                valor : b
-              };
-              console.log(a);     
+              if (b == "") {
+                vue.datos_select.proveedores.push({opcion :'Todos', valor :''})
+              }
+              else{
+                var a = {
+                  opcion : b,
+                  valor : b
+                };  
+              }
 
               //vue.datos_select.proveedores.push((d.replace("&amp;", " &")));
               vue.datos_select.proveedores.push(a);
