@@ -101,6 +101,64 @@ Reportes | @parent
           </div>
         </div>
       </div>
+      <div class="row" >
+        <div class="col-sm-12">
+          <div class="panel product-details">
+            <div class="panel-heading">
+              <h3 class="panel-title"> Gran TOTAL</h3>
+            </div>
+            <div class="panel-body">
+              <div class="row">
+                <div class="col-sm-12">
+                  <div class="table-responsive">
+                    <table class="table table-striped text-center" >
+                      <thead>
+                        <tr>
+                          <th class="text-center"></th>
+                          <th class="text-center"><strong></strong></th>
+                          <th class="text-center"><strong></strong></th>
+                          <th class="text-center"><strong></strong></th>
+                          <th class="text-center"><strong>Monto</strong></th>
+                          <th class="text-center"><strong>Facturado</strong></th>
+                          <th class="text-center"><strong>Por Facturar</strong></th>
+                          <th class="text-center"><strong>Pagado</strong></th>
+                          <th class="text-center"><strong>Pendiente</strong></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr >
+                          
+                        </tr>
+                        <tfoot>
+                            <tr>
+                                <th colspan="4"  style="text-align:right">Total MXN: </th>
+                                <th class="text-center">@{{TMMF | formatoMoneda}} </th>
+                                <th class="text-center">@{{TFMF | formatoMoneda}}</th>
+                                <th class="text-center">@{{TMMF - TFMF | formatoMoneda}}</th>
+                                <th class="text-center">@{{TPaMF | formatoMoneda}}</th>
+                                <th class="text-center">@{{TPeMF | formatoMoneda}}</th>
+                            </tr>
+                            <tr>
+                                <th colspan="4"  style="text-align:right">Total USD: </th>
+                                <th class="text-center">@{{TMDF | formatoMoneda}} </th>
+                                <th class="text-center">@{{TFDF | formatoMoneda}}</th>
+                                <th class="text-center">@{{TMDF - TFDF | formatoMoneda}}</th>
+                                <th class="text-center">@{{TPaDF | formatoMoneda}}</th>
+                                <th class="text-center">@{{TPeDF | formatoMoneda}}</th>
+                            </tr>
+                        </tfoot>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <div class="col-sm-12 p-0">
+                  <span id="product_status"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 </section>    
 @stop
 @section('footer_scripts')
@@ -121,7 +179,18 @@ Reportes | @parent
       totaldfacturado:'',
       totaldporfacturar:'',
       totaldpendiente:'',
-      totaldpagado:''
+      totaldpagado:'',
+      TMMF : 0,
+      TFMF : 0,
+      TPoMF: 0,
+      TPeMF:0,
+      TPaMF:0,
+      TMDF : 0,
+      TFDF : 0,
+      TPoDF: 0,
+      TPeDF:0,
+      TPaDF:0
+
     },
     mounted(){
        var vue =this;
@@ -141,14 +210,22 @@ Reportes | @parent
                 element.forEach(element2 => {
                    if(element2.moneda=="Dolares"){
                     totalDolares.monto+=element2.total;
+                    this.TMDF+=element2.total;
                     totalDolares.facturado+=element2.facturado;
+                    this.TFDF+=element2.facturado;
                     totalDolares.pagado+=element2.pagado;
+                    this.TPaDF+=element2.pagado;
                     totalDolares.pendiente+=element2.pendiente;
+                    this.TPeDF+=element2.pendiente;
                    }else{
                     totalMxn.monto+=element2.total;
+                    this.TMMF+=element2.total;
                     totalMxn.facturado+=element2.facturado;
+                    this.TFMF+=element2.facturado;
                     totalMxn.pagado+=element2.pagado;
+                    this.TPaMF+=element2.pagado;
                     totalMxn.pendiente+=element2.pendiente;
+                    this.TPeMF+=element2.pendiente;
                    } 
                 });
                 totalDolares.porFacturar=+totalDolares.monto-totalDolares.facturado;
