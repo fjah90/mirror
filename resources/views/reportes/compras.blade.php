@@ -208,11 +208,12 @@ const app = new Vue({
             this.api().column(3).data().sort().unique().each(function(d,j){
               //console.log(d);     
               var b = d.replace("&amp;", " &");
-              console.log(b);     
+
               var a = {
                 opcion : b,
                 valor : b
               };
+              console.log(a);     
 
               //vue.datos_select.proveedores.push((d.replace("&amp;", " &")));
               vue.datos_select.proveedores.push(a);
