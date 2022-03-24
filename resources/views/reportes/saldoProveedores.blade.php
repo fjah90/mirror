@@ -210,6 +210,7 @@ const app = new Vue({
             
             //Crear y llenar los select para proveedores 
             vue.datos_select.proveedores.push({valor:'Proveedores',opcion:'Proveedores'})
+            vue.datos_select.proveedores.push({opcion :'Todos', valor :''})
             //vue.datos_select.proveedores.push('');
             this.api().column(1).data().sort().unique().each(function(d,j){
               var b = d.replace("&amp;", " &");
@@ -230,6 +231,7 @@ const app = new Vue({
             });
             //Crear y llenar los select para proyecto 
             vue.datos_select.proyectos.push({valor:'Proyectos',opcion:'Proyectos'})
+            vue.datos_select.proyectos.push({opcion :'Todos', valor :''})
             //vue.datos_select.proyectos.push('');
             this.api().column(3).data().sort().unique().each(function(d,j){   
               var b = d.replace("&amp;", " &");
@@ -249,6 +251,7 @@ const app = new Vue({
             });
 
             vue.datos_select.compras.push({valor:'Numero de compra',opcion:'Numero de compra'})
+            vue.datos_select.compras.push({opcion :'Todos', valor :''})
             //vue.datos_select.compras.push('');
             this.api().column(0).data().sort().unique().each(function(d,j){   
               var b = d.replace("&amp;", " &");

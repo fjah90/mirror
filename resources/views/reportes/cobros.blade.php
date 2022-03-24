@@ -202,6 +202,7 @@ const app = new Vue({
             
             //Crear y llenar los select para cotizaciones 
             vue.datos_select.cotizaciones.push({valor:'Cotizaciones',opcion:'Cotizaciones'})
+            vue.datos_select.cotizaciones.push({opcion :'Todos', valor :''})
             //vue.datos_select.cotizaciones.push('');
             this.api().column(1).data().sort().unique().each(function(d,j){
               var b = d.replace("&amp;", " &");
@@ -222,6 +223,7 @@ const app = new Vue({
             });
             //Crear y llenar los select para proyecto 
             vue.datos_select.proyectos.push({valor:'Proyectos',opcion:'Proyectos'})
+            vue.datos_select.proyectos.push({opcion :'Todos', valor :''})
             //vue.datos_select.proyectos.push('');
             this.api().column(3).data().sort().unique().each(function(d,j){   
               var b = d.replace("&amp;", " &");
@@ -241,6 +243,7 @@ const app = new Vue({
             });
 
             vue.datos_select.clientes.push({valor:'Clientes',opcion:'Clientes'})
+            vue.datos_select.clientes.push({opcion :'Todos', valor :''})
             //vue.datos_select.clientes.push('');
             this.api().column(2).data().sort().unique().each(function(d,j){   
               var b = d.replace("&amp;", " &");

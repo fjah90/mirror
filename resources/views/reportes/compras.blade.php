@@ -226,6 +226,7 @@ const app = new Vue({
             });
             //Crear y llenar los select para proyecto 
             vue.datos_select.proyectos.push({valor:'Proyectos',opcion:'Proyectos'})
+            vue.datos_select.proyectos.push({opcion :'Todos', valor :''})
             //vue.datos_select.proyectos.push('');
             this.api().column(5).data().sort().unique().each(function(d,j){   
 
@@ -246,6 +247,7 @@ const app = new Vue({
             });
 
             vue.datos_select.ids.push({valor:'Compra',opcion:'Compra'})
+            vue.datos_select.ids.push({opcion :'Todos', valor :''})
             //vue.datos_select.ids.push('');
             this.api().column(1).data().sort().unique().each(function(d,j){   
               var b = d.replace("&amp;", " &");
