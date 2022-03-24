@@ -206,8 +206,9 @@ const app = new Vue({
             vue.datos_select.proveedores.push('Proveedores')
             vue.datos_select.proveedores.push('');
             this.api().column(3).data().sort().unique().each(function(d,j){
-              console.log(d);     
+              //console.log(d);     
               vue.datos_select.proveedores.push((d.replace("&amp;", " &")));
+              console.log(vue.datos_select.proveedores);
             });
             //Crear y llenar los select para proyecto 
             vue.datos_select.proyectos.push('Proyectos')
