@@ -632,7 +632,7 @@
             </tr>
           </thead>
           <tbody>
-            @foreach($cotizacion->entradas as $entrada)
+            @foreach($cotizacion->entradas as $key => $entrada)
             @if($loop->index == 5)
             <tr class="page-break">
             @else
@@ -672,18 +672,6 @@
             </tr>
             @endforeach
             <tr>
-              @if(count($cotizacion->entradas)>1)
-              <td></td>
-              <td>
-                @if($cotizacion->entradas->count()==1)
-                <div style="height: 200px; background-color:white;"></div>
-                @elseif($cotizacion->entradas->count()==2)
-                <div style="height: 0px; background-color:white;"></div>
-                @endif
-              </td>
-              <td></td>
-              <td></td>
-              @else
               <td style="border-top :0px !important"></td>
               <td style="border-top :0px !important">
                 @if($cotizacion->entradas->count()==1)
@@ -693,8 +681,7 @@
                 @endif
               </td>
               <td style="border-top :0px !important"></td>
-              <td style="border-top :0px !important"></td>
-              @endif
+              <td style="border-top :0px !important"></td>   
             </tr>
           </tbody>
         </table>
