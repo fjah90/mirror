@@ -206,8 +206,8 @@ const app = new Vue({
             vue.datos_select.proveedores.push('Proveedores')
             //vue.datos_select.proveedores.push('');
             this.api().column(3).data().sort().unique().each(function(d,j){
-              //console.log(d);     
-              var b = d.replace("&amp;", " &");
+              console.log(d);     
+              var b = d;
               var a = {
                 opcion : b,
                 valor : b
