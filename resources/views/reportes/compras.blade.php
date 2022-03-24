@@ -79,24 +79,24 @@ Reportes | @parent
                     </dropdown>
                     <div class="marg025 btn-group" id="select_proveedores" >
                         <select name="proxDias" class="form-control" size="1" v-model="valor_proveedores" id="selectproveedores" style="width:100%">
-                        <option v-for="(option, index) in datos_select.proveedores" v-bind:value="option" >
-                            @{{ option }}
+                        <option v-for="(option, index) in datos_select.proveedores" v-bind:value="option.valor" >
+                            @{{ option.opcion }}
                           </option>
                           
                         </select>
                     </div>
                     <div class="marg025 btn-group" id="select_proyectos" >
                         <select name="proxDias" class="form-control" size="1" v-model="valor_proyectos" id="selectproyectos" style="width:100%">
-                          <option v-for="option in datos_select.proyectos" v-bind:value="option">
-                            @{{ option }}
+                          <option v-for="option in datos_select.proyectos" v-bind:value="option.valor">
+                            @{{ option.opcion }}
                           </option>
                           
                         </select>
                     </div>
                     <div class="marg025 btn-group" id="select_ids" >
                         <select name="proxDias" class="form-control" size="1" v-model="valor_ids" id="selectids" style="width:100%">
-                          <option v-for="option in datos_select.ids" v-bind:value="option">
-                            @{{ option }}
+                          <option v-for="option in datos_select.ids" v-bind:value="option.valor">
+                            @{{ option.opcion }}
                           </option>
                           
                         </select>
@@ -203,23 +203,67 @@ const app = new Vue({
           initComplete: function () {
             
             //Crear y llenar los select para proveedores 
-            vue.datos_select.proveedores.push('Proveedores')
-            vue.datos_select.proveedores.push('');
+            vue.datos_select.proveedores.push({opcion :'Proveedores', valor :'Proveedores'})
+            //vue.datos_select.proveedores.push('');
             this.api().column(3).data().sort().unique().each(function(d,j){
-              console.log(d);     
-              vue.datos_select.proveedores.push((d.replace("&amp;", " &")));
+              //console.log(d);     
+              var b = d.replace("&amp;", " &");
+
+              var a = {
+                opcion : b,
+                valor : b
+              };  
+
+              if (b == "") {
+                vue.datos_select.proveedores.push({opcion :'Todos', valor :''})
+              }
+              else{
+                vue.datos_select.proveedores.push(a);
+              }
+
+              //vue.datos_select.proveedores.push((d.replace("&amp;", " &")));
+              //console.log(vue.datos_select.proveedores);
             });
             //Crear y llenar los select para proyecto 
-            vue.datos_select.proyectos.push('Proyectos')
-            vue.datos_select.proyectos.push('');
+            vue.datos_select.proyectos.push({valor:'Proyectos',opcion:'Proyectos'})
+            vue.datos_select.proyectos.push({opcion :'Todos', valor :''})
+            //vue.datos_select.proyectos.push('');
             this.api().column(5).data().sort().unique().each(function(d,j){   
-              vue.datos_select.proyectos.push(d);
+
+              var b = d.replace("&amp;", " &");
+
+              var a = {
+                opcion : b,
+                valor : b
+              };  
+
+              if (b == "") {
+                vue.datos_select.proyectos.push({opcion :'Todos', valor :''})
+              }
+              else{
+                vue.datos_select.proyectos.push(a);
+              }
+              //vue.datos_select.proyectos.push(d);
             });
 
-            vue.datos_select.ids.push('Compra')
-            vue.datos_select.ids.push('');
+            vue.datos_select.ids.push({valor:'Compra',opcion:'Compra'})
+            vue.datos_select.ids.push({opcion :'Todos', valor :''})
+            //vue.datos_select.ids.push('');
             this.api().column(1).data().sort().unique().each(function(d,j){   
-              vue.datos_select.ids.push(d);
+              var b = d.replace("&amp;", " &");
+
+              var a = {
+                opcion : b,
+                valor : b
+              };  
+
+              if (b == "") {
+                vue.datos_select.ids.push({opcion :'Todos', valor :''})
+              }
+              else{
+                vue.datos_select.ids.push(a);
+              }
+              //vue.datos_select.ids.push(d);
             });
           },
 
