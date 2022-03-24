@@ -78,24 +78,24 @@ Reportes | @parent
                     </dropdown>
                     <div class="marg025 btn-group" id="select_cotizaciones" >
                         <select name="proxDias" class="form-control" size="1" v-model="valor_cotizaciones" id="selectcotizaciones" style="width:100%">
-                        <option v-for="(option, index) in datos_select.cotizaciones" v-bind:value="option" >
-                            @{{ option }}
+                        <option v-for="(option, index) in datos_select.cotizaciones" v-bind:value="option.valor" >
+                            @{{ option.opcion }}
                           </option>
                           
                         </select>
                     </div>
                     <div class="marg025 btn-group" id="select_proyectos" >
                         <select name="proxDias" class="form-control" size="1" v-model="valor_proyectos" id="selectproyectos" style="width:100%">
-                          <option v-for="option in datos_select.proyectos" v-bind:value="option">
-                            @{{ option }}
+                          <option v-for="option in datos_select.proyectos" v-bind:value="option.valor">
+                            @{{ option.opcion }}
                           </option>
                           
                         </select>
                     </div>
                     <div class="marg025 btn-group" id="select_clientes" >
                         <select name="proxDias" class="form-control" size="1" v-model="valor_clientes" id="selectclientes" style="width:100%">
-                          <option v-for="option in datos_select.clientes" v-bind:value="option">
-                            @{{ option }}
+                          <option v-for="option in datos_select.clientes" v-bind:value="option.valor">
+                            @{{ option.opcion }}
                           </option>
                           
                         </select>
@@ -201,23 +201,62 @@ const app = new Vue({
           initComplete: function () {
             
             //Crear y llenar los select para cotizaciones 
-            vue.datos_select.cotizaciones.push('Cotizaciones')
-            vue.datos_select.cotizaciones.push('');
+            vue.datos_select.cotizaciones.push({valor:'Cotizaciones',opcion:'Cotizaciones'})
+            //vue.datos_select.cotizaciones.push('');
             this.api().column(1).data().sort().unique().each(function(d,j){
-              console.log(d);     
-              vue.datos_select.cotizaciones.push((d.replace("&amp;", " &")));
+              var b = d.replace("&amp;", " &");
+
+              var a = {
+                opcion : b,
+                valor : b
+              };  
+
+              if (b == "") {
+                vue.datos_select.cotizaciones.push({opcion :'Todos', valor :''})
+              }
+              else{
+                vue.datos_select.cotizaciones.push(a);
+              }
+              //console.log(d);     
+              //vue.datos_select.cotizaciones.push((d.replace("&amp;", " &")));
             });
             //Crear y llenar los select para proyecto 
-            vue.datos_select.proyectos.push('Proyectos')
-            vue.datos_select.proyectos.push('');
+            vue.datos_select.proyectos.push({valor:'Proyectos',opcion:'Proyectos'})
+            //vue.datos_select.proyectos.push('');
             this.api().column(3).data().sort().unique().each(function(d,j){   
-              vue.datos_select.proyectos.push(d);
+              var b = d.replace("&amp;", " &");
+
+              var a = {
+                opcion : b,
+                valor : b
+              };  
+
+              if (b == "") {
+                vue.datos_select.proyectos.push({opcion :'Todos', valor :''})
+              }
+              else{
+                vue.datos_select.proyectos.push(a);
+              }
+              //vue.datos_select.proyectos.push(d);
             });
 
-            vue.datos_select.clientes.push('Clientes')
-            vue.datos_select.clientes.push('');
+            vue.datos_select.clientes.push({valor:'Clientes',opcion:'Clientes'})
+            //vue.datos_select.clientes.push('');
             this.api().column(2).data().sort().unique().each(function(d,j){   
-              vue.datos_select.clientes.push(d);
+              var b = d.replace("&amp;", " &");
+
+              var a = {
+                opcion : b,
+                valor : b
+              };  
+
+              if (b == "") {
+                vue.datos_select.clientes.push({opcion :'Todos', valor :''})
+              }
+              else{
+                vue.datos_select.clientes.push(a);
+              }
+              //vue.datos_select.clientes.push(d);
             });
           },
 
