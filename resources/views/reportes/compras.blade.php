@@ -209,18 +209,19 @@ const app = new Vue({
               //console.log(d);     
               var b = d.replace("&amp;", " &");
 
+              var a = {
+                opcion : b,
+                valor : b
+              };  
+
               if (b == "") {
                 vue.datos_select.proveedores.push({opcion :'Todos', valor :''})
               }
               else{
-                var a = {
-                  opcion : b,
-                  valor : b
-                };  
+                vue.datos_select.proveedores.push(a);
               }
 
               //vue.datos_select.proveedores.push((d.replace("&amp;", " &")));
-              vue.datos_select.proveedores.push(a);
               console.log(vue.datos_select.proveedores);
             });
             //Crear y llenar los select para proyecto 
