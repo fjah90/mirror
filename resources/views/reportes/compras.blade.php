@@ -207,10 +207,11 @@ const app = new Vue({
             //vue.datos_select.proveedores.push('');
             this.api().column(3).data().sort().unique().each(function(d,j){
               //console.log(d);     
+              var b = d.replace("&amp;", " &");
               var a = {
-                opcion : 'opcion',
-                valor : d.replace("&amp;", " &")
-              }
+                opcion : b,
+                valor : b
+              };
 
               //vue.datos_select.proveedores.push((d.replace("&amp;", " &")));
               vue.datos_select.proveedores.push(a);
