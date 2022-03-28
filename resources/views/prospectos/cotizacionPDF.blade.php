@@ -640,9 +640,9 @@
             @endif
               <td class="text-center" style="border-bottom: none; border-top: none">@format_number($entrada->cantidad) <br /> {{$entrada->medida}}</td>
               <td>
-                <table style="width:100%; margin:0;">
-                  <tr style="height: 120px;">
-                    <td style="vertical-align: top;border-bottom: none; border-top: none">
+                <table style="width:100%; margin:0; border-top:none; border-bottom:none">
+                  <tr style="height: 120px;border-top:none; border-bottom:none">
+                    <td style="vertical-align: top;border-bottom: none !important;  border-top: none !important">
                       @foreach($entrada->descripciones as $descripcion)
                       @if($descripcion->valor)
                       <p>
