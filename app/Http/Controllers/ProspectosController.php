@@ -140,9 +140,19 @@ class ProspectosController extends Controller
                 $anio = Carbon::parse($request->anio);
                 $prospectos = Prospecto::with('cliente', 'ultima_actividad.tipo', 'proxima_actividad.tipo', 'user','cotizaciones')
                 ->where('user_id', $request->id)
+                ->whereHas('ultima_actividad', function($query) use ($inicio,$anio){
+                    $query->whereBetween('created_at', [$inicio, $anio]);
+                })
+                //->whereBetween('prospectos.created_at', [$inicio, $anio])
+                ->has('cliente')
+                ->get();
+
+                /*$prospectos = Prospecto::with('cliente', 'ultima_actividad.tipo', 'proxima_actividad.tipo', 'user','cotizaciones')
+                ->where('user_id', $request->id)
                 ->whereBetween('prospectos.created_at', [$inicio, $anio])
                 ->has('cliente')
                 ->get();
+                */
                 /*
                 ->where('user_id', $request->id)->orWhereHas("cliente", function($query) use ($request,$inicio,$anio) {
                 $query->where("usuario_id", $request->id)->whereBetween('created_at', [$inicio, $anio]);
