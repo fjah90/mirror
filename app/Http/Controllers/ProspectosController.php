@@ -139,7 +139,7 @@ class ProspectosController extends Controller
                 $prospectos = Prospecto::leftjoin('prospectos_actividades', 'prospectos.id', '=', 'prospectos_actividades.prospecto_id')
                 ->with('cliente', 'ultima_actividad.tipo', 'proxima_actividad.tipo', 'user','cotizaciones')
                 ->where('user_id', $request->id)
-                ->whereBetween('prospectos_actividades.created_at', [$inicio, $anio])
+                ->whereBetween('prospectos_actividades.created_at', [$inicio, $request->anio])
                 ->has('cliente')
                 ->get();
                 /*
