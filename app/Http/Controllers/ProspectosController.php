@@ -49,12 +49,13 @@ class ProspectosController extends Controller
             ->whereBetween('created_at', [$inicio, $anio])
             ->get();
             */
-        $prospectos = Prospecto::leftjoin('prospectos_actividades', 'prospectos.id', '=', 'prospectos_actividades.prospecto_id')
-        ->with('cliente', 'ultima_actividad.tipo', 'proxima_actividad.tipo', 'user','cotizaciones')
+        $prospectos = Prospecto::with('cliente', 'ultima_actividad.tipo', 'proxima_actividad.tipo', 'user','cotizaciones')
         ->where('user_id', $user->id)
-        ->whereBetween('prospectos_actividades.created_at', [$inicio, $anio])
         ->has('cliente')
         ->get();
+
+        $prospectos->whereBetween('ultima_actividad.created_at', [$inicio, $anio]);
+        dd($prospectos);
 
         if (auth()->user()->tipo == 'Administrador') {
             $usuarios = User::all();
@@ -135,21 +136,12 @@ class ProspectosController extends Controller
                 })->get();
             }
             else{
-
-                $prospectos = Prospecto::leftjoin('prospectos_actividades', 'prospectos.id', '=', 'prospectos_actividades.prospecto_id')
-                ->with('cliente', 'ultima_actividad.tipo', 'proxima_actividad.tipo', 'user','cotizaciones')
-                ->where('user_id', $request->id)
-                ->whereBetween('prospectos_actividades.created_at', [$inicio, $request->anio])
-                ->has('cliente')
-                ->get();
-                /*
                 $anio = Carbon::parse($request->anio);
                 $prospectos = Prospecto::with('cliente', 'ultima_actividad.tipo', 'proxima_actividad.tipo', 'user','cotizaciones')
                 ->where('user_id', $request->id)
                 ->whereBetween('prospectos.created_at', [$inicio, $anio])
                 ->has('cliente')
                 ->get();
-                */
                 /*
                 ->where('user_id', $request->id)->orWhereHas("cliente", function($query) use ($request,$inicio,$anio) {
                 $query->where("usuario_id", $request->id)->whereBetween('created_at', [$inicio, $anio]);
