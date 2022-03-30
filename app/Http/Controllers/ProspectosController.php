@@ -42,6 +42,8 @@ class ProspectosController extends Controller
 
         $user = auth()->user();
 
+        dd($user);
+
         /*$prospectos = Prospecto::with('cliente', 'ultima_actividad.tipo', 'proxima_actividad.tipo', 'user','cotizaciones')
             ->where('user_id', $user->id)->orWhereHas("cliente", function($query) use ($user) {
                 $query->where("usuario_id", $user->id);
