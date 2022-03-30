@@ -12,7 +12,7 @@ class Prospecto extends Model
     protected $fillable = ['cliente_id','nombre','descripcion', 'user_id'];
 
     protected $appends = [
-        'num_cotizaciones','num_cotaprobadas'
+        'num_cotizaciones','num_cotaprobadas','ulti_activi'
     ];
 
 
@@ -24,6 +24,11 @@ class Prospecto extends Model
     public function getNumCotaprobadasAttribute()
     {
         return count($this->cotizaciones_aprobadas);
+    }
+
+    public function getUltiActiviAttribute()
+    {
+        return $this->ultima_actividad->created_at;
     }
 
     /**
