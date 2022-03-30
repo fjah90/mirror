@@ -50,7 +50,7 @@ class ProspectosController extends Controller
             ->get();
             */
         $prospectos = Prospecto::with('cliente', 'ultima_actividad.tipo', 'proxima_actividad.tipo', 'user','cotizaciones')
-        ->where('user_id', $user->id)
+        ->where('user_id', 2)
         ->whereBetween('prospectos.created_at', [$inicio, $anio])
         ->has('cliente')
         ->get();
