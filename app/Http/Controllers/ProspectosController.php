@@ -55,6 +55,8 @@ class ProspectosController extends Controller
         ->has('cliente')
         ->get();
 
+        dd($prospectos);
+
         if (auth()->user()->tipo == 'Administrador') {
             $usuarios = User::all();
         } else {
