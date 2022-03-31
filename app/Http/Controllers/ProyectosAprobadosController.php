@@ -31,7 +31,7 @@ class ProyectosAprobadosController extends Controller
       $inicio = Carbon::parse('2022-01-01');
       $anio = Carbon::parse('2022-12-31');
       //$proyectos = ProyectoAprobado::whereBetween('created_at', [$inicio, $anio])->with('cotizacion','cotizacion.cuenta_cobrar','cotizacion.user','ordenes')->get();
-      $user = User::with('proyectos_aprobados.cotizacion','proyectos_aprobados.cotizacion.cuenta_cobrar','proyectos_aprobados.cotizacion.user')->find(auth()->user()->id);
+      $user = User::with('proyectos_aprobados.cotizacion','proyectos_aprobados.cotizacion.cuenta_cobrar','proyectos_aprobados.cotizacion.user',,'proyectos_aprobados.ordenes')->find(auth()->user()->id);
       if (is_null($user)) $proyectos = [];
       else {
         $proyectos = $user->proyectos_aprobados->where('created_at','>',$inicio)->where('created_at','<',$anio);
@@ -79,13 +79,13 @@ class ProyectosAprobadosController extends Controller
       } else {
 
         if ($request->anio == 'Todos') {
-            $user = User::with('proyectos_aprobados.cotizacion','proyectos_aprobados.cotizacion.cuenta_cobrar','proyectos_aprobados.cotizacion.user')->find($request->id);
+            $user = User::with('proyectos_aprobados.cotizacion','proyectos_aprobados.cotizacion.cuenta_cobrar','proyectos_aprobados.cotizacion.user','proyectos_aprobados.ordenes')->find($request->id);
             if (is_null($user)) $proyectos = [];
             else $proyectos = $user->proyectos_aprobados;
         }
         else{
             $anio = Carbon::parse($request->anio);
-            $user = User::with('proyectos_aprobados.cotizacion','proyectos_aprobados.cotizacion.cuenta_cobrar','proyectos_aprobados.cotizacion.user')->find($request->id);
+            $user = User::with('proyectos_aprobados.cotizacion','proyectos_aprobados.cotizacion.cuenta_cobrar','proyectos_aprobados.cotizacion.user','proyectos_aprobados.ordenes')->find($request->id);
             if (is_null($user)) $proyectos = [];
             else {
 
