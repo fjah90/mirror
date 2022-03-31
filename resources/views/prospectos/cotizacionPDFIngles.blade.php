@@ -642,11 +642,11 @@
             @else
             <tr>
             @endif
-              <td class="text-center">@format_number($entrada->cantidad) <br /> {{$entrada->medida}}</td>
+              <td class="text-center" style="border-bottom: none; border-top: none">@format_number($entrada->cantidad) <br /> {{$entrada->medida}}</td>
               <td>
                 <table style="width:100%; margin:0;">
                   <tr style="height: 120px;">
-                    <td style="vertical-align: top;">
+                    <td style="vertical-align: top;" style="border-bottom: none; border-top: none">
                       @foreach($entrada->descripciones as $descripcion)
                       @if($descripcion->valor)
                       <p>
@@ -671,8 +671,8 @@
                   </tr>
                 </table>
               </td>
-              <td class="text-right">@format_money($entrada->precio)</td>
-              <td class="text-right">@format_money($entrada->importe)</td>
+              <td class="text-right" style="border-bottom: none; border-top: none">@format_money($entrada->precio)</td>
+              <td class="text-right" style="border-bottom: none; border-top: none">@format_money($entrada->importe)</td>
             </tr>
             @endforeach
             <tr>

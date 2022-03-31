@@ -614,14 +614,14 @@
             @foreach($orden->entradas as $entrada)
             <tr>
               @if($entrada->cantidad_convertida)
-              <td class="text-center">@format_number($entrada->cantidad_convertida) <br /> {{$entrada->conversion_ingles}}</td>
+              <td class="text-center" style="border-bottom: none; border-top: none">@format_number($entrada->cantidad_convertida) <br /> {{$entrada->conversion_ingles}}</td>
               @else
-              <td class="text-center">@format_number($entrada->cantidad) <br /> {{$entrada->medida_ingles}}</td>
+              <td class="text-center" style="border-bottom: none; border-top: none">@format_number($entrada->cantidad) <br /> {{$entrada->medida_ingles}}</td>
               @endif
-              <td>
+              <td style="border-bottom: none; border-top: none">
                 <table style="width:100%; margin:0;">
                   <tr>
-                    <td style="vertical-align: top;">
+                    <td style="vertical-align: top;border-bottom: none; border-top: none">
                       @foreach($entrada->descripciones as $descripcion)
                       @if(($descripcion->valor||$descripcion->valor_ingles) && $entrada->producto->descripciones[$loop->index]->descripcionNombre->aparece_orden_compra )
                       <p>
@@ -642,7 +642,7 @@
                       @endif
                       <p>{{$entrada->comentarios}}</p>
                     </td>
-                    <td style="width:100px;">
+                    <td style="width:100px;border-bottom: none; border-top: none">
                       @foreach($entrada->fotos as $foto)
                         <img src="{{$foto}}" alt="foto" style="width:100px; height:100px;" />
                         <br />
@@ -656,21 +656,21 @@
                   </tr>
                 </table>
               </td>
-              <td class="text-right">@format_money($entrada->precio)</td>
-              <td class="text-right">@format_money($entrada->importe)</td>
+              <td class="text-right" style="border-bottom: none; border-top: none">@format_money($entrada->precio)</td>
+              <td class="text-right" style="border-bottom: none; border-top: none">@format_money($entrada->importe)</td>
             </tr>
             @endforeach
             <tr>
-              <td></td>
-              <td>
+              <td style="border-bottom: none; border-top: none"></td>
+              <td style="border-bottom: none; border-top: none">
                 @if($orden->entradas->count()==1)
                 <div style="height: 200px; background-color:white;"></div>
                 @elseif($orden->entradas->count()==2)
                 <div style="height: 0px; background-color:white;"></div>
                 @endif
               </td>
-              <td></td>
-              <td></td>
+              <td style="border-bottom: none; border-top: none"></td>
+              <td style="border-bottom: none; border-top: none"></td>
             </tr>
           </tbody>
         </table>
