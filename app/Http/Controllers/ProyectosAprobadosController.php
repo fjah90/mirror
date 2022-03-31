@@ -28,15 +28,15 @@ class ProyectosAprobadosController extends Controller
       //$proyectos = auth()->user()->proyectos_aprobados()->with('cotizacion.cuentaCobrar','cliente','cotizacion.user','ordenes')->get();
 
       
-      $inicio = Carbon::parse('2021-01-01');
-      $anio = Carbon::parse('2021-12-31');
-      //$proyectos = ProyectoAprobado::whereBetween('created_at', [$inicio, $anio])->with('cotizacion','cotizacion.cuenta_cobrar','cotizacion.user','ordenes')->get();
-      $user = User::with('proyectos_aprobados.cotizacion','proyectos_aprobados.cotizacion.cuenta_cobrar','proyectos_aprobados.cotizacion.user')->find(auth()->user()->id);
+      $inicio = Carbon::parse('2022-01-01');
+      $anio = Carbon::parse('2022-12-31');
+      $proyectos = ProyectoAprobado::whereBetween('created_at', [$inicio, $anio])->with('cotizacion','cotizacion.cuenta_cobrar','cotizacion.user','ordenes')->get();
+      /*$user = User::with('proyectos_aprobados.cotizacion','proyectos_aprobados.cotizacion.cuenta_cobrar','proyectos_aprobados.cotizacion.user')->find(auth()->user()->id);
       if (is_null($user)) $proyectos = [];
       else {
-        $proyectos = $user->proyectos_aprobados->whereBetween('created_at', [$inicio, $anio]);
+        $proyectos = $user->proyectos_aprobados->where('created_at','>',$inicio)->where('created_at','<',$anio);
       }
-
+      */
       foreach ($proyectos as $proyecto) {
         $proyecto->cotizacion->archivo = asset('storage/'.$proyecto->cotizacion->archivo);
       }
