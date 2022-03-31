@@ -36,7 +36,6 @@ class ProyectosAprobadosController extends Controller
       else {
         $proyectos = $user->proyectos_aprobados->where('created_at','>',$inicio)->where('created_at','<',$anio);
       }
-      dd($proyectos);
       
       foreach ($proyectos as $proyecto) {
         $proyecto->cotizacion->archivo = asset('storage/'.$proyecto->cotizacion->archivo);
