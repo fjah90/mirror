@@ -34,7 +34,7 @@ class ProyectosAprobadosController extends Controller
       $user = User::with('proyectos_aprobados.cotizacion','proyectos_aprobados.cotizacion.cuenta_cobrar','proyectos_aprobados.cotizacion.user')->find(auth()->user()->id);
       if (is_null($user)) $proyectos = [];
       else {
-        $proyectos = $user->proyectos_aprobados->where('created_at','>',$inicio);
+        $proyectos = $user->proyectos_aprobados->whereBetween('created_at', [$inicio, $anio]);
       }
 
       foreach ($proyectos as $proyecto) {
