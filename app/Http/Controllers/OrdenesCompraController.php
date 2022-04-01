@@ -103,7 +103,7 @@ class OrdenesCompraController extends Controller
         ]);
 
         $proyecto->load('cotizacion', 'cotizacion.entradas', 'cotizacion.entradas.producto', 'cotizacion.entradas.contacto');
-
+        $orden_anterior = OrdenCompra::orderBy('id', 'desc')->first();
 
         if ($validator->fails()) {
             $errors = $validator->errors()->all();
@@ -113,6 +113,7 @@ class OrdenesCompraController extends Controller
         }
 
         $create = $request->except('entradas', 'tiempo');
+        $create['numero'] = $orden_anterior->numero + 1;
         $create['cliente_id'] = $proyecto->cliente_id;
         $create['cliente_nombre'] = $proyecto->cliente_nombre;
         $create['proyecto_nombre'] = $proyecto->proyecto;
