@@ -70,7 +70,7 @@
                         <i class="far fa-eye"></i>
                       </a>
                       <a v-if="orden.archivo" class="btn btn-xs btn-warning" title="PDF" :href="orden.archivo"
-                        :download="'INTERCORP-PO '+orden.numero+' '+orden.proyecto_nombre+'.pdf'">
+                        :download="'INTERCORP-PO '+orden.numero+' '+orden.cliente_nombre+' '+orden.proyecto_nombre+'.pdf'">
                         <i class="far fa-file-pdf"></i>
                       </a>
                     </template>
