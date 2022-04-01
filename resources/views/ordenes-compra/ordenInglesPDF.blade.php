@@ -516,6 +516,7 @@
             <tr>
               <td class="bordered">
                 <p class="text-uppercase">{{$orden->proveedor->empresa}}</p>
+                <p class="text-uppercase">{{$orden->proveedor->razon_social}}</p>
                 <p class="text-uppercase">
                   {{$orden->proveedor->calle}}
                   {{$orden->proveedor->numero}}
