@@ -15,7 +15,7 @@
 @section('content')
 <!-- Content Header (Page header) -->
 <section class="content-header">
-  <h1>Proyectos en proceso</h1>
+  <h1>Cotizaciones en proceso</h1>
 </section>
 <!-- Main content -->
 <section class="content" id="content">
@@ -25,7 +25,7 @@
         <div class="panel-heading">
           <h3 class="panel-title">
             <div class="p-10">
-              Proyectos
+              Cotizaciones
               @role('Administrador')
                 de
                 <select class="form-control" @change="cargar()" v-model="usuarioCargado" style="width:auto;display:inline-block;">
@@ -49,7 +49,7 @@
             <div class="p-10">
               <button class="btn btn-sm btn-primary">
                 <a href="{{route('prospectos.create')}}" style="color:white;">
-                  <i class="fas fa-address-book"></i> Nueva Cotización
+                  <i class="fas fa-address-book"></i> Nuevo Proyecto
                 </a>
               </button>
             </div>
