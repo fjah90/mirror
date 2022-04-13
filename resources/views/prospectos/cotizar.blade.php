@@ -1986,6 +1986,7 @@
                         headers: {'Content-Type': 'multipart/form-data'}
                     })
                         .then(({data}) => {
+                            console.log(data);
                             this.prospecto.cotizaciones.find(function (cotizacion) {
                                 if (this.aceptar.cotizacion_id == cotizacion.id) {
                                     cotizacion.proyecto_aprobado = data.proyecto_aprobado;
