@@ -47,13 +47,15 @@ class ProyectoAprobadoObserver
                         $unidad_medida = UnidadMedida::where('simbolo',$entrada->medida)->first();
                         $unidad_convertir = UnidadMedida::where('simbolo',$entrada->medida_compra)->first();
                         $conversion = UnidadMedidaConversion::where('unidad_medida_id',$unidad_medida->id)->where('unidad_conversion_id',$unidad_convertir->id)->first();
-                        $cantidad_convertida = $entrada->cantidad * $conversion->factor_conversion;
+                        if(!empty($conversion)){
+                            $cantidad_convertida = $entrada->cantidad * $conversion->factor_conversion;
 
-                        if ($entrada->precio_compra != null) {
-                            $importe = $entrada->precio_compra * $cantidad_convertida;
-                        }
-                        else{
-                            $importe = $entrada->precio * $cantidad_convertida;   
+                            if ($entrada->precio_compra != null) {
+                                $importe = $entrada->precio_compra * $cantidad_convertida;
+                            }
+                            else{
+                                $importe = $entrada->precio * $cantidad_convertida;   
+                            }
                         }
                     }
                     
