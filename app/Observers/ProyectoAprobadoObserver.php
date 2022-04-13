@@ -57,6 +57,10 @@ class ProyectoAprobadoObserver
                                 $importe = $entrada->precio * $cantidad_convertida;   
                             }
                         }
+                        else{
+                            $cantidad_convertida = null;
+                            $importe = $entrada->importe;        
+                        }
                     }
                     
                 }
