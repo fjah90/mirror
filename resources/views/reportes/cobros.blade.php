@@ -8,10 +8,10 @@ Reportes | @parent
 @section('header_styles')
 <style>
   .marg025 {margin: 0 25px;}
-  i.pdf:hover{
+  .pdf:hover{
     color: #069ecf;
   }
-  i.excel:hover{
+  .excel:hover{
     color: #06cf3a;
   }
 </style>
