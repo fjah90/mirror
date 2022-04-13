@@ -1986,6 +1986,7 @@
                         headers: {'Content-Type': 'multipart/form-data'}
                     })
                         .then(({data}) => {
+                            /*
                             this.prospecto.cotizaciones.find(function (cotizacion) {
                                 if (this.aceptar.cotizacion_id == cotizacion.id) {
                                     cotizacion.proyecto_aprobado = data.proyecto_aprobado;
@@ -2002,12 +2003,13 @@
                             $("#comprobante").fileinput('clear');
                             this.openAceptar = false;
                             this.cargando = false;
+                            */
                             swal({
                                 title: "Cotizacion Aceptada",
                                 text: "La cotización ha sido aceptada y se ha generado una cuenta por cobrar",
                                 type: "success"
                             });
-                            window.open("/proyectos-aprobados/"+this.cotizacion.proyecto_aprobado.id+"/ordenes-compra",'_blank');
+                            window.location.href = "/proyectos-aprobados/"+this.cotizacion.proyecto_aprobado.id+"/ordenes-compra";
                         })
                         .catch(({response}) => {
                             console.error(response);
