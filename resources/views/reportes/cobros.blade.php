@@ -8,6 +8,12 @@ Reportes | @parent
 @section('header_styles')
 <style>
   .marg025 {margin: 0 25px;}
+  i.pdf:hover{
+    color: #069ecf;
+  }
+  i.excel:hover{
+    color: #06cf3a;
+  }
 </style>
 @stop
 
@@ -24,10 +30,10 @@ Reportes | @parent
             <div class="panel-heading">
               <h3 class="panel-title">Reporte de Cobros</h3>
               <div class="marg025 btn-group">
-                  <i class="fa fa-file-pdf" v-on:click="pdf" style="color:red"></i>
+                  <i class=" pdf fa fa-file-pdf" v-on:click="pdf" style="color:red;font-size: 20px;"></i>
               </div>
               <div class="marg025 btn-group">
-                  <i class="fa fa-file-excel" v-on:click="excel" style="color: green;"></i>
+                  <i class="excel fa fa-file-excel" v-on:click="excel" style="color: green; font-size:20px; hover"></i>
               </div>
             </div>
             <div class="panel-body">
