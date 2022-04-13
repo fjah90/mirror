@@ -25,7 +25,7 @@
         <div class="panel-heading">
           <h3 class="panel-title">
             <div class="p-10">
-              Cotizaciones
+              Proyectos
               @role('Administrador')
                 de
                 <select class="form-control" @change="cargar()" v-model="usuarioCargado" style="width:auto;display:inline-block;">
@@ -49,7 +49,7 @@
             <div class="p-10">
               <button class="btn btn-sm btn-primary">
                 <a href="{{route('prospectos.create')}}" style="color:white;">
-                  <i class="fas fa-address-book"></i> Nuevo Proyecto
+                  <i class="fas fa-address-book"></i> Nueva Cotizacion
                 </a>
               </button>
             </div>
