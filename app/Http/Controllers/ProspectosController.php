@@ -527,7 +527,7 @@ class ProspectosController extends Controller
     public function cotizar(Prospecto $prospecto)
     {
 
-        $proyectos = Prospecto::all();
+        $proyectos = Prospecto::with('cliente')->get();
         $prospecto->load(
             ['cotizaciones' => function ($query) {
                 $query->orderBy('fecha', 'asc');
