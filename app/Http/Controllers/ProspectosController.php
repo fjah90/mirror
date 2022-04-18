@@ -526,8 +526,7 @@ class ProspectosController extends Controller
      */
     public function cotizar(Prospecto $prospecto)
     {
-
-        $proyectos = Prospecto::with('cliente')->get();
+        $proyectos = Prospecto::all();
         $prospecto->load(
             ['cotizaciones' => function ($query) {
                 $query->orderBy('fecha', 'asc');
@@ -551,7 +550,7 @@ class ProspectosController extends Controller
         $unidades_medida = UnidadMedida::orderBy('simbolo')->get();
         //$unidades_medida = UnidadMedida::with('conversiones')->orderBy('simbolo')->get();
         if (auth()->user()->can('editar numero cotizacion')) {
-            $numero_siguiente = ProspectoCotizacion::select('id')->orderBy('numero', 'desc')->first()->id + 1;
+            $numero_siguiente = ProspectoCotizacion::select('id')->orderBy('id', 'desc')->first()->id + 1;
         } else {
             $numero_siguiente = 0;
         }
@@ -629,8 +628,6 @@ class ProspectosController extends Controller
                 $producto->foto = asset('storage/' . $producto->foto);
             }
         }
-
-        //dd($proyectos,$prospectos,$productos,$condiciones,$observaciones,$unidades_medida,$rfcs,$numero_siguiente,$direcciones);
 
         //$entradas_proveedor = collect($entradas_proveedor);
 
