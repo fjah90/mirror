@@ -526,6 +526,7 @@ class ProspectosController extends Controller
      */
     public function cotizar(Prospecto $prospecto)
     {
+        dd($prospecto);
         $proyectos = Prospecto::all();
         $prospecto->load(
             ['cotizaciones' => function ($query) {
