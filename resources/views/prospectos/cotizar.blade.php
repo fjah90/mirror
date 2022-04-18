@@ -820,112 +820,44 @@
             </div>
         </div>
 
-        
+        <!-- Catalogo Productos Modal -->
+        <modal v-model="openCatalogo" title="Productos" :footer="false">
+            <div class="table-responsive">
+                <table id="tablaProductos" class="table table-bordred">
+                    <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Proveedor</th>
+                        <th>Tipo</th>
+                        <th>Ficha Técnica</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr v-for="(prod, index) in productos">
+                        <td>@{{prod.nombre}}</td>
+                        <td>@{{prod.proveedor.empresa}}</td>
+                        <td>@{{prod.categoria.nombre}}</td>
+                        <td>
+                            <a v-if="prod.ficha_tecnica" :href="prod.ficha_tecnica" target="_blank"
+                               class="btn btn-success" style="cursor:pointer;">
+                                <i class="far fa-file-pdf"></i>
+                            </a>
+                        </td>
+                        <td class="text-right">
+                            <button class="btn btn-primary" title="Seleccionar"
+                                    @click="seleccionarProduco(prod, index)">
+                                <i class="fas fa-check"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </modal>
         <!-- /.Catalogo Productos Modal -->
 
-        <!-- Enviar Modal -->
-        <modal v-model="openNotas" :title="'Notas Cotización '+notas.cotizacion_id" :footer="false">
-            <form class="" @submit.prevent="notasCotizacion()">
-                <div class="form-group">
-                    <label class="control-label">Notas</label>
-                    <textarea name="mensaje" class="form-control" v-model="notas.mensaje" rows="8" cols="80">
-          </textarea>
-                </div>
-                <div class="form-group text-right">
-                    <button type="submit" class="btn btn-primary" :disabled="cargando">Guardar</button>
-                    <button type="button" class="btn btn-default"
-                            @click="notas.cotizacion_id=0; notas.mensaje=''; openNotas=false;">
-                        Cancelar
-                    </button>
-                </div>
-            </form>
-        </modal>
-        <!-- /.Enviar Modal -->
-
-        <!-- Copiar Modal -->
-        <modal v-model="openCopiar" :title="'Copiar Cotizacion'" :footer="false">
-            <form class="" @submit.prevent="copiarCotizacion()">
-                <div class="form-group">
-                    <label class="control-label">Proyecto Destino</label>
-                    <select name="proyecto_id" v-model="copiar_cotizacion.proyecto_id"
-                            class="form-control" required id="proyecto-select" style="width: 300px;">
-                        @foreach($proyectos as $proyecto)
-                            <option value="{{$proyecto->id}}" @click="copiar3(index,{{$proyecto->id}});">{{$proyecto->nombre}}--{{$proyecto->cliente->nombre}}</option>
-                        @endforeach
-                    </select>
-                </div>
-                <div class="form-group text-right">
-                    <button type="submit" class="btn btn-primary" :disabled="cargando">Guardar</button>
-                    <button type="button" class="btn btn-default"
-                            @click="openCopiar=false;">
-                        Cancelar
-                    </button>
-                </div>
-            </form>
-        </modal>
-        <!-- /.Copiar Modal -->
-
-        <!-- Enviar Modal -->
-        <modal v-model="openEnviar" :title="'Enviar Cotizacion '+enviar.numero" :footer="false">
-            <form class="" @submit.prevent="enviarCotizacion()">
-                <div class="form-group">
-                    <label class="control-label">Email(s)</label>
-                    <select2multags :options="enviar.emailOpciones" v-model="enviar.email" style="width:100%;" required>
-                    </select2multags>
-                </div>
-                <div class="form-group">
-                    <label class="control-label">Mensaje</label>
-                    <textarea name="mensaje" class="form-control" v-model="enviar.mensaje" rows="6" cols="80" required>
-          </textarea>
-                </div>
-                <div class="form-group text-right">
-                    <button type="submit" class="btn btn-primary" :disabled="cargando">Enviar</button>
-                </div>
-            </form>
-        </modal>
-        <!-- /.Enviar Modal -->
-
-        <!-- Aceptar Modal -->
-        <modal v-model="openAceptar" :title="'Aceptar Cotizacion '+aceptar.cotizacion_id" :footer="false">
-            <form class="" @submit.prevent="aceptarCotizacion()">
-                <div class="form-group">
-                    <label class="control-label">Comprobante Confirmacion</label>
-                    <div class="file-loading">
-                        <input id="comprobante" name="comprobante" type="file" ref="comprobante"
-                               @change="fijarComprobante()" required/>
-                    </div>
-                    <div id="comprobante-file-errors"></div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label">Fecha Aceptación</label>
-                    <br />
-                    <dropdown style="width:100%;">
-                        <div class="input-group" >
-                            <div class="input-group-btn">
-                                <btn class="dropdown-toggle" style="background-color:#fff;">
-                                    <i class="fas fa-calendar"></i>
-                                </btn>
-                            </div>
-                            <input class="form-control" type="text" name="fecha_comprobante" placeholder="DD/MM/YYYY" v-model="aceptar.fecha_comprobante" readonly/>
-                        </div>
-                        <template slot="dropdown">
-                            <li>
-                                <date-picker :locale="locale" :today-btn="false" :clear-btn="false"
-                                             format="dd/MM/yyyy" :date-parser="dateParser" v-model="aceptar.fecha_comprobante"/>
-                            </li>
-                        </template>
-                    </dropdown>
-                </div>
-                <div class="form-group text-right">
-                    <button type="submit" class="btn btn-primary" :disabled="cargando">Aceptar</button>
-                    <button type="button" class="btn btn-default"
-                            @click="aceptar.cotizacion_id=0; openAceptar=false;">
-                        Cancelar
-                    </button>
-                </div>
-            </form>
-        </modal>
-        <!-- /.Aceptar Modal -->
+        
 
         <!-- Nuevo Producto Modal-->
         <modal v-model="modalProducto" title="Registrar Producto" :footer="false">
