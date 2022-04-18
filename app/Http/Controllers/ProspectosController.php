@@ -630,7 +630,7 @@ class ProspectosController extends Controller
             }
         }
 
-        dd($proyectos,$prospectos,$productos,$condiciones,$observaciones,$unidades_medida,$rfcs,$numero_siguiente,$direcciones);
+        //dd($proyectos,$prospectos,$productos,$condiciones,$observaciones,$unidades_medida,$rfcs,$numero_siguiente,$direcciones);
 
         //$entradas_proveedor = collect($entradas_proveedor);
 
