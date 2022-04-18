@@ -27,33 +27,7 @@
                     <div class="panel-heading">
                         <h3 class="panel-title">Cotizar Proyecto</h3>
                     </div>
-                    <div class="panel-body">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label class="control-label">Cliente</label>
-                                    <span class="form-control">{{$prospecto->cliente->nombre}}</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label class="control-label">Nombre de Proyecto</label>
-                                    <span class="form-control text-uppercase">{{$prospecto->nombre}}</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label class="control-label">Descripción</label>
-                                    <span class="form-control"
-                                          style="min-height:68px;">{{$prospecto->descripcion}}</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    
                 </div>
             </div>
         </div>
@@ -2007,6 +1981,7 @@
                                 text: "La cotización ha sido aceptada y se ha generado una cuenta por cobrar",
                                 type: "success"
                             });
+                            window.location.href = "/proyectos-aprobados/"+data.proyecto_aprobado.id+"/ordenes-compra";
                         })
                         .catch(({response}) => {
                             console.error(response);
