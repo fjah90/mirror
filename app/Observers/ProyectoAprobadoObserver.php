@@ -34,7 +34,12 @@ class ProyectoAprobadoObserver
             ];
 
             $orden = OrdenCompra::create($create);
-            $orden->update(['numero' => $orden->id]);
+            
+            $orden_anterior = OrdenCompra::orderBy('numero','desc')->first();
+            $orden->update(['numero' => $orden_anterior->numero + 1]);  
+            
+            
+            
 
             foreach ($entradas as $entrada) {
 
