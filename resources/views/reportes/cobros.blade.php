@@ -8,6 +8,7 @@ Reportes | @parent
 @section('header_styles')
 <style>
   .marg025 {margin: 0 25px;}
+  .marg015 {margin: 0 25px 0 0;}
   .pdf:hover{
     color: #069ecf;
   }
@@ -28,17 +29,17 @@ Reportes | @parent
         <div class="col-sm-12">
           <div class="panel product-details">
             <div class="panel-heading">
-              <h3 class="panel-title">Reporte de Cobros</h3>
-              <div class="marg025 btn-group">
-                  <i class=" pdf fa fa-file-pdf" v-on:click="pdf" style="color:red;font-size: 20px;"></i>
-              </div>
-              <div class="marg025 btn-group">
-                  <i class="excel fa fa-file-excel" v-on:click="excel" style="color: green; font-size:20px; hover"></i>
-              </div>
+              <h3 class="panel-title">Reporte de Cobros <button style="background-color:transparent; border:none;float: right;">
+                  <i class=" fa fa-file-pdf" v-on:click="pdf" style="color:#eb1b3d;font-size: 20px;"></i>
+                </button>
+                <button style="background-color:transparent; border:none;float: right;">
+                  <i class="excel fa fa-file-excel" v-on:click="excel" style="color: #3ca906; font-size:20px;"></i>
+                </button>
+              </h3>
             </div>
             <div class="panel-body">
                 <div id="oculto_filtros" class="hide">
-                    <dropdown id="fecha_ini_control" class="marg025">
+                    <dropdown id="fecha_ini_control" class="marg015">
                       <div class="input-group">
                         <div class="input-group-btn">
                           <btn class="dropdown-toggle" style="background-color:#fff;">
@@ -58,7 +59,7 @@ Reportes | @parent
                         </li>
                       </template>
                     </dropdown>
-                    <dropdown id="fecha_fin_control" class="marg025">
+                    <dropdown id="fecha_fin_control" class="marg015">
                       <div class="input-group">
                         <div class="input-group-btn">
                           <btn class="dropdown-toggle" style="background-color:#fff;">
@@ -78,7 +79,7 @@ Reportes | @parent
                         </li>
                       </template>
                     </dropdown>
-                    <div class="marg025 btn-group" id="select_cotizaciones" >
+                    <div class="marg015 btn-group" id="select_cotizaciones" >
                         <select name="proxDias" class="form-control" size="1" v-model="valor_cotizaciones" id="selectcotizaciones" style="width:100%">
                         <option v-for="(option, index) in datos_select.cotizaciones" v-bind:value="option.valor" >
                             @{{ option.opcion }}
@@ -86,7 +87,7 @@ Reportes | @parent
                           
                         </select>
                     </div>
-                    <div class="marg025 btn-group" id="select_proyectos" >
+                    <div class="marg015 btn-group" id="select_proyectos" >
                         <select name="proxDias" class="form-control" size="1" v-model="valor_proyectos" id="selectproyectos" style="width:100%">
                           <option v-for="option in datos_select.proyectos" v-bind:value="option.valor">
                             @{{ option.opcion }}
@@ -94,7 +95,7 @@ Reportes | @parent
                           
                         </select>
                     </div>
-                    <div class="marg025 btn-group" id="select_clientes" >
+                    <div class="marg015 btn-group" id="select_clientes" >
                         <select name="proxDias" class="form-control" size="1" v-model="valor_clientes" id="selectclientes" style="width:100%">
                           <option v-for="option in datos_select.clientes" v-bind:value="option.valor">
                             @{{ option.opcion }}
@@ -108,7 +109,7 @@ Reportes | @parent
                   <div class="table-responsive">
                     
                     <table class="table table-striped text-center" id="tabla">
-                      <thead>
+                      <thead style="background-color:#fa7702">
                         <tr>
                           <th class="text-center">Fecha Pago</th>
                           <th class="text-center"><strong>Número Compra</strong></th>
@@ -198,7 +199,7 @@ const app = new Vue({
           //this.tabla.columns(4).search(this.valor_proyectos).draw();
         });
       this.tabla = $("#tabla").DataTable({
-          "dom": 'f<"#fechas_container.pull-left">ltip',
+          "dom": 'f<"#fechas_container.pull-left">tlp',
           "order":[],
           initComplete: function () {
             

@@ -2007,7 +2007,6 @@
                                 text: "La cotización ha sido aceptada y se ha generado una cuenta por cobrar",
                                 type: "success"
                             });
-                            window.location.href = "/proyectos-aprobados/"+data.proyecto_aprobado.id+"/ordenes-compra";
                         })
                         .catch(({response}) => {
                             console.error(response);

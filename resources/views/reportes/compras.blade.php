@@ -24,14 +24,14 @@ Reportes | @parent
             <div class="panel-heading">
               <h3 class="panel-title">Reporte de Compras</h3>
               <div class="marg025 btn-group">
-                  <button class="btn btn-primary" v-on:click="pdf">
-                      PDF
-                  </button>
+                <button style="background-color:transparent; border:none">
+                  <i class=" pdf fa fa-file-pdf" v-on:click="pdf" style="color:red;font-size: 20px;"></i>
+                </button>
               </div>
               <div class="marg025 btn-group">
-                  <button class="btn btn-success" v-on:click="excel">
-                      EXCEL
-                  </button>
+                <button style="background-color:transparent; border:none">
+                  <i class="excel fa fa-file-excel" v-on:click="excel" style="color: green; font-size:20px; hover"></i>
+                </button>
               </div>
             
             </div>
