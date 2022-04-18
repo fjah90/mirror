@@ -857,29 +857,25 @@
         </modal>
         <!-- /.Catalogo Productos Modal -->
 
-
-        <!-- Copiar Modal -->
-        <modal v-model="openCopiar" :title="'Copiar Cotizacion'" :footer="false">
-            <form class="" @submit.prevent="copiarCotizacion()">
+        <!-- Enviar Modal -->
+        <modal v-model="openNotas" :title="'Notas Cotización '+notas.cotizacion_id" :footer="false">
+            <form class="" @submit.prevent="notasCotizacion()">
                 <div class="form-group">
-                    <label class="control-label">Proyecto Destino</label>
-                    <select name="proyecto_id" v-model="copiar_cotizacion.proyecto_id"
-                            class="form-control" required id="proyecto-select" style="width: 300px;">
-                        @foreach($proyectos as $proyecto)
-                            <option value="{{$proyecto->id}}" @click="copiar3(index,{{$proyecto->id}});">{{$proyecto->nombre}}--{{$proyecto->cliente->nombre}}</option>
-                        @endforeach
-                    </select>
+                    <label class="control-label">Notas</label>
+                    <textarea name="mensaje" class="form-control" v-model="notas.mensaje" rows="8" cols="80">
+          </textarea>
                 </div>
                 <div class="form-group text-right">
                     <button type="submit" class="btn btn-primary" :disabled="cargando">Guardar</button>
                     <button type="button" class="btn btn-default"
-                            @click="openCopiar=false;">
+                            @click="notas.cotizacion_id=0; notas.mensaje=''; openNotas=false;">
                         Cancelar
                     </button>
                 </div>
             </form>
         </modal>
-        <!-- /.Copiar Modal -->
+        <!-- /.Enviar Modal -->
+
 
         <!-- Enviar Modal -->
         <modal v-model="openEnviar" :title="'Enviar Cotizacion '+enviar.numero" :footer="false">
