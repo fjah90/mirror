@@ -180,43 +180,647 @@
             </div>
         </div>
 
-        
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">Nueva Cotización</h4>
+                    </div>
+                    <div class="panel-body">
+                        <form class="" @submit.prevent="agregarEntrada()">
+                            <div class="row">
+                                @can('editar numero cotizacion')
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="control-label">Numero Cotización</label>
+                                            <input type="number" step="1" min="0" name="numero" class="form-control"
+                                                   v-model="cotizacion.numero"/>
+                                        </div>
+                                    </div>
+                                @endcan
+                                <div class="col-md-offset-2 col-md-6">
+                                    <label class="control-label">Cliente Contacto</label>
+                                    <select name="cliente_contacto_id" v-model="cotizacion.cliente_contacto_id"
+                                            class="form-control" required>
+                                        @foreach($prospecto->cliente->contactos as $contacto)
+                                            <option value="{{$contacto->id}}">{{$contacto->nombre}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label class="control-label">Facturar</label>
+                                        <select class="form-control" name="facturar" v-model="cotizacion.facturar"
+                                                @change="seleccionarRFC()">
+                                            <option value="0">No</option>
+                                            <option value="1">Si</option>
+                                            <option v-for="(rfc, index) in rfcs" :value="index">@{{rfc.rfc}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6" v-if="cotizacion.facturar!='0'">
+                                  <label class="control-label">RFC</label>
+                                  <input type="text" name="rfc" class="form-control" v-model="cotizacion.rfc" required />
+                                </div>
+                            </div>
+                            <div class="row form-group" v-if="cotizacion.facturar!='0'">
+                                <div class="col-sm-12">
+                                    <label class="control-label">Razon Social</label>
+                                    <input type="text" name="razon_social" class="form-control text-uppercase"
+                                           v-model="cotizacion.razon_social"/>
+                                </div>
+                            </div>
+                            <div class="row form-group" v-if="cotizacion.facturar!='0'">
+                                <div class="col-sm-4">
+                                    <label class="control-label">Calle</label>
+                                    <input type="text" name="calle" class="form-control text-uppercase"
+                                           v-model="cotizacion.calle"/>
+                                </div>
+                                <div class="col-sm-2">
+                                    <label class="control-label">No. Ext.</label>
+                                    <input type="text" name="nexterior" class="form-control text-uppercase"
+                                           v-model="cotizacion.nexterior"/>
+                                </div>
+                                <div class="col-sm-2">
+                                    <label class="control-label">No. Int.</label>
+                                    <input type="text" name="ninterior" class="form-control text-uppercase"
+                                           v-model="cotizacion.ninterior"/>
+                                </div>
+                                <div class="col-sm-4">
 
-        <!-- Catalogo Productos Modal -->
-        <modal v-model="openCatalogo" title="Productos" :footer="false">
-            <div class="table-responsive">
-                <table id="tablaProductos" class="table table-bordred">
-                    <thead>
-                    <tr>
-                        <th>Nombre</th>
-                        <th>Proveedor</th>
-                        <th>Tipo</th>
-                        <th>Ficha Técnica</th>
-                        <th></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr v-for="(prod, index) in productos">
-                        <td>@{{prod.nombre}}</td>
-                        <td>@{{prod.proveedor.empresa}}</td>
-                        <td>@{{prod.categoria.nombre}}</td>
-                        <td>
-                            <a v-if="prod.ficha_tecnica" :href="prod.ficha_tecnica" target="_blank"
-                               class="btn btn-success" style="cursor:pointer;">
-                                <i class="far fa-file-pdf"></i>
-                            </a>
-                        </td>
-                        <td class="text-right">
-                            <button class="btn btn-primary" title="Seleccionar"
-                                    @click="seleccionarProduco(prod, index)">
-                                <i class="fas fa-check"></i>
-                            </button>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
+                                    <label class="control-label">Colonia</label>
+                                    <!--
+                                    <select class="form-control" name="colonia" v-model="cotizacion.colonia" text-uppercase required>
+                                        <option v-for="(colonia,index) in colonias" v-bind:value="colonia">@{{colonia}}</option>
+                                    </select>
+                                    -->
+                                    
+                                    <input type="text" name="colonia" class="form-control text-uppercase"
+                                           v-model="cotizacion.colonia"/>
+                                    
+                                </div>
+                                
+                            </div>
+                            <div class="row form-group" v-if="cotizacion.facturar!='0'">
+                                <div class="col-sm-4">
+                                    <label class="control-label">CP</label>
+                                    <input type="text" name="cp" class="form-control cp text-uppercase"
+                                           @keyup="cp()" v-model="cotizacion.cp"/>
+                                    
+                                </div>
+                                <div class="col-sm-4">
+                                    <label class="control-label">Ciudad</label>
+                                    <input type="text" name="ciudad" class="form-control ciudad text-uppercase"
+                                           v-model="cotizacion.ciudad"/>
+                                </div>
+                                <div class="col-sm-4">
+                                    <label class="control-label">Estado</label>
+                                    <input type="text" name="estado" class="form-control estado text-uppercase"
+                                           v-model="cotizacion.estado"/>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label class="control-label">Dirección de Entrega</label>
+                                        <select class="form-control text-uppercase" name="direccion"
+                                                v-model="cotizacion.direccion"
+                                                @change="seleccionarDireccion()">
+                                            <option value="0">No</option>
+                                            <option value="1">Si</option>
+                                            <option v-for="(direccion, index) in direcciones" :value="index">
+                                                @{{index}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6" v-if="cotizacion.direccion!='0'">
+                                    <label class="control-label">Enviar a:</label>
+                                    <input type="text" name="enviar_a" class="form-control text-uppercase"
+                                           v-model="cotizacion.enviar_a"/>
+                                </div>
+                            </div>
+                            <div class="row form-group" v-if="cotizacion.direccion!='0'">
+                                <div class="col-sm-4">
+                                    <label class="control-label">Calle</label>
+                                    <input type="text" name="calle" class="form-control text-uppercase"
+                                           v-model="cotizacion.dircalle"/>
+                                </div>
+                                <div class="col-sm-2">
+                                    <label class="control-label">No. Ext.</label>
+                                    <input type="text" name="nexterior" class="form-control text-uppercase"
+                                           v-model="cotizacion.dirnexterior"/>
+                                </div>
+                                <div class="col-sm-2">
+                                    <label class="control-label">No. Int.</label>
+                                    <input type="text" name="ninterior" class="form-control text-uppercase"
+                                           v-model="cotizacion.dirninterior"/>
+                                </div>
+                                <div class="col-sm-4">
+
+                                    <label class="control-label">Colonia</label>
+                                    <!--
+                                    <select class="form-control" name="colonia" v-model="cotizacion.dircolonia" text-uppercase required>
+                                        <option v-for="(colonia,index) in colonias2" v-bind:value="colonia">@{{colonia}}</option>
+                                    </select>
+                                    -->
+                                    <input type="text" name="colonia" class="form-control text-uppercase"
+                                           v-model="cotizacion.dircolonia"/>
+
+                                </div>
+                                
+                            </div>
+                            <div class="row form-group" v-if="cotizacion.direccion!='0'">
+                                
+                                <div class="col-sm-4">
+
+                                    <label class="control-label">CP</label>
+                                    <input type="text" name="cp" class="form-control cp1 text-uppercase"
+                                           @keyup="cp1()" v-model="cotizacion.dircp"/>
+                                    
+                                    
+                                </div>
+                                <div class="col-sm-4">
+                                    <label class="control-label">Ciudad</label>
+                                    <input type="text" name="ciudad" class="form-control ciudad1 text-uppercase"
+                                           v-model="cotizacion.dirciudad"/>
+                                </div>
+                                <div class="col-sm-4">
+                                    <label class="control-label">Estado</label>
+                                    <input type="text" name="estado" class="form-control estado1 text-uppercase"
+                                           v-model="cotizacion.direstado"/>
+                                </div>
+                            </div>
+                            <div class="row form-group" v-if="cotizacion.direccion!='0'">
+                                <div class="col-sm-12">
+                                    <label class="control-label">Instrucciones Especiales:</label>
+                                    <input type="text" name="instrucciones" class="form-control text-uppercase"
+                                           v-model="cotizacion.instrucciones"/>
+                                </div>
+                            </div>
+                            <div class="row form-group" v-if="cotizacion.direccion!='0'">
+                                <div class="col-sm-4">
+                                    <label class="control-label">Nombre de Contacto</label>
+                                    <input type="text" name="cp" class="form-control "
+                                           v-model="cotizacion.contacto_nombre"/>
+                                </div>
+                                <div class="col-sm-4">
+                                    <label class="control-label">Teléfono de Contacto</label>
+                                    <input type="text" class="form-control" name="telefono"
+                                           v-model="cotizacion.contacto_telefono"
+                                           v-mask="['(##) ####-####','+#(##)####-####','+##(##)####-####']"
+                                    />
+                                </div>
+                                <div class="col-sm-4">
+                                    <label class="control-label">Correo de Contacto</label>
+                                    <input type="email" name="estado" class="form-control "
+                                           v-model="cotizacion.contacto_email"/>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label">Condiciones De Pago</label>
+                                        <select class="form-control" name="condiciones"
+                                                v-model='cotizacion.condicion.id'
+                                                @change="condicionCambiada()" required>
+                                            <option v-for="condicion in condiciones" :value="condicion.id">
+                                                @{{condicion.nombre}}
+                                            </option>
+                                            <option value="0">Otra</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div v-if="cotizacion.condicion.id==0" class="form-group">
+                                        <label class="control-label">Especifique Otra</label>
+                                        <input class="form-control" type="text" name="condiciones"
+                                               v-model="cotizacion.condicion.nombre" required
+                                        />
+                                    </div>
+                                    <div v-else class="form-group">
+                                        <label class="control-label">Actualizar Condicion</label>
+                                        <div class="input-group">
+                                            <input class="form-control" type="text" name="condiciones"
+                                                   v-model="cotizacion.condicion.nombre" required
+                                            />
+                                            <span class="input-group-btn">
+                        <button class="btn btn-success" type="button" title="Actualizar"
+                                @click="actualizarCondicion()">
+                          <i class="far fa-edit"></i>
+                        </button>
+                        <button class="btn btn-danger" type="button" title="Borrar"
+                                @click="borrarCondicion()">
+                          <i class="fas fa-times"></i>
+                        </button>
+                      </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label">Tiempo de Entrega</label>
+                                        <input type="text" name="entrega" class="form-control"
+                                               v-model="cotizacion.entrega" required/>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="control-label">Fletes</label>
+                                    <input class="form-control" type="text" name="fletes" v-model="cotizacion.fletes"/>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="control-label">Moneda</label>
+                                        <select class="form-control" name="moneda" v-model="cotizacion.moneda" required>
+                                            <option value="Dolares">Dolares USD</option>
+                                            <option value="Pesos">Pesos MXN</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="control-label">IVA</label>
+                                        <select class="form-control" name="iva" v-model="cotizacion.iva" required>
+                                            <option value="0">No</option>
+                                            <option value="1">Si</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="control-label">Idioma</label>
+                                        <select class="form-control" name="idioma" v-model="cotizacion.idioma" required>
+                                            <option value="español">Español</option>
+                                            <option value="ingles">Ingles</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr/>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="table-responsive">
+                                        <table id="tablaEntradas" class="table table-bordred" style="width:100%;">
+                                            <thead>
+                                            <tr>
+                                                <th>Orden</th>
+                                                <th>Area</th>
+                                                <th>Producto</th>
+                                                <th>Cantidad</th>
+                                                <th>Precio</th>
+                                                <th>Importe</th>
+                                                <th></th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                            <tfoot>
+                                            <tr>
+                                                <td colspan="3"></td>
+                                                <td class="text-right"><strong>Subtotal</strong></td>
+                                                <td>@{{cotizacion.subtotal | formatoMoneda}}</td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="3"></td>
+                                                <td class="text-right"><strong>IVA</strong></td>
+                                                <td v-if="cotizacion.iva=='0'">$0.00</td>
+                                                <td v-else>@{{cotizacion.subtotal * 0.16 | formatoMoneda}}</td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="3"></td>
+                                                <td class="text-right">
+                                                    <strong>Total
+                                                        <span v-if="cotizacion.moneda=='Dolares'"> Dolares</span>
+                                                        <span v-else> Pesos</span>
+                                                    </strong>
+                                                </td>
+                                                <td v-if="cotizacion.iva=='0'">@{{cotizacion.subtotal |
+                                                    formatoMoneda}}
+                                                </td>
+                                                <td v-else>@{{cotizacion.subtotal * 1.16 | formatoMoneda}}</td>
+                                                <td></td>
+                                            </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="control-label">Producto</label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" placeholder="Producto"
+                                                   v-model="entrada.producto.nombre" @click="openCatalogo=true"
+                                                   readonly required
+                                            />
+                                            <span class="input-group-btn">
+                        <button class="btn btn-default" type="button" @click="openCatalogo=true">
+                          <i class="far fa-edit"></i>
+                        </button>
+                      </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label class="control-label">Cantidad</label>
+                                        <input type="number" step="0.01" min="0.01" name="cantidad" class="form-control"
+                                               v-model="entrada.cantidad" required/>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label class="control-label">Unidad Medida</label>
+                                        <select class="form-control" name="medida" v-model="entrada.medida" required>
+                                            @foreach($unidades_medida as $unidad)
+                                                <option value="{{ $unidad->simbolo }}">{{ $unidad->simbolo }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="control-label">Precio</label>
+                                        <input type="number" step="0.01" min="0.01" name="precio" class="form-control"
+                                               v-model="entrada.precio" required/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <button type="button" class="btn btn-primary" @click="modalProducto=true">
+                                        Registrar producto
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="row" style="padding-top: 10px;">
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label class="control-label">Precio de Compra</label>
+                                        <input type="number" step="0.01" min="0.01" name="precio_compra"
+                                               class="form-control"
+                                               v-model="entrada.precio_compra"/>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label class="control-label">Unidad Medida Compra</label>
+                                        <select class="form-control" name="medida" v-model="entrada.medida_compra">
+                                            @foreach($unidades_medida as $unidad)
+                                                <option value="{{ $unidad->simbolo }}">{{ $unidad->simbolo }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label class="control-label">Fecha Precio</label>
+                                        <br/>
+                                        <dropdown>
+                                            <div class="input-group">
+                                                <div class="input-group-btn">
+                                                    <btn class="dropdown-toggle" style="background-color:#fff;">
+                                                        <i class="fas fa-calendar"></i>
+                                                    </btn>
+                                                </div>
+                                                <input class="form-control" type="text" name="fecha"
+                                                       v-model="entrada.fecha_precio_compra" placeholder="DD/MM/YYYY"
+                                                       readonly
+                                                />
+                                            </div>
+                                            <template slot="dropdown">
+                                                <li>
+                                                    <date-picker :locale="locale" :today-btn="false" :clear-btn="false"
+                                                                 format="dd/MM/yyyy" :date-parser="dateParser"
+                                                                 v-model="entrada.fecha_precio_compra"/>
+                                                </li>
+                                            </template>
+                                        </dropdown>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label class="control-label">Moneda Referencia</label>
+                                        <select class="form-control" name="moneda" v-model="entrada.moneda_referencia">
+                                            <option value=""></option>
+                                            <option value="Dolares">Dolares USD</option>
+                                            <option value="Pesos">Pesos MXN</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="control-label">Contacto Proveedor</label>
+                                        <select class="form-control" name="medida"
+                                                v-model="entrada.proveedor_contacto_id">
+                                            <option v-for="contacto in entrada.producto.proveedor.contactos"
+                                                    :value="contacto.id">@{{contacto.nombre}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordred">
+                                            <thead>
+                                            <tr>
+                                                <th colspan="3">Descripciones</th>
+                                            </tr>
+                                            <tr>
+                                                <th>Nombre</th>
+                                                <th>Name</th>
+                                                <th>Valor</th>
+                                                <th>Valor Inglés</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr v-for="(descripcion, index) in entrada.descripciones">
+                                                <td>@{{descripcion.nombre}}</td>
+                                                <td>@{{descripcion.name}}</td>
+                                                <td>
+                                                    <input type="text" class="form-control"
+                                                           v-model="descripcion.valor"/>
+                                                </td>
+                                                <td>
+                                                    <input v-if="entrada.producto.descripciones[index].descripcion_nombre.valor_ingles"
+                                                           type="text" class="form-control"
+                                                           v-model="descripcion.valor_ingles"/>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label class="control-label">Observaciónes Producto</label>
+                                        <p v-for="(observacion, index) in observaciones_productos">
+                                            <button class="btn btn-xxs btn-danger" type="button" title="eliminar"
+                                                    @click="eliminarObservacionProducto(observacion, index)">
+                                                <i class="fas fa-times"></i>
+                                            </button>
+                                            <i v-if="observacion.activa" class="glyphicon glyphicon-check"
+                                               @click="quitarObservacionProducto(observacion)"></i>
+                                            <i v-else class="glyphicon glyphicon-unchecked"
+                                               @click="agregarObservacionProducto(observacion)"></i>
+                                            @{{observacion.texto}}
+                                        </p>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" placeholder="Nueva Observación"
+                                                   v-model="nuevaObservacionProducto"/>
+                                            <span class="input-group-btn">
+                        <button class="btn btn-default" type="button" @click="crearObservacionProducto()">
+                          <i class="fas fa-plus"></i>
+                        </button>
+                      </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label class="control-label" style="display:block;">Foto</label>
+                                        <div class="btn btn-sm btn-danger" v-if="entrada.fotos.length" v-on:click="borrarfotos" title="BORRAR FOTOS">
+                                            <i class="fas fa-trash"></i>
+                                        </div>
+                                        <div class="file-loading">
+                                            <input id="fotos" name="fotos[]" type="file" ref="fotos" multiple/>
+                                        </div>
+                                        <div id="fotos-file-errors"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 text-right">
+                                    <div class="form-group" style="margin-top:25px;">
+                                        <button type="submit" class="btn btn-info">
+                                            <i class="fas fa-plus"></i>
+                                            Agregar Producto
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        {{-- <div class="row">
+                          <div class="col-md-12">
+                            <div class="table-responsive">
+                              <table id="tablaEntradas" class="table table-bordred" style="width:100%;">
+                                <thead>
+                                  <tr>
+                                    <th>Orden</th>
+                                    <th>Producto</th>
+                                    <th>Cantidad</th>
+                                    <th>Precio</th>
+                                    <th>Importe</th>
+                                    <th></th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                                <tfoot>
+                                  <tr>
+                                    <td colspan="3"></td>
+                                    <td class="text-right"><strong>Subtotal</strong></td>
+                                    <td>@{{cotizacion.subtotal | formatoMoneda}}</td>
+                                    <td></td>
+                                  </tr>
+                                  <tr>
+                                    <td colspan="3"></td>
+                                    <td class="text-right"><strong>IVA</strong></td>
+                                    <td v-if="cotizacion.iva=='0'">$0.00</td>
+                                    <td v-else>@{{cotizacion.subtotal * 0.16 | formatoMoneda}}</td>
+                                    <td></td>
+                                  </tr>
+                                  <tr>
+                                    <td colspan="3"></td>
+                                    <td class="text-right">
+                                      <strong>Total
+                                        <span v-if="cotizacion.moneda=='Dolares'"> Dolares</span>
+                                        <span v-else> Pesos</span>
+                                      </strong>
+                                    </td>
+                                    <td v-if="cotizacion.iva=='0'">@{{cotizacion.subtotal | formatoMoneda}}</td>
+                                    <td v-else>@{{cotizacion.subtotal * 1.16 | formatoMoneda}}</td>
+                                    <td></td>
+                                  </tr>
+                                </tfoot>
+                              </table>
+                            </div>
+                          </div>
+                        </div> --}}
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="control-label text-danger">Notas</label>
+                                    <textarea class="form-control" name="notas" rows="3" cols="80"
+                                              v-model="cotizacion.notas"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="control-label">Observaciónes Cotización</label>
+                                    <p v-for="(observacion, index) in observaciones">
+                                        @role('Administrador')
+                                        <button class="btn btn-xxs btn-danger" type="button" title="eliminar"
+                                                @click="eliminarObservacion(observacion, index)">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                        @endrole
+                                        <i class="glyphicon glyphicon-check" v-if="observacion.activa"
+                                           @click="quitarObservacion(observacion, index)"></i>
+                                        <i class="glyphicon glyphicon-unchecked" v-else
+                                           @click="agregarObservacion(observacion)"></i>
+                                        @{{observacion.texto}}
+                                    </p>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" placeholder="Nueva Observación"
+                                               v-model="nuevaObservacion"/>
+                                        <span class="input-group-btn">
+                      <button class="btn btn-default" type="button" @click="crearObservacion()">
+                        <i class="fas fa-plus"></i>
+                      </button>
+                    </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 text-right">
+                                <div class="form-group">
+                                    <a href="{{route('prospectos.index')}}" class="btn btn-default">
+                                        Regresar
+                                    </a>
+                                    <button type="button" class="btn btn-primary"
+                                            @click="guardar()" :disabled="cargando || edicionEntradaActiva">
+                                        <i v-if="!cargando" class="fas fa-save"></i>
+                                        <i v-else class="fas fa-refresh animation-rotate"></i>
+                                        Guardar Cotización
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </modal>
+        </div>
+
+        
         <!-- /.Catalogo Productos Modal -->
 
         <!-- Enviar Modal -->
