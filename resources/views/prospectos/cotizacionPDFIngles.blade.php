@@ -643,7 +643,7 @@
             <tr>
             @endif
               <td class="text-center" style="border-bottom: none; border-top: none">@format_number($entrada->cantidad) <br /> {{$entrada->medida}}</td>
-              <td>
+              <td style="border-bottom: none; border-top: none">
                 <table style="width:100%; margin:0;">
                   <tr style="height: 120px;">
                     <td style="vertical-align: top;" style="border-bottom: none; border-top: none">
@@ -676,16 +676,16 @@
             </tr>
             @endforeach
             <tr>
-              <td></td>
-              <td>
+              <td style="border-bottom: none; border-top: none"></td>
+              <td style="border-bottom: none; border-top: none">
                 @if($cotizacion->entradas->count()==1)
                 <div style="height: 200px; background-color:white;"></div>
                 @elseif($cotizacion->entradas->count()==2)
                 <div style="height: 0px; background-color:white;"></div>
                 @endif
               </td>
-              <td></td>
-              <td></td>
+              <td style="border-bottom: none; border-top: none"></td>
+              <td style="border-bottom: none; border-top: none"></td>
             </tr>
           </tbody>
         </table>
