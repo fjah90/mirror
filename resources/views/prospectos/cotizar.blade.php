@@ -884,7 +884,7 @@
                     <select name="proyecto_id" v-model="copiar_cotizacion.proyecto_id"
                             class="form-control" required id="proyecto-select" style="width: 300px;">
                         @foreach($proyectos as $proyecto)
-                            <option value="{{$proyecto->id}}" @click="copiar3(index,{{$proyecto->id}});">{{$proyecto->nombre}}</option>
+                            <option value="{{$proyecto->id}}" @click="copiar3(index,{{$proyecto->id}});">{{$proyecto->nombre}}--{{$proyecto->cliente}}</option>
                         @endforeach
                     </select>
                 </div>
