@@ -114,121 +114,10 @@
           <!-- Dashboard -->
           <li {!! (Request::is('dashboard') ? 'class="active"' : '') !!}>
             <a href="{{ URL::to('dashboard') }}">
-              <i class="menu-icon fas fa-home" style="color:#027a3a ; font-size: 20px;" ></i>
+              <i class="menu-icon fas fa-home"></i>
               <span class="mm-text ">INICIO</span>
             </a>
           </li>
-
-          <hr class="divider-menu">
-
-          <!-- Proyectos -->
-          <li {!! (Request::is('prospectos/cotizaciones*') ? 'class="active"' : '') !!}><a class="title"><i class="fas fa-calendar-check" style="color:#06a1ce; font-size: 20px;" ></i>  Proyectos <span class="fa fa-chevron-down"></span></a>
-            <ul class="nav child_menu">
-              <li {!! (Request::is('prospectos/cotizaciones*') ? 'class="active"' : '') !!}>
-                <a href="{{ URL::to('prospectos/cotizaciones') }}" >
-                <i class="fas fa-address-book"></i>Lista de Proyectos
-                </a>
-              </li>
-            </ul>
-
-          </li>
-
-          <hr class="divider-menu">
-
-          <!-- Cotizaciones -->
-
-          <li {!! (Request::is('prospectos*') ? 'class="active"' : '') !!}>
-            <a href="{{ URL::to('prospectos') }}">
-              <i class="menu-icon fas fa-shopping-bag" style="color:#e933ff; font-size: 20px;"></i>
-              <span class="mm-text ">Cotizaciones</span>
-            </a>
-          </li>
-
-
-            <hr class="divider-menu">
-
-          <!-- ordenes compra-->
-          <li {!! (Request::is('ordenes-proceso*') ? 'class="active"' : '') !!}  {!! (Request::is('proyectos-aprobados*') ? 'class="active"' : '') !!}><a class="title"><i class="fa fa-cart-arrow-down" style="color:#7702fa; font-size: 20px;"></i>  Ordenes Compra <span class="fa fa-chevron-down"></span></a>
-           <ul class="nav child_menu">  
-              <li  {!! (Request::is('proyectos-aprobados*') ? 'class="active"' : '') !!} >
-                <a href="{{ URL::to('proyectos-aprobados') }}">
-                  <i class="menu-icon fas fa-file-signature"></i>
-                  <span>Lista de Ordenes</span>
-                </a>
-              </li>
-              <li {!! (Request::is('ordenes-proceso*') ? 'class="active"' : '') !!} >
-                <a href="{{ URL::to('ordenes-proceso') }}">
-                  <i class="menu-icon fas fa-clipboard-list" ></i>
-                  <span >Ordenes Proceso</span>
-                </a>
-              </li>
-            </ul>
-          </li>
-
-          <hr class="divider-menu">
-
-          <!--Reportes-->
-
-          <li {!! (Request::is('reportes*') ? 'class="active"' : '') !!}><a class="title"><i class="fas fa-file" style="color:#fa7702; font-size: 20px;"></i>  Reportes <span class="fa fa-chevron-down"></span></a>
-           <ul class="nav child_menu">
-              <li  {!! (Request::is('reportes/cotizaciones') ? 'active' : '') !!}">
-            <a href="{{ URL::to('reportes/cotizaciones') }}">
-              <i class="fas fa-file-invoice-dollar" ></i> Cotizaciones
-            </a>
-          </li>
-          <li {!! (Request::is('reportes/cobros') ? 'class="active"' : '') !!}>
-            <a href="{{ URL::to('reportes/cobros') }}">
-              <i class="fas fa-file-invoice-dollar" ></i> Cobros
-            </a>
-          </li>
-          <li >
-            <a href="{{ URL::to('reportes/compras') }}">
-              <i class="fas fa-file-invoice-dollar" ></i> Compras
-            </a>
-          </li>
-          <li >
-            <a href="{{ URL::to('reportes/pagos') }}">
-              <i class="fas fa-file-invoice-dollar" ></i> Pagos
-            </a>
-          </li>
-          <li >
-            <a href="{{ URL::to('reportes/saldoProveedores') }}">
-              <i class="fas fa-file-invoice-dollar"></i> Saldo Proveedores
-            </a>
-          </li>
-          <li >
-            <a href="{{ URL::to('reportes/cuentaCliente') }}">
-              <i class="fas fa-file-invoice-dollar" ></i> Cuenta Cliente
-            </a>
-          </li>
-          <li >
-            <a href="{{ URL::to('reportes/utilidades') }}">
-              <i class="fas fa-file-invoice-dollar" ></i> Utilidades
-            </a>
-          </li>
-            </ul>
-          </li>
-
-          <hr class="divider-menu">
-
-          <!-- Administracion -->
-          <li {!! (Request::is('cuentas-cobrar*') ? 'class="active"' : '') !!} {!! (Request::is('cuentas-pagar*') ? 'class="active"' : '') !!}><a class="title"><i class="fa fa-calculator" style="color:#fa2002; font-size:20px;"></i>  Contabilidad <span class="fa fa-chevron-down" ></span></a>
-           <ul class="nav child_menu">  
-              <li {!! (Request::is('cuentas-cobrar*') ? 'class="active"' : '') !!}>
-                <a href="{{ URL::to('cuentas-cobrar') }}">
-                  <i class="menu-icon fas fa-hand-holding-usd" ></i>
-                  <span >Cuentas por Cobrar</span>
-                </a>
-              </li>
-              <li {!! (Request::is('cuentas-pagar*') ? 'class="active"' : '') !!}>
-                <a href="{{ URL::to('cuentas-pagar') }}">
-                  <i class="menu-icon fas fa-receipt" ></i>
-                  <span >Cuentas por Pagar</span>
-                </a>
-              </li>  
-            </ul> 
-          </li>
-
 
           <!-- Administracion 
           @hasanyrole('Administrador')
@@ -251,31 +140,51 @@
           -->
 
           <!-- Catalogos -->
-          <li {!! (Request::is('clientes*' ) ? 'class="active"' : '') !!} {!! (Request::is('proveedores*' ) ? 'class="active"' : '') !!} {!! (Request::is('agentesAduanales*' ) ? 'class="active"' : '') !!} {!! (Request::is('productos*' ) ? 'class="active"' : '') !!}><a class="title"><i class="fa fa-signal" style="color:#fa02a4; font-size: 20px;"></i>  Administración <span class="fa fa-chevron-down"></span></a>
+          <li {!! (Request::is('clientes*' ) ? 'class="active"' : '') !!} {!! (Request::is('proveedores*' ) ? 'class="active"' : '') !!} {!! (Request::is('agentesAduanales*' ) ? 'class="active"' : '') !!} {!! (Request::is('productos*' ) ? 'class="active"' : '') !!}><a class="title"><i class="fa fa-book"></i>  Catálogos <span class="fa fa-chevron-down"></span></a>
             <ul class="nav child_menu">  
               <li  {!! (Request::is('clientes*') ? 'class="active"' : '') !!}>
                 <a href="{{ URL::to('clientes') }}">
-                  <i class="fas fa-user-tie"></i> Clientes
+                  <i class="fas fa-user-tie"style="color:#2283bf;"></i> Clientes
                 </a>
               </li>
               <li {!! (Request::is('proveedores*') ? 'class="active"' : '') !!}>
               <a href="{{ URL::to('proveedores') }}">
-                <i class="fas fa-truck-loading " ></i> Proveedores
+                <i class="fas fa-truck-loading " style="color:#2283bf;"></i> Proveedores
               </a>
             </li>
             <li  {!! (Request::is('agentesAduanales*') ? 'class="active"' : '') !!}>
               <a href="{{ URL::to('agentesAduanales') }}">
-                <i class="fas fa-warehouse" ></i> Agentes Aduanales
+                <i class="fas fa-warehouse" style="color:#2283bf;"></i> Agentes Aduanales
               </a>
             </li>
             <li {!! (Request::is('productos*') ? 'class="active"' : '') !!}>
               <a href="{{ URL::to('productos') }}">
-                <i class="fas fa-parking " ></i> Producto
+                <i class="fas fa-parking " style="color:#2283bf;"></i> Producto
               </a>
             </li>
             </ul>
           </li>
                   
+
+          <hr class="divider-menu">
+
+          <!-- Cotizaciones -->
+           <li {!! (Request::is('prospectos.create*') ? 'class="active"' : '') !!} {!! (Request::is('prospectos*') ? 'class="active"' : '') !!}><a class="title"><i class="fa fa-list-alt"></i>  Cotizaciones <span class="fa fa-chevron-down"></span></a>
+
+              <ul class="nav child_menu">
+              <li {!! (Request::is('prospectos.create*') ? 'class="active"' : '') !!}>
+              <a href="{{route('prospectos.create')}}">
+                <i class="fas fa-address-book" style="color:#186e86"></i> Nueva Cotización
+              </a>
+              </li>
+                <li {!! (Request::is('prospectos*') ? 'class="active"' : '') !!}>
+                  <a href="{{ URL::to('prospectos') }}" >
+                  <i class="fas fa-address-book" style="color:#186e86"></i>Lista de Cotizaciones
+                  </a>
+                </li>
+              </ul>
+
+            </li>
 
       
           <!--
@@ -291,6 +200,109 @@
             </a>
           </li>
           -->
+          <hr class="divider-menu">
+
+          <!-- Proyectos -->
+          <li {!! (Request::is('prospectos/cotizaciones*') ? 'class="active"' : '') !!}><a class="title"><i class="fas fa-building"></i>  Proyectos <span class="fa fa-chevron-down"></span></a>
+            <ul class="nav child_menu">
+              <li {!! (Request::is('prospectos/cotizaciones*') ? 'class="active"' : '') !!}>
+                <a href="{{ URL::to('prospectos/cotizaciones') }}" >
+                <i class="fas fa-address-book" style="color:#2c42bf"></i>Lista de Proyectos
+                </a>
+              </li>
+            </ul>
+
+          </li>
+
+          
+          
+          <hr class="divider-menu">
+
+          <!-- Administracion -->
+          <li {!! (Request::is('cuentas-cobrar*') ? 'class="active"' : '') !!} {!! (Request::is('cuentas-pagar*') ? 'class="active"' : '') !!}><a class="title"><i class="fa fa-university"></i>  Administración <span class="fa fa-chevron-down" ></span></a>
+           <ul class="nav child_menu">  
+              <li {!! (Request::is('cuentas-cobrar*') ? 'class="active"' : '') !!}>
+                <a href="{{ URL::to('cuentas-cobrar') }}">
+                  <i class="menu-icon fas fa-hand-holding-usd" style="color:#22007C;"></i>
+                  <span >Cuentas por Cobrar</span>
+                </a>
+              </li>
+              <li {!! (Request::is('cuentas-pagar*') ? 'class="active"' : '') !!}>
+                <a href="{{ URL::to('cuentas-pagar') }}">
+                  <i class="menu-icon fas fa-receipt" style="color:#22007C;"></i>
+                  <span >Cuentas por Pagar</span>
+                </a>
+              </li>  
+            </ul> 
+          </li>
+          
+
+          <hr class="divider-menu">
+
+          <!-- ordenes compra-->
+          <li {!! (Request::is('ordenes-proceso*') ? 'class="active"' : '') !!}  {!! (Request::is('proyectos-aprobados*') ? 'class="active"' : '') !!}><a class="title"><i class="fa fa-cart-arrow-down"></i>  Ordenes Compra <span class="fa fa-chevron-down"></span></a>
+           <ul class="nav child_menu">  
+              <li  {!! (Request::is('proyectos-aprobados*') ? 'class="active"' : '') !!} >
+                <a href="{{ URL::to('proyectos-aprobados') }}">
+                  <i class="menu-icon fas fa-file-signature"></i>
+                  <span>Lista de Ordenes</span>
+                </a>
+              </li>
+              <li {!! (Request::is('ordenes-proceso*') ? 'class="active"' : '') !!} >
+                <a href="{{ URL::to('ordenes-proceso') }}">
+                  <i class="menu-icon fas fa-clipboard-list" style="color:#04052E"></i>
+                  <span >Ordenes Proceso</span>
+                </a>
+              </li>
+            </ul>
+          </li>
+
+          
+
+          <hr class="divider-menu">
+
+          <!--Reportes-->
+
+          <li {!! (Request::is('reportes*') ? 'class="active"' : '') !!}><a class="title"><i class="fas fa-file"></i>  Reportes <span class="fa fa-chevron-down"></span></a>
+           <ul class="nav child_menu">
+              <li  {!! (Request::is('reportes/cotizaciones') ? 'active' : '') !!}">
+            <a href="{{ URL::to('reportes/cotizaciones') }}">
+              <i class="fas fa-file-invoice-dollar" style="color:#04052E;"></i> Cotizaciones
+            </a>
+          </li>
+          <li {!! (Request::is('reportes/cobros') ? 'class="active"' : '') !!}>
+            <a href="{{ URL::to('reportes/cobros') }}">
+              <i class="fas fa-file-invoice-dollar" style="color:#04052E;"></i> Cobros
+            </a>
+          </li>
+          <li >
+            <a href="{{ URL::to('reportes/compras') }}">
+              <i class="fas fa-file-invoice-dollar" style="color:#04052E;"></i> Compras
+            </a>
+          </li>
+          <li >
+            <a href="{{ URL::to('reportes/pagos') }}">
+              <i class="fas fa-file-invoice-dollar" style="color:#04052E;"></i> Pagos
+            </a>
+          </li>
+          <li >
+            <a href="{{ URL::to('reportes/saldoProveedores') }}">
+              <i class="fas fa-file-invoice-dollar"style="color:#04052E;"></i> Saldo Proveedores
+            </a>
+          </li>
+          <li >
+            <a href="{{ URL::to('reportes/cuentaCliente') }}">
+              <i class="fas fa-file-invoice-dollar" style="color:#04052E;"></i> Cuenta Cliente
+            </a>
+          </li>
+          <li >
+            <a href="{{ URL::to('reportes/utilidades') }}">
+              <i class="fas fa-file-invoice-dollar" style="color:#04052E;"></i> Utilidades
+            </a>
+          </li>
+            </ul>
+          </li>
+
           
           
           <hr class="divider-menu">
@@ -299,7 +311,7 @@
 
           <!--Catalogos de Apoyo-->
 
-          <li {!! (Request::is('Usuarios*') ? 'class="active"' : '') !!} {!! (Request::is('tiposClientes*') ? 'class="active"' : '') !!} {!! (Request::is('proyectos*') ? 'class="active"' : '') !!} {!! (Request::is('subproyectos*') ? 'class="active"' : '') !!} {!! (Request::is('tiposProveedores*') ? 'class="active"' : '') !!} {!! (Request::is('unidadesMedida*') ? 'class="active"' : '') !!} {!! (Request::is('subcategorias*') ? 'class="active"' : '') !!} {!! (Request::is('categorias*') ? 'class="active"' : '') !!}><a class="title"><i class="fa fa-book" style="color:#e5e504; font-size: 20px;"></i>  Catálogos<span class="fa fa-chevron-down"></span></a>
+          <li {!! (Request::is('Usuarios*') ? 'class="active"' : '') !!} {!! (Request::is('tiposClientes*') ? 'class="active"' : '') !!} {!! (Request::is('proyectos*') ? 'class="active"' : '') !!} {!! (Request::is('subproyectos*') ? 'class="active"' : '') !!} {!! (Request::is('tiposProveedores*') ? 'class="active"' : '') !!} {!! (Request::is('unidadesMedida*') ? 'class="active"' : '') !!} {!! (Request::is('subcategorias*') ? 'class="active"' : '') !!} {!! (Request::is('categorias*') ? 'class="active"' : '') !!}><a class="title"><i class="fa fa-book"></i>  Catálogos de Apoyo <span class="fa fa-chevron-down"></span></a>
            <ul class="nav child_menu">
           @hasanyrole('Administrador')
           <li {!! (Request::is('Usuarios*') ? 'class="active"' : '') !!} class="sub {!! (Request::is('usuarios*') ? 'active' : '') !!}">
