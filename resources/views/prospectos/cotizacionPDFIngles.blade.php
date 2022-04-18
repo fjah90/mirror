@@ -662,7 +662,7 @@
                       </p>
                       @endif
                     </td>
-                    <td style="width:100px;">
+                    <td style="width:100px;border-bottom: none; border-top: none">
                       @foreach($entrada->fotos as $foto)
                       <img src="{{$foto}}" alt="foto" style="width:100px; height:100px;" />
                       <br />
