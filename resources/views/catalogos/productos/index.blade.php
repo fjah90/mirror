@@ -34,7 +34,7 @@
             <table id="tabla" class="table table-bordred"  style="width:100%;"
             data-page-length="-1">
               <thead>
-                <tr>
+                <tr style="background-color:#fa02a4">
                   <th>#</th>
                   <th>Código de Producto o Servicio</th>
                   <th>Proveedor</th>

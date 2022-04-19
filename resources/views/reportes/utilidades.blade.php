@@ -8,6 +8,12 @@ Reportes | @parent
 @section('header_styles')
 <style>
   .marg025 {margin: 0 25px;}
+  #tabla_length{
+    float: left !important;
+  }#tabla_filter{
+    display: inline-block !important;
+    float: none;
+  }
 </style>
 @stop
 
@@ -22,17 +28,15 @@ Reportes | @parent
         <div class="col-sm-12">
           <div class="panel product-details">
             <div class="panel-heading">
-              <h3 class="panel-title">Reporte de Utilidades</h3>
-              <div class="marg025 btn-group">
-                <button style="background-color:transparent; border:none">
-                  <i class=" pdf fa fa-file-pdf" v-on:click="pdf" style="color:red;font-size: 20px;"></i>
+              <h3 class="panel-title">Reporte de Utilidades
+                <button style="background-color:transparent; border:none;float: right;">
+                  <i class=" fa fa-file-pdf" v-on:click="pdf" style="color:#eb1b3d;font-size: 20px;"></i>
                 </button>
-              </div>
-              <div class="marg025 btn-group">
-                <button style="background-color:transparent; border:none">
-                  <i class="excel fa fa-file-excel" v-on:click="excel" style="color: green; font-size:20px; hover"></i>
+                <button style="background-color:transparent; border:none;float: right;">
+                  <i class="excel fa fa-file-excel" v-on:click="excel" style="color: #3ca906; font-size:20px;"></i>
                 </button>
-              </div>
+
+              </h3>
             </div>
             <div class="panel-body">
                 <div id="oculto_filtros" class="hide">
@@ -107,7 +111,7 @@ Reportes | @parent
                     
                     <table class="table table-striped text-center" id="tabla">
                       <thead>
-                        <tr>
+                        <tr style="background-color:#fa7702">
                           <th class="text-center">Número de Cotización</th>
                           <th class="text-center"><strong>Cliente</strong></th>
                           <th class="text-center"><strong>Proyecto</strong></th>
@@ -210,7 +214,7 @@ const app = new Vue({
           //this.tabla.columns(4).search(this.valor_proyectos).draw();
         });
       this.tabla = $("#tabla").DataTable({
-          "dom": 'f<"#fechas_container.pull-left">ltip',
+          "dom": '<"#fechas_container.pull-left"f>tlp',
           "order":[],
           initComplete: function () {
             

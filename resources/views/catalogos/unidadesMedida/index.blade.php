@@ -37,7 +37,7 @@
             <table id="tabla" class="table table-bordred" style="width:100%;"
               data-page-length="100">
               <thead>
-                <tr>
+                <tr style="background-color:#e5e504">
                   <th>#</th>
                   <th>Unidad</th>
                   <th>Unidad Ingles</th>

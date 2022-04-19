@@ -52,7 +52,7 @@
           <div class="table-responsive">
             <table id="tabla" class="table table-bordred">
               <thead>
-                <tr>
+                <tr style="background-color:#fa2002">
                   <th>#</th>
                   <th>Proveedor</th>
                   <th>Proyecto</th>

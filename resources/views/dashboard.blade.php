@@ -168,8 +168,9 @@ Dashboard | @parent
     <div class="row">
       <div class="col-md-4 form-horizontal">
         <div class="form-group p-10">
+          <!--
           BASE DE DATOS
-            <!--
+            
                 <select class="form-control" @change="CHANGEBDD()" v-model="bdd" style="width:auto;display:inline-block;">
                   <option value="mysql">MX</option>
                   <option value="mysql2">USA</option>
@@ -321,7 +322,7 @@ Dashboard | @parent
               <div class="table-responsive">
                 <table class="table table-striped text-center" id="tablaActividades">
                   <thead>
-                    <tr>
+                    <tr style="background-color:#027a3a">
                       <th class="text-center">Cliente</th>
                       <th class="text-center"><strong>Proyecto</strong></th>
                       <th class="text-center"><strong>Tipo</strong></th>
@@ -431,7 +432,7 @@ Dashboard | @parent
                 
                 <table class="table table-striped text-center" id="tablaCotizaciones">
                   <thead>
-                    <tr>
+                    <tr style="background-color:#027a3a">
                       <th class="text-center">Cliente</th>
                       <th class="text-center"><strong>Proyecto</strong></th>
                       <th class="text-center"><strong>Número Cotización</strong></th>
@@ -545,7 +546,7 @@ Dashboard | @parent
                 
                 <table class="table table-striped text-center" id="tablaCompras">
                   <thead>
-                    <tr>
+                    <tr style="background-color:#027a3a">
                       <th class="text-center"># Orden</th>
                       <th class="text-center">Ejecutivo</th>
                       <th class="text-center">Cliente</th>
@@ -702,7 +703,7 @@ Dashboard | @parent
                 
                 <table class="table table-striped text-center" id="tablaAceptadas">
                   <thead>
-                    <tr>
+                    <tr style="background-color:#027a3a">
                       <th class="text-center">Cliente</th>
                       <th class="text-center"><strong>Proyecto</strong></th>
                       <th class="text-center"><strong>Número Cotización</strong></th>

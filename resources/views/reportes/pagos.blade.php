@@ -8,6 +8,12 @@ Reportes | @parent
 @section('header_styles')
 <style>
   .marg025 {margin: 0 25px;}
+  #tabla_length{
+    float: left !important;
+  }#tabla_filter{
+    display: inline-block !important;
+    float: none;
+  }
 </style>
 @stop
 
@@ -22,17 +28,16 @@ Reportes | @parent
         <div class="col-sm-12">
           <div class="panel product-details">
             <div class="panel-heading">
-              <h3 class="panel-title">Reporte de Pagos</h3>
-              <div class="marg025 btn-group">
-                <button style="background-color:transparent; border:none">
-                  <i class=" pdf fa fa-file-pdf" v-on:click="pdf" style="color:red;font-size: 20px;"></i>
+              <h3 class="panel-title">Reporte de Pagos
+
+                <button style="background-color:transparent; border:none;float: right;">
+                  <i class=" fa fa-file-pdf" v-on:click="pdf" style="color:#eb1b3d;font-size: 20px;"></i>
                 </button>
-              </div>
-              <div class="marg025 btn-group">
-                <button style="background-color:transparent; border:none">
-                  <i class="excel fa fa-file-excel" v-on:click="excel" style="color: green; font-size:20px; hover"></i>
+                <button style="background-color:transparent; border:none;float: right;">
+                  <i class="excel fa fa-file-excel" v-on:click="excel" style="color: #3ca906; font-size:20px;"></i>
                 </button>
-              </div>
+              </h3>
+              
             </div>
             <div class="panel-body">
                 <div id="oculto_filtros" class="hide">
@@ -107,7 +112,7 @@ Reportes | @parent
                     
                     <table class="table table-striped text-center" id="tabla">
                       <thead>
-                        <tr>
+                        <tr style="background-color:#fa7702">
                           <th class="text-center">Fecha Pago</th>
                           <th class="text-center"><strong>Número Compra</strong></th>
                           <th class="text-center"><strong>Proveedor</strong></th>
@@ -198,7 +203,7 @@ const app = new Vue({
         });
 
       this.tabla = $("#tabla").DataTable({
-          "dom": 'f<"#fechas_container.pull-left">ltip',
+          "dom": '<"#fechas_container.pull-left"f>tlp',
           "order":[],
           initComplete: function () {
             
@@ -299,11 +304,12 @@ const app = new Vue({
             nCells[1].innerHTML = accounting.formatMoney(totalUsd, "$", 2);
         }
       });
-      $("#fechas_container").append($("#fecha_ini_control"));
-      $("#fechas_container").append($("#fecha_fin_control"));
+      
       $("#fechas_container").append($("#select_proveedores"));
       $("#fechas_container").append($("#select_proyectos"));
       $("#fechas_container").append($("#select_compras"));
+      $("#fechas_container").append($("#fecha_ini_control"));
+      $("#fechas_container").append($("#fecha_fin_control"));
 
       $.fn.dataTableExt.afnFiltering.push(
         function( settings, data, dataIndex ) {

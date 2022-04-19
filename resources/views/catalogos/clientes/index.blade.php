@@ -55,7 +55,7 @@
                             <table id="tablaNac" class="table table-bordred" style="width:100%;"
                                    data-page-length="100">
                                 <thead>
-                                <tr>
+                                <tr style="background-color:#fa02a4">
                                     <th>#</th>
                                     <th>Usuario</th>
                                     <th>Tipo</th>
@@ -133,7 +133,7 @@
                             <table id="tablaExt" class="table table-bordred" style="width:100%;"
                                    data-page-length="100">
                                 <thead>
-                                <tr>
+                                <tr style="background-color:#fa02a4">
                                     <th>#</th>
                                     <th>Usuario</th>
                                     <th>Tipo</th>

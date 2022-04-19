@@ -34,7 +34,7 @@
             <table id="tabla" class="table table-bordred" style="width:100%;"
               data-page-length="100">
               <thead>
-                <tr>
+                <tr style="background-color:#fa02a4">
                   <th>#</th>
                   <th>Compañia</th>
                   <th>Contacto</th>
