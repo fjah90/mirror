@@ -8,12 +8,18 @@ Reportes | @parent
 @section('header_styles')
 <style>
   .marg025 {margin: 0 25px;}
-  .marg015 {margin: 0 25px 0 0;}
+  .marg015 {margin: 0 25px 0 25px;}
   .pdf:hover{
     color: #069ecf;
   }
   .excel:hover{
     color: #06cf3a;
+  }
+  #tabla_length{
+    float: left !important;
+  }#tabla_filter{
+    display: inline-block !important;
+    float: none;
   }
 </style>
 @stop
@@ -29,7 +35,8 @@ Reportes | @parent
         <div class="col-sm-12">
           <div class="panel product-details">
             <div class="panel-heading">
-              <h3 class="panel-title">Reporte de Cobros <button style="background-color:transparent; border:none;float: right;">
+              <h3 class="panel-title">Reporte de Cobros 
+                <button style="background-color:transparent; border:none;float: right;">
                   <i class=" fa fa-file-pdf" v-on:click="pdf" style="color:#eb1b3d;font-size: 20px;"></i>
                 </button>
                 <button style="background-color:transparent; border:none;float: right;">
@@ -199,7 +206,7 @@ const app = new Vue({
           //this.tabla.columns(4).search(this.valor_proyectos).draw();
         });
       this.tabla = $("#tabla").DataTable({
-          "dom": 'f<"#fechas_container.pull-left">tlp',
+          "dom": '<"#fechas_container.pull-left"f>tlp',
           "order":[],
           initComplete: function () {
             
@@ -301,11 +308,12 @@ const app = new Vue({
             nCells[1].innerHTML = accounting.formatMoney(totalUsd, "$", 2);
         }
       });
-      $("#fechas_container").append($("#fecha_ini_control"));
-      $("#fechas_container").append($("#fecha_fin_control"));
+      
       $("#fechas_container").append($("#select_cotizaciones"));
       $("#fechas_container").append($("#select_proyectos"));
       $("#fechas_container").append($("#select_clientes"));
+      $("#fechas_container").append($("#fecha_ini_control"));
+      $("#fechas_container").append($("#fecha_fin_control"));
 
       $.fn.dataTableExt.afnFiltering.push(
         function( settings, data, dataIndex ) {

@@ -34,7 +34,7 @@
           <div class="table-responsive">
             <table id="tabla" class="table table-bordred">
               <thead>
-                <tr>
+                <tr style="background-color:#7702fa">
                   <th>#</th>
                   <th>Numero</th>
                   <th>Proveedor</th>

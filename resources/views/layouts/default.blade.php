@@ -122,6 +122,15 @@
           <hr class="divider-menu">
 
           <!-- Proyectos -->
+
+          <li {!! (Request::is('prospectos/cotizaciones*') ? 'class="active"' : '') !!}>
+            <a href="{{ URL::to('prospectos/cotizaciones') }}">
+              <i class="menu-icon fas fa-calendar-check" style="color:#06a1ce; font-size: 20px;"></i>
+              <span class="mm-text ">Proyectos</span>
+            </a>
+          </li>
+
+          <!-- Proyectos 
           <li {!! (Request::is('prospectos/cotizaciones*') ? 'class="active"' : '') !!}><a class="title"><i class="fas fa-calendar-check" style="color:#06a1ce; font-size: 20px;" ></i>  Proyectos <span class="fa fa-chevron-down"></span></a>
             <ul class="nav child_menu">
               <li {!! (Request::is('prospectos/cotizaciones*') ? 'class="active"' : '') !!}>
@@ -132,6 +141,7 @@
             </ul>
 
           </li>
+        -->
 
           <hr class="divider-menu">
 

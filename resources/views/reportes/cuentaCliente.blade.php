@@ -47,7 +47,7 @@ Reportes | @parent
                   <div class="table-responsive">
                     <table class="table table-striped text-center" id="tablaActividades">
                       <thead>
-                        <tr>
+                        <tr style="background-color:#fa7702">
                           <th class="text-center">Fecha</th>
                           <th class="text-center"><strong>Número Cotización</strong></th>
                           <th class="text-center"><strong>Fecha Aprobación</strong></th>
