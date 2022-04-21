@@ -52,7 +52,7 @@
           <div class="table-responsive">
             <table class="table table-bordred" id="tabla">
               <thead>
-                <tr style="background-color:#fa2002">
+                <tr style="background-color:#f54c82">
                   <th>#</th>
                   <th># Cotizacion</th>
                   <th>Ejecutivo</th>

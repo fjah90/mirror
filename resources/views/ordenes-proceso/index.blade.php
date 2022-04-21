@@ -53,7 +53,7 @@
             <table id="tabla" class="table table-bordred" style="width:100%;"
               data-page-length="-1">
               <thead>
-                <tr style="background-color:#7702fa">
+                <tr style="background-color:#907ff3">
                   <th>Orden Numero</th>
                   <th>#</th>
                   <th>Cliente</th>
