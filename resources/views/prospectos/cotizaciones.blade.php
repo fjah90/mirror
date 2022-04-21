@@ -15,7 +15,7 @@
 @section('content')
 <!-- Content Header (Page header) -->
 <section class="content-header">
-  <h1>Proyectos en proceso</h1>
+  <h1 style="font-weight: bolder;">Proyectos en proceso</h1>
 </section>
 <!-- Main content -->
 <section class="content" id="content">
@@ -77,7 +77,7 @@
                 </li>
               </template>
             </dropdown>
-            <dropdown id="fecha_fin_control" class="marg025">
+            <dropdown id="fecha_fin_control" class="marg025" style="padding-bottom: 10px;">
               <div class="input-group">
                 <div class="input-group-btn">
                   <btn class="dropdown-toggle" style="background-color:#fff;">
