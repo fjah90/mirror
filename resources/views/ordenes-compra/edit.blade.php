@@ -739,6 +739,7 @@ const app = new Vue({
     convertirCantidad(){
       console.log(this.entrada.conversion);
       if(this.entrada.conversion=="" || this.entrada.conversion==undefined){
+        console.log(this.entrada.conversion);
         this.entrada.cantidad_convertida="";
       }else{
         this.entrada.cantidad_convertida =
