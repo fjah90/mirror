@@ -33,7 +33,7 @@
                   <div class="table-responsive">
                     <table id="tabla" class="table table-bordred" style="width:100%;">
                       <thead>
-                        <tr style="background-color:#e5e504">
+                        <tr style="background-color:#f5bf4c">
                           <th>#</th>
                           <th>Tipo</th>
                           <th>Nombre</th>

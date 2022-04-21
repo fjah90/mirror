@@ -102,7 +102,7 @@
             <table id="tabla" class="table table-bordred" style="width:100%;"
               data-page-length="100">
               <thead>
-                <tr style="background-color:#e933ff">
+                <tr style="background-color:#c37ff3">
                   <th class="hide">#</th>
                   <th>Usuario</th>
                   <th>Cliente</th>
