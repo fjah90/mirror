@@ -322,7 +322,7 @@ Dashboard | @parent
               <div class="table-responsive">
                 <table class="table table-striped text-center" id="tablaActividades">
                   <thead>
-                    <tr style="background-color:#33ff57">
+                    <tr style="background-color:#33ff53">
                       <th class="text-center">Cliente</th>
                       <th class="text-center"><strong>Proyecto</strong></th>
                       <th class="text-center"><strong>Tipo</strong></th>
@@ -432,7 +432,7 @@ Dashboard | @parent
                 
                 <table class="table table-striped text-center" id="tablaCotizaciones">
                   <thead>
-                    <tr style="background-color:#33ff57">
+                    <tr style="background-color:#33ff53">
                       <th class="text-center">Cliente</th>
                       <th class="text-center"><strong>Proyecto</strong></th>
                       <th class="text-center"><strong>Número Cotización</strong></th>
@@ -546,7 +546,7 @@ Dashboard | @parent
                 
                 <table class="table table-striped text-center" id="tablaCompras">
                   <thead>
-                    <tr style="background-color:#33ff57">
+                    <tr style="background-color:#33ff53">
                       <th class="text-center"># Orden</th>
                       <th class="text-center">Ejecutivo</th>
                       <th class="text-center">Cliente</th>
@@ -703,7 +703,7 @@ Dashboard | @parent
                 
                 <table class="table table-striped text-center" id="tablaAceptadas">
                   <thead>
-                    <tr style="background-color:#33ff57">
+                    <tr style="background-color:#33ff53">
                       <th class="text-center">Cliente</th>
                       <th class="text-center"><strong>Proyecto</strong></th>
                       <th class="text-center"><strong>Número Cotización</strong></th>

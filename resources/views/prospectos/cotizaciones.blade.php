@@ -56,8 +56,8 @@
           </h3>
         </div>
         <div class="panel-body">
-          <div id="oculto" class="hide" style="margin-bottom: 10px;">
-            <dropdown id="fecha_ini_control" class="marg025">
+          <div id="oculto" class="hide">
+            <dropdown id="fecha_ini_control" class="marg025" style="padding-bottom: 10px;">
               <div class="input-group">
                 <div class="input-group-btn">
                   <btn class="dropdown-toggle" style="background-color:#fff;">
