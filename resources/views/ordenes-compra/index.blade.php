@@ -14,7 +14,7 @@
 @section('content')
 <!-- Content Header (Page header) -->
 <section class="content-header">
-  <h1>Ordenes De Compra Proyecto {{$ordenes->first()->proyecto_nombre}} // {{$cotizacion->numero}}</h1>
+  <h1 style="font-weight: bolder;">Ordenes De Compra Proyecto {{$ordenes->first()->proyecto_nombre}} // {{$cotizacion->numero}}</h1>
 </section>
 <!-- Main content -->
 <section class="content" id="content">
