@@ -15,7 +15,7 @@
 @section('content')
 <!-- Content Header (Page header) -->
 <section class="content-header">
-  <h1>Cotizaciones en proceso</h1>
+  <h1 style="font-weight: bolder;">Cotizaciones en proceso</h1>
 </section>
 <!-- Main content -->
 <section class="content" id="content">

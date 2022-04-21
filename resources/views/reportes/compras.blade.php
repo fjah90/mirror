@@ -20,7 +20,7 @@ Reportes | @parent
 @section('content')
 <!-- Content Header (Page header) -->
 <section class="content-header">
-  <h1>Reporte</h1>
+  <h1 style="font-weight: bolder;">Reporte</h1>
 </section>
 <!-- Main content -->
 <section class="content" id="content">
