@@ -158,6 +158,15 @@
             <hr class="divider-menu">
 
           <!-- ordenes compra-->
+
+          <li {!! (Request::is('proyectos-aprobados*') ? 'class="active"' : '') !!}>
+            <a href="{{ URL::to('proyectos-aprobados') }}">
+              <i class="menu-icon fas fa-cart-arrow-down" style="color:#907ff3; font-size: 20px;"></i>
+              <span class="mm-text ">Lista de Ordenes</span>
+            </a>
+          </li>
+
+          <!--
           <li {!! (Request::is('ordenes-proceso*') ? 'class="active"' : '') !!}  {!! (Request::is('proyectos-aprobados*') ? 'class="active"' : '') !!}><a class="title"><i class="fa fa-cart-arrow-down" style="color:#907ff3; font-size: 20px;"></i>  Ordenes Compra <span class="fa fa-chevron-down"></span></a>
            <ul class="nav child_menu">  
               <li  {!! (Request::is('proyectos-aprobados*') ? 'class="active"' : '') !!} >
@@ -174,6 +183,7 @@
               </li>
             </ul>
           </li>
+        -->
 
           <hr class="divider-menu">
 
