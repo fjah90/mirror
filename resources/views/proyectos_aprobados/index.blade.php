@@ -54,7 +54,7 @@
                   <table id="tabla" class="table table-bordred" style="width:100%;"
                     data-page-length="-1">
                     <thead>
-                      <tr>
+                      <tr style="background-color:#907ff3">
                         <th># Cotización</th>
                         <th>Usuario</th>
                         <th>Cliente</th>
