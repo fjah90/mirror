@@ -18,95 +18,103 @@
 </section>
 <!-- Main content -->
 <section class="content" id="content">
-  <div class="row">
-    <div class="col-lg-12">
-      <div class="panel">
-        <div class="panel-heading">
-          <h3 class="panel-title">
-            <div class="p-10">
-              Lista de Proyectos
-              @role('Administrador')
-                de 
-                <select class="form-control" @change="cargar()" v-model="usuarioCargado" style="width:auto;display:inline-block;">
-                  <option value="Todos">Todos</option>
-                  @foreach($usuarios as $usuario)
-                  <option value="{{$usuario->id}}">{{$usuario->name}}</option>
-                  @endforeach
-                </select>
-              @endrole
-            </div>
-            <div class="p-10">
-              Año  
-                <select class="form-control" @change="cargar()" v-model="anio" style="width:auto;display:inline-block;">
-                  <option value="Todos">Todos</option>
-                  <option value="2019-12-31">2019</option>
-                  <option value="2020-12-31">2020</option>
-                  <option value="2021-12-31">2021</option>
-                  <option value="2022-12-31">2022</option>
-                </select>
-            </div>
-          </h3>
-        </div>
-        <div class="panel-body">
-          <div class="table-responsive">
-            <table id="tabla" class="table table-bordred" style="width:100%;"
-              data-page-length="-1">
-              <thead>
-                <tr>
-                  <th># Cotización</th>
-                  <th>Usuario</th>
-                  <th>Cliente</th>
-                  <th>Proyecto</th>
-                  <th>Fecha aprobación</th>
-                  <th>Proveedores</th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr v-for="(proyecto,index) in proyectos">
-                  <td>@{{proyecto.cotizacion.numero}}</td>
-                  <td>@{{proyecto.cotizacion.user.name}}</td>
-                  <td>@{{proyecto.cliente_nombre}}</td>
-                  <td>@{{proyecto.proyecto}}</td>
-                  {{--<td>@{{proyecto.created_at|date}}</td>--}}
-                  <td v-if="proyecto.cotizacion.cuenta_cobrar !== null && proyecto.cotizacion.cuenta_cobrar !== undefined && proyecto.cotizacion.cuenta_cobrar.fecha_comprobante !== undefined && proyecto.cotizacion.cuenta_cobrar.fecha_comprobante !== null">@{{proyecto.cotizacion.cuenta_cobrar.fecha_comprobante|date}}</td>
-                  <td v-if="
-                  proyecto.cotizacion.cuenta_cobrar === null ||
-                  proyecto.cotizacion.cuenta_cobrar === undefined ||  proyecto.cotizacion.cuenta_cobrar.fecha_comprobante === undefined || proyecto.cotizacion.cuenta_cobrar.fecha_comprobante === null">@{{proyecto.created_at|date}}</td>
+  <tabs>
+      <tab title="Lista de Ordenes">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="panel">
+              <div class="panel-heading">
+                <h3 class="panel-title">
+                  <div class="p-10">
+                    Lista de Proyectos
+                    @role('Administrador')
+                      de 
+                      <select class="form-control" @change="cargar()" v-model="usuarioCargado" style="width:auto;display:inline-block;">
+                        <option value="Todos">Todos</option>
+                        @foreach($usuarios as $usuario)
+                        <option value="{{$usuario->id}}">{{$usuario->name}}</option>
+                        @endforeach
+                      </select>
+                    @endrole
+                  </div>
+                  <div class="p-10">
+                    Año  
+                      <select class="form-control" @change="cargar()" v-model="anio" style="width:auto;display:inline-block;">
+                        <option value="Todos">Todos</option>
+                        <option value="2019-12-31">2019</option>
+                        <option value="2020-12-31">2020</option>
+                        <option value="2021-12-31">2021</option>
+                        <option value="2022-12-31">2022</option>
+                      </select>
+                  </div>
+                </h3>
+              </div>
+              <div class="panel-body">
+                <div class="table-responsive">
+                  <table id="tabla" class="table table-bordred" style="width:100%;"
+                    data-page-length="-1">
+                    <thead>
+                      <tr>
+                        <th># Cotización</th>
+                        <th>Usuario</th>
+                        <th>Cliente</th>
+                        <th>Proyecto</th>
+                        <th>Fecha aprobación</th>
+                        <th>Proveedores</th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr v-for="(proyecto,index) in proyectos">
+                        <td>@{{proyecto.cotizacion.numero}}</td>
+                        <td>@{{proyecto.cotizacion.user.name}}</td>
+                        <td>@{{proyecto.cliente_nombre}}</td>
+                        <td>@{{proyecto.proyecto}}</td>
+                        {{--<td>@{{proyecto.created_at|date}}</td>--}}
+                        <td v-if="proyecto.cotizacion.cuenta_cobrar !== null && proyecto.cotizacion.cuenta_cobrar !== undefined && proyecto.cotizacion.cuenta_cobrar.fecha_comprobante !== undefined && proyecto.cotizacion.cuenta_cobrar.fecha_comprobante !== null">@{{proyecto.cotizacion.cuenta_cobrar.fecha_comprobante|date}}</td>
+                        <td v-if="
+                        proyecto.cotizacion.cuenta_cobrar === null ||
+                        proyecto.cotizacion.cuenta_cobrar === undefined ||  proyecto.cotizacion.cuenta_cobrar.fecha_comprobante === undefined || proyecto.cotizacion.cuenta_cobrar.fecha_comprobante === null">@{{proyecto.created_at|date}}</td>
 
-                  <td>
-                    <span v-for="(orden, index) in proyecto.ordenes">
-                      @{{index+1}}.- @{{orden.proveedor_empresa}} ,@{{orden.numero}} , @{{orden.status}}  <br/>
-                    </span>
-                  </td>
-                  <td class="text-right">
-                    <a class="btn btn-xs btn-info" title="Ver Cotización"
-                      target="_blank" :href="proyecto.cotizacion.archivo">
-                      <i class="far fa-file"></i>
-                    </a>
-                    <!--
-                    <a class="btn btn-xs btn-info" title="Ver Proyecto"
-                      target="_blank" :href="'/proyectos-aprobados/'+proyecto.id+'/show'">
-                      <i class="far fa-eye"></i>
-                    </a>
-                  -->
-                
-                    <a class="btn btn-xs btn-success" title="Ordenes Compra"
-                      :href="'/proyectos-aprobados/'+proyecto.id+'/ordenes-compra'">
-                      <i class="fas fa-file-invoice-dollar"></i>
-                    </a>
-                    <button class="btn btn-xs btn-danger" title="Borrar" @click="borrar(proyecto, index)">
-                      <i class="fas fa-times"></i>
-                    </button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+                        <td>
+                          <span v-for="(orden, index) in proyecto.ordenes">
+                            @{{index+1}}.- @{{orden.proveedor_empresa}} ,@{{orden.numero}} , @{{orden.status}}  <br/>
+                          </span>
+                        </td>
+                        <td class="text-right">
+                          <a class="btn btn-xs btn-info" title="Ver Cotización"
+                            target="_blank" :href="proyecto.cotizacion.archivo">
+                            <i class="far fa-file"></i>
+                          </a>
+                          <!--
+                          <a class="btn btn-xs btn-info" title="Ver Proyecto"
+                            target="_blank" :href="'/proyectos-aprobados/'+proyecto.id+'/show'">
+                            <i class="far fa-eye"></i>
+                          </a>
+                        -->
+                      
+                          <a class="btn btn-xs btn-success" title="Ordenes Compra"
+                            :href="'/proyectos-aprobados/'+proyecto.id+'/ordenes-compra'">
+                            <i class="fas fa-file-invoice-dollar"></i>
+                          </a>
+                          <button class="btn btn-xs btn-danger" title="Borrar" @click="borrar(proyecto, index)">
+                            <i class="fas fa-times"></i>
+                          </button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-  </div>
+      </tab>
+    <tab title="Ordenes en Proceso">
+
+      </tab>
+
+  </tabs>
 </section>
 <!-- /.content -->
 @stop

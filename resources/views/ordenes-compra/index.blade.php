@@ -18,128 +18,120 @@
 </section>
 <!-- Main content -->
 <section class="content" id="content">
-  <tabs>
-      <tab title="Lista de Ordenes">
-        <div class="row">
-          <div class="col-lg-12">
-            <div class="panel">
-              <div class="panel-heading">
-                <h3 class="panel-title text-right">
-                  <span class="p-10 pull-left">Listaaa de Ordenes</span>
-                  <a href="{{route('proyectos-aprobados.ordenes-compra.create', $ordenes->first()->proyecto_id)}}"
-                    class="btn btn-primary" style="color: #fff;">
-                    <i class="fas fa-plus"></i> Nueva Orden
-                  </a>
-                </h3>
-              </div>
-              <div class="panel-body">
-                <div class="table-responsive">
-                  <table id="tabla" class="table table-bordred">
-                    <thead>
-                      <tr style="background-color:#907ff3">
-                        <th>#</th>
-                        <th>Numero</th>
-                        <th>Proveedor</th>
-                        <th>Producto</th>
-                        <th>Cantidad</th>
-                        <th>Estatus</th>
-                        <th></th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr v-for="(orden,index) in ordenes">
-                        <td>@{{index+1}}</td>
-                        <td>@{{orden.numero}}</td>
-                        <td>@{{orden.proveedor_empresa}}</td>
-                        <td>
-                          <span v-for="(entrada, index) in orden.entradas">
-                            @{{index+1}}.- @{{entrada.producto.nombre}} <br />
-                          </span>
-                        </td>
-                        <td>
-                          <span v-for="(entrada, index) in orden.entradas">
-                            @{{index+1}}.-
-                              <span v-if="entrada.conversion">@{{entrada.cantidad_convertida}} @{{entrada.conversion}}</span>
-                              <span v-else>@{{entrada.cantidad}} @{{entrada.medida}}</span>
-                            <br />
-                          </span>
-                        </td>
-                        <td>@{{orden.status}}</td>
-                        <td class="text-right">
-                          <template v-if="orden.status!='Pendiente' && orden.status!='Cancelada'">
-                            <a class="btn btn-xs btn-info" title="Ver"
-                              :href="'/proyectos-aprobados/'+orden.proyecto_id+'/ordenes-compra/'+orden.id">
-                              <i class="far fa-eye"></i>
-                            </a>
-                            <a v-if="orden.archivo" class="btn btn-xs btn-warning" title="PDF" :href="orden.archivo"
-                              :download="'INTERCORP-PO '+orden.numero+' '+orden.cliente_nombre+' '+orden.proyecto_nombre+'.pdf'">
-                              <i class="far fa-file-pdf"></i>
-                            </a>
-                          </template>
-                          <a v-if="orden.status=='Pendiente' || orden.status=='Rechazada'"
-                            class="btn btn-xs btn-success" title="Editar"
-                            :href="'/proyectos-aprobados/'+orden.proyecto_id+'/ordenes-compra/'+orden.id+'/editar'">
-                            <i class="fas fa-pencil-alt"></i>
-                          </a>
-                          <a v-if="orden.status=='Pendiente'"
-                            class="btn btn-xs btn-warning" title="Comprar"
-                            :href="'/proyectos-aprobados/'+orden.proyecto_id+'/ordenes-compra/'+orden.id">
-                            <i class="fas fa-cash-register"></i>
-                          </a>
-                          
-                          @role('Administrador')
-                          <button v-if="orden.status=='Por Autorizar'" class="btn btn-xs btn-primary"
-                            title="Aprobar" @click="ordenModal=orden; openAprobar=true;">
-                            <i class="far fa-thumbs-up"></i>
-                          </button>
-
-                          <button v-if="orden.status=='Aprobada'" class="btn btn-xs btn-danger"
-                            title="Des Aprobar" @click="ordenModal=orden; openDesAprobar=true;">
-                            <i class="fa fa-arrow-down"></i>
-                          </button>
-                          
-                          <button v-if="orden.status=='Aprobada'" class="btn btn-xs btn-purple"
-                            title="Confirmar" @click="ordenModal=orden; openConfirmar=true; ordenModal.monto_total_flete=orden.flete;ordenModal.monto_total_producto=orden.subtotal;ordenModal.tax=orden.iva;sumartot()">
-                            <i class="fas fa-clipboard-check"></i>
-                          </button>
-                          @endrole
-                          <button v-if="orden.status=='Por Autorizar'" class="btn btn-xs btn-danger"
-                            title="Rechazar" @click="ordenModal=orden; openRechazar=true;">
-                            <i class="far fa-thumbs-down"></i>
-                          </button>
-                          <button v-if="orden.status!='Aprobada' && orden.status!='Confirmada' && orden.status!='Cancelada'" 
-                            class="btn btn-xs btn-danger" title="Cancelar" @click="cancelarOrden(orden)">
-                            <i class="fas fa-times"></i>
-                          </button>
-                          <a v-if="orden.status=='Confirmada'" class="btn btn-xs text-primary" title="Confirmación Fabrica" 
-                            :href="orden.confirmacion_fabrica"
-                            target="_blank">
-                            <i class="fas fa-clipboard-check"></i>
-                          </a>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-
-                <div class="row">
-                  <div class="col-md-12 text-right">
-                    <a href="{{ route('proyectos-aprobados.index') }}" class="btn btn-default">
-                      Regresar
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="panel">
+        <div class="panel-heading">
+          <h3 class="panel-title text-right">
+            <span class="p-10 pull-left">Lista de Ordenes</span>
+            <a href="{{route('proyectos-aprobados.ordenes-compra.create', $ordenes->first()->proyecto_id)}}"
+              class="btn btn-primary" style="color: #fff;">
+              <i class="fas fa-plus"></i> Nueva Orden
+            </a>
+          </h3>
+        </div>
+        <div class="panel-body">
+          <div class="table-responsive">
+            <table id="tabla" class="table table-bordred">
+              <thead>
+                <tr style="background-color:#907ff3">
+                  <th>#</th>
+                  <th>Numero</th>
+                  <th>Proveedor</th>
+                  <th>Producto</th>
+                  <th>Cantidad</th>
+                  <th>Estatus</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="(orden,index) in ordenes">
+                  <td>@{{index+1}}</td>
+                  <td>@{{orden.numero}}</td>
+                  <td>@{{orden.proveedor_empresa}}</td>
+                  <td>
+                    <span v-for="(entrada, index) in orden.entradas">
+                      @{{index+1}}.- @{{entrada.producto.nombre}} <br />
+                    </span>
+                  </td>
+                  <td>
+                    <span v-for="(entrada, index) in orden.entradas">
+                      @{{index+1}}.-
+                        <span v-if="entrada.conversion">@{{entrada.cantidad_convertida}} @{{entrada.conversion}}</span>
+                        <span v-else>@{{entrada.cantidad}} @{{entrada.medida}}</span>
+                      <br />
+                    </span>
+                  </td>
+                  <td>@{{orden.status}}</td>
+                  <td class="text-right">
+                    <template v-if="orden.status!='Pendiente' && orden.status!='Cancelada'">
+                      <a class="btn btn-xs btn-info" title="Ver"
+                        :href="'/proyectos-aprobados/'+orden.proyecto_id+'/ordenes-compra/'+orden.id">
+                        <i class="far fa-eye"></i>
+                      </a>
+                      <a v-if="orden.archivo" class="btn btn-xs btn-warning" title="PDF" :href="orden.archivo"
+                        :download="'INTERCORP-PO '+orden.numero+' '+orden.cliente_nombre+' '+orden.proyecto_nombre+'.pdf'">
+                        <i class="far fa-file-pdf"></i>
+                      </a>
+                    </template>
+                    <a v-if="orden.status=='Pendiente' || orden.status=='Rechazada'"
+                      class="btn btn-xs btn-success" title="Editar"
+                      :href="'/proyectos-aprobados/'+orden.proyecto_id+'/ordenes-compra/'+orden.id+'/editar'">
+                      <i class="fas fa-pencil-alt"></i>
                     </a>
-                  </div>
-                </div>
+                    <a v-if="orden.status=='Pendiente'"
+                      class="btn btn-xs btn-warning" title="Comprar"
+                      :href="'/proyectos-aprobados/'+orden.proyecto_id+'/ordenes-compra/'+orden.id">
+                      <i class="fas fa-cash-register"></i>
+                    </a>
+                    
+                    @role('Administrador')
+                    <button v-if="orden.status=='Por Autorizar'" class="btn btn-xs btn-primary"
+                      title="Aprobar" @click="ordenModal=orden; openAprobar=true;">
+                      <i class="far fa-thumbs-up"></i>
+                    </button>
 
-              </div>
+                    <button v-if="orden.status=='Aprobada'" class="btn btn-xs btn-danger"
+                      title="Des Aprobar" @click="ordenModal=orden; openDesAprobar=true;">
+                      <i class="fa fa-arrow-down"></i>
+                    </button>
+                    
+                    <button v-if="orden.status=='Aprobada'" class="btn btn-xs btn-purple"
+                      title="Confirmar" @click="ordenModal=orden; openConfirmar=true; ordenModal.monto_total_flete=orden.flete;ordenModal.monto_total_producto=orden.subtotal;ordenModal.tax=orden.iva;sumartot()">
+                      <i class="fas fa-clipboard-check"></i>
+                    </button>
+                    @endrole
+                    <button v-if="orden.status=='Por Autorizar'" class="btn btn-xs btn-danger"
+                      title="Rechazar" @click="ordenModal=orden; openRechazar=true;">
+                      <i class="far fa-thumbs-down"></i>
+                    </button>
+                    <button v-if="orden.status!='Aprobada' && orden.status!='Confirmada' && orden.status!='Cancelada'" 
+                      class="btn btn-xs btn-danger" title="Cancelar" @click="cancelarOrden(orden)">
+                      <i class="fas fa-times"></i>
+                    </button>
+                    <a v-if="orden.status=='Confirmada'" class="btn btn-xs text-primary" title="Confirmación Fabrica" 
+                      :href="orden.confirmacion_fabrica"
+                      target="_blank">
+                      <i class="fas fa-clipboard-check"></i>
+                    </a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="row">
+            <div class="col-md-12 text-right">
+              <a href="{{ route('proyectos-aprobados.index') }}" class="btn btn-default">
+                Regresar
+              </a>
             </div>
           </div>
+
         </div>
-      </tab>
-      <tab title="Ordenes en Proceso">
-
-      </tab>
-
-  </tabs>
+      </div>
+    </div>
+  </div>
 
   <!-- Aprobar Modal -->
   <modal v-model="openAprobar" :title="'Aprobar orden '+ordenModal.numero" :footer="false">
