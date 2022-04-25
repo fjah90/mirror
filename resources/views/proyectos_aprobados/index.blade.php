@@ -1017,8 +1017,6 @@ const app = new Vue({
         });
       },//fin entregaOrden
     }
-
-    }
 });
 </script>
 @stop
