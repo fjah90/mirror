@@ -33,7 +33,7 @@
                   <p class="type"><i class="fas fa-ban" style="font-size:150px;"></i></p>
                   <p class="type-text" style="margin-top:0;">Acceso Denegado</p>
                   <p class="message">
-                    Sistema bloqueado por falta de pago, por favor realice su pago correspondiente y notifiquelo al administrador.
+                    Sistema bloqueado por falta de pago, por favor realice su pago correspondiente y notifíquelo al administrador.
                     <!--
                     No tiene permisos para acceder a esta area.
                     
