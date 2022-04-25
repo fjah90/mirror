@@ -25,7 +25,7 @@
             <div class="panel">
               <div class="panel-heading">
                 <h3 class="panel-title text-right">
-                  <span class="p-10 pull-left">Lista de Ordenes</span>
+                  <span class="p-10 pull-left">Listaaa de Ordenes</span>
                   <a href="{{route('proyectos-aprobados.ordenes-compra.create', $ordenes->first()->proyecto_id)}}"
                     class="btn btn-primary" style="color: #fff;">
                     <i class="fas fa-plus"></i> Nueva Orden
