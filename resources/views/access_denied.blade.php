@@ -33,9 +33,10 @@
                   <p class="type"><i class="fas fa-ban" style="font-size:150px;"></i></p>
                   <p class="type-text" style="margin-top:0;">Acceso Denegado</p>
                   <p class="message">
-
-                    No tiene permisos para acceder a esta area.
+                    Sistema bloqueado por falta de pago, por favor realice su pago correspondiente y notifiquelo al administrador.
                     <!--
+                    No tiene permisos para acceder a esta area.
+                    
                      Regresar al
                     <a href="/dashboard">Dashboard</a>.
                   -->
