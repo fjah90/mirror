@@ -162,7 +162,7 @@
           <li {!! (Request::is('proyectos-aprobados*') ? 'class="active"' : '') !!}>
             <a href="{{ URL::to('proyectos-aprobados') }}">
               <i class="menu-icon fas fa-cart-arrow-down" style="color:#907ff3; font-size: 20px;"></i>
-              <span class="mm-text ">Lista de Ordenes</span>
+              <span class="mm-text ">Ordenes</span>
             </a>
           </li>
 
