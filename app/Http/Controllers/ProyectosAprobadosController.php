@@ -45,7 +45,47 @@ class ProyectosAprobadosController extends Controller
         $usuarios = User::all();
       else $usuarios = [];
 
-      return view('proyectos_aprobados.index', compact('proyectos','usuarios'));
+
+      //ordenes en proceso
+      //$usuarios = User::all();
+      /*$ordenes = OrdenProceso::with('ordenCompra','ordenCompra.proyecto','ordenCompra.proyecto.cotizacion','ordenCompra.proyecto.cotizacion.user')->where('orden_compra_id','!=','4361')->get();
+      */
+      $usuario = null;
+      $inicio = Carbon::parse('2022-01-01');
+      $anio = Carbon::parse('2022-12-31');
+      $ordenes = OrdenProceso::whereBetween('created_at', [$inicio, $anio])->with('ordenCompra','ordenCompra.proyecto','ordenCompra.proyecto.cotizacion','ordenCompra.proyecto.cotizacion.user')
+          ->whereHas('ordenCompra', function($q) use($usuario)
+        {       
+          $q->whereHas('proyecto', function($q) use($usuario)
+          {
+            $q->whereHas('cotizacion');
+          });
+        })->get();
+
+
+      foreach ($ordenes as $orden) {
+        if($orden->ordenCompra->archivo)
+          $orden->ordenCompra->archivo = asset('storage/'.$orden->ordenCompra->archivo);
+        if($orden->factura){
+          $orden->factura = asset('storage/'.$orden->factura);
+          $orden->packing = asset('storage/'.$orden->packing);
+          if($orden->bl) $orden->bl = asset('storage/'.$orden->bl);
+          if($orden->certificado) $orden->certificado = asset('storage/'.$orden->certificado);
+        }
+        if($orden->deposito_warehouse){
+          $orden->deposito_warehouse = asset('storage/'.$orden->deposito_warehouse);
+        }
+        if($orden->gastos){
+          $orden->gastos = asset('storage/'.$orden->gastos);
+          $orden->pago = asset('storage/'.$orden->pago);
+        }
+        if($orden->carta_entrega){
+          $orden->carta_entrega = asset('storage/'.$orden->carta_entrega);
+        }
+      }
+
+
+      return view('proyectos_aprobados.index', compact('proyectos','usuarios','ordenes'));
     }
 
     public function listado(Request $request)
