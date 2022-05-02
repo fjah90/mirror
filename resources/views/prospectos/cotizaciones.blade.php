@@ -8,6 +8,9 @@
 @section('header_styles')
 <style>
   .marg025 {margin: 0 25px;}
+  #tabla_length{
+    float: left !important;
+  }
 </style>
 @stop
 
@@ -175,7 +178,7 @@ const app = new Vue({
     mounted(){
       $.fn.dataTable.moment( 'DD/MM/YYYY' );
       this.tabla = $("#tabla").DataTable({
-        "dom": 'f<"#fechas_container.pull-left">tlp',
+        "dom": 'f<"#fechas_container.pull-left">tlip',
         "order": [[ 4, "desc" ]]
       });
       //$("#fechas_container").append($("#fecha_ini_control"));
