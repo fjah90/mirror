@@ -24,8 +24,8 @@
       <div class="panel">
         <div class="panel-heading">
           <h3 class="panel-title">
-            <div class="p-10">
-              Lista de Proyectos
+            <div class="p-10 col-lg-10">
+              Proyectos
               @role('Administrador')
                 de
                 <select class="form-control" @change="cargar()" v-model="usuarioCargado" style="width:auto;display:inline-block;">
@@ -36,7 +36,14 @@
                 </select>
               @endrole
             </div>
-            <div class="p-10">
+            <div class="p-10 col-lg-2">
+              <button class="btn btn-sm btn-primary">
+                <a href="{{route('prospectos.create')}}" style="color:white;">
+                  <i class="fas fa-address-book"></i> Nuevo Proyecto
+                </a>
+              </button>
+            </div>
+            <div class="p-10 col-lg-6">
               Año  
                 <select class="form-control" @change="cargar()" v-model="anio" style="width:auto;display:inline-block;">
                   <option value="Todos">Todos</option>
@@ -46,18 +53,8 @@
                   <option value="2022-12-31">2022</option>
                 </select>
             </div>
-            <div class="p-10">
-              <button class="btn btn-sm btn-primary">
-                <a href="{{route('prospectos.create')}}" style="color:white;">
-                  <i class="fas fa-address-book"></i> Nuevo Proyecto
-                </a>
-              </button>
-            </div>
-          </h3>
-        </div>
-        <div class="panel-body">
-          <div id="oculto" class="hide">
-            <dropdown id="fecha_ini_control" class="marg025" style="padding-bottom: 10px;">
+            <div class="col-lg-6">
+              <dropdown id="fecha_ini_control" class="marg025" style="padding-bottom: 10px;">
               <div class="input-group">
                 <div class="input-group-btn">
                   <btn class="dropdown-toggle" style="background-color:#fff;">
@@ -97,6 +94,12 @@
                 </li>
               </template>
             </dropdown>
+            </div>
+          </h3>
+        </div>
+        <div class="panel-body">
+          <div id="oculto" class="hide">
+            
           </div>
           <div class="table-responsive">
             <table id="tabla" class="table table-bordred" style="width:100%;"
