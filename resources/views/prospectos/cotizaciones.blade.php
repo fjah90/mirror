@@ -22,9 +22,9 @@
   <div class="row">
     <div class="col-lg-12">
       <div class="panel">
-        <div class="panel-heading col-lg-12">
+        <div class="panel-heading ">
           <h3 class="panel-title">
-            <div class="p-10 col-lg-10">
+            <div class="p-10" style="display:inline-block;">
               Proyectos
               @role('Administrador')
                 de
@@ -36,14 +36,14 @@
                 </select>
               @endrole
             </div>
-            <div class="p-10 col-lg-2">
+            <div class="p-10 " style="display:inline-block;">
               <button class="btn btn-sm btn-primary">
                 <a href="{{route('prospectos.create')}}" style="color:white;">
                   <i class="fas fa-address-book"></i> Nuevo Proyecto
                 </a>
               </button>
             </div>
-            <div class="p-10 col-lg-6">
+            <div class="p-10 ">
               Año  
                 <select class="form-control" @change="cargar()" v-model="anio" style="width:auto;display:inline-block;">
                   <option value="Todos">Todos</option>
