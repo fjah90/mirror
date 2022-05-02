@@ -43,6 +43,9 @@
                 </a>
               </button>
             </div>
+            <div class="p-10">
+              
+            </div>
             <div class="p-10 " style="display:inline-block">
               Año  
                 <select class="form-control" @change="cargar()" v-model="anio" style="width:auto;display:inline-block;">
