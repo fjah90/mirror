@@ -98,49 +98,7 @@
           </h3>
         </div>
         <div class="panel-body">
-          <div id="oculto" class="hide">
-            <dropdown id="fecha_ini_control" class="marg025" style="padding-bottom: 10px;">
-              <div class="input-group">
-                <div class="input-group-btn">
-                  <btn class="dropdown-toggle" style="background-color:#fff;">
-                    <i class="fas fa-calendar"></i>
-                  </btn>
-                </div>
-                <input class="form-control" type="text" placeholder="DD/MM/YYYY"
-                  v-model="fecha_ini" readonly
-                  style="width:120px;"
-                />
-              </div>
-              <template slot="dropdown">
-                <li>
-                  <date-picker :locale="locale" :today-btn="false"
-                  format="dd/MM/yyyy" :date-parser="dateParser"
-                  v-model="fecha_ini"/>
-                </li>
-              </template>
-            </dropdown>
-            <dropdown id="fecha_fin_control" class="marg025" style="padding-bottom: 10px;">
-              <div class="input-group">
-                <div class="input-group-btn">
-                  <btn class="dropdown-toggle" style="background-color:#fff;">
-                    <i class="fas fa-calendar"></i>
-                  </btn>
-                </div>
-                <input class="form-control" type="text" placeholder="DD/MM/YYYY"
-                  v-model="fecha_fin" readonly
-                  style="width:120px;"
-                />
-              </div>
-              <template slot="dropdown">
-                <li>
-                  <date-picker :locale="locale" :today-btn="false"
-                  format="dd/MM/yyyy" :date-parser="dateParser"
-                  v-model="fecha_fin"/>
-                </li>
-              </template>
-            </dropdown>
-            
-          </div>
+          
           <div class="table-responsive">
             <table id="tabla" class="table table-bordred" style="width:100%;"
               data-page-length="100">
@@ -217,8 +175,8 @@ const app = new Vue({
         "dom": 'f<"#fechas_container.pull-left">ltip',
         "order": [[ 4, "desc" ]]
       });
-      $("#fechas_container").append($("#fecha_ini_control"));
-      $("#fechas_container").append($("#fecha_fin_control"));
+      //$("#fechas_container").append($("#fecha_ini_control"));
+      //$("#fechas_container").append($("#fecha_fin_control"));
       
       var vue = this;
       
@@ -255,8 +213,8 @@ const app = new Vue({
       cargar(){
         axios.post('/prospectos/listado', {id: this.usuarioCargado , anio:this.anio})
         .then(({data}) => {
-          $("#oculto").append($("#fecha_ini_control"));
-          $("#oculto").append($("#fecha_fin_control"));
+          //$("#oculto").append($("#fecha_ini_control"));
+          //$("#oculto").append($("#fecha_fin_control"));
           this.tabla.destroy();
           this.prospectos = data.prospectos;
           swal({
@@ -268,8 +226,8 @@ const app = new Vue({
               "dom": 'f<"#fechas_container.pull-left">ltip',
               "order": [[ 4, "desc" ]]
             });
-            $("#fechas_container").append($("#fecha_ini_control"));
-            $("#fechas_container").append($("#fecha_fin_control"));
+            //$("#fechas_container").append($("#fecha_ini_control"));
+            //$("#fechas_container").append($("#fecha_fin_control"));
           });
         })
         .catch(({response}) => {
