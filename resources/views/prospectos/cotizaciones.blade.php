@@ -175,7 +175,7 @@ const app = new Vue({
     mounted(){
       $.fn.dataTable.moment( 'DD/MM/YYYY' );
       this.tabla = $("#tabla").DataTable({
-        "dom": 'f<"#fechas_container.pull-left">ltip',
+        "dom": 'f<"#fechas_container.pull-left">tlp',
         "order": [[ 4, "desc" ]]
       });
       //$("#fechas_container").append($("#fecha_ini_control"));
