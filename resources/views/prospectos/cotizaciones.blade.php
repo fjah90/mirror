@@ -36,7 +36,7 @@
                 </select>
               @endrole
             </div>
-            <div class="p-10 " style="display:inline-block;">
+            <div class="p-10 " style="display:inline-block;float: right;">
               <button class="btn btn-sm btn-primary">
                 <a href="{{route('prospectos.create')}}" style="color:white;">
                   <i class="fas fa-address-book"></i> Nuevo Proyecto
@@ -53,7 +53,7 @@
                   <option value="2022-12-31">2022</option>
                 </select>
             </div>
-            <div class="col-lg-6">
+            <div class="p-10">
               <dropdown id="fecha_ini_control" class="marg025" style="padding-bottom: 10px;">
               <div class="input-group">
                 <div class="input-group-btn">
