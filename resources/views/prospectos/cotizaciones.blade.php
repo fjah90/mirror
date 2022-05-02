@@ -43,7 +43,7 @@
                 </a>
               </button>
             </div>
-            <div class="p-10 ">
+            <div class="p-10 " style="display:inline-block">
               Año  
                 <select class="form-control" @change="cargar()" v-model="anio" style="width:auto;display:inline-block;">
                   <option value="Todos">Todos</option>
@@ -53,7 +53,7 @@
                   <option value="2022-12-31">2022</option>
                 </select>
             </div>
-            <div class="p-10">
+            <div class="p-10" style="display:inline-block">
               <dropdown id="fecha_ini_control" class="marg025" style="padding-bottom: 10px;">
               <div class="input-group">
                 <div class="input-group-btn">
