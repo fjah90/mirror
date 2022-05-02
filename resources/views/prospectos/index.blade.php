@@ -8,6 +8,9 @@
 @section('header_styles')
 <style>
   .marg025 {margin: 0 25px;}
+  #tabla_length{
+    float: left !important;
+  }
 </style>
 @stop
 
@@ -24,7 +27,7 @@
       <div class="panel">
         <div class="panel-heading">
           <h3 class="panel-title">
-            <div class="p-10">
+            <div class="p-10" style="display:inline-block">
               Proyectos
               @role('Administrador')
                 de
@@ -36,7 +39,17 @@
                 </select>
               @endrole
             </div>
+            <div class="p-10" style="display:inline-block;float: right;">
+              <button class="btn btn-sm btn-primary">
+                <a href="{{route('prospectos.create')}}" style="color:white;">
+                  <i class="fas fa-address-book"></i> Nuevo Proyecto
+                </a>
+              </button>
+            </div>
             <div class="p-10">
+              
+            </div>
+            <div class="p-10" style="display:inline-block">
               Año  
                 <select class="form-control" @change="cargar()" v-model="anio" style="width:auto;display:inline-block;">
                   <option value="Todos">Todos</option>
@@ -46,18 +59,8 @@
                   <option value="2022-12-31">2022</option>
                 </select>
             </div>
-            <div class="p-10">
-              <button class="btn btn-sm btn-primary">
-                <a href="{{route('prospectos.create')}}" style="color:white;">
-                  <i class="fas fa-address-book"></i> Nuevo Proyecto
-                </a>
-              </button>
-            </div>
-          </h3>
-        </div>
-        <div class="panel-body">
-          <div id="oculto" class="hide">
-            <dropdown id="fecha_ini_control" class="marg025">
+            <div class="p-10" style="display:inline-block">
+              <dropdown id="fecha_ini_control" class="marg025">
               <div class="input-group">
                 <div class="input-group-btn">
                   <btn class="dropdown-toggle" style="background-color:#fff;">
@@ -97,7 +100,17 @@
                 </li>
               </template>
             </dropdown>
+
+            </div>
+            
+          </h3>
+        </div>
+        <div class="panel-body">
+          <!--
+          <div id="oculto" class="hide">
+            
           </div>
+        -->
           <div class="table-responsive">
             <table id="tabla" class="table table-bordred" style="width:100%;"
               data-page-length="100">
@@ -193,11 +206,11 @@ const app = new Vue({
     mounted(){
       $.fn.dataTable.moment( 'DD/MM/YYYY' );
       this.tabla = $("#tabla").DataTable({
-        "dom": 'f<"#fechas_container.pull-left">ltip',
+        "dom": 'f<"#fechas_container.pull-left">tlip',
         "order": [[ 4, "desc" ]]
       });
-      $("#fechas_container").append($("#fecha_ini_control"));
-      $("#fechas_container").append($("#fecha_fin_control"));
+      //$("#fechas_container").append($("#fecha_ini_control"));
+      //$("#fechas_container").append($("#fecha_fin_control"));
       
       var vue = this;
       
@@ -234,8 +247,8 @@ const app = new Vue({
       cargar(){
         axios.post('/prospectos/listado', {id: this.usuarioCargado , anio:this.anio})
         .then(({data}) => {
-          $("#oculto").append($("#fecha_ini_control"));
-          $("#oculto").append($("#fecha_fin_control"));
+          //$("#oculto").append($("#fecha_ini_control"));
+          //$("#oculto").append($("#fecha_fin_control"));
           this.tabla.destroy();
           this.prospectos = data.prospectos;
           swal({
@@ -247,8 +260,8 @@ const app = new Vue({
               "dom": 'f<"#fechas_container.pull-left">ltip',
               "order": [[ 4, "desc" ]]
             });
-            $("#fechas_container").append($("#fecha_ini_control"));
-            $("#fechas_container").append($("#fecha_fin_control"));
+            //$("#fechas_container").append($("#fecha_ini_control"));
+            //$("#fechas_container").append($("#fecha_fin_control"));
           });
         })
         .catch(({response}) => {
