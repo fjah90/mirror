@@ -2013,7 +2013,7 @@
                               ],
                               dangerMode: true,
                             }).then(function(isConfirm) {
-                              if (isConfirm) {
+                              if (isConfirm.value) {
                                 window.location.href = "/proyectos-aprobados/"+data.proyecto_aprobado.id+"/ordenes-compra";    
                               } else {
                                 swal("Permanecer");
