@@ -242,7 +242,7 @@ class ProspectosController extends Controller
             
         }
 
-        return response()->json(['success' => true, "error" => false, 'prospectos' => $prospectos], 200);
+        return response()->json(['success' => true, "error" => false, 'cotizaciones' => $cotizaciones], 200);
     }
 
     /**

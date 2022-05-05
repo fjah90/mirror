@@ -176,7 +176,7 @@ const app = new Vue({
           //$("#oculto").append($("#fecha_ini_control"));
           //$("#oculto").append($("#fecha_fin_control"));
           this.tabla.destroy();
-          this.prospectos = data.prospectos;
+          this.cotizaciones = data.cotizaciones;
           swal({
             title: "Exito",
             text: "Datos Cargados",
