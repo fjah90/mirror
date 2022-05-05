@@ -57,11 +57,7 @@
                   <option value="2021-12-31">2021</option>
                   <option value="2022-12-31">2022</option>
                 </select>
-            </div>
-              
-
-            </div>
-            
+            </div>          
           </h3>
         </div>
         <div class="panel-body">
@@ -144,7 +140,6 @@
               </tbody>
             </table>
           </div>
-        
         </div>
       </div>
     </div>
