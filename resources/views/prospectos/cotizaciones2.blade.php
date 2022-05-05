@@ -129,9 +129,9 @@
             </div>
 
             <div class="form-group text-right">
-                <button type="submit" class="btn btn-primary" :disabled="cargando">Aceptar</button>
+                <button type="submit" class="btn btn-primary" :disabled="cargando" @clic='cotizacionueva()'>Aceptar</button>
                 <button type="button" class="btn btn-default"
-                        @click="aceptar.cotizacion_id=0; openAceptar=false;">
+                        @click="proyecto_id=0; modalNuecaCotizacion=false;">
                     Cancelar
                 </button>
             </div>
@@ -232,6 +232,18 @@ const app = new Vue({
           });
         });
       },
+      aceptarCotizacion() {
+        if (this.proyecto_id == 0) {
+          swal({
+              title: "Error",
+              text: response.data.message || "Debe de seleccionar un proyecto o crear uno nuevo para continuar.",
+              type: "error"
+          });
+        }
+        else{ 
+          window.location.href = "/prospectos/"+this.proyecto_id+"/cotizar";
+        }
+      }
     }
 });
 </script>
