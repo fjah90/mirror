@@ -65,11 +65,7 @@
           </h3>
         </div>
         <div class="panel-body">
-          <!--
-          <div id="oculto" class="hide">
-            
-          </div>
-        -->
+          
           <div class="table-responsive">
             <table id="tabla" class="table table-bordred" style="width:100%;"
               data-page-length="100">
@@ -148,6 +144,7 @@
               </tbody>
             </table>
           </div>
+        
         </div>
       </div>
     </div>
