@@ -122,7 +122,6 @@
                   <th>Número de cotización</th>
                   <th>Total</th>
                   <th style="min-width:105px;"></th>
-                  <th class="hide">Cotizacion id</th>
                 </tr>
               </thead>
               <tbody>
@@ -142,12 +141,7 @@
                   <td class="text-right">
                     
                   </td>
-                  <td class="hide">
-                    <template v-for="(cotizacion, index) in prospecto.cotizaciones">
-                        <span>@{{cotizacion.numero}}</span><br/>
-                    </template>
-                    
-                  </td>
+                  
                 </tr>
               </tbody>
             </table>
