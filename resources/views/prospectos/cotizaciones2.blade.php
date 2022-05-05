@@ -161,7 +161,8 @@ const app = new Vue({
       modalNuecaCotizacion: false,
       fecha_ini: '',
       fecha_fin: '',
-      proyecto_id: ''
+      proyecto_id: '',
+      cargando: false
     },
     mounted(){
       $.fn.dataTable.moment( 'DD/MM/YYYY' );
