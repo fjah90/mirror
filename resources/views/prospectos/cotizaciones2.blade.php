@@ -140,18 +140,7 @@
                     <td>@{{cotizacion.total | formatoMoneda}} @{{cotizacion.moneda|formatoCurrency}}</td>
                   </template>
                   <td class="text-right">
-                    <a class="btn btn-xs btn-info" title="Ver" :href="'/prospectos/'+prospecto.id">
-                      <i class="far fa-eye"></i>
-                    </a>
-                    <a class="btn btn-xs btn-warning" title="Editar" :href="'/prospectos/'+prospecto.id+'/editar'">
-                      <i class="fas fa-pencil-alt"></i>
-                    </a>
-                    <a class="btn btn-xs btn-success" title="Cotizar" :href="'/prospectos/'+prospecto.id+'/cotizar'">
-                      <i class="far fa-file-alt"></i>
-                    </a>
-                    <button class="btn btn-xs btn-danger" title="Borrar" @click="borrar(prospecto, index)">
-                      <i class="fas fa-times"></i>
-                    </button>
+                    
                   </td>
                   <td class="hide">
                     <template v-for="(cotizacion, index) in prospecto.cotizaciones">
