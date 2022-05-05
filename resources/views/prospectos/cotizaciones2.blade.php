@@ -117,7 +117,7 @@
                 <select name="proyecto_id" v-model="proyecto_id"
                             class="form-control" required id="proyecto-select" style="width: 300px;">
                   @foreach($proyectos as $proyecto)
-                      <option value="{{$proyecto->id}}" @click="copiar3(index,{{$proyecto->id}});">{{$proyecto->nombre}}--{{$proyecto->cliente->nombre}}</option>
+                      <option value="{{$proyecto->id}}">{{$proyecto->nombre}}--{{$proyecto->cliente->nombre}}</option>
                   @endforeach
                 </select>
                 
@@ -236,7 +236,7 @@ const app = new Vue({
         if (this.proyecto_id == 0) {
           swal({
               title: "Error",
-              text: response.data.message || "Debe de seleccionar un proyecto o crear uno nuevo para continuar.",
+              text: "Debe de seleccionar un proyecto o crear uno nuevo para continuar.",
               type: "error"
           });
         }
