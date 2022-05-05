@@ -125,7 +125,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="(cotizacio, index) in cotizaciones">
+                <tr v-for="(cotizacion, index) in cotizaciones">
                   <td class="hide">@{{index+1}}</td>
                   <template>
                     <td>@{{cotizacion.user_name}}</td>
