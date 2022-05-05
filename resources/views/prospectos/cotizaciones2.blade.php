@@ -39,10 +39,8 @@
               @endrole
             </div>
             <div class="p-10" style="display:inline-block;float: right;">
-              <button class="btn btn-sm btn-primary">
-                <a href="{{route('prospectos.create')}}" style="color:white;">
-                  <i class="fas fa-address-book"></i> Nuevo Proyecto
-                </a>
+              <button class="btn btn-sm btn-primary" @click="modalNuecaCotizacion=true">
+                  <i class="fas fa-address-book"></i> Nueva Cotización
               </button>
             </div>
             <div class="p-10">
@@ -109,6 +107,40 @@
       </div>
     </div>
   </div>
+
+  <!-- Aceptar Modal -->
+    <modal v-model="modalNuecaCotizacion" :title="'Nueva Cotización'" :footer="false">
+        
+            
+            <div class="form-group">
+                <label class="control-label">Seleccione un proyecto</label>
+                <select name="proyecto_id" v-model="proyecto_id"
+                            class="form-control" required id="proyecto-select" style="width: 300px;">
+                  @foreach($proyectos as $proyecto)
+                      <option value="{{$proyecto->id}}" @click="copiar3(index,{{$proyecto->id}});">{{$proyecto->nombre}}--{{$proyecto->cliente->nombre}}</option>
+                  @endforeach
+                </select>
+                <label class="control-label">O</label>
+                <div class="p-10" style="display:inline-block;float: right;">
+                  <button class="btn btn-sm btn-primary">
+                    <a href="{{route('prospectos.create')}}" style="color:white;">
+                      <i class="fas fa-address-book"></i> Nuevo Proyecto
+                    </a>
+                  </button>
+                </div>
+            </div>
+
+            <div class="form-group text-right">
+                <button type="submit" class="btn btn-primary" :disabled="cargando">Aceptar</button>
+                <button type="button" class="btn btn-default"
+                        @click="aceptar.cotizacion_id=0; openAceptar=false;">
+                    Cancelar
+                </button>
+            </div>
+        
+    </modal>
+    <!-- /.Aceptar Modal -->
+
 </section>
 <!-- /.content -->
 @stop
@@ -126,8 +158,10 @@ const app = new Vue({
       anio:'2022-12-31',
       tabla: {},
       locale: localeES,
+      modalProducto: false,
       fecha_ini: '',
-      fecha_fin: ''
+      fecha_fin: '',
+      proyecto_id
     },
     mounted(){
       $.fn.dataTable.moment( 'DD/MM/YYYY' );
