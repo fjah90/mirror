@@ -82,6 +82,7 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/proyectos-aprobados/listado', 'ProyectosAprobadosController@listado');
     Route::post('/prospectos/listado', 'ProspectosController@listado');
+    Route::post('/prospectos/listado3', 'ProspectosController@listado3');
     Route::post('/prospectos/listadocot', 'ProspectosController@listadocot');
     Route::post('/cuentas-cobrar/listado', 'CuentasCobrarController@listado');
     Route::post('/cuentas-pagar/listado', 'CuentasPagarController@listado');

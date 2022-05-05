@@ -170,6 +170,35 @@ const app = new Vue({
       dateParser(value){
   			return moment(value, 'DD/MM/YYYY').toDate().getTime();
       },
+      cargar(){
+        axios.post('/prospectos/listado3', {id: this.usuarioCargado , anio:this.anio})
+        .then(({data}) => {
+          //$("#oculto").append($("#fecha_ini_control"));
+          //$("#oculto").append($("#fecha_fin_control"));
+          this.tabla.destroy();
+          this.prospectos = data.prospectos;
+          swal({
+            title: "Exito",
+            text: "Datos Cargados",
+            type: "success"
+          }).then(()=>{
+            this.tabla = $("#tabla").DataTable({
+              "dom": 'f<"#fechas_container.pull-left">ltip',
+              "order": [[ 4, "desc" ]]
+            });
+            //$("#fechas_container").append($("#fecha_ini_control"));
+            //$("#fechas_container").append($("#fecha_fin_control"));
+          });
+        })
+        .catch(({response}) => {
+          console.error(response);
+          swal({
+            title: "Error",
+            text: response.data.message || "Ocurrio un error inesperado, intente mas tarde",
+            type: "error"
+          });
+        });
+      },
     }
 });
 </script>

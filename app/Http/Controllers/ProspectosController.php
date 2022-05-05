@@ -187,6 +187,64 @@ class ProspectosController extends Controller
         return response()->json(['success' => true, "error" => false, 'prospectos' => $prospectos], 200);
     }
 
+    public function listado3(Request $request)
+    {
+     
+        if ($request->anio == '2019-12-31') {
+            $inicio = Carbon::parse('2019-01-01');    
+        }
+        elseif ($request->anio == '2020-12-31') {
+            $inicio = Carbon::parse('2020-01-01');    
+        }
+        elseif ($request->anio == '2022-12-31') {
+            $inicio = Carbon::parse('2022-01-01');    
+        }
+        else{
+            $inicio = Carbon::parse('2021-01-01');
+        }
+        
+        if ($request->id == 'Todos') {
+
+            if ($request->anio == 'Todos') {
+
+                $cotizaciones = ProspectoCotizacion::leftjoin('prospectos', 'prospectos_cotizaciones.prospecto_id', '=', 'prospectos.id')
+                ->leftjoin('clientes', 'prospectos.cliente_id', '=', 'clientes.id')
+                ->leftjoin('users', 'prospectos_cotizaciones.user_id', '=', 'users.id')
+                ->select('prospectos_cotizaciones.*', 'users.name as user_name', 'prospectos.nombre as prospecto_nombre', 'prospectos.id as prospecto_id', 'clientes.nombre as cliente_nombre')
+                ->orderBy('fecha', 'desc')->get();
+            }
+            else{
+                $anio = Carbon::parse($request->anio);
+                $cotizaciones = ProspectoCotizacion::leftjoin('prospectos', 'prospectos_cotizaciones.prospecto_id', '=', 'prospectos.id')
+                ->leftjoin('clientes', 'prospectos.cliente_id', '=', 'clientes.id')
+                ->leftjoin('users', 'prospectos_cotizaciones.user_id', '=', 'users.id')
+                ->select('prospectos_cotizaciones.*', 'users.name as user_name', 'prospectos.nombre as prospecto_nombre', 'prospectos.id as prospecto_id', 'clientes.nombre as cliente_nombre')
+                ->whereBetween('prospectos_cotizaciones.created_at', [$inicio, $anio])->orderBy('fecha', 'desc')->get();
+            }
+        } else {
+            
+
+            if ($request->anio == 'Todos') {
+                $cotizaciones = ProspectoCotizacion::leftjoin('prospectos', 'prospectos_cotizaciones.prospecto_id', '=', 'prospectos.id')
+                ->leftjoin('clientes', 'prospectos.cliente_id', '=', 'clientes.id')
+                ->leftjoin('users', 'prospectos_cotizaciones.user_id', '=', 'users.id')
+                ->select('prospectos_cotizaciones.*', 'users.name as user_name', 'prospectos.nombre as prospecto_nombre', 'prospectos.id as prospecto_id', 'clientes.nombre as cliente_nombre')
+                ->where('prospectos_cotizaciones.user_id', '=', $request->id)->orderBy('fecha', 'desc')->get();
+            }
+            else{
+                $anio = Carbon::parse($request->anio);
+                $cotizaciones = ProspectoCotizacion::leftjoin('prospectos', 'prospectos_cotizaciones.prospecto_id', '=', 'prospectos.id')
+                ->leftjoin('clientes', 'prospectos.cliente_id', '=', 'clientes.id')
+                ->leftjoin('users', 'prospectos_cotizaciones.user_id', '=', 'users.id')
+                ->select('prospectos_cotizaciones.*', 'users.name as user_name', 'prospectos.nombre as prospecto_nombre', 'prospectos.id as prospecto_id', 'clientes.nombre as cliente_nombre')
+                ->where('prospectos_cotizaciones.user_id', '=', $request->id)->whereBetween('prospectos_cotizaciones.created_at', [$inicio, $anio])->orderBy('fecha', 'desc')->get();
+            }
+            
+        }
+
+        return response()->json(['success' => true, "error" => false, 'prospectos' => $prospectos], 200);
+    }
+
     /**
      * Show the form for creating a new resource.
      *
