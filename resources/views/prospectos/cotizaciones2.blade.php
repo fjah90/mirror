@@ -127,10 +127,10 @@
               <tbody>
                 <tr v-for="(cotizacio, index) in cotizaciones">
                   <td class="hide">@{{index+1}}</td>
-                  <template v-if="prospecto.user">
+                  <template>
                     <td>@{{cotizacion.user_name}}</td>
                   </template>
-                  <template v-else>
+                  <template>
                     <td>@{{cotizacion.cliente_nombre}}</td>
                   </template>
                   <td>@{{cotizacion.prospecto_nombre}}</td>
