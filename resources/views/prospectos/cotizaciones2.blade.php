@@ -118,13 +118,6 @@
                           <i class="fas fa-user-check"></i>
                       </a>
                       
-                      <a v-if="cotizacion.aceptada" class="btn btn-xs text-warning"
-                     title="Orden Compra"
-                     :href="'/proyectos-aprobados/'+ cotizacion.proyecto_aprobado.id + '/ordenes-compra'"
-                     target="_blank">
-                      <i class="fas fa-arrow-up"></i>
-                      </a>
-                      
                       <template v-else>
                           <button class="btn btn-xs btn-warning" title="Editar"
                                   @click="editar(index, cotizacion)">
