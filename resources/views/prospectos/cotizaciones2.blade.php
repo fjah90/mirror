@@ -58,47 +58,7 @@
                   <option value="2022-12-31">2022</option>
                 </select>
             </div>
-            <div class="p-10" style="display:inline-block">
-              <dropdown id="fecha_ini_control" class="marg025">
-              <div class="input-group">
-                <div class="input-group-btn">
-                  <btn class="dropdown-toggle" style="background-color:#fff;">
-                    <i class="fas fa-calendar"></i>
-                  </btn>
-                </div>
-                <input class="form-control" type="text" placeholder="DD/MM/YYYY"
-                  v-model="fecha_ini" readonly
-                  style="width:120px;"
-                />
-              </div>
-              <template slot="dropdown">
-                <li>
-                  <date-picker :locale="locale" :today-btn="false"
-                  format="dd/MM/yyyy" :date-parser="dateParser"
-                  v-model="fecha_ini"/>
-                </li>
-              </template>
-            </dropdown>
-            <dropdown id="fecha_fin_control" class="marg025">
-              <div class="input-group">
-                <div class="input-group-btn">
-                  <btn class="dropdown-toggle" style="background-color:#fff;">
-                    <i class="fas fa-calendar"></i>
-                  </btn>
-                </div>
-                <input class="form-control" type="text" placeholder="DD/MM/YYYY"
-                  v-model="fecha_fin" readonly
-                  style="width:120px;"
-                />
-              </div>
-              <template slot="dropdown">
-                <li>
-                  <date-picker :locale="locale" :today-btn="false"
-                  format="dd/MM/yyyy" :date-parser="dateParser"
-                  v-model="fecha_fin"/>
-                </li>
-              </template>
-            </dropdown>
+              
 
             </div>
             
@@ -139,9 +99,58 @@
                     <td>@{{cotizacion.total | formatoMoneda}} @{{cotizacion.moneda|formatoCurrency}}</td>
                   </template>
                   <td class="text-right">
-                    
-                  </td>
-                  
+                      <button class="btn btn-xs btn-default" title="Notas"
+                              @click="notas.cotizacion_id=cotizacion.id;notas.mensaje=cotizacion.notas2;openNotas=true;">
+                          <i class="far fa-sticky-note"></i>
+                      </button>
+                      <a class="btn btn-xs btn-success" title="PDF" :href="cotizacion.archivo"
+                         :download="'C '+cotizacion.numero+' Intercorp '+prospecto.cliente.nombre+' '+prospecto.nombre+'.pdf'">
+                          <i class="far fa-file-pdf"></i>
+                      </a>
+                      <button class="btn btn-xs btn-info" title="Enviar"
+                              @click="enviar.cotizacion_id=cotizacion.id; enviar.numero=cotizacion.numero; openEnviar=true;">
+                          <i class="far fa-envelope"></i>
+                      </button>
+                      <a v-if="cotizacion.aceptada" class="btn btn-xs text-primary"
+                         title="Comprobante Confirmación"
+                         :href="cotizacion.comprobante_confirmacion"
+                         target="_blank">
+                          <i class="fas fa-user-check"></i>
+                      </a>
+                      
+                      <a v-if="cotizacion.aceptada" class="btn btn-xs text-warning"
+                     title="Orden Compra"
+                     :href="'/proyectos-aprobados/'+ cotizacion.proyecto_aprobado.id + '/ordenes-compra'"
+                     target="_blank">
+                      <i class="fas fa-arrow-up"></i>
+                      </a>
+                      
+                      <template v-else>
+                          <button class="btn btn-xs btn-warning" title="Editar"
+                                  @click="editar(index, cotizacion)">
+                              <i class="fas fa-pencil-alt"></i>
+                          </button>
+                          <button class="btn btn-xs btn-primary" title="Aceptar"
+                                  @click="aceptar.cotizacion_id=cotizacion.id; openAceptar=true;">
+                              <i class="fas fa-user-check"></i>
+                          </button>
+                          @role('Administrador')
+                          <button class="btn btn-xs btn-danger" title="Eliminar"
+                                  @click="borrar(index, cotizacion)">
+                              <i class="fas fa-times"></i>
+                          </button>
+                          @endrole
+                      </template>
+                      <button class="btn btn-xs btn-white" title="Copiar"
+                              @click="copiar(index, cotizacion)">
+                          <i class="far fa-copy"></i>
+                      </button>
+                      <button class="btn btn-xs btn-green" title="Copiar a otro proyecto"
+                              @click="copiar2(index, cotizacion); openCopiar=true ">
+                          <i class="far fa-copy"></i>
+                      </button>
+
+                  </td>  
                 </tr>
               </tbody>
             </table>
