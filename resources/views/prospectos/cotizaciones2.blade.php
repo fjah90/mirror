@@ -134,6 +134,9 @@
                               @click="copiar2(index, cotizacion); openCopiar=true ">
                           <i class="far fa-copy"></i>
                       </button>
+                      <a title="Ver" :href="'/prospectos/'+cotizacion.prospecto_id+'/cotizar'" class="btn btn-info">
+                            <i class="far fa-eye"></i>
+                      </a>
 
                   </td>  
                 </tr>
