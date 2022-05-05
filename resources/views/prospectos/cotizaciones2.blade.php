@@ -129,7 +129,7 @@
             </div>
 
             <div class="form-group text-right">
-                <button type="submit" class="btn btn-primary" :disabled="cargando" @clic='cotizacionueva()'>Aceptar</button>
+                <button type="submit" class="btn btn-primary" :disabled="cargando" @click='cotizacionueva()'>Aceptar</button>
                 <button type="button" class="btn btn-default"
                         @click="proyecto_id=0; modalNuecaCotizacion=false;">
                     Cancelar
