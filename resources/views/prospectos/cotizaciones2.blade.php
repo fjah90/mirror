@@ -158,7 +158,7 @@ const app = new Vue({
       anio:'2022-12-31',
       tabla: {},
       locale: localeES,
-      modalProducto: false,
+      modalNuecaCotizacion
       fecha_ini: '',
       fecha_fin: '',
       proyecto_id
