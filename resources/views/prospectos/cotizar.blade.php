@@ -2007,12 +2007,18 @@
                               text: "La cotización ha sido aceptada y se ha generado una cuenta por cobrar, ¿desea ir a la cuenta por cobrar?",
                               icon: "warning",
                               buttons: [
-                                'No!',
-                                'Si, ir a la cuenta por cobrar!'
+                                yes: {
+                                    text: "'Si, ir a la cuenta por cobrar!'",
+                                    value: "yes"
+                                  },
+                                  no: {
+                                    text: "No",
+                                    value: "no"
+                                  }
                               ],
                               dangerMode: true,
                             }).then(function(isConfirm) {
-                              if (isConfirm) {
+                              if (isConfirm == 'yes') {
                                 window.location.href = "/proyectos-aprobados/"+data.proyecto_aprobado.id+"/ordenes-compra";    
                               } else {
                                 swal("Permanecer");
