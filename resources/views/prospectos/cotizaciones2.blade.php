@@ -232,7 +232,7 @@ const app = new Vue({
           });
         });
       },
-      aceptarCotizacion() {
+      cotizacionueva() {
         if (this.proyecto_id == 0) {
           swal({
               title: "Error",
