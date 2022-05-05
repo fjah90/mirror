@@ -120,12 +120,15 @@
                       <option value="{{$proyecto->id}}" @click="copiar3(index,{{$proyecto->id}});">{{$proyecto->nombre}}--{{$proyecto->cliente->nombre}}</option>
                   @endforeach
                 </select>
-                
-                <button class="btn btn-sm btn-primary" style="display:inline-block;float: right;">
+                <div class="form-control">
+                  <button class="btn btn-sm btn-primary" >
                   <a href="{{route('prospectos.create')}}" style="color:white;">
                     <i class="fas fa-address-book"></i> Nuevo Proyecto
                   </a>
-                </button>
+                  </button>  
+                </div>
+                
+                
                 
             </div>
 
