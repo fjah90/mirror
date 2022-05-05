@@ -72,6 +72,12 @@ class ProspectosController extends Controller
 
         */
 
+        if (auth()->user()->tipo == 'Administrador') {
+            $usuarios = User::all();
+        } else {
+            $usuarios = [];
+        }
+
         $cotizaciones = ProspectoCotizacion::leftjoin('prospectos', 'prospectos_cotizaciones.prospecto_id', '=', 'prospectos.id')
             ->leftjoin('clientes', 'prospectos.cliente_id', '=', 'clientes.id')
             ->leftjoin('users', 'prospectos_cotizaciones.user_id', '=', 'users.id')
