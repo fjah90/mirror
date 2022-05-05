@@ -78,7 +78,7 @@ class ProspectosController extends Controller
             ->select('prospectos_cotizaciones.*', 'users.name as user_name', 'prospectos.nombre as prospecto_nombre', 'prospectos.id as prospecto_id', 'clientes.nombre as cliente_nombre')
             ->where('prospectos_cotizaciones.user_id', '=', $user->id)->whereBetween('prospectos_cotizaciones.created_at', [$inicio, $anio])->orderBy('fecha', 'desc')->get();
 
-        return view('cotizaciones2.index', compact('cotizaciones', 'usuarios'));        
+        return view('prospectos.cotizaciones2', compact('cotizaciones', 'usuarios'));        
     }
 
 
