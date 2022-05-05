@@ -162,6 +162,11 @@ const app = new Vue({
       proyecto_id: '',
       cargando: false
     },
+    filters: {
+        formatoMoneda(numero) {
+            return accounting.formatMoney(numero, "$", 2);
+        },
+    },
     mounted(){
       $.fn.dataTable.moment( 'DD/MM/YYYY' );
       this.tabla = $("#tabla").DataTable({
