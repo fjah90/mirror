@@ -438,11 +438,24 @@ const app = new Vue({
 
           this.openConfirmar = false;
           this.cargando = false;
+
           swal({
-            title: "Exito",
-            text: "La orden ha sido confirmada",
-            type: "success"
-          });
+            title: "Cotizacion Aceptada",
+            text: "La orden ha sido confirmada y se ha generado una orden en proceso, ¿desea ir a la orden en proceso?",
+            icon: "warning",
+            showCancelButton: true,
+            buttons: [
+              'No!',
+              'Si, ir a la orden en proceso!'
+            ],
+            dangerMode: true,
+          }).then(function(isConfirm) {
+            if (isConfirm.value) {
+              window.location.href = "/proyectos-aprobados/";    
+            } else {
+              swal("Permanecer");
+            }
+          })
 
         })
         .catch(({response}) => {

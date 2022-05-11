@@ -2003,11 +2003,30 @@
                             this.openAceptar = false;
                             this.cargando = false;
                             swal({
+                              title: "Cotizacion Aceptada",
+                              text: "La cotización ha sido aceptada y se ha generado una orden de compra, ¿desea ir a la orden de compra?",
+                              icon: "warning",
+                              showCancelButton: true,
+                              buttons: [
+                                'No!',
+                                'Si, ir a la cuenta por cobrar!'
+                              ],
+                              dangerMode: true,
+                            }).then(function(isConfirm) {
+                              if (isConfirm.value) {
+                                window.location.href = "/proyectos-aprobados/"+data.proyecto_aprobado.id+"/ordenes-compra";    
+                              } else {
+                                swal("Permanecer");
+                              }
+                            })
+                            /*
+                            swal({
                                 title: "Cotizacion Aceptada",
                                 text: "La cotización ha sido aceptada y se ha generado una cuenta por cobrar",
                                 type: "success"
                             });
                             window.location.href = "/proyectos-aprobados/"+data.proyecto_aprobado.id+"/ordenes-compra";
+                            */
                         })
                         .catch(({response}) => {
                             console.error(response);

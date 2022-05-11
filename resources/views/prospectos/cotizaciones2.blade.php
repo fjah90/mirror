@@ -18,19 +18,18 @@
 @section('content')
 <!-- Content Header (Page header) -->
 <section class="content-header">
-  <h1 style="font-weight: bolder;">Proyectos en proceso</h1>
+  <h1 style="font-weight: bolder;">Cotizaciones en proceso</h1>
 </section>
 <!-- Main content -->
 <section class="content" id="content">
   <div class="row">
     <div class="col-lg-12">
       <div class="panel">
-        <div class="panel-heading ">
+        <div class="panel-heading">
           <h3 class="panel-title">
-            <div class="p-10" style="display:inline-block;">
-              Proyectos
+            <div class="p-10" style="display:inline-block">
+              Usuario
               @role('Administrador')
-                de
                 <select class="form-control" @change="cargar()" v-model="usuarioCargado" style="width:auto;display:inline-block;">
                   <option value="Todos">Todos</option>
                   @foreach($usuarios as $usuario)
@@ -39,17 +38,15 @@
                 </select>
               @endrole
             </div>
-            <div class="p-10 " style="display:inline-block;float: right;">
-              <button class="btn btn-sm btn-primary">
-                <a href="{{route('prospectos.create')}}" style="color:white;">
-                  <i class="fas fa-address-book"></i> Nuevo Proyecto
-                </a>
+            <div class="p-10" style="display:inline-block;float: right;">
+              <button class="btn btn-sm btn-primary" @click="modalNuecaCotizacion=true">
+                  <i class="fas fa-address-book"></i> Nueva Cotización
               </button>
             </div>
             <div class="p-10">
               
             </div>
-            <div class="p-10 " style="display:inline-block">
+            <div class="p-10" style="display:inline-block">
               Año  
                 <select class="form-control" @change="cargar()" v-model="anio" style="width:auto;display:inline-block;">
                   <option value="Todos">Todos</option>
@@ -58,49 +55,7 @@
                   <option value="2021-12-31">2021</option>
                   <option value="2022-12-31">2022</option>
                 </select>
-            </div>
-            <div class="p-10" style="display:inline-block">
-              <dropdown id="fecha_ini_control" class="marg025" style="padding-bottom: 10px;">
-              <div class="input-group">
-                <div class="input-group-btn">
-                  <btn class="dropdown-toggle" style="background-color:#fff;">
-                    <i class="fas fa-calendar"></i>
-                  </btn>
-                </div>
-                <input class="form-control" type="text" placeholder="DD/MM/YYYY"
-                  v-model="fecha_ini" readonly
-                  style="width:120px;"
-                />
-              </div>
-              <template slot="dropdown">
-                <li>
-                  <date-picker :locale="locale" :today-btn="false"
-                  format="dd/MM/yyyy" :date-parser="dateParser"
-                  v-model="fecha_ini"/>
-                </li>
-              </template>
-            </dropdown>
-            <dropdown id="fecha_fin_control" class="marg025" style="padding-bottom: 10px;">
-              <div class="input-group">
-                <div class="input-group-btn">
-                  <btn class="dropdown-toggle" style="background-color:#fff;">
-                    <i class="fas fa-calendar"></i>
-                  </btn>
-                </div>
-                <input class="form-control" type="text" placeholder="DD/MM/YYYY"
-                  v-model="fecha_fin" readonly
-                  style="width:120px;"
-                />
-              </div>
-              <template slot="dropdown">
-                <li>
-                  <date-picker :locale="locale" :today-btn="false"
-                  format="dd/MM/yyyy" :date-parser="dateParser"
-                  v-model="fecha_fin"/>
-                </li>
-              </template>
-            </dropdown>
-            </div>
+            </div>          
           </h3>
         </div>
         <div class="panel-body">
@@ -109,44 +64,41 @@
             <table id="tabla" class="table table-bordred" style="width:100%;"
               data-page-length="100">
               <thead>
-                <tr style="background-color:#06a1ce">
+                <tr style="background-color:#c37ff3">
                   <th class="hide">#</th>
                   <th>Usuario</th>
                   <th>Cliente</th>
                   <th>Nombre de Proyecto</th>
-                  <th>Cotizaciones</th>
-                  <th>Cot Aprobadas</th>
+                  <th>Número de cotización</th>
+                  <th>Total</th>
                   <th style="min-width:105px;"></th>
-                  <th class="hide">Cotizacion id</th>
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="(prospecto, index) in prospectos">
+                <tr v-for="(cotizacion, index) in cotizaciones">
                   <td class="hide">@{{index+1}}</td>
-                  <template v-if="prospecto.user">
-                    <td>@{{prospecto.user.name}}</td>
+                  <template>
+                    <td>@{{cotizacion.user_name}}</td>
                   </template>
-                  <template v-else>
-                    <td>@{{prospecto.cliente.usuario_nombre}} </td>
+                  <template>
+                    <td>@{{cotizacion.cliente_nombre}}</td>
                   </template>
-                  <td>@{{prospecto.cliente.nombre}}</td>
-                  <td>@{{prospecto.nombre}}</td>
-                  <td>@{{prospecto.num_cotizaciones}}</td>
-                  <td>@{{prospecto.num_cotaprobadas}}</td>
-                  <template v-else>
-                    <td></td>
-                    <td></td>
+                  <td>@{{cotizacion.prospecto_nombre}}</td>
+                  <td>@{{cotizacion.numero}}</td>
+                  <template>
+                    <td>@{{cotizacion.total | formatoMoneda}} @{{cotizacion.moneda|formatoCurrency}}</td>
                   </template>
                   <td class="text-right">
-                    <a class="btn btn-xs btn-info" title="Ver" :href="'/prospectos/'+prospecto.id">
-                      <i class="far fa-eye"></i>
-                    </a>
-                  </td>
-                  <td class="hide">
-                    <template v-for="(cotizacion, index) in prospecto.cotizaciones">
-                        <span>@{{cotizacion.numero}}</span><br/>
-                    </template>
-                  </td>
+                      <a class="btn btn-xs btn-success" title="PDF" :href="cotizacion.archivo"
+                         :download="'C '+cotizacion.numero+' Intercorp '+cotizacion.cliente_nombre+' '+cotizacion.prospecto_nombre+'.pdf'">
+                          <i class="far fa-file-pdf"></i>
+                      </a>
+                      
+                      <a title="Ver" :href="'/prospectos/'+cotizacion.prospecto_id+'/cotizar'" class="btn btn-xs btn-info">
+                            <i class="far fa-eye"></i>
+                      </a>
+
+                  </td>  
                 </tr>
               </tbody>
             </table>
@@ -155,6 +107,38 @@
       </div>
     </div>
   </div>
+
+  <!-- Aceptar Modal -->
+    <modal v-model="modalNuecaCotizacion" :title="'Nueva Cotización'" :footer="false">
+        
+            
+            <div class="form-group">
+                <label class="control-label">Seleccione un proyecto</label>
+                <select name="proyecto_id" v-model="proyecto_id"
+                            class="form-control" required id="proyecto-select" style="width: 300px;">
+                  @foreach($proyectos as $proyecto)
+                      <option value="{{$proyecto->id}}">{{$proyecto->nombre}}--{{$proyecto->cliente->nombre}}</option>
+                  @endforeach
+                </select>
+                
+                  <button class="btn btn-sm btn-primary" >
+                  <a href="{{route('prospectos.create')}}" style="color:white;">
+                    <i class="fas fa-address-book"></i> Nuevo Proyecto
+                  </a>
+                  </button>           
+            </div>
+
+            <div class="form-group text-right">
+                <button type="submit" class="btn btn-primary" :disabled="cargando" @click='cotizacionueva()'>Aceptar</button>
+                <button type="button" class="btn btn-default"
+                        @click="proyecto_id=0; modalNuecaCotizacion=false;">
+                    Cancelar
+                </button>
+            </div>
+        
+    </modal>
+    <!-- /.Aceptar Modal -->
+
 </section>
 <!-- /.content -->
 @stop
@@ -167,13 +151,21 @@
 const app = new Vue({
     el: '#content',
     data: {
-      prospectos: {!! json_encode($prospectos) !!},
+      cotizaciones: {!! json_encode($cotizaciones) !!},
       usuarioCargado: {{auth()->user()->id}},
-      anio:'Todos',
+      anio:'2022-12-31',
       tabla: {},
       locale: localeES,
+      modalNuecaCotizacion: false,
       fecha_ini: '',
-      fecha_fin: ''
+      fecha_fin: '',
+      proyecto_id: '',
+      cargando: false
+    },
+    filters: {
+        formatoMoneda(numero) {
+            return accounting.formatMoney(numero, "$", 2);
+        },
     },
     mounted(){
       $.fn.dataTable.moment( 'DD/MM/YYYY' );
@@ -217,12 +209,12 @@ const app = new Vue({
   			return moment(value, 'DD/MM/YYYY').toDate().getTime();
       },
       cargar(){
-        axios.post('/prospectos/listado', {id: this.usuarioCargado , anio:this.anio})
+        axios.post('/prospectos/listado3', {id: this.usuarioCargado , anio:this.anio})
         .then(({data}) => {
           //$("#oculto").append($("#fecha_ini_control"));
           //$("#oculto").append($("#fecha_fin_control"));
           this.tabla.destroy();
-          this.prospectos = data.prospectos;
+          this.cotizaciones = data.cotizaciones;
           swal({
             title: "Exito",
             text: "Datos Cargados",
@@ -245,38 +237,18 @@ const app = new Vue({
           });
         });
       },
-      borrar(prospecto, index){
-        swal({
-          title: 'Cuidado',
-          text: "Borrar el Proyecto "+prospecto.nombre+"?",
-          type: 'warning',
-          showCancelButton: true,
-          confirmButtonColor: '#3085d6',
-          cancelButtonColor: '#d33',
-          confirmButtonText: 'Si, Borrar',
-          cancelButtonText: 'No, Cancelar',
-        }).then((result) => {
-          if (result.value) {
-            axios.delete('/prospectos/'+prospecto.id, {})
-            .then(({data}) => {
-              this.prospectos.splice(index, 1);
-              swal({
-                title: "Exito",
-                text: "El Proyecto ha sido borrado",
-                type: "success"
-              });
-            })
-            .catch(({response}) => {
-              console.error(response);
-              swal({
-                title: "Error",
-                text: response.data.message || "Ocurrio un error inesperado, intente mas tarde",
-                type: "error"
-              });
-            });
-          } //if confirmacion
-        });
-      },//fin borrar
+      cotizacionueva() {
+        if (this.proyecto_id == 0) {
+          swal({
+              title: "Error",
+              text: "Debe de seleccionar un proyecto o crear uno nuevo para continuar.",
+              type: "error"
+          });
+        }
+        else{ 
+          window.location.href = "/prospectos/"+this.proyecto_id+"/cotizar";
+        }
+      }
     }
 });
 </script>
