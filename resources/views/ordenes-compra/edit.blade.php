@@ -758,9 +758,12 @@ const app = new Vue({
         return false;
       }
       
-      if(this.entrada.cantidad_convertida!="")
+      if(this.entrada.cantidad_convertida!="" && this.entrada.cantidad_convertida!=null && this.entrada.cantidad_convertida!=undefined){
         this.entrada.importe = this.entrada.cantidad_convertida * this.entrada.precio;
-      else this.entrada.importe = this.entrada.cantidad * this.entrada.precio;
+      }
+      else{
+       this.entrada.importe = this.entrada.cantidad * this.entrada.precio;
+      }
 
       if (this.$refs['fotos'].files.length) {//hay fotos
 
