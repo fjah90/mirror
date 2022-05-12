@@ -2007,10 +2007,8 @@
                               text: "La cotización ha sido aceptada y se ha generado una orden de compra, ¿desea realizar en estos momentos la orden de compra?",
                               icon: "warning",
                               showCancelButton: true,
-                              buttons: [
-                                'No',
-                                'Si'
-                              ],
+                              confirmButtonText: "Si",
+                              cancelButtonText: "No",  
                               dangerMode: true,
                             }).then(function(isConfirm) {
                               if (isConfirm.value) {
