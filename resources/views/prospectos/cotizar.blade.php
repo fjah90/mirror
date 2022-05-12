@@ -2004,12 +2004,12 @@
                             this.cargando = false;
                             swal({
                               title: "Cotizacion Aceptada",
-                              text: "La cotización ha sido aceptada y se ha generado una orden de compra, ¿desea ir a la orden de compra?",
+                              text: "La cotización ha sido aceptada y se ha generado una orden de compra, ¿desea realizar en estos momentos la orden de compra?",
                               icon: "warning",
                               showCancelButton: true,
                               buttons: [
-                                'No!',
-                                'Si, ir a la cuenta por cobrar!'
+                                'No',
+                                'Si'
                               ],
                               dangerMode: true,
                             }).then(function(isConfirm) {
