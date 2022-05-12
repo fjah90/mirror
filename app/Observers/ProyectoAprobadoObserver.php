@@ -63,15 +63,31 @@ class ProyectoAprobadoObserver
                             }
                         }
                         else{
-                            $cantidad_convertida = null;
-                            $importe = $entrada->importe;        
+
+                            if ($entrada->precio_compra != null) {
+                                $cantidad_convertida = null;
+                                $importe = $entrada->precio_compra * $entrada->cantidad;
+                            }
+                            else{
+                                $cantidad_convertida = null;
+                                $importe = $entrada->importe;
+                            }
+
+                            
                         }
                     }
                     
                 }
                 else{
-                    $cantidad_convertida = null;
-                    $importe = $entrada->importe;
+
+                    if ($entrada->precio_compra != null) {
+                        $cantidad_convertida = null;
+                        $importe = $entrada->precio_compra * $entrada->cantidad;
+                    }
+                    else{
+                        $cantidad_convertida = null;
+                        $importe = $entrada->importe;
+                    }
                 }
 
 
