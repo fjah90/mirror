@@ -113,6 +113,14 @@ Reportes | @parent
                           
                         </select>
                     </div>
+                    <div class=" btn-group" id="select_status" style="margin:0px 10px">
+                        <select name="selectstatus" class="form-control" size="1" v-model="valor_status" id="selectstatus" style="width:100%">
+                          <option v-for="option in datos_select.status" v-bind:value="option.valor">
+                            @{{ option.opcion }}
+                          </option>
+                          
+                        </select>
+                    </div>
                   </div>
               <div class="row">
                 <div class="col-sm-12">
@@ -211,7 +219,7 @@ const app = new Vue({
       valor_proyectos:'Proyectos',
       valor_ids:'Cotización',
       valor_usuarios:'Usuarios',
-      datos_select:{clientes:[], proyectos:[], ids:[], usuarios:[]},   
+      datos_select:{clientes:[], proyectos:[], ids:[], usuarios:[],status[{valor:'Aprobado',opcion:'Aprobado'},{valor:'Pendiente',opcion:'Pendiente'}]},   
       tabla: {},
       locale: localeES,
       proyectoSelect:null,
