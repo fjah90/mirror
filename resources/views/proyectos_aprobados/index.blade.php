@@ -18,8 +18,11 @@
 </section>
 <!-- Main content -->
 <section class="content" id="content">
+  <!--
   <tabs>
+      
       <tab title="Lista de Ordenes">
+      -->
         <div class="row">
           <div class="col-lg-12">
             <div class="panel">
@@ -109,7 +112,10 @@
             </div>
           </div>
         </div>
+      <!--
       </tab>
+    -->
+      <!--
     <tab title="Ordenes en Proceso">
         <div class="row">
           <div class="col-lg-12">
@@ -274,8 +280,10 @@
           </div>
         </div>
       </tab>
-
+    -->
+<!--
   </tabs>
+-->
 
 
   <!-- Historial Modal -->
