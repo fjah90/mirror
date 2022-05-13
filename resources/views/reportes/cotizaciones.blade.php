@@ -219,7 +219,7 @@ const app = new Vue({
       valor_proyectos:'Proyectos',
       valor_ids:'Cotización',
       valor_usuarios:'Usuarios',
-      datos_select:{clientes:[], proyectos:[], ids:[], usuarios:[],status[{valor:'Aprobado',opcion:'Aprobado'}{valor:'Pendiente',opcion:'Pendiente'}]},   
+      datos_select:{clientes:[], proyectos:[], ids:[], usuarios:[],status[]},   
       tabla: {},
       locale: localeES,
       proyectoSelect:null,
