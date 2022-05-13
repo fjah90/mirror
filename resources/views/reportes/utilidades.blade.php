@@ -422,13 +422,13 @@ const app = new Vue({
         },
         formatoPorcentaje(value, monedaCotizacion, monedaCompra, totalCotizacion){
             if(monedaCotizacion == monedaCompra){
-                  return ((totalCotizacion-value) / totalCotizacion) * 100;
+                  return (((totalCotizacion-value) / totalCotizacion) * 100).toFixed(2);
               }
             else if(monedaCotizacion == "Dolares" && monedaCompra == "Pesos"){
-                  return ((totalCotizacion-(value/19)) / totalCotizacion) * 100;
+                  return (((totalCotizacion-(value/19)) / totalCotizacion) * 100).toFixed(2);
               }
             else if(monedaCotizacion == "Pesos" && monedaCompra == "Dolares"){
-                  return ((totalCotizacion-(value*19)) / totalCotizacion) * 100;
+                  return (((totalCotizacion-(value*19)) / totalCotizacion) * 100).toFixed(2);
               }
         },
     },
