@@ -220,12 +220,12 @@
           </li>
           <li >
             <a href="{{ URL::to('reportes/cuentaCliente') }}">
-              <i class="fas fa-file-invoice-dollar" ></i> Cuenta Cliente
+              <i class="fas fa-file-invoice-dollar" ></i> Estado de Cuenta
             </a>
           </li>
           <li >
             <a href="{{ URL::to('reportes/utilidades') }}">
-              <i class="fas fa-file-invoice-dollar" ></i> Utilidades
+              <i class="fas fa-file-invoice-dollar" ></i> Reporte de operaciones
             </a>
           </li>
             </ul>

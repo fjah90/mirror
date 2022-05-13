@@ -7,7 +7,7 @@ Reportes | @parent
 
 @section('content')
 <section class="content-header">
-    <h1 style="font-weight: bolder;">Cuenta Cliente </h1>
+    <h1 style="font-weight: bolder;">Estado de Cuenta </h1>
 </section>
 <section class="content" id="content">
     <div class="row">

@@ -28,7 +28,7 @@ Reportes | @parent
         <div class="col-sm-12">
           <div class="panel product-details">
             <div class="panel-heading">
-              <h3 class="panel-title">Reporte de Utilidades
+              <h3 class="panel-title">Reporte de Operaciones
                 <button style="background-color:transparent; border:none;float: right;">
                   <i class=" fa fa-file-pdf" v-on:click="pdf" style="color:#eb1b3d;font-size: 20px;"></i>
                 </button>
@@ -120,6 +120,7 @@ Reportes | @parent
                           <th class="text-center"><strong>Número Compra</strong></th>
                           <th class="text-center"><strong>Costo</strong></th>
                           <th class="text-center"><strong>Utilidad</strong></th>
+                          <th class="text-center"><strong>%</strong></th>
                         </tr>
                       </thead>
                       <tbody>
@@ -132,8 +133,8 @@ Reportes | @parent
                           <td>@{{dato.numero}}</td>
                           <td>@{{dato.total | formatoConvertirMoneda(dato.cotizaciones_moneda, dato.moneda)}}</td>
                           <td>@{{dato.total | formatoUtilidad(dato.cotizaciones_moneda, dato.moneda, dato.cotizaciones_total)}}</td>
+                          <td>% @{{dato.total | formatoPorcentaje(dato.cotizaciones_moneda, dato.moneda, dato.cotizaciones_total)}}</td>
                         </tr>
-                        
                       </tbody>
                       <tfoot>
                         <tr>
@@ -417,6 +418,17 @@ const app = new Vue({
               }
             else if(monedaCotizacion == "Pesos" && monedaCompra == "Dolares"){
                   return accounting.formatMoney((totalCotizacion-(value*19)), "$", 2);
+              }
+        },
+        formatoPorcentaje(value, totalCotizacion){
+            if(monedaCotizacion == monedaCompra){
+                  return ((totalCotizacion-value) / totalCotizacion) * 100;
+              }
+            else if(monedaCotizacion == "Dolares" && monedaCompra == "Pesos"){
+                  return ((totalCotizacion-(value/19)) / totalCotizacion) * 100;
+              }
+            else if(monedaCotizacion == "Pesos" && monedaCompra == "Dolares"){
+                  return ((totalCotizacion-(value*19)) / totalCotizacion) * 100;
               }
         },
     },
