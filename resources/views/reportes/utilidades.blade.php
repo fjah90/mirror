@@ -420,7 +420,7 @@ const app = new Vue({
                   return accounting.formatMoney((totalCotizacion-(value*19)), "$", 2);
               }
         },
-        formatoPorcentaje(value, totalCotizacion){
+        formatoPorcentaje(value, monedaCotizacion, monedaCompra, totalCotizacion){
             if(monedaCotizacion == monedaCompra){
                   return ((totalCotizacion-value) / totalCotizacion) * 100;
               }
