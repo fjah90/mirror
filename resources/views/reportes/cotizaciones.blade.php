@@ -459,6 +459,9 @@ const app = new Vue({
       valor_usuarios:function(val){
         this.tabla.columns(10).search(this.valor_usuarios).draw();
       },
+      valor_status:function(val){
+        this.tabla.columns(11).search(this.valor_status).draw();
+      },
     },
     filters:{
         formatoMoneda(numero){
