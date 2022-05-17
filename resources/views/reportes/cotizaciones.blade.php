@@ -409,6 +409,7 @@ const app = new Vue({
       $("#fechas_container").append($("#select_proyectos"));
       $("#fechas_container").append($("#select_ids"));
       $("#fechas_container").append($("#select_usuarios"));
+      $("#fechas_container").append($("#select_status"));
       $("#fechas_container").append($("#fecha_ini_control"));
       $("#fechas_container").append($("#fecha_fin_control"));
 
