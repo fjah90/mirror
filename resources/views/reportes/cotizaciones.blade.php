@@ -163,16 +163,29 @@ Reportes | @parent
                               @endforeach
                             </template>
                           </td>
-                          <td>
+                          @if($cotizacion->monda == 'Dolares')
+                          <td style="color:#266e07">
                             <template>
                               @foreach($cotizacion->entradas2() as $entrada)
                               <span > ${{number_format($entrada->total_importe, 2, '.', ',')}}</span><br/>
                               @endforeach
                             </template>
                           </td>
-                          <td>${{number_format($cotizacion->iva, 2, '.', ',')}}</td>
-                          <td>${{number_format($cotizacion->total, 2, '.', ',')}}</td>
-                          <td>{{str_replace('ol','ól',$cotizacion->moneda)}}</td>
+                          <td style="color:#266e07">${{number_format($cotizacion->iva, 2, '.', ',')}}</td>
+                          <td style="color:#266e07">${{number_format($cotizacion->total, 2, '.', ',')}}</td>
+                          <td style="color:#266e07">{{str_replace('ol','ól',$cotizacion->moneda)}}</td>
+                          @else
+                          <td style="color:#150a9b">
+                            <template>
+                              @foreach($cotizacion->entradas2() as $entrada)
+                              <span > ${{number_format($entrada->total_importe, 2, '.', ',')}}</span><br/>
+                              @endforeach
+                            </template>
+                          </td>
+                          <td style="color:#150a9b">${{number_format($cotizacion->iva, 2, '.', ',')}}</td>
+                          <td style="color:#150a9b">${{number_format($cotizacion->total, 2, '.', ',')}}</td>
+                          <td style="color:#150a9b">{{str_replace('ol','ól',$cotizacion->moneda)}}</td>
+                          @endif
                           <td>{{$cotizacion->user->name}}</td>
                           
                         </tr>
@@ -219,6 +232,7 @@ const app = new Vue({
       valor_proyectos:'Proyectos',
       valor_ids:'Cotización',
       valor_usuarios:'Usuarios',
+      valor_status:'Status',
       datos_select:{clientes:[], proyectos:[], ids:[], usuarios:[],status:[{valor:'Aprobado',opcion:'Aprobado'},{valor:'Pendiente',opcion:'Pendiente'}]},   
       tabla: {},
       locale: localeES,
