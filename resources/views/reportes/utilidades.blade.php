@@ -196,7 +196,7 @@ const app = new Vue({
       valor_cotizaciones:'Cotizaciones',
       valor_proyectos:'Proyectos',
       valor_clientes:'Clientes',
-      datos_select:{cotizaciones:[], proyectos:[], clientes:[],usuarios :[]},   
+      datos_select:{cotizaciones:[], proyectos:[], clientes:[],usuarios:[] ,},   
       tabla: {},
       locale: localeES,
       proyectoSelect:null,
@@ -297,7 +297,6 @@ const app = new Vue({
               }
               //vue.datos_select.usuarios.push(d);
             });
-          },
 
             vue.datos_select.clientes.push({valor:'Clientes',opcion:'Clientes'})
             vue.datos_select.clientes.push({opcion :'Todos', valor :''})
