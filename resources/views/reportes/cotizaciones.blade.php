@@ -240,6 +240,7 @@ const app = new Vue({
       cotizacionSelect:null,
       clienteSelect:null,
       usuarioSelect:null,
+      statusSelect:null,
       totalm:'',
       totald:'',
       cargando:false
