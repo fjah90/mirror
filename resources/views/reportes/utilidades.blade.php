@@ -425,7 +425,7 @@ const app = new Vue({
         this.tabla.columns(1).search(this.valor_clientes).draw();
       },
       valor_usuarios:function(val){
-        this.tabla.columns(10).search(this.valor_usuarios).draw();
+        this.tabla.columns(9).search(this.valor_usuarios).draw();
       },
     },
     filters:{
