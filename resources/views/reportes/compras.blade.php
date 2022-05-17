@@ -129,8 +129,8 @@ Reportes | @parent
                           <td>@{{compra.proveedor_razon_social}}</td>
                           <td>@{{compra.cliente_nombre}}</td>
                           <td>@{{compra.proyecto_nombre}}</td>
-                          <td>@{{compra.total | formatoMoneda}}</td>
-                          <td>@{{compra.moneda | formatodolares}}</td>
+                          <td v-bind:style= "[compra.moneda == 'Dolares' ? {'color':'#266e07'} : {'color':'#150a9b'}]">@{{compra.total | formatoMoneda}}</td>
+                          <td v-bind:style= "[compra.moneda == 'Dolares' ? {'color':'#266e07'} : {'color':'#150a9b'}]">@{{compra.moneda | formatodolares}}</td>
                         </tr>
                         
                       </tbody>

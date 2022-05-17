@@ -134,8 +134,9 @@ Reportes | @parent
                           <td>@{{cobro.cliente_nombre}}</td>
                           <td>@{{cobro.proyecto}}</td>
                           <td>@{{cobro.documento}}</td>
-                          <td>@{{cobro.pago_monto | formatoMoneda}}</td>
-                          <td>@{{cobro.moneda | formatodolares}}</td>
+                          <td v-bind:style= "[cobro.moneda == 'Dolares' ? {'color':'#266e07'} : {'color':'#150a9b'}]">@{{cobro.pago_monto | formatoMoneda}}
+                          </td>
+                          <td v-bind:style= "[cobro.moneda == 'Dolares' ? {'color':'#266e07'} : {'color':'#150a9b'}]">@{{cobro.moneda | formatodolares}}</td>
                         </tr>
                         
                       </tbody>

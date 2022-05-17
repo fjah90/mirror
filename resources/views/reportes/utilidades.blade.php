@@ -128,11 +128,11 @@ Reportes | @parent
                           <td>@{{dato.cotizaciones_id}}</td>
                           <td>@{{dato.cliente_nombre}}</td>
                           <td>@{{dato.proyecto_nombre}}</td>
-                          <td>@{{dato.cotizaciones_total | formatoMoneda}}</td>
-                          <td>@{{dato.cotizaciones_moneda | formatodolares}}</td>
+                          <td  v-bind:style= "[dato.cotizaciones_moneda == 'Dolares' ? {'color':'#266e07'} : {'color':'#150a9b'}]">@{{dato.cotizaciones_total | formatoMoneda}}</td>
+                          <td v-bind:style= "[dato.cotizaciones_moneda == 'Dolares' ? {'color':'#266e07'} : {'color':'#150a9b'}]">@{{dato.cotizaciones_moneda | formatodolares}}</td>
                           <td>@{{dato.numero}}</td>
-                          <td>@{{dato.total | formatoConvertirMoneda(dato.cotizaciones_moneda, dato.moneda)}}</td>
-                          <td>@{{dato.total | formatoUtilidad(dato.cotizaciones_moneda, dato.moneda, dato.cotizaciones_total)}}</td>
+                          <td v-bind:style= "[dato.cotizaciones_moneda == 'Dolares' ? {'color':'#266e07'} : {'color':'#150a9b'}]">@{{dato.total | formatoConvertirMoneda(dato.cotizaciones_moneda, dato.moneda)}}</td>
+                          <td v-bind:style= "[dato.cotizaciones_moneda == 'Dolares' ? {'color':'#266e07'} : {'color':'#150a9b'}]">@{{dato.total | formatoUtilidad(dato.cotizaciones_moneda, dato.moneda, dato.cotizaciones_total)}}</td>
                           <td>% @{{dato.total | formatoPorcentaje(dato.cotizaciones_moneda, dato.moneda, dato.cotizaciones_total)}}</td>
                         </tr>
                       </tbody>

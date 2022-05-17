@@ -114,7 +114,7 @@
           <!-- Dashboard -->
           <li {!! (Request::is('dashboard') ? 'class="active"' : '') !!}>
             <a href="{{ URL::to('dashboard') }}">
-              <i class="menu-icon fas fa-home" style="color:#33ff33; font-size: 20px;" ></i>
+              <i class="menu-icon fas fa-home" style="color:#08c8c2; font-size: 20px;" ></i>
               <span class="mm-text ">INICIO</span>
             </a>
           </li>

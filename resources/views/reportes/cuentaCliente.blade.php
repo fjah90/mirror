@@ -64,12 +64,12 @@ Reportes | @parent
                           <td>@{{row.cotizacionFecha | date}}</td>
                           <td>@{{row.cotizacion_id}}</td>
                           <td>@{{row.aprobadoEn | date}}</td>
-                          <td>@{{row.moneda | formatodolares}}</td>
-                          <td>@{{row.total | formatoMoneda}}</td>
-                          <td>@{{row.facturado | formatoMoneda}}</td>
-                          <td>@{{(row.total-row.facturado) | formatoMoneda}}</td>
-                          <td>@{{row.pagado | formatoMoneda}}</td>
-                          <td>@{{row.pendiente | formatoMoneda}}</td>     
+                          <td v-bind:style= "[row.moneda == 'Dolares' ? {'color':'#266e07'} : {'color':'#150a9b'}]">@{{row.moneda | formatodolares}}</td>
+                          <td  v-bind:style= "[row.moneda == 'Dolares' ? {'color':'#266e07'} : {'color':'#150a9b'}]">@{{row.total | formatoMoneda}}</td>
+                          <td  v-bind:style= "[row.moneda == 'Dolares' ? {'color':'#266e07'} : {'color':'#150a9b'}]">@{{row.facturado | formatoMoneda}}</td>
+                          <td  v-bind:style= "[row.moneda == 'Dolares' ? {'color':'#266e07'} : {'color':'#150a9b'}]">@{{(row.total-row.facturado) | formatoMoneda}}</td>
+                          <td  v-bind:style= "[row.moneda == 'Dolares' ? {'color':'#266e07'} : {'color':'#150a9b'}]">@{{row.pagado | formatoMoneda}}</td>
+                          <td  v-bind:style= "[row.moneda == 'Dolares' ? {'color':'#266e07'} : {'color':'#150a9b'}]">@{{row.pendiente | formatoMoneda}}</td>     
                         </tr>
                         <tfoot>
                             <tr>
