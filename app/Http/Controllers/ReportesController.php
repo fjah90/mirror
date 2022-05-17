@@ -792,8 +792,9 @@ class ReportesController extends Controller
         $datos = OrdenCompra::leftjoin('proyectos_aprobados', 'ordenes_compra.proyecto_id', '=', 'proyectos_aprobados.id')
             ->leftjoin('prospectos_cotizaciones', 'proyectos_aprobados.cotizacion_id', '=', 'prospectos_cotizaciones.id')
             ->leftjoin('clientes', 'proyectos_aprobados.cliente_id', '=', 'clientes.id')
+            ->leftjoin('users', 'prospectos_cotizaciones.user_id', '=', 'users.id')
             ->select('ordenes_compra.*', 'proyectos_aprobados.proyecto as proyecto_nombre', 'clientes.nombre as cliente_nombre',
-                'prospectos_cotizaciones.id as cotizaciones_id', 'prospectos_cotizaciones.moneda as cotizaciones_moneda', 'prospectos_cotizaciones.total as cotizaciones_total')
+                'prospectos_cotizaciones.id as cotizaciones_id', 'prospectos_cotizaciones.moneda as cotizaciones_moneda', 'prospectos_cotizaciones.total as cotizaciones_total','users.name as nombre_usuario')
             ->where('ordenes_compra.status','Confirmada')
             ->orWhere('ordenes_compra.status','Pendiente')
             //->whereBetween('ordenes_compra.created_at', [$inicio, $fin])
