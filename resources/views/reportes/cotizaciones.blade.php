@@ -267,6 +267,12 @@ const app = new Vue({
           vue.valor_usuarios = value[0].id
           //this.tabla.columns(4).search(this.valor_proyectos).draw();
         });
+
+        this.statusSelect= $('#selectstatus').select2({ width: '100px'}).on('select2:select',function () {       
+          var value = $("#selectusuarios").select2('data');
+          vue.valor_usuarios = value[0].id
+          //this.tabla.columns(4).search(this.valor_proyectos).draw();
+        });
         //console.log(this.valor_proyectos);
         
 
