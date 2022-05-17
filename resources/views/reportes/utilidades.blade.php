@@ -196,6 +196,7 @@ const app = new Vue({
       valor_cotizaciones:'Cotizaciones',
       valor_proyectos:'Proyectos',
       valor_clientes:'Clientes',
+      valor_usuarios:'Usuarios',
       datos_select:{cotizaciones:[], proyectos:[], clientes:[],usuarios:[] ,},   
       tabla: {},
       locale: localeES,
