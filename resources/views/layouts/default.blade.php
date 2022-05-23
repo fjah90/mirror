@@ -185,8 +185,29 @@
               </li>
             </ul>
           </li>
-        
+      
 
+          <hr class="divider-menu">
+
+          <!-- Administracion -->
+          <li {!! (Request::is('cuentas-cobrar*') ? 'class="active"' : '') !!} {!! (Request::is('cuentas-pagar*') ? 'class="active"' : '') !!}><a class="title"><i class="fa fa-calculator" style="color:#fa2002; font-size:20px;"></i>  Contabilidad <span class="fa fa-chevron-down" ></span></a>
+           <ul class="nav child_menu">  
+              <li {!! (Request::is('cuentas-cobrar*') ? 'class="active"' : '') !!}>
+                <a href="{{ URL::to('cuentas-cobrar') }}">
+                  <i class="menu-icon fas fa-hand-holding-usd" ></i>
+                  <span >Cuentas por Cobrar</span>
+                </a>
+              </li>
+              <li {!! (Request::is('cuentas-pagar*') ? 'class="active"' : '') !!}>
+                <a href="{{ URL::to('cuentas-pagar') }}">
+                  <i class="menu-icon fas fa-receipt" ></i>
+                  <span >Cuentas por Pagar</span>
+                </a>
+              </li>  
+            </ul> 
+          </li>
+
+          
           <hr class="divider-menu">
 
           <!--Reportes-->
@@ -229,26 +250,6 @@
             </a>
           </li>
             </ul>
-          </li>
-
-          <hr class="divider-menu">
-
-          <!-- Administracion -->
-          <li {!! (Request::is('cuentas-cobrar*') ? 'class="active"' : '') !!} {!! (Request::is('cuentas-pagar*') ? 'class="active"' : '') !!}><a class="title"><i class="fa fa-calculator" style="color:#fa2002; font-size:20px;"></i>  Contabilidad <span class="fa fa-chevron-down" ></span></a>
-           <ul class="nav child_menu">  
-              <li {!! (Request::is('cuentas-cobrar*') ? 'class="active"' : '') !!}>
-                <a href="{{ URL::to('cuentas-cobrar') }}">
-                  <i class="menu-icon fas fa-hand-holding-usd" ></i>
-                  <span >Cuentas por Cobrar</span>
-                </a>
-              </li>
-              <li {!! (Request::is('cuentas-pagar*') ? 'class="active"' : '') !!}>
-                <a href="{{ URL::to('cuentas-pagar') }}">
-                  <i class="menu-icon fas fa-receipt" ></i>
-                  <span >Cuentas por Pagar</span>
-                </a>
-              </li>  
-            </ul> 
           </li>
 
 
