@@ -1224,6 +1224,7 @@ class ProspectosController extends Controller
      */
     public function enviarCotizacion(Request $request)
     {
+        dd("si");
         $validator = Validator::make($request->all(), [
             'cotizacion_id' => 'required',
             'email'         => 'required|array',
