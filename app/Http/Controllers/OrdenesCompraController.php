@@ -695,7 +695,7 @@ class OrdenesCompraController extends Controller
 
         $update = $request->only(
             'proveedor_id', 'proveedor_empresa', 'moneda', 'numero', 'subtotal', 'numero_proyecto',
-            'aduana_id', 'aduana_compañia', 'proveedor_contacto_id', 'punto_entrega', 'carga', 'fecha_compra','flete'
+            'aduana_id', 'aduana_compañia', 'proveedor_contacto_id', 'punto_entrega', 'carga', 'fecha_compra','flete','numero_cliente'
         );
 
         if (!is_null($request->tiempo['id'])) {
