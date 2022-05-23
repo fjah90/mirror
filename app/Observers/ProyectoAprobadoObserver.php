@@ -30,6 +30,7 @@ class ProyectoAprobadoObserver
                 'cliente_nombre'    => $proyecto->cliente_nombre,
                 'proyecto_nombre'   => $proyecto->proyecto,
                 'proveedor_empresa' => $proveedor,
+                'numero_cliente' => $entradas->first()->producto->proveedor->numero_cliente,
                 'moneda'            => $entradas->first()->producto->proveedor->moneda ?? 'Dolares',
             ];
 
