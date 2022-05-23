@@ -900,6 +900,7 @@ class OrdenesCompraController extends Controller
         Storage::disk('public')->put($url, $ordenPDF->output());
         unset($orden->fechaPDF);
         unset($orden->firmaAbraham);
+        $orden->update(['archivo' => $url]);
 
         /*if ($orden->status == OrdenCompra::STATUS_RECHAZADA) {
             $this->avisarOrdenPorAprobar($orden);
