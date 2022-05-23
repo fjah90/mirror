@@ -1224,7 +1224,6 @@ class ProspectosController extends Controller
      */
     public function enviarCotizacion(Request $request)
     {
-        dd("si");
         $validator = Validator::make($request->all(), [
             'cotizacion_id' => 'required',
             'email'         => 'required|array',
@@ -1248,9 +1247,9 @@ class ProspectosController extends Controller
 
         Mail::send('email', ['mensaje' => $request->mensaje], function ($message)
              use ($email, $pdf, $pdf_name, $user) {
-                $message->to($email)
-                    ->cc('jed.santana@icloud.com')
-                    ->replyTo($user->email, $user->name)
+                $message->to($email);
+                    ->cc('jed.santana@icloud.com');
+                    ->replyTo($user->email, $user->name);
                     ->subject('Cotización Intercorp');
                 $message->attachData($pdf, $pdf_name);
             });
