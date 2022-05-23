@@ -52,6 +52,10 @@
                 <label class="control-label">Proveedor / To</label>
                 <span class="form-control">{{$orden->proveedor_empresa}}</span>
               </div>
+              <div class="col-md-4">
+                <label class="control-label">Número de cliente / Customer number</label>
+                <span class="form-control"></span>
+              </div>
               @else
               <div class="col-md-4">
                 <label class="control-label">Proveedor / To</label>
