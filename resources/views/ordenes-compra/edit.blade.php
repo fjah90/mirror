@@ -37,27 +37,27 @@
             </div>
             @endif
             <div class="row form-group">
-              <div class="col-md-4">
+              <div class="col-md-3">
                 <label class="control-label">Número Orden / Order</label>
                 <input type="number" step="1" min="1" class="form-control" name="numero"
                   v-model="orden.numero" required />
               </div>
-              <div class="col-md-4">
+              <div class="col-md-3">
                 <label class="control-label">Número Proyecto / Project Number</label>
                 <input type="text" step="1" min="1" class="form-control" name="numero_proyecto"
                   v-model="orden.numero_proyecto" />
               </div>
               @if($orden->proveedor_id)
-              <div class="col-md-4">
+              <div class="col-md-3">
                 <label class="control-label">Proveedor / To</label>
                 <span class="form-control">{{$orden->proveedor_empresa}}</span>
               </div>
-              <div class="col-md-4">
+              <div class="col-md-3">
                 <label class="control-label">Número de cliente / Customer number</label>
                 <span class="form-control"></span>
               </div>
               @else
-              <div class="col-md-4">
+              <div class="col-md-3">
                 <label class="control-label">Proveedor / To</label>
                 <select class="form-control" name="proveedor_id" v-model='orden.proveedor_id'
                   required @change="fijarProveedor()">
@@ -66,7 +66,7 @@
                   @endforeach
                 </select>
               </div>
-              <div class="col-md-4">
+              <div class="col-md-3">
                 <label class="control-label">Número de cliente / Customer number</label>
                 <span class="form-control"></span>
               </div>
