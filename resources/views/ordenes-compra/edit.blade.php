@@ -54,7 +54,8 @@
               </div>
               <div class="col-md-3">
                 <label class="control-label">Número de cliente / Customer number</label>
-                <span class="form-control"></span>
+                <input type="text" class="form-control" name="numero_cliente"
+                  v-model="orden.numero_cliente" />
               </div>
               @else
               <div class="col-md-3">
@@ -68,7 +69,8 @@
               </div>
               <div class="col-md-3">
                 <label class="control-label">Número de cliente / Customer number</label>
-                <span class="form-control"></span>
+                <input type="text" class="form-control" name="numero_cliente"
+                  v-model="orden.numero_cliente" />
               </div>
               @endif
             </div>
