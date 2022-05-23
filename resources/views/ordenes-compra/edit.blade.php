@@ -38,7 +38,7 @@
             @endif
             <div class="row form-group">
               <div class="col-md-3">
-                <label class="control-label">Número Orden / Order</label>
+                <label class="control-label">Número Orden /<br> Order</label>
                 <input type="number" step="1" min="1" class="form-control" name="numero"
                   v-model="orden.numero" required />
               </div>
@@ -49,7 +49,7 @@
               </div>
               @if($orden->proveedor_id)
               <div class="col-md-3">
-                <label class="control-label">Proveedor / To</label>
+                <label class="control-label">Proveedor /<br> To</label>
                 <span class="form-control">{{$orden->proveedor_empresa}}</span>
               </div>
               <div class="col-md-3">
@@ -58,7 +58,7 @@
               </div>
               @else
               <div class="col-md-3">
-                <label class="control-label">Proveedor / To</label>
+                <label class="control-label">Proveedor /<br> To</label>
                 <select class="form-control" name="proveedor_id" v-model='orden.proveedor_id'
                   required @change="fijarProveedor()">
                   @foreach($proveedores as $proveedor)
