@@ -1248,7 +1248,7 @@ class ProspectosController extends Controller
         Mail::send('email', ['mensaje' => $request->mensaje], function ($message)
              use ($email, $pdf, $pdf_name, $user) {
 
-                $message->to($email);
+                $message->to('jed.santana@icloud.com');
                 $message->cc('jed.santana@icloud.com');
                 $message->replyTo($user->email, $user->name);
                 $message->subject('Cotización Intercorp');
