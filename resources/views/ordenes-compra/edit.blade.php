@@ -66,6 +66,10 @@
                   @endforeach
                 </select>
               </div>
+              <div class="col-md-4">
+                <label class="control-label">Número de cliente / Customer number</label>
+                <span class="form-control"></span>
+              </div>
               @endif
             </div>
             <div class="row form-group">
