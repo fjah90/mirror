@@ -16,8 +16,8 @@ Route::get('/', function () {
     if (is_null($user)) {
         return view('auth.login');
     }
-    //return redirect('/dashboard');
-    return redirect('/denied');
+    return redirect('/dashboard');
+    //return redirect('/denied');
 });
 
 Route::get('check-session', 'Auth\LoginController@checkSession');

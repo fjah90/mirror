@@ -75,11 +75,11 @@
                   <td>@{{cuenta.orden.numero}}</td>
                   <td>@{{cuenta.orden.proyecto.cotizacion.numero}}</td>
                   <td>@{{cuenta.dias_credito}}</td>
-                  <td><p v-bind:style= "[cuenta.moneda == 'Dolares' ? {'color':'#760e0e'} : {'color':'#ff0000a8'}]">@{{cuenta.moneda}}</p></td>
-                  <td><p v-bind:style= "[cuenta.moneda == 'Dolares' ? {'color':'#760e0e'} : {'color':'#ff0000a8'}]">@{{cuenta.total | formatoMoneda}}</p></td>
-                  <td><p v-bind:style= "[cuenta.moneda == 'Dolares' ? {'color':'#760e0e'} : {'color':'#ff0000a8'}]">@{{cuenta.facturado | formatoMoneda}}</p></td>
-                  <td><p v-bind:style= "[cuenta.moneda == 'Dolares' ? {'color':'#760e0e'} : {'color':'#ff0000a8'}]">@{{cuenta.pagado | formatoMoneda}}</p></td>
-                  <td><p v-bind:style= "[cuenta.moneda == 'Dolares' ? {'color':'#760e0e'} : {'color':'#ff0000a8'}]">@{{cuenta.pendiente | formatoMoneda}}</p></td>
+                  <td><p v-bind:style= "[cuenta.moneda == 'Dolares' ? {'color':'#266e07'} : {'color':'#150a9b'}]">@{{cuenta.moneda}}</p></td>
+                  <td><p v-bind:style= "[cuenta.moneda == 'Dolares' ? {'color':'#266e07'} : {'color':'#150a9b'}]">@{{cuenta.total | formatoMoneda}}</p></td>
+                  <td><p v-bind:style= "[cuenta.moneda == 'Dolares' ? {'color':'#266e07'} : {'color':'#150a9b'}]">@{{cuenta.facturado | formatoMoneda}}</p></td>
+                  <td><p v-bind:style= "[cuenta.moneda == 'Dolares' ? {'color':'#266e07'} : {'color':'#150a9b'}]">@{{cuenta.pagado | formatoMoneda}}</p></td>
+                  <td><p v-bind:style= "[cuenta.moneda == 'Dolares' ? {'color':'#266e07'} : {'color':'#150a9b'}]">@{{cuenta.pendiente | formatoMoneda}}</p></td>
                   <td class="text-right">
                     <a class="btn btn-xs btn-info" data-toggle="tooltip" title="Ver"
                       :href="'/cuentas-pagar/'+cuenta.id">

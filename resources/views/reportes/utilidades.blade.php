@@ -28,7 +28,7 @@ Reportes | @parent
         <div class="col-sm-12">
           <div class="panel product-details">
             <div class="panel-heading">
-              <h3 class="panel-title">Reporte de Utilidades
+              <h3 class="panel-title">Reporte de Operaciones
                 <button style="background-color:transparent; border:none;float: right;">
                   <i class=" fa fa-file-pdf" v-on:click="pdf" style="color:#eb1b3d;font-size: 20px;"></i>
                 </button>
@@ -104,6 +104,14 @@ Reportes | @parent
                           
                         </select>
                     </div>
+                    <div class=" btn-group" id="select_usuarios" style="margin:0px 10px">
+                        <select name="proxDias" class="form-control" size="1" v-model="valor_usuarios" id="selectusuarios" style="width:100%">
+                          <option v-for="option in datos_select.usuarios" v-bind:value="option.valor">
+                            @{{ option.opcion }}
+                          </option>
+                          
+                        </select>
+                    </div>
                   </div>
               <div class="row">
                 <div class="col-sm-12">
@@ -120,6 +128,8 @@ Reportes | @parent
                           <th class="text-center"><strong>Número Compra</strong></th>
                           <th class="text-center"><strong>Costo</strong></th>
                           <th class="text-center"><strong>Utilidad</strong></th>
+                          <th class="text-center"><strong>%</strong></th>
+                          <th class="text-center"><strong>Usuario</strong></th>
                         </tr>
                       </thead>
                       <tbody>
@@ -127,13 +137,16 @@ Reportes | @parent
                           <td>@{{dato.cotizaciones_id}}</td>
                           <td>@{{dato.cliente_nombre}}</td>
                           <td>@{{dato.proyecto_nombre}}</td>
-                          <td>@{{dato.cotizaciones_total | formatoMoneda}}</td>
-                          <td>@{{dato.cotizaciones_moneda | formatodolares}}</td>
+                          <td  v-bind:style= "[dato.cotizaciones_moneda == 'Dolares' ? {'color':'#266e07'} : {'color':'#150a9b'}]">@{{dato.cotizaciones_total | formatoMoneda}}</td>
+                          <td v-bind:style= "[dato.cotizaciones_moneda == 'Dolares' ? {'color':'#266e07'} : {'color':'#150a9b'}]">@{{dato.cotizaciones_moneda | formatodolares}}</td>
                           <td>@{{dato.numero}}</td>
-                          <td>@{{dato.total | formatoConvertirMoneda(dato.cotizaciones_moneda, dato.moneda)}}</td>
-                          <td>@{{dato.total | formatoUtilidad(dato.cotizaciones_moneda, dato.moneda, dato.cotizaciones_total)}}</td>
+                          <td v-bind:style= "[dato.cotizaciones_moneda == 'Dolares' ? {'color':'#266e07'} : {'color':'#150a9b'}]">@{{dato.total | formatoConvertirMoneda(dato.cotizaciones_moneda, dato.moneda)}}</td>
+                          <td v-bind:style= "[dato.cotizaciones_moneda == 'Dolares' ? {'color':'#266e07'} : {'color':'#150a9b'}]">@{{dato.total | formatoUtilidad(dato.cotizaciones_moneda, dato.moneda, dato.cotizaciones_total)}}</td>
+                          <td>% @{{dato.total | formatoPorcentaje(dato.cotizaciones_moneda, dato.moneda, dato.cotizaciones_total)}}</td>
+                          <td>
+                            @{{dato.nombre_usuario}}
+                          </td>
                         </tr>
-                        
                       </tbody>
                       <tfoot>
                         <tr>
@@ -183,11 +196,13 @@ const app = new Vue({
       valor_cotizaciones:'Cotizaciones',
       valor_proyectos:'Proyectos',
       valor_clientes:'Clientes',
-      datos_select:{cotizaciones:[], proyectos:[], clientes:[]},   
+      valor_usuarios:'Usuarios',
+      datos_select:{cotizaciones:[], proyectos:[], clientes:[],usuarios:[] ,},   
       tabla: {},
       locale: localeES,
       proyectoSelect:null,
       cotizacionSelect:null,
+      usuarioSelect:null,
       clienteSelect:null,
       totalmventas:'',
       totalmcosto:'',
@@ -211,6 +226,11 @@ const app = new Vue({
         this.clienteSelect= $('#selectclientes').select2({ width: '100px'}).on('select2:select',function () {       
           var value = $("#selectclientes").select2('data');
           vue.valor_clientes = value[0].id
+          //this.tabla.columns(4).search(this.valor_proyectos).draw();
+        });
+        this.usuarioSelect= $('#selectusuarios').select2({ width: '100px'}).on('select2:select',function () {       
+          var value = $("#selectusuarios").select2('data');
+          vue.valor_usuarios = value[0].id
           //this.tabla.columns(4).search(this.valor_proyectos).draw();
         });
       this.tabla = $("#tabla").DataTable({
@@ -257,6 +277,26 @@ const app = new Vue({
                 vue.datos_select.proyectos.push(a);
               }
               //vue.datos_select.proyectos.push(d);
+            });
+
+            vue.datos_select.usuarios.push({valor:'Usuarios',opcion:'Usuarios'})
+            vue.datos_select.usuarios.push({opcion :'Todos', valor :''})
+            //vue.datos_select.usuarios.push('');
+            this.api().column(9).data().sort().unique().each(function(d,j){   
+              var b = d.replace("&amp;", " &");
+
+              var a = {
+                opcion : b,
+                valor : b
+              };  
+
+              if (b == "") {
+                vue.datos_select.usuarios.push({opcion :'Todos', valor :''})
+              }
+              else{
+                vue.datos_select.usuarios.push(a);
+              }
+              //vue.datos_select.usuarios.push(d);
             });
 
             vue.datos_select.clientes.push({valor:'Clientes',opcion:'Clientes'})
@@ -348,6 +388,7 @@ const app = new Vue({
       $("#fechas_container").append($("#select_cotizaciones"));
       $("#fechas_container").append($("#select_proyectos"));
       $("#fechas_container").append($("#select_clientes"));
+      $("#fechas_container").append($("#select_usuarios"));
 
       $.fn.dataTableExt.afnFiltering.push(
         function( settings, data, dataIndex ) {
@@ -383,6 +424,9 @@ const app = new Vue({
       valor_clientes:function(val){
         this.tabla.columns(1).search(this.valor_clientes).draw();
       },
+      valor_usuarios:function(val){
+        this.tabla.columns(9).search(this.valor_usuarios).draw();
+      },
     },
     filters:{
         formatoMoneda(numero){
@@ -417,6 +461,17 @@ const app = new Vue({
               }
             else if(monedaCotizacion == "Pesos" && monedaCompra == "Dolares"){
                   return accounting.formatMoney((totalCotizacion-(value*19)), "$", 2);
+              }
+        },
+        formatoPorcentaje(value, monedaCotizacion, monedaCompra, totalCotizacion){
+            if(monedaCotizacion == monedaCompra){
+                  return (((totalCotizacion-value) / totalCotizacion) * 100).toFixed(2);
+              }
+            else if(monedaCotizacion == "Dolares" && monedaCompra == "Pesos"){
+                  return (((totalCotizacion-(value/19)) / totalCotizacion) * 100).toFixed(2);
+              }
+            else if(monedaCotizacion == "Pesos" && monedaCompra == "Dolares"){
+                  return (((totalCotizacion-(value*19)) / totalCotizacion) * 100).toFixed(2);
               }
         },
     },

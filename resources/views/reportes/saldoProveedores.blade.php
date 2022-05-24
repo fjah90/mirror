@@ -132,8 +132,8 @@ Reportes | @parent
                           <td>@{{saldo.cliente_nombre}}</td>
                           <td>@{{saldo.proyecto_nombre}}</td>
                           <td>@{{saldo.documento}}</td>
-                          <td>@{{saldo.facturas_monto | formatoMoneda}}</td>
-                          <td>@{{saldo.moneda | formatodolares}}</td>
+                          <td v-bind:style= "[saldo.moneda == 'Dolares' ? {'color':'#266e07'} : {'color':'#150a9b'}]">@{{saldo.facturas_monto | formatoMoneda}}</td>
+                          <td v-bind:style= "[saldo.moneda == 'Dolares' ? {'color':'#266e07'} : {'color':'#150a9b'}]">@{{saldo.moneda | formatodolares}}</td>
                           <td>@{{saldo.facturas_fecha_vencimiento | formatoFechaInicio}}</td>
                           <td>@{{saldo.facturas_fecha_vencimiento | date}}</td>
                           <td>@{{saldo.facturas_fecha_vencimiento | formatoDiasFavor}}</td>

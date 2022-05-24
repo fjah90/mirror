@@ -69,11 +69,11 @@
                         :href="'/proyectos-aprobados/'+orden.proyecto_id+'/ordenes-compra/'+orden.id">
                         <i class="far fa-eye"></i>
                       </a>
-                      <a v-if="orden.archivo" class="btn btn-xs btn-warning" title="PDF" :href="orden.archivo"
-                        :download="'INTERCORP-PO '+orden.numero+' '+orden.cliente_nombre+' '+orden.proyecto_nombre+'.pdf'">
-                        <i class="far fa-file-pdf"></i>
-                      </a>
                     </template>
+                    <a v-if="orden.archivo" class="btn btn-xs btn-warning" title="PDF" :href="orden.archivo"
+                      :download="'INTERCORP-PO '+orden.numero+' '+orden.cliente_nombre+' '+orden.proyecto_nombre+'.pdf'">
+                      <i class="far fa-file-pdf"></i>
+                    </a>
                     <a v-if="orden.status=='Pendiente' || orden.status=='Rechazada'"
                       class="btn btn-xs btn-success" title="Editar"
                       :href="'/proyectos-aprobados/'+orden.proyecto_id+'/ordenes-compra/'+orden.id+'/editar'">

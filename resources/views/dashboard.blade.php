@@ -322,7 +322,7 @@ Dashboard | @parent
               <div class="table-responsive">
                 <table class="table table-striped text-center" id="tablaActividades">
                   <thead>
-                    <tr style="background-color:#33ff53">
+                    <tr style="background-color:#08c8c2">
                       <th class="text-center">Cliente</th>
                       <th class="text-center"><strong>Proyecto</strong></th>
                       <th class="text-center"><strong>Tipo</strong></th>
@@ -432,7 +432,7 @@ Dashboard | @parent
                 
                 <table class="table table-striped text-center" id="tablaCotizaciones">
                   <thead>
-                    <tr style="background-color:#33ff53">
+                    <tr style="background-color:#08c8c2">
                       <th class="text-center">Cliente</th>
                       <th class="text-center"><strong>Proyecto</strong></th>
                       <th class="text-center"><strong>Número Cotización</strong></th>
@@ -448,7 +448,7 @@ Dashboard | @parent
                       <td>@{{cotizacion.prospecto_nombre}}</td>
                       <td>@{{cotizacion.id}}</td>
                       <td>@{{cotizacion.fecha_formated}}</td>
-                      <td>@{{cotizacion.total | formatoMoneda}} @{{cotizacion.moneda|formatoCurrency}}</td>
+                      <td v-bind:style= "[cotizacion.moneda == 'Dolares' ? {'color':'#266e07'} : {'color':'#150a9b'}]">@{{cotizacion.total | formatoMoneda}} @{{cotizacion.moneda|formatoCurrency}}</td>
                       <td>@{{cotizacion.user_name}}</td>
                       <td class="text-warning">
                           <a title="Ver" :href="'/prospectos/'+cotizacion.prospecto_id+'/cotizar'" class="btn btn-info">
@@ -546,7 +546,7 @@ Dashboard | @parent
                 
                 <table class="table table-striped text-center" id="tablaCompras">
                   <thead>
-                    <tr style="background-color:#33ff53">
+                    <tr style="background-color:#08c8c2">
                       <th class="text-center"># Orden</th>
                       <th class="text-center">Ejecutivo</th>
                       <th class="text-center">Cliente</th>
@@ -580,11 +580,11 @@ Dashboard | @parent
                           <br />
                         </span>
                       </td>
-                      <td>
+                      <td v-bind:style= "[compra.moneda == 'Dolares' ? {'color':'#266e07'} : {'color':'#150a9b'}]">
                         @{{compra.moneda}}
                         
                       </td>
-                      <td>
+                      <td v-bind:style= "[compra.moneda == 'Dolares' ? {'color':'#266e07'} : {'color':'#150a9b'}]">
                         @{{compra.total | formatoMoneda}} 
                       </td>
                       <td>@{{compra.status}}</td>
@@ -703,7 +703,7 @@ Dashboard | @parent
                 
                 <table class="table table-striped text-center" id="tablaAceptadas">
                   <thead>
-                    <tr style="background-color:#33ff53">
+                    <tr style="background-color:#08c8c2">
                       <th class="text-center">Cliente</th>
                       <th class="text-center"><strong>Proyecto</strong></th>
                       <th class="text-center"><strong>Número Cotización</strong></th>
@@ -718,7 +718,7 @@ Dashboard | @parent
                       <td>@{{cotizacion.prospecto_nombre}}</td>
                       <td>@{{cotizacion.id}}</td>
                       <td>@{{cotizacion.fecha_formated}}</td>
-                      <td>@{{cotizacion.total | formatoMoneda}} @{{cotizacion.moneda| formatoCurrency}}</td>
+                      <td v-bind:style= "[cotizacion.moneda == 'Dolares' ? {'color':'#266e07'} : {'color':'#150a9b'}]">@{{cotizacion.total | formatoMoneda}} @{{cotizacion.moneda| formatoCurrency}}</td>
                       <td class="text-warning">
                           <a title="Ver" :href="'/proyectos-aprobados/'+cotizacion.id_aprobado+'/ordenes-compra'" class="btn btn-info">
                             Ver <i class="far fa-eye"></i>

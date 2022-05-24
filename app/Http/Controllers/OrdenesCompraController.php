@@ -664,6 +664,10 @@ class OrdenesCompraController extends Controller
             $this->avisarOrdenPorAprobar($orden);
         }*/
 
+
+
+
+
         return response()->json(['success' => true, "error" => false], 200);
     }
 
@@ -691,7 +695,7 @@ class OrdenesCompraController extends Controller
 
         $update = $request->only(
             'proveedor_id', 'proveedor_empresa', 'moneda', 'numero', 'subtotal', 'numero_proyecto',
-            'aduana_id', 'aduana_compañia', 'proveedor_contacto_id', 'punto_entrega', 'carga', 'fecha_compra','flete'
+            'aduana_id', 'aduana_compañia', 'proveedor_contacto_id', 'punto_entrega', 'carga', 'fecha_compra','flete','numero_cliente'
         );
 
         if (!is_null($request->tiempo['id'])) {
@@ -828,6 +832,75 @@ class OrdenesCompraController extends Controller
 
             
         }
+
+
+        //generar PDF de orden
+        $orden->load('proveedor', 'contacto', 'proyecto.cotizacion',
+            'proyecto.cliente', 'entradas.producto.descripciones.descripcionNombre', 'aduana');
+
+        $proyecto->load('cotizacion', 'cotizacion.entradas', 'cotizacion.entradas.producto', 'cotizacion.entradas.contacto');
+
+        foreach($orden->entradas as $entrada_index => $entrada){
+            if ($entrada->fotos == null) {        
+
+                foreach($proyecto->cotizacion->entradas as $entcotizacion){
+                    if ($entcotizacion->producto_id == $entrada->producto_id) {
+                        $entradaf = OrdenCompraEntrada::findOrFail($entrada->id);
+                        if(!is_string($entcotizacion->fotos2)){
+                            $entradaf->fotos = '';
+                        }
+                        else{
+                            $entradaf->fotos = $entcotizacion->fotos2;    
+                        }
+                        $entradaf->update();        
+                    }
+                }
+                //$entrada_cotizacion = $proyecto->cotizacion->entradas[$entrada_index];
+            }
+        }
+
+        $orden->load('proveedor', 'contacto', 'proyecto.cotizacion',
+            'proyecto.cliente', 'entradas.producto.descripciones.descripcionNombre', 'aduana');
+
+        $firmaAbraham = User::select('firma')->where('id', 2)->first()->firma;
+        if ($firmaAbraham) {
+            $firmaAbraham = storage_path('app/public/' . $firmaAbraham);
+        } else {
+            $firmaAbraham = public_path('images/firma_vacia.png');
+        }
+
+        $orden->firmaAbraham = $firmaAbraham;
+
+        $url = 'ordenes_compra/' . $orden->id . '/orden_' . $orden->numero . '.pdf';
+        foreach ($orden->entradas as $entrada) {
+            if ($entrada->producto->foto) {
+                $entrada->producto->foto = asset('storage/' . $entrada->producto->foto);
+            }
+
+        }
+
+        list($ano, $mes, $dia) = explode('-', date('Y-m-d'));
+        if ($orden->proveedor->nacional) {
+            $meses = ['ENERO', 'FEBRERO', 'MARZO', 'ABRIL', 'MAYO', 'JUNIO', 'JULIO',
+                'AGOSTO', 'SEPTIEMBRE', 'OCTUBRE', 'NOVIEMBRE', 'DICIEMBRE'];
+            $mes = $meses[+$mes - 1];
+            $orden->fechaPDF = "$dia DE $mes DEL $ano";
+            $vista = 'ordenes-compra.ordenPDF';
+            $nombre = "nombre";
+        } else {
+            $meses = ['JANUARY', 'FEBRUARY', 'MARCH', 'APRIL', 'MAY', 'JUNE', 'JULY',
+                'AUGUST', 'SEPTEMBER', 'OCTOBER', 'NOVEMBER', 'DECEMBER'];
+            $mes = $meses[+$mes - 1];
+            $orden->fechaPDF = "$mes $dia, $ano";
+            $vista = 'ordenes-compra.ordenInglesPDF';
+            $nombre = "name";
+        }
+
+        $ordenPDF = PDF::loadView($vista, compact('orden', 'nombre'));
+        Storage::disk('public')->put($url, $ordenPDF->output());
+        unset($orden->fechaPDF);
+        unset($orden->firmaAbraham);
+        $orden->update(['archivo' => $url]);
 
         /*if ($orden->status == OrdenCompra::STATUS_RECHAZADA) {
             $this->avisarOrdenPorAprobar($orden);

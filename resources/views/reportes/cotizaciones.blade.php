@@ -113,6 +113,14 @@ Reportes | @parent
                           
                         </select>
                     </div>
+                    <div class=" btn-group" id="select_status" style="margin:0px 10px">
+                        <select name="selectstatus" class="form-control" size="1" v-model="valor_status" id="selectstatus" style="width:100%">
+                          <option v-for="option in datos_select.status" v-bind:value="option.valor">
+                            @{{ option.opcion }}
+                          </option>
+                          
+                        </select>
+                    </div>
                   </div>
               <div class="row">
                 <div class="col-sm-12">
@@ -132,6 +140,7 @@ Reportes | @parent
                           <th class="text-center"><strong>Monto</strong></th>
                           <th class="text-center"><strong>Moneda</strong></th>
                           <th class="text-center"><strong>Usuario</strong></th>
+                          <th class="text-center"><strong>Status</strong></th>
                         </tr>
                       </thead>
                       <tbody>
@@ -155,17 +164,35 @@ Reportes | @parent
                               @endforeach
                             </template>
                           </td>
-                          <td>
+                          @if($cotizacion->monda == 'Dolares')
+                          <td style="color:#266e07">
                             <template>
                               @foreach($cotizacion->entradas2() as $entrada)
                               <span > ${{number_format($entrada->total_importe, 2, '.', ',')}}</span><br/>
                               @endforeach
                             </template>
                           </td>
-                          <td>${{number_format($cotizacion->iva, 2, '.', ',')}}</td>
-                          <td>${{number_format($cotizacion->total, 2, '.', ',')}}</td>
-                          <td>{{str_replace('ol','ól',$cotizacion->moneda)}}</td>
+                          <td style="color:#266e07">${{number_format($cotizacion->iva, 2, '.', ',')}}</td>
+                          <td style="color:#266e07">${{number_format($cotizacion->total, 2, '.', ',')}}</td>
+                          <td style="color:#266e07">{{str_replace('ol','ól',$cotizacion->moneda)}}</td>
+                          @else
+                          <td style="color:#150a9b">
+                            <template>
+                              @foreach($cotizacion->entradas2() as $entrada)
+                              <span > ${{number_format($entrada->total_importe, 2, '.', ',')}}</span><br/>
+                              @endforeach
+                            </template>
+                          </td>
+                          <td style="color:#150a9b">${{number_format($cotizacion->iva, 2, '.', ',')}}</td>
+                          <td style="color:#150a9b">${{number_format($cotizacion->total, 2, '.', ',')}}</td>
+                          <td style="color:#150a9b">{{str_replace('ol','ól',$cotizacion->moneda)}}</td>
+                          @endif
                           <td>{{$cotizacion->user->name}}</td>
+                          @if($cotizacion->aceptada == 0)
+                          <td>Pendiente</td>
+                          @else
+                          <td>Aceptada</td>
+                          @endif
                           
                         </tr>
                         @endforeach
@@ -211,13 +238,15 @@ const app = new Vue({
       valor_proyectos:'Proyectos',
       valor_ids:'Cotización',
       valor_usuarios:'Usuarios',
-      datos_select:{clientes:[], proyectos:[], ids:[], usuarios:[]},   
+      valor_status:'Status',
+      datos_select:{clientes:[], proyectos:[], ids:[], usuarios:[],status:[{valor:'Status',opcion:'Status'},{valor:'',opcion:'Todos'},{valor:'Aceptada',opcion:'Aceptada'},{valor:'Pendiente',opcion:'Pendiente'}]},   
       tabla: {},
       locale: localeES,
       proyectoSelect:null,
       cotizacionSelect:null,
       clienteSelect:null,
       usuarioSelect:null,
+      statusSelect:null,
       totalm:'',
       totald:'',
       cargando:false
@@ -243,6 +272,12 @@ const app = new Vue({
         this.usuarioSelect= $('#selectusuarios').select2({ width: '100px'}).on('select2:select',function () {       
           var value = $("#selectusuarios").select2('data');
           vue.valor_usuarios = value[0].id
+          //this.tabla.columns(4).search(this.valor_proyectos).draw();
+        });
+
+        this.statusSelect= $('#selectstatus').select2({ width: '100px'}).on('select2:select',function () {       
+          var value = $("#selectstatus").select2('data');
+          vue.valor_status = value[0].id
           //this.tabla.columns(4).search(this.valor_proyectos).draw();
         });
         //console.log(this.valor_proyectos);
@@ -380,6 +415,7 @@ const app = new Vue({
       $("#fechas_container").append($("#select_proyectos"));
       $("#fechas_container").append($("#select_ids"));
       $("#fechas_container").append($("#select_usuarios"));
+      $("#fechas_container").append($("#select_status"));
       $("#fechas_container").append($("#fecha_ini_control"));
       $("#fechas_container").append($("#fecha_fin_control"));
 
@@ -422,6 +458,9 @@ const app = new Vue({
       },
       valor_usuarios:function(val){
         this.tabla.columns(10).search(this.valor_usuarios).draw();
+      },
+      valor_status:function(val){
+        this.tabla.columns(11).search(this.valor_status).draw();
       },
     },
     filters:{

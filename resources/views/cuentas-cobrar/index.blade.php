@@ -75,11 +75,11 @@
                   <td>@{{cuenta.cliente}}</td>
                   <td>@{{cuenta.proyecto}}</td>
                   <td>@{{cuenta.condiciones}}</td>
-                  <td >@{{cuenta.moneda}}</p></td>
-                  <td>@{{cuenta.total | formatoMoneda}}</td>
-                  <td>@{{cuenta.facturado | formatoMoneda}}</td>
-                  <td>@{{cuenta.pagado | formatoMoneda}}</td>
-                  <td>@{{cuenta.pendiente | formatoMoneda}}</td>
+                  <td v-bind:style= "[cuenta.moneda == 'Dolares' ? {'color':'#266e07'} : {'color':'#150a9b'}]">@{{cuenta.moneda}}</p></td>
+                  <td v-bind:style= "[cuenta.moneda == 'Dolares' ? {'color':'#266e07'} : {'color':'#150a9b'}]">@{{cuenta.total | formatoMoneda}}</td>
+                  <td v-bind:style= "[cuenta.moneda == 'Dolares' ? {'color':'#266e07'} : {'color':'#150a9b'}]">@{{cuenta.facturado | formatoMoneda}}</td>
+                  <td v-bind:style= "[cuenta.moneda == 'Dolares' ? {'color':'#266e07'} : {'color':'#150a9b'}]">@{{cuenta.pagado | formatoMoneda}}</td>
+                  <td v-bind:style= "[cuenta.moneda == 'Dolares' ? {'color':'#266e07'} : {'color':'#150a9b'}]">@{{cuenta.pendiente | formatoMoneda}}</td>
                   <td class="text-right">
                     <a class="btn btn-xs btn-info" data-toggle="tooltip" title="Ver"
                       :href="'/cuentas-cobrar/'+cuenta.id">

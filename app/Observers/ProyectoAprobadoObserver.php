@@ -30,6 +30,7 @@ class ProyectoAprobadoObserver
                 'cliente_nombre'    => $proyecto->cliente_nombre,
                 'proyecto_nombre'   => $proyecto->proyecto,
                 'proveedor_empresa' => $proveedor,
+                'numero_cliente' => $entradas->first()->producto->proveedor->numero_cliente,
                 'moneda'            => $entradas->first()->producto->proveedor->moneda ?? 'Dolares',
             ];
 
@@ -63,15 +64,31 @@ class ProyectoAprobadoObserver
                             }
                         }
                         else{
-                            $cantidad_convertida = null;
-                            $importe = $entrada->importe;        
+
+                            if ($entrada->precio_compra != null) {
+                                $cantidad_convertida = null;
+                                $importe = $entrada->precio_compra * $entrada->cantidad;
+                            }
+                            else{
+                                $cantidad_convertida = null;
+                                $importe = $entrada->importe;
+                            }
+
+                            
                         }
                     }
                     
                 }
                 else{
-                    $cantidad_convertida = null;
-                    $importe = $entrada->importe;
+
+                    if ($entrada->precio_compra != null) {
+                        $cantidad_convertida = null;
+                        $importe = $entrada->precio_compra * $entrada->cantidad;
+                    }
+                    else{
+                        $cantidad_convertida = null;
+                        $importe = $entrada->importe;
+                    }
                 }
 
 

@@ -86,7 +86,7 @@
                   <td>@{{cotizacion.prospecto_nombre}}</td>
                   <td>@{{cotizacion.numero}}</td>
                   <template>
-                    <td>@{{cotizacion.total | formatoMoneda}} @{{cotizacion.moneda|formatoCurrency}}</td>
+                    <td v-bind:style= "[cotizacion.moneda == 'Dolares' ? {'color':'#266e07'} : {'color':'#150a9b'}]">@{{cotizacion.total | formatoMoneda}} @{{cotizacion.moneda|formatoCurrency}}</td>
                   </template>
                   <td class="text-right">
                       <a class="btn btn-xs btn-success" title="PDF" :href="cotizacion.archivo"
