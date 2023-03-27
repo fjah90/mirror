@@ -192,6 +192,12 @@
                                                 contacto_type="ClienteContacto"
                                                 :nacional="cliente.nacional">
                             </contacto-telefonos>
+                            <div class="row form-group">
+                                <div class="col-md-6">
+                                    <label class="control-label">Fax</label>
+                                    <input type="text" class="form-control" name="fax" v-model="contacto.fax" required/>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -252,7 +258,8 @@
                     nombre: '',
                     cargo: '',
                     emails: [],
-                    telefonos: []
+                    telefonos: [],
+                    fax: ''
                 },
                 user: {
                     users: [],

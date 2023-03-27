@@ -24,7 +24,7 @@
 
                             <div class="panel">
                                 <div class="panel-heading">
-                                    <h3 class="panel-title">Datos Generales</h3>
+                                    <h3 class="panel-title">Datos Generalesgggggggggg</h3>
                                 </div>
                                 <div class="panel-body">
                                     <div class="row form-group">
@@ -207,6 +207,12 @@
                                                         contacto_type="ClienteContacto"
                                                         :nacional="cliente.nacional">
                                     </contacto-telefonos>
+                                    <div class="row form-group">
+                                        <div class="col-md-6">
+                                            <label class="control-label">Fax</label>
+                                            <input type="text" class="form-control" name="fax" v-model="contacto.fax" required/>
+                                        </div>
+                                    </div>
                                     <div class="row" style="margin-top:40px;">
                                         <div class="col-md-12 text-center">
                                             <button v-if="contacto.id" type="submit" class="btn btn-success"
@@ -230,6 +236,7 @@
                                                     <th>Cargo</th>
                                                     <th>Emails</th>
                                                     <th>Teléfonos</th>
+                                                    <th>Fax</th>
                                                     <th></th>
                                                 </tr>
                                                 </thead>
@@ -248,6 +255,7 @@
                                                             @{{telefono.extencion}}
                                                         </div>
                                                     </td>
+                                                    <td>@{{contacto.fax}}</td>
                                                     <td class="text-right">
                                                         <button class="btn btn-xs btn-success" data-toggle="tooltip"
                                                                 title="Editar"

@@ -8,7 +8,7 @@ class ClienteContacto extends Model
 {
     protected $table = 'clientes_contactos';
 
-    protected $fillable = ['cliente_id','nombre','cargo'];
+    protected $fillable = ['cliente_id','nombre','cargo','fax'];
 
     protected $appends = ['tipo','telefono','email'];
 
