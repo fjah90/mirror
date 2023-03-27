@@ -159,6 +159,12 @@
               <h3 class="panel-title">Datos Bancarios</h3>
             </div>
             <div class="panel-body">
+               <div class="row form-group">
+                <div class="col-md-4">
+                  <label class="control-label">Descripción de la empresa</label>
+                  <textarea  type="" class="form-control" name="decripcion_empresa" v-model="proveedor.decripcion_empresa"></textarea>
+                </div>
+              </div>
               <div class="row form-group">
                 <div class="col-md-4">
                   <label class="control-label">Moneda</label>
