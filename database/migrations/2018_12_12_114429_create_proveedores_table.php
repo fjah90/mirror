@@ -24,7 +24,7 @@ class CreateProveedoresTable extends Migration
           $table->string('numero_cuenta')->nullable();
           $table->string('clave_interbancaria')->nullable();
           $table->string('moneda')->nullable();
-          $table->int('dias_credito')->default(0);
+          $table->integer('dias_credito')->default(0);
           $table->string('calle')->nullable();
           $table->string('numero')->nullable();
           $table->string('colonia')->nullable();
