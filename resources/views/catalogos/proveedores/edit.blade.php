@@ -173,7 +173,7 @@
                     </div>
                     <div class="col-md-6">
                       <label class="control-label">Precios*</label>
-                      <input type="text" class="form-control" name="precios" v-model="proveedor.precios" required/>
+                      <input type="number" class="form-control" step="0.01" min="0.01" name="precios" v-model="proveedor.precios" required/>
                     </div>
                   </div>
                   <div class="row form-group">
