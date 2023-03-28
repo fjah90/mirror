@@ -47,6 +47,14 @@ Route::middleware('auth')->group(function () {
     Route::resource('/tiposClientes', 'TiposClientesController', ['parameters' => [
         'tiposClientes' => 'tipo',
     ]]);
+
+    /******Ruta de Categoria de cliente*********/
+
+     /*Route::resource('/categoriaClientes', 'CategoriaClientesController', ['parameters' => [
+        'categoriaClientes' => 'tipo',
+    ]]);*/
+
+
     Route::resource('/tiposProveedores', 'TiposProveedoresController', ['parameters' => [
         'tiposProveedores' => 'tipo',
     ]]);
