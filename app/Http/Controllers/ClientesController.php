@@ -10,6 +10,7 @@ use App\Models\ProveedorContacto;
 use App\Models\DatoFacturacion;
 use App\Models\Prospecto;
 use App\Models\TipoCliente;
+use App\Models\Vendedor;
 use App\User;
 use Illuminate\Http\Request;
 use Mail;
@@ -73,7 +74,8 @@ class ClientesController extends Controller
         $tipos    = TipoCliente::all();
         $nacional = true;
         $usuarios = User::all()->pluck('name', 'id');
-        return view('catalogos.clientes.create', compact('tipos', 'nacional', 'usuarios', 'layout'));
+        $vendedores = Vendedor::all()->pluck('nombre', 'id');
+        return view('catalogos.clientes.create', compact('tipos', 'nacional', 'usuarios', 'layout','vendedores'));
     }
 
     public function createExtra(Request $request)
@@ -210,10 +212,11 @@ class ClientesController extends Controller
 
         $tipos    = TipoCliente::all();
         $usuarios = User::all()->pluck('name', 'id');
+        $vendedores = Vendedor::all()->pluck('nombre', 'id');
         $cliente->load(['tipo', 'contactos.emails', 'contactos.telefonos', 'datos_facturacion','users']);
         $tab = ($request->has('contactos')) ? 1 : 0;
 
-        return view('catalogos.clientes.edit', compact(['cliente', 'tipos', 'usuarios', 'tab', '']));
+        return view('catalogos.clientes.edit', compact(['cliente', 'tipos', 'usuarios', 'tab','vendedores']));
     }
 
 

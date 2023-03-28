@@ -27,7 +27,7 @@
                         </div>
                         <div class="panel-body">
                             <div class="row form-group">
-                                <div class="col-md-4">
+                                <div class="col-md-6">
                                     <label class="control-label">Usuario</label>
                                     <select class="form-control" name="usuario_id" v-model='cliente.usuario_id'
                                             required>
@@ -36,18 +36,27 @@
                                         @endforeach
                                     </select>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="control-label">Usuario(s) adicional</label>
                                         <select2multags :options="user.userOptions" v-model="user.users" style="width:100%;">
                                         </select2multags>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-6">
                                     <label class="control-label">Tipo</label>
                                     <select class="form-control" name="tipo_id" v-model='cliente.tipo_id' required>
                                         @foreach($tipos as $tipo)
                                             <option value="{{$tipo->id}}">{{$tipo->nombre}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="control-label">Vendedor</label>
+                                    <select class="form-control" name="vendedor_id" v-model='cliente.vendedor_id'
+                                            required>
+                                        @foreach($vendedores as $id => $nombre)
+                                            <option value="{{$id}}">{{$nombre}}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -227,6 +236,7 @@
                 translations: translationsES,
                 cliente: {
                     usuario_id: '',
+                    vendedor_id: '',
                     tipo_id: '',
                     nombre: '',
                     rfc: '',

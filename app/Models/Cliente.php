@@ -14,6 +14,7 @@ class Cliente extends Model
         'calle', 'nexterior', 'ninterior',
         'colonia', 'delegacion', 'cp', 'ciudad', 'estado', 'pais',
         'pagina_web', 'adicionales', 'nacional', 'usuario_nombre',
+        'vendedor_id'
     ];
 
     protected $casts = [
@@ -60,6 +61,10 @@ class Cliente extends Model
     public function usuario()
     {
         return $this->belongsTo('App\User', 'usuario_id', 'id');
+    }
+    public function vendedor()
+    {
+        return $this->belongsTo('App\Vendedor', 'vendedor_id', 'id');
     }
 
     public function contactos()
