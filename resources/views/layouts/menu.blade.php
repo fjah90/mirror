@@ -152,11 +152,13 @@
                 <i class="fas fa-truck-loading " style="color:#2283bf;"></i> Proveedores
               </a>
             </li>
+            <!--
             <li  {!! (Request::is('agentesAduanales*') ? 'class="active"' : '') !!}>
               <a href="{{ URL::to('agentesAduanales') }}">
                 <i class="fas fa-warehouse" style="color:#2283bf;"></i> Agentes Aduanales
               </a>
             </li>
+            -->
             <li {!! (Request::is('productos*') ? 'class="active"' : '') !!}>
               <a href="{{ URL::to('productos') }}">
                 <i class="fas fa-parking " style="color:#2283bf;"></i> Producto
@@ -311,7 +313,7 @@
 
           <!--Catalogos de Apoyo-->
 
-          <li {!! (Request::is('Usuarios*') ? 'class="active"' : '') !!} {!! (Request::is('tiposClientes*') ? 'class="active"' : '') !!} {!! (Request::is('proyectos*') ? 'class="active"' : '') !!} {!! (Request::is('subproyectos*') ? 'class="active"' : '') !!} {!! (Request::is('tiposProveedores*') ? 'class="active"' : '') !!} {!! (Request::is('unidadesMedida*') ? 'class="active"' : '') !!} {!! (Request::is('subcategorias*') ? 'class="active"' : '') !!} {!! (Request::is('categorias*') ? 'class="active"' : '') !!}><a class="title"><i class="fa fa-book"></i>  Catálogos de Apoyo <span class="fa fa-chevron-down"></span></a>
+          <li {!! (Request::is('Usuarios*') ? 'class="active"' : '') !!} {!! (Request::is('vendedores*') ? 'class="active"' : '') !!}{!! (Request::is('tiposClientes*') ? 'class="active"' : '') !!} {!! (Request::is('proyectos*') ? 'class="active"' : '') !!} {!! (Request::is('subproyectos*') ? 'class="active"' : '') !!} {!! (Request::is('tiposProveedores*') ? 'class="active"' : '') !!} {!! (Request::is('unidadesMedida*') ? 'class="active"' : '') !!} {!! (Request::is('subcategorias*') ? 'class="active"' : '') !!} {!! (Request::is('categorias*') ? 'class="active"' : '') !!}><a class="title"><i class="fa fa-book"></i>  Catálogos de Apoyo <span class="fa fa-chevron-down"></span></a>
            <ul class="nav child_menu">
           @hasanyrole('Administrador')
           <li {!! (Request::is('Usuarios*') ? 'class="active"' : '') !!} class="sub {!! (Request::is('usuarios*') ? 'active' : '') !!}">
@@ -322,7 +324,12 @@
           @endhasanyrole
           <li  {!! (Request::is('tiposClientes*') ? 'class="active"' : '') !!}>
             <a href="{{ URL::to('tiposClientes') }}">
-              <i class="fas fa-address-book"></i> Tipo de Clientes
+              <i class="fas fa-address-book"></i> Tipo de Clientesss
+            </a>
+          </li>
+          <li {!! (Request::is('vendedores*') ? 'class="active"' : '') !!}>
+            <a href="{{ URL::to('vendedores') }}">
+              <i class="fas fa-address-card-o " style="color:#2283bf;"></i> Vendedores
             </a>
           </li>
           <li  {!! (Request::is('proyectos*') ? 'class="active"' : '') !!}>

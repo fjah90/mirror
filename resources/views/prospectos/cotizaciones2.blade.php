@@ -38,11 +38,13 @@
                 </select>
               @endrole
             </div>
+            @hasanyrole('Administrador'|'Usuario')
             <div class="p-10" style="display:inline-block;float: right;">
               <button class="btn btn-sm btn-primary" @click="modalNuecaCotizacion=true">
                   <i class="fas fa-address-book"></i> Nueva Cotización
               </button>
             </div>
+            @endhasrole
             <div class="p-10">
               
             </div>

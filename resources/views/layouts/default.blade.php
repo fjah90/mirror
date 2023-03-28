@@ -110,7 +110,7 @@
           </div>
         </div>
         <ul class="navigation nav side-menu">
-
+        @hasanyrole('Administrador|Usuaro')
           <!-- Dashboard -->
           <li {!! (Request::is('dashboard') ? 'class="active"' : '') !!}>
             <a href="{{ URL::to('dashboard') }}">
@@ -120,7 +120,9 @@
           </li>
 
           <hr class="divider-menu">
+        @endhasanyrole
 
+        @hasanyrole('Administrador|Usuaro')
           <!-- Proyectos -->
 
           <li {!! (Request::is('prospectos/cotizaciones*') ? 'class="active"' : '') !!}>
@@ -129,6 +131,7 @@
               <span class="mm-text ">Proyectos</span>
             </a>
           </li>
+        @endhasanyrole
 
           <!-- Proyectos 
           <li {!! (Request::is('prospectos/cotizaciones*') ? 'class="active"' : '') !!}><a class="title"><i class="fas fa-calendar-check" style="color:#06a1ce; font-size: 20px;" ></i>  Proyectos <span class="fa fa-chevron-down"></span></a>
@@ -168,7 +171,7 @@
           </li>
         -->
 
-          
+        @hasanyrole('Administrador|Usuaro')
           <li {!! (Request::is('ordenes-proceso*') ? 'class="active"' : '') !!}  {!! (Request::is('proyectos-aprobados*') ? 'class="active"' : '') !!}><a class="title"><i class="fa fa-cart-arrow-down" style="color:#907ff3; font-size: 20px;"></i>  Ordenes Compra <span class="fa fa-chevron-down"></span></a>
            <ul class="nav child_menu">  
               <li  {!! (Request::is('proyectos-aprobados*') ? 'class="active"' : '') !!} >
@@ -185,10 +188,11 @@
               </li>
             </ul>
           </li>
-      
-
           <hr class="divider-menu">
+          @endhasanyrole
 
+
+          @hasanyrole('Administrador|Usuaro')
           <!-- Administracion -->
           <li {!! (Request::is('cuentas-cobrar*') ? 'class="active"' : '') !!} {!! (Request::is('cuentas-pagar*') ? 'class="active"' : '') !!}><a class="title"><i class="fa fa-calculator" style="color:#fa2002; font-size:20px;"></i>  Contabilidad <span class="fa fa-chevron-down" ></span></a>
            <ul class="nav child_menu">  
@@ -206,10 +210,10 @@
               </li>  
             </ul> 
           </li>
-
-          
           <hr class="divider-menu">
+          @endhasanyrole
 
+          @hasanyrole('Administrador|Usuaro')
           <!--Reportes-->
 
           <li {!! (Request::is('reportes*') ? 'class="active"' : '') !!}><a class="title"><i class="fas fa-file" style="color:#fa7702; font-size: 20px;"></i>  Reportes <span class="fa fa-chevron-down"></span></a>
@@ -251,6 +255,7 @@
           </li>
             </ul>
           </li>
+          @endhasanyrole
 
 
           <!-- Administracion 
@@ -272,7 +277,7 @@
           <hr class="divider-menu">
           @endhasanyrole
           -->
-
+          @hasanyrole('Administrador|Usuaro')
           <!-- Catalogos -->
           <li {!! (Request::is('clientes*' ) ? 'class="active"' : '') !!} {!! (Request::is('proveedores*' ) ? 'class="active"' : '') !!} {!! (Request::is('agentesAduanales*' ) ? 'class="active"' : '') !!} {!! (Request::is('productos*' ) ? 'class="active"' : '') !!}><a class="title"><i class="fa fa-signal" style="color:#f54c82; font-size: 20px;"></i>  Administración <span class="fa fa-chevron-down"></span></a>
             <ul class="nav child_menu">  
@@ -298,6 +303,8 @@
             </li>
             </ul>
           </li>
+          <hr class="divider-menu">
+          @endhasanyrole
                   
 
       
@@ -316,63 +323,70 @@
           -->
           
           
-          <hr class="divider-menu">
+          
 
 
 
           <!--Catalogos de Apoyo-->
-
-          <li {!! (Request::is('Usuarios*') ? 'class="active"' : '') !!} {!! (Request::is('tiposClientes*') ? 'class="active"' : '') !!} {!! (Request::is('proyectos*') ? 'class="active"' : '') !!} {!! (Request::is('subproyectos*') ? 'class="active"' : '') !!} {!! (Request::is('tiposProveedores*') ? 'class="active"' : '') !!} {!! (Request::is('unidadesMedida*') ? 'class="active"' : '') !!} {!! (Request::is('subcategorias*') ? 'class="active"' : '') !!} {!! (Request::is('categorias*') ? 'class="active"' : '') !!}><a class="title"><i class="fa fa-book" style="color:#f5bf4c; font-size: 20px;"></i>  Catálogos<span class="fa fa-chevron-down"></span></a>
+          @hasanyrole('Administrador|Usuaro')
+          <li {!! (Request::is('vendedores*') ? 'class="active"' : '') !!} {!! (Request::is('Usuarios*') ? 'class="active"' : '') !!} {!! (Request::is('tiposClientes*') ? 'class="active"' : '') !!} {!! (Request::is('proyectos*') ? 'class="active"' : '') !!} {!! (Request::is('subproyectos*') ? 'class="active"' : '') !!} {!! (Request::is('tiposProveedores*') ? 'class="active"' : '') !!} {!! (Request::is('unidadesMedida*') ? 'class="active"' : '') !!} {!! (Request::is('subcategorias*') ? 'class="active"' : '') !!} {!! (Request::is('categorias*') ? 'class="active"' : '') !!}><a class="title"><i class="fa fa-book" style="color:#f5bf4c; font-size: 20px;"></i>  Catálogos<span class="fa fa-chevron-down"></span></a>
            <ul class="nav child_menu">
-          @hasanyrole('Administrador')
-          <li {!! (Request::is('Usuarios*') ? 'class="active"' : '') !!} class="sub {!! (Request::is('usuarios*') ? 'active' : '') !!}">
-            <a href="{{ URL::to('usuarios') }}">
-              <i class="fas fa-user"></i> Usuarios
-            </a>
-          </li>
-          @endhasanyrole
-          <li  {!! (Request::is('tiposClientes*') ? 'class="active"' : '') !!}>
-            <a href="{{ URL::to('tiposClientes') }}">
-              <i class="fas fa-address-book"></i> Tipo de Clientes
-            </a>
-          </li>
-          <li  {!! (Request::is('proyectos*') ? 'class="active"' : '') !!}>
-            <a href="{{ URL::to('proyectos') }}">
-              <i class="fas fa-folder-open "></i> Categoría de Proyectos
-            </a>
-          </li>
-          <li  {!! (Request::is('subproyectos*') ? 'class="active"' : '') !!}>
-            <a href="{{ URL::to('subproyectos') }}">
-              <i class="far fa-folder-open "></i> Tipo de Proyecto
-            </a>
-          </li>
-          <li  {!! (Request::is('tiposProveedores*') ? 'class="active"' : '') !!}>
-            <a href="{{URL::to('tiposProveedores')}}">
-              <i class="fas fa-address-book"></i> Tipos de Proveedores
-            </a>
-          </li>
-          <li  {!! (Request::is('unidadesMedida*') ? 'class="active"' : '') !!}>
-            <a href="{{ URL::to('unidadesMedida') }}">
-              <i class="fas fa-ruler-combined"></i> Unidades de Medida
-            </a>
-          </li>
-          <li  {!! (Request::is('subcategorias*') ? 'class="active"' : '') !!}>
-            <a href="{{ URL::to('subcategorias') }}">
-              <i class="fas fa-cubes "></i> Categoría de Productos
-            </a>
-          </li>
-          <li  {!! (Request::is('categorias*') ? 'class="active"' : '') !!}>
-            <a href="{{ URL::to('categorias') }}">
-              <i class="fas fa-cubes "></i> Tipo de Producto
-            </a>
-          </li>
+            @hasanyrole('Administrador')
+            <li {!! (Request::is('Usuarios*') ? 'class="active"' : '') !!} class="sub {!! (Request::is('usuarios*') ? 'active' : '') !!}">
+              <a href="{{ URL::to('usuarios') }}">
+                <i class="fas fa-user"></i> Usuarios
+              </a>
+            </li>
+            @endhasanyrole
+            <li  {!! (Request::is('tiposClientes*') ? 'class="active"' : '') !!}>
+              <a href="{{ URL::to('tiposClientes') }}">
+                <i class="fas fa-address-book"></i> Tipo de Clientes
+              </a>
+            </li>
+            <li {!! (Request::is('vendedores*') ? 'class="active"' : '') !!}>
+              <a href="{{ URL::to('vendedores') }}">
+                <i class="fas fa-address-card "></i> Vendedores
+              </a>
+            </li>
+            <li  {!! (Request::is('proyectos*') ? 'class="active"' : '') !!}>
+              <a href="{{ URL::to('proyectos') }}">
+                <i class="fas fa-folder-open "></i> Categoría de Proyectos
+              </a>
+            </li>
+            <li  {!! (Request::is('subproyectos*') ? 'class="active"' : '') !!}>
+              <a href="{{ URL::to('subproyectos') }}">
+                <i class="far fa-folder-open "></i> Tipo de Proyecto
+              </a>
+            </li>
+            <li  {!! (Request::is('tiposProveedores*') ? 'class="active"' : '') !!}>
+              <a href="{{URL::to('tiposProveedores')}}">
+                <i class="fas fa-address-book"></i> Tipos de Proveedores
+              </a>
+            </li>
+            <li  {!! (Request::is('unidadesMedida*') ? 'class="active"' : '') !!}>
+              <a href="{{ URL::to('unidadesMedida') }}">
+                <i class="fas fa-ruler-combined"></i> Unidades de Medida
+              </a>
+            </li>
+            <li  {!! (Request::is('subcategorias*') ? 'class="active"' : '') !!}>
+              <a href="{{ URL::to('subcategorias') }}">
+                <i class="fas fa-cubes "></i> Categoría de Productos
+              </a>
+            </li>
+            <li  {!! (Request::is('categorias*') ? 'class="active"' : '') !!}>
+              <a href="{{ URL::to('categorias') }}">
+                <i class="fas fa-cubes "></i> Tipo de Producto
+              </a>
+            </li>
             </ul>
           </li>
-
-          
-          
-
           <hr class="divider-menu">
+          @endhasanyrole
+
+          
+          
+
+          
 
           <!--
           
