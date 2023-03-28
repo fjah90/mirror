@@ -159,10 +159,20 @@
               <h3 class="panel-title">Datos Bancarios</h3>
             </div>
             <div class="panel-body">
-               <div class="row form-group">
-                <div class="col-md-4">
+               <div class="row">
+                <div class="col-md-12">
                   <label class="control-label">Descripción de la empresa</label>
-                  <textarea  type="" class="form-control" name="decripcion_empresa" v-model="proveedor.decripcion_empresa"></textarea>
+                  <textarea  name="decripcion_empresa" class="form-control" rows="4"  cols="80" v-model="proveedor.decripcion_empresa" required></textarea>
+                </div>
+              </div><br>
+              <div class="row form-group">
+                <div class="col-md-6">
+                  <label class="control-label">Productos*</label>
+                  <input type="text" class="form-control" name="productos" v-model="proveedor.productos" required/>
+                </div>
+                 <div class="col-md-6">
+                  <label class="control-label">Precios*</label>
+                  <input type="text" class="form-control" name="precios" v-model="proveedor.precios" required/>
                 </div>
               </div>
               <div class="row form-group">
@@ -313,6 +323,9 @@ const app = new Vue({
         pais: '',
         pagina_web: '',
         adicionales: '',
+        decripcion_empresa: '',
+        productos: '',
+        precios: '',
         moneda: '',
         limite_credito: '',
         dias_credito: '',

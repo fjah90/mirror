@@ -14,7 +14,7 @@ class AddAlterTableClientesContactos extends Migration
     public function up()
     {
          Schema::table('clientes_contactos', function (Blueprint $table) {
-          $table->string('fax')->default(0)->after('telefono');
+          $table->string('fax')->nullable()->after('telefono');
         
         });
     }

@@ -94,6 +94,25 @@
             </div>
             @endif
             <div class="row">
+              <div class="col-md-12">
+                <label class="control-label">Descripción de la empresa</label>
+                <span class="form-control">{{$proveedor->decripcion_empresa}}</span>
+                <!--textarea  name="decripcion_empresa" class="form-control" rows="4"  cols="80" v-model="proveedor.decripcion_empresa" required></textarea-->
+              </div>
+            </div><br>
+            <div class="row form-group">
+              <div class="col-md-6">
+                <label class="control-label">Productos*</label>
+                <span class="form-control">{{$proveedor->productos}}</span>
+                <!--input type="text" class="form-control" name="productos" v-model="proveedor.productos" required/-->
+              </div>
+              <div class="col-md-6">
+                <label class="control-label">Precios*</label>
+                <span class="form-control">{{$proveedor->precios}}</span>
+                <!--input type="text" class="form-control" name="precios" v-model="proveedor.precios" required/-->
+              </div>
+            </div>
+            <div class="row">
               <div class="col-md-4">
                 <div class="form-group">
                   <label class="control-label">Moneda</label>

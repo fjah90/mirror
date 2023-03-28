@@ -15,7 +15,7 @@ class Proveedor extends Model
       'razon_social','identidad_fiscal','identificacion_fiscal',
       'calle','nexterior',
       'colonia','delegacion','cp','ciudad','estado','pais',
-      'pagina_web','adicionales',
+      'pagina_web','adicionales','decripcion_empresa','productos','precios',
       'moneda','limite_credito','dias_credito',
       'banco','numero_cuenta','clave_interbancaria','cuenta_intercorp','swift','aba',
       'banco_colonia','banco_delegacion','banco_ciudad','banco_estado','banco_zipcode','banco_pais',
