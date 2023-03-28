@@ -54,6 +54,7 @@
                   <option value="2020-12-31">2020</option>
                   <option value="2021-12-31">2021</option>
                   <option value="2022-12-31">2022</option>
+                  <option value="2023-12-31">2023</option>
                 </select>
             </div>          
           </h3>
@@ -153,7 +154,7 @@ const app = new Vue({
     data: {
       cotizaciones: {!! json_encode($cotizaciones) !!},
       usuarioCargado: {{auth()->user()->id}},
-      anio:'2022-12-31',
+      anio:'2023-12-31',
       tabla: {},
       locale: localeES,
       modalNuecaCotizacion: false,

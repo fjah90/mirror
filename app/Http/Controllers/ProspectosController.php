@@ -37,8 +37,11 @@ class ProspectosController extends Controller
      */
     public function index()
     {
-        $inicio = Carbon::parse('2022-01-01');
-        $anio = Carbon::parse('2022-12-31');
+        /*$inicio = Carbon::parse('2022-01-01');
+        $anio = Carbon::parse('2022-12-31');*/
+
+        $inicio = Carbon::parse('2023-01-01');
+        $anio = Carbon::parse('2023-12-31');
 
         $user = auth()->user();
 
@@ -98,8 +101,8 @@ class ProspectosController extends Controller
                 $query->where("usuario_id", $user->id);
             })->get();
         */
-        $inicio = Carbon::parse('2022-01-01');
-        $anio = Carbon::parse('2022-12-31');
+        $inicio = Carbon::parse('2023-01-01');//se ajusto por el año en curso
+        $anio = Carbon::parse('2023-12-31');// se ajusto por el año
         $prospectos = Prospecto::with('cliente', 'ultima_actividad.tipo', 'proxima_actividad.tipo', 'user','cotizaciones')
         ->where('user_id', $user->id)
         ->whereBetween('prospectos.created_at', [$inicio, $anio])
@@ -127,6 +130,10 @@ class ProspectosController extends Controller
         elseif ($request->anio == '2022-12-31') {
             $inicio = Carbon::parse('2022-01-01');    
         }
+         elseif ($request->anio == '2023-12-31') {
+            $inicio = Carbon::parse('2023-01-01');    
+        }
+
         else{
             $inicio = Carbon::parse('2021-01-01');
         }
@@ -200,6 +207,9 @@ class ProspectosController extends Controller
         }
         elseif ($request->anio == '2022-12-31') {
             $inicio = Carbon::parse('2022-01-01');    
+        }
+         elseif ($request->anio == '2023-12-31') {
+            $inicio = Carbon::parse('2023-01-01');    
         }
         else{
             $inicio = Carbon::parse('2021-01-01');

@@ -56,6 +56,7 @@
                   <option value="2020-12-31">2020</option>
                   <option value="2021-12-31">2021</option>
                   <option value="2022-12-31">2022</option>
+                  <option value="2023-12-31">2023</option>
                 </select>
             </div>
             <div class="p-10" style="display:inline-block">
@@ -196,7 +197,7 @@ const app = new Vue({
     data: {
       prospectos: {!! json_encode($prospectos) !!},
       usuarioCargado: {{auth()->user()->id}},
-      anio:'2022-12-31',
+      anio:'2023-12-31',
       tabla: {},
       locale: localeES,
       fecha_ini: '',
