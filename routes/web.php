@@ -33,20 +33,7 @@ Route::middleware('auth')->group(function () {
 
     //Dashboard
     Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
-
-
-    //Mi Cuenta
-    Route::get('/mi_cuenta', 'MiCuentaController@index')->name('mi_cuenta');
-    Route::post('/mi_cuenta', 'MiCuentaController@update');
-
-    //Catalogos
-    Route::resource('/observacionesCotizacion', 'ObservacionesCotizacionController', [
-        'only'       => ['store', 'destroy'],
-        'parameters' => ['observacionesCotizacion' => 'observacion'],
-    ]);
-    Route::resource('/tiposClientes', 'TiposClientesController', ['parameters' => [
-        'tiposClientes' => 'tipo',
-    ]]);
+    
 
     /******Ruta de Categoria de cliente*********/
 
@@ -54,51 +41,23 @@ Route::middleware('auth')->group(function () {
         'categoriaClientes' => 'tipo',
     ]]);*/
 
-
-    Route::resource('/tiposProveedores', 'TiposProveedoresController', ['parameters' => [
-        'tiposProveedores' => 'tipo',
-    ]]);
-    Route::resource('/unidadesMedida', 'UnidadesMedidaController', ['parameters' => [
-        'unidadesMedida' => 'unidad',
-    ]]);
-    Route::resource('/agentesAduanales', 'AgentesAduanalesController', ['parameters' => [
-        'agentesAduanales' => 'agente',
-    ]]);
-    Route::resource('/condicionesCotizacion', 'CondicionesCotizacionController', [
-        'only'       => ['update', 'destroy'],
-        'parameters' => ['condicionesCotizacion' => 'condicion'],
-    ]);
-    Route::get('/clientes/crearNacional', 'ClientesController@create')->name('clientes.createNacional');
-    Route::get('/clientes/crearExtranjero', 'ClientesController@createExtra')->name('clientes.createExtranjero');
-    Route::post('/clientes/listado', 'ClientesController@listado');
-    Route::resource('/clientes', 'ClientesController');
-    Route::get('/proveedores/crearNacional', 'ProveedoresController@create')->name('proveedores.createNacional');
-    Route::get('/proveedores/crearInternacional', 'ProveedoresController@createInter')->name('proveedores.createInternacional');
-    Route::get('/proveedoresExtra', 'ProveedoresController@indexExtra')->name('proveedores.indexExtra');
-    Route::resource('/proveedores', 'ProveedoresController', ['parameters' => ['proveedores' => 'proveedor']]);
-    Route::resource('/contactos', 'ContactosController');
-    Route::resource('/datosFacturacion', 'DatosFacturacionController');
-    Route::resource('/emails', 'EmailsController');
-    Route::resource('/telefonos', 'TelefonosController');
-    Route::resource('/proyectos', 'ProyectosController');
-    Route::resource('/subproyectos', 'SubProyectosController');
-    Route::post('/productos/{producto}', 'ProductosController@update');
-    Route::resource('/productos', 'ProductosController');
-    Route::resource('/categorias', 'CategoriasController');
-    Route::resource('/subcategorias', 'SubcategoriasController');
-
-
-    Route::post('/proyectos-aprobados/listado', 'ProyectosAprobadosController@listado');
-    Route::post('/prospectos/listado', 'ProspectosController@listado');
-    Route::post('/prospectos/listado3', 'ProspectosController@listado3');
-    Route::post('/prospectos/listadocot', 'ProspectosController@listadocot');
-    Route::post('/cuentas-cobrar/listado', 'CuentasCobrarController@listado');
-    Route::post('/cuentas-pagar/listado', 'CuentasPagarController@listado');
-    Route::post('/ordenes-proceso/listado', 'OrdenesProcesoController@listado');///
-
-
     //Todos
+    //Prospectos
+    Route::get('/prospectos/cotizaciones', 'ProspectosController@cotizaciones');
+    Route::get('prospectos/regeneratePDF', 'ProspectosController@regeneratePDF');
+    Route::get('prospectos/actualizarActividades', 'ProspectosController@actualizarActividades');
+    Route::post('/prospectos/{prospecto}/guardarActividades', 'ProspectosController@guardarActividades');
+    Route::get('/prospectos/{prospecto}/cotizar', 'ProspectosController@cotizar')->name('prospectos.cotizar');
+    Route::post('/prospectos/{prospecto}/cotizacion', 'ProspectosController@cotizacion');
+    Route::post('/prospectos/{prospecto}/cotizacion/{cotizacion}', 'ProspectosController@cotizacionUpdate');
+    Route::post('/prospectos/{prospecto}/enviarCotizacion', 'ProspectosController@enviarCotizacion');
+    Route::post('/prospectos/{prospecto}/aceptarCotizacion', 'ProspectosController@aceptarCotizacion');
+    Route::post('/prospectos/{prospecto}/notasCotizacion', 'ProspectosController@notasCotizacion');
+    Route::post('/prospectos/{prospecto}/copiarCotizacion', 'ProspectosController@copiarCotizacion');
+    Route::delete('/prospectos/{prospecto}/cotizacion/{cotizacion}', 'ProspectosController@destroyCotizacion');
     Route::resource('/prospectos', 'ProspectosController');
+    
+   
 
     //Usuario y Admin
     Route::middleware('role:Usuario|Administrador')->group(function () {
@@ -178,6 +137,8 @@ Route::middleware('auth')->group(function () {
         Route::post('/prospectos/{prospecto}/notasCotizacion', 'ProspectosController@notasCotizacion');
         Route::post('/prospectos/{prospecto}/copiarCotizacion', 'ProspectosController@copiarCotizacion');
         Route::delete('/prospectos/{prospecto}/cotizacion/{cotizacion}', 'ProspectosController@destroyCotizacion');
+        Route::resource('/prospectos', 'ProspectosController',[
+            'only'       => ['create', 'show', 'edit'],]);
         
 
         //Proyectos Aprobados
