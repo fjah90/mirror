@@ -14,7 +14,9 @@ class AddAlterTableProveedoresContactos extends Migration
     public function up()
     {
         Schema::table('proveedores_contactos', function (Blueprint $table) {
-          $table->string('fax')->nullable()->after('telefono');
+          $table->string('telefono')->nullable()->after('cargo');
+          $table->string('email')->nullable()->after('telefono');
+          $table->string('fax')->nullable()->after('email');
         
         });
     }
