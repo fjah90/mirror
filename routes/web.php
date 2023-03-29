@@ -53,7 +53,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('/categoriaClientes', 'CategoriaClientesController', ['parameters' => [
         'categoriaClientes' => 'categoria',
     ]]);
-
+    /**************************************************************/
 
     Route::resource('/tiposProveedores', 'TiposProveedoresController', ['parameters' => [
         'tiposProveedores' => 'tipo',
@@ -118,6 +118,11 @@ Route::middleware('auth')->group(function () {
         Route::resource('/tiposClientes', 'TiposClientesController', ['parameters' => [
             'tiposClientes' => 'tipo',
         ]]);
+        /*categoria del cliente*/
+        Route::resource('/categoriaClientes', 'CategoriaClientesController', ['parameters' => [
+        'categoriaClientes' => 'categoria',
+        ]]);
+        /*categoria del cliente*/
         Route::resource('/tiposProveedores', 'TiposProveedoresController', ['parameters' => [
             'tiposProveedores' => 'tipo',
         ]]);
@@ -245,6 +250,7 @@ Route::middleware('auth')->group(function () {
         Route::delete('/clientes/{cliente}', 'ClientesController@destroy');
         Route::resource('/subcategorias', 'SubcategoriasController', ['only' => ['create', 'store', 'edit', 'update', 'delete']]);
         Route::resource('/categorias', 'CategoriasController', ['only' => ['create', 'store', 'edit', 'update', 'delete']]);
+        Route::resource('/categoriaClientes', 'CategoriaClientesController', ['only' => ['create', 'store', 'edit', 'update', 'delete']]);//
         Route::resource('/tiposClientes', 'TiposClientesController', ['only' => ['create', 'store', 'edit', 'update', 'delete']]);
         Route::resource('/vendedores', 'VendedoresController', ['only' => ['create', 'store', 'edit', 'update', 'delete']]);
         Route::resource('/tiposProveedores', 'TiposProveedoresController', ['only' => ['create', 'store', 'edit', 'update', 'delete']]);
