@@ -14,7 +14,7 @@
   <section class="content-header">
     <h1>Categoria del Clientes</h1>
   </section>
-  <!-- Main content -->
+  <!-- Main content -->          
   <section class="content" id="content">
     <div class="row">
       <div class="col-lg-12">

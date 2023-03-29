@@ -52,7 +52,7 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('/categoriaClientes', 'CategoriaClientesController', ['parameters' => [
         'categoriaClientes' => 'categoria',
-    ]]);
+    ]]);       
     /**************************************************************/
 
     Route::resource('/tiposProveedores', 'TiposProveedoresController', ['parameters' => [

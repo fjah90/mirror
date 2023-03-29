@@ -27,11 +27,11 @@
             <span style="visibility:hidden">.</span>
             @hasrole('Administrador')
             <a href="{{route('categoriaClientes.create')}}" class="btn btn-primary" style="color: #fff;">
-              <i class="fa fa-plus"></i> Nuevo Tipo
+              <i class="fa fa-plus"></i> Nueva Categoria
             </a>
             @endhasrole
           </h3>
-        </div>
+        </div>           
         <div class="panel-body">
           <div class="table-responsive">
             <table id="tabla" class="table table-bordred" style="width:100%;"

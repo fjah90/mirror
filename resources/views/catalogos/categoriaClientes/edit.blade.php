@@ -21,7 +21,7 @@
         <div class="panel ">
           <div class="panel-heading">
             <h3 class="panel-title">Editar Categoria del Cliente</h3>
-          </div>
+          </div>    
           <div class="panel-body">
             <form class="" @submit.prevent="guardar()">
               <div class="row">
