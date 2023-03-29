@@ -4,7 +4,6 @@ namespace App\Models;
 
 use App\Model;
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Model;
 
 class CategoriaCliente extends Model
 {
