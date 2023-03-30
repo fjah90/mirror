@@ -2,7 +2,7 @@
 
 {{-- Page title --}}
 @section('title')
-    Nueva Categoria del Cliente | @parent
+    Nueva Categoría de Cliente | @parent
 @stop
 
 @section('header_styles')
@@ -12,7 +12,7 @@
 @section('content')
   <!-- Content Header (Page header) -->
   <section class="content-header">
-    <h1>Categoria del Clientes</h1>
+    <h1>Categoría de Cliente</h1>
   </section>
   <!-- Main content -->          
   <section class="content" id="content">
@@ -20,7 +20,7 @@
       <div class="col-lg-12">
         <div class="panel ">
           <div class="panel-heading">
-            <h3 class="panel-title">Nueva Categoria del Cliente</h3>
+            <h3 class="panel-title">Nueva Categoría del Cliente</h3>
           </div>
           <div class="panel-body">
             <form class="" @submit.prevent="guardar()">
@@ -34,7 +34,7 @@
               </div>
               <div class="row" style="margin-top:25px;">
                 <div class="col-md-12 text-right">
-                  <a class="btn btn-default" href="{{route('categoriaCliente.index')}}" style="margin-right:20px;">
+                  <a class="btn btn-default" href="{{route('categoriaClientes.index')}}" style="margin-right:20px;">
                     Regresar
                   </a>
                   <button type="submit" class="btn btn-primary" :disabled="cargando">
@@ -65,7 +65,7 @@ const app = new Vue({
     methods: {
       guardar(){
         this.cargando = true;
-        axios.post('/categoriaCliente', {
+        axios.post('/categoriaClientes', {
           nombre: this.nombre,
         })
         .then(({data}) => {
@@ -75,7 +75,7 @@ const app = new Vue({
             text: "",
             type: "success"
           }).then(()=>{
-            window.location = "/categoriaCliente";
+            window.location = "/categoriaClientes";
           });
         })
         .catch(({response}) => {

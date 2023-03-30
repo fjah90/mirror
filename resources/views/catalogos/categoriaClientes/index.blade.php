@@ -2,7 +2,7 @@
 
 {{-- Page title --}}
 @section('title')
-  Categoria del Clientes | @parent
+  Categoría de Cliente | @parent
 @stop
 
 @section('header_styles')
@@ -14,7 +14,7 @@
 @section('content')
 <!-- Content Header (Page header) -->
 <section class="content-header">
-    <h1>Categoria  del Clientes</h1>
+    <h1>Categoría  de Cliente</h1>
 </section>
 <!-- Main content -->
 <section class="content" id="content">
@@ -23,11 +23,11 @@
       <div class="panel">
         <div class="panel-heading">
           <h3 class="panel-title text-right">
-            <span class="pull-left p-10">Lista de Categoria del Clientes</span>
+            <span class="pull-left p-10">Lista de Categoría de Cliente</span>
             <span style="visibility:hidden">.</span>
             @hasrole('Administrador')
             <a href="{{route('categoriaClientes.create')}}" class="btn btn-primary" style="color: #fff;">
-              <i class="fa fa-plus"></i> Nueva Categoria
+              <i class="fa fa-plus"></i> Nueva Categoría
             </a>
             @endhasrole
           </h3>
@@ -39,12 +39,12 @@
               <thead>
                 <tr style="background-color:#f5bf4c">
                   <th>#</th>
-                  <th>Categoria</th>
+                  <th>Categoría</th>
                   <th></th>
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="(tipo, index) in tipos">
+                <tr v-for="(categoria, index) in categorias">
                   <td>@{{index+1}}</td>
                   <td>@{{categoria.nombre}}</td><!--categoria definir en el controlador-->
                   <td class="text-right">
@@ -90,7 +90,7 @@ const app = new Vue({
       borrar(categoria, index){
         swal({
           title: 'Cuidado',
-          text: "Borrar Categoria "+categoria.nombre+"?",
+          text: "Borrar Categoría "+categoria.nombre+"?",
           type: 'warning',
           showCancelButton: true,
           confirmButtonColor: '#3085d6',
@@ -99,12 +99,12 @@ const app = new Vue({
           cancelButtonText: 'No, Cancelar',
         }).then((result) => {
           if (result.value) {
-            axios.delete('/categoriaCliente/'+tipo.id, {})
+            axios.delete('/categoriaClientes/'+categoria.id, {})
             .then(({data}) => {
               this.categorias.splice(index, 1);
               swal({
                 title: "Exito",
-                text: "La Categoria ha sido borrada",
+                text: "La Categoría ha sido borrada",
                 type: "success"
               });
             })

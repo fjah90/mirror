@@ -2,7 +2,7 @@
 
 {{-- Page title --}}
 @section('title')
-    Ver  Categoria del Cliente | @parent
+    Ver  Categoría del Cliente | @parent
 @stop
 
 @section('header_styles')
@@ -12,7 +12,7 @@
 @section('content')
   <!-- Content Header (Page header) -->
   <section class="content-header">
-    <h1>Ver Categoria del Cliente</h1>
+    <h1>Ver Categoría del Cliente</h1>
   </section>
   <!-- Main content -->
   <section class="content" id="content">
@@ -20,7 +20,7 @@
       <div class="col-lg-12">
         <div class="panel ">
           <div class="panel-heading">
-            <h3 class="panel-title">Categoria del Cliente {{$categoria->nombre}}</h3>
+            <h3 class="panel-title">Categoría del Cliente {{$categoria->nombre}}</h3>
           </div>
           <div class="panel-body">
             <div class="row">

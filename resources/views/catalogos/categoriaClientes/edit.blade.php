@@ -2,7 +2,7 @@
 
 {{-- Page title --}}
 @section('title')
-    Editar Categoria del Cliente | @parent
+    Editar Categoría de Cliente | @parent
 @stop
 
 @section('header_styles')
@@ -12,7 +12,7 @@
 @section('content')
   <!-- Content Header (Page header) -->
   <section class="content-header">
-    <h1>Categoria del Clientes</h1>
+    <h1>Categoría de Cliente</h1>
   </section>
   <!-- Main content -->
   <section class="content" id="content">
@@ -20,7 +20,7 @@
       <div class="col-lg-12">
         <div class="panel ">
           <div class="panel-heading">
-            <h3 class="panel-title">Editar Categoria del Cliente</h3>
+            <h3 class="panel-title">Editar Categoría de Cliente</h3>
           </div>    
           <div class="panel-body">
             <form class="" @submit.prevent="guardar()">
@@ -34,7 +34,7 @@
               </div>
               <div class="row" style="margin-top:25px;">
                 <div class="col-md-12 text-right">
-                  <a class="btn btn-default" href="{{route('categoriaCliente.index')}}" style="margin-right:20px;">
+                  <a class="btn btn-default" href="{{route('categoriaClientes.index')}}" style="margin-right:20px;">
                     Regresar
                   </a>
                   <button type="submit" class="btn btn-success" :disabled="cargando">
@@ -65,17 +65,17 @@ const app = new Vue({
     methods: {
       guardar(){
         this.cargando = true;
-        axios.put('/categoriaCliente/{{$categoria->id}}', {
+        axios.put('/categoriaClientes/{{$categoria->id}}', {
           nombre: this.nombre,
         })
         .then(({data}) => {
           this.cargando = false;
           swal({
-            title: "Categoria  del Cliente Actualizado",
+            title: "Categoría  del Cliente Actualizado",
             text: "",
             type: "success"
           }).then(()=>{
-            window.location = "/categoriaCliente";
+            window.location = "/categoriaClientes";
           });
         })
         .catch(({response}) => {
@@ -83,7 +83,7 @@ const app = new Vue({
           this.cargando = false;
           swal({
             title: "Error",
-            text: response.data.message || "Ocurrio un error inesperado, intente mas tarde",
+            text: response.data.message || "Ocurrio un error inesperado, intente más tarde",
             type: "error"
           });
         });

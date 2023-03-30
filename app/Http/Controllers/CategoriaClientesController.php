@@ -3,11 +3,10 @@
 namespace App\Http\Controllers;
 
 use Validator;
-use Illuminate\Http\Request;
 use App\Models\CategoriaCliente;
+use Illuminate\Http\Request;
 
-
-class CategoriaClienteController extends Controller
+class CategoriaClientesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,8 +16,8 @@ class CategoriaClienteController extends Controller
     public function index()
     {
         $categorias = CategoriaCliente::all();
-        //dd($categoria);
-        return view('catalogos.categoriaCliente.index',compact('categorias'));
+
+        return view('catalogos.categoriaClientes.index', compact('categorias'));
     }
 
     /**
@@ -28,7 +27,7 @@ class CategoriaClienteController extends Controller
      */
     public function create()
     {
-        return view('catalogos.categoriaCliente.create');
+        return view('catalogos.categoriaClientes.create');
     }
 
     /**
@@ -62,7 +61,7 @@ class CategoriaClienteController extends Controller
      */
     public function show(CategoriaCliente $categoria)
     {
-        return view('catalogos.categoriaCliente.show',compact('categoria'));
+        return view('catalogos.categoriaClientes.show',compact('categoria'));
     }
 
     /**
@@ -73,7 +72,7 @@ class CategoriaClienteController extends Controller
      */
     public function edit(CategoriaCliente $categoria)
     {
-        return view('catalogos.categoriaCliente',compact('categoria'));
+        return view('catalogos.categoriaClientes.edit',compact('categoria'));
     }
 
     /**
@@ -85,7 +84,7 @@ class CategoriaClienteController extends Controller
      */
     public function update(Request $request, CategoriaCliente $categoria)
     {
-        $validator = Validator::make($request->all(), [
+         $validator = Validator::make($request->all(), [
             'nombre' =>'required',
         ]);
 
@@ -108,7 +107,7 @@ class CategoriaClienteController extends Controller
      */
     public function destroy(CategoriaCliente $categoria)
     {
-        $categoria->delete();
+         $categoria->delete();
         return response()->json(['success' => true, "error" => false],200);
     }
 }

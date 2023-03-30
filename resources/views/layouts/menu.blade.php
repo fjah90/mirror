@@ -313,7 +313,7 @@
 
           <!--Catalogos de Apoyo-->
 
-          <li {!! (Request::is('Usuarios*') ? 'class="active"' : '') !!} {!! (Request::is('vendedores*') ? 'class="active"' : '') !!}{!! (Request::is('tiposClientes*') ? 'class="active"' : '') !!} {!! (Request::is('proyectos*') ? 'class="active"' : '') !!} {!! (Request::is('subproyectos*') ? 'class="active"' : '') !!} {!! (Request::is('tiposProveedores*') ? 'class="active"' : '') !!} {!! (Request::is('unidadesMedida*') ? 'class="active"' : '') !!} {!! (Request::is('subcategorias*') ? 'class="active"' : '') !!} {!! (Request::is('categorias*') ? 'class="active"' : '') !!}><a class="title"><i class="fa fa-book"></i>  Catálogos de Apoyo <span class="fa fa-chevron-down"></span></a>
+          <li {!! (Request::is('Usuarios*') ? 'class="active"' : '') !!} {!! (Request::is('vendedores*') ? 'class="active"' : '') !!}{!! (Request::is('tiposClientes*') ? 'class="active"' : '') !!} {!! (Request::is('categoriaClientes*') ? 'class="active"' : '') !!} {!! (Request::is('proyectos*') ? 'class="active"' : '') !!} {!! (Request::is('subproyectos*') ? 'class="active"' : '') !!} {!! (Request::is('tiposProveedores*') ? 'class="active"' : '') !!} {!! (Request::is('unidadesMedida*') ? 'class="active"' : '') !!} {!! (Request::is('subcategorias*') ? 'class="active"' : '') !!} {!! (Request::is('categorias*') ? 'class="active"' : '') !!}><a class="title"><i class="fa fa-book"></i>  Catálogos de Apoyo <span class="fa fa-chevron-down"></span></a>
            <ul class="nav child_menu">
           @hasanyrole('Administrador')
           <li {!! (Request::is('Usuarios*') ? 'class="active"' : '') !!} class="sub {!! (Request::is('usuarios*') ? 'active' : '') !!}">
@@ -327,6 +327,11 @@
               <i class="fas fa-address-book"></i> Tipo de Clientesss
             </a>
           </li>
+           <li  {!! (Request::is('categoriaClientes*') ? 'class="active"' : '') !!}>
+              <a href="{{ URL::to('categoriaClientes') }}">
+                <i class="fas fa-folder-open"></i> Categoría de Cliente
+              </a>
+            </li>
           <li {!! (Request::is('vendedores*') ? 'class="active"' : '') !!}>
             <a href="{{ URL::to('vendedores') }}">
               <i class="fas fa-address-card-o " style="color:#2283bf;"></i> Vendedores
