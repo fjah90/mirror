@@ -167,16 +167,6 @@
                     </div>
                   </div><br>
                   <div class="row form-group">
-                    <div class="col-md-6">
-                      <label class="control-label">Productos*</label>
-                      <input type="text" class="form-control" name="productos" v-model="proveedor.productos" required/>
-                    </div>
-                    <div class="col-md-6">
-                      <label class="control-label">Precios*</label>
-                      <input type="number" class="form-control" step="0.01" min="0.01" name="precios" v-model="proveedor.precios" required/>
-                    </div>
-                  </div>
-                  <div class="row form-group">
                     <div class="col-md-4">
                       <label class="control-label">Moneda</label>
                       <select class="form-control" name="moneda" v-model="proveedor.moneda">

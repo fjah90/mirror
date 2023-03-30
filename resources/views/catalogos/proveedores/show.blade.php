@@ -99,16 +99,6 @@
                 <span class="form-control">{{$proveedor->decripcion_empresa}}</span>
               </div>
             </div><br>
-            <div class="row form-group">
-              <div class="col-md-6">
-                <label class="control-label">Productos*</label>
-                <span class="form-control">{{$proveedor->productos}}</span>
-              </div>
-              <div class="col-md-6">
-                <label class="control-label">Precios*</label>
-                <span class="form-control">{{$proveedor->precios}}</span>
-              </div>
-            </div>
             <div class="row">
               <div class="col-md-4">
                 <div class="form-group">
