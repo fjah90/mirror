@@ -11,6 +11,7 @@ use App\Models\DatoFacturacion;
 use App\Models\Prospecto;
 use App\Models\TipoCliente;
 use App\Models\Vendedor;
+use App\Models\CategoriaCliente;
 use App\User;
 use Illuminate\Http\Request;
 use Mail;
@@ -29,8 +30,9 @@ class ClientesController extends Controller
         $clientesExtranjeros = Cliente::with('tipo')->where('nacional', 0)->get();
         $usuarios            = User::all();
         $tipos               = TipoCliente::all();
+        $categorias          = CategoriaCliente::all();
 
-        return view('catalogos.clientes.index', compact('clientesNacionales', 'clientesExtranjeros', 'usuarios', 'tipos'));
+        return view('catalogos.clientes.index', compact('clientesNacionales', 'clientesExtranjeros', 'usuarios', 'tipos','categorias'));
     }
 
     public function listado(Request $request)
@@ -75,7 +77,8 @@ class ClientesController extends Controller
         $nacional = true;
         $usuarios = User::all()->pluck('name', 'id');
         $vendedores = Vendedor::all()->pluck('nombre', 'id');
-        return view('catalogos.clientes.create', compact('tipos', 'nacional', 'usuarios', 'layout','vendedores'));
+        $categorias = CategoriaCliente::all();
+        return view('catalogos.clientes.create', compact('tipos', 'nacional', 'usuarios', 'layout','vendedores','categorias'));
     }
 
     public function createExtra(Request $request)
@@ -84,8 +87,9 @@ class ClientesController extends Controller
         $tipos    = TipoCliente::all();
         $nacional = false;
         $usuarios = User::all()->pluck('name', 'id');
+        $categorias = CategoriaCliente::all();
 
-        return view('catalogos.clientes.create', compact('tipos', 'nacional', 'usuarios', 'layout'));
+        return view('catalogos.clientes.create', compact('tipos', 'nacional', 'usuarios', 'layout','categorias'));
     }
 
     /**
@@ -159,7 +163,7 @@ class ClientesController extends Controller
      */
     public function show(Cliente $cliente)
     {
-        $cliente->load(['tipo', 'contactos', 'datos_facturacion', 'users']);
+        $cliente->load(['tipo', 'contactos', 'datos_facturacion', 'users','categoria']);
 
         return view('catalogos.clientes.show', compact('cliente'));
     }
@@ -213,11 +217,12 @@ class ClientesController extends Controller
         $tipos    = TipoCliente::all();
         $usuarios = User::all()->pluck('name', 'id');
         $vendedores = Vendedor::all()->pluck('nombre', 'id');
-        $cliente->load(['tipo', 'contactos.emails', 'contactos.telefonos', 'datos_facturacion','users']);
+        $categorias = CategoriaCliente::all();
+        $cliente->load(['tipo', 'contactos.emails', 'contactos.telefonos', 'datos_facturacion','users','categoria']);
         $tab = ($request->has('contactos')) ? 1 : 0;
 
 
-        return view('catalogos.clientes.edit', compact(['cliente', 'tipos', 'usuarios', 'tab','vendedores']));
+        return view('catalogos.clientes.edit', compact(['cliente', 'tipos', 'usuarios', 'tab','vendedores','categorias']));
     }
 
 

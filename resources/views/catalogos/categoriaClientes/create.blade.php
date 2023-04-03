@@ -71,7 +71,7 @@ const app = new Vue({
         .then(({data}) => {
           this.cargando = false;
           swal({
-            title: "Categoria Guardada",
+            title: "Categoría Guardada",
             text: "",
             type: "success"
           }).then(()=>{

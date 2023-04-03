@@ -62,6 +62,20 @@
                                 </div>
                             </div>
                             <div class="row form-group">
+                                  <div class="col-md-6">
+                                    <label class="control-label">Categoría de Cliente</label>
+                                    <select class="form-control" name="cliente_id"  required v-model=cliente.cliente_id required>
+                                    @foreach($categorias as $categoria)
+                                        <option value="{{$categoria->id}}">{{$categoria->nombre}}</option>
+                                    @endforeach
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="control-label">Preferencias y necesidades</label>
+                                    <input type="text" class="form-control" name="preferencias" v-model="cliente.preferencias">
+                                </div>
+                            </div>
+                            <div class="row form-group">
                                 <div class="col-md-8">
                                     <label class="control-label">Nombre</label>
                                     <input type="text" class="form-control" name="nombre" v-model="cliente.nombre"

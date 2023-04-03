@@ -52,6 +52,20 @@
               </div>
             </div>
             <div class="row">
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label class="control-label">Categoría de Cliente</label>
+                  <span class="form-control">{{$cliente->categoria->nombre}}</span>
+                </div>
+              </div>
+              <div class="col-md-8">
+                <div class="form-group">
+                  <label class="control-label">Preferencias y necesidades</label>
+                  <span class="form-control">{{$cliente->preferencias}}</span>
+                </div>
+              </div>
+            </div>
+            <div class="row">
               <div class="col-md-12">
                 <div class="form-group">
                   <label class="control-label">Razon Social</label>

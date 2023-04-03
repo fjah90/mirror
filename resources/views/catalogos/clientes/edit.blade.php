@@ -24,7 +24,7 @@
 
                             <div class="panel">
                                 <div class="panel-heading">
-                                    <h3 class="panel-title">Datos Generales</h3>
+                                    <h3 class="panel-title">Datos Generalesd</h3>
                                 </div>
                                 <div class="panel-body">
                                     <div class="row form-group">
@@ -59,6 +59,20 @@
                                                     <option value="{{$id}}">{{$nombre}}</option>
                                                 @endforeach
                                             </select>
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <div class="col-md-6">
+                                            <label class="control-label">Categoría de Cliente</label>
+                                            <select class="form-control" name="cliente_id"  required v-model=cliente.cliente_id required>
+                                                @foreach($categorias as $categoria)
+                                                <option value="{{$categoria->id}}">{{$categoria->nombre}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="control-label">Preferencias y necesidades</label>
+                                            <input type="text" class="form-control" name="preferencias" v-model="cliente.preferencias">
                                         </div>
                                     </div>
                                     <div class="row form-group">
