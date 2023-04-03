@@ -433,6 +433,23 @@
                                     <input class="form-control" type="text" name="fletes" v-model="cotizacion.fletes"/>
                                 </div>
                             </div>
+                            <!--Agregando campos nuevos-->
+                            <div class="row">
+                              <div class="col-md-12">
+                                  <div class="form-group">
+                                     <label class="control-label" style="display:block;">Documentación adjuntar (planos, etc)</label>
+                                     <div class="file-loading"><!--Agregar la clase-->
+                                         <input type="file" name="documentacion" id="documentacion" ref="documentacion" @change="fijarDocumentacion('documentacion')" />
+                                     </div>
+                                     <div id="documentacion-file-errors"></div>
+                                  </div>
+                              </div> 
+                              <div class="col-md-6">
+                                     <label class="control-label">Factibilidad de proyecto</label>
+                                     <input type="text" name="factibilidad" class="form-control" v-model="cotizacion.factibilidad" required/>
+                              </div>  
+                            </div><br>
+                            <!--Agregando campos nuevos-->
                             <div class="row">
                                 <div class="col-md-4">
                                     <div class="form-group">
@@ -1045,6 +1062,8 @@
                     entrega: '',
                     lugar: '',
                     fletes: '',
+                    documentacion: '',
+                    factibilidad: '',
                     moneda: '{{ ($prospecto->cliente->nacional)?"Pesos":"Dolares" }}',
                     entradas: [],
                     subtotal: 0,
@@ -1163,6 +1182,23 @@
                     allowedFileExtensions: ["jpg", "jpeg", "png", "pdf"],
                     elErrorContainer: '#comprobante-file-errors',
                 });
+
+                $("#documentacion").fileinput({
+                    overwriteInitial: true,
+                    maxFileSize: 5000,
+                    showClose: false,
+                    showCaption: false,
+                    showBrowse: false,
+                    browseOnZoneClick: true,
+                    removeLabel: '',
+                    removeIcon: '<i class="glyphicon glyphicon-remove"></i>',
+                    removeTitle: 'Quitar Foto',
+                    defaultPreviewContent: '<img src="{{asset('images/planos_intercorp_01.png')}}" alt="documentacion" style="width:250px;" height:auto; ><h6 class="text-muted">Click para seleccionar</h6>',
+                    layoutTemplates: {main2: '{preview} {remove} {browse}'},
+                    allowedFileExtensions: ["dwg", "ifc", "rvt","pln"],
+                    elErrorContainer: '#documentacion-file-errors'
+                });
+
                 this.tablaProductos = $("#tablaProductos").DataTable({dom: 'ftp'});
 
                 this.dataTableEntradas = $("#tablaEntradas").DataTable({
