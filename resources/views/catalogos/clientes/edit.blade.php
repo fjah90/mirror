@@ -64,7 +64,7 @@
                                     <div class="row form-group">
                                         <div class="col-md-6">
                                             <label class="control-label">Categoría de Cliente</label>
-                                            <select class="form-control" name="cliente_id"  required v-model=cliente.cliente_id required>
+                                            <select class="form-control" name="categoria_cliente_id"  required v-model=cliente.categoria_cliente_id required>
                                                 @foreach($categorias as $categoria)
                                                 <option value="{{$categoria->id}}">{{$categoria->nombre}}</option>
                                                 @endforeach

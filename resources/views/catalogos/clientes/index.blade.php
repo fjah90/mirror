@@ -43,6 +43,14 @@
                                         <option value="{{$tipo->id}}">{{$tipo->nombre}}</option>
                                     @endforeach
                                 </select>
+                                Categoría
+                                <select class="form-control" @change="cargar()" v-model="categoriaCargado"
+                                        style="width:auto;display:inline-block;">
+                                    <option value="Todos">Todos</option>
+                                    @foreach($categorias as $categoria)
+                                        <option value="{{$categoria->id}}">{{$categoria->nombre}}</option>
+                                    @endforeach
+                                </select>
                                 <a href="{{route('clientes.createNacional')}}" class="btn btn-primary pull-right"
                                    style="color: #fff;">
                                     <i class="fas fa-plus"></i> Cliente Nacional
@@ -62,7 +70,6 @@
                                     <th>Nombre</th>
                                     <th>RFC</th>
                                     <th>Razon Social</th>
-                                    <th>Categoría de <br>Cliente</th>
                                     <th style="min-width:70px;"></th>
                                 </tr>
                                 </thead>
@@ -74,7 +81,6 @@
                                     <td>@{{cliente.nombre}}</td>
                                     <td>@{{cliente.rfc}}</td>
                                     <td>@{{cliente.razon_social}}</td>
-                                    <td>@{{cliente.tipo.nombre}}</td>
                                     <td class="text-right">
                                         <a class="btn btn-xs btn-info" data-toggle="tooltip" title="Ver"
                                            :href="'/clientes/'+cliente.id">
@@ -124,6 +130,13 @@
                                     @endforeach
                                 </select>
                                 Categoría
+                                 <select class="form-control" @change="cargar()" v-model="categoriaCargado"
+                                        style="width:auto;display:inline-block;">
+                                    <option value="Todos">Todos</option>
+                                    @foreach($categorias as $categoria)
+                                        <option value="{{$categoria->id}}">{{$categoria->nombre}}</option>
+                                    @endforeach
+                                </select>
                                 <a href="{{route('clientes.createExtranjero')}}" class="btn btn-brown pull-right"
                                    style="color: #fff;">
                                     <i class="fas fa-plus"></i> Cliente Extranjero
@@ -143,7 +156,6 @@
                                     <th>Nombre</th>
                                     <th>RFC</th>
                                     <th>Razon Social</th>
-                                    <!--th>Categoría de Cliente</th-->
                                     <th style="min-width:70px;"></th>
                                 </tr>
                                 </thead>
@@ -155,7 +167,6 @@
                                     <td>@{{cliente.nombre}}</td>
                                     <td>@{{cliente.rfc}}</td>
                                     <td>@{{cliente.razon_social}}</td>
-                                    <!--td>@{{cliente.categoria.nombre}}</td-->
                                     <td class="text-right">
                                         <a class="btn btn-xs btn-info" data-toggle="tooltip" title="Ver"
                                            :href="'/clientes/'+cliente.id">
@@ -194,6 +205,7 @@
                 clientesExtranjeros: {!! json_encode($clientesExtranjeros) !!},
                 usuarioCargado: "Todos",
                 tipoCargado: "Todos",
+                categoriaCargado: "Todos",//
                 tablaNac: {},
                 tablaExt: {}
             },
@@ -203,7 +215,7 @@
             },
             methods: {
                 cargar() {
-                    axios.post('/clientes/listado', {id: this.usuarioCargado, tipo: this.tipoCargado})
+                    axios.post('/clientes/listado', {id: this.usuarioCargado, tipo: this.tipoCargado, categoria: this.categoriaCargado})//
                         .then(({data}) => {
                             this.tablaNac.destroy();
                             this.tablaExt.destroy();

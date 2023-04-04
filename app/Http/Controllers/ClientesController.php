@@ -30,7 +30,7 @@ class ClientesController extends Controller
         $clientesExtranjeros = Cliente::with('tipo')->where('nacional', 0)->get();
         $usuarios            = User::all();
         $tipos               = TipoCliente::all();
-        $categorias          = CategoriaCliente::all();
+        $categorias = CategoriaCliente::all();//
 
         return view('catalogos.clientes.index', compact('clientesNacionales', 'clientesExtranjeros', 'usuarios', 'tipos','categorias'));
     }
@@ -87,9 +87,10 @@ class ClientesController extends Controller
         $tipos    = TipoCliente::all();
         $nacional = false;
         $usuarios = User::all()->pluck('name', 'id');
+        $vendedores = Vendedor::all()->pluck('nombre', 'id');//
         $categorias = CategoriaCliente::all();
 
-        return view('catalogos.clientes.create', compact('tipos', 'nacional', 'usuarios', 'layout','categorias'));
+        return view('catalogos.clientes.create', compact('tipos', 'nacional', 'usuarios', 'layout','categorias','vendedores'));
     }
 
     /**
