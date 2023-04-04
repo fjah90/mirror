@@ -90,6 +90,10 @@
                                            :href="'/clientes/'+cliente.id+'/editar'">
                                             <i class="fas fa-pencil-alt"></i>
                                         </a>
+                                        <a class="btn btn-xs btn-primary" data-toggle="tooltip" title="Historial de compra"
+                                           :href="'/historialCompra/'+cliente.id+'/historial'">
+                                            <i class="fas fa-file-alt"></i>
+                                        </a>
                                         @hasrole('Administrador')
                                         <button class="btn btn-xs btn-danger" data-toggle="tooltip" title="Borrar"
                                                 @click="borrar(cliente, index)">
