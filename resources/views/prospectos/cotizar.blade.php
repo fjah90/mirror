@@ -446,7 +446,11 @@
                               </div> 
                               <div class="col-md-6">
                                      <label class="control-label">Factibilidad de proyecto</label>
-                                     <input type="text" name="factibilidad" class="form-control" v-model="cotizacion.factibilidad" required/>
+                                     <select class="form-control" name="factibilidad" v-model="cotizacion.factibilidad" required>
+                                         <option value="Alta">Alta</option>
+                                         <option value="Media">Media</option>
+                                         <option value="Baja">Baja</option>
+                                     </select>
                               </div>  
                             </div><br>
                             <!--Agregando campos nuevos-->
@@ -1184,17 +1188,18 @@
                 });
 
                 $("#documentacion").fileinput({
+                    language: 'es',
                     overwriteInitial: true,
                     maxFileSize: 5000,
-                    showClose: false,
+                    //showClose: false,
                     showCaption: false,
                     showBrowse: false,
                     browseOnZoneClick: true,
                     removeLabel: '',
-                    removeIcon: '<i class="glyphicon glyphicon-remove"></i>',
-                    removeTitle: 'Quitar Foto',
-                    defaultPreviewContent: '<img src="{{asset('images/planos_intercorp_01.png')}}" alt="documentacion" style="width:250px;" height:auto; ><h6 class="text-muted">Click para seleccionar</h6>',
-                    layoutTemplates: {main2: '{preview} {remove} {browse}'},
+                    //removeIcon: '<i class="glyphicon glyphicon-remove"></i>',
+                    //removeTitle: 'Quitar Plano',
+                    defaultPreviewContent: '<img src="{{asset('images/planos_intercorp_01.png')}}" alt="documentacion" style="width:200px;" height:auto; ><h6 class="text-muted">Click para seleccionar</h6>',
+                    //layoutTemplates: {main2: '{preview} {remove} {browse}'},
                     allowedFileExtensions: ["dwg", "ifc", "rvt","pln"],
                     elErrorContainer: '#documentacion-file-errors'
                 });
@@ -1543,10 +1548,15 @@
                             valor_ingles: desc.valor_ingles
                         });
                     }, this);
-
+                    ///
                     if (prod.foto) {
                         $("button.fileinput-remove").click();
                         $("div.file-default-preview img")[0].src = prod.foto;
+                    }
+                    /////////////////////////////////
+                     if (prod.documentacion) {
+                        $("button.fileinput-remove").click();
+                        $("div.file-default-preview img")[0].src = prod.documentacion;
                     }
 
                     this.openCatalogo = false;
@@ -1709,6 +1719,8 @@
                         entrega: cotizacion.entrega,
                         lugar: cotizacion.lugar,
                         fletes: cotizacion.fletes,
+                        documentacion: cotizacion.documentacion,//
+                        factibilidad: cotizacion.factibilidad,//
                         moneda: cotizacion.moneda,
                         entradas: cotizacion.entradas,
                         subtotal: cotizacion.subtotal,
@@ -1804,6 +1816,8 @@
                         entrega: cotizacion.entrega,
                         lugar: cotizacion.lugar,
                         fletes: cotizacion.fletes,
+                        documentacion: cotizacion.documentacion,//
+                        factibilidad: cotizacion.factibilidad,//
                         moneda: cotizacion.moneda,
                         entradas: cotizacion.entradas,
                         subtotal: cotizacion.subtotal,
@@ -1943,6 +1957,8 @@
                                     entrega: '',
                                     lugar: '',
                                     fletes: '',
+                                    documentacion: '',
+                                    factibilidad: '',
                                     moneda: '{{ ($prospecto->cliente->nacional)?"Pesos":"Dolares" }}',
                                     entradas: [],
                                     subtotal: 0,
