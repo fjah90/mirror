@@ -893,8 +893,8 @@ class ProspectosController extends Controller
         //documentacion de planos
 
         foreach ($prospecto->cotizaciones as $cotizacion) {
-            if ($cotizacion->planos) {
-                $cotizacion->planos  = asset('storage/' . $cotizacion->planos);
+            if ($cotizacion->documentacion) {
+                $cotizacion->documentacion = asset('storage/' . $cotizacion->documentacion);
             }
         }
 
@@ -935,7 +935,7 @@ class ProspectosController extends Controller
             'cliente_contacto_id' => 'required',
             'entrega'             => 'required',
             'moneda'              => 'required',
-            'cotizacion.planos'   => 'array',//
+            'documentacion'       => 'image|mimes:dwg,ifc,rvt,pln',//
             'factibilidad'        => 'required',
             'condicion'           => 'required',
             'iva'                 => 'required',
@@ -1048,15 +1048,15 @@ class ProspectosController extends Controller
             }
 
             //documentacion para planos
-             if ($cotizacion['documentacion']) { //hay fotos
+             if ($entrada['documentacion']) { //hay fotos
                 $documentacion     = "";
                 $separador = "";
-                foreach ($cotizacion['documentacion'] as $documentacion_index => $documentacion) {
+                foreach ($entrada['documentacion'] as $documentacion_index => $documentacion) {
                     if (!is_string($documentacion)) {
                         $ruta = Storage::putFileAs(
                             'public/cotizaciones/' . $cotizacion->id,
                             $documentacion,
-                            'cotizacion' . ($index + 1) . '_documentacion_' . ($documentacion_index + 1) . '.' . $documentacion->guessExtension()
+                            'entrada_' . ($index + 1) . '_documentacion_' . ($documentacion_index + 1) . '.' . $documentacion->guessExtension()
                         );
                         $ruta = str_replace('public/', '', $ruta);
                         $documentacion .= $separador . $ruta;
@@ -1065,14 +1065,14 @@ class ProspectosController extends Controller
                         $documentacion .= $separador . strstr($documentacion, "cotizaciones/");
                     }
                 }
-                $cotizacion['documentacion'] = $documentacion;
+                $entrada['documentacion'] = $documentacion;
             } else if ($producto->documentacion) {
                 $extencion = pathinfo(asset($producto->documentacion), PATHINFO_EXTENSION);
-                $ruta      = "cotizaciones/" . $cotizacion->id . "/cotizacion" . ($index + 1) . "_documentacion_1." . $extencion;
+                $ruta      = "cotizaciones/" . $cotizacion->id . "/entrada_" . ($index + 1) . "_documentacion_1." . $extencion;
                 Storage::copy("public/" . $producto->documentacion, "public/$ruta");
-                $cotizacion['documentacion'] = $ruta;
+                $entrada['documentacion'] = $ruta;
             } else {
-                $cotizacion['documentacion'] = "";
+                $entrada['documentacion'] = "";
             }
             ////
 
@@ -1176,8 +1176,6 @@ class ProspectosController extends Controller
             'cotizacion_id'       => 'required',
             'entrega'             => 'required',
             'moneda'              => 'required',
-            'cotizacion.planos'   => 'array',
-            'factibilidad'        => 'required',
             'condicion'           => 'required',
             'iva'                 => 'required',
             'entradas'            => 'required|min:1',
@@ -1299,42 +1297,6 @@ class ProspectosController extends Controller
                 $entrada['fotos'] = $ruta;
             } else {
                 $entrada['fotos'] = "";
-            }
-
-            ////////////////////////
-            if ($cotizacion['planos'] && !is_string($cotizacion['planos'][0])) { //hay fotos
-                $planos     = "";
-                $separador = "";
-                foreach ($cotizacion['planos'] as $planos_index => $planos) {
-                    //borrar archivo actual, si existe
-                    Storage::disk('public')->delete('cotizaciones/' . $cotizacion->id . '/cotizacion_' . ($index + 1) . '_planos_' . ($planos_index + 1) . '.' . $planos->guessExtension());
-                    $ruta = Storage::putFileAs(
-                        'public/cotizaciones/' . $cotizacion->id,
-                        $planos,
-                        'cotizacion_' . ($index + 1) . '_planos_' . ($planos_index + 1) . '.' . $planos->guessExtension()
-                    );
-                    $ruta = str_replace('public/', '', $ruta);
-                    $planos .= $separador . $ruta;
-                    $separador = "|";
-                }
-                $cotizacion['planos'] = $planos;
-            } else if ($cotizacionGuardada && $cotizacionGuardada->producto_id == $producto->id) {
-                if ($cotizacion['planos']) {
-                    
-                }
-                else{
-                    $cotizacion['planos']='';
-                    $cotizacionGuardada->planos = '';
-                }
-                unset($cotizacion['planos']); //no se actualzan fotos
-            } else if ($producto->planos) {
-                $extencion = pathinfo(asset($producto->planos), PATHINFO_EXTENSION);
-                $ruta      = "cotizaciones/" . $cotizacion->id . "/cotizacion_" . ($index + 1) . "_planos_1." . $extencion;
-                Storage::disk('public')->delete($ruta); //borrar archivo actual, si existe
-                Storage::copy("public/" . $producto->planos, "public/$ruta");
-                $cotizacion['planos'] = $ruta;
-            } else {
-                $cotizacion['planos'] = "";
             }
 
             $entrada['cotizacion_id'] = $cotizacion->id;
@@ -1702,7 +1664,7 @@ class ProspectosController extends Controller
                 'total'   => $cotizacion->total,
                 'observaciones' => $cotizacion->observaciones,
                 'entrega' => $cotizacion->entrega,
-                'planos ' => $cotizacion->planos,//
+                'documentacion' => $cotizacion->documentacion,//
                 'factibilidad' => $cotizacion->factibilidad,//
                 'moneda' => $cotizacion->moneda,
                 'lugar' => $cotizacion->lugar,
@@ -1729,25 +1691,6 @@ class ProspectosController extends Controller
                 }
             }else {
                 $fotos = "";
-            }
-
-            ////////////////
-
-            if ($cotizacion['planos']) { //hay planos
-                $planos     = "";
-                $separador = "";
-                foreach ($cotizacion['planos'] as $planos_index => $planos) {
-                    $extencion = pathinfo(asset($planos), PATHINFO_EXTENSION);
-                    $rutaplanos = explode('storage',$planos);
-                    $rutaplanos = $rutaplanos[1];
-                    $ruta      = "cotizaciones/" . $cotizacion_nueva->id . "/cotizacion_" . ($key + 1) . "_planos_1." . $extencion;
-                    Storage::copy("public/" . $rutaplanos, "public/$ruta");
-
-                    $planos .= $separador . $ruta;
-                    $separador = "|";
-                }
-            }else {
-                $planos = "";
             }
 
             $entrada_nueva = ProspectoCotizacionEntrada::create([
