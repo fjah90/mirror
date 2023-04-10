@@ -916,7 +916,7 @@ class ProspectosController extends Controller
             'rfcs',
             'numero_siguiente',
             'direcciones',
-            'vendedores',
+            'vendedores'
         ));
     }
 
