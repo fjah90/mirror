@@ -54,7 +54,7 @@
       <div class="col-lg-12">
         <div class="panel ">
           <div class="panel-heading">
-            <h3 class="panel-title">Nuevo Proyecto</h3>
+            <h3 class="panel-title">Nuevo Proyecto Prospecto</h3>
           </div>
           {{-- <div>
             <h2>Wizard generated from HTML</h2>
@@ -354,7 +354,7 @@ const app = new Vue({
         cliente_id: '',
         nombre: '',
         descripcion: '',
-        es_prospecto: 'no',
+        es_prospecto: 'si',
         vendedor_id:'',
       },
       ultima_actividad: {
@@ -493,7 +493,14 @@ const app = new Vue({
             text: "",
             type: "success"
           }).then(()=>{
-            window.location = "/prospectos/"+data.prospecto.id+"/cotizar";
+            if(this.prospecto.es_prospecto == 'si')
+            {
+                window.location = "/prospectos/prospectos";
+            }
+            else{
+                window.location = "/prospectos/"+data.prospecto.id+"/cotizar";
+            }
+            
           });
         })
         .catch(({response}) => {
