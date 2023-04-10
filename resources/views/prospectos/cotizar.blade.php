@@ -80,6 +80,7 @@
                                             <th>Fecha</th>
                                             <th>Productos Ofrecidos</th>
                                             <th>Total</th>
+                                            <th>Status</th>
                                             <th></th>
                                         </tr>
                                         </thead>
@@ -106,6 +107,18 @@
                                                         <th class="text-right">@{{cotizacion.total | formatoMoneda}} </th>
                                                     </tr>
                                                 </table>
+                                            </td>
+
+                                            <td>
+                                                <label class="label label-warning" v-if="cotizacion.aceptada == 0">
+                                                    Pendiente
+                                                </label>
+
+                                                <label class="label label-success" v-if="cotizacion.aceptada == 1">
+                                                    Aceptada
+                                                </label>
+
+                                        
                                             </td>
                                             <td class="text-right">
                                                 <button class="btn btn-xs btn-default" title="Notas"
@@ -198,12 +211,21 @@
                                         </div>
                                     </div>
                                 @endcan
-                                <div class="col-md-offset-2 col-md-6">
+                                <div class="col-md-4">
                                     <label class="control-label">Cliente Contacto</label>
                                     <select name="cliente_contacto_id" v-model="cotizacion.cliente_contacto_id"
                                             class="form-control" required>
                                         @foreach($prospecto->cliente->contactos as $contacto)
                                             <option value="{{$contacto->id}}">{{$contacto->nombre}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="control-label">Vendedor</label>
+                                    <select name="vendedor_id" v-model="cotizacion.vendedor_id"
+                                            class="form-control" required>
+                                        @foreach($vendedores as $vendedor)
+                                            <option value="{{$vendedor->id}}">{{$vendedor->nombre}}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -1024,6 +1046,7 @@
                 cotizacion: {
                     prospecto_id: {{$prospecto->id}},
                     cliente_contacto_id: '',
+                    vendedor_id:'',
                     numero: {{$numero_siguiente}},
                     condicion: {
                         id: 0,

@@ -33,6 +33,12 @@
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
+                    <label class="control-label">Email</label>
+                    <input type="text" class="form-control" name="email" v-model="vendedor.email" required />
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
                     <label class="control-label">Presupuesto Anual</label>
                     <input type="number" class="form-control" name="presupuesto_anual" v-model="vendedor.presupuesto_anual" required />
                   </div>
@@ -82,6 +88,7 @@ const app = new Vue({
             presupuesto_anual: '',
             comision_base: '',
             pago_comision: '',
+            email:'',
         },
         cargando: false,
     },

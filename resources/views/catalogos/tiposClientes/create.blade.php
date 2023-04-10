@@ -25,10 +25,16 @@
           <div class="panel-body">
             <form class="" @submit.prevent="guardar()">
               <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-6">
                   <div class="form-group">
                     <label class="control-label">Nombre</label>
                     <input type="text" class="form-control" name="nombre" v-model="nombre" required />
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="control-label">Factor porcentual</label>
+                    <input type="number" step="0.01" class="form-control" name="factor_porcentual" v-model="factor_porcentual" required />
                   </div>
                 </div>
               </div>
@@ -60,6 +66,7 @@ const app = new Vue({
     el: '#content',
     data: {
       nombre: '',
+      factor_porcentual,
       cargando: false,
     },
     methods: {
@@ -67,6 +74,7 @@ const app = new Vue({
         this.cargando = true;
         axios.post('/tiposClientes', {
           nombre: this.nombre,
+          factor_porcentual : this.factor_porcentual,
         })
         .then(({data}) => {
           this.cargando = false;

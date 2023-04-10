@@ -49,11 +49,14 @@ Route::middleware('auth')->group(function () {
     //Todos
     //Prospectos
     Route::get('/prospectos/cotizaciones', 'ProspectosController@cotizaciones');
+    Route::get('/prospectos/prospectos', 'ProspectosController@prospectos');
+    Route::get('/prospectos/prospectos/create', 'ProspectosController@create2')->name('prospectos.create2');
     Route::get('prospectos/regeneratePDF', 'ProspectosController@regeneratePDF');
     Route::get('prospectos/actualizarActividades', 'ProspectosController@actualizarActividades');
     Route::post('/prospectos/{prospecto}/guardarActividades', 'ProspectosController@guardarActividades');
     Route::get('/prospectos/{prospecto}/cotizar', 'ProspectosController@cotizar')->name('prospectos.cotizar');
     Route::post('/prospectos/{prospecto}/cotizacion', 'ProspectosController@cotizacion');
+    Route::post('/prospectos/{prospecto}/convertir', 'ProspectosController@convertir');
     Route::post('/prospectos/{prospecto}/cotizacion/{cotizacion}', 'ProspectosController@cotizacionUpdate');
     Route::post('/prospectos/{prospecto}/enviarCotizacion', 'ProspectosController@enviarCotizacion');
     Route::post('/prospectos/{prospecto}/aceptarCotizacion', 'ProspectosController@aceptarCotizacion');
@@ -128,6 +131,7 @@ Route::middleware('auth')->group(function () {
         Route::post('/proyectos-aprobados/listado', 'ProyectosAprobadosController@listado');
         Route::post('/prospectos/listado', 'ProspectosController@listado');
         Route::post('/prospectos/listado3', 'ProspectosController@listado3');
+        Route::post('/prospectos/listadoprospectos', 'ProspectosController@listadoprospectos');
         Route::post('/prospectos/listadocot', 'ProspectosController@listadocot');
         Route::post('/cuentas-cobrar/listado', 'CuentasCobrarController@listado');
         Route::post('/cuentas-pagar/listado', 'CuentasPagarController@listado');
