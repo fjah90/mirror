@@ -90,8 +90,8 @@
                                            :href="'/clientes/'+cliente.id+'/editar'">
                                             <i class="fas fa-pencil-alt"></i>
                                         </a>
-                                        <a class="btn btn-xs btn-primary" data-toggle="tooltip" title="Historial de compra"
-                                           :href="'/historialCompra/'+cliente.id+'/historial'">
+                                        <a class="btn btn-xs btn-primary"  title="Historial de compra"
+                                           href="{{route('historialCompra.index')}}">
                                             <i class="fas fa-file-alt"></i>
                                         </a>
                                         @hasrole('Administrador')
