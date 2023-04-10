@@ -228,6 +228,7 @@ class OrdenesCompraController extends Controller
      */
     public function comprar(ProyectoAprobado $proyecto, OrdenCompra $orden)
     {
+       
         if (is_null($orden->proveedor_id)) {
             return response()->json(['success' => false, "error" => true,
                 'message' => 'Falta agregar proveedor a la orden',
@@ -272,12 +273,12 @@ class OrdenesCompraController extends Controller
         $orden->load('proveedor', 'contacto', 'proyecto.cotizacion',
             'proyecto.cliente', 'entradas.producto.descripciones.descripcionNombre', 'aduana');
 
-        $firmaAbraham = User::select('firma')->where('id', 2)->first()->firma;
-        if ($firmaAbraham) {
-            $firmaAbraham = storage_path('app/public/' . $firmaAbraham);
-        } else {
+        //$firmaAbraham = User::select('firma')->where('id', 2)->first()->firma;
+        //if ($firmaAbraham) {
+          //  $firmaAbraham = storage_path('app/public/' . $firmaAbraham);
+        //} else {
             $firmaAbraham = public_path('images/firma_vacia.png');
-        }
+        //}
 
         $orden->firmaAbraham = $firmaAbraham;
 
