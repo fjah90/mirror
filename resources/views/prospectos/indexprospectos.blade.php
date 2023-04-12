@@ -88,6 +88,12 @@
                   <td>@{{prospecto.nombre}}</td>
                   <td>@{{prospecto.descripcion}}</td>
                   <td class="text-right">
+                  <a class="btn btn-xs btn-info" title="Ver" :href="'/prospectos/'+prospecto.id">
+                    <i class="far fa-eye"></i>
+                  </a>
+                  <a class="btn btn-xs btn-warning" title="Editar" :href="'/prospectos/'+prospecto.id+'/editar'">
+                      <i class="fas fa-pencil-alt"></i>
+                  </a>
                   <button class="btn btn-xs btn-success" title="Convertir el Proyecto" @click="convertirenproyecto(prospecto, index)">
                       <i class="fas fa-upload"></i>
                     </button>

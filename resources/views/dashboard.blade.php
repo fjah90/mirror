@@ -199,6 +199,7 @@ Dashboard | @parent
                   <option value="2020-12-31">2020</option>
                   <option value="2021-12-31">2021</option>
                   <option value="2022-12-31">2022</option>
+                  <option value="2023-12-31">2023</option>
                 </select>
             </div>
         </div>
@@ -327,6 +328,7 @@ Dashboard | @parent
                       <th class="text-center"><strong>Proyecto</strong></th>
                       <th class="text-center"><strong>Tipo</strong></th>
                       <th class="text-center"><strong>Próxima Actividad</strong></th>
+                      <th class="text-center"><strong>¿Es prospecto?</strong></th>
                       <th class="text-center"><strong>Acciones</strong></th>
                     </tr>
                   </thead>
@@ -336,6 +338,7 @@ Dashboard | @parent
                       <td>@{{actividad.prospecto_nombre}}</td>
                       <td>@{{actividad.tipo_actividad}}</td>
                       <td>@{{actividad.fecha_formated}}</td>
+                      <td>@{{actividad.es_prospecto}}</td>
                       <td>
                         <a title="Ver" :href="'/prospectos/'+actividad.prospecto_id" class="btn btn-xs btn-info">
                             Ver <i class="far fa-eye"></i>
@@ -829,7 +832,7 @@ Dashboard | @parent
     data: {
       prospectos: {},
       usuarioCargado: {{auth()->user()->id}},
-      anio:'2022-12-31',
+      anio:'2023-12-31',
       bdd: '',
       tablaCotizaciones: {},
       tablaCompras: {},

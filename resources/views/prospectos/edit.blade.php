@@ -139,6 +139,7 @@
                     </div>
                   </div>
                 </div>
+                
                 <div class="row">
                   <div class="col-sm-10">
                     <label class="control-label">Productos Ofrecidos</label>
@@ -154,16 +155,19 @@
                       </span>
                     </div>
                   </div>
+                
                   <div class="col-sm-2" style="padding-top: 25px;">
                     <button type="button" class="btn btn-primary" @click="agregarProducto()">
                       Agregar
                     </button>
                   </div>
+                  <!--
                   <div class="col-sm-2" style="padding-top: 25px;">
                     <button type="button" class="btn btn-primary" @click="modalProducto=true">
                       Registrar producto
                     </button>
                   </div>
+                   -->
                 </div>
                 <div class="row">
                   <div class="col-sm-12">
@@ -177,6 +181,7 @@
                     </ul>
                   </div>
                 </div>
+               
                 <div class="row">
                   <div class="col-sm-12">
                     <label class="control-label">Descripción Actividad</label>
@@ -283,8 +288,9 @@
 
     <!-- Nuevo Producto Modal-->
     <modal v-model="modalProducto" title="Registrar Producto" :footer="false">
-      <iframe id="theFrame" src="../productos/crear?layout=iframe" style="width:100%; height:700px;" frameborder="0">
-      </iframe>
+    <iframe id="theFrame" src="{{url("/")}}/productos/crear?layout=iframe" style="width:100%; height:700px;"
+                    frameborder="0">
+            </iframe>
     </modal>
     <!-- /.Nuevo Producto Modal -->
 
