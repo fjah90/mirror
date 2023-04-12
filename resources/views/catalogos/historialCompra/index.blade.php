@@ -59,7 +59,7 @@
                   <td>{{$cliente->proyecto_nombre}}</td>
                   <td>{{$cliente->numero_proyecto}}</td>
                   <td>{{$cliente->proveedor_empresa}}</td>
-                  <td></td>
+                  <td>{{$cliente->nombre_producto}}</td>
                   <td>{{$cliente->tiempo_entrega}}</td>
                   <td>{{$cliente->fecha_compra}}</td>
                   <td>{{$cliente->moneda}}</td>
