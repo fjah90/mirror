@@ -457,14 +457,16 @@
                             </div>
                             <!--Agregando campos nuevos-->
                             <div class="row">
-                              <div class="col-md-12">
-                                  <div class="form-group">
-                                     <label class="control-label" style="display:block;">Documentación adjuntar (planos, etc)</label>
-                                     <div class="file-loading"><!--Agregar la clase-->
-                                         <input type="file" name="documentacion" id="documentacion" ref="documentacion" @change="fijarDocumentacion('documentacion')" />
-                                     </div>
-                                     <div id="documentacion-file-errors"></div>
-                                  </div>
+                              <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label" style="display:block;">Documentación adjuntar (planos,etc)</label>
+                                    <div class="kv-avatar">
+                                        <div class="file-loading">
+                                            <input id="planos" name="planos" type="file" ref="planos" @change="fijarArchivo('planos')" />
+                                        </div>
+                                    </div>
+                                    <div id="planos-file-errors"></div>
+                                </div>
                               </div> 
                               <div class="col-md-6">
                                      <label class="control-label">Factibilidad de proyecto</label>
@@ -1089,7 +1091,7 @@
                     entrega: '',
                     lugar: '',
                     fletes: '',
-                    documentacion: '',
+                    planos: '',
                     factibilidad: '',
                     moneda: '{{ ($prospecto->cliente->nacional)?"Pesos":"Dolares" }}',
                     entradas: [],
@@ -1210,7 +1212,7 @@
                     elErrorContainer: '#comprobante-file-errors',
                 });
 
-                $("#documentacion").fileinput({
+                $("#planos").fileinput({
                     language: 'es',
                     overwriteInitial: true,
                     maxFileSize: 5000,
@@ -1219,12 +1221,9 @@
                     showBrowse: false,
                     browseOnZoneClick: true,
                     removeLabel: '',
-                    //removeIcon: '<i class="glyphicon glyphicon-remove"></i>',
-                    //removeTitle: 'Quitar Plano',
-                    defaultPreviewContent: '<img src="{{asset('images/planos_intercorp_01.png')}}" alt="documentacion" style="width:200px;" height:auto; ><h6 class="text-muted">Click para seleccionar</h6>',
-                    //layoutTemplates: {main2: '{preview} {remove} {browse}'},
+                    defaultPreviewContent: '<img src="{{asset('images/planos_intercorp_01.png')}}" alt="planos" style="width:200px;" height:auto; ><h6 class="text-muted">Click para seleccionar</h6>',
                     allowedFileExtensions: ["dwg", "ifc", "rvt","pln"],
-                    elErrorContainer: '#documentacion-file-errors'
+                    elErrorContainer: '#planos-file-errors'
                 });
 
                 this.tablaProductos = $("#tablaProductos").DataTable({dom: 'ftp'});
@@ -1577,9 +1576,9 @@
                         $("div.file-default-preview img")[0].src = prod.foto;
                     }
                     /////////////////////////////////
-                     if (prod.documentacion) {
+                     if (prod.planos) {
                         $("button.fileinput-remove").click();
-                        $("div.file-default-preview img")[0].src = prod.documentacion;
+                        $("div.file-default-preview img")[0].src = prod.planos;
                     }
 
                     this.openCatalogo = false;
@@ -1742,7 +1741,7 @@
                         entrega: cotizacion.entrega,
                         lugar: cotizacion.lugar,
                         fletes: cotizacion.fletes,
-                        documentacion: cotizacion.documentacion,//
+                        planos: cotizacion.planos,//
                         factibilidad: cotizacion.factibilidad,//
                         moneda: cotizacion.moneda,
                         entradas: cotizacion.entradas,
@@ -1839,7 +1838,7 @@
                         entrega: cotizacion.entrega,
                         lugar: cotizacion.lugar,
                         fletes: cotizacion.fletes,
-                        documentacion: cotizacion.documentacion,//
+                        planos: cotizacion.planos,//
                         factibilidad: cotizacion.factibilidad,//
                         moneda: cotizacion.moneda,
                         entradas: cotizacion.entradas,
@@ -1980,7 +1979,7 @@
                                     entrega: '',
                                     lugar: '',
                                     fletes: '',
-                                    documentacion: '',
+                                    planos: '',
                                     factibilidad: '',
                                     moneda: '{{ ($prospecto->cliente->nacional)?"Pesos":"Dolares" }}',
                                     entradas: [],

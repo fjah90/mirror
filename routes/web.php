@@ -36,6 +36,11 @@ Route::middleware('auth')->group(function () {
     
 
    
+   //Historial
+
+    Route::resource('/historialCompra','HistorialCompraController', ['parameters'=>['historialCompra'=>'historial']]);
+
+    //fin de ruta
 
     Route::resource('/categoriaClientes', 'CategoriaClientesController', ['parameters' => [
         'categoriaClientes' => 'categoria',
@@ -217,6 +222,8 @@ Route::middleware('auth')->group(function () {
         Route::resource('/categorias', 'CategoriasController', ['only' => ['create', 'store', 'edit', 'update', 'delete']]);
         Route::resource('/categoriaClientes', 'CategoriaClientesController', ['only' => ['create', 'store', 'edit', 'update', 'delete']]);//
         Route::resource('/tiposClientes', 'TiposClientesController', ['only' => ['create', 'store', 'edit', 'update', 'delete']]);
+
+        Route::resource('/historialCompra', 'HistorialCompraController', ['only' => ['create', 'store', 'edit', 'update', 'delete']]);
         Route::resource('/vendedores', 'VendedoresController', ['only' => ['create', 'store', 'edit', 'update', 'delete']]);
         Route::resource('/tiposProveedores', 'TiposProveedoresController', ['only' => ['create', 'store', 'edit', 'update', 'delete']]);
         Route::resource('/proyectos', 'ProyectosController', ['only' => ['create', 'store', 'edit', 'update', 'delete']]);
