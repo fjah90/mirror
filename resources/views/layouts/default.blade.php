@@ -157,10 +157,10 @@
 
           </li>
         -->
-
+        <!--
           <hr class="divider-menu">
-
-          <!-- Cotizaciones -->
+        -->
+          <!-- Cotizaciones
 
           <li {!! (Request::is('prospectos*') ? 'class="active"' : '') !!}>
             <a href="{{ URL::to('prospectos') }}">
@@ -168,7 +168,7 @@
               <span class="mm-text ">Cotizaciones</span>
             </a>
           </li>
-
+           -->
 
             <hr class="divider-menu">
 
@@ -181,7 +181,8 @@
               <span class="mm-text ">Ordenes</span>
             </a>
           </li>
-        -->
+        
+
 
         @hasanyrole('Administrador|Usuaro')
           <li {!! (Request::is('ordenes-proceso*') ? 'class="active"' : '') !!}  {!! (Request::is('proyectos-aprobados*') ? 'class="active"' : '') !!}><a class="title"><i class="fa fa-cart-arrow-down" style="color:#907ff3; font-size: 20px;"></i>  Ordenes Compra <span class="fa fa-chevron-down"></span></a>
@@ -203,9 +204,11 @@
           <hr class="divider-menu">
           @endhasanyrole
 
+          -->
+
 
           @hasanyrole('Administrador|Usuaro')
-          <!-- Administracion -->
+          <!-- Administracion 
           <li {!! (Request::is('cuentas-cobrar*') ? 'class="active"' : '') !!} {!! (Request::is('cuentas-pagar*') ? 'class="active"' : '') !!}><a class="title"><i class="fa fa-calculator" style="color:#fa2002; font-size:20px;"></i>  Contabilidad <span class="fa fa-chevron-down" ></span></a>
            <ul class="nav child_menu">  
               <li {!! (Request::is('cuentas-cobrar*') ? 'class="active"' : '') !!}>
@@ -224,9 +227,10 @@
           </li>
           <hr class="divider-menu">
           @endhasanyrole
+          -->
 
           @hasanyrole('Administrador|Usuaro')
-          <!--Reportes-->
+          <!--Reportes
 
           <li {!! (Request::is('reportes*') ? 'class="active"' : '') !!}><a class="title"><i class="fas fa-file" style="color:#fa7702; font-size: 20px;"></i>  Reportes <span class="fa fa-chevron-down"></span></a>
            <ul class="nav child_menu">
@@ -268,6 +272,7 @@
             </ul>
           </li>
           @endhasanyrole
+          -->
 
 
           <!-- Administracion 
@@ -343,7 +348,7 @@
 
 
           <hr class="divider-menu">
-          <!--Catalogos de Apoyo-->
+          <!--Catalogos de Apoyo-
           @hasanyrole('Administrador|Usuaro')
           <li {!! (Request::is('vendedores*') ? 'class="active"' : '') !!} {!! (Request::is('Usuarios*') ? 'class="active"' : '') !!} {!! (Request::is('tiposClientes*') ? 'class="active"' : '') !!} {!! (Request::is('categoriaClientes*') ? 'class="active"' : '') !!} {!! (Request::is('proyectos*') ? 'class="active"' : '') !!} {!! (Request::is('subproyectos*') ? 'class="active"' : '') !!} {!! (Request::is('tiposProveedores*') ? 'class="active"' : '') !!} {!! (Request::is('unidadesMedida*') ? 'class="active"' : '') !!} {!! (Request::is('subcategorias*') ? 'class="active"' : '') !!} {!! (Request::is('categorias*') ? 'class="active"' : '') !!} {!! (Request::is('clientes*' ) ? 'class="active"' : '') !!} {!! (Request::is('proveedores*' ) ? 'class="active"' : '') !!} {!! (Request::is('agentesAduanales*' ) ? 'class="active"' : '') !!} {!! (Request::is('productos*' ) ? 'class="active"' : '') !!}><a class="title"><i class="fa fa-book" style="color:#f5bf4c; font-size: 20px;"></i>  Catálogos<span class="fa fa-chevron-down"></span></a>
            <ul class="nav child_menu">
@@ -357,13 +362,15 @@
                   <i class="fas fa-truck-loading " ></i> Proveedores
                 </a>
               </li>
+
+          -->
             <!--
             <li  {!! (Request::is('agentesAduanales*') ? 'class="active"' : '') !!}>
               <a href="{{ URL::to('agentesAduanales') }}">
                 <i class="fas fa-warehouse" ></i> Agentes Aduanales
               </a>
             </li>
-            -->
+            
               <li {!! (Request::is('productos*') ? 'class="active"' : '') !!}>
                 <a href="{{ URL::to('productos') }}">
                   <i class="fas fa-parking " ></i> Producto
@@ -428,6 +435,8 @@
           </li>
           <hr class="divider-menu">
           @endhasanyrole
+
+          -->
 
           
           
