@@ -461,7 +461,7 @@
                                   <div class="form-group">
                                      <label class="control-label" style="display:block;">Documentación adjuntar (planos, etc)</label>
                                      <div class="file-loading"><!--Agregar la clase-->
-                                         <input type="file" name="documentacion" id="documentacion" ref="documentacion" @change="fijarDocumentacion('documentacion')" />
+                                         <input type="file" name="planos" id="planos" ref="planosplanos" @change="fijarPlanos('planos')" />
                                      </div>
                                      <div id="documentacion-file-errors"></div>
                                   </div>
@@ -1089,7 +1089,7 @@
                     entrega: '',
                     lugar: '',
                     fletes: '',
-                    documentacion: '',
+                    planos: '',
                     factibilidad: '',
                     moneda: '{{ ($prospecto->cliente->nacional)?"Pesos":"Dolares" }}',
                     entradas: [],
@@ -1742,7 +1742,7 @@
                         entrega: cotizacion.entrega,
                         lugar: cotizacion.lugar,
                         fletes: cotizacion.fletes,
-                        documentacion: cotizacion.documentacion,//
+                        planos: cotizacion.planos,//
                         factibilidad: cotizacion.factibilidad,//
                         moneda: cotizacion.moneda,
                         entradas: cotizacion.entradas,
@@ -1839,7 +1839,7 @@
                         entrega: cotizacion.entrega,
                         lugar: cotizacion.lugar,
                         fletes: cotizacion.fletes,
-                        documentacion: cotizacion.documentacion,//
+                        planos: cotizacion.planos,//
                         factibilidad: cotizacion.factibilidad,//
                         moneda: cotizacion.moneda,
                         entradas: cotizacion.entradas,
@@ -1980,7 +1980,7 @@
                                     entrega: '',
                                     lugar: '',
                                     fletes: '',
-                                    documentacion: '',
+                                    planos: '',
                                     factibilidad: '',
                                     moneda: '{{ ($prospecto->cliente->nacional)?"Pesos":"Dolares" }}',
                                     entradas: [],
