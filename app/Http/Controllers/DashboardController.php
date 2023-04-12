@@ -36,8 +36,8 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        $inicio = Carbon::parse('2022-01-01');
-        $anio = Carbon::parse('2022-12-31');
+        $inicio = Carbon::parse('2023-01-01');
+        $anio = Carbon::parse('2023-12-31');
 
         $userId             = auth()->user()->id;
         $clientesId         = auth()->user()->clientes()->get()->pluck('id');
@@ -64,7 +64,7 @@ class DashboardController extends Controller
         $proximasActividades = ProspectoActividad::leftjoin('prospectos', 'prospectos_actividades.prospecto_id', '=', 'prospectos.id')
             ->leftjoin('clientes', 'prospectos.cliente_id', '=', 'clientes.id')
             ->leftjoin('prospectos_tipos_actividades', 'prospectos_actividades.tipo_id', '=', 'prospectos_tipos_actividades.id')
-            ->select('prospectos_actividades.*', 'prospectos.nombre as prospecto_nombre', 'prospectos.id as prospecto_id', 'clientes.nombre as cliente_nombre', 'prospectos_tipos_actividades.nombre as tipo_actividad')
+            ->select('prospectos_actividades.*', 'prospectos.nombre as prospecto_nombre','prospectos.es_prospecto as es_prospecto', 'prospectos.id as prospecto_id', 'clientes.nombre as cliente_nombre', 'prospectos_tipos_actividades.nombre as tipo_actividad')
             ->whereIn('prospecto_id', $prospectosId)->where('realizada', false)->whereBetween('prospectos_actividades.created_at', [$inicio, $anio])->orderBy('fecha', 'desc')->get();
 
         $usuarios = User::select('id', 'name')->get();
@@ -207,7 +207,7 @@ class DashboardController extends Controller
         $proximasActividades = ProspectoActividad::leftjoin('prospectos', 'prospectos_actividades.prospecto_id', '=', 'prospectos.id')
             ->leftjoin('clientes', 'prospectos.cliente_id', '=', 'clientes.id')
             ->leftjoin('prospectos_tipos_actividades', 'prospectos_actividades.tipo_id', '=', 'prospectos_tipos_actividades.id')
-            ->select('prospectos_actividades.*', 'prospectos.nombre as prospecto_nombre', 'prospectos.id as prospecto_id', 'clientes.nombre as cliente_nombre', 'prospectos_tipos_actividades.nombre as tipo_actividad');
+            ->select('prospectos_actividades.*', 'prospectos.nombre as prospecto_nombre' ,'prospectos.es_prospecto as es_prospecto', 'prospectos.id as prospecto_id', 'clientes.nombre as cliente_nombre', 'prospectos_tipos_actividades.nombre as tipo_actividad');
         if ($request->id != "todos") {
             $proximasActividades->whereIn('prospecto_id', $prospectosId);
         }

@@ -139,9 +139,13 @@
                     <td></td>
                   </template>
                   <td class="text-right">
+
                     <a class="btn btn-xs btn-info" title="Ver" :href="'/prospectos/'+prospecto.id">
                       <i class="far fa-eye"></i>
                     </a>
+                    <a class="btn btn-xs btn-warning" title="Editar" :href="'/prospectos/'+prospecto.id+'/editar'">
+                      <i class="fas fa-pencil-alt"></i>
+                  </a>
                   </td>
                   <td class="hide">
                     <template v-for="(cotizacion, index) in prospecto.cotizaciones">
