@@ -50,7 +50,7 @@ Route::middleware('auth')->group(function () {
     //Prospectos
     Route::get('/prospectos/cotizaciones', 'ProspectosController@cotizaciones');
     Route::get('/prospectos/prospectos', 'ProspectosController@prospectos');
-    Route::get('/prospectos/prospectos/create', 'ProspectosController@create2')->name('prospectos.create2');
+    Route::get('/prospectos/create2', 'ProspectosController@create2')->name('prospectos.create2');
     Route::get('prospectos/regeneratePDF', 'ProspectosController@regeneratePDF');
     Route::get('prospectos/actualizarActividades', 'ProspectosController@actualizarActividades');
     Route::post('/prospectos/{prospecto}/guardarActividades', 'ProspectosController@guardarActividades');

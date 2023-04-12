@@ -74,16 +74,16 @@
                       </select>
                     </div>
                   </div>
-                <!--
+                <
                 <div class="col-md-2">
                   <div class="form-group">
                     <label class="control-label">Registrar cliente</label>
                     <button type="button" id="show-modal" @click="modalCliente = true" class="btn btn-effect-ripple btn-primary form-control">Nuevo Cliente</button>
-                    use the modal component, pass in the prop 
+                    <!--use the modal component, pass in the prop -->
                     <modal v-if="modalCliente" @close="modalCliente = false">
                   </div>
                 </div>
-              -->
+              
                 </div>
                 <div class="row">
                   <div class="col-md-8">
