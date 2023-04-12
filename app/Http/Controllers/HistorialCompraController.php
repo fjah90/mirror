@@ -5,6 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\Cliente;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use App\Models\CuentaCobrar;
+use App\Models\OrdenCompra;
+use App\Models\Pago;
+use App\Models\PagoCuentaPagar;
+use App\Models\ProspectoCotizacion;
+use App\Models\Producto;
+use App\Models\ProspectoCotizacionEntrada;
 use Mail;
 use App\User;
 use Storage;
@@ -18,9 +25,22 @@ class HistorialCompraController extends Controller
      */
     public function index()
     {   
-        $clientes = Cliente::orderBy('nombre','asc')->get();
+        //$clientes = Cliente::orderBy('nombre','asc')->get();
+        $productos = Producto::with('categoria')->get();
+        //dd($productos);
+        $clientes = OrdenCompra::join('proyectos_aprobados', 'ordenes_compra.proyecto_id', '=', 'proyectos_aprobados.id')
+            ->join('prospectos_cotizaciones', 'proyectos_aprobados.cotizacion_id', '=', 'prospectos_cotizaciones.id')
+            ->join('clientes', 'proyectos_aprobados.cliente_id', '=', 'clientes.id')
+            ->join('users', 'prospectos_cotizaciones.user_id', '=', 'users.id')
+            ->select('ordenes_compra.*', 'proyectos_aprobados.proyecto as proyecto_nombre', 'clientes.nombre as cliente_nombre',
+                'prospectos_cotizaciones.id as cotizaciones_id', 'prospectos_cotizaciones.moneda as cotizaciones_moneda', 'prospectos_cotizaciones.total as cotizaciones_total','users.name as nombre_usuario')
+            ->where('ordenes_compra.status','Confirmada')
+            ->orWhere('ordenes_compra.status','Pendiente')
+            ->orderBy('prospectos_cotizaciones.id', 'asc')
+            ->get();
         //dd($clientes);
-        return view ('catalogos.historialCompra.index',compact('clientes'));
+
+        return view ('catalogos.historialCompra.index',compact('clientes','productos'));
     }
 
     /**
