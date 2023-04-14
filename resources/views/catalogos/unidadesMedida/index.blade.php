@@ -65,10 +65,10 @@
                       :href="'/unidadesMedida/'+unidad.id+'/editar'">
                       <i class="fas fa-pencil-alt"></i>
                     </a>
-                    {{-- <button class="btn btn-danger" data-toggle="tooltip" title="Borrar"
-                      @click="borrar(tipo, index)">
+                    <button class="btn btn-xs btn-danger"  title="Borrar"
+                      @click="borrar(unidad, index)">
                       <i class="fas fa-times"></i>
-                    </button> --}}
+                    </button>
                     @endrole
                   </td>
                 </tr>
@@ -92,9 +92,9 @@ const app = new Vue({
       unidades: {!! json_encode($unidades) !!},
     },
     mounted(){
-      $("#tabla").DataTable();
-    },
-    methods: {
+     $("#tabla").DataTable({"order": [[ 1, "asc" ]]});
+},
+methods: {
       borrar(unidad, index){
         swal({
           title: 'Cuidado',
@@ -107,7 +107,7 @@ const app = new Vue({
           cancelButtonText: 'No, Cancelar',
         }).then((result) => {
           if (result.value) {
-            axios.delete('/unidadesMedida/'+unidad.id, {})
+           axios.delete('/unidadesMedida/'+unidad.id, {})
             .then(({data}) => {
               this.tipos.splice(index, 1);
               swal({
