@@ -460,8 +460,8 @@
                               <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="control-label" style="display:block;">Documentación adjuntar (planos,etc)</label>
-                                    <div class="kv-avatar">
-                                        <div class="file-loading">
+                                    <div>
+                                        <div>
                                             <input id="planos" name="planos" type="file" ref="planos" @change="fijarArchivo('planos')" />
                                         </div>
                                     </div>
