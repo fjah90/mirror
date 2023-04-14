@@ -30,8 +30,8 @@
 <header class="header">
   <nav class="navbar navbar-static-top" role="navigation">
     <a href="/dashboard" class="logo">
-      <img src="{{asset('images/robinson-negro.jpg')}}" alt="logo" style="width:100%; height:130%;" />
-    </a>
+      <img src="{{asset('images/robinson-negro.jpg')}}" alt="logo" style="width:100%; height:155%;" />
+    </a><br>
     <div>
       <a href="javascript:void(0)" class="navbar-btn sidebar-toggle" data-toggle="offcanvas" role="button">
         <i class="fas fa-bars"></i>
