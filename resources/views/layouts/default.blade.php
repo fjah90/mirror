@@ -160,7 +160,7 @@
 
           <hr class="divider-menu">
 
-          <!-- Cotizaciones 
+          <!-- Cotizaciones -->
 
           <li {!! (Request::is('prospectos*') ? 'class="active"' : '') !!}>
             <a href="{{ URL::to('prospectos') }}">
@@ -172,7 +172,7 @@
 
             <hr class="divider-menu">
 
-            -->
+            
 
           <!-- ordenes compra-->
 
@@ -183,7 +183,8 @@
               <span class="mm-text ">Ordenes</span>
             </a>
           </li>
-        
+        -->
+       
 
         @hasanyrole('Administrador|Usuaro')
           <li {!! (Request::is('ordenes-proceso*') ? 'class="active"' : '') !!}  {!! (Request::is('proyectos-aprobados*') ? 'class="active"' : '') !!}><a class="title"><i class="fa fa-cart-arrow-down" style="color:#907ff3; font-size: 20px;"></i>  Ordenes Compra <span class="fa fa-chevron-down"></span></a>
@@ -204,10 +205,10 @@
           </li>
           <hr class="divider-menu">
           @endhasanyrole
-          -->
+          
 
           @hasanyrole('Administrador|Usuaro')
-          <!-- Administracion 
+          <!-- Administracion  -->
           <li {!! (Request::is('cuentas-cobrar*') ? 'class="active"' : '') !!} {!! (Request::is('cuentas-pagar*') ? 'class="active"' : '') !!}><a class="title"><i class="fa fa-calculator" style="color:#fa2002; font-size:20px;"></i>  Contabilidad <span class="fa fa-chevron-down" ></span></a>
            <ul class="nav child_menu">  
               <li {!! (Request::is('cuentas-cobrar*') ? 'class="active"' : '') !!}>
@@ -225,11 +226,11 @@
             </ul> 
           </li>
           <hr class="divider-menu">
-          -->
+         
           @endhasanyrole
 
           @hasanyrole('Administrador|Usuaro')
-          <!--Reportes
+          <!--Reportes-->
 
           <li {!! (Request::is('reportes*') ? 'class="active"' : '') !!}><a class="title"><i class="fas fa-file" style="color:#fa7702; font-size: 20px;"></i>  Reportes <span class="fa fa-chevron-down"></span></a>
            <ul class="nav child_menu">
@@ -270,7 +271,7 @@
           </li>
             </ul>
           </li>
-          -->
+          
           @endhasanyrole
 
 
