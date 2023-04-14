@@ -40,8 +40,8 @@
                   <input type="text" class="form-control" name="empresa" v-model="proveedor.empresa" required />
                 </div>
                 <div class="col-md-4">
-                  <label class="control-label">Numero Cliente</label>
-                  <input type="text" class="form-control" name="numero_cliente" v-model="proveedor.numero_cliente" />
+                  <label class="control-label">Número Proveedor</label>
+                  <input type="text" class="form-control" name="  numero_proveedor" v-model="proveedor. numero_proveedor" />
                 </div>
               </div>
               <div class="row form-group">
@@ -299,7 +299,7 @@ const app = new Vue({
         tipo_id: '',
         nacional: {{ ($nacional)?"true":"false" }},
         empresa: '',
-        numero_cliente: '',
+        numero_proveedor: '',
         razon_social: '',
         identificacion_fiscal: '{{ ($nacional)?"RFC":"TAX ID NO" }}',
         identidad_fiscal: '',
