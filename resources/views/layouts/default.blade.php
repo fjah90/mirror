@@ -350,7 +350,7 @@
           <hr class="divider-menu">
           <!--Catalogos de Apoyo-->
           @hasanyrole('Administrador|Usuaro')
-          <li {!! (Request::is('vendedores*') ? 'class="active"' : '') !!} {!! (Request::is('Usuarios*') ? 'class="active"' : '') !!} {!! (Request::is('tiposClientes*') ? 'class="active"' : '') !!} {!! (Request::is('categoriaClientes*') ? 'class="active"' : '') !!} {!! (Request::is('proyectos*') ? 'class="active"' : '') !!} {!! (Request::is('subproyectos*') ? 'class="active"' : '') !!} {!! (Request::is('tiposProveedores*') ? 'class="active"' : '') !!} {!! (Request::is('unidadesMedida*') ? 'class="active"' : '') !!} {!! (Request::is('subcategorias*') ? 'class="active"' : '') !!} {!! (Request::is('categorias*') ? 'class="active"' : '') !!} {!! (Request::is('clientes*' ) ? 'class="active"' : '') !!} {!! (Request::is('proveedores*' ) ? 'class="active"' : '') !!} {!! (Request::is('agentesAduanales*' ) ? 'class="active"' : '') !!} {!! (Request::is('productos*' ) ? 'class="active"' : '') !!}><a class="title"><i class="fa fa-book" style="color:#f5bf4c; font-size: 20px;"></i>  Catálogos<span class="fa fa-chevron-down"></span></a>
+          <li {!! (Request::is('vendedores*') ? 'class="active"' : '') !!} {!! (Request::is('Usuarios*') ? 'class="active"' : '') !!} {!! (Request::is('tiposClientes*') ? 'class="active"' : '') !!} {!! (Request::is('categoriaClientes*') ? 'class="active"' : '') !!} {!! (Request::is('proyectos*') ? 'class="active"' : '') !!} {!! (Request::is('tiposProveedores*') ? 'class="active"' : '') !!} {!! (Request::is('unidadesMedida*') ? 'class="active"' : '') !!} {!! (Request::is('subcategorias*') ? 'class="active"' : '') !!} {!! (Request::is('categorias*') ? 'class="active"' : '') !!} {!! (Request::is('clientes*' ) ? 'class="active"' : '') !!} {!! (Request::is('proveedores*' ) ? 'class="active"' : '') !!} {!! (Request::is('agentesAduanales*' ) ? 'class="active"' : '') !!} {!! (Request::is('productos*' ) ? 'class="active"' : '') !!}><a class="title"><i class="fa fa-book" style="color:#f5bf4c; font-size: 20px;"></i>  Catálogos<span class="fa fa-chevron-down"></span></a>
            <ul class="nav child_menu">
              <li  {!! (Request::is('clientes*') ? 'class="active"' : '') !!}>
                 <a href="{{ URL::to('clientes') }}">
@@ -404,11 +404,11 @@
                 <i class="fas fa-folder-open "></i> Categoría de Proyectos
               </a>
             </li>
-            <li  {!! (Request::is('subproyectos*') ? 'class="active"' : '') !!}>
+            <!--li  {!! (Request::is('subproyectos*') ? 'class="active"' : '') !!}>
               <a href="{{ URL::to('subproyectos') }}">
                 <i class="far fa-folder-open "></i> Tipo de Proyecto
               </a>
-            </li>
+            </li-->
             <li  {!! (Request::is('tiposProveedores*') ? 'class="active"' : '') !!}>
               <a href="{{URL::to('tiposProveedores')}}">
                 <i class="fas fa-address-book"></i> Tipos de Proveedores
