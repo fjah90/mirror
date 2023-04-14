@@ -14,6 +14,7 @@ class Cliente extends Model
         'calle', 'nexterior', 'ninterior',
         'colonia', 'delegacion', 'cp', 'ciudad', 'estado', 'pais',
         'pagina_web', 'adicionales', 'nacional', 'usuario_nombre',
+        'vendedor_id','categoria_cliente_id','preferencias'
     ];
 
     protected $casts = [
@@ -61,6 +62,10 @@ class Cliente extends Model
     {
         return $this->belongsTo('App\User', 'usuario_id', 'id');
     }
+    public function vendedor()
+    {
+        return $this->belongsTo('App\Vendedor', 'vendedor_id', 'id');
+    }
 
     public function contactos()
     {
@@ -76,6 +81,12 @@ class Cliente extends Model
     public function datos_facturacion()
     {
         return $this->hasMany('App\Models\DatoFacturacion', 'cliente_id', 'id');
+    }
+
+
+    public function categoria()
+    {
+        return $this->belongsTo('App\Models\CategoriaCliente', 'categoria_cliente_id', 'id');
     }
 
 }

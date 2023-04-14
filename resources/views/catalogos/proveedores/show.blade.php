@@ -94,6 +94,12 @@
             </div>
             @endif
             <div class="row">
+              <div class="col-md-12">
+                <label class="control-label">Descripción de la empresa</label>
+                <span class="form-control">{{$proveedor->decripcion_empresa}}</span>
+              </div>
+            </div><br>
+            <div class="row">
               <div class="col-md-4">
                 <div class="form-group">
                   <label class="control-label">Moneda</label>
@@ -170,6 +176,7 @@
                         <th>Email</th>
                         <th>Teléfono</th>
                         <th>Teléfono 2</th>
+                        <th>Fax</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -180,6 +187,7 @@
                         <td>{{$contacto->email}}</td>
                         <td>{{$contacto->tipo_telefono}} {{$contacto->telefono}} Ext. {{$contacto->extencion_telefono}}</td>
                         <td>{{$contacto->tipo_telefono2}} {{$contacto->telefono2}} Ext. {{$contacto->extencion_telefono2}}</td>
+                        <td>{{$contacto->fax}}</td>
                       </tr>
                       @endforeach
                     </tbody>

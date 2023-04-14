@@ -194,6 +194,9 @@ class UsuariosController extends Controller
                 
                 if(Hash::check($input['password'], $user->password)){
                     Auth::loginUsingId($user->id);
+                    if($user->getRoleNames()[0]== 'Cliente'){
+                      return response()->redirectTo('prospectos');
+                    }
                    
                     return response()->redirectTo('/');
                     

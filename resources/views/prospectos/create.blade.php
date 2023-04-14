@@ -90,6 +90,15 @@
                       <input name="nombre" class="form-control" v-model="prospecto.nombre" required />
                     </div>
                   </div>
+                  <div class="col-md-4">
+                      <label class="control-label">Vendedor</label>
+                      <select name="vendedor_id" v-model="prospecto.vendedor_id"
+                              class="form-control" required>
+                          @foreach($vendedores as $vendedor)
+                              <option value="{{$vendedor->id}}">{{$vendedor->nombre}}</option>
+                          @endforeach
+                      </select>
+                  </div>
                 </div>
                 <div class="row">
                   <div class="col-md-12">
@@ -345,6 +354,8 @@ const app = new Vue({
         cliente_id: '',
         nombre: '',
         descripcion: '',
+        es_prospecto: 'no',
+        vendedor_id:'',
       },
       ultima_actividad: {
         fecha: '',

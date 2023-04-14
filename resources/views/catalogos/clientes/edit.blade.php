@@ -24,11 +24,11 @@
 
                             <div class="panel">
                                 <div class="panel-heading">
-                                    <h3 class="panel-title">Datos Generales</h3>
+                                    <h3 class="panel-title">Datos Generalesd</h3>
                                 </div>
                                 <div class="panel-body">
                                     <div class="row form-group">
-                                        <div class="col-md-4">
+                                        <div class="col-md-6">
                                             <label class="control-label">Usuario Default</label>
                                             <select class="form-control" name="usuario_id" v-model='cliente.usuario_id' required>
                                                 @foreach($usuarios as $id => $nombre)
@@ -36,14 +36,14 @@
                                                 @endforeach
                                             </select>
                                         </div>
-                                        <div class="col-md-4">
+                                        <div class="col-md-6">
                                             <div class="form-group">
                                                 <label class="control-label">Usuario(s) adicional</label>
                                                 <select2multags :options="user.userOptions" v-model="user.users" style="width:100%;">
                                                 </select2multags>
                                             </div>
                                         </div>
-                                        <div class="col-md-4">
+                                        <div class="col-md-6">
                                             <label class="control-label">Tipo</label>
                                             <select class="form-control" name="tipo_id" v-model='cliente.tipo_id'
                                                     required>
@@ -51,6 +51,28 @@
                                                     <option value="{{$tipo->id}}">{{$tipo->nombre}}</option>
                                                 @endforeach
                                             </select>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="control-label">Vendedor</label>
+                                            <select class="form-control" name="vendedor_id" v-model='cliente.vendedor_id' required>
+                                                @foreach($vendedores as $id => $nombre)
+                                                    <option value="{{$id}}">{{$nombre}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <div class="col-md-6">
+                                            <label class="control-label">Categoría de Cliente</label>
+                                            <select class="form-control" name="categoria_cliente_id"  required v-model=cliente.categoria_cliente_id required>
+                                                @foreach($categorias as $categoria)
+                                                <option value="{{$categoria->id}}">{{$categoria->nombre}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="control-label">Preferencias y necesidades</label>
+                                            <input type="text" class="form-control" name="preferencias" v-model="cliente.preferencias">
                                         </div>
                                     </div>
                                     <div class="row form-group">
@@ -207,6 +229,12 @@
                                                         contacto_type="ClienteContacto"
                                                         :nacional="cliente.nacional">
                                     </contacto-telefonos>
+                                    <div class="row form-group">
+                                        <div class="col-md-6">
+                                            <label class="control-label">Fax</label>
+                                            <input type="text" class="form-control" name="fax" v-model="contacto.fax" required/>
+                                        </div>
+                                    </div>
                                     <div class="row" style="margin-top:40px;">
                                         <div class="col-md-12 text-center">
                                             <button v-if="contacto.id" type="submit" class="btn btn-success"
@@ -230,6 +258,7 @@
                                                     <th>Cargo</th>
                                                     <th>Emails</th>
                                                     <th>Teléfonos</th>
+                                                    <th>Fax</th>
                                                     <th></th>
                                                 </tr>
                                                 </thead>
@@ -248,6 +277,7 @@
                                                             @{{telefono.extencion}}
                                                         </div>
                                                     </td>
+                                                    <td>@{{contacto.fax}}</td>
                                                     <td class="text-right">
                                                         <button class="btn btn-xs btn-success" data-toggle="tooltip"
                                                                 title="Editar"

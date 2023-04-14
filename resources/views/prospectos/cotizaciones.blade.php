@@ -57,6 +57,7 @@
                   <option value="2020-12-31">2020</option>
                   <option value="2021-12-31">2021</option>
                   <option value="2022-12-31">2022</option>
+                  <option value="2023-12-31">2023</option>
                 </select>
             </div>
             <div class="p-10" style="display:inline-block">
@@ -138,9 +139,13 @@
                     <td></td>
                   </template>
                   <td class="text-right">
+
                     <a class="btn btn-xs btn-info" title="Ver" :href="'/prospectos/'+prospecto.id">
                       <i class="far fa-eye"></i>
                     </a>
+                    <a class="btn btn-xs btn-warning" title="Editar" :href="'/prospectos/'+prospecto.id+'/editar'">
+                      <i class="fas fa-pencil-alt"></i>
+                  </a>
                   </td>
                   <td class="hide">
                     <template v-for="(cotizacion, index) in prospecto.cotizaciones">
@@ -169,7 +174,7 @@ const app = new Vue({
     data: {
       prospectos: {!! json_encode($prospectos) !!},
       usuarioCargado: {{auth()->user()->id}},
-      anio:'2022-12-31',
+      anio:'2023-12-31',
       tabla: {},
       locale: localeES,
       fecha_ini: '',

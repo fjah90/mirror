@@ -43,6 +43,14 @@
                                         <option value="{{$tipo->id}}">{{$tipo->nombre}}</option>
                                     @endforeach
                                 </select>
+                                Categoría
+                                <select class="form-control" @change="cargar()" v-model="categoriaCargado"
+                                        style="width:auto;display:inline-block;">
+                                    <option value="Todos">Todos</option>
+                                    @foreach($categorias as $categoria)
+                                        <option value="{{$categoria->id}}">{{$categoria->nombre}}</option>
+                                    @endforeach
+                                </select>
                                 <a href="{{route('clientes.createNacional')}}" class="btn btn-primary pull-right"
                                    style="color: #fff;">
                                     <i class="fas fa-plus"></i> Cliente Nacional
@@ -82,6 +90,10 @@
                                            :href="'/clientes/'+cliente.id+'/editar'">
                                             <i class="fas fa-pencil-alt"></i>
                                         </a>
+                                        <a class="btn btn-xs btn-primary"  title="Historial de compra"
+                                           href="{{route('historialCompra.index')}}">
+                                            <i class="fas fa-file-alt"></i>
+                                        </a>
                                         @hasrole('Administrador')
                                         <button class="btn btn-xs btn-danger" data-toggle="tooltip" title="Borrar"
                                                 @click="borrar(cliente, index)">
@@ -119,6 +131,14 @@
                                     <option value="Todos">Todos</option>
                                     @foreach($tipos as $tipo)
                                         <option value="{{$tipo->id}}">{{$tipo->nombre}}</option>
+                                    @endforeach
+                                </select>
+                                Categoría
+                                 <select class="form-control" @change="cargar()" v-model="categoriaCargado"
+                                        style="width:auto;display:inline-block;">
+                                    <option value="Todos">Todos</option>
+                                    @foreach($categorias as $categoria)
+                                        <option value="{{$categoria->id}}">{{$categoria->nombre}}</option>
                                     @endforeach
                                 </select>
                                 <a href="{{route('clientes.createExtranjero')}}" class="btn btn-brown pull-right"
@@ -160,6 +180,10 @@
                                            :href="'/clientes/'+cliente.id+'/editar'">
                                             <i class="fas fa-pencil-alt"></i>
                                         </a>
+                                        <a class="btn btn-xs btn-primary"  title="Historial de compra"
+                                           href="{{route('historialCompra.index')}}">
+                                            <i class="fas fa-file-alt"></i>
+                                        </a>
                                         @hasrole('Administrador')
                                         <button class="btn btn-xs btn-danger" data-toggle="tooltip" title="Borrar"
                                                 @click="borrar(cliente, index)">
@@ -189,6 +213,7 @@
                 clientesExtranjeros: {!! json_encode($clientesExtranjeros) !!},
                 usuarioCargado: "Todos",
                 tipoCargado: "Todos",
+                categoriaCargado: "Todos",//
                 tablaNac: {},
                 tablaExt: {}
             },
@@ -198,7 +223,7 @@
             },
             methods: {
                 cargar() {
-                    axios.post('/clientes/listado', {id: this.usuarioCargado, tipo: this.tipoCargado})
+                    axios.post('/clientes/listado', {id: this.usuarioCargado, tipo: this.tipoCargado, categoria: this.categoriaCargado})//
                         .then(({data}) => {
                             this.tablaNac.destroy();
                             this.tablaExt.destroy();

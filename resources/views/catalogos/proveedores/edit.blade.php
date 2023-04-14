@@ -153,7 +153,6 @@
               </div>
             </div>
           </div>
-
           <div class="row">
             <div class="col-lg-12">
               <div class="panel ">
@@ -161,6 +160,12 @@
                   <h3 class="panel-title">Datos Bancarios</h3>
                 </div>
                 <div class="panel-body">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <label class="control-label">Descripción de la empresa</label>
+                      <textarea  name="decripcion_empresa" class="form-control" rows="4"  cols="80" v-model="proveedor.decripcion_empresa" required></textarea>
+                    </div>
+                  </div><br>
                   <div class="row form-group">
                     <div class="col-md-4">
                       <label class="control-label">Moneda</label>
@@ -309,6 +314,12 @@
                     contacto_type="ProveedorContacto"
                     :nacional="proveedor.nacional">
                   </contacto-telefonos>
+                  <div class="row form-group">
+                    <div class="col-md-6">
+                      <label class="control-label">Fax</label>
+                      <input type="text" class="form-control" name="fax" v-model="contacto.fax" required/>
+                    </div>
+                  </div>
                   <div class="row" style="margin-top:40px;">
                     <div class="col-md-12 text-center">
                       <button v-if="contacto.id" type="submit" class="btn btn-success" :disabled="cargando">
@@ -331,6 +342,7 @@
                             <th>Cargo</th>
                             <th>Emails</th>
                             <th>Teléfonos</th>
+                            <th>Fax</th>
                             <th></th>
                           </tr>
                         </thead>
@@ -347,6 +359,9 @@
                               <div v-for="(telefono, i) in contacto.telefonos">
                                 @{{i+1}}.- @{{telefono.tipo}}: @{{telefono.telefono}} @{{telefono.extencion}}
                               </div>
+                            </td>
+                            <td>
+                              @{{contacto.fax}}
                             </td>
                             <td class="text-right">
                               <button class="btn btn-xs btn-success" data-toggle="tooltip" title="Editar"
@@ -390,7 +405,8 @@ const app = new Vue({
         nombre: '',
         cargo: '',
         emails: [],
-        telefonos: []
+        telefonos: [],
+        fax : ''
       },
       cargando: false,
     },
@@ -410,7 +426,8 @@ const app = new Vue({
             nombre: '',
             cargo: '',
             emails: [],
-            telefonos: []
+            telefonos: [],
+            fax : ''
           };
           this.cargando = false;
           swal({
@@ -441,7 +458,8 @@ const app = new Vue({
             nombre: '',
             cargo: '',
             emails: [],
-            telefonos: []
+            telefonos: [],
+            fax : ''
           };
           this.cargando = false;
           swal({

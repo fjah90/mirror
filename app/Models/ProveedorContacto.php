@@ -9,7 +9,7 @@ class ProveedorContacto extends Model
 {
     protected $table = 'proveedores_contactos';
 
-    protected $fillable = ['proveedor_id','nombre','cargo'];
+    protected $fillable = ['proveedor_id','nombre','cargo','fax'];
 
     protected $appends = ['tipo', 'telefono', 'email'];
 

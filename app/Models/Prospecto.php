@@ -9,7 +9,7 @@ class Prospecto extends Model
 {
     protected $table = 'prospectos';
 
-    protected $fillable = ['cliente_id','nombre','descripcion', 'user_id'];
+    protected $fillable = ['cliente_id','nombre','descripcion', 'user_id','es_prospecto'];
 
     protected $appends = [
         'num_cotizaciones','num_cotaprobadas'
@@ -34,6 +34,10 @@ class Prospecto extends Model
 
     public function cliente(){
       return $this->belongsTo('App\Models\Cliente', 'cliente_id', 'id');
+    }
+
+    public function usuario(){
+      return $this->belongsTo(User::class, 'user_id','id');
     }
     
     public function actividades(){
