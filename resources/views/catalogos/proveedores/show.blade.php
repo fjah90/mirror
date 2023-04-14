@@ -64,7 +64,7 @@
               </div>
               <div class="col-md-4">
                 <div class="form-group">
-                  <label class="control-label">No Cuenta (Intercorp/Cliente)</label>
+                  <label class="control-label">No Cuenta (Robinson/Cliente)</label>
                   <span class="form-control">{{$proveedor->cuenta_interna}}</span>
                 </div>
               </div>

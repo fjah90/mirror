@@ -489,7 +489,7 @@
 
     <div class="row">
       <div class="col-lg-12 text-center">
-        <img style="width:200px; height:auto;" src="{{public_path().'/images/logo.jpg'}}" alt="INTERCORP" />
+        <img style="width:200px; height:auto;" src="{{public_path().'/images/logo.jpg'}}" alt="ROBINSON" />
       </div>
     </div>
 

@@ -153,7 +153,7 @@
                                                     <i class="far fa-sticky-note"></i>
                                                 </button>
                                                 <a class="btn btn-xs btn-success" title="PDF" :href="'/storage/'+cotizacion.archivo"
-                                                   :download="'C '+cotizacion.numero+' Intercorp '+prospecto.nombre+'.pdf'">
+                                                   :download="'C '+cotizacion.numero+' Robinson '+prospecto.nombre+'.pdf'">
                                                     <i class="far fa-file-pdf"></i>
                                                 </a>
                                                 <button class="btn btn-xs btn-info" title="Enviar"
@@ -271,7 +271,7 @@
                                                     <i class="far fa-sticky-note"></i>
                                                 </button>
                                                 <a class="btn btn-xs btn-success" title="PDF" :href="'/storage/'+cotizacion.archivo"
-                                                   :download="'C '+cotizacion.numero+' Intercorp '+prospecto.nombre+'.pdf'">
+                                                   :download="'C '+cotizacion.numero+' Robinson '+prospecto.nombre+'.pdf'">
                                                     <i class="far fa-file-pdf"></i>
                                                 </a>
                                                 <button class="btn btn-xs btn-info" title="Enviar"
@@ -386,7 +386,7 @@
                                     <i class="far fa-eye"></i>
                                   </a>
                                   <a v-if="orden.archivo" class="btn btn-xs btn-warning" title="PDF" :href="orden.archivo"
-                                    :download="'INTERCORP-PO '+orden.numero+' '+orden.proyecto_nombre+'.pdf'">
+                                    :download="'ROBINSON-PO '+orden.numero+' '+orden.proyecto_nombre+'.pdf'">
                                     <i class="far fa-file-pdf"></i>
                                   </a>
                                 </template>
@@ -552,7 +552,7 @@
                             {{-- Descarga de archivos --}}
                             <a v-if="orden.orden_compra.archivo" class="btn btn-xs btn-warning"
                               title="PDF" :href="orden.orden_compra.archivo"
-                              :download="'INTERCORP-PO '+orden.numero+orden.orden_compra.proyecto_nombre+'.pdf'">
+                              :download="'ROBINSON-PO'+orden.numero+orden.orden_compra.proyecto_nombre+'.pdf'">
                               <i class="far fa-file-pdf"></i>
                             </a>
                             <template v-if="orden.factura" >
@@ -1117,7 +1117,7 @@
                         @endforeach
                         @endforeach
                     ],
-                    mensaje: "Buenas tardes  .\n\nAnexo a la presente encontrarán la cotización solicitada de {{$prospecto->descripcion}}  para {{$prospecto->nombre}} .\n\nEsperamos esta información les sea de utilidad y quedamos a sus órdenes para cualquier duda o comentario.\n\nSaludos,\n\n{{auth()->user()->name}}.\n{{auth()->user()->email}}\nIntercorp Contract Resources"
+                    mensaje: "Buenas tardes  .\n\nAnexo a la presente encontrarán la cotización solicitada de {{$prospecto->descripcion}}  para {{$prospecto->nombre}} .\n\nEsperamos esta información les sea de utilidad y quedamos a sus órdenes para cualquier duda o comentario.\n\nSaludos,\n\n{{auth()->user()->name}}.\n{{auth()->user()->email}}\nRobinson Contract Resources"
                 },
                 aceptar: {
                     cotizacion_id: 0,
@@ -1817,7 +1817,7 @@
                                     @endforeach
                                     @endforeach
                                 ],
-                                mensaje: "Buen día.\n\nLe envió cotización para su consideración.\n\n{{auth()->user()->name}}.\nAtención del Cliente\nIntercorp Contract Resources"
+                                mensaje: "Buen día.\n\nLe envió cotización para su consideración.\n\n{{auth()->user()->name}}.\nAtención del Cliente\nRobinson Contract Resources"
                             };
                             this.openEnviar = false;
                             this.cargando = false;

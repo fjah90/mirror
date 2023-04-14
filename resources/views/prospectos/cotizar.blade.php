@@ -126,7 +126,7 @@
                                                     <i class="far fa-sticky-note"></i>
                                                 </button>
                                                 <a class="btn btn-xs btn-success" title="PDF" :href="cotizacion.archivo"
-                                                   :download="'C '+cotizacion.numero+' Intercorp '+prospecto.cliente.nombre+' '+prospecto.nombre+'.pdf'">
+                                                   :download="'C '+cotizacion.numero+' Robinson'+prospecto.cliente.nombre+' '+prospecto.nombre+'.pdf'">
                                                     <i class="far fa-file-pdf"></i>
                                                 </a>
                                                 <button class="btn btn-xs btn-info" title="Enviar"
@@ -1132,7 +1132,7 @@
                         @endforeach
                         @endforeach
                     ],
-                    mensaje: "Buenas tardes  .\n\nAnexo a la presente encontrarán la cotización solicitada de {{$prospecto->descripcion}}  para {{$prospecto->nombre}} .\n\nEsperamos esta información les sea de utilidad y quedamos a sus órdenes para cualquier duda o comentario.\n\nSaludos,\n\n{{auth()->user()->name}}.\n{{auth()->user()->email}}\nIntercorp Contract Resources"
+                    mensaje: "Buenas tardes  .\n\nAnexo a la presente encontrarán la cotización solicitada de {{$prospecto->descripcion}}  para {{$prospecto->nombre}} .\n\nEsperamos esta información les sea de utilidad y quedamos a sus órdenes para cualquier duda o comentario.\n\nSaludos,\n\n{{auth()->user()->name}}.\n{{auth()->user()->email}}\nRobinson Contract Resources"
                 },
                 aceptar: {
                     cotizacion_id: 0,
@@ -2000,7 +2000,7 @@
                                     text: "",
                                     type: "success"
                                 }).then(() => {
-                                    $('a[download="C ' + data.cotizacion.numero + ' Intercorp ' + this.prospecto.nombre + '.pdf"]')[0].click();
+                                    $('a[download="C ' + data.cotizacion.numero + ' Robinson ' + this.prospecto.nombre + '.pdf"]')[0].click();
                                     window.location.reload(true);
                                 });
                             })
@@ -2032,7 +2032,7 @@
                                     @endforeach
                                     @endforeach
                                 ],
-                                mensaje: "Buen día.\n\nLe envió cotización para su consideración.\n\n{{auth()->user()->name}}.\nAtención del Cliente\nIntercorp Contract Resources"
+                                mensaje: "Buen día.\n\nLe envió cotización para su consideración.\n\n{{auth()->user()->name}}.\nAtención del Cliente\nRobinson Contract Resources"
                             };
                             this.openEnviar = false;
                             this.cargando = false;

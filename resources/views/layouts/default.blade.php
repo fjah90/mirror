@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <title>
     @section('title')
-      Intercorp
+     ROBINSON
     @show
   </title>
   <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
@@ -30,7 +30,7 @@
 <header class="header">
   <nav class="navbar navbar-static-top" role="navigation">
     <a href="/dashboard" class="logo">
-      <img src="{{asset('images/robinson-negro.jpeg')}}" alt="logo" style="width:100%; height:100%;" />
+      <img src="{{asset('images/robinson-negro.jpg')}}" alt="logo" style="width:100%; height:130%;" />
     </a>
     <div>
       <a href="javascript:void(0)" class="navbar-btn sidebar-toggle" data-toggle="offcanvas" role="button">

@@ -86,7 +86,7 @@
                     {{-- Descarga de archivos --}}
                     <a v-if="orden.orden_compra.archivo" class="btn btn-xs btn-warning"
                       title="PDF" :href="orden.orden_compra.archivo"
-                      :download="'INTERCORP-PO '+orden.numero+orden.orden_compra.cliente_nombre+orden.orden_compra.proyecto_nombre+'.pdf'">
+                      :download="'ROBINSON-PO '+orden.numero+orden.orden_compra.cliente_nombre+orden.orden_compra.proyecto_nombre+'.pdf'">
                       <i class="far fa-file-pdf"></i>
                     </a>
                     <template v-if="orden.factura" >
