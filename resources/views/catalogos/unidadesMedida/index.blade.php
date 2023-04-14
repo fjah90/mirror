@@ -109,7 +109,7 @@ methods: {
           if (result.value) {
            axios.delete('/unidadesMedida/'+unidad.id, {})
             .then(({data}) => {
-              this.tipos.splice(index, 1);
+              this.unidades.splice(index, 1);
               swal({
                 title: "Exito",
                 text: "La unidad ha sido borrado",
