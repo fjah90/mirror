@@ -6,12 +6,17 @@
 @stop
 
 @section('header_styles')
+<style>
+  .color_text{
+    color:#B3B3B3;
+  }
+</style>
 @stop
 
 {{-- Page content --}}
 @section('content')
   <!-- Content Header (Page header) -->
-  <section class="content-header">
+  <section class="content-header" style="background-color:#12160F; color:#FBAE08;">
     <h1>Productos</h1>
   </section>
   <!-- Main content -->
@@ -19,7 +24,7 @@
     <div class="row">
       <div class="col-lg-12">
         <div class="panel ">
-          <div class="panel-heading">
+          <div class="panel-heading" style="background-color:#12160F; color:#FBAE08;">
             <h3 class="panel-title">Ver Producto {{$producto->nombre}}</h3>
           </div>
           <div class="panel-body">
@@ -99,7 +104,7 @@
                     Ficha Técnica
                     @if($producto->ficha_tecnica)
                     <a href="{{ $producto->ficha_tecnica }}" target="_blank"
-                      class="btn btn-xs btn-info" style="cursor:pointer;">
+                      class="btn btn-md btn-dark" style="cursor:pointer; color:#FBAE08; background-color:#000">
                       <i class="fas fa-eye"></i>
                     </a>
                     @endif
@@ -107,7 +112,7 @@
                 </div>
               </div>
               <div class="col-md-4 text-right">
-                <a style="margin-top:25px;" class="btn btn-default" href="{{route('productos.index')}}">
+                <a style="margin-top:25px; color:#000; background-color:#B3B3B3" class="btn btn-default" href="{{route('productos.index')}}">
                   Regresar
                 </a>
               </div>

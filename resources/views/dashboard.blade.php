@@ -18,6 +18,9 @@ Dashboard | @parent
     font-size: 16px;
     color: #777;
   }
+   .color_text{
+    color:#B3B3B3;
+  }
 
   /*mail tiles sales, visits etc*/
   .card-box {
@@ -159,7 +162,7 @@ Dashboard | @parent
 {{-- Page content --}}
 @section('content')
 <!-- Content Header (Page header) -->
-<section class="content-header">
+<section class="content-header" style="background-color:#12160F; color:#FBAE08;">
   <h1>Dashboard</h1>
 </section>
 <!-- Main content -->
@@ -256,7 +259,7 @@ Dashboard | @parent
   <div class="row">
     <div class="col-sm-12">
       <div class="panel product-details">
-        <div class="panel-heading">
+        <div class="panel-heading" style="background-color:#12160F; color:#FBAE08;">
           <h3 class="panel-title">Próximas Actividades</h3>
         </div>
         <div class="panel-body">
@@ -317,19 +320,19 @@ Dashboard | @parent
                   
                 </select>
             </div>
-          </div>
+          </div><br>
           <div class="row">
             <div class="col-sm-12">
               <div class="table-responsive">
                 <table class="table table-striped text-center" id="tablaActividades">
                   <thead>
-                    <tr style="background-color:#08c8c2">
-                      <th class="text-center">Cliente</th>
-                      <th class="text-center"><strong>Proyecto</strong></th>
-                      <th class="text-center"><strong>Tipo</strong></th>
-                      <th class="text-center"><strong>Próxima Actividad</strong></th>
-                      <th class="text-center"><strong>¿Es prospecto?</strong></th>
-                      <th class="text-center"><strong>Acciones</strong></th>
+                    <tr style="background-color:#12160F">
+                      <th class="text-center color_text">Cliente</th>
+                      <th class="text-center color_text"><strong>Proyecto</strong></th>
+                      <th class="text-center color_text"><strong>Tipo</strong></th>
+                      <th class="text-center color_text"><strong>Próxima Actividad</strong></th>
+                      <th class="text-center color_text"><strong>¿Es prospecto?</strong></th>
+                      <th class="text-center color_text"><strong>Acciones</strong></th>
                     </tr>
                   </thead>
                   <tbody>
@@ -367,7 +370,7 @@ Dashboard | @parent
   <div class="row">
     <div class="col-sm-12">
       <div class="panel product-details">
-        <div class="panel-heading">
+        <div class="panel-heading" style="background-color:#12160F; color:#FBAE08;">
           <h3 class="panel-title">Ultimas Cotizaciones</h3>
         </div>
         <div class="panel-body">
@@ -435,14 +438,14 @@ Dashboard | @parent
                 
                 <table class="table table-striped text-center" id="tablaCotizaciones">
                   <thead>
-                    <tr style="background-color:#08c8c2">
-                      <th class="text-center">Cliente</th>
-                      <th class="text-center"><strong>Proyecto</strong></th>
-                      <th class="text-center"><strong>Número Cotización</strong></th>
-                      <th class="text-center"><strong>Fecha</strong></th>                     
-                      <th class="text-center"><strong>Total</strong></th>
-                      <th class="text-center"><strong>Usuario</strong></th>
-                      <th class="text-center"><strong>Acciones</strong></th>
+                    <tr style="background-color:#12160F">
+                      <th class="text-center color_text">Cliente</th>
+                      <th class="text-center color_text"><strong>Proyecto</strong></th>
+                      <th class="text-center color_text"><strong>Número Cotización</strong></th>
+                      <th class="text-center color_text"><strong>Fecha</strong></th>                     
+                      <th class="text-center color_text"><strong>Total</strong></th>
+                      <th class="text-center color_text"><strong>Usuario</strong></th>
+                      <th class="text-center color_text"><strong>Acciones</strong></th>
                     </tr>
                   </thead>
                   <tbody>
@@ -478,7 +481,7 @@ Dashboard | @parent
   <div class="row">
     <div class="col-sm-12">
       <div class="panel product-details">
-        <div class="panel-heading">
+        <div class="panel-heading" style="background-color:#12160F; color:#FBAE08;">
           <h3 class="panel-title">Ordenes de Compra Pendientes De Aprobar</h3>
         </div>
         <div class="panel-body">
@@ -549,17 +552,17 @@ Dashboard | @parent
                 
                 <table class="table table-striped text-center" id="tablaCompras">
                   <thead>
-                    <tr style="background-color:#08c8c2">
-                      <th class="text-center"># Orden</th>
-                      <th class="text-center">Ejecutivo</th>
-                      <th class="text-center">Cliente</th>
-                      <th class="text-center">Proyecto</th>
-                      <th class="text-center"><strong>Proveedor</strong></th>
-                      <th class="text-center"><strong>Producto</strong></th>
-                      <th class="text-center"><strong>Cantidad</strong></th>
-                      <th class="text-center"><strong>Moneda</strong></th>
-                      <th class="text-center"><strong>Total</strong></th>
-                      <th class="text-center"><strong>Status</strong></th>
+                    <tr style="background-color:#12160F">
+                      <th class="text-center color_text"># Orden</th>
+                      <th class="text-center color_text">Ejecutivo</th>
+                      <th class="text-center color_text">Cliente</th>
+                      <th class="text-center color_text">Proyecto</th>
+                      <th class="text-center color_text"><strong>Proveedor</strong></th>
+                      <th class="text-center color_text"><strong>Producto</strong></th>
+                      <th class="text-center color_text"><strong>Cantidad</strong></th>
+                      <th class="text-center color_text"><strong>Moneda</strong></th>
+                      <th class="text-center color_text"><strong>Total</strong></th>
+                      <th class="text-center color_text"><strong>Status</strong></th>
                       <th></th>
                     </tr>
                   </thead>
@@ -638,7 +641,7 @@ Dashboard | @parent
   <div class="row">
     <div class="col-sm-12">
       <div class="panel product-details">
-        <div class="panel-heading">
+        <div class="panel-heading" style="background-color:#12160F; color:#FBAE08;">
           <h3 class="panel-title">Ultimas Cotizaciones Aceptadas</h3>
         </div>
         <div class="panel-body">
@@ -706,13 +709,13 @@ Dashboard | @parent
                 
                 <table class="table table-striped text-center" id="tablaAceptadas">
                   <thead>
-                    <tr style="background-color:#08c8c2">
-                      <th class="text-center">Cliente</th>
-                      <th class="text-center"><strong>Proyecto</strong></th>
-                      <th class="text-center"><strong>Número Cotización</strong></th>
-                      <th class="text-center"><strong>Fecha</strong></th>                     
-                      <th class="text-center"><strong>Total</strong></th>
-                      <th class="text-center"><strong>Acciones</strong></th>
+                    <tr style="background-color:#12160F">
+                      <th class="text-center color_text">Cliente</th>
+                      <th class="text-center color_text"><strong>Proyecto</strong></th>
+                      <th class="text-center color_text"><strong>Número Cotización</strong></th>
+                      <th class="text-center color_text"><strong>Fecha</strong></th>                     
+                      <th class="text-center color_text"><strong>Total</strong></th>
+                      <th class="text-center color_text"><strong>Acciones</strong></th>
                     </tr>
                   </thead>
                   <tbody>
@@ -745,7 +748,7 @@ Dashboard | @parent
   <div class="row">
       <div class="col-sm-12">
           <div class="panel product-details">
-            <div class="panel-heading">
+            <div class="panel-heading" style="background-color:#12160F; color:#FBAE08;">
               <h3 class="panel-title">Total Facturado VS Cobrado</h3>
             </div>
             <div class="panel-body">

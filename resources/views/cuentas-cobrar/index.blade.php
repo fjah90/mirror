@@ -6,8 +6,16 @@
 @stop
 
 @section('header_styles')
+<style>
+  .marg025 {margin: 0 25px;}
+  #tabla_length{
+    float: left !important;
+  }
 
-<!-- <style></style> -->
+  .color_text{
+    color:#FBAE08;
+  }
+</style>
 @stop
 
 {{-- Page content --}}
@@ -53,19 +61,19 @@
           <div class="table-responsive">
             <table class="table table-bordred" id="tabla">
               <thead>
-                <tr style="background-color:#f54c82">
-                  <th>#</th>
-                  <th># Cotizacion</th>
-                  <th>Ejecutivo</th>
-                  <th>Cliente</th>
-                  <th>Proyecto</th>
-                  <th>Condiciones Pago</th>
-                  <th>Moneda</th>
-                  <th>Total</th>
-                  <th>Facturado</th>
-                  <th>Pagado</th>
-                  <th>Pendiente</th>
-                  <th style="min-width:70px;"></th>
+                <tr style="background-color:#12160F">
+                  <th class="color_text">#</th>
+                  <th class="color_text"># Cotizacion</th>
+                  <th class="color_text">Ejecutivo</th>
+                  <th class="color_text">Cliente</th>
+                  <th class="color_text">Proyecto</th>
+                  <th class="color_text">Condiciones Pago</th>
+                  <th class="color_text">Moneda</th>
+                  <th class="color_text">Total</th>
+                  <th class="color_text">Facturado</th>
+                  <th class="color_text">Pagado</th>
+                  <th class="color_text">Pendiente</th>
+                  <th style="min-width:80px;"></th>
                 </tr>
               </thead>
               <tbody>

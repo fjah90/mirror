@@ -114,8 +114,8 @@
           <!-- Dashboard -->
           <li {!! (Request::is('dashboard') ? 'class="active"' : '') !!}>
             <a href="{{ URL::to('dashboard') }}">
-              <i class="menu-icon fas fa-home" style="color:#08c8c2; font-size: 20px;" ></i>
-              <span class="mm-text ">INICIO</span>
+              <i class="menu-icon fas fa-home" style="color:#12160F; font-size: 20px;" ></i>
+              <span class="mm-text " style="color:#12160F;"><b>INICIO</b></span>
             </a>
           </li>
 
@@ -128,8 +128,8 @@
 
           <li {!! (Request::is('prospectos/prospectos*') ? 'class="active"' : '') !!}>
             <a href="{{ URL::to('prospectos/prospectos') }}">
-              <i class="menu-icon fas fa-calendar-check" style="color:#B6F488; font-size: 20px;"></i>
-              <span class="mm-text ">Prospectos</span>
+              <i class="menu-icon fas fa-calendar-check" style="color:#12160F; font-size: 20px;"></i>
+              <span class="mm-text">Prospectos</span>
             </a>
           </li>
 
@@ -139,7 +139,7 @@
 
           <li {!! (Request::is('prospectos/cotizaciones*') ? 'class="active"' : '') !!}>
             <a href="{{ URL::to('prospectos/cotizaciones') }}">
-              <i class="menu-icon fas fa-calendar-check" style="color:#06a1ce; font-size: 20px;"></i>
+              <i class="menu-icon fas fa-calendar-check" style="color:#12160F; font-size: 20px;"></i>
               <span class="mm-text ">Proyectos</span>
             </a>
           </li>
@@ -164,7 +164,7 @@
 
           <li {!! (Request::is('prospectos*') ? 'class="active"' : '') !!}>
             <a href="{{ URL::to('prospectos') }}">
-              <i class="menu-icon fas fa-shopping-bag" style="color:#c37ff3; font-size: 20px;"></i>
+              <i class="menu-icon fas fa-shopping-bag" style="color:#12160F; font-size: 20px;"></i>
               <span class="mm-text ">Cotizaciones</span>
             </a>
           </li>
@@ -187,7 +187,7 @@
        
 
         @hasanyrole('Administrador|Usuaro')
-          <li {!! (Request::is('ordenes-proceso*') ? 'class="active"' : '') !!}  {!! (Request::is('proyectos-aprobados*') ? 'class="active"' : '') !!}><a class="title"><i class="fa fa-cart-arrow-down" style="color:#907ff3; font-size: 20px;"></i>  Ordenes Compra <span class="fa fa-chevron-down"></span></a>
+          <li {!! (Request::is('ordenes-proceso*') ? 'class="active"' : '') !!}  {!! (Request::is('proyectos-aprobados*') ? 'class="active"' : '') !!}><a class="title"><i class="fa fa-cart-arrow-down" style="color:#12160F; font-size: 20px;"></i>  Ordenes Compra <span class="fa fa-chevron-down"></span></a>
            <ul class="nav child_menu">  
               <li  {!! (Request::is('proyectos-aprobados*') ? 'class="active"' : '') !!} >
                 <a href="{{ URL::to('proyectos-aprobados') }}">
@@ -209,7 +209,7 @@
 
           @hasanyrole('Administrador|Usuaro')
           <!-- Administracion  -->
-          <li {!! (Request::is('cuentas-cobrar*') ? 'class="active"' : '') !!} {!! (Request::is('cuentas-pagar*') ? 'class="active"' : '') !!}><a class="title"><i class="fa fa-calculator" style="color:#fa2002; font-size:20px;"></i>  Contabilidad <span class="fa fa-chevron-down" ></span></a>
+          <li {!! (Request::is('cuentas-cobrar*') ? 'class="active"' : '') !!} {!! (Request::is('cuentas-pagar*') ? 'class="active"' : '') !!}><a class="title"><i class="fa fa-calculator" style="color:#12160F; font-size:20px;"></i>  Contabilidad <span class="fa fa-chevron-down" ></span></a>
            <ul class="nav child_menu">  
               <li {!! (Request::is('cuentas-cobrar*') ? 'class="active"' : '') !!}>
                 <a href="{{ URL::to('cuentas-cobrar') }}">
@@ -232,7 +232,7 @@
           @hasanyrole('Administrador|Usuaro')
           <!--Reportes-->
 
-          <li {!! (Request::is('reportes*') ? 'class="active"' : '') !!}><a class="title"><i class="fas fa-file" style="color:#fa7702; font-size: 20px;"></i>  Reportes <span class="fa fa-chevron-down"></span></a>
+          <li {!! (Request::is('reportes*') ? 'class="active"' : '') !!}><a class="title"><i class="fas fa-file" style="color:#12160F; font-size: 20px;"></i>  Reportes <span class="fa fa-chevron-down"></span></a>
            <ul class="nav child_menu">
               <li  {!! (Request::is('reportes/cotizaciones') ? 'active' : '') !!}">
             <a href="{{ URL::to('reportes/cotizaciones') }}">
@@ -350,7 +350,7 @@
           <hr class="divider-menu">
           <!--Catalogos de Apoyo-->
           @hasanyrole('Administrador|Usuaro')
-          <li {!! (Request::is('vendedores*') ? 'class="active"' : '') !!} {!! (Request::is('Usuarios*') ? 'class="active"' : '') !!} {!! (Request::is('tiposClientes*') ? 'class="active"' : '') !!} {!! (Request::is('categoriaClientes*') ? 'class="active"' : '') !!} {!! (Request::is('proyectos*') ? 'class="active"' : '') !!} {!! (Request::is('tiposProveedores*') ? 'class="active"' : '') !!} {!! (Request::is('unidadesMedida*') ? 'class="active"' : '') !!} {!! (Request::is('subcategorias*') ? 'class="active"' : '') !!} {!! (Request::is('categorias*') ? 'class="active"' : '') !!} {!! (Request::is('clientes*' ) ? 'class="active"' : '') !!} {!! (Request::is('proveedores*' ) ? 'class="active"' : '') !!} {!! (Request::is('agentesAduanales*' ) ? 'class="active"' : '') !!} {!! (Request::is('productos*' ) ? 'class="active"' : '') !!}><a class="title"><i class="fa fa-book" style="color:#f5bf4c; font-size: 20px;"></i>  Catálogos<span class="fa fa-chevron-down"></span></a>
+          <li {!! (Request::is('vendedores*') ? 'class="active"' : '') !!} {!! (Request::is('Usuarios*') ? 'class="active"' : '') !!} {!! (Request::is('tiposClientes*') ? 'class="active"' : '') !!} {!! (Request::is('categoriaClientes*') ? 'class="active"' : '') !!} {!! (Request::is('proyectos*') ? 'class="active"' : '') !!} {!! (Request::is('tiposProveedores*') ? 'class="active"' : '') !!} {!! (Request::is('unidadesMedida*') ? 'class="active"' : '') !!} {!! (Request::is('subcategorias*') ? 'class="active"' : '') !!} {!! (Request::is('categorias*') ? 'class="active"' : '') !!} {!! (Request::is('clientes*' ) ? 'class="active"' : '') !!} {!! (Request::is('proveedores*' ) ? 'class="active"' : '') !!} {!! (Request::is('agentesAduanales*' ) ? 'class="active"' : '') !!} {!! (Request::is('productos*' ) ? 'class="active"' : '') !!}><a class="title"><i class="fa fa-book" style="color:#12160F; font-size: 20px;"></i>  Catálogos<span class="fa fa-chevron-down"></span></a>
            <ul class="nav child_menu">
              <li  {!! (Request::is('clientes*') ? 'class="active"' : '') !!}>
                 <a href="{{ URL::to('clientes') }}">

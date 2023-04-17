@@ -6,7 +6,7 @@ Reportes | @parent
 @stop
 
 @section('content')
-<section class="content-header">
+<section class="content-header" style="background-color:#12160F; color:#FBAE08;">
     <h1 style="font-weight: bolder;">Estado de Cuenta </h1>
 </section>
 <section class="content" id="content">
@@ -47,7 +47,7 @@ Reportes | @parent
                   <div class="table-responsive">
                     <table class="table table-striped text-center" id="tablaActividades">
                       <thead>
-                        <tr style="background-color:#fa7702">
+                        <tr style="background-color:#12160F">
                           <th class="text-center">Fecha</th>
                           <th class="text-center"><strong>Número Cotización</strong></th>
                           <th class="text-center"><strong>Fecha Aprobación</strong></th>
@@ -104,7 +104,7 @@ Reportes | @parent
       <div class="row" >
         <div class="col-sm-12">
           <div class="panel product-details">
-            <div class="panel-heading">
+            <div class="panel-heading" style="background-color:#12160F; color:#FBAE08;">
               <h3 class="panel-title"> Gran TOTAL</h3>
             </div>
             <div class="panel-body">

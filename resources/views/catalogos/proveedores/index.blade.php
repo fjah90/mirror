@@ -6,13 +6,17 @@
 @stop
 
 @section('header_styles')
-<!-- <style></style> -->
+<style>
+  .color_text{
+    color:#B3B3B3;
+  }
+</style>
 @stop
 
 {{-- Page content --}}
 @section('content')
 <!-- Content Header (Page header) -->
-<section class="content-header">
+<section class="content-header" style="background-color:#12160F; color:#FBAE08;">
   <h1>Proveedores</h1>
 </section>
 <!-- Main content -->
@@ -22,10 +26,10 @@
       <div class="row">
         <div class="col-lg-12">
           <div class="panel">
-            <div class="panel-heading">
+            <div class="panel-heading" style="background-color:#12160F; color:#FBAE08;">
               <h3 class="panel-title text-right">
                 <span class="pull-left p-10">Lista de Proveedores Nacionales</span>
-                <a href="{{route('proveedores.createNacional')}}" class="btn btn-primary" style="color: #fff;">
+                <a href="{{route('proveedores.createNacional')}}" class="btn btn-warning" style="color:#000;">
                   <i class="fas fa-plus"></i> Proveedor
                 </a>
               </h3>
@@ -35,11 +39,11 @@
                 <table id="tablaNacionales" class="table table-bordred" style="width:100%;"
                   data-page-length="100">
                   <thead>
-                    <tr style="background-color:#fa02a4">
-                      <th>#</th>
-                      <th>Tipo</th>
-                      <th>Empresa</th>
-                      <th>RFC</th>
+                    <tr style="background-color:#12160F">
+                      <th class="color_text">#</th>
+                      <th class="color_text">Tipo</th>
+                      <th class="color_text">Empresa</th>
+                      <th class="color_text">RFC</th>
                       <th style="min-width:70px;"></th>
                     </tr>
                   </thead>
@@ -74,10 +78,10 @@
       <div class="row">
         <div class="col-lg-12">
           <div class="panel">
-            <div class="panel-heading">
+            <div class="panel-heading" style="background-color:#12160F; color:#FBAE08;">
               <h3 class="panel-title text-right">
                 <span class="pull-left p-10">Lista de Proveedores Extranjeros</span>
-                <a href="{{route('proveedores.createInternacional')}}" class="btn btn-brown" style="color: #fff;">
+                <a href="{{route('proveedores.createInternacional')}}" class="btn btn-warning" style="color:#000;">
                   <i class="fas fa-plus"></i> Proveedor
                 </a>
               </h3>
@@ -87,11 +91,11 @@
                 <table id="tablaExtranjeros" class="table table-bordred" style="width:100%;"
                   data-page-length="100">
                   <thead>
-                    <tr>
-                      <th>#</th>
-                      <th>Tipo</th>
-                      <th>Empresa</th>
-                      <th>TAX ID NO</th>
+                    <tr style="background-color:#12160F">
+                      <th class="color_text">#</th>
+                      <th class="color_text">Tipo</th>
+                      <th class="color_text">Empresa</th>
+                      <th class="color_text">TAX ID NO</th>
                       <th style="min-width:70px;"></th>
                     </tr>
                   </thead>

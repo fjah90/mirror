@@ -34,7 +34,7 @@
     </a>
     <div>
       <a href="javascript:void(0)" class="navbar-btn sidebar-toggle" data-toggle="offcanvas" role="button">
-        <i class="fas fa-bars"></i>
+        <i class="fas fa-bars" style="background-color:#000;"></i>
       </a>
     </div>
     <div class="navbar-right">
@@ -115,7 +115,7 @@
           <li {!! (Request::is('dashboard') ? 'class="active"' : '') !!}>
             <a href="{{ URL::to('dashboard') }}">
               <i class="menu-icon fas fa-home"></i>
-              <span class="mm-text ">INICIO</span>
+              <span class="mm-text">INICIO</span>
             </a>
           </li>
 

@@ -11,13 +11,21 @@
   #tabla_length{
     float: left !important;
   }
+
+  .color_text{
+    color:#FBAE08;
+  }
+
+  .btn-primary{
+    color:#000;
+  }
 </style>
 @stop
 
 {{-- Page content --}}
 @section('content')
 <!-- Content Header (Page header) -->
-<section class="content-header">
+<section class="content-header" style="background-color:#12160F; color:#FBAE08;">
   <h1 style="font-weight: bolder;">Cotizaciones en proceso</h1>
 </section>
 <!-- Main content -->
@@ -39,8 +47,8 @@
               @endrole
             </div>
             <div class="p-10 " style="display:inline-block;float: right;">
-              <button class="btn btn-sm btn-primary">
-                <a href="{{route('prospectos.create2')}}" style="color:white;">
+              <button class="btn btn-dark btn-sm btn" style="background-color:#000;">
+                <a href="{{route('prospectos.create2')}}" style="background-color:black; color:#FBAE08;">
                   <i class="fas fa-address-book"></i> Nuevo Proyecto Prospecto
                 </a>
               </button>
@@ -67,12 +75,12 @@
             <table id="tabla" class="table table-bordred" style="width:100%;"
               data-page-length="100">
               <thead>
-                <tr style="background-color:#B6F488">
+                <tr style="background-color:#12160F">
                   <th class="hide">#</th>
-                  <th>Usuario</th>
-                  <th>Cliente</th>
-                  <th>Nombre de Proyecto</th>
-                  <th>Descripción</th>
+                  <th class="color_text">Usuario</th>
+                  <th class="color_text">Cliente</th>
+                  <th class="color_text">Nombre de Proyecto</th>
+                  <th class="color_text">Descripción</th>
                   <th style="min-width:105px;"></th>
                 </tr>
               </thead>
@@ -120,7 +128,7 @@
                   @endforeach
                 </select>
                 
-                  <button class="btn btn-sm btn-primary" >
+                  <button class="btn btn-sm btn" >
                   <a href="{{route('prospectos.create')}}" style="color:white;">
                     <i class="fas fa-address-book"></i> Nuevo Proyecto
                   </a>
@@ -128,7 +136,7 @@
             </div>
 
             <div class="form-group text-right">
-                <button type="submit" class="btn btn-primary" :disabled="cargando" @click='cotizacionueva()'>Aceptar</button>
+                <button type="submit" class="" :disabled="cargando" @click='cotizacionueva()'>Aceptar</button>
                 <button type="button" class="btn btn-default"
                         @click="proyecto_id=0; modalNuecaCotizacion=false;">
                     Cancelar

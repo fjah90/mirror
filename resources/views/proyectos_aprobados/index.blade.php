@@ -6,8 +6,16 @@
 @stop
 
 @section('header_styles')
+<style>
+  .marg025 {margin: 0 25px;}
+  #tabla_length{
+    float: left !important;
+  }
 
-<!-- <style></style> -->
+  .color_text{
+    color:#FBAE08;
+  }
+</style>
 @stop
 
 {{-- Page content --}}
@@ -58,13 +66,13 @@
                   <table id="tabla" class="table table-bordred" style="width:100%;"
                     data-page-length="-1">
                     <thead>
-                      <tr style="background-color:#907ff3">
-                        <th># Cotización</th>
-                        <th>Usuario</th>
-                        <th>Cliente</th>
-                        <th>Proyecto</th>
-                        <th>Fecha aprobación</th>
-                        <th>Proveedores</th>
+                      <tr style="background-color:#12160F">
+                        <th class="color_text"># Cotización</th>
+                        <th class="color_text">Usuario</th>
+                        <th class="color_text">Cliente</th>
+                        <th class="color_text">Proyecto</th>
+                        <th class="color_text">Fecha aprobación</th>
+                        <th class="color_text">Proveedores</th>
                         <th></th>
                       </tr>
                     </thead>

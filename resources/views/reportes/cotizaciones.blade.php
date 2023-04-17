@@ -14,6 +14,9 @@ Reportes | @parent
     display: inline-block !important;
     float: none;
   }
+  .color_text{
+    color:#FBAE08;
+  }
 </style>
 @stop
 
@@ -128,19 +131,19 @@ Reportes | @parent
                     
                     <table class="table table-striped text-center" id="tabla">
                       <thead>
-                        <tr style="background-color:#fa7702">
-                          <th class="text-center">Fecha</th>
-                          <th class="text-center"><strong>Número Cotización</strong></th>
-                          <th class="text-center"><strong>Fecha Aprobación</strong></th>
-                          <th class="text-center"><strong>Cliente</strong></th>
-                          <th class="text-center"><strong>Proyecto</strong></th>
-                          <th class="text-center"><strong>Marca</strong></th>
-                          <th class="text-center"><strong>Proveedores</strong></th>
-                          <th class="text-center"><strong>IVA</strong></th>
-                          <th class="text-center"><strong>Monto</strong></th>
-                          <th class="text-center"><strong>Moneda</strong></th>
-                          <th class="text-center"><strong>Usuario</strong></th>
-                          <th class="text-center"><strong>Status</strong></th>
+                        <tr style="background-color:#12160F">
+                          <th class="text-center color_text">Fecha</th>
+                          <th class="text-center color_text"><strong>Número Cotización</strong></th>
+                          <th class="text-center color_text"><strong>Fecha Aprobación</strong></th>
+                          <th class="text-center color_text"><strong>Cliente</strong></th>
+                          <th class="text-center color_text"><strong>Proyecto</strong></th>
+                          <th class="text-center color_text"><strong>Marca</strong></th>
+                          <th class="text-center color_text"><strong>Proveedores</strong></th>
+                          <th class="text-center color_text"><strong>IVA</strong></th>
+                          <th class="text-center color_text"><strong>Monto</strong></th>
+                          <th class="text-center color_text"><strong>Moneda</strong></th>
+                          <th class="text-center color_text"><strong>Usuario</strong></th>
+                          <th class="text-center color_text"><strong>Status</strong></th>
                         </tr>
                       </thead>
                       <tbody>

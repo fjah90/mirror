@@ -14,6 +14,9 @@ Reportes | @parent
     display: inline-block !important;
     float: none;
   }
+  .color_text{
+    color:#FBAE08;
+  }
 </style>
 @stop
 
@@ -112,17 +115,17 @@ Reportes | @parent
                     
                     <table class="table table-striped text-center" id="tabla">
                       <thead>
-                        <tr style="background-color:#fa7702">
-                          <th class="text-center"><strong>Número Compra</strong></th>
-                          <th class="text-center"><strong>Proveedor</strong></th>
-                          <th class="text-center"><strong>Cliente</strong></th>
-                          <th class="text-center"><strong>Proyecto</strong></th>
-                          <th class="text-center"><strong>Documento</strong></th>
-                          <th class="text-center"><strong>Monto</strong></th>
-                          <th class="text-center"><strong>Moneda</strong></th>
-                          <th class="text-center"><strong>Fecha Factura</strong></th>
-                          <th class="text-center"><strong>Fecha Vencimiento</strong></th>
-                          <th class="text-center"><strong>Dias a favor o Encontra</strong></th>
+                        <tr style="background-color:#12160F">
+                          <th class="text-center color_text"><strong>Número Compra</strong></th>
+                          <th class="text-center color_text"><strong>Proveedor</strong></th>
+                          <th class="text-center color_text"><strong>Cliente</strong></th>
+                          <th class="text-center color_text"><strong>Proyecto</strong></th>
+                          <th class="text-center color_text"><strong>Documento</strong></th>
+                          <th class="text-center color_text"><strong>Monto</strong></th>
+                          <th class="text-center color_text"><strong>Moneda</strong></th>
+                          <th class="text-center color_text"><strong>Fecha Factura</strong></th>
+                          <th class="text-center color_text"><strong>Fecha Vencimiento</strong></th>
+                          <th class="text-center color_text"><strong>Dias a favor o Encontra</strong></th>
                         </tr>
                       </thead>
                       <tbody>

@@ -1263,7 +1263,7 @@ mark,
 
 a.text-primary:hover,
 a.text-primary:focus {
-  color: #1a6594; }
+  color: #12160F; }
 
 .text-success {
   color: #75D1A3; }
@@ -1301,7 +1301,7 @@ a.text-danger:focus {
 
 a.bg-primary:hover,
 a.bg-primary:focus {
-  background-color: #1a6594; }
+  background-color: #12160F; }
 
 .bg-success {
   background-color: #75D1A3; }
@@ -2856,16 +2856,16 @@ fieldset[disabled] a.btn {
   border-color: #2283BF; }
   .btn-primary:focus, .btn-primary.focus {
     color: #fff;
-    background-color: #1a6594;
+    background-color: #12160F;
     border-color: #0f3953; }
   .btn-primary:hover {
     color: #fff;
-    background-color: #1a6594;
+    background-color: #12160F;
     border-color: #195f8b; }
   .btn-primary:active, .btn-primary.active,
   .open > .btn-primary.dropdown-toggle {
     color: #fff;
-    background-color: #1a6594;
+    background-color: #12160F;
     border-color: #195f8b; }
     .btn-primary:active:hover, .btn-primary:active:focus, .btn-primary:active.focus, .btn-primary.active:hover, .btn-primary.active:focus, .btn-primary.active.focus,
     .open > .btn-primary.dropdown-toggle:hover,
@@ -4196,7 +4196,7 @@ a.label:hover, a.label:focus {
 .label-primary {
   background-color: #2283BF; }
   .label-primary[href]:hover, .label-primary[href]:focus {
-    background-color: #1a6594; }
+    background-color: #12160F; }
 
 .label-success {
   background-color: #75D1A3; }

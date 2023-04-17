@@ -6,8 +6,16 @@
 @stop
 
 @section('header_styles')
+<style>
+  .marg025 {margin: 0 25px;}
+  #tabla_length{
+    float: left !important;
+  }
 
-<!-- <style></style> -->
+  .color_text{
+    color:#FBAE08;
+  }
+</style>
 @stop
 
 {{-- Page content --}}
@@ -54,15 +62,15 @@
             <table id="tabla" class="table table-bordred" style="width:100%;"
               data-page-length="-1">
               <thead>
-                <tr style="background-color:#907ff3">
-                  <th>Orden Numero</th>
-                  <th>#</th>
-                  <th>Cliente</th>
-                  <th>Ejecutivo</th>
-                  <th>Proyecto</th>
-                  <th>Proveedor</th>
-                  <th>Status</th>
-                  <th></th>
+                <tr style="background-color:#12160F">
+                  <th class="color_text">Orden Numero</th>
+                  <th class="color_text">#</th>
+                  <th class="color_text">Cliente</th>
+                  <th class="color_text">Ejecutivo</th>
+                  <th class="color_text">Proyecto</th>
+                  <th class="color_text">Proveedor</th>
+                  <th class="color_text">Status</th>
+                  <th class="color_text"></th>
                 </tr>
               </thead>
               <tbody>

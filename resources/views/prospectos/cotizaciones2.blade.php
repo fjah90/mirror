@@ -11,6 +11,10 @@
   #tabla_length{
     float: left !important;
   }
+
+  .color_text{
+    color:#FBAE08;
+  }
 </style>
 @stop
 
@@ -67,13 +71,13 @@
             <table id="tabla" class="table table-bordred" style="width:100%;"
               data-page-length="100">
               <thead>
-                <tr style="background-color:#c37ff3">
+                <tr style="background-color:#12160F">
                   <th class="hide">#</th>
-                  <th>Usuario</th>
-                  <th>Cliente</th>
-                  <th>Nombre de Proyecto</th>
-                  <th>Número de cotización</th>
-                  <th>Total</th>
+                  <th class="color_text">Usuario</th>
+                  <th class="color_text">Cliente</th>
+                  <th class="color_text">Nombre de Proyecto</th>
+                  <th class="color_text">Número de cotización</th>
+                  <th class="color_text">Total</th>
                   <th style="min-width:105px;"></th>
                 </tr>
               </thead>

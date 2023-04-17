@@ -14,12 +14,15 @@ Reportes | @parent
     display: inline-block !important;
     float: none;
   }
+  .color_text{
+    color:#FBAE08;
+  }
 </style>
 @stop
 
 @section('content')
 <!-- Content Header (Page header) -->
-<section class="content-header">
+<section class="content-header" style="background-color:#12160F; color:#FBAE08;">
   <h1 style="font-weight: bolder;">Reporte</h1>
 </section>
 <!-- Main content -->
@@ -27,7 +30,7 @@ Reportes | @parent
     <div class="row">
         <div class="col-sm-12">
           <div class="panel product-details">
-            <div class="panel-heading">
+            <div class="panel-heading" style="background-color:#12160F; color:#FBAE08;">
               <h3 class="panel-title">Reporte de Operaciones
                 <button style="background-color:transparent; border:none;float: right;">
                   <i class=" fa fa-file-pdf" v-on:click="pdf" style="color:#eb1b3d;font-size: 20px;"></i>
@@ -119,17 +122,17 @@ Reportes | @parent
                     
                     <table class="table table-striped text-center" id="tabla">
                       <thead>
-                        <tr style="background-color:#fa7702">
-                          <th class="text-center">Número de Cotización</th>
-                          <th class="text-center"><strong>Cliente</strong></th>
-                          <th class="text-center"><strong>Proyecto</strong></th>
-                          <th class="text-center"><strong>Monto</strong></th>
-                          <th class="text-center"><strong>Moneda</strong></th>
-                          <th class="text-center"><strong>Número Compra</strong></th>
-                          <th class="text-center"><strong>Costo</strong></th>
-                          <th class="text-center"><strong>Utilidad</strong></th>
-                          <th class="text-center"><strong>%</strong></th>
-                          <th class="text-center"><strong>Usuario</strong></th>
+                        <tr style="background-color:#12160F;">
+                          <th class="text-center color_text">Número de Cotización</th>
+                          <th class="text-center color_text"><strong>Cliente</strong></th>
+                          <th class="text-center color_text"><strong>Proyecto</strong></th>
+                          <th class="text-center color_text"><strong>Monto</strong></th>
+                          <th class="text-center color_text"><strong>Moneda</strong></th>
+                          <th class="text-center color_text"><strong>Número Compra</strong></th>
+                          <th class="text-center color_text"><strong>Costo</strong></th>
+                          <th class="text-center color_text"><strong>Utilidad</strong></th>
+                          <th class="text-center color_text"><strong>%</strong></th>
+                          <th class="text-center color_text"><strong>Usuario</strong></th>
                         </tr>
                       </thead>
                       <tbody>

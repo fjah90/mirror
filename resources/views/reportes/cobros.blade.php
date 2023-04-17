@@ -21,6 +21,9 @@ Reportes | @parent
     display: inline-block !important;
     float: none;
   }
+  .color_text{
+    color:#FBAE08;
+  }
 </style>
 @stop
 
@@ -116,15 +119,15 @@ Reportes | @parent
                   <div class="table-responsive">
                     
                     <table class="table table-striped text-center" id="tabla">
-                      <thead style="background-color:#fa7702">
+                      <thead style="background-color:#12160F">
                         <tr>
-                          <th class="text-center">Fecha Pago</th>
-                          <th class="text-center"><strong>Número Compra</strong></th>
-                          <th class="text-center"><strong>Cliente</strong></th>
-                          <th class="text-center"><strong>Proyecto</strong></th>
-                          <th class="text-center"><strong>Documento</strong></th>
-                          <th class="text-center"><strong>Monto</strong></th>
-                          <th class="text-center"><strong>Moneda</strong></th>
+                          <th class="text-center color_text">Fecha Pago</th>
+                          <th class="text-center color_text"><strong>Número Compra</strong></th>
+                          <th class="text-center color_text"><strong>Cliente</strong></th>
+                          <th class="text-center color_text"><strong>Proyecto</strong></th>
+                          <th class="text-center color_text"><strong>Documento</strong></th>
+                          <th class="text-center color_text"><strong>Monto</strong></th>
+                          <th class="text-center color_text"><strong>Moneda</strong></th>
                         </tr>
                       </thead>
                       <tbody>
