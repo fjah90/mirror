@@ -6,14 +6,17 @@
 @stop
 
 @section('header_styles')
-
-<!-- <style></style> -->
+<style>
+  .color_text{
+    color:#B3B3B3;
+  }
+</style>
 @stop
 
 {{-- Page content --}}
 @section('content')
 <!-- Content Header (Page header) -->
-<section class="content-header">
+<section class="content-header" style="background-color:#12160F; color:#FBAE08;">
     <h1>Categorias Proyectos</h1>
 </section>
 <!-- Main content -->
@@ -21,12 +24,12 @@
   <div class="row">
     <div class="col-lg-12">
       <div class="panel">
-        <div class="panel-heading">
+        <div class="panel-heading" style="background-color:#12160F; color:#FBAE08;">
           <h3 class="panel-title text-right">
             <span class="pull-left p-10">Lista de Categorias Proyectos</span>
             <span style="visibility:hidden">.</span>
             @role('Administrador')
-            <a href="{{route('proyectos.create')}}" class="btn btn-primary" style="color: #fff;">
+            <a href="{{route('proyectos.create')}}" class="btn btn-warning" style="color: #000;">
               <i class="fa fa-plus"></i> Nueva Categoria
             </a>
             @endrole
@@ -38,8 +41,8 @@
               data-page-length="100">
               <thead>
                 <tr style="background-color:#12160F">
-                  <th>#</th>
-                  <th>Nombre</th>
+                  <th class="color_text">#</th>
+                  <th class="color_text">Nombre</th>
                   <th></th>
                 </tr>
               </thead>

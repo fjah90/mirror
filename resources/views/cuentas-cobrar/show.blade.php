@@ -6,14 +6,17 @@
 @stop
 
 @section('header_styles')
-<!-- <style>
-</style> -->
+<style>
+  .color_text{
+    color:#B3B3B3;
+  }
+</style>
 @stop
 
 {{-- Page content --}}
 @section('content')
   <!-- Content Header (Page header) -->
-  <section class="content-header">
+  <section class="content-header" style="background-color:#12160F; color:#FBAE08;">
     <h1 style="font-weight: bolder;">Cuentas por Cobrar</h1>
   </section>
   <!-- Main content -->
@@ -21,7 +24,7 @@
     <div class="row">
       <div class="col-lg-12">
         <div class="panel">
-          <div class="panel-heading">
+          <div class="panel-heading" style="background-color:#12160F; color:#FBAE08;">
             <h3 class="panel-title">Cuenta {{$cuenta->id}}: {{$cuenta->proyecto}}</h3>
           </div>
           <div class="panel-body">
@@ -77,13 +80,13 @@
                 <div class="table-responsive">
                   <table class="table table-bordred">
                     <thead>
-                      <tr>
-                        <th>Documento</th>
-                        <th>Monto Total</th>
-                        <th>Pagos</th>
-                        <th>Monto Pendiente</th>
-                        <th>Fecha Vencimiento</th>
-                        <th>Fecha Emisión</th>
+                      <tr style="background-color:#12160F;">
+                        <th class="color_text">Documento</th>
+                        <th class="color_text">Monto Total</th>
+                        <th class="color_text">Pagos</th>
+                        <th class="color_text">Monto Pendiente</th>
+                        <th class="color_text">Fecha Vencimiento</th>
+                        <th class="color_text">Fecha Emisión</th>
                         <th></th>
                       </tr>
                     </thead>
@@ -127,7 +130,7 @@
 
             <div class="row">
               <div class="col-md-12 text-right">
-                <a href="{{ route('cuentas-cobrar.index') }}" class="btn btn-default">
+                <a href="{{ route('cuentas-cobrar.index') }}" class="btn btn-default" style="color:#000; background-color:#B3B3B3">
                   Regresar
                 </a>
               </div>

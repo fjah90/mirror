@@ -15,7 +15,7 @@ Reportes | @parent
     float: none;
   }
   .color_text{
-    color:#FBAE08;
+    color:#B3B3B3;
   }
 </style>
 @stop

@@ -13,7 +13,7 @@
   }
 
   .color_text{
-    color:#FBAE08;
+    color:#B3B3B3;
   }
 </style>
 @stop
@@ -21,7 +21,7 @@
 {{-- Page content --}}
 @section('content')
 <!-- Content Header (Page header) -->
-<section class="content-header">
+<section class="content-header" style="background-color:#12160F; color:#FBAE08;">
   <h1 style="font-weight: bolder;">Cuentas por Cobrar</h1>
 </section>
 <!-- Main content -->
@@ -29,7 +29,7 @@
   <div class="row">
     <div class="col-lg-12">
       <div class="panel">
-        <div class="panel-heading">
+        <div class="panel-heading" style="background-color:#12160F; color:#FBAE08;">
           <h3 class="panel-title">
             <span class="p-10">Lista de Cuentas</span>
 

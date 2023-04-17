@@ -6,14 +6,22 @@
 @stop
 
 @section('header_styles')
+<style>
+  .marg025 {margin: 0 25px;}
+  #tabla_length{
+    float: left !important;
+  }
 
-<!-- <style></style> -->
+  .color_text{
+    color:#B3B3B3;
+  }
+</style>
 @stop
 
 {{-- Page content --}}
 @section('content')
 
-<section class="content-header">
+<section class="content-header" style="background-color:#12160F; color:#FBAE08;">
   <h1 style="font-weight: bolder;">Proyecto {{$proyecto->cotizacion->prospecto->nombre}}</h1>
 </section>
 <!-- Main content -->
@@ -21,7 +29,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="panel">
-                    <div class="panel-heading">
+                    <div class="panel-heading" style="background-color:#12160F; color:#FBAE08;">
                         <h3 class="panel-title">Datos del Proyecto</h3>
                     </div>
                     <div class="panel-body">
@@ -58,7 +66,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="panel">
-                    <div class="panel-heading">
+                    <div class="panel-heading" style="background-color:#12160F; color:#FBAE08;">
                         <h4 class="panel-title">Cotizaciones Realizadas</h4>
                     </div>
                     <div class="panel-body">
@@ -71,11 +79,11 @@
                                 <div class="table-responsive">
                                     <table class="table table-bordred">
                                         <thead>
-                                        <tr>
-                                            <th>Numero</th>
-                                            <th>Fecha</th>
-                                            <th>Productos Ofrecidos</th>
-                                            <th>Total</th>
+                                        <tr style="background-color:#12160F; color:#FBAE08;">
+                                            <th class="color_text">Numero</th>
+                                            <th class="color_text">Fecha</th>
+                                            <th class="color_text">Productos Ofrecidos</th>
+                                            <th class="color_text">Total</th>
                                             <th></th>
                                         </tr>
                                         </thead>
@@ -176,7 +184,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="panel">
-                    <div class="panel-heading">
+                    <div class="panel-heading" style="background-color:#12160F; color:#FBAE08;">
                         <h4 class="panel-title">Cotizaciones Aprobadas</h4>
                     </div>
                     <div class="panel-body">
@@ -294,7 +302,7 @@
         <div class="row">
             <div class="col-lg-12">
               <div class="panel">
-                <div class="panel-heading">
+                <div class="panel-heading" style="background-color:#12160F; color:#FBAE08;">
                     <h4 class="panel-title">Lista de Ordenes de Compra</h4>
                 </div>
                 <div class="panel-body">
@@ -306,14 +314,14 @@
                       <div class="table-responsive">
                         <table id="tabla" class="table table-bordred">
                           <thead>
-                            <tr>
-                              <th>#</th>
-                              <th>Numero</th>
-                              <th>Proveedor</th>
-                              <th>Producto</th>
-                              <th>Cantidad</th>
-                              <th>Estatus</th>
-                              <th></th>
+                            <tr style="background-color:#12160F; color:#FBAE08;">
+                              <th class="color_text">#</th>
+                              <th class="color_text">Numero</th>
+                              <th class="color_text">Proveedor</th>
+                              <th class="color_text">Producto</th>
+                              <th class="color_text">Cantidad</th>
+                              <th class="color_text">Estatus</th>
+                              <th class="color_text"></th>
                             </tr>
                           </thead>
                           <tbody>
@@ -397,7 +405,7 @@
         <div class="row">
             <div class="col-lg-12">
               <div class="panel">
-                <div class="panel-heading">
+                <div class="panel-heading" style="background-color:#12160F; color:#FBAE08;">
                   <h3 class="panel-title">
                     <span class="p-10">Lista de Cuentas por Cobrar</span>
                   </h3>
@@ -406,18 +414,18 @@
                   <div class="table-responsive">
                     <table class="table table-bordred" id="tabla_cuentas">
                       <thead>
-                        <tr>
-                          <th>#</th>
-                          <th># Cotizacion</th>
-                          <th>Ejecutivo</th>
-                          <th>Cliente</th>
-                          <th>Proyecto</th>
-                          <th>Condiciones Pago</th>
-                          <th>Moneda</th>
-                          <th>Total</th>
-                          <th>Facturado</th>
-                          <th>Pagado</th>
-                          <th>Pendiente</th>
+                        <tr style="background-color:#12160F; color:#FBAE08;">
+                          <th class="color_text">#</th>
+                          <th class="color_text"># Cotizacion</th>
+                          <th class="color_text">Ejecutivo</th>
+                          <th class="color_text">Cliente</th>
+                          <th class="color_text">Proyecto</th>
+                          <th class="color_text">Condiciones Pago</th>
+                          <th class="color_text">Moneda</th>
+                          <th class="color_text">Total</th>
+                          <th class="color_text">Facturado</th>
+                          <th class="color_text">Pagado</th>
+                          <th class="color_text">Pendiente</th>
                           <th style="min-width:70px;"></th>
                         </tr>
                       </thead>
@@ -466,7 +474,7 @@
         <div class="row">
             <div class="col-lg-12">
               <div class="panel">
-                <div class="panel-heading">
+                <div class="panel-heading" style="background-color:#12160F; color:#FBAE08;">
                   <h3 class="panel-title">
                     <span class="p-10">Lista de Ordenes en Proceso</span>
                   </h3>
@@ -477,13 +485,13 @@
                       data-page-length="-1">
                       <thead>
                         <tr>
-                          <th>Orden Numero</th>
-                          <th>#</th>
-                          <th>Cliente</th>
-                          <th>Ejecutivo</th>
-                          <th>Proyecto</th>
-                          <th>Proveedor</th>
-                          <th>Status</th>
+                          <th class="color_text">Orden Numero</th>
+                          <th class="color_text">#</th>
+                          <th class="color_text">Cliente</th>
+                          <th class="color_text">Ejecutivo</th>
+                          <th class="color_text">Proyecto</th>
+                          <th class="color_text">Proveedor</th>
+                          <th class="color_text">Status</th>
                           <th></th>
                         </tr>
                       </thead>

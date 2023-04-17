@@ -6,14 +6,17 @@
 @stop
 
 @section('header_styles')
-
-<!-- <style></style> -->
+<style>
+  .color_text{
+    color:#B3B3B3;
+  }
+</style>
 @stop
 
 {{-- Page content --}}
 @section('content')
 
-<section class="content-header">
+<section class="content-header" style="background-color:#12160F; color:#FBAE08;">
   <h1 style="font-weight: bolder;">Proyecto {{$prospecto->nombre}}</h1>
 </section>
 <!-- Main content -->
@@ -21,7 +24,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="panel">
-                    <div class="panel-heading">
+                    <div class="panel-heading" style="background-color:#12160F; color:#FBAE08;">
                         <h3 class="panel-title">Datos del Proyecto</h3>
                     </div>
                     <div class="panel-body">
@@ -102,7 +105,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="panel">
-                    <div class="panel-heading">
+                    <div class="panel-heading" style="background-color:#12160F; color:#FBAE08;">
                         <h4 class="panel-title">Cotizaciones Realizadas</h4>
                     </div>
                     <div class="panel-body">
@@ -220,7 +223,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="panel">
-                    <div class="panel-heading">
+                    <div class="panel-heading" style="background-color:#12160F; color:#FBAE08;">
                         <h4 class="panel-title">Cotizaciones Aprobadas</h4>
                     </div>
                     <div class="panel-body">
@@ -338,7 +341,7 @@
         <div class="row">
             <div class="col-lg-12">
               <div class="panel">
-                <div class="panel-heading">
+                <div class="panel-heading" style="background-color:#12160F; color:#FBAE08;">
                     <h4 class="panel-title">Lista de Ordenes de Compra</h4>
                 </div>
                 <div class="panel-body">
@@ -441,7 +444,7 @@
         <div class="row">
             <div class="col-lg-12">
               <div class="panel">
-                <div class="panel-heading">
+                <div class="panel-heading" style="background-color:#12160F; color:#FBAE08;">
                   <h3 class="panel-title">
                     <span class="p-10">Lista de Cuentas por Cobrar</span>
                   </h3>
@@ -510,7 +513,7 @@
         <div class="row">
             <div class="col-lg-12">
               <div class="panel">
-                <div class="panel-heading">
+                <div class="panel-heading" style="background-color:#12160F; color:#FBAE08;">
                   <h3 class="panel-title">
                     <span class="p-10">Lista de Ordenes en Proceso</span>
                   </h3>
@@ -650,7 +653,7 @@
 
           <div class="row">
               <div class="col-md-12 text-right">
-                <a href="{{route('prospectos.index')}}" style="margin-top:25px;" class="btn btn-default">
+                <a href="{{route('prospectos.index')}}" style="margin-top:25px; color:#000; background-color:#B3B3B3" class="btn btn-default">
                   Regresar
                 </a>
               </div>

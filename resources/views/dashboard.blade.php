@@ -213,7 +213,7 @@ Dashboard | @parent
     <div class="col-sm-6 col-md-6 col-lg-3">
       <div class="widget-bg-color-icon card-box">
         <div class="bg-icon pull-left">
-          <i class="fas fa-user-check text-warning"></i>
+          <i class="fas fa-user-check text-warning" style="color:#000;"></i>
         </div>
         <div class="text-right">
           <h3 class="text-dark"><b>@{{data.clientes}}</b></h3>
@@ -224,7 +224,7 @@ Dashboard | @parent
     <div class="col-sm-6 col-md-6 col-lg-3">
       <div class="widget-bg-color-icon card-box">
         <div class="bg-icon pull-left">
-          <i class="fab fa-opencart text-success"></i>
+          <i class="fab fa-opencart text-warning"></i>
         </div>
         <div class="text-right">
           <h3><b id="widget_count3">@{{data.prospectos}}</b></h3>
@@ -235,7 +235,7 @@ Dashboard | @parent
     <div class="col-sm-6 col-md-6 col-lg-3">
       <div class="widget-bg-color-icon card-box">
         <div class="bg-icon pull-left">
-          <i class="far fa-thumbs-up text-danger"></i>
+          <i class="far fa-thumbs-up text-default" style="color:#B3B3B3;"></i>
         </div>
         <div class="text-right">
           <h3 class="text-dark"><b>@{{data.proyectosAprobados}}</b></h3>
@@ -246,7 +246,7 @@ Dashboard | @parent
     <div class="col-sm-6 col-md-6 col-lg-3">
       <div class="widget-bg-color-icon card-box">
         <div class="bg-icon pull-left">
-          <i class="far fa-clock text-info"></i>
+          <i class="far fa-clock text-dark" style="color:#000;"></i>
         </div>
         <div class="text-right">
           <h3 class="text-dark"><b>@{{data.ordenesProceso}}</b></h3>
@@ -342,7 +342,7 @@ Dashboard | @parent
                       <td>@{{actividad.tipo_actividad}}</td>
                       <td>@{{actividad.fecha_formated}}</td>
                       <td>@{{actividad.es_prospecto}}</td>
-                      <td>
+                      <td class="col-md-2">
                         <a title="Ver" :href="'/prospectos/'+actividad.prospecto_id" class="btn btn-xs btn-info">
                             Ver <i class="far fa-eye"></i>
                           </a>

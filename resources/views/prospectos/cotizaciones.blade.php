@@ -12,7 +12,7 @@
     float: left !important;
   }
   .color_text{
-    color:#FBAE08;
+    color:#B3B3B3;
   }
 </style>
 @stop
@@ -28,7 +28,7 @@
   <div class="row">
     <div class="col-lg-12">
       <div class="panel">
-        <div class="panel-heading ">
+        <div class="panel-heading" style="background-color:#12160F; color:#FBAE08;">
           <h3 class="panel-title">
             <div class="p-10" style="display:inline-block;">
               Proyectos
@@ -43,8 +43,8 @@
               @endrole
             </div>
             <div class="p-10 " style="display:inline-block;float: right;">
-              <button class="btn btn-sm btn-dark" style="background-color:#12160F; color:#FBAE08;">
-                <a href="{{route('prospectos.create')}}" style="background-color:#12160F; color:#FBAE08;">
+              <button class="btn btn-sm btn-warning">
+                <a href="{{route('prospectos.create')}}" style="color:#000;">
                   <i class="fas fa-address-book"></i> Nuevo Proyecto
                 </a>
               </button>

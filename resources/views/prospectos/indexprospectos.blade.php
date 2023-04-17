@@ -13,7 +13,7 @@
   }
 
   .color_text{
-    color:#FBAE08;
+    color:#B3B3B3;
   }
 
   .btn-primary{
@@ -47,8 +47,8 @@
               @endrole
             </div>
             <div class="p-10 " style="display:inline-block;float: right;">
-              <button class="btn btn-dark btn-sm btn" style="background-color:#000;">
-                <a href="{{route('prospectos.create2')}}" style="background-color:black; color:#FBAE08;">
+              <button class="btn btn-warning btn-sm btn">
+                <a href="{{route('prospectos.create2')}}" style="color:#000;">
                   <i class="fas fa-address-book"></i> Nuevo Proyecto Prospecto
                 </a>
               </button>

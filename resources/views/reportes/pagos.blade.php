@@ -15,7 +15,7 @@ Reportes | @parent
     float: none;
   }
   .color_text{
-    color:#FBAE08;
+    color:#B3B3B3;
   }
 </style>
 @stop
@@ -30,7 +30,7 @@ Reportes | @parent
     <div class="row">
         <div class="col-sm-12">
           <div class="panel product-details">
-            <div class="panel-heading">
+            <div class="panel-heading" style="background-color:#12160F; color:#FBAE08;">
               <h3 class="panel-title">Reporte de Pagos
 
                 <button style="background-color:transparent; border:none;float: right;">
@@ -47,7 +47,7 @@ Reportes | @parent
                     <dropdown id="fecha_ini_control" class="marg025">
                       <div class="input-group">
                         <div class="input-group-btn">
-                          <btn class="dropdown-toggle" style="background-color:#fff;">
+                          <btn class="dropdown-toggle" style="background-color:#000; color:#fff;">
                             <i class="fas fa-calendar"></i>
                           </btn>
                         </div>
@@ -67,7 +67,7 @@ Reportes | @parent
                     <dropdown id="fecha_fin_control" class="marg025">
                       <div class="input-group">
                         <div class="input-group-btn">
-                          <btn class="dropdown-toggle" style="background-color:#fff;">
+                          <btn class="dropdown-toggle" style="background-color:#000; color:#fff;">
                             <i class="fas fa-calendar"></i>
                           </btn>
                         </div>
@@ -75,7 +75,7 @@ Reportes | @parent
                           v-model="fecha_fin" readonly
                           style="width:120px;"
                         />
-                      </div>
+                      </div><br>
                       <template slot="dropdown">
                         <li>
                           <date-picker :locale="locale" :today-btn="false"

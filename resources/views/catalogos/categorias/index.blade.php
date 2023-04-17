@@ -6,14 +6,18 @@
 @stop
 
 @section('header_styles')
-
-<!-- <style></style> -->
+<style>
+  .color_text{
+    color:#B3B3B3;
+  }
+</style>
 @stop
 
 {{-- Page content --}}
 @section('content')
 <!-- Content Header (Page header) -->
-<section class="content-header">
+
+<section class="content-header" style="background-color:#12160F; color:#FBAE08;">
     <h1 style="font-weight: bolder;">TIPOS DE PRODUCTOS</h1>
 </section>
 <!-- Main content -->
@@ -21,12 +25,12 @@
   <div class="row">
     <div class="col-lg-12">
       <div class="panel">
-        <div class="panel-heading">
+        <div class="panel-heading" style="background-color:#12160F; color:#FBAE08;">
           <h3 class="panel-title text-right">
             <span class="pull-left p-10">Lista de Tipos de Productos y Servicios</span>
             <span style="visibility:hidden">.</span>
             @hasrole('Administrador')
-            <a href="{{route('categorias.create')}}" class="btn btn-primary" style="color: #fff;">
+            <a href="{{route('categorias.create')}}" class="btn btn-warning" style="color: #000;">
               <i class="fa fa-plus"></i> Nuevo Tipo
             </a>
             @endhasrole
@@ -37,9 +41,9 @@
             <table id="tabla" class="table table-bordred" style="width:100%;"
             data-page-length="100">
               <thead>
-                <tr style="background-color:#e5e504">
-                  <th>#</th>
-                  <th>Nombre</th>
+                <tr style="background-color:#12160F">
+                  <th class="color_text">#</th>
+                  <th class="color_text">Nombre</th>
                   <th style="min-width:70px;"></th>
                 </tr>
               </thead>

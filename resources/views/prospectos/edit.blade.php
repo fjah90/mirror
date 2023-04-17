@@ -18,7 +18,7 @@
 {{-- Page content --}}
 @section('content')
   <!-- Content Header (Page header) -->
-  <section class="content-header">
+  <section class="content-header" style="background-color:#12160F; color:#FBAE08;">
     <h1 style="font-weight: bolder;">Proyectos</h1>
   </section>
   <!-- Main content -->
@@ -26,7 +26,7 @@
     <div class="row">
       <div class="col-lg-12">
         <div class="panel ">
-          <div class="panel-heading">
+          <div class="panel-heading" style="background-color:#12160F; color:#FBAE08;">
             <h3 class="panel-title">Editar Proyecto</h3>
           </div>
           <div class="panel-body">
@@ -61,10 +61,10 @@
               </div>
               <div class="row">
                 <div class="col-sm-12 text-right">
-                  <a href="{{route('prospectos.index')}}" class="btn btn-info">
+                  <a href="{{route('prospectos.index')}}" class="btn btn-default" style="color:#000; background-color:#B3B3B3;">
                     Regresar
                   </a>
-                  <button type="submit" class="btn btn-success" :disabled="cargando">
+                  <button type="submit" class="btn btn-DARK" :disabled="cargando" style="background-color:#12160F; color:#FBAE08;">
                     <i class="fas fa-save"></i>
                     Actualizar Datos
                   </button>
@@ -79,7 +79,7 @@
     <div class="row">
       <div class="col-lg-12">
         <div class="panel ">
-          <div class="panel-heading">
+          <div class="panel-heading" style="background-color:#12160F; color:#FBAE08;">
             <h3 class="panel-title">Actividades Realizadas</h3>
           </div>
           <div class="panel-body">
@@ -203,7 +203,7 @@
                     <dropdown>
                       <div class="input-group">
                         <div class="input-group-btn">
-                          <btn class="dropdown-toggle" style="background-color:#fff;">
+                          <btn class="dropdown-toggle" style="background-color:#000; color:#FFF;">
                             <i class="fas fa-calendar"></i>
                           </btn>
                         </div>
@@ -239,10 +239,10 @@
               </div>
               <div class="row">
                 <div class="col-md-12 text-right">
-                  <a href="{{route('prospectos.index')}}" class="btn btn-default">
+                  <a href="{{route('prospectos.index')}}" class="btn btn-default" style="color:#000; background-color:#B3B3B3;">
                     Regresar
                   </a>  
-                  <button type="submit" class="btn btn-success" :disabled="cargando">
+                  <button type="submit" class="btn btn-DARK" :disabled="cargando" style="background-color:#12160F; color:#FBAE08;">
                     <i class="fas fa-save"></i>
                     Guardar Actividades
                   </button>

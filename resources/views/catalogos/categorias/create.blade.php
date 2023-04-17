@@ -6,12 +6,17 @@ Nuevo Tipo | @parent
 @stop
 
 @section('header_styles')
+<style>
+  .color_text{
+    color:#FBAE08;
+  }
+</style>
 @stop
 
 {{-- Page content --}}
 @section('content')
 <!-- Content Header (Page header) -->
-<section class="content-header">
+<section class="content-header" style="background-color:#12160F; color:#FBAE08;">
   <h1 style="font-weight: bolder;">Tipos Productos</h1>
 </section>
 <!-- Main content -->
@@ -19,7 +24,7 @@ Nuevo Tipo | @parent
   <div class="row">
     <div class="col-lg-12">
       <div class="panel ">
-        <div class="panel-heading">
+        <div class="panel-heading" style="background-color:#12160F; color:#FBAE08;">
           <h3 class="panel-title">Nuevo Tipo</h3>
         </div>
         <div class="panel-body">
@@ -42,7 +47,7 @@ Nuevo Tipo | @parent
             </div>
             <div class="row" style="margin-top:25px;">
               <div class="col-md-12 text-right">
-                <a class="btn btn-default" href="{{route('categorias.index')}}" style="margin-right: 20px;">
+                <a class="btn btn-default" href="{{route('categorias.index')}}" style="margin-right: 20px; color:#000; background-color:#B3B3B3;">
                   Regresar
                 </a>
                 <button type="submit" class="btn btn-primary" :disabled="cargando">
@@ -79,14 +84,14 @@ Nuevo Tipo | @parent
               <div class="col-md-12">
                 <div class="form-group">
                   <label class="control-label" style="cursor:pointer;" @click="descripcion.no_alta_productos=!descripcion.no_alta_productos">
-                    <i class="text-info far" :class="(descripcion.no_alta_productos)?'fa-check-square':'fa-square'">
+                    <i class="text-dark far" :class="(descripcion.no_alta_productos)?'fa-check-square':'fa-square'">
                     </i>
                     No Alta Productos
                   </label>
                 </div>
                 <div class="form-group">
                   <label class="control-label" style="cursor:pointer;" @click="descripcion.valor_ingles=!descripcion.valor_ingles">
-                    <i class="text-info far" :class="(descripcion.valor_ingles)?'fa-check-square':'fa-square'">
+                    <i class="text-dark far" :class="(descripcion.valor_ingles)?'fa-check-square':'fa-square'">
                     </i>
                     Añadir valor en inglés
                   </label>
@@ -95,7 +100,7 @@ Nuevo Tipo | @parent
             </div>
             <div class="row">
               <div class="col-md-12 text-right">
-                <button style="margin-top:25px;" type="submit" class="btn btn-info">
+                <button style="margin-top:25px; background-color:#12160F; color:#FBAE08;" type="submit" class="btn btn-dark">
                   <i class="fas fa-save"></i>
                   Agregar Descripcion
                 </button>

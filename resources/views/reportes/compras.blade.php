@@ -15,7 +15,7 @@ Reportes | @parent
     float: none;
   }
   .color_text{
-    color:#FBAE08;
+    color:#B3B3B3;
   }
 </style>
 @stop
@@ -45,7 +45,7 @@ Reportes | @parent
                     <dropdown id="fecha_ini_control" class="marg025">
                       <div class="input-group">
                         <div class="input-group-btn">
-                          <btn class="dropdown-toggle" style="background-color:#fff;">
+                          <btn class="dropdown-toggle" style="background-color:#000; color:#fff;">
                             <i class="fas fa-calendar"></i>
                           </btn>
                         </div>
@@ -53,7 +53,7 @@ Reportes | @parent
                           v-model="fecha_ini" readonly
                           style="width:120px;"
                         />
-                      </div>
+                      </div><br>
                       <template slot="dropdown">
                         <li>
                           <date-picker :locale="locale" :today-btn="false"
@@ -65,7 +65,7 @@ Reportes | @parent
                     <dropdown id="fecha_fin_control" class="marg025">
                       <div class="input-group">
                         <div class="input-group-btn">
-                          <btn class="dropdown-toggle" style="background-color:#fff;">
+                          <btn class="dropdown-toggle" style="background-color:#000; color:#fff;">
                             <i class="fas fa-calendar"></i>
                           </btn>
                         </div>
