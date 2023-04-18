@@ -16,7 +16,7 @@ Nuevo Producto | @parent
 {{-- Page content --}}
 @section('content')
 <!-- Content Header (Page header) -->
-<section class="content-header" style="background-color:#12160F; color:#FBAE08;">
+<section class="content-header" style="background-color:#12160F; color:#B68911;">
   <h1>Productos</h1>
 </section>
 <!-- Main content -->
@@ -24,7 +24,7 @@ Nuevo Producto | @parent
   <div class="row">
     <div class="col-lg-12">
       <div class="panel ">
-        <div class="panel-heading" style="background-color:#12160F; color:#FBAE08;">
+        <div class="panel-heading" style="background-color:#12160F; color:#B68911;">
           <h3 class="panel-title">Nuevo Producto</h3>
         </div>
         <div class="panel-body">

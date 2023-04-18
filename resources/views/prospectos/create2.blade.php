@@ -45,7 +45,7 @@
 {{-- Page content --}}
 @section('content')
   <!-- Content Header (Page header) -->
-  <section class="content-header" style="background-color:#12160F; color:#FBAE08;">
+  <section class="content-header" style="background-color:#12160F; color:#B68911;">
     <h1 style="font-weight: bolder;">Proyectos</h1>
   </section>
   <!-- Main content -->
@@ -53,7 +53,7 @@
     <div class="row">
       <div class="col-lg-12">
         <div class="panel ">
-          <div class="panel-heading" style="background-color:#12160F; color:#FBAE08;">
+          <div class="panel-heading" style="background-color:#12160F; color:#B68911;">
             <h3 class="panel-title">Nuevo Proyecto Prospecto</h3>
           </div>
           {{-- <div>
@@ -78,7 +78,7 @@
                 <div class="col-md-2">
                   <div class="form-group">
                     <label class="control-label">Registrar cliente</label>
-                    <button type="button" id="show-modal" @click="modalCliente = true" class="btn btn-effect-ripple form-control" style="background-color:black; color:#FBAE08;">Nuevo Cliente</button>
+                    <button type="button" id="show-modal" @click="modalCliente = true" class="btn btn-effect-ripple form-control" style="background-color:black; color:#B68911;">Nuevo Cliente</button>
                     <!--use the modal component, pass in the prop -->
                     <modal v-if="modalCliente" @close="modalCliente = false">
                   </div>

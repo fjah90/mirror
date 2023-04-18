@@ -23,7 +23,7 @@
       <div class="row">
         <div class="col-lg-12">
           <div class="panel ">
-            <div class="panel-heading">
+            <div class="panel-heading" style="background-color:#12160F; color:#B68911;">
               <h3 class="panel-title">{{$usuario->name}}</h3>
             </div>
             <div class="panel-body">
@@ -81,7 +81,7 @@
                   <div class="col-md-3">
                     <div class="row">
                       <div class="col-sm-12 text-right">
-                        <button style="margin-top:25px;" type="submit" class="btn btn-success" :disabled="cargando">
+                        <button style="margin-top:25px; color:#B68911; background-color:#12160F;" type="submit" class="btn btn-DARK" :disabled="cargando">
                           <i class="fas fa-save"></i>
                           Actualizar Datos
                         </button>

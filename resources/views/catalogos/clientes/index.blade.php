@@ -16,7 +16,7 @@
 {{-- Page content --}}
 @section('content')
     <!-- Content Header (Page header) -->
-    <section class="content-header" style="background-color:#12160F; color:#FBAE08;">
+    <section class="content-header" style="background-color:#12160F; color:#B68911;">
         <h1>Clientes</h1>
     </section>
     <!-- Main content -->
@@ -55,7 +55,7 @@
                                     @endforeach
                                 </select>
                                 <a href="{{route('clientes.createNacional')}}" class="btn btn-dark pull-right"
-                                   style="background-color:#12160F; color:#FBAE08;">
+                                   style="background-color:#12160F; color:#B68911;">
                                     <i class="fas fa-plus"></i> Cliente Nacional
                                 </a>
                             </div>
@@ -145,7 +145,7 @@
                                     @endforeach
                                 </select>
                                 <a href="{{route('clientes.createExtranjero')}}" class="btn btn-dark pull-right"
-                                  style="background-color:#12160F; color:#FBAE08;">
+                                  style="background-color:#12160F; color:#B68911;">
                                     <i class="fas fa-plus"></i> Cliente Extranjero
                                 </a>
                             </div>

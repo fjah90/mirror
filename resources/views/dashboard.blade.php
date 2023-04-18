@@ -162,7 +162,7 @@ Dashboard | @parent
 {{-- Page content --}}
 @section('content')
 <!-- Content Header (Page header) -->
-<section class="content-header" style="background-color:#12160F; color:#FBAE08;">
+<section class="content-header" style="background-color:#12160F; color:#B68911;">
   <h1>Dashboard</h1>
 </section>
 <!-- Main content -->
@@ -259,7 +259,7 @@ Dashboard | @parent
   <div class="row">
     <div class="col-sm-12">
       <div class="panel product-details">
-        <div class="panel-heading" style="background-color:#12160F; color:#FBAE08;">
+        <div class="panel-heading" style="background-color:#12160F; color:#B68911;">
           <h3 class="panel-title">Próximas Actividades</h3>
         </div>
         <div class="panel-body">
@@ -370,7 +370,7 @@ Dashboard | @parent
   <div class="row">
     <div class="col-sm-12">
       <div class="panel product-details">
-        <div class="panel-heading" style="background-color:#12160F; color:#FBAE08;">
+        <div class="panel-heading" style="background-color:#12160F; color:#B68911;">
           <h3 class="panel-title">Ultimas Cotizaciones</h3>
         </div>
         <div class="panel-body">
@@ -481,7 +481,7 @@ Dashboard | @parent
   <div class="row">
     <div class="col-sm-12">
       <div class="panel product-details">
-        <div class="panel-heading" style="background-color:#12160F; color:#FBAE08;">
+        <div class="panel-heading" style="background-color:#12160F; color:#B68911;">
           <h3 class="panel-title">Ordenes de Compra Pendientes De Aprobar</h3>
         </div>
         <div class="panel-body">
@@ -641,7 +641,7 @@ Dashboard | @parent
   <div class="row">
     <div class="col-sm-12">
       <div class="panel product-details">
-        <div class="panel-heading" style="background-color:#12160F; color:#FBAE08;">
+        <div class="panel-heading" style="background-color:#12160F; color:#B68911;">
           <h3 class="panel-title">Ultimas Cotizaciones Aceptadas</h3>
         </div>
         <div class="panel-body">
@@ -748,7 +748,7 @@ Dashboard | @parent
   <div class="row">
       <div class="col-sm-12">
           <div class="panel product-details">
-            <div class="panel-heading" style="background-color:#12160F; color:#FBAE08;">
+            <div class="panel-heading" style="background-color:#12160F; color:#B68911;">
               <h3 class="panel-title">Total Facturado VS Cobrado</h3>
             </div>
             <div class="panel-body">
@@ -1139,15 +1139,15 @@ Dashboard | @parent
         graphData.datasets=[
           {
             label:'Total',
-            backgroundColor: 'rgba(255, 99, 132, 0.2)',
-            borderColor:'rgba(255, 99, 132, 1)',
+            backgroundColor: 'BLACK',
+            borderColor:'BLACK',
             borderWidth: 1,
             data:[...serie1]
           },
           {
             label:'Facturado',
-            backgroundColor: 'rgba(54, 162, 235, 0.2)',
-            borderColor:  'rgba(54, 162, 235, 1)',
+            backgroundColor: '#B3B3B3;',
+            borderColor:  '#B3B3B3;',
             borderWidth: 1,
             data:[...serie2]
           },

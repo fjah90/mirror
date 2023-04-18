@@ -16,7 +16,7 @@
 {{-- Page content --}}
 @section('content')
 <!-- Content Header (Page header) -->
-<section class="content-header" style="background-color:#12160F; color:#FBAE08;">
+<section class="content-header" style="background-color:#12160F; color:#B68911;">
   <h1>Proveedores</h1>
 </section>
 <!-- Main content -->
@@ -26,7 +26,7 @@
       <div class="row">
         <div class="col-lg-12">
           <div class="panel">
-            <div class="panel-heading" style="background-color:#12160F; color:#FBAE08;">
+            <div class="panel-heading" style="background-color:#12160F; color:#B68911;">
               <h3 class="panel-title text-right">
                 <span class="pull-left p-10">Lista de Proveedores Nacionales</span>
                 <a href="{{route('proveedores.createNacional')}}" class="btn btn-warning" style="color:#000;">
@@ -78,7 +78,7 @@
       <div class="row">
         <div class="col-lg-12">
           <div class="panel">
-            <div class="panel-heading" style="background-color:#12160F; color:#FBAE08;">
+            <div class="panel-heading" style="background-color:#12160F; color:#B68911;">
               <h3 class="panel-title text-right">
                 <span class="pull-left p-10">Lista de Proveedores Extranjeros</span>
                 <a href="{{route('proveedores.createInternacional')}}" class="btn btn-warning" style="color:#000;">
