@@ -55,7 +55,7 @@
                                     @endforeach
                                 </select><br>
                                 <a href="{{route('clientes.createNacional')}}" class="btn btn-warning pull-right"
-                                   style="color:#000; background-color:#12160F;">
+                                   style="color:#000;">
                                     <i class="fas fa-plus"></i> Cliente Nacional
                                 </a>
                             </div>
@@ -145,7 +145,7 @@
                                     @endforeach
                                 </select>
                                 <a href="{{route('clientes.createExtranjero')}}" class="btn btn-warning pull-right"
-                                  style="color:#000; background-color:#12160F;">
+                                  style="color:#000;">
                                     <i class="fas fa-plus"></i> Cliente Extranjero
                                 </a>
                             </div>
