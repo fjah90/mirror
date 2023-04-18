@@ -15,7 +15,7 @@
 {{-- Page content --}}
 @section('content')
     <!-- Content Header (Page header) -->
-    <section class="content-header">
+    <section class="content-header" style="background-color:#12160F; color:#B68911;">
         <h1>Mi Cuenta</h1>
     </section>
     <!-- Main content -->
