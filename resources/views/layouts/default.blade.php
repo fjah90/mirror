@@ -192,13 +192,13 @@
               <li  {!! (Request::is('proyectos-aprobados*') ? 'class="active"' : '') !!} >
                 <a href="{{ URL::to('proyectos-aprobados') }}">
                   <i class="menu-icon fas fa-file-signature"></i>
-                  <span>Lista de Ordenes</span>
+                  <span style="color:#000;">Lista de Ordenes</span>
                 </a>
               </li>
               <li {!! (Request::is('ordenes-proceso*') ? 'class="active"' : '') !!} >
                 <a href="{{ URL::to('ordenes-proceso') }}">
                   <i class="menu-icon fas fa-clipboard-list" ></i>
-                  <span >Logística</span>
+                  <span style="color:#000;">Logística</span>
                 </a>
               </li>
             </ul>
@@ -213,14 +213,14 @@
            <ul class="nav child_menu">  
               <li {!! (Request::is('cuentas-cobrar*') ? 'class="active"' : '') !!}>
                 <a href="{{ URL::to('cuentas-cobrar') }}">
-                  <i class="menu-icon fas fa-hand-holding-usd" ></i>
-                  <span >Cuentas por Cobrar</span>
+                  <i class="menu-icon fas fa-hand-holding-usd"></i>
+                  <span style="color:#000;">Cuentas por Cobrar</span>
                 </a>
               </li>
               <li {!! (Request::is('cuentas-pagar*') ? 'class="active"' : '') !!}>
                 <a href="{{ URL::to('cuentas-pagar') }}">
-                  <i class="menu-icon fas fa-receipt" ></i>
-                  <span >Cuentas por Pagar</span>
+                  <i class="menu-icon fas fa-receipt"></i>
+                  <span style="color:#000;">Cuentas por Pagar</span>
                 </a>
               </li>  
             </ul> 
@@ -236,37 +236,37 @@
            <ul class="nav child_menu">
               <li  {!! (Request::is('reportes/cotizaciones') ? 'active' : '') !!}">
             <a href="{{ URL::to('reportes/cotizaciones') }}">
-              <i class="fas fa-file-invoice-dollar" ></i> Cotizaciones
+              <i class="fas fa-file-invoice-dollar" ></i> <span style="color:#000;">Cotizaciones</span>
             </a>
           </li>
           <li {!! (Request::is('reportes/cobros') ? 'class="active"' : '') !!}>
             <a href="{{ URL::to('reportes/cobros') }}">
-              <i class="fas fa-file-invoice-dollar" ></i> Cobros
+              <i class="fas fa-file-invoice-dollar" ></i> <span style="color:#000;">Cobros</span>
             </a>
           </li>
           <li >
             <a href="{{ URL::to('reportes/compras') }}">
-              <i class="fas fa-file-invoice-dollar" ></i> Compras
+              <i class="fas fa-file-invoice-dollar" ></i> <span style="color:#000;">Compras</span>
             </a>
           </li>
           <li >
             <a href="{{ URL::to('reportes/pagos') }}">
-              <i class="fas fa-file-invoice-dollar" ></i> Pagos
+              <i class="fas fa-file-invoice-dollar" ></i> <span style="color:#000;">Pagos</span>
             </a>
           </li>
           <li >
             <a href="{{ URL::to('reportes/saldoProveedores') }}">
-              <i class="fas fa-file-invoice-dollar"></i> Saldo Proveedores
+              <i class="fas fa-file-invoice-dollar"></i> <span style="color:#000;">Saldo Proveedores</span>
             </a>
           </li>
           <li >
             <a href="{{ URL::to('reportes/cuentaCliente') }}">
-              <i class="fas fa-file-invoice-dollar" ></i> Estado de Cuenta
+              <i class="fas fa-file-invoice-dollar" ></i> <span style="color:#000;">Estado de Cuenta</span>
             </a>
           </li>
           <li >
             <a href="{{ URL::to('reportes/utilidades') }}">
-              <i class="fas fa-file-invoice-dollar" ></i> Reporte de operaciones
+              <i class="fas fa-file-invoice-dollar" ></i> <span style="color:#000;">Reporte de operaciones</span>
             </a>
           </li>
             </ul>
@@ -354,12 +354,12 @@
            <ul class="nav child_menu">
              <li  {!! (Request::is('clientes*') ? 'class="active"' : '') !!}>
                 <a href="{{ URL::to('clientes') }}">
-                  <i class="fas fa-user-tie"></i> Clientes
+                  <i class="fas fa-user-tie"></i> <span style="color:#000;">Clientes</span>
                 </a>
               </li>
               <li {!! (Request::is('proveedores*') ? 'class="active"' : '') !!}>
                 <a href="{{ URL::to('proveedores') }}">
-                  <i class="fas fa-truck-loading " ></i> Proveedores
+                  <i class="fas fa-truck-loading " ></i> <span style="color:#000;">Proveedores</span>
                 </a>
               </li>
             <!--
@@ -371,7 +371,7 @@
             -->
               <li {!! (Request::is('productos*') ? 'class="active"' : '') !!}>
                 <a href="{{ URL::to('productos') }}">
-                  <i class="fas fa-parking " ></i> Producto
+                  <i class="fas fa-parking " ></i> <span style="color:#000;">Producto</span>
                 </a>
               </li>
 
@@ -380,28 +380,28 @@
             @hasanyrole('Administrador')
             <li {!! (Request::is('Usuarios*') ? 'class="active"' : '') !!} class="sub {!! (Request::is('usuarios*') ? 'active' : '') !!}">
               <a href="{{ URL::to('usuarios') }}">
-                <i class="fas fa-user"></i> Usuarios
+                <i class="fas fa-user"></i> <span style="color:#000;">Usuarios</span>
               </a>
             </li>
             @endhasanyrole
             <li  {!! (Request::is('tiposClientes*') ? 'class="active"' : '') !!}>
               <a href="{{ URL::to('tiposClientes') }}">
-                <i class="fas fa-address-book"></i> Tipo de Clientes
+                <i class="fas fa-address-book"></i> <span style="color:#000;">Tipo de Clientes</span>
               </a>
             </li>
              <li  {!! (Request::is('categoriaClientes*') ? 'class="active"' : '') !!}>
               <a href="{{ URL::to('categoriaClientes') }}">
-                <i class="fas fa-folder-open"></i> Categoría de Cliente
+                <i class="fas fa-folder-open"></i> <span style="color:#000;">Categoría de Cliente</span>
               </a>
             </li>
             <li {!! (Request::is('vendedores*') ? 'class="active"' : '') !!}>
               <a href="{{ URL::to('vendedores') }}">
-                <i class="fas fa-address-card "></i> Vendedores
+                <i class="fas fa-address-card "></i> <span style="color:#000;">Vendedores</span>
               </a>
             </li>
             <li  {!! (Request::is('proyectos*') ? 'class="active"' : '') !!}>
               <a href="{{ URL::to('proyectos') }}">
-                <i class="fas fa-folder-open "></i> Categoría de Proyectos
+                <i class="fas fa-folder-open "></i> <span style="color:#000;">Categoría de Proyectos</span>
               </a>
             </li>
             <!--li  {!! (Request::is('subproyectos*') ? 'class="active"' : '') !!}>
@@ -411,22 +411,22 @@
             </li-->
             <li  {!! (Request::is('tiposProveedores*') ? 'class="active"' : '') !!}>
               <a href="{{URL::to('tiposProveedores')}}">
-                <i class="fas fa-address-book"></i> Tipos de Proveedores
+                <i class="fas fa-address-book"></i> <span style="color:#000;">Tipos de Proveedores</span>
               </a>
             </li>
             <li  {!! (Request::is('unidadesMedida*') ? 'class="active"' : '') !!}>
               <a href="{{ URL::to('unidadesMedida') }}">
-                <i class="fas fa-ruler-combined"></i> Unidades de Medida
+                <i class="fas fa-ruler-combined"></i> <span style="color:#000;">Unidades de Medida</span>
               </a>
             </li>
             <li  {!! (Request::is('subcategorias*') ? 'class="active"' : '') !!}>
               <a href="{{ URL::to('subcategorias') }}">
-                <i class="fas fa-cubes "></i> Categoría de Productos
+                <i class="fas fa-cubes "></i> <span style="color:#000;">Categoría de Productos</span>
               </a>
             </li>
             <li  {!! (Request::is('categorias*') ? 'class="active"' : '') !!}>
               <a href="{{ URL::to('categorias') }}">
-                <i class="fas fa-cubes "></i> Tipo de Producto
+                <i class="fas fa-cubes "></i> <span style="color:#000;">Tipo de Producto</span>
               </a>
             </li>
             </ul>
