@@ -6,14 +6,17 @@
 @stop
 
 @section('header_styles')
-<!-- <style>
-</style> -->
+<style>
+  .color_text{
+    color:#B3B3B3;
+  }
+</style>
 @stop
 
 {{-- Page content --}}
 @section('content')
   <!-- Content Header (Page header) -->
-  <section class="content-header">
+  <section class="content-header" style="background-color:#12160F; color:#B68911;">
     <h1 style="font-weight: bolder;">Ordenes de Compra</h1>
   </section>
   <!-- Main content -->
@@ -21,7 +24,7 @@
     <div class="row">
       <div class="col-lg-12">
         <div class="panel">
-          <div class="panel-heading">
+          <div class="panel-heading" style="background-color:#12160F; color:#B68911;">
             <h3 class="panel-title">Orden Compra Proyecto {{$proyecto->proyecto}} // {{$cotizacion->numero}}</h3>
           </div>
           <div class="panel-body">
@@ -112,15 +115,15 @@
                 <div class="table-responsive">
                   <table class="table table-bordred">
                     <thead>
-                      <tr>
-                        <th>Producto</th>
-                        <th>Área</th>
-                        <th>Comentarios</th>
-                        <th>Cantidad</th>
-                        <th>Conversión</th>
-                        <th>Cant. en Conversión</th>
-                        <th>Precio</th>
-                        <th>Importe</th>
+                      <tr style="background-color:#12160F; color:#B68911;">
+                        <th class="color_text">Producto</th>
+                        <th class="color_text">Área</th>
+                        <th class="color_text">Comentarios</th>
+                        <th class="color_text">Cantidad</th>
+                        <th class="color_text">Conversión</th>
+                        <th class="color_text">Cant. en Conversión</th>
+                        <th class="color_text">Precio</th>
+                        <th class="color_text">Importe</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -205,7 +208,7 @@
                   </button>
                   @endif
                   <a class="btn btn-default"
-                    href="{{route('proyectos-aprobados.ordenes-compra.index', $proyecto->id)}}">
+                    href="{{route('proyectos-aprobados.ordenes-compra.index', $proyecto->id)}}" style="color:#000;background-color:#B3B3B3;">
                     Regresar
                   </a>
                 </div>
