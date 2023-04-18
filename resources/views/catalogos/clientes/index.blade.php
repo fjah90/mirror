@@ -24,7 +24,7 @@
         <tabs>
             <tab title="Nacionales">
                 <div class="panel">
-                    <div class="panel-heading">
+                    <div class="panel-heading" style="background-color:#12160F; color:#B68911;">
                         <h3 class="panel-title">
                             <div class="p-10">
                                 Clientes Nacionales
@@ -53,9 +53,9 @@
                                     @foreach($categorias as $categoria)
                                         <option value="{{$categoria->id}}">{{$categoria->nombre}}</option>
                                     @endforeach
-                                </select>
-                                <a href="{{route('clientes.createNacional')}}" class="btn btn-dark pull-right"
-                                   style="background-color:#12160F; color:#B68911;">
+                                </select><br>
+                                <a href="{{route('clientes.createNacional')}}" class="btn btn-warning pull-right"
+                                   style="color:#B68911; background-color:#000;">
                                     <i class="fas fa-plus"></i> Cliente Nacional
                                 </a>
                             </div>
@@ -114,7 +114,7 @@
 
             <tab title="Extranjeros">
                 <div class="panel">
-                    <div class="panel-heading">
+                    <div class="panel-heading" style="background-color:#12160F; color:#B68911;">
                         <h3 class="panel-title">
                             <div class="p-10">
                                 Clientes Extranjeros
@@ -144,8 +144,8 @@
                                         <option value="{{$categoria->id}}">{{$categoria->nombre}}</option>
                                     @endforeach
                                 </select>
-                                <a href="{{route('clientes.createExtranjero')}}" class="btn btn-dark pull-right"
-                                  style="background-color:#12160F; color:#B68911;">
+                                <a href="{{route('clientes.createExtranjero')}}" class="btn btn-warning pull-right"
+                                  style="color:#B68911; background-color:#000;">
                                     <i class="fas fa-plus"></i> Cliente Extranjero
                                 </a>
                             </div>
