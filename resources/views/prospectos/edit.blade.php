@@ -40,7 +40,7 @@
             </div>
             <form class="" @submit.prevent="actualizar()">
               <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-8">
                   <div class="form-group">
                     <label class="control-label">Nombre de Proyecto</label>
                     <input type="text" class="form-control" name="nombre"
@@ -48,6 +48,15 @@
                     />
                   </div>
                 </div>
+                <div class="col-md-4">
+                      <label class="control-label">Vendedor</label>
+                      <select name="vendedor_id" v-model="prospecto.vendedor_id"
+                              class="form-control" required>
+                          @foreach($vendedores as $vendedor)
+                              <option value="{{$vendedor->id}}" >{{$vendedor->nombre}}</option>
+                          @endforeach
+                      </select>
+                  </div>
               </div>
               <div class="row">
                 <div class="col-md-12">
@@ -59,6 +68,47 @@
                   </div>
                 </div>
               </div>
+              @if($prospecto->es_prospecto == 'si')
+              <div class="row">
+                  <div class="col-md-4">
+                      <div class="form-group">
+                        <label for="prospecto.fecha_cierre" class="control-label">Fecha aproximada de cierre</label>
+                        <br />
+                        <dropdown>
+                          <div class="input-group">
+                            <div class="input-group-btn">
+                              <btn class="dropdown-toggle" style="background-color:#fff;">
+                                <i class="fas fa-calendar"></i>
+                              </btn>
+                            </div>
+                            <input class="form-control" type="text" name="fecha"
+                              v-model="prospecto.fecha_cierre" placeholder="dd/MM/YYYY"
+                            />
+                          </div>
+                          <template slot="dropdown">
+                            <li>
+                              <date-picker :locale="locale" :today-btn="false" :clear-btn="false"
+                              format="dd/MM/yyyy" :date-parser="dateParser" v-model="prospecto.fecha_cierre"/>
+                            </li>
+                          </template>
+                        </dropdown>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label class="control-label">Proyección de venta</label>
+                        <input type="number" step="0.1" name="proyeccion_venta" class="form-control" v-model="prospecto.proyeccion_venta" required />
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label class="control-label">Factibilidad</label>
+                        <input name="factibilidad" class="form-control" v-model="prospecto.factibilidad" required />
+                      </div>
+                    </div>
+
+              </div>
+              @endif
               <div class="row">
                 <div class="col-sm-12 text-right">
                   <a href="{{route('prospectos.index')}}" class="btn btn-default" style="color:#000; background-color:#B3B3B3;">
@@ -357,7 +407,11 @@ const app = new Vue({
       this.cargando = true;
       axios.put('/prospectos/{{$prospecto->id}}', {
         nombre: this.prospecto.nombre,
-        descripcion: this.prospecto.descripcion
+        descripcion: this.prospecto.descripcion,
+        vendedor_id: this.prospecto.vendedor_id,
+        fecha_cierre: this.prospecto.fecha_cierre,
+        proyeccion_venta: this.prospecto.proyeccion_venta,
+        factibilidad: this.prospecto.factibilidad
       })
       .then(({data}) => {
         this.cargando = false;

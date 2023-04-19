@@ -124,7 +124,18 @@ class ProspectosController extends Controller
         } else {
             $usuarios = [];
         }
-        $proyectos = Prospecto::with('usuario')->where('es_prospecto','si')->get();
+        
+        $proyectos = Prospecto::leftjoin('prospectos_actividades','prospectos.id','=','prospectos_actividades.prospecto_id')
+        ->leftjoin('prospectos_tipos_actividades', 'prospectos_actividades.tipo_id', '=', 'prospectos_tipos_actividades.id')
+        ->leftjoin('users', 'prospectos.user_id', '=', 'users.id')
+        ->leftjoin('clientes', 'prospectos.cliente_id', '=', 'clientes.id')
+        ->leftjoin('vendedores', 'prospectos.vendedor_id', '=', 'vendedores.id')
+        ->select('vendedores.nombre as vendedor','prospectos.*','users.name as usuario','clientes.nombre as cliente','prospectos_tipos_actividades.nombre as actividad','prospectos_actividades.fecha as fecha')
+        ->where('prospectos_actividades.realizada', false)
+        ->where('prospectos.es_prospecto', 'si')
+        ->get();
+       
+        //$proyectos = Prospecto::with('usuario','vendedor')->where('es_prospecto','si')->get();
 
         
             $cotizaciones = ProspectoCotizacion::leftjoin('prospectos', 'prospectos_cotizaciones.prospecto_id', '=', 'prospectos.id')
@@ -419,7 +430,7 @@ class ProspectosController extends Controller
     {
         $clientes  = Cliente::orderBy('nombre', 'asc')->get();
         $productos = Producto::with('categoria')->get();
-        $tipos     = ProspectoTipoActividad::all();
+        $tipos  = ProspectoTipoActividad::whereIn('id', [1, 2, 3,4,5,6,7,8,9,10,11])->get();
         $vendedores = Vendedor::all();
         return view('prospectos.create', compact('clientes', 'productos', 'tipos','vendedores'));
     }
@@ -428,7 +439,7 @@ class ProspectosController extends Controller
     {
         $clientes  = Cliente::orderBy('nombre', 'asc')->get();
         $productos = Producto::with('categoria')->get();
-        $tipos     = ProspectoTipoActividad::all();
+        $tipos  = ProspectoTipoActividad::whereIn('id', [1, 12, 13,14,3,15,5])->get();
         $vendedores = Vendedor::all();
         return view('prospectos.create2', compact('clientes', 'productos', 'tipos','vendedores'));
     }
@@ -463,14 +474,34 @@ class ProspectosController extends Controller
         }
 
         $user = auth()->user();
-        $prospecto = Prospecto::create([
-            'cliente_id'  => $request->cliente_id,
-            'nombre'      => $request->nombre,
-            'descripcion' => $request->descripcion,
-            'es_prospecto' => $request->es_prospecto,
-            'user_id' => $user->id,
-            'vendedor_id' => $request->vendedor_id
-        ]);
+        if( $request->es_prospecto == 'si'){
+
+            $fecha_cierre   =  Carbon::createFromFormat('d/m/Y', $request->fecha_cierre);
+
+            $prospecto = Prospecto::create([
+                'cliente_id'  => $request->cliente_id,
+                'nombre'      => $request->nombre,
+                'descripcion' => $request->descripcion,
+                'es_prospecto' => $request->es_prospecto,
+                'user_id' => $user->id,
+                'vendedor_id' => $request->vendedor_id,
+                'factibilidad' => $request->factibilidad,
+                'fecha_cierre' => $fecha_cierre,
+                'proyeccion_venta' => $request->proyeccion_venta
+            ]);
+
+        }else{
+            $prospecto = Prospecto::create([
+                'cliente_id'  => $request->cliente_id,
+                'nombre'      => $request->nombre,
+                'descripcion' => $request->descripcion,
+                'es_prospecto' => $request->es_prospecto,
+                'user_id' => $user->id,
+                'vendedor_id' => $request->vendedor_id,
+            ]);
+
+        }
+        
 
         //Actividad de alta de proyecto
         ProspectoActividad::create([
@@ -534,7 +565,7 @@ class ProspectosController extends Controller
         $proyectos = Prospecto::all();
         //$proyecto->load('cotizacion','ordenes','cliente','cotizacion.prospecto');
 
-        $prospecto->load('cotizaciones','cotizaciones.proyecto_aprobado','cotizaciones.entradas','cotizaciones.entradas.producto.proveedor','cotizaciones_aprobadas','cotizaciones_aprobadas.proyecto_aprobado','cotizaciones_aprobadas.entradas','cotizaciones_aprobadas.entradas.producto.proveedor','cliente', 'actividades.tipo', 'actividades.productos_ofrecidos');
+        $prospecto->load('vendedor','cotizaciones','cotizaciones.proyecto_aprobado','cotizaciones.entradas','cotizaciones.entradas.producto.proveedor','cotizaciones_aprobadas','cotizaciones_aprobadas.proyecto_aprobado','cotizaciones_aprobadas.entradas','cotizaciones_aprobadas.entradas.producto.proveedor','cliente', 'actividades.tipo', 'actividades.productos_ofrecidos');
 
       $ordenes = OrdenCompra::wherehas('proyecto.cotizacion', function($query) use ($prospecto) {
            $query->where('prospecto_id', $prospecto->id);
@@ -616,9 +647,20 @@ class ProspectosController extends Controller
             'tipo_id' => 1,
             'tipo'    => '',
         ];
+        if($prospecto->fecha_cierre != null){
+            $prospecto->fecha_cierre = $prospecto->fecha_cierre_formated;
+        }
+        
         $productos = Producto::with('categoria')->get();
-        $tipos     = ProspectoTipoActividad::all();
-        return view('prospectos.edit', compact('prospecto', 'productos', 'tipos'));
+        if($prospecto->es_prospecto == 'si'){
+            $tipos  = ProspectoTipoActividad::whereIn('id', [1, 12, 13,14,3,15,5])->get();
+        }
+        else{
+            $tipos  = ProspectoTipoActividad::whereIn('id', [1, 2, 3,4,5,6,7,8,9,10,11])->get();
+        }
+        
+        $vendedores = Vendedor::all();
+        return view('prospectos.edit', compact('prospecto', 'productos', 'tipos','vendedores'));
     }
 
     /**
@@ -641,8 +683,20 @@ class ProspectosController extends Controller
                 "success" => false, "error" => true, "message" => $errors[0],
             ], 422);
         }
+        if($prospecto->es_prospecto == 'si'){
+            $fecha_cierre   =  Carbon::createFromFormat('d/m/Y', $request->fecha_cierre);
+            $update = $request->except('fecha_cierre');
+    
+            $prospecto->update($update);
+            $prospecto->fecha_cierre = $fecha_cierre;
+            $prospecto->save();
 
-        $prospecto->update($request->all());
+        }
+        else{
+            $prospecto->update($request->all());
+        }
+    
+       
 
         return response()->json(['success' => true, "error" => false], 200);
     }
