@@ -110,6 +110,45 @@
                     </div>
                   </div>
                 </div>
+                <div class="row">
+                  <div class="col-md-4">
+                      <div class="form-group">
+                        <label for="prospecto.fecha_cierre" class="control-label">Fecha aproximada de cierre</label>
+                        <br />
+                        <dropdown>
+                          <div class="input-group">
+                            <div class="input-group-btn">
+                              <btn class="dropdown-toggle" style="background-color:#fff;">
+                                <i class="fas fa-calendar"></i>
+                              </btn>
+                            </div>
+                            <input class="form-control" type="text" name="fecha"
+                              v-model="prospecto.fecha_cierre" placeholder="dd/MM/YYYY"
+                            />
+                          </div>
+                          <template slot="dropdown">
+                            <li>
+                              <date-picker :locale="locale" :today-btn="false" :clear-btn="false"
+                              format="dd/MM/yyyy" :date-parser="dateParser" v-model="prospecto.fecha_cierre"/>
+                            </li>
+                          </template>
+                        </dropdown>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label class="control-label">Proyección de venta</label>
+                        <input type="number" step="0.1" name="proyeccion_venta" class="form-control" v-model="prospecto.proyeccion_venta" required />
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label class="control-label">Factibilidad</label>
+                        <input name="factibilidad" class="form-control" v-model="prospecto.factibilidad" required />
+                      </div>
+                    </div>
+
+                </div>
               </div>
               <div class="tab">
                 <div class="row">
@@ -358,6 +397,9 @@ const app = new Vue({
         descripcion: '',
         es_prospecto: 'si',
         vendedor_id:'',
+        fecha_cierre:'',
+        proyeccion_venta:'',
+        factibilidad:''
       },
       ultima_actividad: {
         fecha: '',

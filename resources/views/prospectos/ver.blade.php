@@ -37,10 +37,20 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="control-label">Nombre de Proyecto</label>
                                     <span class="form-control">{{$prospecto->nombre}}</span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label">Vendedor</label>
+                                    <span class="form-control">
+                                      @if($prospecto->vendedor_id)
+                                      {{$prospecto->vendedor->nombre}}
+                                      @endif
+                                    </span>
                                 </div>
                             </div>
                         </div>
@@ -52,6 +62,30 @@
                                 </div>
                             </div>
                         </div>
+                       @if($prospecto->es_prospecto == "si")
+                        <div class="row" >
+                          <div class="col-md-4">
+                              <div class="form-group">
+                                <label for="prospecto.fecha_cierre" class="control-label">Fecha aproximada de cierre</label>
+                                <br />
+                                <span class="form-control">{{$prospecto->fecha_cierre_formated}}</span>
+                              </div>
+                            </div>
+                            <div class="col-md-4">
+                              <div class="form-group">
+                                <label class="control-label">Proyección de venta</label>
+                                <span class="form-control" >{{$prospecto->proyeccion_venta}}</span>
+                              </div>
+                            </div>
+                            <div class="col-md-4">
+                              <div class="form-group">
+                                <label class="control-label">Factibilidad</label>
+                                <span class="form-control" >{{$prospecto->factibilidad}}</span>
+                              </div>
+                            </div>
+
+                        </div>
+                        @endif
                     </div>
                 </div>
             </div>

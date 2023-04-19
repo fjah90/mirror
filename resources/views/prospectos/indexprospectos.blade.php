@@ -81,7 +81,9 @@
                   <th class="color_text">Usuario</th>
                   <th class="color_text">Cliente</th>
                   <th class="color_text">Nombre de Proyecto</th>
-                  <th class="color_text">Descripción</th>
+                  <th class="color_text">Vendedor</th>
+                  <th class="color_text">Próxima actividad</th>
+                  <th class="color_text">Fecha</th>
                   <th style="min-width:105px;"></th>
                 </tr>
               </thead>
@@ -89,13 +91,15 @@
                 <tr v-for="(prospecto, index) in prospectos">
                   <td class="hide">@{{index+1}}</td>
                   <template>
-                    <td>@{{prospecto.usuario.name}}</td>
+                    <td>@{{prospecto.usuario}}</td>
                   </template>
                   <template>
-                    <td>@{{prospecto.cliente.nombre}}</td>
+                    <td>@{{prospecto.cliente}}</td>
                   </template>
                   <td>@{{prospecto.nombre}}</td>
-                  <td>@{{prospecto.descripcion}}</td>
+                  <td>@{{prospecto.vendedor}}</td>
+                  <td>@{{prospecto.actividad}}</td>
+                  <td>@{{prospecto.fecha}}</td>
                   <td class="text-right">
                   <a class="btn btn-xs btn-info" title="Ver" :href="'/prospectos/'+prospecto.id">
                     <i class="far fa-eye"></i>
@@ -125,7 +129,7 @@
                 <select name="proyecto_id" v-model="proyecto_id"
                             class="form-control" required id="proyecto-select" style="width: 300px;">
                   @foreach($proyectos as $proyecto)
-                      <option value="{{$proyecto->id}}">{{$proyecto->nombre}}--{{$proyecto->cliente->nombre}}</option>
+                      <option value="{{$proyecto->id}}">{{$proyecto->nombre}}--{{$proyecto->cliente}}</option>
                   @endforeach
                 </select>
                 
