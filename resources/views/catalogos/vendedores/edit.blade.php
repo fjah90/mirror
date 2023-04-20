@@ -2,7 +2,7 @@
 
 {{-- Page title --}}
 @section('title')
-    Editar Vendedor | @parent
+    Editar Diseñador | @parent
 @stop
 
 @section('header_styles')
@@ -17,7 +17,7 @@
 @section('content')
   <!-- Content Header (Page header) -->
   <section class="content-header" style="background-color:#12160F; color:#B68911;">
-    <h1>Vendedores</h1>
+    <h1>Diseñadores</h1>
   </section>
   <!-- Main content -->
   <section class="content" id="content">
@@ -25,7 +25,7 @@
       <div class="col-lg-12">
         <div class="panel ">
           <div class="panel-heading" style="background-color:#12160F; color:#B68911;">
-            <h3 class="panel-title">Editar Vendedor</h3>
+            <h3 class="panel-title">Editar Diseñador</h3>
           </div>
           <div class="panel-body">
             <form class="" @submit.prevent="guardar()">
@@ -68,7 +68,7 @@
                   </a>
                   <button type="submit" class="btn btn-dark" :disabled="cargando" style="background-color:#12160F; color:#B68911;">
                     <i class="fas fa-save"></i>
-                    Actualizar Vendedor
+                    Actualizar Diseñador
                   </button>
                 </div>
               </div>
@@ -104,7 +104,7 @@ const app = new Vue({
         .then(({data}) => {
           this.cargando = false;
           swal({
-            title: "Vendedor Actualizado",
+            title: "Diseñador Actualizado",
             text: "",
             type: "success"
           }).then(()=>{

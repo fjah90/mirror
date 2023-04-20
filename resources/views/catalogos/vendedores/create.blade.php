@@ -2,7 +2,7 @@
 
 {{-- Page title --}}
 @section('title')
-    Nuevo Vendedor | @parent
+    Nuevo Diseñador | @parent
 @stop
 
 @section('header_styles')
@@ -17,7 +17,7 @@
 @section('content')
   <!-- Content Header (Page header) -->
   <section class="content-header" style="background-color:#12160F; color:#B68911;">
-    <h1>Vendedores</h1>
+    <h1>Diseñadores</h1>
   </section>
   <!-- Main content -->
   <section class="content" id="content">
@@ -25,7 +25,7 @@
       <div class="col-lg-12">
         <div class="panel ">
           <div class="panel-heading" style="background-color:#12160F; color:#B68911;">
-            <h3 class="panel-title">Nuevo Vendedor</h3>
+            <h3 class="panel-title">Nuevo Diseñador</h3>
           </div>
           <div class="panel-body">
             <form class="" @submit.prevent="guardar()">
@@ -68,7 +68,7 @@
                   </a>
                   <button type="submit" class="btn btn-primary" :disabled="cargando">
                     <i class="fas fa-save"></i>
-                    Guardar Vendedor
+                    Guardar Diseñador
                   </button>
                 </div>
               </div>

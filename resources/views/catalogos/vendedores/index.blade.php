@@ -2,7 +2,7 @@
 
 {{-- Page title --}}
 @section('title')
-  Vendedores | @parent
+  Diseñadores | @parent
 @stop
 
 @section('header_styles')
@@ -17,7 +17,7 @@
 @section('content')
 <!-- Content Header (Page header) -->
 <section class="content-header" style="background-color:#12160F; color:#B68911;">
-    <h1>Vendedores</h1>
+    <h1>Diseñadores</h1>
 </section>
 <!-- Main content -->
 <section class="content" id="content">
@@ -26,11 +26,11 @@
       <div class="panel">
         <div class="panel-heading" style="background-color:#12160F; color:#B68911;">
           <h3 class="panel-title text-right">
-            <span class="pull-left p-10">Lista de Vendedores</span>
+            <span class="pull-left p-10">Lista de Diseñadores</span>
             <span style="visibility:hidden">.</span>
             @hasrole('Administrador')
             <a href="{{route('vendedores.create')}}" class="btn btn-warning" style="color: #000;">
-              <i class="fa fa-plus"></i> Nuevo Vendedor
+              <i class="fa fa-plus"></i> Nuevo Diseñador
             </a>
             @endhasrole
           </h3>
@@ -111,7 +111,7 @@ const app = new Vue({
               this.vendedores.splice(index, 1);
               swal({
                 title: "Exito",
-                text: "El vendedor ha sido borrado",
+                text: "El Diseñador ha sido borrado",
                 type: "success"
               });
             })

@@ -49,7 +49,7 @@
                   </div>
                 </div>
                 <div class="col-md-4">
-                      <label class="control-label">Vendedor</label>
+                      <label class="control-label">Diseñador</label>
                       <select name="vendedor_id" v-model="prospecto.vendedor_id"
                               class="form-control" required>
                           @foreach($vendedores as $vendedor)

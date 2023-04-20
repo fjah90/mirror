@@ -52,7 +52,7 @@
                                     </select>
                                 </div>
                                 <div class="col-md-6">
-                                    <label class="control-label">Vendedor</label>
+                                    <label class="control-label">Diseñador</label>
                                     <select class="form-control" name="vendedor_id" v-model='cliente.vendedor_id'
                                             required>
                                         @foreach($vendedores as $id => $nombre)

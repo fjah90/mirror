@@ -334,7 +334,7 @@
             </li>
           <li {!! (Request::is('vendedores*') ? 'class="active"' : '') !!}>
             <a href="{{ URL::to('vendedores') }}">
-              <i class="fas fa-address-card-o " style="color:#2283bf;"></i> Vendedores
+              <i class="fas fa-address-card-o " style="color:#2283bf;"></i> Diseñadores
             </a>
           </li>
           <li  {!! (Request::is('proyectos*') ? 'class="active"' : '') !!}>
