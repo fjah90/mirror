@@ -162,7 +162,7 @@
 
           <!-- Cotizaciones -->
 
-          <li {!! (Request::is('prospectos*') ? 'class="active"' : '') !!}>
+          {{--  <li {!! (Request::is('prospectos*') ? 'class="active"' : '') !!}>
             <a href="{{ URL::to('prospectos') }}">
               <i class="menu-icon fas fa-shopping-bag" style="color:#B68911; font-size: 20px;"></i>
               <span class="mm-text" style="color:#9F9F9F;">Cotizaciones</span>
@@ -292,8 +292,7 @@
             </ul>
           </li>
           <hr class="divider-menu">
-          @endhasanyrole
-          -->
+          @endhasanyrole--}}
           <!--
           @hasanyrole('Administrador|Usuaro')
          Catalogos 
