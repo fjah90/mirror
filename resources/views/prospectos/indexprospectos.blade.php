@@ -81,7 +81,7 @@
                   <th class="color_text">Usuario</th>
                   <th class="color_text">Cliente</th>
                   <th class="color_text">Nombre de Proyecto</th>
-                  <th class="color_text">Vendedor</th>
+                  <th class="color_text">Diseñador</th>
                   <th class="color_text">Próxima actividad</th>
                   <th class="color_text">Fecha</th>
                   <th style="min-width:105px;"></th>
