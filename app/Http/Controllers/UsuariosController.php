@@ -8,6 +8,7 @@ use Illuminate\Validation\Rule;
 use Illuminate\Http\Request;
 use App\User;
 use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 
@@ -24,6 +25,35 @@ class UsuariosController extends Controller
 
       return view('usuarios.index', compact('usuarios'));
     }
+
+    public function permisos()
+    {
+      $roles = Role::all();
+      //Role::findOrfail('writer')->permissions 
+      //dd($roles);
+      return view('usuarios.permisos', compact('roles'));
+      
+    }
+
+    public function editpermisos($rol_id)
+    {
+      $rol =  Role::find($rol_id);
+      $permisos = Permission::all();
+      $permisosrol = $rol->permissions()->get()->pluck('id');
+     
+      return view('usuarios.editpermisos', compact('permisos','rol','permisosrol'));
+    }
+
+    public function updatepermisos($rol_id,Request $request)
+    {
+      $permissions = $request->permisos_ids;
+      $role =  Role::find($rol_id);
+      $role->syncPermissions($permissions);
+      
+      return  redirect()->route('usuarios.permisos');
+    }
+
+
 
     /**
      * Show the form for creating a new resource.
