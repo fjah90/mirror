@@ -6,14 +6,17 @@
 @stop
 
 @section('header_styles')
-
-    <!-- <style></style> -->
+<style>
+  .color_text{
+    color:#B3B3B3;
+  }
+</style>
 @stop
 
 {{-- Page content --}}
 @section('content')
     <!-- Content Header (Page header) -->
-    <section class="content-header">
+    <section class="content-header" style="background-color:#12160F; color:#B68911;">
         <h1>Clientes</h1>
     </section>
     <!-- Main content -->
@@ -21,7 +24,7 @@
         <tabs>
             <tab title="Nacionales">
                 <div class="panel">
-                    <div class="panel-heading">
+                    <div class="panel-heading" style="background-color:#12160F; color:#B68911;">
                         <h3 class="panel-title">
                             <div class="p-10">
                                 Clientes Nacionales
@@ -50,9 +53,9 @@
                                     @foreach($categorias as $categoria)
                                         <option value="{{$categoria->id}}">{{$categoria->nombre}}</option>
                                     @endforeach
-                                </select>
-                                <a href="{{route('clientes.createNacional')}}" class="btn btn-primary pull-right"
-                                   style="color: #fff;">
+                                </select><br>
+                                <a href="{{route('clientes.createNacional')}}" class="btn btn-warning pull-right"
+                                   style="color:#000;">
                                     <i class="fas fa-plus"></i> Cliente Nacional
                                 </a>
                             </div>
@@ -63,13 +66,13 @@
                             <table id="tablaNac" class="table table-bordred" style="width:100%;"
                                    data-page-length="100">
                                 <thead>
-                                <tr style="background-color:#fa02a4">
-                                    <th>#</th>
-                                    <th>Usuario</th>
-                                    <th>Tipo</th>
-                                    <th>Nombre</th>
-                                    <th>RFC</th>
-                                    <th>Razon Social</th>
+                                <tr style="background-color:#12160F;">
+                                    <th class="color_text">#</th>
+                                    <th class="color_text">Usuario</th>
+                                    <th class="color_text">Tipo</th>
+                                    <th class="color_text">Nombre</th>
+                                    <th class="color_text">RFC</th>
+                                    <th class="color_text">Razon Social</th>
                                     <th style="min-width:70px;"></th>
                                 </tr>
                                 </thead>
@@ -111,7 +114,7 @@
 
             <tab title="Extranjeros">
                 <div class="panel">
-                    <div class="panel-heading">
+                    <div class="panel-heading" style="background-color:#12160F; color:#B68911;">
                         <h3 class="panel-title">
                             <div class="p-10">
                                 Clientes Extranjeros
@@ -141,8 +144,8 @@
                                         <option value="{{$categoria->id}}">{{$categoria->nombre}}</option>
                                     @endforeach
                                 </select>
-                                <a href="{{route('clientes.createExtranjero')}}" class="btn btn-brown pull-right"
-                                   style="color: #fff;">
+                                <a href="{{route('clientes.createExtranjero')}}" class="btn btn-warning pull-right"
+                                  style="color:#000;">
                                     <i class="fas fa-plus"></i> Cliente Extranjero
                                 </a>
                             </div>
@@ -153,13 +156,13 @@
                             <table id="tablaExt" class="table table-bordred" style="width:100%;"
                                    data-page-length="100">
                                 <thead>
-                                <tr style="background-color:#fa02a4">
-                                    <th>#</th>
-                                    <th>Usuario</th>
-                                    <th>Tipo</th>
-                                    <th>Nombre</th>
-                                    <th>RFC</th>
-                                    <th>Razon Social</th>
+                                <tr style="background-color:#12160F">
+                                    <th class="color_text">#</th>
+                                    <th class="color_text">Usuario</th>
+                                    <th class="color_text">Tipo</th>
+                                    <th class="color_text">Nombre</th>
+                                    <th class="color_text">RFC</th>
+                                    <th class="color_text">Razon Social</th>
                                     <th style="min-width:70px;"></th>
                                 </tr>
                                 </thead>

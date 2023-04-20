@@ -23,8 +23,8 @@ class SubProyecto extends Model
      * ---------------------------------------------------------------------------
      */
 
-    public function proyecto(){
+    /*public function proyecto(){
       return $this->belongsTo('App\Models\Proyecto', 'proyecto_id', 'id');
-    }
+    }*/
 
 }

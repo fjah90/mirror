@@ -6,14 +6,17 @@
 @stop
 
 @section('header_styles')
-
-<!-- <style></style> -->
+<style>
+  .color_text{
+    color:#B3B3B3;
+  }
+</style>
 @stop
 
 {{-- Page content --}}
 @section('content')
     <!-- Content Header (Page header) -->
-    <section class="content-header">
+    <section class="content-header" style="background-color:#12160F; color:#B68911;">
         <h1 style="font-weight: bolder;">Usuarios</h1>
     </section>
     <!-- Main content -->
@@ -21,10 +24,10 @@
         <div class="row">
             <div class="col-lg-12">
               <div class="panel">
-                <div class="panel-heading">
+                <div class="panel-heading" style="background-color:#12160F; color:#B68911;">
                   <h3 class="panel-title text-right">
                     <span class="pull-left p-10">Lista de Usuarios</span>
-                    <a href="{{route('usuarios.create')}}" class="btn btn-primary" style="color: #fff;">
+                    <a href="{{route('usuarios.create')}}" class="btn btn-warning" style="color: #000;">
                       <i class="fa fa-plus"></i> Nuevo Usuario
                     </a>
                   </h3>
@@ -33,11 +36,11 @@
                   <div class="table-responsive">
                     <table id="tabla" class="table table-bordred" style="width:100%;">
                       <thead>
-                        <tr style="background-color:#f5bf4c">
-                          <th>#</th>
-                          <th>Tipo</th>
-                          <th>Nombre</th>
-                          <th>Email</th>
+                        <tr style="background-color:#12160F">
+                          <th class="color_text">#</th>
+                          <th class="color_text">Tipo</th>
+                          <th class="color_text">Nombre</th>
+                          <th class="color_text">Email</th>
                           <th></th>
                         </tr>
                       </thead>

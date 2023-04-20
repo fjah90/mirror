@@ -6,14 +6,22 @@
 @stop
 
 @section('header_styles')
+<style>
+  .marg025 {margin: 0 25px;}
+  #tabla_length{
+    float: left !important;
+  }
 
-<!-- <style></style> -->
+  .color_text{
+    color:#B3B3B3;
+  }
+</style>
 @stop
 
 {{-- Page content --}}
 @section('content')
 <!-- Content Header (Page header) -->
-<section class="content-header">
+<section class="content-header" style="background-color:#12160F; color:#B68911;">
   <h1 style="font-weight: bolder;">Cuentas por Pagar</h1>
 </section>
 <!-- Main content -->
@@ -21,7 +29,7 @@
   <div class="row">
     <div class="col-lg-12">
       <div class="panel">
-        <div class="panel-heading">
+        <div class="panel-heading" style="background-color:#12160F; color:#B68911;">
           <h3 class="panel-title">
             <span class="p-10">Lista de Cuentas</span>
             <div class="p-10">
@@ -53,18 +61,18 @@
           <div class="table-responsive">
             <table id="tabla" class="table table-bordred">
               <thead>
-                <tr style="background-color:#f54c82">
-                  <th>#</th>
-                  <th>Proveedor</th>
-                  <th>Proyecto</th>
-                  <th>#Orden</th>
-                  <th>#Cotizacion</th>
-                  <th>Dias Credito</th>
-                  <th>Moneda</th>
-                  <th>Total</th>
-                  <th>Facturado</th>
-                  <th>Pagado</th>
-                  <th>Pendiente</th>
+                <tr style="background-color:#12160F">
+                  <th class="color_text">#</th>
+                  <th class="color_text">Proveedor</th>
+                  <th class="color_text">Proyecto</th>
+                  <th class="color_text">#Orden</th>
+                  <th class="color_text">#Cotizacion</th>
+                  <th class="color_text">Dias Credito</th>
+                  <th class="color_text">Moneda</th>
+                  <th class="color_text">Total</th>
+                  <th class="color_text">Facturado</th>
+                  <th class="color_text">Pagado</th>
+                  <th class="color_text">Pendiente</th>
                   <th style="min-width:70px;"></th>
                 </tr>
               </thead>

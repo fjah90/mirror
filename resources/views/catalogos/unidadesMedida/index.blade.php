@@ -6,14 +6,17 @@
 @stop
 
 @section('header_styles')
-
-<!-- <style></style> -->
+<style>
+  .color_text{
+    color:#B3B3B3;
+  }
+</style>
 @stop
 
 {{-- Page content --}}
 @section('content')
 <!-- Content Header (Page header) -->
-<section class="content-header">
+<section class="content-header" style="background-color:#12160F; color:#B68911;">
     <h1>Unidades de Medida</h1>
 </section>
 <!-- Main content -->
@@ -21,12 +24,12 @@
   <div class="row">
     <div class="col-lg-12">
       <div class="panel">
-        <div class="panel-heading">
+        <div class="panel-heading" style="background-color:#12160F; color:#B68911;">
           <h3 class="panel-title text-right">
             <span class="pull-left p-10">Lista de Unidades de Medida</span>
             <span style="visibility:hidden">.</span>
             @hasrole('Administrador')
-            <a href="{{route('unidadesMedida.create')}}" class="btn btn-primary" style="color: #fff;">
+            <a href="{{route('unidadesMedida.create')}}" class="btn btn-warning" style="color: #000;">
               <i class="fa fa-plus"></i> Nueva Unidad
             </a>
             @endhasrole
@@ -37,11 +40,11 @@
             <table id="tabla" class="table table-bordred" style="width:100%;"
               data-page-length="100">
               <thead>
-                <tr style="background-color:#f5bf4c">
-                  <th>#</th>
-                  <th>Unidad</th>
-                  <th>Unidad Ingles</th>
-                  <th>Conversiones</th>
+                <tr style="background-color:#12160F">
+                  <th class="color_text">#</th>
+                  <th class="color_text">Unidad</th>
+                  <th class="color_text">Unidad Ingles</th>
+                  <th class="color_text">Conversiones</th>
                   <th></th>
                 </tr>
               </thead>
@@ -65,10 +68,10 @@
                       :href="'/unidadesMedida/'+unidad.id+'/editar'">
                       <i class="fas fa-pencil-alt"></i>
                     </a>
-                    {{-- <button class="btn btn-danger" data-toggle="tooltip" title="Borrar"
-                      @click="borrar(tipo, index)">
+                    <button class="btn btn-xs btn-danger"  title="Borrar"
+                      @click="borrar(unidad, index)">
                       <i class="fas fa-times"></i>
-                    </button> --}}
+                    </button>
                     @endrole
                   </td>
                 </tr>
@@ -92,9 +95,9 @@ const app = new Vue({
       unidades: {!! json_encode($unidades) !!},
     },
     mounted(){
-      $("#tabla").DataTable();
-    },
-    methods: {
+     $("#tabla").DataTable({"order": [[ 1, "asc" ]]});
+},
+methods: {
       borrar(unidad, index){
         swal({
           title: 'Cuidado',
@@ -107,9 +110,9 @@ const app = new Vue({
           cancelButtonText: 'No, Cancelar',
         }).then((result) => {
           if (result.value) {
-            axios.delete('/unidadesMedida/'+unidad.id, {})
+           axios.delete('/unidadesMedida/'+unidad.id, {})
             .then(({data}) => {
-              this.tipos.splice(index, 1);
+              this.unidades.splice(index, 1);
               swal({
                 title: "Exito",
                 text: "La unidad ha sido borrado",

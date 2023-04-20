@@ -10,13 +10,16 @@
   table td:first-child span.fa-grip-vertical:hover {
     cursor: move;
   }
+  .color_text{
+    color:#B3B3B3;
+  }
 </style>
 @stop
 
 {{-- Page content --}}
 @section('content')
   <!-- Content Header (Page header) -->
-  <section class="content-header">
+  <section class="content-header" style="background-color:#12160F; color:#B68911;">
     <h1 style="font-weight: bolder;">Tipos Productos</h1>
   </section>
   <!-- Main content -->
@@ -24,7 +27,7 @@
     <div class="row">
       <div class="col-lg-12">
         <div class="panel ">
-          <div class="panel-heading">
+          <div class="panel-heading" style="background-color:#12160F; color:#B68911;">
             <h3 class="panel-title">Editar Tipo</h3>
           </div>
           <div class="panel-body">
@@ -47,10 +50,10 @@
               </div>
               <div class="row" style="margin-top:25px;" >
                 <div class="col-md-12 text-right">
-                  <a class="btn btn-default" href="{{route('categorias.index')}}" style="margin-right: 20px;">
+                  <a class="btn btn-default" href="{{route('categorias.index')}}" style="margin-right: 20px; color:#000; background-color:#B3B3B3;">
                     Regresar
                   </a>
-                  <button type="submit" class="btn btn-success" :disabled="cargando">
+                  <button type="submit" class="btn btn-dark" :disabled="cargando" style="background-color:#12160F; color:#B68911;">
                     <i class="fas fa-save"></i>
                     Actualizar Tipo
                   </button>
@@ -84,21 +87,21 @@
                 <div class="col-md-12">
                   <div class="form-group">
                     <label class="control-label" style="cursor:pointer;" @click="descripcion.no_alta_productos=!descripcion.no_alta_productos">
-                      <i class="text-info far":class="(descripcion.no_alta_productos)?'fa-check-square':'fa-square'">
+                      <i class="text-dark far":class="(descripcion.no_alta_productos)?'fa-check-square':'fa-square'">
                       </i>
                       No Alta Productos
                     </label>
                   </div>
                   <div class="form-group">
                   <label class="control-label" style="cursor:pointer;" @click="descripcion.valor_ingles=!descripcion.valor_ingles">
-                    <i class="text-info far" :class="(descripcion.valor_ingles)?'fa-check-square':'fa-square'">
+                    <i class="text-dark far" :class="(descripcion.valor_ingles)?'fa-check-square':'fa-square'">
                     </i>
                     Añadir valor en inglés
                   </label>
                 </div>
                   <div class="form-group">
                   <label class="control-label" style="cursor:pointer;" @click="descripcion.aparece_orden_compra=!descripcion.aparece_orden_compra">
-                    <i class="text-info far" :class="(descripcion.aparece_orden_compra)?'fa-check-square':'fa-square'">
+                    <i class="text-dark far" :class="(descripcion.aparece_orden_compra)?'fa-check-square':'fa-square'">
                     </i>
                     Aparece en Orden de Compra
                   </label>
@@ -107,24 +110,24 @@
               </div>
               <div class="row">
                 <div class="col-md-12 text-right">
-                  <button style="margin-top:25px;" type="submit" class="btn btn-info">
+                  <button style="margin-top:25px; background-color:#12160F; color:#B68911;" type="submit" class="btn btn-dark">
                     <i class="fas fa-save"></i>
                     Agregar Descripcion
                   </button>
                 </div>
               </div>
-            </form>
+            </form><br>
             <div class="row">
               <div class="col-md-12">
                 <div class="table-responsive">
                   <table id="tabla" class="table table-bordred">
                     <thead>
-                      <tr>
-                        <th>Orden</th>
-                        <th>Nombre</th>
-                        <th>Name</th>
-                        <td>Aparece en Orden de Compra</td>
-                        <th></th>
+                      <tr style="background-color:#12160F; color:#B68911;">
+                        <th class="color_text">Orden</th>
+                        <th class="color_text">Nombre</th>
+                        <th class="color_text">Name</th>
+                        <td class="color_text">Aparece en Orden de Compra</td>
+                        <th class="col-md-1"></th>
                       </tr>
                     </thead>
                     <tbody>
@@ -214,8 +217,8 @@ const app = new Vue({
         var rows = [], row = [];
         this.categoria.descripciones.forEach(function(descripcion, index){
           if(descripcion.borrar==true) return true;
-          checked='<i class="text-info far fa-check-square"></i></label>';
-          unchecked='<i class="text-info far fa-square"></i></label>';
+          checked='<i class="text-dark far fa-check-square"></i></label>';
+          unchecked='<i class="text-dark far fa-square"></i></label>';
           row = [
             '<span class="fas fa-grip-vertical"></span> '+descripcion.ordenamiento,
             descripcion.nombre,

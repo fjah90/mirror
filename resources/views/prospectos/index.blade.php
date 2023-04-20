@@ -11,13 +11,17 @@
   #tabla_length{
     float: left !important;
   }
+
+  .color_text{
+    color:#B3B3B3;
+  }
 </style>
 @stop
 
 {{-- Page content --}}
 @section('content')
 <!-- Content Header (Page header) -->
-<section class="content-header">
+<section class="content-header" style="background-color:#12160F; color:#B68911;">
   <h1 style="font-weight: bolder;">Cotizaciones en proceso</h1>
 </section>
 <!-- Main content -->
@@ -25,7 +29,7 @@
   <div class="row">
     <div class="col-lg-12">
       <div class="panel">
-        <div class="panel-heading">
+        <div class="panel-heading" style="background-color:#12160F; color:#B68911;">
           <h3 class="panel-title">
             <div class="p-10" style="display:inline-block">
               Usuario
@@ -115,15 +119,15 @@
             <table id="tabla" class="table table-bordred" style="width:100%;"
               data-page-length="100">
               <thead>
-                <tr style="background-color:#c37ff3">
+                <tr style="background-color:#12160F">
                   <th class="hide">#</th>
-                  <th>Usuario</th>
-                  <th>Cliente</th>
-                  <th>Nombre de Proyecto</th>
-                  <th>Ultima Actividad</th>
-                  <th>Tipo</th>
-                  <th>Próxima Actividad</th>
-                  <th>Tipo</th>
+                  <th class="color_text">Usuario</th>
+                  <th class="color_text">Cliente</th>
+                  <th class="color_text">Nombre de Proyecto</th>
+                  <th class="color_text">Ultima Actividad</th>
+                  <th class="color_text">Tipo</th>
+                  <th class="color_text">Próxima Actividad</th>
+                  <th class="color_text">Tipo</th>
                   <th style="min-width:105px;"></th>
                   <th class="hide">Cotizacion id</th>
                 </tr>

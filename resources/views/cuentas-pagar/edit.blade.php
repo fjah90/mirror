@@ -6,14 +6,17 @@
 @stop
 
 @section('header_styles')
-<!-- <style>
-</style> -->
+<style>
+  .color_text{
+    color:#B3B3B3;
+  }
+</style>
 @stop
 
 {{-- Page content --}}
 @section('content')
   <!-- Content Header (Page header) -->
-  <section class="content-header">
+  <section class="content-header" style="background-color:#12160F; color:#B68911;">
     <h1 style="font-weight: bolder;">Cuentas por Pagar</h1>
   </section>
   <!-- Main content -->
@@ -21,7 +24,7 @@
     <div class="row">
       <div class="col-lg-12">
         <div class="panel">
-          <div class="panel-heading">
+          <div class="panel-heading" style="background-color:#12160F; color:#B68911;">
             <h3 class="panel-title">Facturas Cuenta {{$cuenta->id}}: {{$cuenta->proyecto_nombre}}</h3>
             <table class="table table-bordred">
               <thead>
@@ -222,7 +225,7 @@
               <div class="row">
                 <div class="col-md-12 text-right">
                   <div class="form-group" style="margin-top:25px;">
-                    <button type="submit" class="btn btn-primary">
+                    <button type="submit" class="btn btn-dark" style="background-color:#12160F; color:#B68911;">
                       Agregar Factura
                     </button>
                   </div>
@@ -232,7 +235,7 @@
 
             <div class="row">
               <div class="col-md-12 text-right">
-                <a href="{{ route('cuentas-pagar.index') }}" class="btn btn-default">
+                <a href="{{ route('cuentas-pagar.index') }}" class="btn btn-default" style="color:#000; background-color:#B3B3B3;">
                   Regresar
                 </a>
               </div>
@@ -254,7 +257,7 @@
               <dropdown style="width:100%;">
                 <div class="input-group" >
                   <div class="input-group-btn">
-                    <btn class="dropdown-toggle" style="background-color:#fff;">
+                    <btn class="dropdown-toggle" style="background-color:#000; color:#fff;">
                       <i class="fas fa-calendar"></i>
                     </btn>
                   </div>
@@ -300,8 +303,8 @@
           </div>
         </div>
         <div class="form-group text-right">
-          <button type="submit" class="btn btn-primary">Aceptar</button>
-          <button type="button" class="btn btn-default" @click="cancelarPago()">
+          <button type="submit" class="btn btn-primary" style="background-color:#12160F; color:#B68911;">Aceptar</button>
+          <button type="button" class="btn btn-default" @click="cancelarPago()" style="color:#000; background-color:#B3B3B3;">
             Cancelar
           </button>
         </div>

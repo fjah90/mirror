@@ -3,16 +3,17 @@
 namespace App\Models;
 
 use App\Model;
+use Carbon\Carbon;
 use App\User;
 
 class Prospecto extends Model
 {
     protected $table = 'prospectos';
 
-    protected $fillable = ['cliente_id','nombre','descripcion', 'user_id','es_prospecto'];
+    protected $fillable = ['cliente_id','nombre','descripcion', 'user_id','es_prospecto','vendedor_id','proyeccion_venta','fecha_cierre','factibilidad'];
 
     protected $appends = [
-        'num_cotizaciones','num_cotaprobadas'
+        'num_cotizaciones','num_cotaprobadas','fecha_cierre_formated'
     ];
 
 
@@ -24,6 +25,11 @@ class Prospecto extends Model
     public function getNumCotaprobadasAttribute()
     {
         return count($this->cotizaciones_aprobadas);
+    }
+
+    public function getFechaCierreFormatedAttribute()
+    {
+        return Carbon::parse($this->fecha_cierre)->format('d/m/Y');
     }
 
     /**
@@ -65,6 +71,11 @@ class Prospecto extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function vendedor()
+    {
+        return $this->belongsTo(Vendedor::class);
     }
 
 }

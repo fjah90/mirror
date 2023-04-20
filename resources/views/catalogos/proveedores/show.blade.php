@@ -11,7 +11,7 @@
 {{-- Page content --}}
 @section('content')
   <!-- Content Header (Page header) -->
-  <section class="content-header">
+  <section class="content-header" style="background-color:#12160F; color:#B68911;">
     <h1>Proveedores</h1>
   </section>
   <!-- Main content -->
@@ -19,7 +19,7 @@
     <div class="row">
       <div class="col-lg-12">
         <div class="panel ">
-          <div class="panel-heading">
+          <div class="panel-heading" style="background-color:#12160F; color:#B68911;">
             <h3 class="panel-title">Ver Proveedor {{$proveedor->empresa}}</h3>
           </div>
           <div class="panel-body">
@@ -64,7 +64,7 @@
               </div>
               <div class="col-md-4">
                 <div class="form-group">
-                  <label class="control-label">No Cuenta (Intercorp/Cliente)</label>
+                  <label class="control-label">No Cuenta (Robinson/Cliente)</label>
                   <span class="form-control">{{$proveedor->cuenta_interna}}</span>
                 </div>
               </div>
@@ -135,7 +135,7 @@
     <div class="row">
       <div class="col-lg-12">
         <div class="panel">
-          <div class="panel-heading">
+          <div class="panel-heading" style="background-color:#12160F; color:#B68911;">
             <h3 class="panel-title">Datos Generales</h3>
           </div>
           <div class="panel-body">
@@ -161,7 +161,7 @@
     <div class="row">
       <div class="col-lg-12">
         <div class="panel ">
-          <div class="panel-heading">
+          <div class="panel-heading" style="background-color:#12160F; color:#B68911;">
             <h3 class="panel-title">Contactos del Proveedor</h3>
           </div>
           <div class="panel-body">
@@ -202,7 +202,7 @@
 
     <div class="row">
       <div class="col-md-12 text-right">
-        <a class="btn btn-default" href="{{route('proveedores.index')}}">
+        <a class="btn btn-default" href="{{route('proveedores.index')}}" style="color:#000; background-color:#B3B3B3">
           Regresar
         </a>
       </div>

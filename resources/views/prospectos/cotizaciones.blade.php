@@ -11,13 +11,16 @@
   #tabla_length{
     float: left !important;
   }
+  .color_text{
+    color:#B3B3B3;
+  }
 </style>
 @stop
 
 {{-- Page content --}}
 @section('content')
 <!-- Content Header (Page header) -->
-<section class="content-header">
+<section class="content-header" style="background-color:#12160F; color:#B68911;">
   <h1 style="font-weight: bolder;">Proyectos en proceso</h1>
 </section>
 <!-- Main content -->
@@ -25,7 +28,7 @@
   <div class="row">
     <div class="col-lg-12">
       <div class="panel">
-        <div class="panel-heading ">
+        <div class="panel-heading" style="background-color:#12160F; color:#B68911;">
           <h3 class="panel-title">
             <div class="p-10" style="display:inline-block;">
               Proyectos
@@ -40,8 +43,8 @@
               @endrole
             </div>
             <div class="p-10 " style="display:inline-block;float: right;">
-              <button class="btn btn-sm btn-primary">
-                <a href="{{route('prospectos.create')}}" style="color:white;">
+              <button class="btn btn-sm btn-warning">
+                <a href="{{route('prospectos.create')}}" style="color:#000;">
                   <i class="fas fa-address-book"></i> Nuevo Proyecto
                 </a>
               </button>
@@ -64,13 +67,13 @@
               <dropdown id="fecha_ini_control" class="marg025" style="padding-bottom: 10px;">
               <div class="input-group">
                 <div class="input-group-btn">
-                  <btn class="dropdown-toggle" style="background-color:#fff;">
-                    <i class="fas fa-calendar"></i>
+                  <btn class="dropdown-toggle" style="background-color:#000;">
+                    <i class="fas fa-calendar" style="color:#fff;"></i>
                   </btn>
                 </div>
                 <input class="form-control" type="text" placeholder="DD/MM/YYYY"
                   v-model="fecha_ini" readonly
-                  style="width:120px;"
+                  style="width:122px;"
                 />
               </div>
               <template slot="dropdown">
@@ -84,8 +87,8 @@
             <dropdown id="fecha_fin_control" class="marg025" style="padding-bottom: 10px;">
               <div class="input-group">
                 <div class="input-group-btn">
-                  <btn class="dropdown-toggle" style="background-color:#fff;">
-                    <i class="fas fa-calendar"></i>
+                  <btn class="dropdown-toggle" style="background-color:#000;">
+                    <i class="fas fa-calendar" style="color:#fff;"></i>
                   </btn>
                 </div>
                 <input class="form-control" type="text" placeholder="DD/MM/YYYY"
@@ -110,13 +113,13 @@
             <table id="tabla" class="table table-bordred" style="width:100%;"
               data-page-length="100">
               <thead>
-                <tr style="background-color:#06a1ce">
+                <tr style="background-color:#12160F">
                   <th class="hide">#</th>
-                  <th>Usuario</th>
-                  <th>Cliente</th>
-                  <th>Nombre de Proyecto</th>
-                  <th>Cotizaciones</th>
-                  <th>Cot Aprobadas</th>
+                  <th class="color_text">Usuario</th>
+                  <th class="color_text">Cliente</th>
+                  <th class="color_text">Nombre de Proyecto</th>
+                  <th class="color_text">Cotizaciones</th>
+                  <th class="color_text">Cot Aprobadas</th>
                   <th style="min-width:105px;"></th>
                   <th class="hide">Cotizacion id</th>
                 </tr>

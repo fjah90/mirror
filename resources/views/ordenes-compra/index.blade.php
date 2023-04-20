@@ -6,14 +6,17 @@
 @stop
 
 @section('header_styles')
-
-<!-- <style></style> -->
+<style>
+  .color_text{
+    color:#B3B3B3;
+  }
+</style>
 @stop
 
 {{-- Page content --}}
 @section('content')
 <!-- Content Header (Page header) -->
-<section class="content-header">
+<section class="content-header" style="background-color:#12160F; color:#B68911;">
   <h1 style="font-weight: bolder;">Ordenes De Compra Proyecto {{$ordenes->first()->proyecto_nombre}} // {{$cotizacion->numero}}</h1>
 </section>
 <!-- Main content -->
@@ -21,7 +24,7 @@
   <div class="row">
     <div class="col-lg-12">
       <div class="panel">
-        <div class="panel-heading">
+        <div class="panel-heading" style="background-color:#12160F; color:#B68911;">
           <h3 class="panel-title text-right">
             <span class="p-10 pull-left">Lista de Ordenes</span>
             <a href="{{route('proyectos-aprobados.ordenes-compra.create', $ordenes->first()->proyecto_id)}}"
@@ -71,7 +74,7 @@
                       </a>
                     </template>
                     <a v-if="orden.archivo" class="btn btn-xs btn-warning" title="PDF" :href="orden.archivo"
-                      :download="'INTERCORP-PO '+orden.numero+' '+orden.cliente_nombre+' '+orden.proyecto_nombre+'.pdf'">
+                      :download="'ROBINSON-PO '+orden.numero+' '+orden.cliente_nombre+' '+orden.proyecto_nombre+'.pdf'">
                       <i class="far fa-file-pdf"></i>
                     </a>
                     <a v-if="orden.status=='Pendiente' || orden.status=='Rechazada'"

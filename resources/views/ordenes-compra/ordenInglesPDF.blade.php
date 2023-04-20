@@ -474,7 +474,7 @@
 
     <div class="row">
       <div class="col-lg-12 text-center">
-        <img style="width:200px; height:auto;" src="{{public_path().'/images/logo.jpg'}}" alt="INTERCORP" />
+        <img style="width:200px; height:auto;" src="{{public_path().'/images/logo.jpg'}}" alt="ROBINSON" />
       </div>
     </div>
 
@@ -492,10 +492,10 @@
         <p>Date: {{$orden->fecha_compra}}</p>
       </div>
       <div class="col-lg-7">
-        <p class="text-uppercase text-right">Intercorp Contract Resources, s.a. de c.v.</p>
+        <p class="text-uppercase text-right">Robinson Contract Resources, s.a. de c.v.</p>
         <p class=" text-right font-small">Av. Juan Salvador Agraz 50, Oficina 702,  Lomas de Santa Fe.</p>
         <p class=" text-right font-small">Ciudad de Mexico, 05348 Mexico</p>
-        <p class="text-right font-small">T. +52 (55) 5557-5214 intercorp.com.mx</p>
+        <p class="text-right font-small">T. +52 (55) 5557-5214 robinson.com.mx</p>
       </div>
     </div>
 
@@ -535,7 +535,7 @@
                 </p>
               </td>
               <td class="bordered">
-                <p>INTERCORP CONTRACT RESOURCES, S.A. DE C.V.</p>
+                <p>ROBINSON CONTRACT RESOURCES, S.A. DE C.V.</p>
                 <p class="text-uppercase">Av. Juan Salvador Agraz 50, Oficina 702,  Lomas de Santa Fe</p>
                 <p class="text-uppercase">Ciudad de Mexico, 05348 Mexico</p>
                 <p>T. +52 (55) 5557-5214</p>
@@ -721,7 +721,7 @@
             <td class="text-center" style="width:30%; text-transform: none;">
               <img style="margin-top:1em; width:150px; height:auto;" src="{{$orden->firmaAbraham}}" alt=" " />
               <hr style="border:0.5px solid #000; width:70%; margin-top:-5px; margin-bottom:0px;" />
-              <img style="width:150px; height:auto;" src="{{public_path().'/images/logo.jpg'}}" alt="INTERCORP" />
+              <img style="width:150px; height:auto;" src="{{public_path().'/images/logo.jpg'}}" alt="ROBINSON" />
             </td>
           </tr>
         </table>

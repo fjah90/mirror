@@ -202,7 +202,7 @@ class ProductosController extends Controller
         $validator = Validator::make($request->all(), [
             'proveedor_id' => 'required',
             'categoria_id' => 'required',
-            'nombre'       => ['required', Rule::unique('productos')->ignore($producto->id)],
+            'nombre'       => 'required',
         ]);
 
         if ($validator->fails()) {

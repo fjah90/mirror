@@ -6,14 +6,17 @@
 @stop
 
 @section('header_styles')
-<!-- <style>
-</style> -->
+<style>
+  .color_text{
+    color:#B3B3B3;
+  }
+</style>
 @stop
 
 {{-- Page content --}}
 @section('content')
   <!-- Content Header (Page header) -->
-  <section class="content-header">
+  <section class="content-header" style="background-color:#12160F; color:#B68911;">
     <h1 style="font-weight: bolder;">Ordenes de Compra</h1>
   </section>
   <!-- Main content -->
@@ -21,7 +24,7 @@
     <div class="row">
       <div class="col-lg-12">
         <div class="panel">
-          <div class="panel-heading">
+          <div class="panel-heading" style="background-color:#12160F; color:#B68911;">
             <h3 class="panel-title">Editar Orden Proyecto {{$proyecto->proyecto}} // {{$cotizacion->numero}}</h3>
           </div>
           <div class="panel-body">
@@ -244,7 +247,7 @@
               </div>
               <div class="row">
                   <div class="col-md-2">
-                      <button type="button" class="btn btn-primary" @click="modalProducto=true">
+                      <button type="button" class="btn btn-primary" @click="modalProducto=true" style="background-color:#12160F; color:#B68911;">
                           Registrar producto
                       </button>
                   </div>
@@ -264,11 +267,11 @@
                       <tr>
                         <th colspan="3">Descripciones</th>
                       </tr>
-                      <tr>
-                        <th>Nombre</th>
-                        <th>Name</th>
-                        <th>Valor</th>
-                        <th>Valor Inglés</th>
+                      <tr style="background-color:#12160F; color:#B68911;">
+                        <th class="color_text">Nombre</th>
+                        <th class="color_text">Name</th>
+                        <th class="color_text">Valor</th>
+                        <th class="color_text">Valor Inglés</th>
                       </tr>
                       </thead>
                       <tbody>
@@ -307,7 +310,7 @@
               <div class="row">
                 <div class="col-md-12 text-right">
                   <div class="form-group" style="margin-top:25px;">
-                    <button type="submit" class="btn btn-info">
+                    <button type="submit" class="btn btn-dark" style="background-color:#12160F; color:#B68911;">
                       <i class="fas fa-plus"></i>
                       Agregar Producto
                     </button>
@@ -320,15 +323,15 @@
                 <div class="table-responsive">
                   <table class="table table-bordred" id="tablaEntradas">
                     <thead>
-                      <tr>
-                        <th>Producto</th>
-                        <th>Área</th>
-                        <th>Comentarios</th>
-                        <th>Cantidad</th>
-                        <th>Conversión</th>
-                        <th>Cant. en conversión</th>
-                        <th>Precio</th>
-                        <th>Importe</th>
+                      <tr style="background-color:#12160F; color:#B68911;">
+                        <th class="color_text">Producto</th>
+                        <th class="color_text">Área</th>
+                        <th class="color_text">Comentarios</th>
+                        <th class="color_text">Cantidad</th>
+                        <th class="color_text">Conversión</th>
+                        <th class="color_text">Cant. en conversión</th>
+                        <th class="color_text">Precio</th>
+                        <th class="color_text">Importe</th>
                         <th></th>
                       </tr>
                     </thead>
@@ -396,11 +399,11 @@
               <div class="col-md-12 text-right">
                 <div class="form-group">
                   <a class="btn btn-default"
-                    href="{{route('proyectos-aprobados.ordenes-compra.index', $proyecto->id)}}">
+                    href="{{route('proyectos-aprobados.ordenes-compra.index', $proyecto->id)}}" style="color:#000; background-color:#B3B3B3,">
                     Regresar
                   </a>
-                  <button type="button" class="btn btn-success"
-                    @click="guardar()" :disabled="cargando">
+                  <button type="button" class="btn btn-dark"
+                    @click="guardar()" :disabled="cargando" style="background-color:#12160F; color:#B68911;">
                     <i class="fas fa-save"></i>
                     Actualizar Orden
                   </button>
@@ -414,19 +417,19 @@
     <div class="row">
       <div class="col-lg-12">
         <div class="panel">
-          <div class="panel-heading">
+          <div class="panel-heading" style="background-color:#12160F; color:#B68911;">
             <h3 class="panel-title">Precios Aprobados</h3>
           </div>
           <div class="panel-body">
             <div class="table-responsive">
               <table class="table table-bordred">
                 <thead>
-                  <tr>
-                    <th>Producto</th>
-                    <th>Fecha de Precio</th>
-                    <th>Precio de Compra</th>
-                    <th>contacto de proveedor</th>
-                    <th>Unidad de Medida Compra</th>
+                  <tr style="background-color:#12160F; color:#B68911;">
+                    <th class="color_text">Producto</th>
+                    <th class="color_text">Fecha de Precio</th>
+                    <th class="color_text">Precio de Compra</th>
+                    <th class="color_text">contacto de proveedor</th>
+                    <th class="color_text">Unidad de Medida Compra</th>
                   </tr>
                 </thead>
                 <tbody>

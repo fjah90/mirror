@@ -18,6 +18,9 @@ Dashboard | @parent
     font-size: 16px;
     color: #777;
   }
+   .color_text{
+    color:#B3B3B3;
+  }
 
   /*mail tiles sales, visits etc*/
   .card-box {
@@ -159,7 +162,7 @@ Dashboard | @parent
 {{-- Page content --}}
 @section('content')
 <!-- Content Header (Page header) -->
-<section class="content-header">
+<section class="content-header" style="background-color:#12160F; color:#B68911;">
   <h1>Dashboard</h1>
 </section>
 <!-- Main content -->
@@ -210,7 +213,7 @@ Dashboard | @parent
     <div class="col-sm-6 col-md-6 col-lg-3">
       <div class="widget-bg-color-icon card-box">
         <div class="bg-icon pull-left">
-          <i class="fas fa-user-check text-warning"></i>
+          <i class="fas fa-user-check text-warning" style="color:#000;"></i>
         </div>
         <div class="text-right">
           <h3 class="text-dark"><b>@{{data.clientes}}</b></h3>
@@ -221,7 +224,7 @@ Dashboard | @parent
     <div class="col-sm-6 col-md-6 col-lg-3">
       <div class="widget-bg-color-icon card-box">
         <div class="bg-icon pull-left">
-          <i class="fab fa-opencart text-success"></i>
+          <i class="fab fa-opencart text-warning"></i>
         </div>
         <div class="text-right">
           <h3><b id="widget_count3">@{{data.prospectos}}</b></h3>
@@ -232,7 +235,7 @@ Dashboard | @parent
     <div class="col-sm-6 col-md-6 col-lg-3">
       <div class="widget-bg-color-icon card-box">
         <div class="bg-icon pull-left">
-          <i class="far fa-thumbs-up text-danger"></i>
+          <i class="far fa-thumbs-up text-default" style="color:#B3B3B3;"></i>
         </div>
         <div class="text-right">
           <h3 class="text-dark"><b>@{{data.proyectosAprobados}}</b></h3>
@@ -243,7 +246,7 @@ Dashboard | @parent
     <div class="col-sm-6 col-md-6 col-lg-3">
       <div class="widget-bg-color-icon card-box">
         <div class="bg-icon pull-left">
-          <i class="far fa-clock text-info"></i>
+          <i class="far fa-clock text-dark" style="color:#000;"></i>
         </div>
         <div class="text-right">
           <h3 class="text-dark"><b>@{{data.ordenesProceso}}</b></h3>
@@ -256,7 +259,7 @@ Dashboard | @parent
   <div class="row">
     <div class="col-sm-12">
       <div class="panel product-details">
-        <div class="panel-heading">
+        <div class="panel-heading" style="background-color:#12160F; color:#B68911;">
           <h3 class="panel-title">Próximas Actividades</h3>
         </div>
         <div class="panel-body">
@@ -317,19 +320,19 @@ Dashboard | @parent
                   
                 </select>
             </div>
-          </div>
+          </div><br>
           <div class="row">
             <div class="col-sm-12">
               <div class="table-responsive">
                 <table class="table table-striped text-center" id="tablaActividades">
                   <thead>
-                    <tr style="background-color:#08c8c2">
-                      <th class="text-center">Cliente</th>
-                      <th class="text-center"><strong>Proyecto</strong></th>
-                      <th class="text-center"><strong>Tipo</strong></th>
-                      <th class="text-center"><strong>Próxima Actividad</strong></th>
-                      <th class="text-center"><strong>¿Es prospecto?</strong></th>
-                      <th class="text-center"><strong>Acciones</strong></th>
+                    <tr style="background-color:#12160F">
+                      <th class="text-center color_text">Cliente</th>
+                      <th class="text-center color_text"><strong>Proyecto</strong></th>
+                      <th class="text-center color_text"><strong>Tipo</strong></th>
+                      <th class="text-center color_text"><strong>Próxima Actividad</strong></th>
+                      <th class="text-center color_text"><strong>¿Es prospecto?</strong></th>
+                      <th class="text-center color_text"><strong>Acciones</strong></th>
                     </tr>
                   </thead>
                   <tbody>
@@ -339,7 +342,7 @@ Dashboard | @parent
                       <td>@{{actividad.tipo_actividad}}</td>
                       <td>@{{actividad.fecha_formated}}</td>
                       <td>@{{actividad.es_prospecto}}</td>
-                      <td>
+                      <td class="col-md-2">
                         <a title="Ver" :href="'/prospectos/'+actividad.prospecto_id" class="btn btn-xs btn-info">
                             Ver <i class="far fa-eye"></i>
                           </a>
@@ -367,7 +370,7 @@ Dashboard | @parent
   <div class="row">
     <div class="col-sm-12">
       <div class="panel product-details">
-        <div class="panel-heading">
+        <div class="panel-heading" style="background-color:#12160F; color:#B68911;">
           <h3 class="panel-title">Ultimas Cotizaciones</h3>
         </div>
         <div class="panel-body">
@@ -435,14 +438,14 @@ Dashboard | @parent
                 
                 <table class="table table-striped text-center" id="tablaCotizaciones">
                   <thead>
-                    <tr style="background-color:#08c8c2">
-                      <th class="text-center">Cliente</th>
-                      <th class="text-center"><strong>Proyecto</strong></th>
-                      <th class="text-center"><strong>Número Cotización</strong></th>
-                      <th class="text-center"><strong>Fecha</strong></th>                     
-                      <th class="text-center"><strong>Total</strong></th>
-                      <th class="text-center"><strong>Usuario</strong></th>
-                      <th class="text-center"><strong>Acciones</strong></th>
+                    <tr style="background-color:#12160F">
+                      <th class="text-center color_text">Cliente</th>
+                      <th class="text-center color_text"><strong>Proyecto</strong></th>
+                      <th class="text-center color_text"><strong>Número Cotización</strong></th>
+                      <th class="text-center color_text"><strong>Fecha</strong></th>                     
+                      <th class="text-center color_text"><strong>Total</strong></th>
+                      <th class="text-center color_text"><strong>Usuario</strong></th>
+                      <th class="text-center color_text"><strong>Acciones</strong></th>
                     </tr>
                   </thead>
                   <tbody>
@@ -478,7 +481,7 @@ Dashboard | @parent
   <div class="row">
     <div class="col-sm-12">
       <div class="panel product-details">
-        <div class="panel-heading">
+        <div class="panel-heading" style="background-color:#12160F; color:#B68911;">
           <h3 class="panel-title">Ordenes de Compra Pendientes De Aprobar</h3>
         </div>
         <div class="panel-body">
@@ -549,17 +552,17 @@ Dashboard | @parent
                 
                 <table class="table table-striped text-center" id="tablaCompras">
                   <thead>
-                    <tr style="background-color:#08c8c2">
-                      <th class="text-center"># Orden</th>
-                      <th class="text-center">Ejecutivo</th>
-                      <th class="text-center">Cliente</th>
-                      <th class="text-center">Proyecto</th>
-                      <th class="text-center"><strong>Proveedor</strong></th>
-                      <th class="text-center"><strong>Producto</strong></th>
-                      <th class="text-center"><strong>Cantidad</strong></th>
-                      <th class="text-center"><strong>Moneda</strong></th>
-                      <th class="text-center"><strong>Total</strong></th>
-                      <th class="text-center"><strong>Status</strong></th>
+                    <tr style="background-color:#12160F">
+                      <th class="text-center color_text"># Orden</th>
+                      <th class="text-center color_text">Ejecutivo</th>
+                      <th class="text-center color_text">Cliente</th>
+                      <th class="text-center color_text">Proyecto</th>
+                      <th class="text-center color_text"><strong>Proveedor</strong></th>
+                      <th class="text-center color_text"><strong>Producto</strong></th>
+                      <th class="text-center color_text"><strong>Cantidad</strong></th>
+                      <th class="text-center color_text"><strong>Moneda</strong></th>
+                      <th class="text-center color_text"><strong>Total</strong></th>
+                      <th class="text-center color_text"><strong>Status</strong></th>
                       <th></th>
                     </tr>
                   </thead>
@@ -598,7 +601,7 @@ Dashboard | @parent
                           <i class="far fa-eye"></i>
                         </a>
                         <a v-if="compra.archivo" class="btn btn-xs btn-warning" title="PDF" :href="'storage/'+compra.archivo"
-                          :download="'INTERCORP-PO '+compra.numero+' '+compra.cliente_nombre+' '+compra.proyecto_nombre+'.pdf'">
+                          :download="'ROBINSON-PO '+compra.numero+' '+compra.cliente_nombre+' '+compra.proyecto_nombre+'.pdf'">
                           <i class="far fa-file-pdf"></i>
                         </a>
                       </template>
@@ -638,7 +641,7 @@ Dashboard | @parent
   <div class="row">
     <div class="col-sm-12">
       <div class="panel product-details">
-        <div class="panel-heading">
+        <div class="panel-heading" style="background-color:#12160F; color:#B68911;">
           <h3 class="panel-title">Ultimas Cotizaciones Aceptadas</h3>
         </div>
         <div class="panel-body">
@@ -706,13 +709,13 @@ Dashboard | @parent
                 
                 <table class="table table-striped text-center" id="tablaAceptadas">
                   <thead>
-                    <tr style="background-color:#08c8c2">
-                      <th class="text-center">Cliente</th>
-                      <th class="text-center"><strong>Proyecto</strong></th>
-                      <th class="text-center"><strong>Número Cotización</strong></th>
-                      <th class="text-center"><strong>Fecha</strong></th>                     
-                      <th class="text-center"><strong>Total</strong></th>
-                      <th class="text-center"><strong>Acciones</strong></th>
+                    <tr style="background-color:#12160F">
+                      <th class="text-center color_text">Cliente</th>
+                      <th class="text-center color_text"><strong>Proyecto</strong></th>
+                      <th class="text-center color_text"><strong>Número Cotización</strong></th>
+                      <th class="text-center color_text"><strong>Fecha</strong></th>                     
+                      <th class="text-center color_text"><strong>Total</strong></th>
+                      <th class="text-center color_text"><strong>Acciones</strong></th>
                     </tr>
                   </thead>
                   <tbody>
@@ -745,7 +748,7 @@ Dashboard | @parent
   <div class="row">
       <div class="col-sm-12">
           <div class="panel product-details">
-            <div class="panel-heading">
+            <div class="panel-heading" style="background-color:#12160F; color:#B68911;">
               <h3 class="panel-title">Total Facturado VS Cobrado</h3>
             </div>
             <div class="panel-body">
@@ -1136,15 +1139,15 @@ Dashboard | @parent
         graphData.datasets=[
           {
             label:'Total',
-            backgroundColor: 'rgba(255, 99, 132, 0.2)',
-            borderColor:'rgba(255, 99, 132, 1)',
+            backgroundColor: 'BLACK',
+            borderColor:'BLACK',
             borderWidth: 1,
             data:[...serie1]
           },
           {
             label:'Facturado',
-            backgroundColor: 'rgba(54, 162, 235, 0.2)',
-            borderColor:  'rgba(54, 162, 235, 1)',
+            backgroundColor: '#B3B3B3;',
+            borderColor:  '#B3B3B3;',
             borderWidth: 1,
             data:[...serie2]
           },

@@ -64,7 +64,7 @@ class UnidadesMedidaController extends Controller
         ]);
       }
 
-      return response()->json(['success' => true, "error" => false],200);
+      return response()->json(['success' => true, "error" => false], 200);
     }
 
     /**
@@ -155,6 +155,6 @@ class UnidadesMedidaController extends Controller
     {
       $unidad->delete();
 
-      return response()->json(['success' => true, "error" => false],200);
+      return response()->json(['success' => true, "error" => false], 200);
     }
 }

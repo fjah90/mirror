@@ -11,13 +11,21 @@
   #tabla_length{
     float: left !important;
   }
+
+  .color_text{
+    color:#B3B3B3;
+  }
+
+  .btn-primary{
+    color:#000;
+  }
 </style>
 @stop
 
 {{-- Page content --}}
 @section('content')
 <!-- Content Header (Page header) -->
-<section class="content-header">
+<section class="content-header" style="background-color:#12160F; color:#B68911;">
   <h1 style="font-weight: bolder;">Cotizaciones en proceso</h1>
 </section>
 <!-- Main content -->
@@ -25,7 +33,8 @@
   <div class="row">
     <div class="col-lg-12">
       <div class="panel">
-        <div class="panel-heading">
+        <div class="panel-heading" style="background-color:#12160F; color:#B68911;">
+
           <h3 class="panel-title">
             <div class="p-10" style="display:inline-block">
               Usuario
@@ -39,8 +48,8 @@
               @endrole
             </div>
             <div class="p-10 " style="display:inline-block;float: right;">
-              <button class="btn btn-sm btn-primary">
-                <a href="{{route('prospectos.create2')}}" style="color:white;">
+              <button class="btn btn-warning btn-sm btn">
+                <a href="{{route('prospectos.create2')}}" style="color:#000;">
                   <i class="fas fa-address-book"></i> Nuevo Proyecto Prospecto
                 </a>
               </button>
@@ -67,12 +76,14 @@
             <table id="tabla" class="table table-bordred" style="width:100%;"
               data-page-length="100">
               <thead>
-                <tr style="background-color:#B6F488">
+                <tr style="background-color:#12160F">
                   <th class="hide">#</th>
-                  <th>Usuario</th>
-                  <th>Cliente</th>
-                  <th>Nombre de Proyecto</th>
-                  <th>Descripción</th>
+                  <th class="color_text">Usuario</th>
+                  <th class="color_text">Cliente</th>
+                  <th class="color_text">Nombre de Proyecto</th>
+                  <th class="color_text">Vendedor</th>
+                  <th class="color_text">Próxima actividad</th>
+                  <th class="color_text">Fecha</th>
                   <th style="min-width:105px;"></th>
                 </tr>
               </thead>
@@ -80,13 +91,15 @@
                 <tr v-for="(prospecto, index) in prospectos">
                   <td class="hide">@{{index+1}}</td>
                   <template>
-                    <td>@{{prospecto.usuario.name}}</td>
+                    <td>@{{prospecto.usuario}}</td>
                   </template>
                   <template>
-                    <td>@{{prospecto.cliente.nombre}}</td>
+                    <td>@{{prospecto.cliente}}</td>
                   </template>
                   <td>@{{prospecto.nombre}}</td>
-                  <td>@{{prospecto.descripcion}}</td>
+                  <td>@{{prospecto.vendedor}}</td>
+                  <td>@{{prospecto.actividad}}</td>
+                  <td>@{{prospecto.fecha}}</td>
                   <td class="text-right">
                   <a class="btn btn-xs btn-info" title="Ver" :href="'/prospectos/'+prospecto.id">
                     <i class="far fa-eye"></i>
@@ -116,11 +129,11 @@
                 <select name="proyecto_id" v-model="proyecto_id"
                             class="form-control" required id="proyecto-select" style="width: 300px;">
                   @foreach($proyectos as $proyecto)
-                      <option value="{{$proyecto->id}}">{{$proyecto->nombre}}--{{$proyecto->cliente->nombre}}</option>
+                      <option value="{{$proyecto->id}}">{{$proyecto->nombre}}--{{$proyecto->cliente}}</option>
                   @endforeach
                 </select>
                 
-                  <button class="btn btn-sm btn-primary" >
+                  <button class="btn btn-sm btn" >
                   <a href="{{route('prospectos.create')}}" style="color:white;">
                     <i class="fas fa-address-book"></i> Nuevo Proyecto
                   </a>
@@ -128,7 +141,7 @@
             </div>
 
             <div class="form-group text-right">
-                <button type="submit" class="btn btn-primary" :disabled="cargando" @click='cotizacionueva()'>Aceptar</button>
+                <button type="submit" class="" :disabled="cargando" @click='cotizacionueva()'>Aceptar</button>
                 <button type="button" class="btn btn-default"
                         @click="proyecto_id=0; modalNuecaCotizacion=false;">
                     Cancelar

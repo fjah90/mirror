@@ -45,7 +45,7 @@
 {{-- Page content --}}
 @section('content')
   <!-- Content Header (Page header) -->
-  <section class="content-header">
+  <section class="content-header" style="background-color:#12160F; color:#B68911;">
     <h1 style="font-weight: bolder;">Proyectos</h1>
   </section>
   <!-- Main content -->
@@ -53,7 +53,7 @@
     <div class="row">
       <div class="col-lg-12">
         <div class="panel ">
-          <div class="panel-heading">
+          <div class="panel-heading" style="background-color:#12160F; color:#B68911;">
             <h3 class="panel-title">Nuevo Proyecto Prospecto</h3>
           </div>
           {{-- <div>
@@ -78,7 +78,7 @@
                 <div class="col-md-2">
                   <div class="form-group">
                     <label class="control-label">Registrar cliente</label>
-                    <button type="button" id="show-modal" @click="modalCliente = true" class="btn btn-effect-ripple btn-primary form-control">Nuevo Cliente</button>
+                    <button type="button" id="show-modal" @click="modalCliente = true" class="btn btn-effect-ripple form-control" style="background-color:black; color:#B68911;">Nuevo Cliente</button>
                     <!--use the modal component, pass in the prop -->
                     <modal v-if="modalCliente" @close="modalCliente = false">
                   </div>
@@ -109,6 +109,45 @@
                       <textarea name="descripcion" rows="3" cols="80" class="form-control" v-model="prospecto.descripcion" required></textarea>
                     </div>
                   </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-4">
+                      <div class="form-group">
+                        <label for="prospecto.fecha_cierre" class="control-label">Fecha aproximada de cierre</label>
+                        <br />
+                        <dropdown>
+                          <div class="input-group">
+                            <div class="input-group-btn">
+                              <btn class="dropdown-toggle" style="background-color:#fff;">
+                                <i class="fas fa-calendar"></i>
+                              </btn>
+                            </div>
+                            <input class="form-control" type="text" name="fecha"
+                              v-model="prospecto.fecha_cierre" placeholder="dd/MM/YYYY"
+                            />
+                          </div>
+                          <template slot="dropdown">
+                            <li>
+                              <date-picker :locale="locale" :today-btn="false" :clear-btn="false"
+                              format="dd/MM/yyyy" :date-parser="dateParser" v-model="prospecto.fecha_cierre"/>
+                            </li>
+                          </template>
+                        </dropdown>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label class="control-label">Proyección de venta</label>
+                        <input type="number" step="0.1" name="proyeccion_venta" class="form-control" v-model="prospecto.proyeccion_venta" required />
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label class="control-label">Factibilidad</label>
+                        <input name="factibilidad" class="form-control" v-model="prospecto.factibilidad" required />
+                      </div>
+                    </div>
+
                 </div>
               </div>
               <div class="tab">
@@ -358,6 +397,9 @@ const app = new Vue({
         descripcion: '',
         es_prospecto: 'si',
         vendedor_id:'',
+        fecha_cierre:'',
+        proyeccion_venta:'',
+        factibilidad:''
       },
       ultima_actividad: {
         fecha: '',

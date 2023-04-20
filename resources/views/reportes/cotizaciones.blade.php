@@ -14,12 +14,15 @@ Reportes | @parent
     display: inline-block !important;
     float: none;
   }
+  .color_text{
+    color:#B3B3B3;
+  }
 </style>
 @stop
 
 @section('content')
 <!-- Content Header (Page header) -->
-<section class="content-header">
+<section class="content-header"  style="background-color:#12160F; color:#B68911;">
   <h1 style="font-weight: bolder;">Reporte</h1>
 </section>
 <!-- Main content -->
@@ -27,7 +30,7 @@ Reportes | @parent
     <div class="row">
         <div class="col-sm-12">
           <div class="panel product-details">
-            <div class="panel-heading">
+            <div class="panel-heading"  style="background-color:#12160F; color:#B68911;">
               <h3 class="panel-title">Reporte de Cotizaciones
 
                 <button style="background-color:transparent; border:none;float: right;">
@@ -128,19 +131,19 @@ Reportes | @parent
                     
                     <table class="table table-striped text-center" id="tabla">
                       <thead>
-                        <tr style="background-color:#fa7702">
-                          <th class="text-center">Fecha</th>
-                          <th class="text-center"><strong>Número Cotización</strong></th>
-                          <th class="text-center"><strong>Fecha Aprobación</strong></th>
-                          <th class="text-center"><strong>Cliente</strong></th>
-                          <th class="text-center"><strong>Proyecto</strong></th>
-                          <th class="text-center"><strong>Marca</strong></th>
-                          <th class="text-center"><strong>Proveedores</strong></th>
-                          <th class="text-center"><strong>IVA</strong></th>
-                          <th class="text-center"><strong>Monto</strong></th>
-                          <th class="text-center"><strong>Moneda</strong></th>
-                          <th class="text-center"><strong>Usuario</strong></th>
-                          <th class="text-center"><strong>Status</strong></th>
+                        <tr style="background-color:#12160F">
+                          <th class="text-center color_text">Fecha</th>
+                          <th class="text-center color_text"><strong>Número Cotización</strong></th>
+                          <th class="text-center color_text"><strong>Fecha Aprobación</strong></th>
+                          <th class="text-center color_text"><strong>Cliente</strong></th>
+                          <th class="text-center color_text"><strong>Proyecto</strong></th>
+                          <th class="text-center color_text"><strong>Marca</strong></th>
+                          <th class="text-center color_text"><strong>Proveedores</strong></th>
+                          <th class="text-center color_text"><strong>IVA</strong></th>
+                          <th class="text-center color_text"><strong>Monto</strong></th>
+                          <th class="text-center color_text"><strong>Moneda</strong></th>
+                          <th class="text-center color_text"><strong>Usuario</strong></th>
+                          <th class="text-center color_text"><strong>Status</strong></th>
                         </tr>
                       </thead>
                       <tbody>

@@ -6,14 +6,22 @@
 @stop
 
 @section('header_styles')
+<style>
+  .marg025 {margin: 0 25px;}
+  #tabla_length{
+    float: left !important;
+  }
 
-<!-- <style></style> -->
+  .color_text{
+    color:#B3B3B3;
+  }
+</style>
 @stop
 
 {{-- Page content --}}
 @section('content')
 <!-- Content Header (Page header) -->
-<section class="content-header">
+<section class="content-header" style="background-color:#12160F; color:#B68911;">
   <h1 style="font-weight: bolder;">Ordenes en Proceso</h1>
 </section>
 <!-- Main content -->
@@ -21,7 +29,7 @@
   <div class="row">
     <div class="col-lg-12">
       <div class="panel">
-        <div class="panel-heading">
+        <div class="panel-heading" style="background-color:#12160F; color:#B68911;">
           <h3 class="panel-title">
             <span class="p-10">Lista de Ordenes</span>
             <div class="p-10">
@@ -54,15 +62,15 @@
             <table id="tabla" class="table table-bordred" style="width:100%;"
               data-page-length="-1">
               <thead>
-                <tr style="background-color:#907ff3">
-                  <th>Orden Numero</th>
-                  <th>#</th>
-                  <th>Cliente</th>
-                  <th>Ejecutivo</th>
-                  <th>Proyecto</th>
-                  <th>Proveedor</th>
-                  <th>Status</th>
-                  <th></th>
+                <tr style="background-color:#12160F">
+                  <th class="color_text">Orden Numero</th>
+                  <th class="color_text">#</th>
+                  <th class="color_text">Cliente</th>
+                  <th class="color_text">Ejecutivo</th>
+                  <th class="color_text">Proyecto</th>
+                  <th class="color_text">Proveedor</th>
+                  <th class="color_text">Status</th>
+                  <th class="color_text"></th>
                 </tr>
               </thead>
               <tbody>
@@ -86,7 +94,7 @@
                     {{-- Descarga de archivos --}}
                     <a v-if="orden.orden_compra.archivo" class="btn btn-xs btn-warning"
                       title="PDF" :href="orden.orden_compra.archivo"
-                      :download="'INTERCORP-PO '+orden.numero+orden.orden_compra.cliente_nombre+orden.orden_compra.proyecto_nombre+'.pdf'">
+                      :download="'ROBINSON-PO '+orden.numero+orden.orden_compra.cliente_nombre+orden.orden_compra.proyecto_nombre+'.pdf'">
                       <i class="far fa-file-pdf"></i>
                     </a>
                     <template v-if="orden.factura" >

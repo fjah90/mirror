@@ -6,12 +6,17 @@ Nuevo Producto | @parent
 @stop
 
 @section('header_styles')
+<style>
+  .color_text{
+    color:#B3B3B3;
+  }
+</style>
 @stop
 
 {{-- Page content --}}
 @section('content')
 <!-- Content Header (Page header) -->
-<section class="content-header">
+<section class="content-header" style="background-color:#12160F; color:#B68911;">
   <h1>Productos</h1>
 </section>
 <!-- Main content -->
@@ -19,7 +24,7 @@ Nuevo Producto | @parent
   <div class="row">
     <div class="col-lg-12">
       <div class="panel ">
-        <div class="panel-heading">
+        <div class="panel-heading" style="background-color:#12160F; color:#B68911;">
           <h3 class="panel-title">Nuevo Producto</h3>
         </div>
         <div class="panel-body">
@@ -126,7 +131,7 @@ Nuevo Producto | @parent
             <div class="row" style="margin-top:25px;">
               <div class="col-md-12 text-right">
                 @if($layout !=='iframe')
-                  <a class="btn btn-default" href="{{route('productos.index')}}" style="margin-right: 20px;">
+                  <a class="btn btn-default" href="{{route('productos.index')}}" style="margin-right: 20px; color:#000; background-color:#B3B3B3">
                     Regresar
                   </a>
                 @endif

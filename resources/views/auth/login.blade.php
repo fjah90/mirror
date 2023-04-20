@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Intercorp</title>
+  <title>ROBINSON</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" href="{{ URL::asset('images/favicon.ico') }}" sizes="32x32">
 	<link rel="apple-touch-icon-precomposed" href="{{ URL::asset('images/favicon.ico') }}">
