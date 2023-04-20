@@ -162,7 +162,7 @@
 
           <!-- Cotizaciones -->
 
-          <li {!! (Request::is('prospectos*') ? 'class="active"' : '') !!}>
+          {{--  <li {!! (Request::is('prospectos*') ? 'class="active"' : '') !!}>
             <a href="{{ URL::to('prospectos') }}">
               <i class="menu-icon fas fa-shopping-bag" style="color:#B68911; font-size: 20px;"></i>
               <span class="mm-text" style="color:#9F9F9F;">Cotizaciones</span>
@@ -170,7 +170,7 @@
           </li>
 
 
-            <hr class="divider-menu">
+            <hr class="divider-menu">--}}
 
             
 
@@ -186,7 +186,7 @@
         -->
        
 
-        @hasanyrole('Administrador|Usuaro')
+        {{--  @hasanyrole('Administrador|Usuaro')
           <li {!! (Request::is('ordenes-proceso*') ? 'class="active"' : '') !!}  {!! (Request::is('proyectos-aprobados*') ? 'class="active"' : '') !!}><a class="title"><i class="fa fa-cart-arrow-down" style="color:#B68911; font-size: 20px;"></i> <b style="color:#9F9F9F;">Ordenes Compra </b><span class="fa fa-chevron-down" style="color:#9F9F9F;"></span></a>
            <ul class="nav child_menu">  
               <li  {!! (Request::is('proyectos-aprobados*') ? 'class="active"' : '') !!} >
@@ -206,8 +206,8 @@
           <hr class="divider-menu">
           @endhasanyrole
           
-
-          @hasanyrole('Administrador|Usuaro')
+          --}}
+          {{--  @hasanyrole('Administrador|Usuaro')
           <!-- Administracion  -->
           <li {!! (Request::is('cuentas-cobrar*') ? 'class="active"' : '') !!} {!! (Request::is('cuentas-pagar*') ? 'class="active"' : '') !!}><a class="title"><i class="fa fa-calculator" style="color:#B68911; font-size:20px;"></i>  <b style="color:#9F9F9F;">Contabilidad</b><span class="fa fa-chevron-down" style="color:#9F9F9F;"></span></a>
            <ul class="nav child_menu">  
@@ -227,9 +227,9 @@
           </li>
           <hr class="divider-menu">
          
-          @endhasanyrole
+          @endhasanyrole--}}
 
-          @hasanyrole('Administrador|Usuaro')
+          {{--  @hasanyrole('Administrador|Usuaro')
           <!--Reportes-->
 
           <li {!! (Request::is('reportes*') ? 'class="active"' : '') !!}><a class="title"><i class="fas fa-file" style="color:#B68911; font-size: 20px;"></i> <b style="color:#9F9F9F;">Reportes</b> <span class="fa fa-chevron-down" style="color:#9F9F9F;"></span></a>
@@ -272,7 +272,7 @@
             </ul>
           </li>
           
-          @endhasanyrole
+          @endhasanyrole --}}
 
 
           <!-- Administracion 
