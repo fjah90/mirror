@@ -111,7 +111,7 @@
                   </div>
                 </div>
                 <div class="row">
-                  <div class="col-md-4">
+                  <div class="col-md-3">
                       <div class="form-group">
                         <label for="prospecto.fecha_cierre" class="control-label">Fecha aproximada de cierre</label>
                         <br />
@@ -135,19 +135,31 @@
                         </dropdown>
                       </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                       <div class="form-group">
-                        <label class="control-label">Proyección de venta</label>
-                        <input type="number" step="0.1" name="proyeccion_venta" class="form-control" v-model="prospecto.proyeccion_venta" required />
+                        <label class="control-label">Proyección de venta en USD</label>
+                        <input type="number" step="0.1"  name="proyeccion_venta" class="form-control" v-model="prospecto.proyeccion_venta" required />
                       </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                       <div class="form-group">
                         <label class="control-label">Factibilidad</label>
-                        <input name="factibilidad" class="form-control" v-model="prospecto.factibilidad" required />
+                        <select class="form-control" name="factibilidad" v-model="prospecto.factibilidad" required>
+                          <option value="Alta">Alta</option>
+                          <option value="Media">Media</option>
+                          <option value="Baja">Baja</option>
+                        </select>
                       </div>
                     </div>
-
+                    <div class="col-md-3">
+                      <div class="form-group">
+                        <label class="control-label">Estatus</label>
+                        <select class="form-control" name="factibilidad" v-model="prospecto.factibilidad" required>
+                          <option value="Activo">Activo</option>
+                          <option value="Cancelado">Cancelado</option>
+                        </select>
+                      </div>
+                    </div>
                 </div>
               </div>
               <div class="tab">

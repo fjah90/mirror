@@ -26,7 +26,7 @@
 @section('content')
 <!-- Content Header (Page header) -->
 <section class="content-header" style="background-color:#12160F; color:#B68911;">
-  <h1 style="font-weight: bolder;">Cotizaciones en proceso</h1>
+  <h1 style="font-weight: bolder;">Prospectos</h1>
 </section>
 <!-- Main content -->
 <section class="content" id="content">
@@ -78,11 +78,12 @@
               <thead>
                 <tr style="background-color:#12160F">
                   <th class="hide">#</th>
-                  <th class="color_text">Usuario</th>
                   <th class="color_text">Cliente</th>
                   <th class="color_text">Nombre de Proyecto</th>
                   <th class="color_text">Diseñador</th>
                   <th class="color_text">Próxima actividad</th>
+                  <th class="color_text">Proyección de venta en USD</th>
+                  <th class="color_text">Factibilidad</th>
                   <th class="color_text">Fecha</th>
                   <th style="min-width:105px;"></th>
                 </tr>
@@ -91,14 +92,13 @@
                 <tr v-for="(prospecto, index) in prospectos">
                   <td class="hide">@{{index+1}}</td>
                   <template>
-                    <td>@{{prospecto.usuario}}</td>
-                  </template>
-                  <template>
                     <td>@{{prospecto.cliente}}</td>
                   </template>
                   <td>@{{prospecto.nombre}}</td>
                   <td>@{{prospecto.vendedor}}</td>
                   <td>@{{prospecto.actividad}}</td>
+                  <td>@{{prospecto.proyeccion_venta}}</td>
+                  <td>@{{prospecto.factibilidad}}</td>
                   <td>@{{prospecto.fecha}}</td>
                   <td class="text-right">
                   <a class="btn btn-xs btn-info" title="Ver" :href="'/prospectos/'+prospecto.id">
