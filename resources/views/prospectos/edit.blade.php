@@ -103,20 +103,20 @@
                     <div class="col-md-3">
                       <div class="form-group">
                         <label class="control-label">Factibilidad</label>
-                          <select class="form-control" name="factibilidad" v-model="prospecto.factibilidad" required>
-                            <option value="Alta">Alta</option>
-                            <option value="Media">Media</option>
-                            <option value="Baja">Baja</option>
-                          </select>
+                         <select class="form-control" name="factibilidad" v-model="prospecto.factibilidad" required>
+                          <option value="Alta">Alta</option>
+                          <option value="Media">Media</option>
+                          <option value="Baja">Baja</option>
+                        </select>
                       </div>
                     </div>
-                    <div class="col-md-3">
+                     <div class="col-md-3">
                       <div class="form-group">
                         <label class="control-label">Estatus</label>
-                          <select class="form-control" name="factibilidad" v-model="prospecto.estatus" required>
-                            <option value="Activo">Activo</option>
-                            <option value="Cancelado">Cancelado</option>
-                          </select>
+                          <select class="form-control" name="estatus" v-model="prospecto.estatus" required>
+                          <option value="Activo">Activo</option>
+                          <option value="Cancelado">Cancelado</option>
+                        </select>
                       </div>
                     </div>
               </div>
@@ -405,8 +405,8 @@ const app = new Vue({
       return accounting.formatMoney(numero, { symbol: "%",  format: "%v %s" });
     },
     dateParser(value){
-			return moment(value, 'DD/MM/YYYY').toDate().getTime();
-		},
+      return moment(value, 'DD/MM/YYYY').toDate().getTime();
+    },
     agregarProducto(){
       if(this.ofrecido.id==undefined) return false;
       this.prospecto.proxima_actividad.productos_ofrecidos.push(this.ofrecido);
@@ -424,6 +424,7 @@ const app = new Vue({
         fecha_cierre: this.prospecto.fecha_cierre,
         proyeccion_venta: this.prospecto.proyeccion_venta,
         factibilidad: this.prospecto.factibilidad
+        estatus: this.prospecto.estatus
       })
       .then(({data}) => {
         this.cargando = false;
