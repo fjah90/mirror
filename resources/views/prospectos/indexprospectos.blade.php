@@ -87,6 +87,7 @@
                   <th class="color_text">Proyección de venta en USD</th>
                   <th class="color_text">Factibilidad</th>
                   <th class="color_text">Fecha</th>
+                  <th class="color_text">Estatus</th>
                   <th style="min-width:105px;"></th>
                 </tr>
               </thead>
@@ -99,9 +100,10 @@
                   <td>@{{prospecto.nombre}}</td>
                   <td>@{{prospecto.vendedor}}</td>
                   <td>@{{prospecto.actividad}}</td>
-                  <td>@{{prospecto.proyeccion_venta}}</td>
+                  <td>@{{prospecto.proyeccion_venta}} $</td>
                   <td>@{{prospecto.factibilidad}}</td>
                   <td>@{{prospecto.fecha}}</td>
+                  <td>@{{prospecto.estatus}}</td>
                   <td class="text-right">
                   @can('Prospectos ver')
                   <a class="btn btn-xs btn-info" title="Ver" :href="'/prospectos/'+prospecto.id">

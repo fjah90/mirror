@@ -113,7 +113,7 @@
                     <div class="col-md-3">
                       <div class="form-group">
                         <label class="control-label">Estatus</label>
-                          <select class="form-control" name="factibilidad" v-model="prospecto.factibilidad" required>
+                          <select class="form-control" name="factibilidad" v-model="prospecto.estatus" required>
                             <option value="Activo">Activo</option>
                             <option value="Cancelado">Cancelado</option>
                           </select>

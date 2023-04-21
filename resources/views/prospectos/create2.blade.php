@@ -154,7 +154,7 @@
                     <div class="col-md-3">
                       <div class="form-group">
                         <label class="control-label">Estatus</label>
-                        <select class="form-control" name="factibilidad" v-model="prospecto.factibilidad" required>
+                        <select class="form-control" name="estatus" v-model="prospecto.estatus" required>
                           <option value="Activo">Activo</option>
                           <option value="Cancelado">Cancelado</option>
                         </select>
@@ -260,7 +260,7 @@
               <div class="tab">
                 <div class="row">
                   <div class="col-sm-12">
-                    <h4>Próxima Actividad</h4>
+                    <h4>Próxima Actividaddddd</h4>
                     <hr />
                   </div>
                 </div>
@@ -305,6 +305,12 @@
                       <label class="control-label">Especifique</label>
                       <input class="form-control" type="text" name="tipo" v-model="proxima_actividad.tipo"/>
                     </div>
+                  </div>
+                </div>
+                 <div class="row">
+                  <div class="col-sm-12">
+                    <label class="control-label">Descripción Actividad</label>
+                    <textarea name="descripcion" rows="5" cols="80" class="form-control" v-model="ultima_actividad.descripcion"></textarea>
                   </div>
                 </div>
                 <div class="row" style="margin-top:25px;">
@@ -411,7 +417,8 @@ const app = new Vue({
         vendedor_id:'',
         fecha_cierre:'',
         proyeccion_venta:'',
-        factibilidad:''
+        factibilidad:'',
+        estatus:''
       },
       ultima_actividad: {
         fecha: '',

@@ -487,7 +487,8 @@ class ProspectosController extends Controller
                 'vendedor_id' => $request->vendedor_id,
                 'factibilidad' => $request->factibilidad,
                 'fecha_cierre' => $fecha_cierre,
-                'proyeccion_venta' => $request->proyeccion_venta
+                'proyeccion_venta' => $request->proyeccion_venta,
+                'estatus' => $request->estatus,
             ]);
 
         }else{
