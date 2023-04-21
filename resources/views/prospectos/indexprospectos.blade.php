@@ -49,9 +49,11 @@
             </div>
             <div class="p-10 " style="display:inline-block;float: right;">
               <button class="btn btn-warning btn-sm btn">
+              @can('Prospectos nuevo')
                 <a href="{{route('prospectos.create2')}}" style="color:#000;">
                   <i class="fas fa-address-book"></i> Nuevo Proyecto Prospecto
                 </a>
+              @endcan
               </button>
             </div>
             <div class="p-10">
@@ -101,15 +103,21 @@
                   <td>@{{prospecto.factibilidad}}</td>
                   <td>@{{prospecto.fecha}}</td>
                   <td class="text-right">
+                  @can('Prospectos ver')
                   <a class="btn btn-xs btn-info" title="Ver" :href="'/prospectos/'+prospecto.id">
                     <i class="far fa-eye"></i>
                   </a>
+                  @endcan
+                  @can('Prospectos editar')
                   <a class="btn btn-xs btn-warning" title="Editar" :href="'/prospectos/'+prospecto.id+'/editar'">
                       <i class="fas fa-pencil-alt"></i>
                   </a>
+                  @endcan
+                  @can('Prospectos convertir')
                   <button class="btn btn-xs btn-success" title="Convertir el Proyecto" @click="convertirenproyecto(prospecto, index)">
                       <i class="fas fa-upload"></i>
                     </button>
+                  @endcan
                   </td>  
                 </tr>
               </tbody>
