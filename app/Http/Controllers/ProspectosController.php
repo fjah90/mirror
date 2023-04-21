@@ -648,9 +648,9 @@ class ProspectosController extends Controller
             'tipo_id' => 1,
             'tipo'    => '',
         ];
-        if($prospecto->fecha_cierre != null){
+        /*if($prospecto->fecha_cierre != null){
             $prospecto->fecha_cierre = $prospecto->fecha_cierre_formated;
-        }
+        }*/
         
         $productos = Producto::with('categoria')->get();
         if($prospecto->es_prospecto == 'si'){

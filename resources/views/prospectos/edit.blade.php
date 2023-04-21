@@ -243,7 +243,6 @@
                     </ul>
                   </div>
                 </div>
-               
                 <div class="row">
                   <div class="col-sm-12">
                     <label class="control-label">Descripción Actividad</label>
