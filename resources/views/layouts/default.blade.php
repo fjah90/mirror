@@ -383,10 +383,6 @@
               </li>
             @endcan
 
-
-
-            @hasanyrole('Administrador')
-            @endhasanyrole
             @can('Tipo clientes menu')
             <li  {!! (Request::is('tiposClientes*') ? 'class="active"' : '') !!}>
               <a href="{{ URL::to('tiposClientes') }}">

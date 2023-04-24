@@ -74,6 +74,8 @@ Route::middleware('auth')->group(function () {
         Route::get('usuarios/permisos', 'UsuariosController@permisos');
         Route::get('/permisos/{rol}/edit', 'UsuariosController@editpermisos')->name('permisos.edit');
         Route::post('/permisos/{rol}/actualizar', 'UsuariosController@updatepermisos');
+        /**/
+        Route::resource('/permisos', 'PermisosController');
         //Mi Cuenta
         Route::get('/mi_cuenta', 'MiCuentaController@index')->name('mi_cuenta');
         Route::post('/mi_cuenta', 'MiCuentaController@update');
@@ -220,6 +222,7 @@ Route::middleware('auth')->group(function () {
         Route::get('usuarios/permisos', 'UsuariosController@permisos')->name('usuarios.permisos');
         Route::get('/permisos/{rol}/edit', 'UsuariosController@editpermisos')->name('permisos.edit');
         Route::post('/permisos/{rol}/actualizar', 'UsuariosController@updatepermisos');
+        Route::resource('/permisos', 'PermisosController');
 
         Route::delete('/productos/{producto}', 'ProductosController@destroy');
         Route::delete('/clientes/{cliente}', 'ClientesController@destroy');
