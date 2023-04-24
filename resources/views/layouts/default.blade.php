@@ -386,20 +386,6 @@
 
 
             @hasanyrole('Administrador')
-            @can('Usuarios menu')
-            <li {!! (Request::is('Usuarios*') ? 'class="active"' : '') !!} class="sub {!! (Request::is('usuarios*') ? 'active' : '') !!}">
-              <a href="{{ URL::to('usuarios') }}">
-                <i class="fas fa-user"></i> <span style="color:#000;">Usuarios</span>
-              </a>
-            </li>
-            @endcan
-            @can('Permisos menu')
-            <li {!! (Request::is('Usuarios*') ? 'class="active"' : '') !!} class="sub {!! (Request::is('usuarios*') ? 'active' : '') !!}">
-              <a href="{{ URL::to('usuarios/permisos') }}">
-                <i class="fas fa-user"></i> <span style="color:#000;">Permisos</span>
-              </a>
-            </li>
-            @endcan
             @endhasanyrole
             @can('Tipo clientes menu')
             <li  {!! (Request::is('tiposClientes*') ? 'class="active"' : '') !!}>
@@ -468,11 +454,28 @@
           @endcan
           @endhasanyrole
 
-          
-          
-
-          
-
+           @hasanyrole('Administrador|Usuaro')
+          <!-- Administracion  -->
+          <li {!! (Request::is('Usuarios*') ? 'class="active"' : '') !!}><a class="title"><i class="fa fa-user" style="color:#B68911; font-size:20px;"></i>  <b style="color:#9F9F9F;">Gestión de Usuario</b><span class="fa fa-chevron-down" style="color:#9F9F9F;"></a>
+           <ul class="nav child_menu">  
+            @can('Usuarios menu')
+            <li {!! (Request::is('Usuarios*') ? 'class="active"' : '') !!} class="sub {!! (Request::is('usuarios*') ? 'active' : '') !!}">
+              <a href="{{ URL::to('usuarios') }}">
+                <i class="fas fa-user"></i> <span style="color:#000;">Usuarios</span>
+              </a>
+            </li>
+            @endcan
+            @can('Permisos menu')
+            <li {!! (Request::is('Usuarios*') ? 'class="active"' : '') !!} class="sub {!! (Request::is('usuarios*') ? 'active' : '') !!}">
+              <a href="{{ URL::to('usuarios/permisos') }}">
+                <i class="fas fa-user"></i> <span style="color:#000;">Permisos</span>
+              </a>
+            </li>
+            @endcan 
+            </ul> 
+          </li>
+          <hr class="divider-menu">
+          @endhasanyrole
           <!--
           
           <li {!! (Request::is('clientes*') ? 'class="active"' : '') !!}>
