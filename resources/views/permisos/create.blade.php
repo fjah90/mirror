@@ -36,6 +36,16 @@
                     <div class="row">
                       <div class="col-sm-6">
                         <div class="form-group">
+                          <label class="control-label">Rol</label>
+                          <select name="tipo" v-model="usuario.tipo" class="form-control" required >
+                            @foreach($roles as $rol)
+                            <option value="{{$rol->name}}">{{$rol->name}}</option>
+                            @endforeach
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-sm-6">
+                        <div class="form-group">
                           <label class="control-label">Nombre</label>
                           <input type="text" class="form-control" name="name" v-model="permisos.name" required />
                         </div>
@@ -70,12 +80,16 @@
 const app = new Vue({
     el: '#content',
     data: {
-      permisos: {
-        name: '', 
+      usuario: {
+        tipo: '',
+        nombre: ''
       },
       cargando: false,
     },
     methods: {
+      fijarArchivo(campo){
+        this.usuario[campo] = this.$refs[campo].files[0];
+      },
       /*guardar(){
         this.cargando = true;
         var formData = objectToFormData(this.usuario);

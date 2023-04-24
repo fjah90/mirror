@@ -36,7 +36,7 @@
                     <div class="row">
                       <div class="col-sm-6">
                         <div class="form-group">
-                          <label class="control-label">Tipo</label>
+                          <label class="control-label">Rol</label>
                           <select name="tipo" v-model="usuario.tipo" class="form-control" required >
                             @foreach($roles as $rol)
                             <option value="{{$rol->name}}">{{$rol->name}}</option>

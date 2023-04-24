@@ -39,7 +39,7 @@
                 </div>
                 <div class="col-md-4">
                   <div class="form-group">
-                    <label class="control-label">Tipo</label>
+                    <label class="control-label">Rol</label>
                     <span class="form-control">{{$usuario->tipo}}</span>
                   </div>
                 </div>

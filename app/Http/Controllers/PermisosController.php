@@ -32,8 +32,9 @@ class PermisosController extends Controller
     public function create()
     {
          $roles = Role::all();
+         $permisos = Permission::all();
 
-        return view('permisos.create', compact('roles'));
+        return view('permisos.create', compact('roles','permisos'));
     }
 
     /**
@@ -45,11 +46,8 @@ class PermisosController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-        'tipo' => 'required',
-        'nombre' => 'required',
-        'email' => 'required|email|unique:users',
-        'contraseña' => 'required|confirmed',
-        'firma' => 'nullable|file|mimes:jpeg,jpg,png',
+        'name' => 'required',
+      
       ]);
 
       if ($validator->fails()) {
@@ -68,8 +66,8 @@ class PermisosController extends Controller
 
       $create = [
         'name' => $request->nombre,
-        'email' => $request->email,
-        'password' => password_hash($request->contraseña, PASSWORD_BCRYPT),
+        /*'email' => $request->email,
+        'password' => password_hash($request->contraseña, PASSWORD_BCRYPT),*/
       ];
 
       $usuario = User::create($create);
@@ -96,9 +94,10 @@ class PermisosController extends Controller
     public function show(User $user)
     {
         $roles = Role::all();
-        if($usuario->firma) $usuario->firma = asset('storage/'.$usuario->firma);
+         $permisos = Permission::all();
+        //if($usuario->firma) $usuario->firma = asset('storage/'.$usuario->firma);
 
-        return view('permisos.show', compact('usuario','roles'));
+        return view('permisos.show', compact('roles','permisos'));
     }
 
     /**
