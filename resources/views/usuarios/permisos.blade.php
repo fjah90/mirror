@@ -49,7 +49,7 @@
                           <td>{{$rol->name}}</td>
                           <td class="text-right">
                             <a class="btn btn-xs btn-info" title="Ver"
-                              href="#">
+                              href="{{route('permisos.show', ['rol'=>$rol->id])}}">
                               <i class="far fa-eye"></i>
                             </a>
                             <a class="btn btn-xs btn-success" title="Editar Permisos"
@@ -78,7 +78,7 @@
 
 {{-- footer_scripts --}}
 @section('footer_scripts')
-
 <script>
+
 </script> 
 @stop

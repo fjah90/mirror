@@ -36,18 +36,8 @@
                     <div class="row">
                       <div class="col-sm-6">
                         <div class="form-group">
-                          <label class="control-label">Rol</label>
-                          <select name="tipo" v-model="usuario.tipo" class="form-control" required >
-                            @foreach($roles as $rol)
-                            <option value="{{$rol->name}}">{{$rol->name}}</option>
-                            @endforeach
-                          </select>
-                        </div>
-                      </div>
-                      <div class="col-sm-6">
-                        <div class="form-group">
                           <label class="control-label">Nombre</label>
-                          <input type="text" class="form-control" name="name" v-model="permisos.name" required />
+                          <input type="text" class="form-control" name="name" v-model="permiso.name" required />
                         </div>
                       </div>
                     </div>
@@ -78,10 +68,11 @@
 
 <script>
 const app = new Vue({
-    el: '#content',
+  el: '#content',
     data: {
-      tipo:'',
-      name: ''
+      permiso: {
+        name: '',
+      },
       cargando: false,
     },
     methods: {
@@ -110,7 +101,7 @@ const app = new Vue({
           });
         });
       },//
-    }
+    },
 });
 </script>
 @stop

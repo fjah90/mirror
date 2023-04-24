@@ -32,7 +32,9 @@ class PermisosController extends Controller
     public function create()
     {
          $roles = Role::all();
+         //dd($roles);
          $permisos = Permission::all();
+         //dd($permisos);
 
         return view('permisos.create', compact('roles','permisos'));
     }
@@ -64,23 +66,8 @@ class PermisosController extends Controller
         ], 400);
       }
 
-      $create = [
-        'name' => $request->nombre,
-        /*'email' => $request->email,
-        'password' => password_hash($request->contraseña, PASSWORD_BCRYPT),*/
-      ];
-
-      $usuario = User::create($create);
-      $usuario->assignRole($rol);
-
-      if(!is_null($request->firma)){
-        $firma = Storage::putFileAs(
-          'public/usuarios/'.$usuario->id, $request->firma,
-          'firma.'.$request->firma->guessExtension()
-        );
-        $firma = str_replace('public/', '', $firma);
-        $usuario->update(['firma'=>$firma]);
-      }
+       Permission::create($request->all());
+       dd($request->all());
 
       return response()->json(["success"=>true,"error"=>false], 200);
     }

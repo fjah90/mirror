@@ -130,6 +130,16 @@ class UsuariosController extends Controller
       return view('usuarios.show', compact('usuario'));
     }
 
+
+
+    public function showpermisos(User $usuario)
+    {
+      $roles = Role::all();
+      $permisos = Permission::all();
+      
+      return view('usuarios.showpermisos', compact('usuario','roles','permisos'));
+    }
+
     /**
      * Show the form for editing the specified resource.
      *
