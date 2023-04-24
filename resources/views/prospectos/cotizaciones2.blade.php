@@ -22,7 +22,7 @@
 @section('content')
 <!-- Content Header (Page header) -->
 <section class="content-header" style="background-color:#12160F; color:#B68911;">
-  <h1 style="font-weight: bolder;">Cotizaciones en proceso</h1>
+  <h1 style="font-weight: bolder;">Prospectos</h1>
 </section>
 <!-- Main content -->
 <section class="content" id="content">
@@ -45,7 +45,7 @@
             @hasanyrole('Administrador'|'Usuario')
             <div class="p-10" style="display:inline-block;float: right;">
               <button class="btn btn-sm btn-primary" @click="modalNuecaCotizacion=true">
-                  <i class="fas fa-address-book"></i> Nueva Cotización
+                  <i class="fas fa-address-book"></i> Nuevo Proyecto Prospecto
               </button>
             </div>
             @endhasrole

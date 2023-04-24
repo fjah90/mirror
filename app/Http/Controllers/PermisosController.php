@@ -94,9 +94,10 @@ class PermisosController extends Controller
     public function show(User $user)
     {
         $roles = Role::all();
-         $permisos = Permission::all();
-        //if($usuario->firma) $usuario->firma = asset('storage/'.$usuario->firma);
-
+        //$rol = Role::all();
+        $permisos = Permission::all();
+        //dd($permisos);
+  
         return view('permisos.show', compact('roles','permisos'));
     }
 

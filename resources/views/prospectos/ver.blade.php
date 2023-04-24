@@ -73,7 +73,7 @@
                             </div>
                             <div class="col-md-3">
                               <div class="form-group">
-                                <label class="control-label">Proyección de venta</label>
+                                <label class="control-label">Proyección de venta en USD</label>
                                 <span class="form-control" >{{$prospecto->proyeccion_venta}}</span>
                               </div>
                             </div>

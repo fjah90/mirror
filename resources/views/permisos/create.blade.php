@@ -80,31 +80,24 @@
 const app = new Vue({
     el: '#content',
     data: {
-      usuario: {
-        tipo: '',
-        nombre: ''
-      },
+      tipo:'',
+      name: ''
       cargando: false,
     },
     methods: {
-      fijarArchivo(campo){
-        this.usuario[campo] = this.$refs[campo].files[0];
-      },
-      /*guardar(){
+      guardar(){
         this.cargando = true;
-        var formData = objectToFormData(this.usuario);
-
-        axios.post('/usuarios', formData, {
-          headers: { 'Content-Type': 'multipart/form-data'}
+        axios.post('/permisos', {
+          name: this.name,
         })
         .then(({data}) => {
           this.cargando = false;
           swal({
-            title: "Usuario Guardado",
+            title: "Rol Guardado",
             text: "",
             type: "success"
           }).then(()=>{
-            window.location = "/usuarios";
+            window.location = "/permisos";
           });
         })
         .catch(({response}) => {
@@ -116,8 +109,8 @@ const app = new Vue({
             type: "error"
           });
         });
-      },//fin cargarPresupuesto
-    }*/
+      },//
+    }
 });
 </script>
 @stop

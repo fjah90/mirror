@@ -196,12 +196,15 @@
                   <div class="col-md-4">
                     <div class="form-group">
                       <label class="control-label">Tipo</label>
-                      <select class="form-control" name="tipo" v-model='ultima_actividad.tipo_id' >
-                        @foreach($tipos as $tipo)
-                        <option value="{{$tipo->id}}">{{$tipo->nombre}}</option>
-                        @endforeach
-                        <option value="0">Otro</option>
-                      </select>
+                        <select class="form-control" name="tipo" v-model="ultima_actividad.tipo_id" required>
+                          <option value="1">Llamada</option>
+                          <option value="12">Videollamada</option>
+                          <option value="2">Cita Presencial</option>
+                          <option value="13">Cita Showroom</option>
+                          <option value="3">Email</option>
+                          <option value="14">Propuesta</option>
+                          <option value="5">Enviar Cotizacion</option>
+                        </select>
                     </div>
                   </div>
                   <div class="col-md-4" v-if="ultima_actividad.tipo_id==0">
@@ -252,14 +255,14 @@
                 <div class="row">
                   <div class="col-sm-12">
                     <label class="control-label">Descripción Actividad</label>
-                    <textarea name="descripcion" rows="5" cols="80" class="form-control" v-model="ultima_actividad.descripcion"></textarea>
+                    <textarea name="descripcion" rows="5" cols="80" class="form-control" v-model="proxima_actividad.descripcion"></textarea>
                   </div>
                 </div>
               </div>
               <div class="tab">
                 <div class="row">
                   <div class="col-sm-12">
-                    <h4>Próxima Actividaddddd</h4>
+                    <h4>Próxima Actividad</h4>
                     <hr />
                   </div>
                 </div>
@@ -291,12 +294,15 @@
                   <div class="col-md-4">
                     <div class="form-group">
                       <label class="control-label">Tipo</label>
-                      <select class="form-control" name="tipo" v-model='proxima_actividad.tipo_id'>
-                        @foreach($tipos as $tipo)
-                          <option value="{{$tipo->id}}">{{$tipo->nombre}}</option>
-                        @endforeach
-                          <option value="0">Otro</option>
-                      </select>
+                       <select class="form-control" name="tipo" v-model="proxima_actividad.tipo_id" required>
+                          <option value="1">Llamada</option>
+                          <option value="12">Videollamada</option>
+                          <option value="2">Cita Presencial</option>
+                          <option value="13">Cita Showroom</option>
+                          <option value="3">Email</option>
+                          <option value="14">Propuesta</option>
+                          <option value="5">Enviar Cotizacion</option>
+                        </select>
                     </div>
                   </div>
                   <div class="col-md-4" v-if="proxima_actividad.tipo_id==0">
