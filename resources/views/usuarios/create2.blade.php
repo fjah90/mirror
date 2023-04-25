@@ -30,6 +30,7 @@
               <h3 class="panel-title">Nuevo Rol</h3>
             </div>
             <div class="panel-body">
+              {{Form::open(['route'=>'usuarios.store2','method'=>'POST','id'=>'formpermiso']) }}
               <form class="" @submit.prevent="guardar()">
                 <div class="row">
                   <div class="col-md-9">
@@ -44,12 +45,10 @@
                           </select>
                         </div>
                       </div>
-                    </div>
-                    <div class="row">
                       <div class="col-sm-6">
                         <div class="form-group">
                           <label class="control-label">Nombre</label>
-                          <input type="text" class="form-control" name="nombre" v-model="usuario.nombre" required />
+                          <input type="text" class="form-control" name="name" id="name" required />
                         </div>
                       </div>
                     </div>
@@ -66,7 +65,7 @@
                     </div>
                   </div>
                 </div>
-              </form>
+      {{Form::close()}}
             </div>
           </div>
         </div>
@@ -79,44 +78,5 @@
 @section('footer_scripts')
 
 <script>
-const app = new Vue({
-    el: '#content',
-    data: {
-      usuario: {
-        //tipo: '',
-        name: '',
-      },
-      cargando: false,
-    },
-    methods: {
-      guardar(){
-        this.cargando = true;
-        var formData = objectToFormData(this.usuario);
-
-        axios.post('/usuarios', formData, {
-          headers: { 'Content-Type': 'multipart/form-data'}
-        })
-        .then(({data}) => {
-          this.cargando = false;
-          swal({
-            title: "Usuario Guardado",
-            text: "",
-            type: "success"
-          }).then(()=>{
-            window.location = "/usuarios";
-          });
-        })
-        .catch(({response}) => {
-          console.error(response);
-          this.cargando = false;
-          swal({
-            title: "Error",
-            text: response.data.message || "Ocurrio un error inesperado, intente mas tarde",
-            type: "error"
-          });
-        });
-      },//fin cargarPresupuesto
-    }
-});
 </script>
 @stop

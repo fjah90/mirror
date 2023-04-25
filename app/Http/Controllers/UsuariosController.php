@@ -71,10 +71,12 @@ class UsuariosController extends Controller
     public function create2()
     {
         $roles = Role::all();
+        //dd($roles);
         $permisos = Permission::all();
+        //dd($permisos);
         $usuarios = User::with('roles')->get();
 
-        return view('usuarios.create2', compact('roles','permisos','usuarios'));
+        return view('usuarios.create2', compact('roles','usuarios','permisos'));
     }
 
     /**
@@ -124,6 +126,12 @@ class UsuariosController extends Controller
         $firma = str_replace('public/', '', $firma);
         $usuario->update(['firma'=>$firma]);
       }
+
+      $permiso=new Permission;
+      $permiso->name=$request->name;
+      $permiso->guard_name=$request->guard_name;
+      $permiso->save();
+
 
       return response()->json(["success"=>true,"error"=>false], 200);
     }
