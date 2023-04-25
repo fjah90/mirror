@@ -784,12 +784,12 @@
             <form class="" @submit.prevent="copiarCotizacion()">
                 <div class="form-group">
                     <label class="control-label">Proyecto Destino</label>
-                    <!--select name="proyecto_id" v-model="copiar_cotizacion.proyecto_id"
+                    <select name="proyecto_id" v-model="copiar_cotizacion.proyecto_id"
                             class="form-control" required id="proyecto-select" style="width: 300px;">
                         @foreach($proyectos as $proyecto)
                             <option value="{{$proyecto->id}}" >{{$proyecto->nombre}}--{{$proyecto->cliente->nombre}}</option>
                         @endforeach
-                    </select-->
+                    </select>
                 </div>
                 <div class="form-group text-right">
                     <button type="submit" class="btn btn-primary" :disabled="cargando">Guardar</button>
@@ -1139,9 +1139,9 @@
                 ordenModal : {},
                 locale: localeES,
                 prospecto: {!! json_encode($prospecto) !!},
-                ordenes: {!! json_encode($ordenes) !!},
-                 cuentas: {!! json_encode($cuentas) !!},
-                 ordenes_proceso: {!! json_encode($ordenes_proceso) !!},
+                //ordenes: {!! json_encode($ordenes) !!},
+                 //cuentas: {!! json_encode($cuentas) !!},
+                 //ordenes_proceso: {!! json_encode($ordenes_proceso) !!},
                  notas: {
                     cotizacion_id: 0,
                     mensaje: ""
