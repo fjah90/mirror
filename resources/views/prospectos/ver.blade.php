@@ -1139,9 +1139,9 @@
                 ordenModal : {},
                 locale: localeES,
                 prospecto: {!! json_encode($prospecto) !!},
-                //ordenes: {!! json_encode($ordenes) !!},
-                 //cuentas: {!! json_encode($cuentas) !!},
-                 //ordenes_proceso: {!! json_encode($ordenes_proceso) !!},
+                ordenes: {!! json_encode($ordenes) !!},
+                 cuentas: {!! json_encode($cuentas) !!},
+                 ordenes_proceso: {!! json_encode($ordenes_proceso) !!},
                  notas: {
                     cotizacion_id: 0,
                     mensaje: ""
