@@ -56,7 +56,7 @@
                     <div class="row" style="margin-top:25px;">
                       <div class="col-sm-12 text-right">
                         <a href="{{route('usuarios.permisos')}}" class="btn btn-default" style="color:#000; background-color:#B3B3B3;">Regresar</a>
-                        <button type="submit" class="btn btn-primary" :disabled="cargando">
+                        <button type="submit" class="btn btn-primary" :disabled="cargando" style="background-color:#12160F; color:#B68911;">
                           <i class="fa fa-save"></i>
                           Guardar Rol
                         </button>
