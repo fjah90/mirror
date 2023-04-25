@@ -65,9 +65,7 @@ class PermisosController extends Controller
       }
 
       $create = [
-        'name' => $request->nombre,
-        /*'email' => $request->email,
-        'password' => password_hash($request->contraseña, PASSWORD_BCRYPT),*/
+        'name' => $request->name,
       ];
 
       $usuario = User::create($create);
