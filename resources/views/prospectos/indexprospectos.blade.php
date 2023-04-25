@@ -26,7 +26,7 @@
 @section('content')
 <!-- Content Header (Page header) -->
 <section class="content-header" style="background-color:#12160F; color:#B68911;">
-  <h1 style="font-weight: bolder;">Cotizaciones en proceso</h1>
+  <h1 style="font-weight: bolder;">Prospectos</h1>
 </section>
 <!-- Main content -->
 <section class="content" id="content">
@@ -49,9 +49,11 @@
             </div>
             <div class="p-10 " style="display:inline-block;float: right;">
               <button class="btn btn-warning btn-sm btn">
+              @can('Prospectos nuevo')
                 <a href="{{route('prospectos.create2')}}" style="color:#000;">
                   <i class="fas fa-address-book"></i> Nuevo Proyecto Prospecto
                 </a>
+              @endcan
               </button>
             </div>
             <div class="p-10">
@@ -78,12 +80,14 @@
               <thead>
                 <tr style="background-color:#12160F">
                   <th class="hide">#</th>
-                  <th class="color_text">Usuario</th>
                   <th class="color_text">Cliente</th>
                   <th class="color_text">Nombre de Proyecto</th>
                   <th class="color_text">Diseñador</th>
                   <th class="color_text">Próxima actividad</th>
+                  <th class="color_text">Proyección de venta en USD</th>
+                  <th class="color_text">Factibilidad</th>
                   <th class="color_text">Fecha</th>
+                  <th class="color_text">Estatus</th>
                   <th style="min-width:105px;"></th>
                 </tr>
               </thead>
@@ -91,25 +95,31 @@
                 <tr v-for="(prospecto, index) in prospectos">
                   <td class="hide">@{{index+1}}</td>
                   <template>
-                    <td>@{{prospecto.usuario}}</td>
-                  </template>
-                  <template>
                     <td>@{{prospecto.cliente}}</td>
                   </template>
                   <td>@{{prospecto.nombre}}</td>
                   <td>@{{prospecto.vendedor}}</td>
                   <td>@{{prospecto.actividad}}</td>
+                  <td>@{{prospecto.proyeccion_venta}}</td>
+                  <td>@{{prospecto.factibilidad}}</td>
                   <td>@{{prospecto.fecha}}</td>
+                  <td>@{{prospecto.estatus}}</td>
                   <td class="text-right">
+                  @can('Prospectos ver')
                   <a class="btn btn-xs btn-info" title="Ver" :href="'/prospectos/'+prospecto.id">
                     <i class="far fa-eye"></i>
                   </a>
+                  @endcan
+                  @can('Prospectos editar')
                   <a class="btn btn-xs btn-warning" title="Editar" :href="'/prospectos/'+prospecto.id+'/editar'">
                       <i class="fas fa-pencil-alt"></i>
                   </a>
+                  @endcan
+                  @can('Prospectos convertir')
                   <button class="btn btn-xs btn-success" title="Convertir el Proyecto" @click="convertirenproyecto(prospecto, index)">
                       <i class="fas fa-upload"></i>
                     </button>
+                  @endcan
                   </td>  
                 </tr>
               </tbody>

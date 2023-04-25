@@ -38,7 +38,7 @@
                       <thead>
                         <tr style="background-color:#12160F">
                           <th class="color_text">#</th>
-                          <th class="color_text">Tipo</th>
+                          <th class="color_text">Rol</th>
                           <th class="color_text">Nombre</th>
                           <th class="color_text">Email</th>
                           <th></th>

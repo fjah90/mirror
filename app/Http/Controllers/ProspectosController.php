@@ -487,7 +487,8 @@ class ProspectosController extends Controller
                 'vendedor_id' => $request->vendedor_id,
                 'factibilidad' => $request->factibilidad,
                 'fecha_cierre' => $fecha_cierre,
-                'proyeccion_venta' => $request->proyeccion_venta
+                'proyeccion_venta' => $request->proyeccion_venta,
+                'estatus' => $request->estatus,
             ]);
 
         }else{
@@ -647,9 +648,9 @@ class ProspectosController extends Controller
             'tipo_id' => 1,
             'tipo'    => '',
         ];
-        if($prospecto->fecha_cierre != null){
+        /*if($prospecto->fecha_cierre != null){
             $prospecto->fecha_cierre = $prospecto->fecha_cierre_formated;
-        }
+        }*/
         
         $productos = Producto::with('categoria')->get();
         if($prospecto->es_prospecto == 'si'){

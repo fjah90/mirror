@@ -10,7 +10,7 @@ class Prospecto extends Model
 {
     protected $table = 'prospectos';
 
-    protected $fillable = ['cliente_id','nombre','descripcion', 'user_id','es_prospecto','vendedor_id','proyeccion_venta','fecha_cierre','factibilidad'];
+    protected $fillable = ['cliente_id','nombre','descripcion', 'user_id','es_prospecto','vendedor_id','proyeccion_venta','fecha_cierre','factibilidad','estatus'];
 
     protected $appends = [
         'num_cotizaciones','num_cotaprobadas','fecha_cierre_formated'

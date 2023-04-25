@@ -70,7 +70,7 @@
               </div>
               @if($prospecto->es_prospecto == 'si')
               <div class="row">
-                  <div class="col-md-4">
+                  <div class="col-md-3">
                       <div class="form-group">
                         <label for="prospecto.fecha_cierre" class="control-label">Fecha aproximada de cierre</label>
                         <br />
@@ -94,19 +94,31 @@
                         </dropdown>
                       </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                       <div class="form-group">
-                        <label class="control-label">Proyección de venta</label>
+                        <label class="control-label">Proyección de venta en USD</label>
                         <input type="number" step="0.1" name="proyeccion_venta" class="form-control" v-model="prospecto.proyeccion_venta" required />
                       </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                       <div class="form-group">
                         <label class="control-label">Factibilidad</label>
-                        <input name="factibilidad" class="form-control" v-model="prospecto.factibilidad" required />
+                         <select class="form-control" name="factibilidad" v-model="prospecto.factibilidad" required>
+                          <option value="Alta">Alta</option>
+                          <option value="Media">Media</option>
+                          <option value="Baja">Baja</option>
+                        </select>
                       </div>
                     </div>
-
+                     <div class="col-md-3">
+                      <div class="form-group">
+                        <label class="control-label">Estatus</label>
+                          <select class="form-control" name="estatus" v-model="prospecto.estatus" required>
+                          <option value="Activo">Activo</option>
+                          <option value="Cancelado">Cancelado</option>
+                        </select>
+                      </div>
+                    </div>
               </div>
               @endif
               <div class="row">
@@ -231,7 +243,6 @@
                     </ul>
                   </div>
                 </div>
-               
                 <div class="row">
                   <div class="col-sm-12">
                     <label class="control-label">Descripción Actividad</label>
@@ -274,10 +285,15 @@
                 <div class="col-md-4">
                   <div class="form-group">
                     <label class="control-label">Tipo</label>
-                    <select class="form-control" name="tipo" v-model='prospecto.nueva_proxima_actividad.tipo_id' required>
-                      <option v-for="tipo in tipos" :value="tipo.id">@{{tipo.nombre}}</option>
-                      <option value="0">Otro</option>
-                    </select>
+                     <select class="form-control" name="tipo" v-model="prospecto.nueva_proxima_actividad.tipo_id" required>
+                        <option value="1">Llamada</option>
+                        <option value="12">Videollamada</option>
+                        <option value="2">Cita Presencial</option>
+                        <option value="13">Cita Showroom</option>
+                        <option value="3">Email</option>
+                        <option value="14">Propuesta</option>
+                        <option value="5">Enviar Cotizacion</option>
+                      </select>
                   </div>
                 </div>
                 <div class="col-md-4" v-if="prospecto.nueva_proxima_actividad.tipo_id==0">
@@ -393,8 +409,8 @@ const app = new Vue({
       return accounting.formatMoney(numero, { symbol: "%",  format: "%v %s" });
     },
     dateParser(value){
-			return moment(value, 'DD/MM/YYYY').toDate().getTime();
-		},
+      return moment(value, 'DD/MM/YYYY').toDate().getTime();
+    },
     agregarProducto(){
       if(this.ofrecido.id==undefined) return false;
       this.prospecto.proxima_actividad.productos_ofrecidos.push(this.ofrecido);
@@ -412,6 +428,7 @@ const app = new Vue({
         fecha_cierre: this.prospecto.fecha_cierre,
         proyeccion_venta: this.prospecto.proyeccion_venta,
         factibilidad: this.prospecto.factibilidad
+        estatus: this.prospecto.estatus
       })
       .then(({data}) => {
         this.cargando = false;
