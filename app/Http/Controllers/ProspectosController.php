@@ -568,7 +568,7 @@ class ProspectosController extends Controller
 
         $prospecto->load('vendedor','cotizaciones','cotizaciones.proyecto_aprobado','cotizaciones.entradas','cotizaciones.entradas.producto.proveedor','cotizaciones_aprobadas','cotizaciones_aprobadas.proyecto_aprobado','cotizaciones_aprobadas.entradas','cotizaciones_aprobadas.entradas.producto.proveedor','cliente', 'actividades.tipo', 'actividades.productos_ofrecidos');
 
-      $ordenes = OrdenCompra::wherehas('proyecto.cotizacion', function($query) use ($prospecto) {
+      /*$ordenes = OrdenCompra::wherehas('proyecto.cotizacion', function($query) use ($prospecto) {
            $query->where('prospecto_id', $prospecto->id);
         })->with('entradas.producto')
             ->get();
@@ -616,10 +616,10 @@ class ProspectosController extends Controller
         if($orden->carta_entrega){
           $orden->carta_entrega = asset('storage/'.$orden->carta_entrega);
         }
-      }
+      }*/
      
 
-      return view('prospectos.ver', compact('prospecto','ordenes','cuentas','ordenes_proceso','proyectos'));
+      return view('prospectos.ver', compact('prospecto','proyectos'));
 
 
 
