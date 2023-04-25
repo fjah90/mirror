@@ -17,12 +17,12 @@
 @section('content')
     <!-- Content Header (Page header) -->
     <section class="content-header" style="background-color:#12160F; color:#B68911;">
-        <h1 style="font-weight: bolder;">Permisos de {{$rol->name}}</h1>
+        <h1 style="font-weight: bolder;">Permisos de {{$permiso->name}}</h1>
     </section>
     <!-- Main content -->
     <section class="content" id="content">
         <div class="row">
-        <form action="">
+        <form action="/permisos/{{$rol->id}}/actualizar" method="post" >
         <input type="hidden" name="_token" value="{{ csrf_token() }}" />
             <div class="col-lg-12">
               <div class="panel">
@@ -39,11 +39,9 @@
                           <th class="color_text">#</th>
                           <th class="color_text">Nombre</th>
                           <th class="color_text">Activo</th>
-                         
                         </tr>
                       </thead>
                       <tbody>
-                        
                         @foreach($permisos as $permiso)
                         <tr>
                           <td>{{$permiso->id}}</td>

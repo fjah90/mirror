@@ -64,7 +64,17 @@ class UsuariosController extends Controller
     {
         $roles = Role::all();
 
+
         return view('usuarios.create', compact('roles'));
+    }
+
+    public function create2()
+    {
+        $roles = Role::all();
+        $permisos = Permission::all();
+        $usuarios = User::with('roles')->get();
+
+        return view('usuarios.create2', compact('roles','permisos','usuarios'));
     }
 
     /**
@@ -132,12 +142,15 @@ class UsuariosController extends Controller
 
 
 
-    public function showpermisos(User $usuario)
+    public function mostrar(User $usuario)
     {
-      $roles = Role::all();
-      $permisos = Permission::all();
+      //$roles = Role::all();
+      //dd($roles);
+      $permiso = Permission::get();
+      //dd($permisos);
+      $rol = Role::all();
       
-      return view('usuarios.showpermisos', compact('usuario','roles','permisos'));
+      return view('usuarios.mostrar', compact('usuario','permiso'));
     }
 
     /**

@@ -74,10 +74,13 @@ Route::middleware('auth')->group(function () {
         Route::get('usuarios/permisos', 'UsuariosController@permisos');
         Route::get('/permisos/{rol}/edit', 'UsuariosController@editpermisos')->name('permisos.edit');
         Route::post('/permisos/{rol}/actualizar', 'UsuariosController@updatepermisos');
+        Route::get('/permisos/create2', 'UsuariosController@create2')->name('permisos.create2');
+        Route::get('/permisos/mostrar', 'UsuariosController@mostrar')->name('permisos.mostrar');
+
         /**/
 
-        Route::resource('/permisos', 'PermisosController', ['parameters' => [
-        'permisos' => 'permiso']]);
+        /*Route::resource('/permisos', 'PermisosController', ['parameters' => [
+        'permisos' => 'permiso']]);*/
         //Mi Cuenta
 
         Route::get('/mi_cuenta', 'MiCuentaController@index')->name('mi_cuenta');
@@ -225,8 +228,8 @@ Route::middleware('auth')->group(function () {
         Route::get('usuarios/permisos', 'UsuariosController@permisos')->name('usuarios.permisos');
         Route::get('/permisos/{rol}/edit', 'UsuariosController@editpermisos')->name('permisos.edit');
         Route::post('/permisos/{rol}/actualizar', 'UsuariosController@updatepermisos');
-         Route::resource('/permisos', 'PermisosController', ['parameters' => [
-        'permisos' => 'permisos']]);
+        /*Route::resource('/permisos', 'PermisosController', ['parameters' => [
+        'permisos' => 'permisos']]);*/
 
         Route::delete('/productos/{producto}', 'ProductosController@destroy');
         Route::delete('/clientes/{cliente}', 'ClientesController@destroy');

@@ -27,7 +27,7 @@
                 <div class="panel-heading" style="background-color:#12160F; color:#B68911;">
                   <h3 class="panel-title text-right" style="height:30px;">
                     <span class="pull-left p-10">Lista de Roles</span>
-                  <a href="{{route('permisos.create')}}" class="btn btn-warning" style="color: #000;">
+                  <a href="{{route('permisos.create2')}}" class="btn btn-warning" style="color: #000;">
                       <i class="fa fa-plus"></i> Nuevo Rol
                     </a>
                   </h3>
@@ -49,7 +49,7 @@
                           <td>{{$rol->name}}</td>
                           <td class="text-right">
                             <a class="btn btn-xs btn-info" title="Ver"
-                              href="{{route('permisos.show', ['rol'=>$rol->id])}}">
+                              href="{{route('permisos.mostrar', ['rol'=>$rol->id])}}">
                               <i class="far fa-eye"></i>
                             </a>
                             <a class="btn btn-xs btn-success" title="Editar Permisos"

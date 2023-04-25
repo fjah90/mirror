@@ -427,7 +427,7 @@ const app = new Vue({
         vendedor_id: this.prospecto.vendedor_id,
         fecha_cierre: this.prospecto.fecha_cierre,
         proyeccion_venta: this.prospecto.proyeccion_venta,
-        factibilidad: this.prospecto.factibilidad
+        factibilidad: this.prospecto.factibilidad,////////////////
         estatus: this.prospecto.estatus
       })
       .then(({data}) => {

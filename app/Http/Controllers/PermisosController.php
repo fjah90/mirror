@@ -32,11 +32,13 @@ class PermisosController extends Controller
     public function create()
     {
          $roles = Role::all();
+
+         $rol = Role::all();
          //dd($roles);
          $permisos = Permission::all();
          //dd($permisos);
 
-        return view('permisos.create', compact('roles','permisos'));
+        return view('permisos.create', compact('roles','permisos','rol'));
     }
 
     /**
