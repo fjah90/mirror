@@ -39,7 +39,7 @@ class Prospecto extends Model
      */
 
     public function cliente(){
-      return $this->belongsTo('App\Models\Cliente', 'cliente_id', 'id')->withtrased();
+      return $this->belongsTo('App\Models\Cliente', 'cliente_id', 'id');
     }
 
     public function usuario(){
