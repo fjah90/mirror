@@ -137,7 +137,7 @@
                     <div class="col-md-3">
                       <div class="form-group">
                         <label class="control-label">Proyección de venta en USD</label>
-                        <input type="text" class="form-control" name="proyeccion_venta" v-model="prospecto.proyeccion_venta" required />
+                        <input type="number"  name="proyeccion_venta" class="form-control" v-model="prospecto.proyeccion_venta" required />
                       </div>
                     </div>
                     <div class="col-md-3">
