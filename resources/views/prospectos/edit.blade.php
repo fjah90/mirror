@@ -33,7 +33,7 @@
             <div class="row">
               <div class="col-md-12">
                 <div class="form-group">
-                  <label class="control-label">Cliente</label>
+                  <label class="control-label">Cliente <strong style="color: grey"> *</strong></label>
                   <span class="form-control">{{$prospecto->cliente->nombre}}</span>
                 </div>
               </div>
@@ -42,14 +42,14 @@
               <div class="row">
                 <div class="col-md-8">
                   <div class="form-group">
-                    <label class="control-label">Nombre de Proyecto</label>
+                    <label class="control-label">Nombre de Proyecto <strong style="color: grey"> *</strong></label>
                     <input type="text" class="form-control" name="nombre"
                       v-model="prospecto.nombre" required
                     />
                   </div>
                 </div>
                 <div class="col-md-4">
-                      <label class="control-label">Diseñador</label>
+                      <label class="control-label">Diseñador <strong style="color: grey"> *</strong></label>
                       <select name="vendedor_id" v-model="prospecto.vendedor_id"
                               class="form-control" required>
                           @foreach($vendedores as $vendedor)
@@ -61,7 +61,7 @@
               <div class="row">
                 <div class="col-md-12">
                   <div class="form-group">
-                    <label class="control-label">Descripción del Proyecto CRM</label>
+                    <label class="control-label">Descripción del Proyecto CRM <strong style="color: grey"> *</strong></label>
                     <textarea name="descripcion" rows="3" cols="80" class="form-control"
                       v-model="prospecto.descripcion" required>
                     </textarea>
@@ -72,7 +72,7 @@
               <div class="row">
                   <div class="col-md-3">
                       <div class="form-group">
-                        <label for="prospecto.fecha_cierre" class="control-label">Fecha aproximada de cierre</label>
+                        <label for="prospecto.fecha_cierre" class="control-label">Fecha aproximada de cierre <strong style="color: grey"> *</strong></label>
                         <br />
                         <dropdown>
                           <div class="input-group">
@@ -96,8 +96,8 @@
                     </div>
                     <div class="col-md-3">
                       <div class="form-group">
-                        <label class="control-label">Proyección de venta en USD</label>
-                        <input type="number" step="0.1" name="proyeccion_venta" class="form-control" v-model="prospecto.proyeccion_venta" required />
+                        <label class="control-label">Proyección de venta en USD <strong style="color: grey"> *</strong></label>
+                        <input type="number" name="proyeccion_venta" class="form-control" v-model="prospecto.proyeccion_venta" required />
                       </div>
                     </div>
                     <div class="col-md-3">
