@@ -228,6 +228,7 @@ Route::middleware('auth')->group(function () {
         Route::get('usuarios/permisos', 'UsuariosController@permisos')->name('usuarios.permisos');
         Route::get('/permisos/{rol}/edit', 'UsuariosController@editpermisos')->name('permisos.edit');
         Route::post('/permisos/{rol}/actualizar', 'UsuariosController@updatepermisos');
+        Route::post('/permisos/{rol}/crear', 'UsuariosController@crearpermisos');
         /*Route::resource('/permisos', 'PermisosController', ['parameters' => [
         'permisos' => 'permisos']]);*/
 

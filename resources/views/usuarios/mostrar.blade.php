@@ -2,7 +2,7 @@
 
 {{-- Page title --}}
 @section('title')
-    Permisos | @parent
+    Ver Rol de Usuario | @parent
 @stop
 
 @section('header_styles')
@@ -15,71 +15,50 @@
 
 {{-- Page content --}}
 @section('content')
-    <!-- Content Header (Page header) -->
-    <section class="content-header" style="background-color:#12160F; color:#B68911;">
-        <h1 style="font-weight: bolder;">Permisos de {{$permiso->name}}</h1>
-    </section>
-    <!-- Main content -->
-    <section class="content" id="content">
-        <div class="row">
-        <form action="/permisos/{{$rol->id}}/actualizar" method="post" >
-        <input type="hidden" name="_token" value="{{ csrf_token() }}" />
-            <div class="col-lg-12">
-              <div class="panel">
-                <div class="panel-heading" style="background-color:#12160F; color:#B68911;">
-                  <h3 class="panel-title text-right" style="height:30px;">
-                    <span class="pull-left p-10">Lista de Permisos  </span>
-                  </h3>
-                </div>
-                <div class="panel-body">
-                  <div class="table-responsive">
-                    <table id="tabla" class="table table-bordred" \>
-                      <thead>
-                        <tr style="background-color:#12160F">
-                          <th class="color_text">#</th>
-                          <th class="color_text">Nombre</th>
-                          <th class="color_text">Activo</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        @foreach($permisos as $permiso)
-                        <tr>
-                          <td>{{$permiso->id}}</td>
-                          <td>{{$permiso->name}}</td>
-                          <td><input type="checkbox" name="permisos_ids[]" value="{{$permiso->id}}" {{ $permisosrol->contains($permiso->id) ? 'checked' : '' }}></input></td>  
-                        </tr>
-                        @endforeach
-                      
-                      </tbody>
-                    </table>
-                  </div>
+  <!-- Content Header (Page header) -->
+  <section class="content-header" style="background-color:#12160F; color:#B68911;">
+    <h1>Ver Rol</h1>
+  </section>
+  <!-- Main content -->
+  <section class="content" id="content">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="panel ">
+          <div class="panel-heading" style="background-color:#12160F; color:#B68911;">
+            <h3 class="panel-title">Rol
+            @foreach($roles as $rol)
+             {{$rol->name}}</h3>
+             @endforeach
+          </div>
+          <div class="panel-body">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label class="control-label">Nombre</label>
+                  @foreach ($roles as $rol)
+                  <span class="form-control">{{$rol->name}}</span>
+                  @endforeach
                 </div>
               </div>
             </div>
-            <div class="col-lg-12">
-              <button type="submit" class="btn btn-dark" style="background-color: rgb(18, 22, 15); color: rgb(182, 137, 17);">Guardar</button>
+            <div class="row">
+              <div class="col-md-12 text-right">
+                <a class="btn btn-default" href="{{route('usuarios.permisos')}}" style="color:#000; background-color:#B3B3B3;">
+                  Regresar
+                </a>
+              </div>
             </div>
-          </form>
+          </div>
         </div>
-    </section>
-    <!-- /.content -->
+      </div>
+    </div>       
+  </section>
+  <!-- /.content -->
 @stop
 
 {{-- footer_scripts --}}
 @section('footer_scripts')
 
 <!-- <script>
-const app = new Vue({
-    el: '#content',
-    data: {},
-    mounted(){
-      this.dataTable = $("#tabla").DataTable({
-        dom: 'lfrtip',
-      });
-    },
-    methods: {
-      algo(){console.log('hola');}
-    }
-});
 </script> -->
 @stop

@@ -109,6 +109,11 @@ class UsuariosController extends Controller
         ], 400);
       }
 
+      /*$roles = Role::create([
+                'name'      => $request->name,
+            ]);
+      //dd($roles);*/
+
       $create = [
         'name' => $request->nombre,
         'email' => $request->email,
@@ -126,12 +131,6 @@ class UsuariosController extends Controller
         $firma = str_replace('public/', '', $firma);
         $usuario->update(['firma'=>$firma]);
       }
-
-      $permiso=new Permission;
-      $permiso->name=$request->name;
-      $permiso->guard_name=$request->guard_name;
-      $permiso->save();
-
 
       return response()->json(["success"=>true,"error"=>false], 200);
     }
@@ -152,13 +151,13 @@ class UsuariosController extends Controller
 
     public function mostrar(User $usuario)
     {
-      //$roles = Role::all();
-      //dd($roles);
-      $permiso = Permission::get();
-      //dd($permisos);
+      $roles = Role::get();
       $rol = Role::all();
+
+       //$roles = Role::where('name')->first();
+       //dd($roles);
       
-      return view('usuarios.mostrar', compact('usuario','permiso'));
+      return view('usuarios.mostrar', compact('usuario','rol','roles'));
     }
 
     /**
