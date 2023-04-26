@@ -99,6 +99,7 @@
                   </template>
                   <td>@{{prospecto.nombre}}</td>
                   <td>@{{prospecto.vendedor}}</td>
+                  <td>$@{{prospecto.proyeccion_venta}}</td>
                   <td>@{{prospecto.factibilidad}}</td>
                   <td>@{{prospecto.actividad}}</td>
                   <td>@{{prospecto.fecha}}</td>
