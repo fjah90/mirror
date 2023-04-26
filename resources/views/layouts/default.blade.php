@@ -9,7 +9,7 @@
   </title>
   <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
   <link rel="shortcut icon" href="{{asset('images/favicon.ico')}}"/>
-  <link rel="apple-touch-icon-precomposed" href="{{ URL::asset('images/favicon.ico') }}">
+  <link rel="apple-touch-icon-precomposed" href="{{ URL::asset('images/favicon.ico') }}"><!--menu desarrollo-->
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
