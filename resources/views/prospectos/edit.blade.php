@@ -102,7 +102,7 @@
                     </div>
                     <div class="col-md-3">
                       <div class="form-group">
-                        <label class="control-label">Factibilidad</label>
+                        <label class="control-label">Factibilidad <strong style="color: grey"> *</strong></label>
                          <select class="form-control" name="factibilidad" v-model="prospecto.factibilidad" required>
                           <option value="Alta">Alta</option>
                           <option value="Media">Media</option>
@@ -112,7 +112,7 @@
                     </div>
                      <div class="col-md-3">
                       <div class="form-group">
-                        <label class="control-label">Estatus</label>
+                        <label class="control-label">Estatus <strong style="color: grey"> *</strong></label>
                           <select class="form-control" name="estatus" v-model="prospecto.estatus" required>
                           <option value="Activo">Activo</option>
                           <option value="Cancelado">Cancelado</option>
@@ -123,7 +123,7 @@
               @endif
               <div class="row">
                 <div class="col-sm-12 text-right">
-                  <a href="{{route('prospectos.index')}}" class="btn btn-default" style="color:#000; background-color:#B3B3B3;">
+                  <a href="{{route('prospectos.indexprospectos')}}" class="btn btn-default" style="color:#000; background-color:#B3B3B3;">
                     Regresar
                   </a>
                   <button type="submit" class="btn btn-DARK" :disabled="cargando" style="background-color:#12160F; color:#B68911;">
@@ -190,13 +190,13 @@
                 <div class="row">
                   <div class="col-md-4">
                     <div class="form-group">
-                      <label class="control-label">Fecha</label>
+                      <label class="control-label">Fecha<strong style="color: grey"> *</strong></label>
                       <span class="form-control">@{{prospecto.proxima_actividad.fecha_formated}}</span>
                     </div>
                   </div>
                   <div class="col-md-4">
                     <div class="form-group">
-                      <label class="control-label">Tipo</label>
+                      <label class="control-label">Tipo <strong style="color: grey"> *</strong></label>
                       <span class="form-control">@{{prospecto.proxima_actividad.tipo.nombre}}</span>
                     </div>
                   </div>
@@ -245,7 +245,7 @@
                 </div>
                 <div class="row">
                   <div class="col-sm-12">
-                    <label class="control-label">Descripción Actividad</label>
+                    <label class="control-label">Descripción Actividad <strong style="color: grey"> *</strong></label>
                     <textarea name="descripcion" rows="5" cols="80" class="form-control" v-model="prospecto.proxima_actividad.descripcion" required></textarea>
                   </div>
                 </div>
@@ -259,7 +259,7 @@
               <div class="row">
                 <div class="col-md-4">
                   <div class="form-group">
-                    <label for="prospecto.nueva_proxima_actividad.fecha" class="control-label">Fecha</label>
+                    <label for="prospecto.nueva_proxima_actividad.fecha" class="control-label">Fecha<strong style="color: grey"> *</strong></label>
                     <br />
                     <dropdown>
                       <div class="input-group">
@@ -305,7 +305,7 @@
               </div>
               <div class="row">
                 <div class="col-md-12 text-right">
-                  <a href="{{route('prospectos.index')}}" class="btn btn-default" style="color:#000; background-color:#B3B3B3;">
+                  <a href="{{route('prospectos.indexprospectos')}}" class="btn btn-default" style="color:#000; background-color:#B3B3B3;">
                     Regresar
                   </a>  
                   <button type="submit" class="btn btn-DARK" :disabled="cargando" style="background-color:#12160F; color:#B68911;">
