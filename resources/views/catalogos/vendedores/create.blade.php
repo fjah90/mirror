@@ -32,31 +32,31 @@
               <div class="row">
                 <div class="col-md-6">
                   <div class="form-group">
-                    <label class="control-label">Nombre</label>
+                    <label class="control-label">Nombre<strong style="color: grey"> *</strong></label>
                     <input type="text" class="form-control" name="nombre" v-model="vendedor.nombre" required />
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
-                    <label class="control-label">Email</label>
+                    <label class="control-label">Email<strong style="color: grey"> *</strong></label>
                     <input type="text" class="form-control" name="email" v-model="vendedor.email" required />
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
-                    <label class="control-label">Presupuesto Anual</label>
+                    <label class="control-label">Presupuesto Anual<strong style="color: grey"> *</strong></label>
                     <input type="number" class="form-control" name="presupuesto_anual" v-model="vendedor.presupuesto_anual" required />
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
-                    <label class="control-label">% Comision</label>
+                    <label class="control-label">% Comision<strong style="color: grey"> *</strong></label>
                     <input type="number" class="form-control" name="comision_base" v-model="vendedor.comision_base" required />
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
-                    <label class="control-label">¿Cuándo se realizará el pago de la comisión?</label>
+                    <label class="control-label">¿Cuándo se realizará el pago de la comisión?<strong style="color: grey"> *</strong></label>
                     <input type="text" class="form-control" name="pago_comision" v-model="vendedor.pago_comision" required />
                   </div>
                 </div>

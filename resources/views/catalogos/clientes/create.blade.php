@@ -28,7 +28,7 @@
                         <div class="panel-body">
                             <div class="row form-group">
                                 <div class="col-md-6">
-                                    <label class="control-label">Usuario</label>
+                                    <label class="control-label">Usuario<strong style="color: grey"> *</strong></label>
                                     <select class="form-control" name="usuario_id" v-model='cliente.usuario_id'
                                             required>
                                         @foreach($usuarios as $id => $nombre)
@@ -44,7 +44,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <label class="control-label">Tipo</label>
+                                    <label class="control-label">Tipo<strong style="color: grey"> *</strong></label>
                                     <select class="form-control" name="tipo_id" v-model='cliente.tipo_id' required>
                                         @foreach($tipos as $tipo)
                                             <option value="{{$tipo->id}}">{{$tipo->nombre}}</option>
@@ -52,7 +52,7 @@
                                     </select>
                                 </div>
                                 <div class="col-md-6">
-                                    <label class="control-label">Diseñador</label>
+                                    <label class="control-label">Diseñador<strong style="color: grey"> *</strong></label>
                                     <select class="form-control" name="vendedor_id" v-model='cliente.vendedor_id'
                                             required>
                                         @foreach($vendedores as $id => $nombre)
@@ -63,7 +63,7 @@
                             </div>
                             <div class="row form-group">
                                   <div class="col-md-6">
-                                    <label class="control-label">Categoría de Cliente</label>
+                                    <label class="control-label">Categoría de Cliente<strong style="color: grey"> *</strong></label>
                                     <select class="form-control" name="categoria_cliente_id"  required v-model=cliente.categoria_cliente_id required>
                                     @foreach($categorias as $categoria)
                                         <option value="{{$categoria->id}}">{{$categoria->nombre}}</option>
@@ -77,7 +77,7 @@
                             </div>
                             <div class="row form-group">
                                 <div class="col-md-8">
-                                    <label class="control-label">Nombre</label>
+                                    <label class="control-label">Nombre<strong style="color: grey"> *</strong></label>
                                     <input type="text" class="form-control" name="nombre" v-model="cliente.nombre"
                                            required/>
                                 </div>
@@ -196,12 +196,12 @@
                         <div class="panel-body">
                             <div class="row form-group">
                                 <div class="col-md-6">
-                                    <label class="control-label">Nombre</label>
+                                    <label class="control-label">Nombre<strong style="color: grey"> *</strong></label>
                                     <input type="text" class="form-control" name="nombre"
                                            v-model="contacto.nombre" required/>
                                 </div>
                                 <div class="col-md-6">
-                                    <label class="control-label">Cargo</label>
+                                    <label class="control-label">Cargo<strong style="color: grey"> *</strong></label>
                                     <input type="text" class="form-control" name="cargo"
                                            v-model="contacto.cargo" required/>
                                 </div>
@@ -217,7 +217,7 @@
                             </contacto-telefonos>
                             <div class="row form-group">
                                 <div class="col-md-6">
-                                    <label class="control-label">Fax</label>
+                                    <label class="control-label">Fax<strong style="color: grey"> *</strong></label>
                                     <input type="text" class="form-control" name="fax" v-model="contacto.fax" required/>
                                 </div>
                             </div>

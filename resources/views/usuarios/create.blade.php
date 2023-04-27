@@ -36,7 +36,7 @@
                     <div class="row">
                       <div class="col-sm-6">
                         <div class="form-group">
-                          <label class="control-label">Rol</label>
+                          <label class="control-label">Rol<strong style="color: grey"> *</strong></label>
                           <select name="tipo" v-model="usuario.tipo" class="form-control" required >
                             @foreach($roles as $rol)
                             <option value="{{$rol->name}}">{{$rol->name}}</option>
@@ -48,13 +48,13 @@
                     <div class="row">
                       <div class="col-sm-6">
                         <div class="form-group">
-                          <label class="control-label">Nombre</label>
+                          <label class="control-label">Nombre<strong style="color: grey"> *</strong></label>
                           <input type="text" class="form-control" name="nombre" v-model="usuario.nombre" required />
                         </div>
                       </div>
                       <div class="col-sm-6">
                         <div class="form-group">
-                          <label class="control-label">Email</label>
+                          <label class="control-label">Email<strong style="color: grey"> *</strong></label>
                           <input type="email" class="form-control" name="email" v-model="usuario.email" required />
                         </div>
                       </div>
@@ -62,13 +62,13 @@
                     <div class="row">
                       <div class="col-sm-6">
                         <div class="form-group">
-                          <label class="control-label">Contaseña</label>
+                          <label class="control-label">Contaseña<strong style="color: grey"> *</strong></label>
                           <input type="password" class="form-control" name="password" v-model="usuario.contraseña" required />
                         </div>
                       </div>
                       <div class="col-sm-6">
                         <div class="form-group">
-                          <label class="control-label">Repetir Contraseña</label>
+                          <label class="control-label">Repetir Contraseña<strong style="color: grey"> *</strong></label>
                           <input type="password" class="form-control" name="password_confirmation" v-model="usuario.contraseña_confirmation" required />
                         </div>
                       </div>

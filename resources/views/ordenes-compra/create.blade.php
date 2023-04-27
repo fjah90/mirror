@@ -32,7 +32,7 @@
             <form class="" @submit.prevent="agregarEntrada()">
               <div class="row form-group">
                 <div class="col-md-4">
-                  <label class="control-label">Número Orden / Order</label>
+                  <label class="control-label">Número Orden / Order<strong style="color: grey"> *</strong></label>
                   <input type="number" step="1" min="1" class="form-control" name="numero"
                     v-model="orden.numero" required />
                 </div>
@@ -42,7 +42,7 @@
                     v-model="orden.numero_proyecto" />
                 </div>
                 <div class="col-md-4">
-                  <label class="control-label">Proveedor / To</label>
+                  <label class="control-label">Proveedor / To<strong style="color: grey"> *</strong></label>
                   <select class="form-control" name="proveedor_id" v-model='orden.proveedor_id'
                     required :disabled="orden.entradas.length>0" @change="fijarProveedor()">
                     @foreach($proveedores as $proveedor)
@@ -117,19 +117,19 @@
               </div>
               <div class="row form-group">
                 <div class="col-md-4">
-                  <label class="control-label">Moneda</label>
+                  <label class="control-label">Moneda<strong style="color: grey"> *</strong></label>
                   <input type="text" class="form-control" name="moneda"
                     v-model="orden.moneda" required disabled />
                 </div>
                 <div class="col-md-4">
-                  <label class="control-label">IVA</label>
+                  <label class="control-label">IVA<strong style="color: grey"> *</strong></label>
                   <select class="form-control" name="iva" v-model="orden.iva" required disabled>
                     <option value="0">No</option>
                     <option value="1">Si</option>
                   </select>
                 </div>
                 <div class="col-md-4">
-                  <label class="control-label">Contacto Proveedor / ATTN</label>
+                  <label class="control-label">Contacto Proveedor / ATTN<strong style="color: grey"> *</strong></label>
                   <select class="form-control" name="proveedor_contacto_id" v-model='orden.proveedor_contacto_id'
                     required>
                     @foreach($contactos as $contacto)
@@ -143,7 +143,7 @@
               <div class="col-md-12"><hr></div>
               <div class="row form-group">
                 <div class="col-md-4">
-                  <label class="control-label">Producto</label>
+                  <label class="control-label">Producto<strong style="color: grey"> *</strong></label>
                   <div class="input-group">
                     <input type="text" class="form-control" placeholder="Producto"
                     v-model="entrada.producto.nombre" @click="abrirCatalogo()"
@@ -157,7 +157,7 @@
                   </div>
                 </div>
                 <div class="col-md-2">
-                  <label class="control-label">Cantidad</label>
+                  <label class="control-label">Cantidad<strong style="color: grey"> *</strong></label>
                   <input type="number" step="0.01" min="0.01" name="cantidad" class="form-control"
                     v-model="entrada.cantidad" required />
                 </div>
@@ -172,7 +172,7 @@
                   </select>
                 </div>
                 <div class="col-md-4">
-                  <label class="control-label">Precio Unitario</label>
+                  <label class="control-label">Precio Unitario<strong style="color: grey"> *</strong></label>
                   <input type="number" step="0.01" min="0.01" name="precio" class="form-control"
                     v-model="entrada.precio" required />
                 </div>

@@ -32,7 +32,7 @@
               <div class="row">
                 <div class="col-md-6">
                   <div class="form-group">
-                    <label class="control-label">Simbolo</label>
+                    <label class="control-label">Simbolo<strong style="color: grey"> *</strong></label>
                     <input type="text" class="form-control" name="simbolo" v-model="unidad.simbolo" required />
                   </div>
                 </div>
@@ -44,7 +44,7 @@
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
-                    <label class="control-label">Simbolo Ingles</label>
+                    <label class="control-label">Simbolo Ingles<strong style="color: grey"> *</strong></label>
                     <input type="text" class="form-control" name="simbolo_ingles" v-model="unidad.simbolo_ingles" required />
                   </div>
                 </div>

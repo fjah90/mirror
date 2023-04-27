@@ -36,7 +36,7 @@
               </div>
               <div class="row form-group">
                 <div class="col-md-8">
-                  <label class="control-label">Nombre Empresa</label>
+                  <label class="control-label">Nombre Empresa<strong style="color: grey"> *</strong></label>
                   <input type="text" class="form-control" name="empresa" v-model="proveedor.empresa" required />
                 </div>
                 <div class="col-md-4">
@@ -161,7 +161,7 @@
             <div class="panel-body">
                <div class="row">
                 <div class="col-md-12">
-                  <label class="control-label">Descripción de la empresa</label>
+                  <label class="control-label">Descripción de la empresa<strong style="color: grey"> *</strong></label>
                   <textarea  name="decripcion_empresa" class="form-control" rows="4"  cols="80" v-model="proveedor.decripcion_empresa" required></textarea>
                 </div>
               </div><br>
