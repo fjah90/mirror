@@ -52,7 +52,7 @@
                 <tr v-for="(vendedor, index) in vendedores">
                   <td>@{{index+1}}</td>
                   <td>@{{vendedor.nombre}}</td>
-                  <td>@{{vendedor.presupuesto_anual}}</td>
+                  <td>$@{{vendedor.presupuesto_anual}}</td>
                   <td>%</td>
                   <td class="text-right">
                     <a class="btn btn-xs btn-info" data-toggle="tooltip" title="Ver"

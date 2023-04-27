@@ -110,7 +110,7 @@
           </div>
         </div>
         <ul class="navigation nav side-menu">
-        @hasanyrole('Administrador|Usuaro')
+        @hasanyrole('Administrador|Usuario|Cliente')
           <!-- Dashboard -->
           <li {!! (Request::is('dashboard') ? 'class="active"' : '') !!}>
             <a href="{{ URL::to('dashboard') }}">
@@ -122,7 +122,7 @@
           <hr class="divider-menu">
         @endhasanyrole
 
-        @hasanyrole('Administrador|Usuaro')
+        @hasanyrole('Administrador|Usuario')
 
           <!-- Proyectos que son prospectos-->
           @can('Prospectos menu')
@@ -187,7 +187,7 @@
         -->
        
 
-        @hasanyrole('Administrador|Usuaro')
+        @hasanyrole('Administrador|Usuario')
           <li {!! (Request::is('ordenes-proceso*') ? 'class="active"' : '') !!}  {!! (Request::is('proyectos-aprobados*') ? 'class="active"' : '') !!}><a class="title"><i class="fa fa-cart-arrow-down" style="color:#B68911; font-size: 20px;"></i> <b style="color:#9F9F9F;">Ordenes Compra </b><span class="fa fa-chevron-down" style="color:#9F9F9F;"></span></a>
            <ul class="nav child_menu">  
               <li  {!! (Request::is('proyectos-aprobados*') ? 'class="active"' : '') !!} >
@@ -208,7 +208,7 @@
           @endhasanyrole
           
 
-          @hasanyrole('Administrador|Usuaro')
+          @hasanyrole('Administrador|Usuario')
           <!-- Administracion  -->
           <li {!! (Request::is('cuentas-cobrar*') ? 'class="active"' : '') !!} {!! (Request::is('cuentas-pagar*') ? 'class="active"' : '') !!}><a class="title"><i class="fa fa-calculator" style="color:#B68911; font-size:20px;"></i>  <b style="color:#9F9F9F;">Contabilidad</b><span class="fa fa-chevron-down" style="color:#9F9F9F;"></span></a>
            <ul class="nav child_menu">  
@@ -230,7 +230,7 @@
          
           @endhasanyrole
 
-          @hasanyrole('Administrador|Usuaro')
+          @hasanyrole('Administrador|Usuario')
           <!--Reportes-->
 
           <li {!! (Request::is('reportes*') ? 'class="active"' : '') !!}><a class="title"><i class="fas fa-file" style="color:#B68911; font-size: 20px;"></i> <b style="color:#9F9F9F;">Reportes</b> <span class="fa fa-chevron-down" style="color:#9F9F9F;"></span></a>
@@ -296,7 +296,7 @@
           @endhasanyrole
           -->
           <!--
-          @hasanyrole('Administrador|Usuaro')
+          @hasanyrole('Administrador|Usuario')
          Catalogos 
           <li {!! (Request::is('clientes*' ) ? 'class="active"' : '') !!} {!! (Request::is('proveedores*' ) ? 'class="active"' : '') !!} {!! (Request::is('agentesAduanales*' ) ? 'class="active"' : '') !!} {!! (Request::is('productos*' ) ? 'class="active"' : '') !!}><a class="title"><i class="fa fa-signal" style="color:#f54c82; font-size: 20px;"></i>  Administración <span class="fa fa-chevron-down"></span></a>
             <ul class="nav child_menu">  
@@ -350,7 +350,7 @@
 
           <hr class="divider-menu">
           <!--Catalogos de Apoyo-->
-          @hasanyrole('Administrador|Usuaro')
+          @hasanyrole('Administrador|Usuario|Cliente')
           @can('Catalogos menu')
           <li {!! (Request::is('vendedores*') ? 'class="active"' : '') !!} {!! (Request::is('Usuarios*') ? 'class="active"' : '') !!} {!! (Request::is('tiposClientes*') ? 'class="active"' : '') !!} {!! (Request::is('categoriaClientes*') ? 'class="active"' : '') !!} {!! (Request::is('proyectos*') ? 'class="active"' : '') !!} {!! (Request::is('tiposProveedores*') ? 'class="active"' : '') !!} {!! (Request::is('unidadesMedida*') ? 'class="active"' : '') !!} {!! (Request::is('subcategorias*') ? 'class="active"' : '') !!} {!! (Request::is('categorias*') ? 'class="active"' : '') !!} {!! (Request::is('clientes*' ) ? 'class="active"' : '') !!} {!! (Request::is('proveedores*' ) ? 'class="active"' : '') !!} {!! (Request::is('agentesAduanales*' ) ? 'class="active"' : '') !!} {!! (Request::is('productos*' ) ? 'class="active"' : '') !!}><a class="title"><i class="fa fa-book" style="color:#B68911; font-size: 20px;"></i> <b style="color:#9F9F9F;">Catálogos</b><span class="fa fa-chevron-down" style="color:#9F9F9F;"></span></a>
            <ul class="nav child_menu">
@@ -450,7 +450,7 @@
           @endcan
           @endhasanyrole
 
-           @hasanyrole('Administrador|Usuaro')
+           @hasanyrole('Administrador|Usuario')
           <!-- Administracion  -->
           <li {!! (Request::is('Usuarios*') ? 'class="active"' : '') !!}><a class="title"><i class="fa fa-user" style="color:#B68911; font-size:20px;"></i>  <b style="color:#9F9F9F;">Gestión de Usuario</b><span class="fa fa-chevron-down" style="color:#9F9F9F;"></a>
            <ul class="nav child_menu">  
@@ -464,7 +464,7 @@
             @can('Permisos menu')
             <li {!! (Request::is('Usuarios*') ? 'class="active"' : '') !!} class="sub {!! (Request::is('usuarios*') ? 'active' : '') !!}">
               <a href="{{ URL::to('usuarios/permisos') }}">
-                <i class="fas fa-user"></i> <span style="color:#000;">Permisos</span>
+                <i class="fas fa-users"></i> <span style="color:#000;">Rol</span>
               </a>
             </li>
             @endcan 

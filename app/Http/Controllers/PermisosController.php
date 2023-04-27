@@ -31,14 +31,14 @@ class PermisosController extends Controller
      */
     public function create()
     {
-         $roles = Role::all();
+         //$roles = Role::all();
 
-         $rol = Role::all();
+         //$rol = Role::all();
          //dd($roles);
-         $permisos = Permission::all();
+         //$permisos = Permission::all();
          //dd($permisos);
 
-        return view('permisos.create', compact('roles','permisos','rol'));
+        return view('permisos.create');
     }
 
     /**
@@ -49,29 +49,20 @@ class PermisosController extends Controller
      */
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
+       $validator = Validator::make($request->all(), [
         'name' => 'required',
-      
       ]);
 
-      if ($validator->fails()) {
-        $errors = $validator->errors()->all();
-        return response()->json([
-          "success" => false, "error" => true, "message" => $errors[0]
-        ], 400);
-      }
+       Role::create($request->all());
+       //dd($request->all());
 
-      $rol = Role::where('name', $request->tipo)->first();
-      if(is_null($rol)){
-        return response()->json([
-          "success" => false, "error" => true, "message" => "No existe el tipo seleccionado"
-        ], 400);
-      }
-
-       Permission::create($request->all());
-       dd($request->all());
-
-      return response()->json(["success"=>true,"error"=>false], 200);
+       $create = [
+        'name' => $request->name,
+      ];
+       
+      //return response()->json(["success"=>true,"error"=>false], 200);
+      return redirect()->action('UsuariosController@permisos');
+         //return view('usuario.permisos', compact('rol','roles'));
     }
 
     /**
@@ -80,14 +71,13 @@ class PermisosController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
+    public function show(Role $rol)
     {
         $roles = Role::all();
         //$rol = Role::all();
-        $permisos = Permission::all();
-        //dd($permisos);
-  
-        return view('permisos.show', compact('roles','permisos'));
+        //dd($rol);
+    
+        return view('permisos.show', compact('rol','roles'));
     }
 
     /**
@@ -112,13 +102,16 @@ class PermisosController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update($rol_id,Request $request)
+    public function update(Request $request,  Role $rol_id)
     {
       $permissions = $request->permisos_ids;
       $role =  Role::find($rol_id);
       $role->syncPermissions($permissions);
+
+      //$rol->update($request->all());
+       Role::find($rol_id)->update($request->all());
       
-      return  redirect()->route('permisos.permisos');
+      return redirect()->route('permisos.permisos');
     }
 
     /**
@@ -127,8 +120,9 @@ class PermisosController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $user)
+    public function destroy(Role $rol)
     {
-        //
+        $rol->delete();
+        return response()->json(['success' => true, "error" =>false],200);
     }
 }

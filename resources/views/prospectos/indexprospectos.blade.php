@@ -37,7 +37,7 @@
 
           <h3 class="panel-title">
             <div class="p-10" style="display:inline-block">
-              Usuario
+              Usuario    
               @role('Administrador')
                 <select class="form-control" @change="cargar()" v-model="usuarioCargado" style="width:auto;display:inline-block;">
                   <option value="Todos">Todos</option>
@@ -46,6 +46,11 @@
                   @endforeach
                 </select>
               @endrole
+            </div>
+            <div class="row">
+              <div class="col-md-9 text-right">
+                <b>Estatus de Proyectos Activos:<span class="label label-warning" style="color:#12160F; background-color:#FFCE56;">&nbsp;&nbsp;&nbsp;<b style="font-size:14px;">{{count($proyectos)}} &nbsp;&nbsp;</b></span></b>
+              </div><br>
             </div>
             <div class="p-10 " style="display:inline-block;float: right;">
               <button class="btn btn-warning btn-sm btn">
