@@ -27,14 +27,17 @@
         <div class="col-lg-12">
           <div class="panel">
             <div class="panel-heading" style="background-color:#12160F; color:#B68911;">
-              <h3 class="panel-title">Rol {{$rol->name}}</h3>
+              <h3 class="panel-title">Rol</h3>
             </div>
             <div class="panel-body">
               <div class="row">
                 <div class="col-md-6">
                   <div class="form-group">
                     <label class="control-label">Nombre</label>
-                    <span class="form-control">{{$rol->name}}</span>
+                    @php $roles = Auth::user()->roles @endphp
+                    @foreach($roles as $role)
+                    <span class="form-control">{{$role->name}}</span>
+                    @endforeach
                   </div>
                 </div>
               </div>

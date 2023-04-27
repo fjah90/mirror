@@ -60,9 +60,7 @@ class PermisosController extends Controller
         'name' => $request->name,
       ];
        
-      //return response()->json(["success"=>true,"error"=>false], 200);
       return redirect()->action('UsuariosController@permisos');
-         //return view('usuario.permisos', compact('rol','roles'));
     }
 
     /**
@@ -73,10 +71,8 @@ class PermisosController extends Controller
      */
     public function show(Role $rol)
     {
-        $roles = Role::all();
-        //$rol = Role::all();
-        //dd($rol);
-    
+       
+        $roles=Role::all();
         return view('permisos.show', compact('rol','roles'));
     }
 
