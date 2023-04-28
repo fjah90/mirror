@@ -61,6 +61,14 @@
               @endcan
               </button>
             </div>
+            <!--Botones para apartados de proyectos activos o cancelados-->
+            <!--div class="row">
+              <div class="col-md-12 text-right">
+                <button type="submit" class="btn btn-dark" style="background-color:#FFCE56; color:#12160F;">Todos</button>
+                <button type="submit" class="btn btn-dark" style="background-color:#FFCE56; color:#12160F;">Activos</button>
+                <button type="submit" class="btn btn-dark" style="background-color:#FFCE56; color:#12160F;">Cancelados</button>
+              </div>
+            </div-->
             <div class="p-10">
               
             </div>

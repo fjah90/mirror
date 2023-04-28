@@ -97,7 +97,7 @@
                     <div class="col-md-3">
                       <div class="form-group">
                         <label class="control-label">Proyección de venta en USD <strong style="color: grey"> *</strong></label>
-                        <input type="number" name="proyeccion_venta" class="form-control" v-model="prospecto.proyeccion_venta" required />
+                        <input type="number" class="form-control" name="proyeccion_venta" v-model="prospecto.proyeccion_venta" required />
                       </div>
                     </div>
                     <div class="col-md-3">
@@ -123,7 +123,7 @@
               @endif
               <div class="row">
                 <div class="col-sm-12 text-right">
-                  <a href="{{route('prospectos.indexprospectos')}}" class="btn btn-default" style="color:#000; background-color:#B3B3B3;">
+                  <a href="{{route('prospectos.index')}}" class="btn btn-default" style="color:#000; background-color:#B3B3B3;">
                     Regresar
                   </a>
                   <button type="submit" class="btn btn-DARK" :disabled="cargando" style="background-color:#12160F; color:#B68911;">
@@ -305,7 +305,7 @@
               </div>
               <div class="row">
                 <div class="col-md-12 text-right">
-                  <a href="{{route('prospectos.indexprospectos')}}" class="btn btn-default" style="color:#000; background-color:#B3B3B3;">
+                  <a href="{{route('prospectos.index')}}" class="btn btn-default" style="color:#000; background-color:#B3B3B3;">
                     Regresar
                   </a>  
                   <button type="submit" class="btn btn-DARK" :disabled="cargando" style="background-color:#12160F; color:#B68911;">

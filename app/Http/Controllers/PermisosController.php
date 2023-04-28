@@ -31,12 +31,6 @@ class PermisosController extends Controller
      */
     public function create()
     {
-         //$roles = Role::all();
-
-         //$rol = Role::all();
-         //dd($roles);
-         //$permisos = Permission::all();
-         //dd($permisos);
 
         return view('permisos.create');
     }
@@ -54,7 +48,6 @@ class PermisosController extends Controller
       ]);
 
        Role::create($request->all());
-       //dd($request->all());
 
        $create = [
         'name' => $request->name,
@@ -69,11 +62,12 @@ class PermisosController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function show(Role $rol)
+    public function show(Role $id)
     {
-       
-        $roles=Role::all();
-        return view('permisos.show', compact('rol','roles'));
+        //$roles=Role::find($id);
+        $roles = Role::all();
+        //dd($roles);
+        return view('permisos.show', compact('id','roles'));
     }
 
     /**

@@ -35,8 +35,8 @@
                   <div class="form-group">
                     <label class="control-label">Nombre</label>
                     @php $roles = Auth::user()->roles @endphp
-                    @foreach($roles as $role)
-                    <span class="form-control">{{$role->name}}</span>
+                    @foreach($roles as $rol)
+                      <span class="form-control">{{$rol->name}}</span>
                     @endforeach
                   </div>
                 </div>
@@ -53,3 +53,5 @@
     </section>
     <!-- /.content -->
 @stop
+
+                       
