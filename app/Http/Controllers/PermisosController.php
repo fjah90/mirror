@@ -64,8 +64,9 @@ class PermisosController extends Controller
      */
     public function show(Role $id)
     {
-        //$roles=Role::find($id);
-        $roles = Role::all();
+        //$roles=Role::all($id);
+        //dd($roles);
+        $roles=Role::find($id);//find es para buscar en la tabla roles el que tenga este id
         //dd($roles);
         return view('permisos.show', compact('id','roles'));
     }
@@ -76,13 +77,12 @@ class PermisosController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function edit($rol_id)
+    public function edit($id)
     {
-      $rol =  Role::find($rol_id);
+      $roles=Role::find($id);
       $permisos = Permission::all();
-      $permisosrol = $rol->permissions()->get()->pluck('id');
      
-      return view('permisos.edit', compact('permisos','rol','permisosrol'));
+      return view('permisos.edit', compact('permisos','id','roles'));
     }
 
     /**
@@ -92,16 +92,16 @@ class PermisosController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,  Role $rol_id)
+    public function update(Request $request,  Role $Roles,$id)
     {
-      $permissions = $request->permisos_ids;
-      $role =  Role::find($rol_id);
-      $role->syncPermissions($permissions);
-
-      //$rol->update($request->all());
-       Role::find($rol_id)->update($request->all());
       
-      return redirect()->route('permisos.permisos');
+          Role::find($id)->update($request->all());
+
+          $roles= Role::find($id);
+          $roles->name=$request->name;
+          $roles->updated_at=date("Y-m-d H:i:s");
+          $roles->save();
+      return redirect()->action('UsuariosController@permisos');
     }
 
     /**
@@ -110,9 +110,11 @@ class PermisosController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Role $rol)
+    public function destroy(Role $Roles,$id)
     {
-        $rol->delete();
-        return response()->json(['success' => true, "error" =>false],200);
+        $roles->delete();
+        return response()->json(['success' => true, "error" => false],200);
+
+        //return redirect()->action('UsuariosController@permisos');    
     }
 }

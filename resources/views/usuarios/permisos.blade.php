@@ -52,7 +52,11 @@
                               href="{{route('permisos.show', ['rol'=>$rol->id])}}">
                               <i class="far fa-eye"></i>
                             </a>
-                            <a class="btn btn-xs btn-success" title="Editar Permisos"
+                            <!--a class="btn btn-xs btn-success" title="Editar Permisos"
+                              href="{{route('permisos.edit', ['rol'=>$rol->id])}}">
+                              <i class="fas fa-pencil-alt"></i>
+                            </a-->
+                             <a class="btn btn-xs btn-success" title="Editar Rol"
                               href="{{route('permisos.edit', ['rol'=>$rol->id])}}">
                               <i class="fas fa-pencil-alt"></i>
                             </a>
@@ -79,6 +83,48 @@
 {{-- footer_scripts --}}
 @section('footer_scripts')
 <script>
-
+/*const app = new Vue({
+    el: '#content',
+    data: {
+      roles: {!! json_encode($roles) !!},
+    },
+    mounted(){
+      $("#tabla").DataTable({"order": [[ 1, "asc" ]]});
+    },
+    methods: {
+      borrar(permiso, index){
+        swal({
+          title: 'Cuidado',
+          text: "Borrar Rol "+permiso.name+"?",
+          type: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Si, Borrar',
+          cancelButtonText: 'No, Cancelar',
+        }).then((result) => {
+          if (result.value) {
+            axios.delete('/permiso/'+permiso.id, {})
+            .then(({data}) => {
+              this.categorias.splice(index, 1);
+              swal({
+                title: "Exito",
+                text: "El Rol ha sido borrado",
+                type: "success"
+              });
+            })
+            .catch(({response}) => {
+              console.error(response);
+              swal({
+                title: "Error",
+                text: response.data.message || "Ocurrio un error inesperado, intente mas tarde",
+                type: "error"
+              });
+            });
+          } //if confirmacion
+        });
+      },//fin borrar
+    }
+});*/
 </script> 
 @stop
