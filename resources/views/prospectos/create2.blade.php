@@ -321,7 +321,7 @@
                 </div>
                 <div class="row" style="margin-top:25px;">
                   <div class="col-md-12 text-right">
-                    <a href="{{route('prospectos.index')}}" class="btn btn-default">
+                    <a href="{{url('/prospectos/prospectos/')}}" class="btn btn-default">
                       Cancelar
                     </a>
                     <button type="submit" class="btn btn-primary" :disabled="cargando">

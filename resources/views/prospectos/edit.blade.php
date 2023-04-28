@@ -305,7 +305,7 @@
               </div>
               <div class="row">
                 <div class="col-md-12 text-right">
-                  <a href="{{route('prospectos.index')}}" class="btn btn-default" style="color:#000; background-color:#B3B3B3;">
+                  <a href="{{url('/prospectos/prospectos/')}}" class="btn btn-default" style="color:#000; background-color:#B3B3B3;">
                     Regresar
                   </a>  
                   <button type="submit" class="btn btn-DARK" :disabled="cargando" style="background-color:#12160F; color:#B68911;">
@@ -319,7 +319,6 @@
         </div>
       </div>
     </div>
-
     <!-- Catalogo Productos Modal -->
     <modal v-model="openCatalogo" title="Productos" :footer="false">
       <div class="table-responsive">

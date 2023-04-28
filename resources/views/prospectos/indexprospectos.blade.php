@@ -65,17 +65,17 @@
             <div class="row">
               <div class="col-md-12 text-right">
                 <button type="submit" class="btn btn-dark" style="background-color:#FFCE56; color:#12160F;">
-                  <a href="{{url('/prospectos/prospectos/')}}" style="color:#000;" id="">
+                  <a href="{{route('prospectos.index')}}" style="color:#000;" id="">
                   <i class="fas fa-user-book"></i>TODOS
                   </a>
                 </button>
                 <button type="submit" class="btn btn-dark" style="background-color:#FFCE56; color:#12160F;">
-                  <a href="{{url('/prospectos/prospectos/')}}" style="color:#000;" id="">
+                  <a href="{{route('prospectos.index')}}" style="color:#000;" id="">
                   <i class="fas fa-user-book"></i>ACTIVOS
                   </a>
                 </button>
                 <button type="submit" class="btn btn-dark" style="background-color:#FFCE56; color:#12160F;">
-                  <a href="{{url('/prospectos/prospectos/')}}" style="color:#000;" id="">
+                  <a href="{{route('prospectos.index')}}" style="color:#000;" id="">
                   <i class="fas fa-user-book"></i>CANCELADOS
                   </a>
                 </button>
