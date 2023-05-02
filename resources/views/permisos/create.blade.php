@@ -29,7 +29,6 @@
           </div>
           <div class="panel-body">
             {!!Form::open(['route'=>'permisos.store','method'=>'POST','id'=>'formroles']) !!}
-            <!--form class="" @submit.prevent="guardar()"-->
               <div class="row">
                 <div class="col-md-6">
                   <div class="form-group">
