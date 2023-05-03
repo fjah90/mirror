@@ -430,7 +430,7 @@
               </a>
             </li>
             @endcan
-            @can('Categoria de producto menu')<!--Se ajusto el nombre -->
+            @can('Categoria de productos menu')<!--Se ajusto el nombre -->
             <li  {!! (Request::is('subcategorias*') ? 'class="active"' : '') !!}>
               <a href="{{ URL::to('subcategorias') }}">
                 <i class="fas fa-cubes "></i> <span style="color:#000;">Categoria de Productos</span>
