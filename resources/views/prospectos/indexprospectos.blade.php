@@ -47,11 +47,6 @@
                 </select>
               @endrole
             </div>
-            <!--div class="row">
-              <div class="col-md-9 text-right">
-                <b>Estatus de Proyectos Activos:<span class="label label-warning" style="color:#12160F; background-color:#FFCE56;">&nbsp;&nbsp;&nbsp;<b style="font-size:14px;">{{count($proyectos)}} &nbsp;&nbsp;</b></span></b>
-              </div><br>
-            </div-->
             <div class="p-10 " style="display:inline-block;float: right;">
               <button class="btn btn-warning btn-sm btn">
               @can('Prospectos nuevo')
@@ -65,17 +60,17 @@
             <div class="row">
               <div class="col-md-12 text-right">
                 <button type="submit" class="btn btn-dark" style="background-color:#FFCE56; color:#12160F;">
-                  <a href="{{route('prospectos.index')}}" style="color:#000;" id="">
+                  <a href="{{route('prospectos.indexprospectos')}}" style="color:#000;" id="">
                   <i class="fas fa-user-book"></i>TODOS
                   </a>
                 </button>
                 <button type="submit" class="btn btn-dark" style="background-color:#FFCE56; color:#12160F;">
-                  <a href="{{route('prospectos.index')}}" style="color:#000;" id="">
+                  <a href="{{url('/prospectos/Activo/indexprospectos')}}" style="color:#000;">
                   <i class="fas fa-user-book"></i>ACTIVOS
                   </a>
                 </button>
                 <button type="submit" class="btn btn-dark" style="background-color:#FFCE56; color:#12160F;">
-                  <a href="{{route('prospectos.index')}}" style="color:#000;" id="">
+                  <a href="{{url('/prospectos/Cancelado/indexprospectos')}}" style="color:#000;">
                   <i class="fas fa-user-book"></i>CANCELADOS
                   </a>
                 </button>
@@ -183,47 +178,6 @@
             </div>
         
     </modal>
-    <!-- /.Aceptar Modal -->
-
-    <!-- Catalogo Productos Modal -->
-    {{--  <modal v-model="openCatalogo" title="Prospecto" :footer="false">
-      <div class="table-responsive">
-        <table id="tablaProspecto" class="table table-bordred">
-          <thead>
-            <tr>
-              <th class="hide">#</th>
-                  <th class="color_text">Cliente</th>
-                  <th class="color_text">Nombre de Proyecto</th>
-                  <th class="color_text">Diseñador</th>
-                  <th class="color_text">Proyección de venta en USD</th>
-                  <th class="color_text">Factibilidad</th>
-                  <th class="color_text">Próxima actividad</th>
-                  <th class="color_text">Fecha</th>
-                  <th class="color_text">Estatus</th>
-                  <th style="min-width:105px;"></th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="(prospecto, index) in prospectos">
-                  <td class="hide">@{{index+1}}</td>
-                  <template>
-                    <td>@{{prospecto.cliente}}</td>
-                  </template>
-                  <td>@{{prospecto.nombre}}</td>
-                  <td>@{{prospecto.vendedor}}</td>
-                  <td>$@{{prospecto.proyeccion_venta}}</td>
-                  <td>@{{prospecto.factibilidad}}</td>
-                  <td>@{{prospecto.actividad}}</td>
-                  <td>@{{prospecto.fecha}}</td>
-                  <td>@{{prospecto.estatus}}</td>
-                  <td class="text-right">
-                  </td>  
-                </tr>
-          </tbody>
-        </table>
-      </div>
-    </modal>--}}
-    <!-- /.Catalogo Productos Modal -->
 </section>
 <!-- /.content -->
 @stop

@@ -53,35 +53,24 @@ class UsuariosController extends Controller
       return  redirect()->route('usuarios.permisos');
     }
 
-
-
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-
-      ///$rol_id=$rol_id;
+      
+      /*$rol_id= $request->rol_id;
+      //dd($rol_id);*/
       $roles = Role::all();
-      //$rol =  Role::find($rol_id);
+      /*$rol =  Role::find($rol_id);*/
       $permisos = Permission::all();
-      //$permisosrol = $rol->permissions()->get()->pluck('id');
+      /*$permisosrol = $rol->permissions()->get()->pluck('id');*/
         
         return view('usuarios.create', compact('roles','permisos'));
     }
 
-    public function create2()
-    {
-        $roles = Role::all();
-        //dd($roles);
-        $permisos = Permission::all();
-        //dd($permisos);
-        $usuarios = User::with('roles')->get();
-
-        return view('usuarios.create2', compact('roles','usuarios','permisos'));
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -112,11 +101,6 @@ class UsuariosController extends Controller
           "success" => false, "error" => true, "message" => "No existe el tipo seleccionado"
         ], 400);
       }
-
-      /*$roles = Role::create([
-                'name'      => $request->name,
-            ]);
-      //dd($roles);*/
 
       $create = [
         'name' => $request->nombre,
@@ -149,19 +133,6 @@ class UsuariosController extends Controller
     {
       if($usuario->firma) $usuario->firma = asset('storage/'.$usuario->firma);
       return view('usuarios.show', compact('usuario'));
-    }
-
-
-
-    public function mostrar(User $usuario)
-    {
-      $roles = Role::get();
-      $rol = Role::all();
-
-       //$roles = Role::where('name')->first();
-       //dd($roles);
-      
-      return view('usuarios.mostrar', compact('usuario','rol','roles'));
     }
 
     /**

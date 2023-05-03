@@ -111,7 +111,7 @@ class ProspectosController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function prospectos()
+    public function prospectos(Request $request)
     {
         
         $inicio = Carbon::parse('2023-01-01');
@@ -124,30 +124,56 @@ class ProspectosController extends Controller
         } else {
             $usuarios = [];
         }
-        
-        $proyectos = Prospecto::leftjoin('prospectos_actividades','prospectos.id','=','prospectos_actividades.prospecto_id')
-        ->leftjoin('prospectos_tipos_actividades', 'prospectos_actividades.tipo_id', '=', 'prospectos_tipos_actividades.id')
-        ->leftjoin('users', 'prospectos.user_id', '=', 'users.id')
-        ->leftjoin('clientes', 'prospectos.cliente_id', '=', 'clientes.id')
-        ->leftjoin('vendedores', 'prospectos.vendedor_id', '=', 'vendedores.id')
-        ->select('vendedores.nombre as vendedor','prospectos.*','users.name as usuario','clientes.nombre as cliente','prospectos_tipos_actividades.nombre as actividad','prospectos_actividades.fecha as fecha')
-        ->where('prospectos_actividades.realizada', false)
-        ->where('prospectos.es_prospecto', 'si')
-        ->get();
-       
-        //$proyectos = Prospecto::with('usuario','vendedor')->where('es_prospecto','si')->get();
+        /**Consulta para obtener el estatus de los apartador***/
+        $estatus=$request->estatus;
 
-        
-            $cotizaciones = ProspectoCotizacion::leftjoin('prospectos', 'prospectos_cotizaciones.prospecto_id', '=', 'prospectos.id')
+        if(!empty($estatus)){
+
+            $proyectos = Prospecto::leftjoin('prospectos_actividades','prospectos.id','=','prospectos_actividades.prospecto_id')
+            ->leftjoin('prospectos_tipos_actividades', 'prospectos_actividades.tipo_id', '=', 'prospectos_tipos_actividades.id')
+            ->leftjoin('users', 'prospectos.user_id', '=', 'users.id')
             ->leftjoin('clientes', 'prospectos.cliente_id', '=', 'clientes.id')
-            ->leftjoin('users', 'prospectos_cotizaciones.user_id', '=', 'users.id')
-            ->select('prospectos_cotizaciones.*', 'users.name as user_name', 'prospectos.nombre as prospecto_nombre', 'prospectos.id as prospecto_id', 'clientes.nombre as cliente_nombre')
-            ->where('prospectos.es_prospecto','si')
-            ->where('prospectos_cotizaciones.user_id', '=', $user->id)->whereBetween('prospectos_cotizaciones.created_at', [$inicio, $anio])->orderBy('fecha', 'desc')->get();
-        
-         $vendedores = Vendedor::all();
+            ->leftjoin('vendedores', 'prospectos.vendedor_id', '=', 'vendedores.id')
+            ->select('vendedores.nombre as vendedor','prospectos.*','users.name as usuario','clientes.nombre as cliente','prospectos_tipos_actividades.nombre as actividad','prospectos_actividades.fecha as fecha')
+            ->where('prospectos_actividades.realizada', false)
+            ->where('prospectos.es_prospecto', 'si')
+            ->where('prospectos.estatus', $estatus)
+            ->get();
 
-        return view('prospectos.indexprospectos', compact('cotizaciones', 'usuarios','proyectos'));        
+              //$proyectos = Prospecto::with('usuario','vendedor')->where('es_prospecto','si')->get();
+                $cotizaciones = ProspectoCotizacion::leftjoin('prospectos', 'prospectos_cotizaciones.prospecto_id', '=', 'prospectos.id')
+                ->leftjoin('clientes', 'prospectos.cliente_id', '=', 'clientes.id')
+                ->leftjoin('users', 'prospectos_cotizaciones.user_id', '=', 'users.id')
+                ->select('prospectos_cotizaciones.*', 'users.name as user_name', 'prospectos.nombre as prospecto_nombre', 'prospectos.id as prospecto_id', 'clientes.nombre as cliente_nombre')
+                ->where('prospectos.es_prospecto','si')
+                ->where('prospectos_cotizaciones.user_id', '=', $user->id)->whereBetween('prospectos_cotizaciones.created_at', [$inicio, $anio])->orderBy('fecha', 'desc')->get();
+            
+             $vendedores = Vendedor::all(); 
+
+        } else {
+            
+            $proyectos = Prospecto::leftjoin('prospectos_actividades','prospectos.id','=','prospectos_actividades.prospecto_id')
+            ->leftjoin('prospectos_tipos_actividades', 'prospectos_actividades.tipo_id', '=', 'prospectos_tipos_actividades.id')
+            ->leftjoin('users', 'prospectos.user_id', '=', 'users.id')
+            ->leftjoin('clientes', 'prospectos.cliente_id', '=', 'clientes.id')
+            ->leftjoin('vendedores', 'prospectos.vendedor_id', '=', 'vendedores.id')
+            ->select('vendedores.nombre as vendedor','prospectos.*','users.name as usuario','clientes.nombre as cliente','prospectos_tipos_actividades.nombre as actividad','prospectos_actividades.fecha as fecha')
+            ->where('prospectos_actividades.realizada', false)
+            ->where('prospectos.es_prospecto', 'si')
+            ->get(); 
+
+            //$proyectos = Prospecto::with('usuario','vendedor')->where('es_prospecto','si')->get();
+                $cotizaciones = ProspectoCotizacion::leftjoin('prospectos', 'prospectos_cotizaciones.prospecto_id', '=', 'prospectos.id')
+                ->leftjoin('clientes', 'prospectos.cliente_id', '=', 'clientes.id')
+                ->leftjoin('users', 'prospectos_cotizaciones.user_id', '=', 'users.id')
+                ->select('prospectos_cotizaciones.*', 'users.name as user_name', 'prospectos.nombre as prospecto_nombre', 'prospectos.id as prospecto_id', 'clientes.nombre as cliente_nombre')
+                ->where('prospectos.es_prospecto','si')
+                ->where('prospectos_cotizaciones.user_id', '=', $user->id)->whereBetween('prospectos_cotizaciones.created_at', [$inicio, $anio])->orderBy('fecha', 'desc')->get();
+            
+             $vendedores = Vendedor::all(); 
+        }
+        
+        return view('prospectos.indexprospectos', compact('cotizaciones', 'usuarios','proyectos','estatus'));  
     }
 
 

@@ -34,7 +34,6 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label class="control-label">Nombre</label>
-                    @php $roles = Auth::user()->roles @endphp
                     @foreach($roles as $rol)
                       <span class="form-control">{{$rol->name}}</span>
                     @endforeach

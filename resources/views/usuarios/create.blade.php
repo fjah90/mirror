@@ -86,10 +86,8 @@
                         </div>
                       </div>
                     </div>
-                  </div>
-                </div>
-              </form><br>
-              <div class="row">
+                  </div><br>
+                <!--div class="row">
                 <form action="/permisos/{{$rol->id}}/actualizar" method="post">
                   <input type="hidden" name="_token" value="{{ csrf_token() }}"/>
                   <div class="col-lg-12">
@@ -112,7 +110,7 @@
                               <tr>
                                 <td>{{$permiso->id}}</td>
                                 <td>{{$permiso->name}}</td>
-                                <td><input type="checkbox" name="permisos_ids[]" value="{{$permiso->id}}"></td>
+                                <td><input type="checkbox" name="permisos_ids[]" value="{{$permiso->id}}"></input></td>
                               </tr>
                               @endforeach
                             </tbody>
@@ -120,10 +118,13 @@
                         </div>
                       </div>
                     </div>
-                  </div>
+                  </div-->
+                  <!--div class="col-lg-12 text-right">
+                  <button type="submit" class="btn btn-dark" style="background-color: rgb(18, 22, 15); color: rgb(182, 137, 17);">Guardar</button>
+                </div-->
                 </form>
               </div>
-             <div class="col-md-12">
+                <div class="col-md-12">
                 <div class="row" style="margin-top:25px;">
                   <div class="col-sm-12 text-right">
                     <a href="{{route('usuarios.index')}}" class="btn btn-default" style="color:#000; background-color:#B3B3B3;">Regresar</a>
@@ -134,10 +135,12 @@
                   </div>
                 </div>
               </div>
+                </div>
+              </form><br>
             </div>
           </div>
         </div>
-      </div>
+      </div><!--Row-->
     </section>
     <!-- /.content -->
 @stop

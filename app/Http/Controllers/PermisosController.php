@@ -32,6 +32,7 @@ class PermisosController extends Controller
     public function create()
     {
 
+
         return view('permisos.create');
     }
 
@@ -62,12 +63,10 @@ class PermisosController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function show(Role $id)
+    public function show(Role $Roles,$id)
     {
-        //$roles=Role::all($id);
-        //dd($roles);
-        $roles=Role::find($id);//find es para buscar en la tabla roles el que tenga este id
-        //dd($roles);
+        $roles=Role::all();
+        //$roles=Role::find($id);//find es para buscar en la tabla roles el que tenga este id
         return view('permisos.show', compact('id','roles'));
     }
 
