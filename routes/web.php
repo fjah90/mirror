@@ -49,7 +49,10 @@ Route::middleware('auth')->group(function () {
     //Todos
     //Prospectos
     Route::get('/prospectos/cotizaciones', 'ProspectosController@cotizaciones');
-    Route::get('/prospectos/prospectos', 'ProspectosController@prospectos');
+    Route::get('/prospectos/prospectos', 'ProspectosController@prospectos')->name('prospectos.indexprospectos');
+    Route::get('/prospectos/{estatus}/indexprospectos', 'ProspectosController@prospectos');//Ruta para los estatus de apartado//
+
+
     Route::get('/prospectos/create2', 'ProspectosController@create2')->name('prospectos.create2');
     Route::get('prospectos/regeneratePDF', 'ProspectosController@regeneratePDF');
     Route::get('prospectos/actualizarActividades', 'ProspectosController@actualizarActividades');
@@ -74,9 +77,11 @@ Route::middleware('auth')->group(function () {
         Route::get('usuarios/permisos', 'UsuariosController@permisos');
         Route::get('/permisos/{rol}/edit', 'UsuariosController@editpermisos')->name('permisos.edit');
         Route::post('/permisos/{rol}/actualizar', 'UsuariosController@updatepermisos');
-        /**/
-        Route::resource('/permisos', 'PermisosController');
+        Route::get('/permisos/{rol}/create', 'UsuariosController@create');///
+        Route::resource('/permisos', 'PermisosController', ['parameters' => [
+        'permisos' => 'permiso']]);
         //Mi Cuenta
+
         Route::get('/mi_cuenta', 'MiCuentaController@index')->name('mi_cuenta');
         Route::post('/mi_cuenta', 'MiCuentaController@update');
 
@@ -222,7 +227,9 @@ Route::middleware('auth')->group(function () {
         Route::get('usuarios/permisos', 'UsuariosController@permisos')->name('usuarios.permisos');
         Route::get('/permisos/{rol}/edit', 'UsuariosController@editpermisos')->name('permisos.edit');
         Route::post('/permisos/{rol}/actualizar', 'UsuariosController@updatepermisos');
-        Route::resource('/permisos', 'PermisosController');
+        Route::get('/permisos/{rol}/create', 'UsuariosController@create');///
+        Route::resource('/permisos', 'PermisosController', ['parameters' => [
+        'permisos' => 'permiso']]);
 
         Route::delete('/productos/{producto}', 'ProductosController@destroy');
         Route::delete('/clientes/{cliente}', 'ClientesController@destroy');

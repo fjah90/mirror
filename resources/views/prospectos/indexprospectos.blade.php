@@ -37,7 +37,7 @@
 
           <h3 class="panel-title">
             <div class="p-10" style="display:inline-block">
-              Usuario
+              Usuario    
               @role('Administrador')
                 <select class="form-control" @change="cargar()" v-model="usuarioCargado" style="width:auto;display:inline-block;">
                   <option value="Todos">Todos</option>
@@ -56,8 +56,27 @@
               @endcan
               </button>
             </div>
+            <!--Botones para apartados de proyectos activos o cancelados-->
+            <div class="row">
+              <div class="col-md-12 text-right">
+                <button type="submit" class="btn btn-dark" style="background-color:#FFCE56; color:#12160F;">
+                  <a href="{{route('prospectos.indexprospectos')}}" style="color:#000;" id="">
+                  <i class="fas fa-user-book"></i>TODOS
+                  </a>
+                </button>
+                <button type="submit" class="btn btn-dark" style="background-color:#FFCE56; color:#12160F;">
+                  <a href="{{url('/prospectos/Activo/indexprospectos')}}" style="color:#000;">
+                  <i class="fas fa-user-book"></i>ACTIVOS
+                  </a>
+                </button>
+                <button type="submit" class="btn btn-dark" style="background-color:#FFCE56; color:#12160F;">
+                  <a href="{{url('/prospectos/Cancelado/indexprospectos')}}" style="color:#000;">
+                  <i class="fas fa-user-book"></i>CANCELADOS
+                  </a>
+                </button>
+              </div>
+            </div>
             <div class="p-10">
-              
             </div>
             <div class="p-10" style="display:inline-block">
               Año  
@@ -159,8 +178,6 @@
             </div>
         
     </modal>
-    <!-- /.Aceptar Modal -->
-
 </section>
 <!-- /.content -->
 @stop

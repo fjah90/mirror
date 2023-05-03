@@ -693,7 +693,7 @@
 
           <div class="row">
               <div class="col-md-12 text-right">
-                <a href="{{route('prospectos.index')}}" style="margin-top:25px; color:#000; background-color:#B3B3B3" class="btn btn-default">
+                <a href="{{url('/prospectos/prospectos/')}}" style="margin-top:25px; color:#000; background-color:#B3B3B3" class="btn btn-default">
                   Regresar
                 </a>
               </div>

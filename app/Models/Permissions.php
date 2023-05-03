@@ -12,7 +12,5 @@ class Permissions extends Model
 {
     protected $table = 'permissions';
     protected $fillable = [
-		'name',
-		'guard_name'
-	];
+		'name','guard_name'];
 }

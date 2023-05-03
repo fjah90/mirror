@@ -53,19 +53,24 @@ class UsuariosController extends Controller
       return  redirect()->route('usuarios.permisos');
     }
 
-
-
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        $roles = Role::all();
-
-        return view('usuarios.create', compact('roles'));
+      
+      /*$rol_id= $request->rol_id;
+      //dd($rol_id);*/
+      $roles = Role::all();
+      /*$rol =  Role::find($rol_id);*/
+      $permisos = Permission::all();
+      /*$permisosrol = $rol->permissions()->get()->pluck('id');*/
+        
+        return view('usuarios.create', compact('roles','permisos'));
     }
+
 
     /**
      * Store a newly created resource in storage.

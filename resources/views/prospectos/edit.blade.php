@@ -33,7 +33,7 @@
             <div class="row">
               <div class="col-md-12">
                 <div class="form-group">
-                  <label class="control-label">Cliente</label>
+                  <label class="control-label">Cliente <strong style="color: grey"> *</strong></label>
                   <span class="form-control">{{$prospecto->cliente->nombre}}</span>
                 </div>
               </div>
@@ -42,14 +42,14 @@
               <div class="row">
                 <div class="col-md-8">
                   <div class="form-group">
-                    <label class="control-label">Nombre de Proyecto</label>
+                    <label class="control-label">Nombre de Proyecto <strong style="color: grey"> *</strong></label>
                     <input type="text" class="form-control" name="nombre"
                       v-model="prospecto.nombre" required
                     />
                   </div>
                 </div>
                 <div class="col-md-4">
-                      <label class="control-label">Diseñador</label>
+                      <label class="control-label">Diseñador <strong style="color: grey"> *</strong></label>
                       <select name="vendedor_id" v-model="prospecto.vendedor_id"
                               class="form-control" required>
                           @foreach($vendedores as $vendedor)
@@ -61,7 +61,7 @@
               <div class="row">
                 <div class="col-md-12">
                   <div class="form-group">
-                    <label class="control-label">Descripción del Proyecto CRM</label>
+                    <label class="control-label">Descripción del Proyecto CRM <strong style="color: grey"> *</strong></label>
                     <textarea name="descripcion" rows="3" cols="80" class="form-control"
                       v-model="prospecto.descripcion" required>
                     </textarea>
@@ -72,7 +72,7 @@
               <div class="row">
                   <div class="col-md-3">
                       <div class="form-group">
-                        <label for="prospecto.fecha_cierre" class="control-label">Fecha aproximada de cierre</label>
+                        <label for="prospecto.fecha_cierre" class="control-label">Fecha aproximada de cierre <strong style="color: grey"> *</strong></label>
                         <br />
                         <dropdown>
                           <div class="input-group">
@@ -96,13 +96,13 @@
                     </div>
                     <div class="col-md-3">
                       <div class="form-group">
-                        <label class="control-label">Proyección de venta en USD</label>
-                        <input type="number" step="0.1" name="proyeccion_venta" class="form-control" v-model="prospecto.proyeccion_venta" required />
+                        <label class="control-label">Proyección de venta en USD <strong style="color: grey"> *</strong></label>
+                        <input type="number" class="form-control" name="proyeccion_venta" v-model="prospecto.proyeccion_venta" required />
                       </div>
                     </div>
                     <div class="col-md-3">
                       <div class="form-group">
-                        <label class="control-label">Factibilidad</label>
+                        <label class="control-label">Factibilidad <strong style="color: grey"> *</strong></label>
                          <select class="form-control" name="factibilidad" v-model="prospecto.factibilidad" required>
                           <option value="Alta">Alta</option>
                           <option value="Media">Media</option>
@@ -112,7 +112,7 @@
                     </div>
                      <div class="col-md-3">
                       <div class="form-group">
-                        <label class="control-label">Estatus</label>
+                        <label class="control-label">Estatus <strong style="color: grey"> *</strong></label>
                           <select class="form-control" name="estatus" v-model="prospecto.estatus" required>
                           <option value="Activo">Activo</option>
                           <option value="Cancelado">Cancelado</option>
@@ -190,13 +190,13 @@
                 <div class="row">
                   <div class="col-md-4">
                     <div class="form-group">
-                      <label class="control-label">Fecha</label>
+                      <label class="control-label">Fecha<strong style="color: grey"> *</strong></label>
                       <span class="form-control">@{{prospecto.proxima_actividad.fecha_formated}}</span>
                     </div>
                   </div>
                   <div class="col-md-4">
                     <div class="form-group">
-                      <label class="control-label">Tipo</label>
+                      <label class="control-label">Tipo <strong style="color: grey"> *</strong></label>
                       <span class="form-control">@{{prospecto.proxima_actividad.tipo.nombre}}</span>
                     </div>
                   </div>
@@ -245,7 +245,7 @@
                 </div>
                 <div class="row">
                   <div class="col-sm-12">
-                    <label class="control-label">Descripción Actividad</label>
+                    <label class="control-label">Descripción Actividad <strong style="color: grey"> *</strong></label>
                     <textarea name="descripcion" rows="5" cols="80" class="form-control" v-model="prospecto.proxima_actividad.descripcion" required></textarea>
                   </div>
                 </div>
@@ -259,7 +259,7 @@
               <div class="row">
                 <div class="col-md-4">
                   <div class="form-group">
-                    <label for="prospecto.nueva_proxima_actividad.fecha" class="control-label">Fecha</label>
+                    <label for="prospecto.nueva_proxima_actividad.fecha" class="control-label">Fecha<strong style="color: grey"> *</strong></label>
                     <br />
                     <dropdown>
                       <div class="input-group">
@@ -305,7 +305,7 @@
               </div>
               <div class="row">
                 <div class="col-md-12 text-right">
-                  <a href="{{route('prospectos.index')}}" class="btn btn-default" style="color:#000; background-color:#B3B3B3;">
+                  <a href="{{url('/prospectos/prospectos/')}}" class="btn btn-default" style="color:#000; background-color:#B3B3B3;">
                     Regresar
                   </a>  
                   <button type="submit" class="btn btn-DARK" :disabled="cargando" style="background-color:#12160F; color:#B68911;">
@@ -319,7 +319,6 @@
         </div>
       </div>
     </div>
-
     <!-- Catalogo Productos Modal -->
     <modal v-model="openCatalogo" title="Productos" :footer="false">
       <div class="table-responsive">
@@ -427,7 +426,7 @@ const app = new Vue({
         vendedor_id: this.prospecto.vendedor_id,
         fecha_cierre: this.prospecto.fecha_cierre,
         proyeccion_venta: this.prospecto.proyeccion_venta,
-        factibilidad: this.prospecto.factibilidad
+        factibilidad: this.prospecto.factibilidad,////////////////
         estatus: this.prospecto.estatus
       })
       .then(({data}) => {

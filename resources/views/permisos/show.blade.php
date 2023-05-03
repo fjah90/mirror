@@ -25,21 +25,23 @@
     <section class="content" id="content">
       <div class="row">
         <div class="col-lg-12">
-          <div class="panel ">
+          <div class="panel">
             <div class="panel-heading" style="background-color:#12160F; color:#B68911;">
-              <h3 class="panel-title">Rol {{$permisos->name}}</h3>
+              <h3 class="panel-title">Rol</h3>
             </div>
             <div class="panel-body">
               <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-6">
                   <div class="form-group">
                     <label class="control-label">Nombre</label>
-                    <span class="form-control">{{$permisos->name}}</span>
+                    @foreach($roles as $rol)
+                      <span class="form-control">{{$rol->name}}</span>
+                    @endforeach
                   </div>
                 </div>
               </div>
               <div class="row">
-                <div class="col-sm-12">
+                <div class="col-md-12 text-right">
                   <a href="{{route('usuarios.permisos')}}" class="btn btn-default" style="color:#000; background-color:#B3B3B3;">Regresar</a>
                 </div>
               </div>
@@ -50,3 +52,5 @@
     </section>
     <!-- /.content -->
 @stop
+
+                       

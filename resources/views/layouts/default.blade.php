@@ -24,7 +24,6 @@
   <!-- end of global css -->
   @yield('header_styles')
 </head>
-
 <body>
 <!-- header logo: style can be found in header-->
 <header class="header">
@@ -187,7 +186,11 @@
         -->
        
 
+<<<<<<< HEAD
         {{--  @hasanyrole('Administrador|Usuaro')
+=======
+        @hasanyrole('Administrador|Usuario')
+>>>>>>> desarrollo
           <li {!! (Request::is('ordenes-proceso*') ? 'class="active"' : '') !!}  {!! (Request::is('proyectos-aprobados*') ? 'class="active"' : '') !!}><a class="title"><i class="fa fa-cart-arrow-down" style="color:#B68911; font-size: 20px;"></i> <b style="color:#9F9F9F;">Ordenes Compra </b><span class="fa fa-chevron-down" style="color:#9F9F9F;"></span></a>
            <ul class="nav child_menu">  
               <li  {!! (Request::is('proyectos-aprobados*') ? 'class="active"' : '') !!} >
@@ -206,9 +209,11 @@
           </li>
           <hr class="divider-menu">
           @endhasanyrole
-          
           --}}
           {{--  @hasanyrole('Administrador|Usuaro')
+
+
+          @hasanyrole('Administrador|Usuario')
           <!-- Administracion  -->
           <li {!! (Request::is('cuentas-cobrar*') ? 'class="active"' : '') !!} {!! (Request::is('cuentas-pagar*') ? 'class="active"' : '') !!}><a class="title"><i class="fa fa-calculator" style="color:#B68911; font-size:20px;"></i>  <b style="color:#9F9F9F;">Contabilidad</b><span class="fa fa-chevron-down" style="color:#9F9F9F;"></span></a>
            <ul class="nav child_menu">  
@@ -231,6 +236,9 @@
           @endhasanyrole--}}
 
           {{--  @hasanyrole('Administrador|Usuaro')
+
+          @hasanyrole('Administrador|Usuario')
+
           <!--Reportes-->
 
           <li {!! (Request::is('reportes*') ? 'class="active"' : '') !!}><a class="title"><i class="fas fa-file" style="color:#B68911; font-size: 20px;"></i> <b style="color:#9F9F9F;">Reportes</b> <span class="fa fa-chevron-down" style="color:#9F9F9F;"></span></a>
@@ -296,7 +304,7 @@
           @endhasanyrole
           -->
           <!--
-          @hasanyrole('Administrador|Usuaro')
+          @hasanyrole('Administrador|Usuario')
          Catalogos 
           <li {!! (Request::is('clientes*' ) ? 'class="active"' : '') !!} {!! (Request::is('proveedores*' ) ? 'class="active"' : '') !!} {!! (Request::is('agentesAduanales*' ) ? 'class="active"' : '') !!} {!! (Request::is('productos*' ) ? 'class="active"' : '') !!}><a class="title"><i class="fa fa-signal" style="color:#f54c82; font-size: 20px;"></i>  Administración <span class="fa fa-chevron-down"></span></a>
             <ul class="nav child_menu">  
@@ -407,7 +415,7 @@
             @can('Categoria de proyectos menu')
             <li  {!! (Request::is('proyectos*') ? 'class="active"' : '') !!}>
               <a href="{{ URL::to('proyectos') }}">
-                <i class="fas fa-folder-open "></i> <span style="color:#000;">Categoría de Proyectos</span>
+                <i class="fas fa-folder-open "></i> <span style="color:#000;">Categoria de Proyectos</span>
               </a>
             </li>
             @endcan
@@ -449,7 +457,6 @@
           <hr class="divider-menu">
           @endcan
           @endhasanyrole
-
            @hasanyrole('Administrador')
           <!-- Administracion  -->
           <li {!! (Request::is('Usuarios*') ? 'class="active"' : '') !!}><a class="title"><i class="fa fa-user" style="color:#B68911; font-size:20px;"></i>  <b style="color:#9F9F9F;">Gestión de Usuario</b><span class="fa fa-chevron-down" style="color:#9F9F9F;"></a>
@@ -464,7 +471,7 @@
             @can('Permisos menu')
             <li {!! (Request::is('Usuarios*') ? 'class="active"' : '') !!} class="sub {!! (Request::is('usuarios*') ? 'active' : '') !!}">
               <a href="{{ URL::to('usuarios/permisos') }}">
-                <i class="fas fa-user"></i> <span style="color:#000;">Permisos</span>
+                <i class="fas fa-users"></i> <span style="color:#000;">Rol</span>
               </a>
             </li>
             @endcan 
@@ -632,7 +639,6 @@
           </li>
           <hr class="divider-menu">
           -->
-
         </ul>
         <!-- / .navigation -->
       </div>

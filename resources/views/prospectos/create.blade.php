@@ -66,7 +66,7 @@
                 <div class="row">
                   <div class="col-md-4">
                     <div class="form-group">
-                      <label class="control-label">Cliente</label>
+                      <label class="control-label">Cliente <strong style="color: grey"> *</strong></label>
                       <select class="form-control" name="cliente_id" v-model='prospecto.cliente_id' id="clienteSelect" required tabindex="-1">
                         <option v-for="(cliente, index) in clientes" v-bind:value="cliente.id" >
                           @{{ cliente.nombre }}
@@ -86,12 +86,12 @@
                 <div class="row">
                   <div class="col-md-8">
                     <div class="form-group">
-                      <label class="control-label">Nombre de Proyecto</label>
+                      <label class="control-label">Nombre de Proyecto <strong style="color: grey"> *</strong></label>
                       <input name="nombre" class="form-control" v-model="prospecto.nombre" required />
                     </div>
                   </div>
                   <div class="col-md-4">
-                      <label class="control-label">Diseñador</label>
+                      <label class="control-label">Diseñador <strong style="color: grey"> *</strong></label>
                       <select name="vendedor_id" v-model="prospecto.vendedor_id"
                               class="form-control" required>
                           @foreach($vendedores as $vendedor)
@@ -103,7 +103,7 @@
                 <div class="row">
                   <div class="col-md-12">
                     <div class="form-group">
-                      <label class="control-label">Descripción del Proyecto CRM</label>
+                      <label class="control-label">Descripción del Proyecto CRM <strong style="color: grey"> *</strong></label>
                       <textarea name="descripcion" rows="3" cols="80" class="form-control" v-model="prospecto.descripcion" required></textarea>
                     </div>
                   </div>
@@ -119,7 +119,7 @@
                 <div class="row">
                   <div class="col-md-4">
                     <div class="form-group">
-                      <label for="ultima_actividad.fecha" class="control-label">Fecha</label>
+                      <label for="ultima_actividad.fecha" class="control-label">Fecha<strong style="color: grey"> *</strong></label>
                       <br />
                       <dropdown>
                         <div class="input-group">
@@ -143,7 +143,7 @@
                   </div>
                   <div class="col-md-4">
                     <div class="form-group">
-                      <label class="control-label">Tipo</label>
+                      <label class="control-label">Tipo<strong style="color: grey"> *</strong></label>
                       <select class="form-control" name="tipo" v-model='ultima_actividad.tipo_id' >
                         @foreach($tipos as $tipo)
                         <option value="{{$tipo->id}}">{{$tipo->nombre}}</option>
@@ -199,7 +199,7 @@
                 </div>
                 <div class="row">
                   <div class="col-sm-12">
-                    <label class="control-label">Descripción Actividad</label>
+                    <label class="control-label">Descripción Actividad <strong style="color: grey"> *</strong></label>
                     <textarea name="descripcion" rows="5" cols="80" class="form-control" v-model="ultima_actividad.descripcion"></textarea>
                   </div>
                 </div>
@@ -214,7 +214,7 @@
                 <div class="row">
                   <div class="col-md-4">
                     <div class="form-group">
-                      <label for="proxima_actividad.fecha" class="control-label">Fecha</label>
+                      <label for="proxima_actividad.fecha" class="control-label">Fecha<strong style="color: grey"> *</strong></label>
                       <br />
                       <dropdown>
                         <div class="input-group">
@@ -238,7 +238,7 @@
                   </div>
                   <div class="col-md-4">
                     <div class="form-group">
-                      <label class="control-label">Tipo</label>
+                      <label class="control-label">Tipo<strong style="color: grey"> *</strong></label>
                       <select class="form-control" name="tipo" v-model='proxima_actividad.tipo_id'>
                         @foreach($tipos as $tipo)
                           <option value="{{$tipo->id}}">{{$tipo->nombre}}</option>
@@ -261,7 +261,7 @@
                     </a>
                     <button type="submit" class="btn btn-primary" :disabled="cargando">
                       <i class="fas fa-save"></i>
-                      Guardar Prospecto
+                      Guardar Proyecto
                     </button>
                   </div>
                 </div>

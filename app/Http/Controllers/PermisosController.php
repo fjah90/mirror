@@ -31,10 +31,9 @@ class PermisosController extends Controller
      */
     public function create()
     {
-         $roles = Role::all();
-         $permisos = Permission::all();
 
-        return view('permisos.create', compact('roles','permisos'));
+
+        return view('permisos.create');
     }
 
     /**
@@ -45,42 +44,18 @@ class PermisosController extends Controller
      */
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
+       $validator = Validator::make($request->all(), [
         'name' => 'required',
-      
       ]);
 
-      if ($validator->fails()) {
-        $errors = $validator->errors()->all();
-        return response()->json([
-          "success" => false, "error" => true, "message" => $errors[0]
-        ], 400);
-      }
+       Role::create($request->all());
 
-      $rol = Role::where('name', $request->tipo)->first();
-      if(is_null($rol)){
-        return response()->json([
-          "success" => false, "error" => true, "message" => "No existe el tipo seleccionado"
-        ], 400);
-      }
+       $create = [
 
-      $create = [
         'name' => $request->name,
       ];
-
-      $usuario = User::create($create);
-      $usuario->assignRole($rol);
-
-      if(!is_null($request->firma)){
-        $firma = Storage::putFileAs(
-          'public/usuarios/'.$usuario->id, $request->firma,
-          'firma.'.$request->firma->guessExtension()
-        );
-        $firma = str_replace('public/', '', $firma);
-        $usuario->update(['firma'=>$firma]);
-      }
-
-      return response()->json(["success"=>true,"error"=>false], 200);
+       
+      return redirect()->action('UsuariosController@permisos');
     }
 
     /**
@@ -89,14 +64,11 @@ class PermisosController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
+    public function show(Role $Roles,$id)
     {
-        $roles = Role::all();
-        //$rol = Role::all();
-        $permisos = Permission::all();
-        //dd($permisos);
-  
-        return view('permisos.show', compact('roles','permisos'));
+        $roles=Role::all();
+        //$roles=Role::find($id);//find es para buscar en la tabla roles el que tenga este id
+        return view('permisos.show', compact('id','roles'));
     }
 
     /**
@@ -105,13 +77,12 @@ class PermisosController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function edit($rol_id)
+    public function edit($id)
     {
-      $rol =  Role::find($rol_id);
+      $roles=Role::find($id);
       $permisos = Permission::all();
-      $permisosrol = $rol->permissions()->get()->pluck('id');
      
-      return view('permisos.edit', compact('permisos','rol','permisosrol'));
+      return view('permisos.edit', compact('permisos','id','roles'));
     }
 
     /**
@@ -121,13 +92,16 @@ class PermisosController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update($rol_id,Request $request)
+    public function update(Request $request,  Role $Roles,$id)
     {
-      $permissions = $request->permisos_ids;
-      $role =  Role::find($rol_id);
-      $role->syncPermissions($permissions);
       
-      return  redirect()->route('permisos.permisos');
+          Role::find($id)->update($request->all());
+
+          $roles= Role::find($id);
+          $roles->name=$request->name;
+          $roles->updated_at=date("Y-m-d H:i:s");
+          $roles->save();
+      return redirect()->action('UsuariosController@permisos');
     }
 
     /**
@@ -136,8 +110,11 @@ class PermisosController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $user)
+    public function destroy(Role $Roles,$id)
     {
-        //
+        $roles->delete();
+        return response()->json(['success' => true, "error" => false],200);
+
+        //return redirect()->action('UsuariosController@permisos');    
     }
 }
