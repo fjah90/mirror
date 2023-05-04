@@ -109,7 +109,7 @@
           </div>
         </div>
         <ul class="navigation nav side-menu">
-        @hasanyrole('Administrador|Usuario')
+        @hasanyrole('Administrador|Diseñadores')
           <!-- Dashboard -->
           <li {!! (Request::is('dashboard') ? 'class="active"' : '') !!}>
             <a href="{{ URL::to('dashboard') }}">
@@ -121,17 +121,19 @@
           <hr class="divider-menu">
         @endhasanyrole
 
-        @hasanyrole('Administrador|Usuario')
+        @hasanyrole('Administrador|Diseñadores')
 
-          <!-- Proyectos que son prospectos-->
-          @can('Prospectos menu')
+          <!-- Proyectos que son prospectos
+          @can('Prospectos menu')-->
           <li {!! (Request::is('prospectos/prospectos*') ? 'class="active"' : '') !!}>
             <a href="{{ URL::to('prospectos/prospectos') }}">
               <i class="menu-icon fas fa-calendar-check" style="color:#B68911; font-size: 20px;"></i>
               <span class="mm-text" style="color:#9F9F9F;">Prospectos</span>
             </a>
           </li>
+          <!--
           @endcan
+          -->
 
           <hr class="divider-menu">
 
@@ -353,17 +355,23 @@
 
           <hr class="divider-menu">
           <!--Catalogos de Apoyo-->
-          @hasanyrole('Administrador|Usuario')
+          @hasanyrole('Administrador|Diseñadores')
+          <!--
           @can('Catalogos menu')
+          -->
           <li {!! (Request::is('vendedores*') ? 'class="active"' : '') !!} {!! (Request::is('Usuarios*') ? 'class="active"' : '') !!} {!! (Request::is('tiposClientes*') ? 'class="active"' : '') !!} {!! (Request::is('categoriaClientes*') ? 'class="active"' : '') !!} {!! (Request::is('proyectos*') ? 'class="active"' : '') !!} {!! (Request::is('tiposProveedores*') ? 'class="active"' : '') !!} {!! (Request::is('unidadesMedida*') ? 'class="active"' : '') !!} {!! (Request::is('subcategorias*') ? 'class="active"' : '') !!} {!! (Request::is('categorias*') ? 'class="active"' : '') !!} {!! (Request::is('clientes*' ) ? 'class="active"' : '') !!} {!! (Request::is('proveedores*' ) ? 'class="active"' : '') !!} {!! (Request::is('agentesAduanales*' ) ? 'class="active"' : '') !!} {!! (Request::is('productos*' ) ? 'class="active"' : '') !!}><a class="title"><i class="fa fa-book" style="color:#B68911; font-size: 20px;"></i> <b style="color:#9F9F9F;">Catálogos</b><span class="fa fa-chevron-down" style="color:#9F9F9F;"></span></a>
            <ul class="nav child_menu">
+            <!--
            @can('Clientes menu')
+          -->
              <li  {!! (Request::is('clientes*') ? 'class="active"' : '') !!}>
                 <a href="{{ URL::to('clientes') }}">
                   <i class="fas fa-user-tie"></i> <span style="color:#000;">Clientes</span>
                 </a>
               </li>
+              <!--
             @endcan
+          -->
             @can('Proveedores menu')
               <li {!! (Request::is('proveedores*') ? 'class="active"' : '') !!}>
                 <a href="{{ URL::to('proveedores') }}">
