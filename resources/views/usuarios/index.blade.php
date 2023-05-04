@@ -60,6 +60,10 @@
                               href="{{route('usuarios.edit', ['usuario'=>$usuario->id])}}">
                               <i class="fas fa-pencil-alt"></i>
                             </a>
+                            <a class="btn btn-xs btn-default" title="Editar Permisos"
+                              href="{{route('usuarios.permisos', ['usuario'=>$usuario->id])}}">
+                              <i class="fas fa-lock"></i>
+                            </a>
                             @if($usuario->status == 'ACTIVO')
                               <a href="{{ route('usuarios.desactivar', ['usuarios' => $usuario->id]) }}" class="btn btn-xs label-danger float-left" data-toggle="tooltip" data-placement="top" title="Desactivar">
                                   <i class="fas fa-times"></i>

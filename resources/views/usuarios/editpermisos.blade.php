@@ -17,12 +17,12 @@
 @section('content')
     <!-- Content Header (Page header) -->
     <section class="content-header" style="background-color:#12160F; color:#B68911;">
-        <h1 style="font-weight: bolder;">Permisos de {{$rol->name}}</h1>
+        <h1 style="font-weight: bolder;">Permisos de {{$user->name}}</h1>
     </section>
     <!-- Main content -->
     <section class="content" id="content">
         <div class="row">
-        <form action="/permisos/{{$rol->id}}/actualizar" method="post" >
+        <form action="/permisosusuarios/{{$user->id}}/actualizar" method="post" >
         <input type="hidden" name="_token" value="{{ csrf_token() }}" />
             <div class="col-lg-12">
               <div class="panel">
@@ -48,7 +48,7 @@
                         <tr>
                           <td>{{$permiso->id}}</td>
                           <td>{{$permiso->name}}</td>
-                          <td><input type="checkbox" name="permisos_ids[]" value="{{$permiso->id}}" {{ $permisosrol->contains($permiso->id) ? 'checked' : '' }}></input></td>  
+                          <td><input type="checkbox" name="permisos_ids[]" value="{{$permiso->id}}" {{ $permisosuser->contains($permiso->id) ? 'checked' : '' }}></input></td>  
                         </tr>
                         @endforeach
                       
