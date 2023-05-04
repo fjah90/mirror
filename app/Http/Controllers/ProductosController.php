@@ -238,7 +238,7 @@ class ProductosController extends Controller
 
             for($i = 5  ; $i<22 ; $i++){
 
-                $descripcion = CategoriaDescripcion::where('nombre',$descripciones[$i-5])->first();
+                $descripcion = CategoriaDescripcion::where('categoria_id',$categoria->id)->where('nombre',$descripciones[$i-5])->first();
                 if($descripcion){
                     $create = array(
                         "producto_id"              => $p->id,
