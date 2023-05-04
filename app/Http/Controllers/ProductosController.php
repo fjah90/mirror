@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Categoria;
+use App\Models\CategoriaDescripcion;
 use App\Models\Producto;
 use App\Models\ProductoDescripcion;
 use App\Models\Proveedor;
@@ -27,6 +28,17 @@ class ProductosController extends Controller
             ->get();
 
         return view('catalogos.productos.index', compact('productos'));
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create2(Request $request)
+    {
+        $layout        = $request->layout;
+        return view('catalogos.productos.create2', compact( 'layout'));
     }
 
     /**
@@ -122,6 +134,125 @@ class ProductosController extends Controller
             $productorespuesta->ficha_tecnica = asset('storage/' . $productorespuesta->ficha_tecnica);
         }
         return response()->json(['success' => true, "error" => false, "producto" => $productorespuesta], 200);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+
+    
+
+        
+    public function guardar(Request $request)
+    {
+        if (isset($request->archivo)) {
+            $file = $request->file('archivo');
+            $archivo = time().$file->getClientOriginalName();
+            $file->move(public_path().'/archivos/', $archivo);
+
+            $path = public_path().'/archivos/'.$archivo;
+            $data = array_map('str_getcsv', file($path));
+            if (count($data) > 1) {
+
+                array_shift($data);
+    
+                $this->storeImports($data);
+                return response()->json(['success' => true, "error" => false], 200);
+            } else {
+                return response()->json([
+                    "success" => false, "error" => true, "message" => 'Error con el archivo',
+                ], 422);
+            }
+        }
+        else{
+            return response()->json([
+                "success" => false, "error" => true, "message" => 'Falta archivo',
+            ], 422);
+
+        }
+        
+    }
+
+    private function storeImports($rows)
+    {
+        foreach ($rows as $key => $row) {
+            $proveedor = Proveedor::where('empresa',$row[1])->first();
+            $categoria = Categoria::where('nombre',$row[2])->first();
+
+            if($row[3] == null || $row[3] == ""){
+                $subcategoria = null;
+            }
+            else{
+                $sub = Subcategoria::where('nombre',$row[4])->first();
+                if(count($sub) == 1){
+                    $subcategoria = $sub->id;
+                }
+                else{
+                    $subcategoria = null;
+                }
+                
+            }
+
+            $producto = [
+                "provedor_id" => $proveedor->id,
+                "categoria_id" => $categoria->id,
+                "nombre" => $row[0],
+                "subcategoria_id" => $subcategoria,
+                "precio" => 1.00//$row[6]
+            ];
+
+            $p = Producto::where('nombre',$row[0])->first();
+            if($p){
+                $p->update($producto);
+            }
+            else{
+                $p = Producto::create($producto);
+            }
+
+            //cargar las desripciones
+
+            //descripciones en el orden del archvo
+            $descripciones = [
+                "Nombre del material",
+                "Color",
+                "Ancho",
+                "Composición",
+                "Flamabilidad",
+                "Abrasión",
+                "Decoloracion de la luz",
+                "Traspaso de color",
+                "Peeling",
+                "Aplicación",
+                "Acabado",
+                "Procedencia",
+                "Código de lavado",
+                "Repeat HV",
+                "Unidad de venta",
+                "Notas/otros",
+                "Backing",    
+            ];
+            
+
+            for($i = 5  ; $i<22 ; $i++){
+
+                $descripcion = CategoriaDescripcion::where('nombre',$descripciones[$i-5])->first();
+                if($descripcion){
+                    $create = array(
+                        "producto_id"              => $p->id,
+                        "categoria_descripcion_id" => $descripcion['id'],
+                        "valor" => $row[$i]
+                    );
+                    ProductoDescripcion::create($create);
+                }
+                
+            }
+        
+        }
+
+        
     }
 
     /**

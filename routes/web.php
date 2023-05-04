@@ -132,6 +132,8 @@ Route::middleware('auth')->group(function () {
         Route::resource('/subproyectos', 'SubProyectosController');
         Route::post('/productos/{producto}', 'ProductosController@update');
         Route::resource('/productos', 'ProductosController');
+        Route::get('/productoscrear2', 'ProductosController@create2')->name('productos.create2');
+        Route::post('/productosguardar', 'ProductosController@guardar');
         Route::resource('/categorias', 'CategoriasController');
         Route::resource('/subcategorias', 'SubcategoriasController');
 
