@@ -236,11 +236,7 @@ class ProductosController extends Controller
             
 
             for($i = 5  ; $i<22 ; $i++){
-                $create = array(
-                    "producto_id"              => $p->id,
-                    "categoria_descripcion_id" => $descripcion['id'],
-                    "valor" => $row[$i]
-                );
+                
                 $update = array(
                     "valor" => $row[$i]
                 );
@@ -252,6 +248,11 @@ class ProductosController extends Controller
                         $productodescripcion->update($update);
                     }
                     else{     
+                        $create = array(
+                            "producto_id"              => $p->id,
+                            "categoria_descripcion_id" => $descripcion['id'],
+                            "valor" => $row[$i]
+                        );
                         ProductoDescripcion::create($create);
                     }
                     
