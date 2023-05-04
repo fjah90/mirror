@@ -192,8 +192,7 @@ class ProductosController extends Controller
                 }
                 else{
                     $subcategoria = null;
-                }
-                
+                } 
             }
 
             $producto = [
@@ -237,15 +236,25 @@ class ProductosController extends Controller
             
 
             for($i = 5  ; $i<22 ; $i++){
+                $create = array(
+                    "producto_id"              => $p->id,
+                    "categoria_descripcion_id" => $descripcion['id'],
+                    "valor" => $row[$i]
+                );
+                $update = array(
+                    "valor" => $row[$i]
+                );
 
                 $descripcion = CategoriaDescripcion::where('categoria_id',$categoria->id)->where('nombre',$descripciones[$i-5])->first();
                 if($descripcion){
-                    $create = array(
-                        "producto_id"              => $p->id,
-                        "categoria_descripcion_id" => $descripcion['id'],
-                        "valor" => $row[$i]
-                    );
-                    ProductoDescripcion::create($create);
+                    $productodescripcion = ProductoDescripcion::where('producto_id',$p->id)->where('categoria_descripcion_id',$descripcion['id'])->first();
+                    if($productodescripcion){
+                        $productodescripcion->update($update);
+                    }
+                    else{     
+                        ProductoDescripcion::create($create);
+                    }
+                    
                 }
                 
             }
