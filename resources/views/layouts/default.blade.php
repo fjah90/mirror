@@ -129,7 +129,7 @@
           <li {!! (Request::is('prospectos/prospectos*') ? 'class="active"' : '') !!}>
             <a href="{{ URL::to('prospectos/prospectos') }}">
               <i class="menu-icon fas fa-calendar-check" style="color:#B68911; font-size: 20px;"></i>
-              <span class="mm-text" style="color:#9F9F9F;">Prospectossss</span>
+              <span class="mm-text" style="color:#9F9F9F;">Prospectos</span>
             </a>
           </li>
           @endcan
