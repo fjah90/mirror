@@ -122,14 +122,14 @@
           <hr class="divider-menu">
         @endhasanyrole
 
-        @hasanyrole('Administrador|Usuario')
+  
 
           <!-- Proyectos que son prospectos-->
           @can('Prospectos menu')
           <li {!! (Request::is('prospectos/prospectos*') ? 'class="active"' : '') !!}>
             <a href="{{ URL::to('prospectos/prospectos') }}">
               <i class="menu-icon fas fa-calendar-check" style="color:#B68911; font-size: 20px;"></i>
-              <span class="mm-text" style="color:#9F9F9F;">Prospectos</span>
+              <span class="mm-text" style="color:#9F9F9F;">Prospectossss</span>
             </a>
           </li>
           @endcan
@@ -144,7 +144,7 @@
               <span class="mm-text " style="color:#9F9F9F;">Proyectos</span>
             </a>
           </li>
-        @endhasanyrole
+       
 
           <!-- Proyectos 
           <li {!! (Request::is('prospectos/cotizaciones*') ? 'class="active"' : '') !!}><a class="title"><i class="fas fa-calendar-check" style="color:#06a1ce; font-size: 20px;" ></i>  Proyectos <span class="fa fa-chevron-down"></span></a>
@@ -461,13 +461,13 @@
               </a>
             </li>
             @endcan
-            @can('Permisos menu')
+            
             <li {!! (Request::is('Usuarios*') ? 'class="active"' : '') !!} class="sub {!! (Request::is('usuarios*') ? 'active' : '') !!}">
               <a href="{{ URL::to('usuarios/permisos') }}">
                 <i class="fas fa-users"></i> <span style="color:#000;">Rol</span>
               </a>
             </li>
-            @endcan 
+            
             </ul> 
           </li>
           <hr class="divider-menu">
