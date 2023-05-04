@@ -186,7 +186,7 @@ class ProductosController extends Controller
                 $subcategoria = null;
             }
             else{
-                $sub = Subcategoria::where('nombre',$row[4])->first();
+                $sub = Subcategoria::where('nombre',$row[3])->first();
                 if($sub){
                     $subcategoria = $sub->id;
                 }
@@ -201,7 +201,7 @@ class ProductosController extends Controller
                 "categoria_id" => $categoria->id,
                 "nombre" => $row[0],
                 "subcategoria_id" => $subcategoria,
-                "precio" => 1.00//$row[6]
+                "precio" => $row[4]
             ];
 
             $p = Producto::where('nombre',$row[0])->first();
