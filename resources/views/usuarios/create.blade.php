@@ -87,7 +87,7 @@
                       </div>
                     </div>
                   </div><br>
-                <!--div class="row">
+                <div class="row">
                 <form action="/permisos/{{$rol->id}}/actualizar" method="post">
                   <input type="hidden" name="_token" value="{{ csrf_token() }}"/>
                   <div class="col-lg-12">
@@ -118,7 +118,7 @@
                         </div>
                       </div>
                     </div>
-                  </div-->
+                  </div>
                   <!--div class="col-lg-12 text-right">
                   <button type="submit" class="btn btn-dark" style="background-color: rgb(18, 22, 15); color: rgb(182, 137, 17);">Guardar</button>
                 </div-->
