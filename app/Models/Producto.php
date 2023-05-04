@@ -10,7 +10,7 @@ class Producto extends Model
     protected $table = 'productos';
 
     protected $fillable = [
-      'proveedor_id','categoria_id','nombre','foto','subcategoria_id','ficha_tecnica'
+      'proveedor_id','categoria_id','nombre','foto','subcategoria_id','ficha_tecnica','precio'
     ];
 
     protected $appends = ['marca'];
