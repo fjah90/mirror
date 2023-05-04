@@ -181,7 +181,6 @@ class ProductosController extends Controller
         foreach ($rows as $key => $row) {
             $proveedor = Proveedor::where('empresa',$row[1])->first();
             $categoria = Categoria::where('nombre',$row[2])->first();
-            dd($row[1]);
 
             if($row[3] == null || $row[3] == ""){
                 $subcategoria = null;
