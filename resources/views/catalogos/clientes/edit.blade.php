@@ -371,21 +371,15 @@
                                     <div class="row">
                                         <div class="col-md-4">
                                            <label>Regimen</label> 
-                                           <select class="form-control" name="" id="">
-                                               <option value="0">--Seleccione un Regimen--</option>
-                                           </select>
+                                           {!! Form::select('cat_regimen_id',$catregimen,null,['class'=>'form-control','id'=>'cat_regimen_id_edit','placeholder'=>'Seleccione un Regimen']) !!}
                                         </div>
                                         <div class="col-md-4">
                                            <label>Uso de CFDI</label> 
-                                            <select class="form-control" name="" id="">
-                                               <option value="0">--Seleccione un CFDI--</option>
-                                           </select>
+                                            {!! Form::select('cat_cfdi_id',$catcfdi,null,['class'=>'form-control','id'=>'cat_cfdi_id','placeholder'=>'Seleccione un CFDI']) !!}
                                         </div>
                                         <div class="col-md-4">
                                            <label>Forma de Pago</label> 
-                                           <select class="form-control" name="" id="">
-                                               <option value="0">--Seleccione una Forma de Pago--</option>
-                                           </select>
+                                           {!! Form::select('cat_forma_pago_id',$catformapago,null,['class'=>'form-control','id'=>'cat_forma_pago_id','placeholder'=>'Seleccione una Forma de Pago']) !!}   
                                         </div>
                                     </div>
                                     <div class="row" style="margin-top:40px;">
@@ -491,6 +485,9 @@
                     cp: '',
                     ciudad: '',
                     estado: '',
+                    cat_regimen_id: '',
+                    cat_forma_pago_id: '',
+                    cat_cfdi_id: '',
                     cliente_id: {{$cliente->id}},
                 },
                 cargando: false,
@@ -614,6 +611,9 @@
                                 cp: '',
                                 ciudad: '',
                                 estado: '',
+                                cat_regimen_id: '',
+                                cat_forma_pago_id: '',
+                                cat_cfdi_id: '',
                                 cliente_id: {{$cliente->id}},
                             };
                             this.cargando = false;
@@ -649,6 +649,9 @@
                                 cp: '',
                                 ciudad: '',
                                 estado: '',
+                                cat_regimen_id: '',
+                                cat_forma_pago_id: '',
+                                cat_cfdi_id: '',
                                 cliente_id: {{$cliente->id}},
                             };
                             this.cargando = false;
