@@ -24,7 +24,7 @@
 
                             <div class="panel">
                                 <div class="panel-heading" style="background-color:#12160F; color:#B68911;">
-                                    <h3 class="panel-title">Datos Generalesd</h3>
+                                    <h3 class="panel-title">Datos Generales</h3>
                                 </div>
                                 <div class="panel-body">
                                     <div class="row form-group">
@@ -365,6 +365,27 @@
                                             <label class="control-label">Estado</label>
                                             <input type="text" name="estado" class="form-control"
                                                    v-model="datoFacturacion.estado"/>
+                                        </div>
+                                    </div>
+                                    <!-- select new-->
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                           <label>Regimen</label> 
+                                           <select class="form-control" name="" id="">
+                                               <option value="0">--Seleccione un Regimen--</option>
+                                           </select>
+                                        </div>
+                                        <div class="col-md-4">
+                                           <label>Uso de CFDI</label> 
+                                            <select class="form-control" name="" id="">
+                                               <option value="0">--Seleccione un CFDI--</option>
+                                           </select>
+                                        </div>
+                                        <div class="col-md-4">
+                                           <label>Forma de Pago</label> 
+                                           <select class="form-control" name="" id="">
+                                               <option value="0">--Seleccione una Forma de Pago--</option>
+                                           </select>
                                         </div>
                                     </div>
                                     <div class="row" style="margin-top:40px;">
