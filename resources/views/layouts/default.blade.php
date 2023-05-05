@@ -461,13 +461,12 @@
               </a>
             </li>
             @endcan
-            @can('Rol menu')
+           
             <li {!! (Request::is('Usuarios*') ? 'class="active"' : '') !!} class="sub {!! (Request::is('usuarios*') ? 'active' : '') !!}">
               <a href="{{ URL::to('usuarios/permisos') }}">
                 <i class="fas fa-users"></i> <span style="color:#000;">Rol</span>
               </a>
             </li>
-            @endcan
             
             </ul> 
           </li>
