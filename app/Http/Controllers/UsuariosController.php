@@ -53,6 +53,26 @@ class UsuariosController extends Controller
       return  redirect()->route('usuarios.permisos');
     }
 
+    public function editpermisosusuarios($user_id)
+    {
+      $user =  User::find($user_id);
+      $permisos = Permission::all();
+      $permisosuser = $user->permissions()->get()->pluck('id');
+     
+      return view('usuarios.editpermisos', compact('permisos','user','permisosuser'));
+    }
+
+    public function updatepermisosusuarios($user_id,Request $request)
+    {
+      $permissions = $request->permisos_ids;
+      $user =  User::find($user_id);
+      $user->syncPermissions($permissions);
+      
+      return  redirect()->route('usuarios.index');
+    }
+
+    
+
     /**
      * Show the form for creating a new resource.
      *

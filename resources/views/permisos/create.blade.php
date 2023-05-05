@@ -39,7 +39,7 @@
               </div>
               <div class="row" style="margin-top:25px;">
                 <div class="col-md-12 text-right">
-                  <a class="btn btn-default" href="{{route('usuarios.permisos')}}" style="margin-right:20px; color:#000; background-color:#B3B3B3">
+                  <a class="btn btn-default" href="{{route('permisos.usuarios')}}" style="margin-right:20px; color:#000; background-color:#B3B3B3">
                     Regresar
                   </a>
                   <button type="submit" class="btn btn-primary" :disabled="cargando" name="Guardar" value="Guardar">

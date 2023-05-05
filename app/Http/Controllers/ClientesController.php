@@ -12,6 +12,9 @@ use App\Models\Prospecto;
 use App\Models\TipoCliente;
 use App\Models\Vendedor;
 use App\Models\CategoriaCliente;
+use App\Models\CatFormaPago;//
+use App\Models\CatCfdi;//
+use App\Models\CatRegimen;//
 use App\User;
 use Illuminate\Http\Request;
 use Mail;
@@ -206,6 +209,9 @@ class ClientesController extends Controller
                             'ciudad'       => $rfc['ciudad'],
                             'estado'       => $rfc['estado'],
                             'cliente_id'   => $cliente->id,
+                            'cat_forma_pago_id' => $catcfdi->id,
+                            'cat_cfdi_id'   => $catformapago->id,
+                            'cat_regimen_id'   => $catregimen->id,
                         ]);
                         $nuevo_rfc->save();
                     }
@@ -222,8 +228,12 @@ class ClientesController extends Controller
         $cliente->load(['tipo', 'contactos.emails', 'contactos.telefonos', 'datos_facturacion','users','categoria']);
         $tab = ($request->has('contactos')) ? 1 : 0;
 
+        $catregimen = CatRegimen::all()->pluck('descripcion','clave','id');
+        $catformapago = CatFormaPago::all()->pluck('nombre','codigo','id');
+        $catcfdi = CatCfdi::all()->pluck('descripcion','clave','id');
 
-        return view('catalogos.clientes.edit', compact(['cliente', 'tipos', 'usuarios', 'tab','vendedores','categorias']));
+
+        return view('catalogos.clientes.edit', compact(['cliente', 'tipos', 'usuarios', 'tab','vendedores','categorias','catregimen','catformapago','catcfdi']));
     }
 
 
@@ -247,6 +257,9 @@ class ClientesController extends Controller
                         'cp'           => $cotizacion->cp,
                         'ciudad'       => $cotizacion->ciudad,
                         'estado'       => $cotizacion->estado,
+                        'cat_regimen_id' => $cotizacion->cat_regimen_id,
+                        'cat_cfdi_id' => $cotizacion->cat_cfdi_id,
+                        'cat_forma_pago_id' => $cotizacion->cat_forma_pago_id,
                     ];
                 }
                 return $rfcs;
@@ -264,6 +277,9 @@ class ClientesController extends Controller
                     'cp'           => $cliente1->cp,
                     'ciudad'       => $cliente1->ciudad,
                     'estado'       => $cliente1->estado,
+                    'cat_regimen_id'    => $cliente1->cat_regimen_id,
+                    'cat_cfdi_id'       => $cliente1->cat_cfdi_id,
+                    'cat_forma_pago_id' => $cliente1->cat_forma_pago_id,
                 ];
             }
         }

@@ -27,6 +27,9 @@
         <div class="panel-heading" style="background-color:#12160F; color:#B68911;">
           <h3 class="panel-title text-right">
             <span class="pull-left p-10">Lista de Productos</span>
+            <a href="{{route('productos.create2')}}" class="btn btn-warning" style="color: #000;">
+              <i class="fas fa-plus"></i> Carga masiva
+            </a>
             <a href="{{route('productos.create')}}" class="btn btn-warning" style="color: #000;">
               <i class="fas fa-plus"></i> Nuevo Producto
             </a>

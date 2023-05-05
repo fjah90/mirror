@@ -24,7 +24,7 @@
 
                             <div class="panel">
                                 <div class="panel-heading" style="background-color:#12160F; color:#B68911;">
-                                    <h3 class="panel-title">Datos Generalesd</h3>
+                                    <h3 class="panel-title">Datos Generales</h3>
                                 </div>
                                 <div class="panel-body">
                                     <div class="row form-group">
@@ -367,6 +367,21 @@
                                                    v-model="datoFacturacion.estado"/>
                                         </div>
                                     </div>
+                                    <!-- select new-->
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                           <label>Regimen</label> 
+                                           {!! Form::select('cat_regimen_id',$catregimen,null,['class'=>'form-control','id'=>'cat_regimen_id_edit','placeholder'=>'Seleccione un Regimen']) !!}
+                                        </div>
+                                        <div class="col-md-4">
+                                           <label>Uso de CFDI</label> 
+                                            {!! Form::select('cat_cfdi_id',$catcfdi,null,['class'=>'form-control','id'=>'cat_cfdi_id','placeholder'=>'Seleccione un CFDI']) !!}
+                                        </div>
+                                        <div class="col-md-4">
+                                           <label>Forma de Pago</label> 
+                                           {!! Form::select('cat_forma_pago_id',$catformapago,null,['class'=>'form-control','id'=>'cat_forma_pago_id','placeholder'=>'Seleccione una Forma de Pago']) !!}   
+                                        </div>
+                                    </div>
                                     <div class="row" style="margin-top:40px;">
                                         <div class="col-md-12 text-center">
                                             <button v-if="datoFacturacion.id" type="submit" class="btn btn-success"
@@ -470,6 +485,9 @@
                     cp: '',
                     ciudad: '',
                     estado: '',
+                    cat_regimen_id: '',
+                    cat_forma_pago_id: '',
+                    cat_cfdi_id: '',
                     cliente_id: {{$cliente->id}},
                 },
                 cargando: false,
@@ -593,6 +611,9 @@
                                 cp: '',
                                 ciudad: '',
                                 estado: '',
+                                cat_regimen_id: '',
+                                cat_forma_pago_id: '',
+                                cat_cfdi_id: '',
                                 cliente_id: {{$cliente->id}},
                             };
                             this.cargando = false;
@@ -628,6 +649,9 @@
                                 cp: '',
                                 ciudad: '',
                                 estado: '',
+                                cat_regimen_id: '',
+                                cat_forma_pago_id: '',
+                                cat_cfdi_id: '',
                                 cliente_id: {{$cliente->id}},
                             };
                             this.cargando = false;

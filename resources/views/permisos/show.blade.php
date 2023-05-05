@@ -42,7 +42,7 @@
               </div>
               <div class="row">
                 <div class="col-md-12 text-right">
-                  <a href="{{route('usuarios.permisos')}}" class="btn btn-default" style="color:#000; background-color:#B3B3B3;">Regresar</a>
+                  <a href="{{route('permisos.usuarios')}}" class="btn btn-default" style="color:#000; background-color:#B3B3B3;">Regresar</a>
                 </div>
               </div>
             </div>
