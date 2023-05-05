@@ -61,6 +61,40 @@
 @section('footer_scripts')
 
 <script>
-
+<<<<<<< HEAD
+const app = new Vue({
+    el: '#content',
+    data: {
+      name: ''
+      cargando: false,
+    },
+    methods: {
+      guardar(){
+        this.cargando = true;
+        axios.post('/permisos', {
+          name: this.name,
+        })
+        .then(({data}) => {
+          this.cargando = false;
+          swal({
+            title: "Rol Guardado",
+            text: "",
+            type: "success"
+          }).then(()=>{
+            window.location = "/permisos";
+          });
+        })
+        .catch(({response}) => {
+          console.error(response);
+          this.cargando = false;
+          swal({
+            title: "Error",
+            text: response.data.message || "Ocurrio un error inesperado, intente mas tarde",
+            type: "error"
+          });
+        });
+      },//
+    }
+});
 </script>
 @stop

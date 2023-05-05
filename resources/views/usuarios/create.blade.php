@@ -14,7 +14,6 @@
   }
 </style>
 @stop
-
 {{-- Page content --}}
 @section('content')
     <!-- Content Header (Page header) -->
@@ -86,42 +85,16 @@
                         </div>
                       </div>
                     </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="row" style="margin-top:25px;">
+                      <div class="col-sm-12 text-right">
+                        <a href="{{route('usuarios.index')}}" class="btn btn-default" style="color:#000; background-color:#B3B3B3;">Regresar</a>
+                        <button type="submit" class="btn btn-dark" :disabled="cargando" style="background-color:#12160F; color:#B68911;">
+                          <i class="fa fa-save"></i>
+                          Guardar Usuario
+                        </button>
                   </div><br>
-                <!--div class="row">
-                <form action="/permisos/{{$rol->id}}/actualizar" method="post">
-                  <input type="hidden" name="_token" value="{{ csrf_token() }}"/>
-                  <div class="col-lg-12">
-                    <div class="panel">
-                       <div class="panel-heading" style="background-color:#12160F; color:#B68911;">
-                        <h3 class="panel-title text-right" style="height:30px;">
-                          <span class="pull-left p-10">Lista de Permisos para Usuarios</span>
-                        </h3>
-                      </div>
-                      <div class="panel-body">
-                        <div class="table-responsive">
-                          <table id="tabla" class="table table-borderd"/>
-                            <tr style="background-color:#12160F;">
-                              <th class="color_text">#</th>
-                              <th class="color_text">Nombre</th>
-                              <th class="color_text">Activo</th>
-                            </tr>
-                            <tbody>
-                              @foreach($permisos as $permiso)
-                              <tr>
-                                <td>{{$permiso->id}}</td>
-                                <td>{{$permiso->name}}</td>
-                                <td><input type="checkbox" name="permisos_ids[]" value="{{$permiso->id}}"></input></td>
-                              </tr>
-                              @endforeach
-                            </tbody>
-                          </table>
-                        </div>
-                      </div>
-                    </div>
-                  </div-->
-                  <!--div class="col-lg-12 text-right">
-                  <button type="submit" class="btn btn-dark" style="background-color: rgb(18, 22, 15); color: rgb(182, 137, 17);">Guardar</button>
-                </div-->
                 </form>
               </div>
                 <div class="col-md-12">
