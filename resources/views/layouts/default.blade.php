@@ -357,7 +357,6 @@
           <!--Catalogos de Apoyo-->
           
           @can('Catalogos menu')
-          -->
           <li {!! (Request::is('vendedores*') ? 'class="active"' : '') !!} {!! (Request::is('Usuarios*') ? 'class="active"' : '') !!} {!! (Request::is('tiposClientes*') ? 'class="active"' : '') !!} {!! (Request::is('categoriaClientes*') ? 'class="active"' : '') !!} {!! (Request::is('proyectos*') ? 'class="active"' : '') !!} {!! (Request::is('tiposProveedores*') ? 'class="active"' : '') !!} {!! (Request::is('unidadesMedida*') ? 'class="active"' : '') !!} {!! (Request::is('subcategorias*') ? 'class="active"' : '') !!} {!! (Request::is('categorias*') ? 'class="active"' : '') !!} {!! (Request::is('clientes*' ) ? 'class="active"' : '') !!} {!! (Request::is('proveedores*' ) ? 'class="active"' : '') !!} {!! (Request::is('agentesAduanales*' ) ? 'class="active"' : '') !!} {!! (Request::is('productos*' ) ? 'class="active"' : '') !!}><a class="title"><i class="fa fa-book" style="color:#B68911; font-size: 20px;"></i> <b style="color:#9F9F9F;">Catálogos</b><span class="fa fa-chevron-down" style="color:#9F9F9F;"></span></a>
            <ul class="nav child_menu">
             <!--
