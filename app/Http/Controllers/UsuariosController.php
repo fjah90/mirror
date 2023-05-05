@@ -53,6 +53,26 @@ class UsuariosController extends Controller
       return  redirect()->route('usuarios.permisos');
     }
 
+    public function editpermisosusuarios($user_id)
+    {
+      $user =  User::find($user_id);
+      $permisos = Permission::all();
+      $permisosuser = $user->permissions()->get()->pluck('id');
+     
+      return view('usuarios.editpermisos', compact('permisos','user','permisosuser'));
+    }
+
+    public function updatepermisosusuarios($user_id,Request $request)
+    {
+      $permissions = $request->permisos_ids;
+      $user =  User::find($user_id);
+      $user->syncPermissions($permissions);
+      
+      return  redirect()->route('usuarios.index');
+    }
+
+    
+
     /**
      * Show the form for creating a new resource.
      *
@@ -62,17 +82,9 @@ class UsuariosController extends Controller
     {
       
       $roles = Role::all();
-      $usuario = User::all();
-      $permissions = $request->permisos_ids;
+     
       $permisos = Permission::all();
-      //dd($permisos);
-      $permisosrol = $rol->permissions()->get()->pluck('id');
-      dd($permisosrol);
-
-      //$permisosuser = $usuario->permissions()->get()->pluck('id');
-      //dd($permisosuser);
-        
-        return view('usuarios.create', compact('roles','permisos','permissions'));
+        return view('usuarios.create', compact('roles','permisos'));
     }
 
 

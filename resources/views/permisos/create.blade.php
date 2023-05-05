@@ -39,7 +39,7 @@
               </div>
               <div class="row" style="margin-top:25px;">
                 <div class="col-md-12 text-right">
-                  <a class="btn btn-default" href="{{route('usuarios.permisos')}}" style="margin-right:20px; color:#000; background-color:#B3B3B3">
+                  <a class="btn btn-default" href="{{route('permisos.usuarios')}}" style="margin-right:20px; color:#000; background-color:#B3B3B3">
                     Regresar
                   </a>
                   <button type="submit" class="btn btn-primary" :disabled="cargando" name="Guardar" value="Guardar">
@@ -61,6 +61,40 @@
 @section('footer_scripts')
 
 <script>
-
+<<<<<<< HEAD
+const app = new Vue({
+    el: '#content',
+    data: {
+      name: ''
+      cargando: false,
+    },
+    methods: {
+      guardar(){
+        this.cargando = true;
+        axios.post('/permisos', {
+          name: this.name,
+        })
+        .then(({data}) => {
+          this.cargando = false;
+          swal({
+            title: "Rol Guardado",
+            text: "",
+            type: "success"
+          }).then(()=>{
+            window.location = "/permisos";
+          });
+        })
+        .catch(({response}) => {
+          console.error(response);
+          this.cargando = false;
+          swal({
+            title: "Error",
+            text: response.data.message || "Ocurrio un error inesperado, intente mas tarde",
+            type: "error"
+          });
+        });
+      },//
+    }
+});
 </script>
 @stop

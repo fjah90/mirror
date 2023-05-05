@@ -51,6 +51,7 @@ class PermisosController extends Controller
        Role::create($request->all());
 
        $create = [
+
         'name' => $request->name,
       ];
        

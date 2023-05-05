@@ -77,7 +77,7 @@
                 <div class="col-md-3">
                   <div class="form-group">
                     <label class="control-label">Registrar cliente</label>
-                    <button type="button" id="show-modal" @click="modalCliente = true" class="btn btn-effect-ripple btn-primary form-control">Nuevo Cliente</button>
+                    <button type="button" id="show-modal" @click="modalCliente = true" class="btn btn-effect-ripple btn-primary form-control" style="background-color:black; color:#B68911;">Nuevo Cliente</button>
                     <!-- use the modal component, pass in the prop -->
                     <modal v-if="modalCliente" @close="modalCliente = false">
                   </div>

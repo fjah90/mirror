@@ -33,187 +33,93 @@ Route::middleware('auth')->group(function () {
 
     //Dashboard
     Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
-    
-
    
    //Historial
-
     Route::resource('/historialCompra','HistorialCompraController', ['parameters'=>['historialCompra'=>'historial']]);
-
     //fin de ruta
+
+    //Mi Cuenta
+
+    Route::get('/mi_cuenta', 'MiCuentaController@index')->name('mi_cuenta');
+    Route::post('/mi_cuenta', 'MiCuentaController@update');
 
     Route::resource('/categoriaClientes', 'CategoriaClientesController', ['parameters' => [
         'categoriaClientes' => 'categoria',
     ]]);
-
-    //Todos
-    //Prospectos
-    Route::get('/prospectos/cotizaciones', 'ProspectosController@cotizaciones');
-    Route::get('/prospectos/prospectos', 'ProspectosController@prospectos')->name('prospectos.indexprospectos');
-    Route::get('/prospectos/{estatus}/indexprospectos', 'ProspectosController@prospectos');//Ruta para los estatus de apartado//
-
-
-    Route::get('/prospectos/create2', 'ProspectosController@create2')->name('prospectos.create2');
-    Route::get('prospectos/regeneratePDF', 'ProspectosController@regeneratePDF');
-    Route::get('prospectos/actualizarActividades', 'ProspectosController@actualizarActividades');
-    Route::post('/prospectos/{prospecto}/guardarActividades', 'ProspectosController@guardarActividades');
-    Route::get('/prospectos/{prospecto}/cotizar', 'ProspectosController@cotizar')->name('prospectos.cotizar');
-    Route::post('/prospectos/{prospecto}/cotizacion', 'ProspectosController@cotizacion');
-    Route::post('/prospectos/{prospecto}/convertir', 'ProspectosController@convertir');
-    Route::post('/prospectos/{prospecto}/cotizacion/{cotizacion}', 'ProspectosController@cotizacionUpdate');
-    Route::post('/prospectos/{prospecto}/enviarCotizacion', 'ProspectosController@enviarCotizacion');
-    Route::post('/prospectos/{prospecto}/aceptarCotizacion', 'ProspectosController@aceptarCotizacion');
-    Route::post('/prospectos/{prospecto}/notasCotizacion', 'ProspectosController@notasCotizacion');
-    Route::post('/prospectos/{prospecto}/copiarCotizacion', 'ProspectosController@copiarCotizacion');
-    Route::delete('/prospectos/{prospecto}/cotizacion/{cotizacion}', 'ProspectosController@destroyCotizacion');
-    Route::resource('/prospectos', 'ProspectosController');
     
-   
 
-    //Usuario y Admin
-    Route::middleware('role:Usuario|Administrador')->group(function () {
-        //Dashboard
-        Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
-        Route::get('usuarios/permisos', 'UsuariosController@permisos');
-        Route::get('/permisos/{rol}/edit', 'UsuariosController@editpermisos')->name('permisos.edit');
-        Route::post('/permisos/{rol}/actualizar', 'UsuariosController@updatepermisos');
-        Route::get('/permisos/{rol}/create', 'UsuariosController@create');///
-        Route::resource('/permisos', 'PermisosController', ['parameters' => [
-        'permisos' => 'permiso']]);
-        //Mi Cuenta
-
-        Route::get('/mi_cuenta', 'MiCuentaController@index')->name('mi_cuenta');
-        Route::post('/mi_cuenta', 'MiCuentaController@update');
-
-        //Catalogos
-        Route::resource('/observacionesCotizacion', 'ObservacionesCotizacionController', [
-            'only'       => ['store', 'destroy'],
-            'parameters' => ['observacionesCotizacion' => 'observacion'],
-        ]);
-        Route::resource('/tiposClientes', 'TiposClientesController', ['parameters' => [
-            'tiposClientes' => 'tipo',
-        ]]);
-        /*categoria del cliente*/
-        Route::resource('/categoriaClientes', 'CategoriaClientesController', ['parameters' => [
-        'categoriaClientes' => 'categoria',
-        ]]);
-        /*categoria del cliente*/
-        Route::resource('/tiposProveedores', 'TiposProveedoresController', ['parameters' => [
-            'tiposProveedores' => 'tipo',
-        ]]);
-        Route::resource('/unidadesMedida', 'UnidadesMedidaController', ['parameters' => [
-            'unidadesMedida' => 'unidad',
-        ]]);
-        Route::resource('/agentesAduanales', 'AgentesAduanalesController', ['parameters' => [
-            'agentesAduanales' => 'agente',
-        ]]);
-
-        Route::resource('/vendedores', 'VendedoresController', ['parameters' => [
-            'vendedores' => 'vendedor',
-        ]]);
-
-        Route::resource('/condicionesCotizacion', 'CondicionesCotizacionController', [
-            'only'       => ['update', 'destroy'],
-            'parameters' => ['condicionesCotizacion' => 'condicion'],
-        ]);
-        Route::get('/clientes/crearNacional', 'ClientesController@create')->name('clientes.createNacional');
-        Route::get('/clientes/crearExtranjero', 'ClientesController@createExtra')->name('clientes.createExtranjero');
-        Route::post('/clientes/listado', 'ClientesController@listado');
-        Route::resource('/clientes', 'ClientesController');
-        Route::get('/proveedores/crearNacional', 'ProveedoresController@create')->name('proveedores.createNacional');
-        Route::get('/proveedores/crearInternacional', 'ProveedoresController@createInter')->name('proveedores.createInternacional');
-        Route::get('/proveedoresExtra', 'ProveedoresController@indexExtra')->name('proveedores.indexExtra');
-        Route::resource('/proveedores', 'ProveedoresController', ['parameters' => ['proveedores' => 'proveedor']]);
-        Route::resource('/contactos', 'ContactosController');
-        Route::resource('/datosFacturacion', 'DatosFacturacionController');
-        Route::resource('/emails', 'EmailsController');
-        Route::resource('/telefonos', 'TelefonosController');
-        Route::resource('/proyectos', 'ProyectosController');
-        Route::resource('/subproyectos', 'SubProyectosController');
-        Route::post('/productos/{producto}', 'ProductosController@update');
-        Route::resource('/productos', 'ProductosController');
-        Route::get('/productoscrear2', 'ProductosController@create2')->name('productos.create2');
-        Route::post('/productosguardar', 'ProductosController@guardar');
-        Route::resource('/categorias', 'CategoriasController');
-        Route::resource('/subcategorias', 'SubcategoriasController');
-
-
-        Route::post('/proyectos-aprobados/listado', 'ProyectosAprobadosController@listado');
-        Route::post('/prospectos/listado', 'ProspectosController@listado');
-        Route::post('/prospectos/listado3', 'ProspectosController@listado3');
-        Route::post('/prospectos/listadoprospectos', 'ProspectosController@listadoprospectos');
-        Route::post('/prospectos/listadocot', 'ProspectosController@listadocot');
-        Route::post('/cuentas-cobrar/listado', 'CuentasCobrarController@listado');
-        Route::post('/cuentas-pagar/listado', 'CuentasPagarController@listado');
-        Route::post('/ordenes-proceso/listado', 'OrdenesProcesoController@listado');
-
-
-        //Prospectos
-        Route::get('/prospectos/cotizaciones', 'ProspectosController@cotizaciones');
-        Route::get('prospectos/regeneratePDF', 'ProspectosController@regeneratePDF');
-        Route::get('prospectos/actualizarActividades', 'ProspectosController@actualizarActividades');
-        Route::post('/prospectos/{prospecto}/guardarActividades', 'ProspectosController@guardarActividades');
-        Route::get('/prospectos/{prospecto}/cotizar', 'ProspectosController@cotizar')->name('prospectos.cotizar');
-        Route::post('/prospectos/{prospecto}/cotizacion', 'ProspectosController@cotizacion');
-        Route::post('/prospectos/{prospecto}/cotizacion/{cotizacion}', 'ProspectosController@cotizacionUpdate');
-        Route::post('/prospectos/{prospecto}/enviarCotizacion', 'ProspectosController@enviarCotizacion');
-        Route::post('/prospectos/{prospecto}/aceptarCotizacion', 'ProspectosController@aceptarCotizacion');
-        Route::post('/prospectos/{prospecto}/notasCotizacion', 'ProspectosController@notasCotizacion');
-        Route::post('/prospectos/{prospecto}/copiarCotizacion', 'ProspectosController@copiarCotizacion');
-        Route::delete('/prospectos/{prospecto}/cotizacion/{cotizacion}', 'ProspectosController@destroyCotizacion');
-        Route::resource('/prospectos', 'ProspectosController',[
-            'only'       => ['create', 'show', 'edit'],]);
-        
-
-        //Proyectos Aprobados
-        Route::get('/proyectos-aprobados', 'ProyectosAprobadosController@index')->name('proyectos-aprobados.index');
-        Route::delete('/proyectos-aprobados/{proyecto}', 'ProyectosAprobadosController@destroy');
-        Route::get('/proyectos-aprobados/{proyecto}/show', 'ProyectosAprobadosController@show');
-        // Route::get('/proyectos-aprobados/{proyecto}/generarOrdenes', 'ProyectosAprobadosController@generarOrdenes');
-
-        //Ordenes de Compra
-        Route::get('ordenes-compra/checarDescripciones', 'OrdenesCompraController@checarDescripciones');
-        Route::get('ordenes-compra/regeneratePDF', 'OrdenesCompraController@regeneratePDF');
-        Route::post('/proyectos-aprobados/{proyecto}/ordenes-compra/{orden}/comprar', 'OrdenesCompraController@comprar');
-        Route::post('/proyectos-aprobados/{proyecto}/ordenes-compra/{orden}/agregarArchivo', 'OrdenesCompraController@agregarArchivo');
-        Route::post('/proyectos-aprobados/{proyecto}/ordenes-compra/{orden}/borrarArchivo', 'OrdenesCompraController@borrarArchivo');
-        Route::post('/proyectos-aprobados/{proyecto}/ordenes-compra/{orden}/rechazar', 'OrdenesCompraController@rechazar');
-        Route::get('/proyectos-aprobados/{proyecto}/ordenes-compra/{orden}/aprobar', 'OrdenesCompraController@aprobar');
-        Route::get('/proyectos-aprobados/{proyecto}/ordenes-compra/{orden}/desaprobar', 'OrdenesCompraController@desaprobar');
-        Route::post('/proyectos-aprobados/{proyecto}/ordenes-compra/{orden}/confirmar', 'OrdenesCompraController@confirmar');
-        Route::post('/proyectos-aprobados/{proyecto}/ordenes-compra/{orden}/actualizar', 'OrdenesCompraController@actualizar');
-        Route::resource('/proyectos-aprobados.ordenes-compra', 'OrdenesCompraController', [
-            'parameters' => ['proyectos-aprobados' => 'proyecto', 'ordenes-compra' => 'orden'],
-        ]);
-
-        //Cuentas cobrar
-        Route::post('/cuentas-cobrar/{cuenta}/facturar', 'CuentasCobrarController@facturar');
-        Route::post('/cuentas-cobrar/{cuenta}/deletefactura', 'CuentasCobrarController@deletefactura');
-        Route::post('/cuentas-cobrar/{cuenta}/pagar', 'CuentasCobrarController@pagar');
-        Route::resource('/cuentas-cobrar', 'CuentasCobrarController', [
-            'only'       => ['index', 'show', 'edit'],
-            'parameters' => ['cuentas-cobrar' => 'cuenta'],
-        ]);
-
-        //Cuentas pagar
-        Route::post('/cuentas-pagar/{cuenta}/facturar', 'CuentasPagarController@facturar');
-        Route::post('/cuentas-pagar/{cuenta}/pagar', 'CuentasPagarController@pagar');
-        Route::resource('/cuentas-pagar', 'CuentasPagarController', [
-            'only'       => ['index', 'show', 'edit'],
-            'parameters' => ['cuentas-pagar' => 'cuenta'],
-        ]);
-
-        //ordenes en proceso
-        Route::get('/ordenes-proceso', 'OrdenesProcesoController@index');
-        Route::post('/ordenes-proceso/{orden}/updateStatus', 'OrdenesProcesoController@updateStatus');
-        Route::post('/ordenes-proceso/{orden}/fijarFechasEstimadas', 'OrdenesProcesoController@fijarFechasEstimadas');
-        Route::post('/ordenes-proceso/{orden}/embarcar', 'OrdenesProcesoController@embarcar');
-        Route::post('/ordenes-proceso/{orden}/frontera', 'OrdenesProcesoController@frontera');
-        Route::post('/ordenes-proceso/{orden}/aduana', 'OrdenesProcesoController@aduana');
-        Route::post('/ordenes-proceso/{orden}/entrega', 'OrdenesProcesoController@entrega');
-    });
-
+    //Dashboard
+    Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
+    Route::get('usuarios/permisos', 'UsuariosController@permisos');
+    Route::get('/permisos/{rol}/edit', 'UsuariosController@editpermisos')->name('permisos.edit');
+    Route::get('/permisosusuarios/{user}/edit', 'UsuariosController@editpermisosusuarios')->name('usuarios.permisos');
+    Route::post('/permisos/{rol}/actualizar', 'UsuariosController@updatepermisos');
+    Route::post('/permisosusuarios/{rol}/actualizar', 'UsuariosController@updatepermisosusuarios');
+    Route::get('/permisos/{rol}/create', 'UsuariosController@create');///
+    Route::resource('/permisos', 'PermisosController', ['parameters' => [
+    'permisos' => 'permiso']]);
     
+
+    //Catalogos
+    Route::resource('/observacionesCotizacion', 'ObservacionesCotizacionController', [
+        'only'       => ['store', 'destroy'],
+        'parameters' => ['observacionesCotizacion' => 'observacion'],
+    ]);
+    Route::resource('/tiposClientes', 'TiposClientesController', ['parameters' => [
+        'tiposClientes' => 'tipo',
+    ]]);
+    /*categoria del cliente*/
+    Route::resource('/categoriaClientes', 'CategoriaClientesController', ['parameters' => [
+    'categoriaClientes' => 'categoria',
+    ]]);
+    /*categoria del cliente*/
+    Route::resource('/tiposProveedores', 'TiposProveedoresController', ['parameters' => [
+        'tiposProveedores' => 'tipo',
+    ]]);
+    Route::resource('/unidadesMedida', 'UnidadesMedidaController', ['parameters' => [
+        'unidadesMedida' => 'unidad',
+    ]]);
+    Route::resource('/agentesAduanales', 'AgentesAduanalesController', ['parameters' => [
+        'agentesAduanales' => 'agente',
+    ]]);
+
+    Route::resource('/vendedores', 'VendedoresController', ['parameters' => [
+        'vendedores' => 'vendedor',
+    ]]);
+
+    Route::resource('/condicionesCotizacion', 'CondicionesCotizacionController', [
+        'only'       => ['update', 'destroy'],
+        'parameters' => ['condicionesCotizacion' => 'condicion'],
+    ]);
+    Route::get('/clientes/crearNacional', 'ClientesController@create')->name('clientes.createNacional');
+    Route::get('/clientes/crearExtranjero', 'ClientesController@createExtra')->name('clientes.createExtranjero');
+    Route::post('/clientes/listado', 'ClientesController@listado');
+    Route::resource('/clientes', 'ClientesController');
+    Route::get('/proveedores/crearNacional', 'ProveedoresController@create')->name('proveedores.createNacional');
+    Route::get('/proveedores/crearInternacional', 'ProveedoresController@createInter')->name('proveedores.createInternacional');
+    Route::get('/proveedoresExtra', 'ProveedoresController@indexExtra')->name('proveedores.indexExtra');
+    Route::resource('/proveedores', 'ProveedoresController', ['parameters' => ['proveedores' => 'proveedor']]);
+    Route::resource('/contactos', 'ContactosController');
+    Route::resource('/datosFacturacion', 'DatosFacturacionController');
+    Route::resource('/emails', 'EmailsController');
+    Route::resource('/telefonos', 'TelefonosController');
+    Route::resource('/proyectos', 'ProyectosController');
+    Route::resource('/subproyectos', 'SubProyectosController');
+    Route::post('/productos/{producto}', 'ProductosController@update');
+    Route::resource('/productos', 'ProductosController');
+    Route::resource('/categorias', 'CategoriasController');
+    Route::resource('/subcategorias', 'SubcategoriasController');
+
+
+    Route::post('/proyectos-aprobados/listado', 'ProyectosAprobadosController@listado');
+    Route::post('/prospectos/listado', 'ProspectosController@listado');
+    Route::post('/prospectos/listado3', 'ProspectosController@listado3');
+    Route::post('/prospectos/listadoprospectos', 'ProspectosController@listadoprospectos');
+    Route::post('/prospectos/listadocot', 'ProspectosController@listadocot');
+    Route::post('/cuentas-cobrar/listado', 'CuentasCobrarController@listado');
+    Route::post('/cuentas-pagar/listado', 'CuentasPagarController@listado');
+    Route::post('/ordenes-proceso/listado', 'OrdenesProcesoController@listado');
+
 
     //Administracion
     Route::middleware('role:Administrador')->group(function () {
@@ -226,7 +132,7 @@ Route::middleware('auth')->group(function () {
         Route::get('usuarios/{id}/desactivar', 'UsuariosController@desactivar',['parameters' => ['usuarios' => 'usuario'],  
         ])->name('usuarios.desactivar');
 
-        Route::get('usuarios/permisos', 'UsuariosController@permisos')->name('usuarios.permisos');
+        Route::get('usuarios/permisos', 'UsuariosController@permisos')->name('permisos.usuarios');
         Route::get('/permisos/{rol}/edit', 'UsuariosController@editpermisos')->name('permisos.edit');
         Route::post('/permisos/{rol}/actualizar', 'UsuariosController@updatepermisos');
         Route::get('/permisos/{rol}/create', 'UsuariosController@create');///
@@ -273,6 +179,85 @@ Route::middleware('auth')->group(function () {
         Route::post('/reportes/utilidades/excel', 'ReportesController@utilidadesexcel');
 
     });
+
+    //Prospectos
+    Route::get('/prospectos/cotizaciones', 'ProspectosController@cotizaciones');
+    Route::get('/prospectos/prospectos', 'ProspectosController@prospectos')->name('prospectos.indexprospectos');
+    Route::get('/prospectos/{estatus}/indexprospectos', 'ProspectosController@prospectos');//Ruta para los estatus de apartado//
+
+
+    Route::get('/prospectos/create2', 'ProspectosController@create2')->name('prospectos.create2');
+    Route::get('/productosmasivo', 'ProductosController@create2')->name('productos.create2');
+    Route::post('/productosguardar', 'ProductosController@guardar');
+    Route::get('prospectos/regeneratePDF', 'ProspectosController@regeneratePDF');
+    Route::get('prospectos/actualizarActividades', 'ProspectosController@actualizarActividades');
+    Route::post('/prospectos/{prospecto}/guardarActividades', 'ProspectosController@guardarActividades');
+    Route::get('/prospectos/{prospecto}/cotizar', 'ProspectosController@cotizar')->name('prospectos.cotizar');
+    Route::post('/prospectos/{prospecto}/cotizacion', 'ProspectosController@cotizacion');
+    Route::post('/prospectos/{prospecto}/convertir', 'ProspectosController@convertir');
+    Route::post('/prospectos/{prospecto}/cotizacion/{cotizacion}', 'ProspectosController@cotizacionUpdate');
+    Route::post('/prospectos/{prospecto}/enviarCotizacion', 'ProspectosController@enviarCotizacion');
+    Route::post('/prospectos/{prospecto}/aceptarCotizacion', 'ProspectosController@aceptarCotizacion');
+    Route::post('/prospectos/{prospecto}/notasCotizacion', 'ProspectosController@notasCotizacion');
+    Route::post('/prospectos/{prospecto}/copiarCotizacion', 'ProspectosController@copiarCotizacion');
+    Route::delete('/prospectos/{prospecto}/cotizacion/{cotizacion}', 'ProspectosController@destroyCotizacion');
+    Route::resource('/prospectos', 'ProspectosController');
+
+
+
+
+    
+
+    //Proyectos Aprobados
+    Route::get('/proyectos-aprobados', 'ProyectosAprobadosController@index')->name('proyectos-aprobados.index');
+    Route::delete('/proyectos-aprobados/{proyecto}', 'ProyectosAprobadosController@destroy');
+    Route::get('/proyectos-aprobados/{proyecto}/show', 'ProyectosAprobadosController@show');
+    // Route::get('/proyectos-aprobados/{proyecto}/generarOrdenes', 'ProyectosAprobadosController@generarOrdenes');
+
+    //Ordenes de Compra
+    Route::get('ordenes-compra/checarDescripciones', 'OrdenesCompraController@checarDescripciones');
+    Route::get('ordenes-compra/regeneratePDF', 'OrdenesCompraController@regeneratePDF');
+    Route::post('/proyectos-aprobados/{proyecto}/ordenes-compra/{orden}/comprar', 'OrdenesCompraController@comprar');
+    Route::post('/proyectos-aprobados/{proyecto}/ordenes-compra/{orden}/agregarArchivo', 'OrdenesCompraController@agregarArchivo');
+    Route::post('/proyectos-aprobados/{proyecto}/ordenes-compra/{orden}/borrarArchivo', 'OrdenesCompraController@borrarArchivo');
+    Route::post('/proyectos-aprobados/{proyecto}/ordenes-compra/{orden}/rechazar', 'OrdenesCompraController@rechazar');
+    Route::get('/proyectos-aprobados/{proyecto}/ordenes-compra/{orden}/aprobar', 'OrdenesCompraController@aprobar');
+    Route::get('/proyectos-aprobados/{proyecto}/ordenes-compra/{orden}/desaprobar', 'OrdenesCompraController@desaprobar');
+    Route::post('/proyectos-aprobados/{proyecto}/ordenes-compra/{orden}/confirmar', 'OrdenesCompraController@confirmar');
+    Route::post('/proyectos-aprobados/{proyecto}/ordenes-compra/{orden}/actualizar', 'OrdenesCompraController@actualizar');
+    Route::resource('/proyectos-aprobados.ordenes-compra', 'OrdenesCompraController', [
+        'parameters' => ['proyectos-aprobados' => 'proyecto', 'ordenes-compra' => 'orden'],
+    ]);
+
+    //Cuentas cobrar
+    Route::post('/cuentas-cobrar/{cuenta}/facturar', 'CuentasCobrarController@facturar');
+    Route::post('/cuentas-cobrar/{cuenta}/deletefactura', 'CuentasCobrarController@deletefactura');
+    Route::post('/cuentas-cobrar/{cuenta}/pagar', 'CuentasCobrarController@pagar');
+    Route::resource('/cuentas-cobrar', 'CuentasCobrarController', [
+        'only'       => ['index', 'show', 'edit'],
+        'parameters' => ['cuentas-cobrar' => 'cuenta'],
+    ]);
+
+    //Cuentas pagar
+    Route::post('/cuentas-pagar/{cuenta}/facturar', 'CuentasPagarController@facturar');
+    Route::post('/cuentas-pagar/{cuenta}/pagar', 'CuentasPagarController@pagar');
+    Route::resource('/cuentas-pagar', 'CuentasPagarController', [
+        'only'       => ['index', 'show', 'edit'],
+        'parameters' => ['cuentas-pagar' => 'cuenta'],
+    ]);
+
+    //ordenes en proceso
+    Route::get('/ordenes-proceso', 'OrdenesProcesoController@index');
+    Route::post('/ordenes-proceso/{orden}/updateStatus', 'OrdenesProcesoController@updateStatus');
+    Route::post('/ordenes-proceso/{orden}/fijarFechasEstimadas', 'OrdenesProcesoController@fijarFechasEstimadas');
+    Route::post('/ordenes-proceso/{orden}/embarcar', 'OrdenesProcesoController@embarcar');
+    Route::post('/ordenes-proceso/{orden}/frontera', 'OrdenesProcesoController@frontera');
+    Route::post('/ordenes-proceso/{orden}/aduana', 'OrdenesProcesoController@aduana');
+    Route::post('/ordenes-proceso/{orden}/entrega', 'OrdenesProcesoController@entrega');
+    
+    
+
+    
 
 
 });
