@@ -110,7 +110,7 @@
                               <tr>
                                 <td>{{$permiso->id}}</td>
                                 <td>{{$permiso->name}}</td>
-                                <td><input type="checkbox" name="permisos_ids[]" value="{{$permiso->id}}"></input></td>
+                                <td><input type="checkbox" name="permisos_ids[]" value="{{$permiso->id}}" {{-- {{$permisosuser->contains($permiso->id) ? 'checked' : ''}} --}}></input></td>
                               </tr>
                               @endforeach
                             </tbody>
@@ -119,9 +119,6 @@
                       </div>
                     </div>
                   </div>
-                  <!--div class="col-lg-12 text-right">
-                  <button type="submit" class="btn btn-dark" style="background-color: rgb(18, 22, 15); color: rgb(182, 137, 17);">Guardar</button>
-                </div-->
                 </form>
               </div>
                 <div class="col-md-12">
