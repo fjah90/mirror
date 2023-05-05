@@ -131,12 +131,11 @@
               <span class="mm-text" style="color:#9F9F9F;">Prospectos</span>
             </a>
           </li>
-          <!--
           @endcan
           @can('Proyectos menu')
           <hr class="divider-menu">
 
-          <!-- Proyectos -->
+          <!--Proyectos -->
 
           <li {!! (Request::is('prospectos/cotizaciones*') ? 'class="active"' : '') !!}>
             <a href="{{ URL::to('prospectos/cotizaciones') }}">
