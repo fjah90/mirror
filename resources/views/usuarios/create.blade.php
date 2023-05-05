@@ -95,21 +95,8 @@
                           Guardar Usuario
                         </button>
                   </div><br>
-                </form>
+                 </div>
               </div>
-                <div class="col-md-12">
-                <div class="row" style="margin-top:25px;">
-                  <div class="col-sm-12 text-right">
-                    <a href="{{route('usuarios.index')}}" class="btn btn-default" style="color:#000; background-color:#B3B3B3;">Regresar</a>
-                    <button type="submit" class="btn btn-primary" :disabled="cargando">
-                      <i class="fa fa-save"></i>
-                      Guardar Usuario
-                    </button>
-                  </div>
-                </div>
-              </div>
-                </div>
-              </form><br>
             </div>
           </div>
         </div>
