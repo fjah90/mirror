@@ -132,7 +132,7 @@ Route::middleware('auth')->group(function () {
         Route::get('usuarios/{id}/desactivar', 'UsuariosController@desactivar',['parameters' => ['usuarios' => 'usuario'],  
         ])->name('usuarios.desactivar');
 
-        Route::get('usuarios/permisos', 'UsuariosController@permisos')->name('usuarios.permisos');
+        Route::get('usuarios/permisos', 'UsuariosController@permisos')->name('permisos.usuarios');
         Route::get('/permisos/{rol}/edit', 'UsuariosController@editpermisos')->name('permisos.edit');
         Route::post('/permisos/{rol}/actualizar', 'UsuariosController@updatepermisos');
         Route::get('/permisos/{rol}/create', 'UsuariosController@create');///
@@ -187,6 +187,8 @@ Route::middleware('auth')->group(function () {
 
 
     Route::get('/prospectos/create2', 'ProspectosController@create2')->name('prospectos.create2');
+    Route::get('/productosmasivo', 'ProductosController@create2')->name('productos.create2');
+    Route::post('/productosguardar', 'ProductosController@guardar');
     Route::get('prospectos/regeneratePDF', 'ProspectosController@regeneratePDF');
     Route::get('prospectos/actualizarActividades', 'ProspectosController@actualizarActividades');
     Route::post('/prospectos/{prospecto}/guardarActividades', 'ProspectosController@guardarActividades');
