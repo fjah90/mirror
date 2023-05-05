@@ -24,6 +24,7 @@
   <!-- end of global css -->
   @yield('header_styles')
 </head>
+
 <body>
 <!-- header logo: style can be found in header-->
 <header class="header">
@@ -123,8 +124,8 @@
 
   
 
-          <!-- Proyectos que son prospectos
-          @can('Prospectos menu')-->
+          <!-- Proyectos que son prospectos-->
+          @can('Prospectos menu')
           <li {!! (Request::is('prospectos/prospectos*') ? 'class="active"' : '') !!}>
             <a href="{{ URL::to('prospectos/prospectos') }}">
               <i class="menu-icon fas fa-calendar-check" style="color:#B68911; font-size: 20px;"></i>
@@ -135,7 +136,7 @@
           @can('Proyectos menu')
           <hr class="divider-menu">
 
-          <!--Proyectos -->
+          <!-- Proyectos -->
 
           <li {!! (Request::is('prospectos/cotizaciones*') ? 'class="active"' : '') !!}>
             <a href="{{ URL::to('prospectos/cotizaciones') }}">
@@ -163,7 +164,7 @@
 
           <!-- Cotizaciones -->
 
-          {{--  <li {!! (Request::is('prospectos*') ? 'class="active"' : '') !!}>
+          <li {!! (Request::is('prospectos*') ? 'class="active"' : '') !!}>
             <a href="{{ URL::to('prospectos') }}">
               <i class="menu-icon fas fa-shopping-bag" style="color:#B68911; font-size: 20px;"></i>
               <span class="mm-text" style="color:#9F9F9F;">Cotizaciones</span>
@@ -171,7 +172,7 @@
           </li>
 
 
-            <hr class="divider-menu">--}}
+            <hr class="divider-menu">
 
             
 
@@ -185,7 +186,8 @@
             </a>
           </li>
         -->
-       @hasanyrole('Administrador|Usuaro')
+       
+
         @hasanyrole('Administrador|Usuario')
           <li {!! (Request::is('ordenes-proceso*') ? 'class="active"' : '') !!}  {!! (Request::is('proyectos-aprobados*') ? 'class="active"' : '') !!}><a class="title"><i class="fa fa-cart-arrow-down" style="color:#B68911; font-size: 20px;"></i> <b style="color:#9F9F9F;">Ordenes Compra </b><span class="fa fa-chevron-down" style="color:#9F9F9F;"></span></a>
            <ul class="nav child_menu">  
@@ -205,9 +207,7 @@
           </li>
           <hr class="divider-menu">
           @endhasanyrole
-          --}}
-          {{--  @hasanyrole('Administrador|Usuaro')
-
+          
 
           @hasanyrole('Administrador|Usuario')
           <!-- Administracion  -->
@@ -229,12 +229,9 @@
           </li>
           <hr class="divider-menu">
          
-          @endhasanyrole--}}
-
-          {{--  @hasanyrole('Administrador|Usuaro')
+          @endhasanyrole
 
           @hasanyrole('Administrador|Usuario')
-
           <!--Reportes-->
 
           <li {!! (Request::is('reportes*') ? 'class="active"' : '') !!}><a class="title"><i class="fas fa-file" style="color:#B68911; font-size: 20px;"></i> <b style="color:#9F9F9F;">Reportes</b> <span class="fa fa-chevron-down" style="color:#9F9F9F;"></span></a>
@@ -277,7 +274,7 @@
             </ul>
           </li>
           
-          @endhasanyrole --}}
+          @endhasanyrole
 
 
           <!-- Administracion 
@@ -356,20 +353,15 @@
           <!--Catalogos de Apoyo-->
           
           @can('Catalogos menu')
-          -->
           <li {!! (Request::is('vendedores*') ? 'class="active"' : '') !!} {!! (Request::is('Usuarios*') ? 'class="active"' : '') !!} {!! (Request::is('tiposClientes*') ? 'class="active"' : '') !!} {!! (Request::is('categoriaClientes*') ? 'class="active"' : '') !!} {!! (Request::is('proyectos*') ? 'class="active"' : '') !!} {!! (Request::is('tiposProveedores*') ? 'class="active"' : '') !!} {!! (Request::is('unidadesMedida*') ? 'class="active"' : '') !!} {!! (Request::is('subcategorias*') ? 'class="active"' : '') !!} {!! (Request::is('categorias*') ? 'class="active"' : '') !!} {!! (Request::is('clientes*' ) ? 'class="active"' : '') !!} {!! (Request::is('proveedores*' ) ? 'class="active"' : '') !!} {!! (Request::is('agentesAduanales*' ) ? 'class="active"' : '') !!} {!! (Request::is('productos*' ) ? 'class="active"' : '') !!}><a class="title"><i class="fa fa-book" style="color:#B68911; font-size: 20px;"></i> <b style="color:#9F9F9F;">Catálogos</b><span class="fa fa-chevron-down" style="color:#9F9F9F;"></span></a>
            <ul class="nav child_menu">
-            <!--
            @can('Clientes menu')
-          -->
              <li  {!! (Request::is('clientes*') ? 'class="active"' : '') !!}>
                 <a href="{{ URL::to('clientes') }}">
                   <i class="fas fa-user-tie"></i> <span style="color:#000;">Clientes</span>
                 </a>
               </li>
-              <!--
             @endcan
-          -->
             @can('Proveedores menu')
               <li {!! (Request::is('proveedores*') ? 'class="active"' : '') !!}>
                 <a href="{{ URL::to('proveedores') }}">
@@ -439,7 +431,7 @@
               </a>
             </li>
             @endcan
-            @can('Categoria de productos menu') 
+            @can('Categoria de productos menu')<!--Se ajusto el nombre -->
             <li  {!! (Request::is('subcategorias*') ? 'class="active"' : '') !!}>
               <a href="{{ URL::to('subcategorias') }}">
                 <i class="fas fa-cubes "></i> <span style="color:#000;">Categoria de Productos</span>
@@ -641,6 +633,7 @@
           </li>
           <hr class="divider-menu">
           -->
+
         </ul>
         <!-- / .navigation -->
       </div>
