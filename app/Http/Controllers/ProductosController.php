@@ -67,6 +67,7 @@ class ProductosController extends Controller
             'proveedor_id' => 'required',
             'categoria_id' => 'required',
             'nombre'       => 'required',
+            'precio'       => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -344,6 +345,7 @@ class ProductosController extends Controller
             'proveedor_id' => 'required',
             'categoria_id' => 'required',
             'nombre'       => 'required',
+            'precio'       => 'required',
         ]);
 
         if ($validator->fails()) {

@@ -118,6 +118,7 @@ class ProspectosController extends Controller
         $anio = Carbon::parse('2023-12-31');
 
         $user = auth()->user();
+        //dd($user);
 
         if (auth()->user()->tipo == 'Administrador') {
             $usuarios = User::all();
@@ -160,6 +161,7 @@ class ProspectosController extends Controller
             ->select('vendedores.nombre as vendedor','prospectos.*','users.name as usuario','clientes.nombre as cliente','prospectos_tipos_actividades.nombre as actividad','prospectos_actividades.fecha as fecha')
             ->where('prospectos_actividades.realizada', false)
             ->where('prospectos.es_prospecto', 'si')
+            ->where('prospectos.user_id', '=', Auth()->user()->id)
             ->get(); 
 
             //$proyectos = Prospecto::with('usuario','vendedor')->where('es_prospecto','si')->get();
