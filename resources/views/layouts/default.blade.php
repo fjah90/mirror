@@ -135,18 +135,13 @@
           @endcan
           @can('Proyectos menu')
           <hr class="divider-menu">
-
-          <!-- Proyectos -->
-
-          <li {!! (Request::is('prospectos/cotizaciones*') ? 'class="active"' : '') !!}>
+           <li {!! (Request::is('prospectos/cotizaciones*') ? 'class="active"' : '') !!}>
             <a href="{{ URL::to('prospectos/cotizaciones') }}">
               <i class="menu-icon fas fa-calendar-check" style="color:#B68911; font-size: 20px;"></i>
               <span class="mm-text " style="color:#9F9F9F;">Proyectos</span>
             </a>
           </li>
           @endcan
-       
-
           <!-- Proyectos 
           <li {!! (Request::is('prospectos/cotizaciones*') ? 'class="active"' : '') !!}><a class="title"><i class="fas fa-calendar-check" style="color:#06a1ce; font-size: 20px;" ></i>  Proyectos <span class="fa fa-chevron-down"></span></a>
             <ul class="nav child_menu">
@@ -161,9 +156,6 @@
         -->
 
           <hr class="divider-menu">
-
-          <!-- Cotizaciones 
-
           <li {!! (Request::is('prospectos*') ? 'class="active"' : '') !!}>
             <a href="{{ URL::to('prospectos') }}">
               <i class="menu-icon fas fa-shopping-bag" style="color:#B68911; font-size: 20px;"></i>
@@ -173,7 +165,6 @@
 
 
             <hr class="divider-menu">
-          -->
 
             
 
@@ -188,7 +179,7 @@
           </li>
         -->
        
-        <!--
+        
         @hasanyrole('Administrador|Usuario')
           <li {!! (Request::is('ordenes-proceso*') ? 'class="active"' : '') !!}  {!! (Request::is('proyectos-aprobados*') ? 'class="active"' : '') !!}><a class="title"><i class="fa fa-cart-arrow-down" style="color:#B68911; font-size: 20px;"></i> <b style="color:#9F9F9F;">Ordenes Compra </b><span class="fa fa-chevron-down" style="color:#9F9F9F;"></span></a>
            <ul class="nav child_menu">  
@@ -208,11 +199,10 @@
           </li>
           <hr class="divider-menu">
           @endhasanyrole
-        -->
+        
           
         
-          @hasanyrole('Administrador|Usuario')
-          <!-- Administracion  
+          @hasanyrole('Administrador|Usuario') 
           <li {!! (Request::is('cuentas-cobrar*') ? 'class="active"' : '') !!} {!! (Request::is('cuentas-pagar*') ? 'class="active"' : '') !!}><a class="title"><i class="fa fa-calculator" style="color:#B68911; font-size:20px;"></i>  <b style="color:#9F9F9F;">Contabilidad</b><span class="fa fa-chevron-down" style="color:#9F9F9F;"></span></a>
            <ul class="nav child_menu">  
               <li {!! (Request::is('cuentas-cobrar*') ? 'class="active"' : '') !!}>
@@ -230,7 +220,7 @@
             </ul> 
           </li>
           <hr class="divider-menu">
-          -->
+          
          
           @endhasanyrole
 
