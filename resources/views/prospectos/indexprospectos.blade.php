@@ -105,7 +105,7 @@
                   <th class="color_text">Proyección de venta en USD</th>
                   <th class="color_text">Factibilidad</th>
                   <th class="color_text">Próxima actividad</th>
-                  <th class="color_text">Fecha</th>
+                  <th class="color_text">Fecha próxima actividad</th>
                   <th class="color_text">Estatus</th>
                   <th style="min-width:105px;"></th>
                 </tr>

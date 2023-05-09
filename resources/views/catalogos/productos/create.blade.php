@@ -143,7 +143,7 @@ Nuevo Producto | @parent
                     Regresar
                   </a>
                 @endif
-                <button type="submit" class="btn btn-primary" :disabled="cargando" @click="actualizarlista()">
+                <button type="submit" class="btn btn-dark" :disabled="cargando" @click="actualizarlista()" style="background-color:#12160F; color:#B68911;">
                   <i class="fas fa-save"></i>
                   Guardar Producto
                 </button>
