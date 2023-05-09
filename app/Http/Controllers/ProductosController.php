@@ -52,8 +52,7 @@ class ProductosController extends Controller
         $proveedores   = Proveedor::orderBy('empresa')->get();
         $categorias    = Categoria::with('descripciones')->orderBy('nombre')->get();
         $subcategorias = Subcategoria::orderBy('nombre')->get();
-        $producto->load('proveedor', 'categoria.descripciones', 'subcategoria', 'descripciones.descripcionNombre');
-        return view('catalogos.productos.create', compact('proveedores', 'categorias', 'subcategorias', 'layout','producto'));
+        return view('catalogos.productos.create', compact('proveedores', 'categorias', 'subcategorias', 'layout'));
     }
 
     /**
