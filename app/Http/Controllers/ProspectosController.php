@@ -170,7 +170,10 @@ class ProspectosController extends Controller
                 ->leftjoin('users', 'prospectos_cotizaciones.user_id', '=', 'users.id')
                 ->select('prospectos_cotizaciones.*', 'users.name as user_name', 'prospectos.nombre as prospecto_nombre', 'prospectos.id as prospecto_id', 'clientes.nombre as cliente_nombre')
                 ->where('prospectos.es_prospecto','si')
-                ->where('prospectos_cotizaciones.user_id', '=', $user->id)->whereBetween('prospectos_cotizaciones.created_at', [$inicio, $anio])->orderBy('fecha', 'desc')->get();
+                ->where('prospectos_cotizaciones.user_id', '=', $user->id)->whereBetween('prospectos_cotizaciones.created_at', [$inicio, $anio])->orderBy('fecha', 'desc')
+                ->where('prospectos.user_id', '=', Auth()->user()->id)
+                ->get();
+
             
              $vendedores = Vendedor::all(); 
         }
