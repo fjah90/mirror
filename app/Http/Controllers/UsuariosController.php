@@ -81,13 +81,9 @@ class UsuariosController extends Controller
     public function create(Request $request)
     {
       
-      /*$rol_id= $request->rol_id;
-      //dd($rol_id);*/
       $roles = Role::all();
-      /*$rol =  Role::find($rol_id);*/
+     
       $permisos = Permission::all();
-      /*$permisosrol = $rol->permissions()->get()->pluck('id');*/
-        
         return view('usuarios.create', compact('roles','permisos'));
     }
 

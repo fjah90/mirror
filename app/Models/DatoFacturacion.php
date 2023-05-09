@@ -32,21 +32,21 @@ class DatoFacturacion extends Model
      public function CatRegimen() 
      {
 
-      return $this->hasOne('App\Models\CatRegimen','id','cat_regimen_id');
+      return $this->hasOne('App\Models\CatRegimen','cat_regimen_id','id');
 
      }
 
     public function CatFormaPago()
      {
 
-      return $this->hasOne('App\Models\CatFormaPago','id','cat_forma_pago_id');
+      return $this->hasOne('App\Models\CatFormaPago','cat_forma_pago_id','id');
 
      }
 
     public function CatCfdi() 
     {
 
-      return $this->hasOne('App\Models\CatCfdi','id','cat_cfdi_id');
+      return $this->hasOne('App\Models\CatCfdi','cat_cfdi_id','id');
 
     }
 

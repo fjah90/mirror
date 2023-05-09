@@ -52,7 +52,8 @@ class ProductosController extends Controller
         $proveedores   = Proveedor::orderBy('empresa')->get();
         $categorias    = Categoria::with('descripciones')->orderBy('nombre')->get();
         $subcategorias = Subcategoria::orderBy('nombre')->get();
-        return view('catalogos.productos.create', compact('proveedores', 'categorias', 'subcategorias', 'layout'));
+        $producto->load('proveedor', 'categoria.descripciones', 'subcategoria', 'descripciones.descripcionNombre');
+        return view('catalogos.productos.create', compact('proveedores', 'categorias', 'subcategorias', 'layout','producto'));
     }
 
     /**
@@ -147,7 +148,7 @@ class ProductosController extends Controller
 
         
     public function guardar(Request $request)
-    {
+    {    
         if (isset($request->archivo)) {
             $file = $request->file('archivo');
             $archivo = time().$file->getClientOriginalName();
@@ -293,6 +294,7 @@ class ProductosController extends Controller
      */
     public function edit(Producto $producto)
     {
+        //dd($producto);
         $proveedores   = Proveedor::orderBy('empresa')->get();
         $categorias    = Categoria::with('descripciones')->orderBy('nombre')->get();
         $subcategorias = Subcategoria::orderBy('nombre')->get();
@@ -339,11 +341,13 @@ class ProductosController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Producto $producto)
-    {
+    {   
+        //dd($request->all());
         $validator = Validator::make($request->all(), [
             'proveedor_id' => 'required',
             'categoria_id' => 'required',
             'nombre'       => 'required',
+            'precio'       => 'required',
         ]);
 
         if ($validator->fails()) {
