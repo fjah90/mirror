@@ -217,8 +217,8 @@
                             </contacto-telefonos>
                             <div class="row form-group">
                                 <div class="col-md-6">
-                                    <label class="control-label">Fax<strong style="color: grey"> *</strong></label>
-                                    <input type="text" class="form-control" name="fax" v-model="contacto.fax" required/>
+                                    <label class="control-label">Fax</label>
+                                    <input type="text" class="form-control" name="fax" v-model="contacto.fax">
                                 </div>
                             </div>
                         </div>
