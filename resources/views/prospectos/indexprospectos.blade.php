@@ -121,7 +121,7 @@
                   <td>$@{{prospecto.proyeccion_venta}}</td>
                   <td>@{{prospecto.factibilidad}}</td>
                   <td>@{{prospecto.actividad}}</td>
-                  <td>@{{prospecto.fecha}}</td>
+                  <td>@{{prospecto.fecha_cierre_formated}}</td>
                   <td>@{{prospecto.estatus}}</td>
                   <td class="text-right">
                   @can('Prospectos ver')

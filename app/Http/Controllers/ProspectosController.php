@@ -169,7 +169,8 @@ class ProspectosController extends Controller
                 ->leftjoin('users', 'prospectos_cotizaciones.user_id', '=', 'users.id')
                 ->select('prospectos_cotizaciones.*', 'users.name as user_name', 'prospectos.nombre as prospecto_nombre', 'prospectos.id as prospecto_id', 'clientes.nombre as cliente_nombre')
                 ->where('prospectos.es_prospecto','si')
-                ->where('prospectos_cotizaciones.user_id', '=', $user->id)->whereBetween('prospectos_cotizaciones.created_at', [$inicio, $anio])->orderBy('fecha', 'desc')->get();
+                ->where('prospectos_cotizaciones.user_id', '=', $user->id)->whereBetween('prospectos_cotizaciones.created_at', [$inicio, $anio])->orderBy('fecha', 'desc')
+                ->get();
 
             
              $vendedores = Vendedor::all(); 
@@ -676,9 +677,10 @@ class ProspectosController extends Controller
             'tipo_id' => 1,
             'tipo'    => '',
         ];
-        /*if($prospecto->fecha_cierre != null){
+
+        if($prospecto->fecha_cierre = null){
             $prospecto->fecha_cierre = $prospecto->fecha_cierre_formated;
-        }*/
+        }    
         
         $productos = Producto::with('categoria')->get();
         if($prospecto->es_prospecto == 'si'){
@@ -1278,7 +1280,7 @@ class ProspectosController extends Controller
         }
 
         $update['user_id'] = $user->id;
-        $update['fecha']   = date('Y-m-d');
+        $update['fecha']   = date('D-M-Y');
         if ($request->condicion['id'] == 0) { //nueva condicion, dar de alta
             $condicion              = CondicionCotizacion::create(['nombre' => $request->condicion['nombre']]);
             $update['condicion_id'] = $condicion->id;
