@@ -121,7 +121,7 @@
                   <td id="proyeccion_venta">$@{{prospecto.proyeccion_venta}}</td>
                   <td>@{{prospecto.factibilidad}}</td>
                   <td>@{{prospecto.actividad}}</td>
-                  <td>@{{prospecto.fecha_cierre}}</td>
+                  <td>@{{prospecto.fecha_cierre_formated}}</td>
                   <td>@{{prospecto.estatus}}</td>
                   <td class="text-right">
                   @can('Prospectos ver')
@@ -145,9 +145,7 @@
                <tfoot>
                   <tr>
                       <th colspan="3" style="text-align:right">Total:</th>
-                    @foreach($proyectos as $proyecto)
-                      <th id="total_proyeccion_venta">{{$proyecto->total_proyeccion_venta}}</th>
-                    @endforeach
+                      <th id="total_proyeccion_venta"></th>
                   </tr>
               </tfoot>
             </table>
@@ -194,25 +192,6 @@
 @section('footer_scripts')
 <script src="{{ URL::asset('js/plugins/date-time/datetime-moment.js') }}" ></script>
 <script>
- $(document).ready(function() { 
-  function sumarProyeccionVenta(){  
-    var suma =0;
-    var proyeccion_venta=parseFloat($('#proyeccion_venta').val());
-   
-  
-    if(!isNaN(proyeccion_venta)){
-    suma +=proyeccion_venta;
-
-    }
-
-      $("#total_proyeccion_venta").val(suma);  
-  }
-
-  $(document).on('keyup','#proyeccion_venta',function(){
-          sumarProyeccionVenta();
-        });
-
- });
 const app = new Vue({
     el: '#content',
     data: {

@@ -96,7 +96,6 @@ Nuevo Producto | @parent
                         <th>Name</th>
                         <th>Valor</th>
                         <th>Valor Inglés</th>
-                        <th>Iconos</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -109,16 +108,6 @@ Nuevo Producto | @parent
                         <td>
                           <input v-if="!descripcion.no_alta_productos && descripcion.valor_ingles" type="text" class="form-control" v-model="descripcion.valor_ingles_valor" />
                         </td>
-                         <tr>
-                           <td>
-                             <table>
-                               <td><img src="{{asset('images/icon-fire.png')}}" alt="foto" style="width:40px; height:30px;"></td>
-                               <td><img src="{{asset('images/icon-crocking.png')}}" alt="foto" style="width:40px; height:30px;"></td>
-                               <td><img src="{{asset('images/icon-lightfastness.png')}}" alt="foto" style="width:40px; height:30px;"></td>
-                               <td><img src="{{asset('images/icon-fire.png')}}" alt="foto" style="width:40px; height:30px;"></td>
-                             </table>
-                           </td>
-                         </tr>
                       </tr>
                     </tbody>
                   </table>
