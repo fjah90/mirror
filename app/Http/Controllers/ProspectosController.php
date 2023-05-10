@@ -679,6 +679,11 @@ class ProspectosController extends Controller
             'tipo_id' => 1,
             'tipo'    => '',
         ];
+
+        if($prospecto->fecha_cierre = null){
+            $prospecto->fecha_cierre = $prospecto->fecha_cierre_formated;
+        }
+        
         /*if($prospecto->fecha_cierre != null){
             $prospecto->fecha_cierre = $prospecto->fecha_cierre_formated;
         }*/
@@ -1281,7 +1286,7 @@ class ProspectosController extends Controller
         }
 
         $update['user_id'] = $user->id;
-        $update['fecha']   = date('Y-m-d');
+        $update['fecha']   = date('D-M-Y');
         if ($request->condicion['id'] == 0) { //nueva condicion, dar de alta
             $condicion              = CondicionCotizacion::create(['nombre' => $request->condicion['nombre']]);
             $update['condicion_id'] = $condicion->id;

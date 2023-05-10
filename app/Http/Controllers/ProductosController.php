@@ -293,7 +293,6 @@ class ProductosController extends Controller
      */
     public function edit(Producto $producto)
     {
-        //dd($producto);
         $proveedores   = Proveedor::orderBy('empresa')->get();
         $categorias    = Categoria::with('descripciones')->orderBy('nombre')->get();
         $subcategorias = Subcategoria::orderBy('nombre')->get();

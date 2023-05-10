@@ -121,7 +121,7 @@
                   <td id="proyeccion_venta">$@{{prospecto.proyeccion_venta}}</td>
                   <td>@{{prospecto.factibilidad}}</td>
                   <td>@{{prospecto.actividad}}</td>
-                  <td>@{{prospecto.fecha}}</td>
+                  <td>@{{prospecto.fecha_cierre}}</td>
                   <td>@{{prospecto.estatus}}</td>
                   <td class="text-right">
                   @can('Prospectos ver')
@@ -146,7 +146,7 @@
                   <tr>
                       <th colspan="3" style="text-align:right">Total:</th>
                     @foreach($proyectos as $proyecto)
-                      <th id="total_proyeccion_venta">{{$proyecto->total_proyeccion_venta }}</th>
+                      <th id="total_proyeccion_venta">{{$proyecto->total_proyeccion_venta}}</th>
                     @endforeach
                   </tr>
               </tfoot>
@@ -234,7 +234,7 @@ const app = new Vue({
         },
     },
     mounted(){
-      $.fn.dataTable.moment( 'DD/MM/YYYY' );
+      $.fn.dataTable.moment('DD/MM/YYYY');
       this.tabla = $("#tabla").DataTable({
         "dom": 'f<"#fechas_container.pull-left">tlip',
         "order": [[ 4, "desc" ]]
@@ -252,7 +252,7 @@ const app = new Vue({
 
           var startDate   = moment(min, "DD/MM/YYYY");
           var endDate     = moment(max, "DD/MM/YYYY");
-          var diffDate = moment(fecha, "YYYY-MM-DD");
+          var diffDate = moment(fecha, "DD/MM/YYYY");/***Ajustando la fecha en la vista de prospectos***/
           // console.log(min=="",max=="",diffDate.isSameOrAfter(startDate),diffDate.isSameOrBefore(endDate),diffDate.isBetween(startDate, endDate));
           if (min=="" && max=="") return true;
           if (max=="" && diffDate.isSameOrAfter(startDate)) return true;
