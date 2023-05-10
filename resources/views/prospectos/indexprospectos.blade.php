@@ -144,8 +144,8 @@
               </tbody>
                <tfoot>
                   <tr>
-                      <th colspan="3" style="text-align:right">Total:</th>
-                      <th id="total_proyeccion_venta"></th>
+                      <th colspan="3" style="text-align:right;">Total:</th>
+                      <th colspan="6">${{$proyectos->sum('proyeccion_venta')}}.00</th>
                   </tr>
               </tfoot>
             </table>
