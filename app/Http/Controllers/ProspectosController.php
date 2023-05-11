@@ -121,7 +121,7 @@ class ProspectosController extends Controller
         $user = auth()->user();
         //dd($user);
 
-       if (auth()->user()->tipo == 'Administrador') {
+       if (auth()->user()->tipo == 'Administrador' || auth()->user()->tipo == 'Dirección') {
             $usuarios = User::all();
         } else {
             $usuarios = [];

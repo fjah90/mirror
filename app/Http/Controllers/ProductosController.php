@@ -63,10 +63,12 @@ class ProductosController extends Controller
      */
     public function store(Request $request)
     {
+        //dd($request->all());
         $validator = Validator::make($request->all(), [
             'proveedor_id' => 'required',
             'categoria_id' => 'required',
             'nombre'       => 'required',
+            'precio'      =>'required',
         ]);
 
         if ($validator->fails()) {
@@ -84,7 +86,15 @@ class ProductosController extends Controller
         if (!is_null($request->subcategoria_id)) {
             $create['subcategoria_id'] = $request->subcategoria_id;
         }
-        $producto = Producto::create($create);
+
+        //$producto = Producto::create($create);
+
+            $producto = Producto::create([
+                'proveedor_id'  => $request->proveedor_id,
+                'categoria_id'      => $request->categoria_id,
+                'nombre' => $request->nombre,
+                'precio' => $request->precio,
+            ]);
 
         if (isset($request->foto)) {
             $foto = Storage::putFile('public/productos', $request->file('foto'));
@@ -297,6 +307,9 @@ class ProductosController extends Controller
         $categorias    = Categoria::with('descripciones')->orderBy('nombre')->get();
         $subcategorias = Subcategoria::orderBy('nombre')->get();
         $producto->load('proveedor', 'categoria.descripciones', 'subcategoria', 'descripciones.descripcionNombre');
+        //dd($producto);
+
+        //dd(1);
 
         $producto_descripciones  = $producto->descripciones->count();
         $categoria_descripciones = $producto->categoria->descripciones->count();
@@ -381,7 +394,11 @@ class ProductosController extends Controller
             $update['subcategoria_id'] = $request->subcategoria_id;
         }
 
+        //$producto->update($update);
+        
         $producto->update($update);
+            $producto->precio = $request->precio;
+            $producto->save();
 
         //actualizar descripciones nuevas que ya existan en descripciones actuales
         $producto->load('descripciones');
