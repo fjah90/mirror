@@ -118,7 +118,7 @@
                   </template>
                   <td>@{{prospecto.nombre}}</td>
                   <td>@{{prospecto.vendedor}}</td>
-                  <td id="proyeccion_venta">$@{{prospecto.proyeccion_venta}}</td>
+                  <td id="proyeccion_venta">@{{prospecto.proyeccion_venta|formatoMoneda}}</td>
                   <td>@{{prospecto.factibilidad}}</td>
                   <td>@{{prospecto.actividad}}</td>
                   <td>@{{prospecto.fecha_cierre_formated}}</td>
@@ -145,7 +145,7 @@
                <tfoot>
                   <tr>
                       <th colspan="3" style="text-align:right;">Total:</th>
-                      <th colspan="6">${{$proyectos->sum('proyeccion_venta')}}.00</th>
+                      <th colspan="6">${{number_format($proyectos->sum('proyeccion_venta'), 2, '.', ',')}}</th>
                   </tr>
               </tfoot>
             </table>
