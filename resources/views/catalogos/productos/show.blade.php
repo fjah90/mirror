@@ -81,6 +81,7 @@
                         <th>Name</th>
                         <th>Valor</th>
                         <th>Valor Ingles</th>
+                        <th>Iconos</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -90,6 +91,21 @@
                         <td>{{$descripcion->descripcionNombre->name}}</td>
                         <td>{{$descripcion->valor}}</td>
                         <td>{{$descripcion->valor_ingles}}</td>
+                        <td>
+                          <table>
+                          @if($descripcion->descripcionNombre->nombre == 'Flamabilidad')
+                            <td><img src="{{asset('images/icon-fire.png')}}" id="Flamabilidad" style="width:50px; height:50px;"></td>
+                          @elseif($descripcion->descripcionNombre->nombre == 'Abrasion')
+                            <td><img src="{{asset('images/icon-physical.png')}}" id="Abrasion" style="width:50px; height:50px;"></td>
+                          @elseif($descripcion->descripcionNombre->nombre == 'Decoloracion_de_luz')
+                            <td><img src="{{asset('images/icon-lightfastness.png')}}" id="Decoloracion_de_luz" style="width:50px; height:50px;"></td>
+                          @elseif($descripcion->descripcionNombre->nombre == 'Traspaso_color')
+                            <td><img src="{{asset('images/icon-crocking.png')}}" id="Traspaso_color" style="width:50px; height:50px;"></td>
+                          @elseif($descripcion->descripcionNombre->nombre == 'Peeling')
+                            <td><img src="{{asset('images/icon-crocking.png')}}" id="Peeling" style="width:50px; height:50px;"></td>
+                          @endif
+                          </table>
+                        </td>
                       </tr>
                       @endforeach
                     </tbody>
@@ -136,4 +152,6 @@
 
 {{-- footer_scripts --}}
 @section('footer_scripts')
+<script>
+</script>
 @stop

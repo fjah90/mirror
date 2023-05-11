@@ -97,6 +97,7 @@
                           <th>Name</th>
                           <th>Valor</th>
                           <th>Valor Ingles</th>
+                          <th>Iconos</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -108,6 +109,23 @@
                           </td>
                           <td>
                             <input v-if="descripcion.descripcion_nombre.valor_ingles" type="text" class="form-control" v-model="descripcion.valor_ingles"/>
+                          </td>
+                          <td>
+                            <div v-if="descripcion.descripcion_nombre.nombre=='Flamabilidad'">
+                              <img src="{{asset('images/icon-fire.png')}}" id="Flamabilidad" style="width:50px; height:50px;">
+                            </div>
+                            <div v-else-if="descripcion.descripcion_nombre.nombre=='Abrasion'">
+                              <img src="{{asset('images/icon-physical.png')}}" id="Abrasion" style="width:50px; height:50px;">
+                            </div>
+                            <div v-else-if="descripcion.descripcion_nombre.nombre=='Decoloracion de la luz'">
+                              <img src="{{asset('images/icon-lightfastness.png')}}" id="Decoloracion_de_luz" style="width:50px; height:50px;">
+                            </div>
+                            <div v-else-if="descripcion.descripcion_nombre.nombre=='Traspaso de color'">
+                               <img src="{{asset('images/icon-crocking.png')}}" id="Traspaso_color" style="width:50px; height:50px;">
+                            </div>
+                           <div v-else-if="descripcion.descripcion_nombre.nombre=='Peeling'">
+                              <img src="{{asset('images/icon-crocking.png')}}" id="Peeling" style="width:50px; height:50px;">
+                           </div>
                           </td>
                         </tr>
                       </tbody>
