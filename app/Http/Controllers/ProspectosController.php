@@ -21,6 +21,7 @@ use App\Models\Vendedor;
 use App\Models\UnidadMedida;
 use Carbon\Carbon;
 use App\User;
+use Auth;
 use DateTime;
 use Illuminate\Http\Request;
 use Mail;
@@ -120,11 +121,12 @@ class ProspectosController extends Controller
         $user = auth()->user();
         //dd($user);
 
-        if (auth()->user()->tipo == 'Administrador') {
+       if (auth()->user()->tipo == 'Administrador' || auth()->user()->tipo == 'Dirección') {
             $usuarios = User::all();
         } else {
             $usuarios = [];
         }
+
         /**Consulta para obtener el estatus de los apartador***/
         $estatus=$request->estatus;
 
@@ -152,8 +154,11 @@ class ProspectosController extends Controller
              $vendedores = Vendedor::all(); 
 
         } else {
-            
-            $proyectos = Prospecto::leftjoin('prospectos_actividades','prospectos.id','=','prospectos_actividades.prospecto_id')
+
+
+        if(Auth::user()->roles[0]->name =='Administrador' || Auth::user()->roles[0]->name =='Dirección'){
+
+          $proyectos = Prospecto::leftjoin('prospectos_actividades','prospectos.id','=','prospectos_actividades.prospecto_id')
             ->leftjoin('prospectos_tipos_actividades', 'prospectos_actividades.tipo_id', '=', 'prospectos_tipos_actividades.id')
             ->leftjoin('users', 'prospectos.user_id', '=', 'users.id')
             ->leftjoin('clientes', 'prospectos.cliente_id', '=', 'clientes.id')
@@ -171,9 +176,32 @@ class ProspectosController extends Controller
                 ->where('prospectos.es_prospecto','si')
                 ->where('prospectos_cotizaciones.user_id', '=', $user->id)->whereBetween('prospectos_cotizaciones.created_at', [$inicio, $anio])->orderBy('fecha', 'desc')
                 ->get();
-
-            
              $vendedores = Vendedor::all(); 
+
+         } else {
+
+             $proyectos = Prospecto::leftjoin('prospectos_actividades','prospectos.id','=','prospectos_actividades.prospecto_id')
+            ->leftjoin('prospectos_tipos_actividades', 'prospectos_actividades.tipo_id', '=', 'prospectos_tipos_actividades.id')
+            ->leftjoin('users', 'prospectos.user_id', '=', 'users.id')
+            ->leftjoin('clientes', 'prospectos.cliente_id', '=', 'clientes.id')
+            ->leftjoin('vendedores', 'prospectos.vendedor_id', '=', 'vendedores.id')
+            ->select('vendedores.nombre as vendedor','prospectos.*','users.name as usuario','clientes.nombre as cliente','prospectos_tipos_actividades.nombre as actividad','prospectos_actividades.fecha as fecha')
+            ->where('prospectos_actividades.realizada', false)
+            ->where('prospectos.es_prospecto', 'si')
+            ->get(); 
+
+            //$proyectos = Prospecto::with('usuario','vendedor')->where('es_prospecto','si')->get();
+                $cotizaciones = ProspectoCotizacion::leftjoin('prospectos', 'prospectos_cotizaciones.prospecto_id', '=', 'prospectos.id')
+                ->leftjoin('clientes', 'prospectos.cliente_id', '=', 'clientes.id')
+                ->leftjoin('users', 'prospectos_cotizaciones.user_id', '=', 'users.id')
+                ->select('prospectos_cotizaciones.*', 'users.name as user_name', 'prospectos.nombre as prospecto_nombre', 'prospectos.id as prospecto_id', 'clientes.nombre as cliente_nombre')
+                ->where('prospectos.es_prospecto','si')
+                ->where('prospectos_cotizaciones.user_id', '=', $user->id)->whereBetween('prospectos_cotizaciones.created_at', [$inicio, $anio])->orderBy('fecha', 'desc')
+                ->get();
+             $vendedores = Vendedor::all();  
+
+            }
+            
         }
         
         return view('prospectos.indexprospectos', compact('cotizaciones', 'usuarios','proyectos','estatus'));  
@@ -681,6 +709,7 @@ class ProspectosController extends Controller
         if($prospecto->fecha_cierre = null){
             $prospecto->fecha_cierre = $prospecto->fecha_cierre_formated;
         }    
+
         
         $productos = Producto::with('categoria')->get();
         if($prospecto->es_prospecto == 'si'){

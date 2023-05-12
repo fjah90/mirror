@@ -38,7 +38,7 @@
           <h3 class="panel-title">
             <div class="p-10" style="display:inline-block">
               Usuario    
-              @role('Administrador')
+              @role('Administrador|Dirección')
                 <select class="form-control" @change="cargar()" v-model="usuarioCargado" style="width:auto;display:inline-block;">
                   <option value="Todos">Todos</option>
                   @foreach($usuarios as $usuario)
@@ -118,7 +118,7 @@
                   </template>
                   <td>@{{prospecto.nombre}}</td>
                   <td>@{{prospecto.vendedor}}</td>
-                  <td>$@{{prospecto.proyeccion_venta}}</td>
+                  <td id="proyeccion_venta">@{{prospecto.proyeccion_venta|formatoMoneda}}</td>
                   <td>@{{prospecto.factibilidad}}</td>
                   <td>@{{prospecto.actividad}}</td>
                   <td>@{{prospecto.fecha_cierre_formated}}</td>
@@ -142,6 +142,12 @@
                   </td>  
                 </tr>
               </tbody>
+               <tfoot>
+                  <tr>
+                      <th colspan="3" style="text-align:right;">Total:</th>
+                      <th colspan="6">${{number_format($proyectos->sum('proyeccion_venta'), 2, '.', ',')}}</th>
+                  </tr>
+              </tfoot>
             </table>
           </div>
         </div>
@@ -186,7 +192,6 @@
 @section('footer_scripts')
 <script src="{{ URL::asset('js/plugins/date-time/datetime-moment.js') }}" ></script>
 <script>
-
 const app = new Vue({
     el: '#content',
     data: {
@@ -208,7 +213,7 @@ const app = new Vue({
         },
     },
     mounted(){
-      $.fn.dataTable.moment( 'DD/MM/YYYY' );
+      $.fn.dataTable.moment('DD/MM/YYYY');
       this.tabla = $("#tabla").DataTable({
         "dom": 'f<"#fechas_container.pull-left">tlip',
         "order": [[ 4, "desc" ]]
@@ -226,7 +231,7 @@ const app = new Vue({
 
           var startDate   = moment(min, "DD/MM/YYYY");
           var endDate     = moment(max, "DD/MM/YYYY");
-          var diffDate = moment(fecha, "YYYY-MM-DD");
+          var diffDate = moment(fecha, "DD/MM/YYYY");/***Ajustando la fecha en la vista de prospectos***/
           // console.log(min=="",max=="",diffDate.isSameOrAfter(startDate),diffDate.isSameOrBefore(endDate),diffDate.isBetween(startDate, endDate));
           if (min=="" && max=="") return true;
           if (max=="" && diffDate.isSameOrAfter(startDate)) return true;
