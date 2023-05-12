@@ -188,6 +188,7 @@ class ProspectosController extends Controller
             ->select('vendedores.nombre as vendedor','prospectos.*','users.name as usuario','clientes.nombre as cliente','prospectos_tipos_actividades.nombre as actividad','prospectos_actividades.fecha as fecha')
             ->where('prospectos_actividades.realizada', false)
             ->where('prospectos.es_prospecto', 'si')
+            ->where('prospectos.user_id', '=', Auth()->user()->id)
             ->get(); 
 
             //$proyectos = Prospecto::with('usuario','vendedor')->where('es_prospecto','si')->get();
@@ -197,6 +198,7 @@ class ProspectosController extends Controller
                 ->select('prospectos_cotizaciones.*', 'users.name as user_name', 'prospectos.nombre as prospecto_nombre', 'prospectos.id as prospecto_id', 'clientes.nombre as cliente_nombre')
                 ->where('prospectos.es_prospecto','si')
                 ->where('prospectos_cotizaciones.user_id', '=', $user->id)->whereBetween('prospectos_cotizaciones.created_at', [$inicio, $anio])->orderBy('fecha', 'desc')
+                ->where('prospectos.user_id', '=', Auth()->user()->id)
                 ->get();
              $vendedores = Vendedor::all();  
 
