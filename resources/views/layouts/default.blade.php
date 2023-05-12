@@ -444,7 +444,7 @@
           <hr class="divider-menu">
           @endcan
 
-           @hasanyrole('Administrador|Usuario')
+           @hasanyrole('Administrador|Usuario|Dirección')
           <!-- Administracion  -->
           <li {!! (Request::is('Usuarios*') ? 'class="active"' : '') !!}><a class="title"><i class="fa fa-user" style="color:#B68911; font-size:20px;"></i>  <b style="color:#9F9F9F;">Gestión de Usuario</b><span class="fa fa-chevron-down" style="color:#9F9F9F;"></a>
            <ul class="nav child_menu">  
