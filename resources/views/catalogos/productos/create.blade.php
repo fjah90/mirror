@@ -75,14 +75,14 @@ Nuevo Producto | @parent
                 </div>
               </div>
             </div>
-             <!--div class="row">
+             <div class="row">
                 <div class="col-md-12">
                   <div class="form-group">
                     <label class="control-label">Precio</label>
                     <input type="text" class="form-control" name="precio" v-model="producto.precio" required />
                   </div>
                 </div>
-              </div-->
+              </div>
             <div class="row">
               <div class="col-md-12">
                 <div class="table-responsive">
@@ -172,7 +172,7 @@ const app = new Vue({
         categoria_id: '',
         subcategoria_id: '',
         nombre: '',
-        //precio: '',
+        precio: '',
         foto: '',
         ficha_tecnica: '',
         descripciones: []

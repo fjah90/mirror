@@ -196,6 +196,7 @@ const app = new Vue({
         categoria_id: '{{$producto->categoria_id}}',
         subcategoria_id: '{{$producto->subcategoria->id}}',
         nombre: '{{$producto->nombre}}',
+        precio: '{{$producto->precio}}',
         descripciones: {!! $producto->descripciones !!},
         foto_ori: '{{$producto->foto}}',
         ficha_ori: '{{$producto->ficha_tecnica}}',
