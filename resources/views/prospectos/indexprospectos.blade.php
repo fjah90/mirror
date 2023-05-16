@@ -95,7 +95,7 @@
           
           <div class="table-responsive">
             <table id="tabla" class="table table-bordred" style="width:100%;"
-              data-page-length="100">
+              data-page-length="500">
               <thead>
                 <tr style="background-color:#12160F">
                   <th class="hide">#</th>
@@ -139,7 +139,8 @@
                       <i class="fas fa-upload"></i>
                     </button>
                   @endcan
-                  </td>  
+                  </td> 
+                <!--Botones de estatus para los comentarios-->
                 </tr>
               </tbody>
                <tfoot>
@@ -149,6 +150,28 @@
                   </tr>
               </tfoot>
             </table>
+            <div class="row">
+              <div class="col-md-12"><h4><b>Observaciones:</b><h4></div>
+                <div class="col-md-12">
+                  <h4></h4>
+                </div>
+                <div class="col-md-12" >
+                  <div class="form-group" style="border:1px solid; border-radius:5px;">
+                    {!! Form::textarea('editor1',null,['class'=>'ckeditor form-control','id'=>'editor1','placeholder'=>'Escriba un comentario...'])!!}
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  {!! Form::label('','Asignación de Estatus') !!}
+                  {!!Form::select('gen_status_id',$estado_observacion,null,['placeholder'=>'Seleccione un estatus','class'=>'form-control','id'=>'gen_status_id'])!!}
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12" style="text-align:right;">
+                  <input type="submit"  name="" id="" class="btn btn-lg btn-dark"  value="Guardar" style="background-color:#12160F; color:#B68911;">
+                </div>
+              </div><br>
           </div>
         </div>
       </div>
@@ -191,6 +214,7 @@
 {{-- footer_scripts --}}
 @section('footer_scripts')
 <script src="{{ URL::asset('js/plugins/date-time/datetime-moment.js') }}" ></script>
+<script src="{{ asset('/vendor/ckeditor_laravel/ckeditor/ckeditor.js') }}"></script>
 <script>
 const app = new Vue({
     el: '#content',
@@ -251,7 +275,7 @@ const app = new Vue({
     },
     methods: {
       dateParser(value){
-  			return moment(value, 'DD/MM/YYYY').toDate().getTime();
+        return moment(value, 'DD/MM/YYYY').toDate().getTime();
       },
       cargar(){
         axios.post('/prospectos/listadoprospectos', {id: this.usuarioCargado , anio:this.anio})

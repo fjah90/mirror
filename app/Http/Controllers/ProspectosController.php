@@ -19,6 +19,7 @@ use App\Models\OrdenCompra;
 use App\Models\OrdenProceso;
 use App\Models\Vendedor;
 use App\Models\UnidadMedida;
+use App\Models\GenStatus;
 use Carbon\Carbon;
 use App\User;
 use Auth;
@@ -134,6 +135,10 @@ class ProspectosController extends Controller
         }*/
 
         /**Consulta para obtener el estatus de los apartador***/
+
+        $estado_observacion=GenStatus::whereIn('id', [2,3,4])->pluck('nombre_status','id');
+        //dd($estado_observacion);
+
         $estatus=$request->estatus;
 
         if(!empty($estatus)){
@@ -212,7 +217,7 @@ class ProspectosController extends Controller
             
         }
         
-        return view('prospectos.indexprospectos', compact('cotizaciones', 'usuarios','proyectos','estatus'));  
+        return view('prospectos.indexprospectos', compact('cotizaciones', 'usuarios','proyectos','estatus','estado_observacion'));  
     }
 
 
