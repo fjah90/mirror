@@ -88,7 +88,7 @@
                           <template slot="dropdown">
                             <li>
                               <date-picker :locale="locale" :today-btn="false" :clear-btn="false"
-                              format="dd/MM/yyyy" :date-parser="dateParser" v-model="prospecto.fecha_cierre"/>
+                              format="dd/MM/yyyy" :date-parser="format_date" v-model="prospecto.fecha_cierre"/>
                             </li>
                           </template>
                         </dropdown>
@@ -276,7 +276,7 @@
                       <template slot="dropdown">
                         <li>
                           <date-picker :locale="locale" :today-btn="false" :clear-btn="false"
-                          format="dd/MM/yyyy" :date-parser="dateParser" v-model="prospecto.nueva_proxima_actividad.fecha"/>
+                          format="dd/MM/yyyy" :date-parser="format_date" v-model="prospecto.nueva_proxima_actividad.fecha"/>
                         </li>
                       </template>
                     </dropdown>
@@ -418,6 +418,12 @@ const app = new Vue({
     removerProducto(index){
       this.prospecto.proxima_actividad.productos_ofrecidos.splice(index, 1);
     },
+    
+     format_date(value){
+         if (value) {
+           return moment(String(value)).format('DD/MM/YYYY')
+          }
+      },
     actualizar(){
       this.cargando = true;
       axios.put('/prospectos/{{$prospecto->id}}', {

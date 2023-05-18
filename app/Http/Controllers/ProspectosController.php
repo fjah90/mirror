@@ -714,9 +714,13 @@ class ProspectosController extends Controller
             'tipo'    => '',
         ];
 
+        /******Validacion de la fecha de cierre****/
+
         if($prospecto->fecha_cierre = null){
             $prospecto->fecha_cierre = $prospecto->fecha_cierre_formated;
         }
+
+        /******Validacion de la fecha de cierre****/
         
         $productos = Producto::with('categoria')->get();
         if($prospecto->es_prospecto == 'si'){
