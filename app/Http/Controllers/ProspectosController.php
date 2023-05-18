@@ -714,7 +714,7 @@ class ProspectosController extends Controller
             'tipo'    => '',
         ];
 
-        if($prospecto->fecha_cierre != null){
+        if($prospecto->fecha_cierre = null){
             $prospecto->fecha_cierre = $prospecto->fecha_cierre_formated;
         }
         
