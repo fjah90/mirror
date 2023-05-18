@@ -170,15 +170,15 @@ class ProspectosController extends Controller
 
         if(Auth::user()->roles[0]->name =='Administrador' || Auth::user()->roles[0]->name =='Dirección'){
 
-          $proyectos = Prospecto::join('prospectos_actividades','prospectos.id','=','prospectos_actividades.prospecto_id')
-            ->join('prospectos_tipos_actividades', 'prospectos_actividades.tipo_id', '=', 'prospectos_tipos_actividades.id')
+          $proyectos = Prospecto::leftjoin('prospectos_actividades','prospectos.id','=','prospectos_actividades.prospecto_id')
+            ->leftjoin('prospectos_tipos_actividades', 'prospectos_actividades.tipo_id', '=', 'prospectos_tipos_actividades.id')
             ->leftjoin('users', 'prospectos.user_id', '=', 'users.id')
             ->leftjoin('clientes', 'prospectos.cliente_id', '=', 'clientes.id')
             ->leftjoin('vendedores', 'prospectos.vendedor_id', '=', 'vendedores.id')
             ->select('vendedores.nombre as vendedor','prospectos.*','users.name as usuario','clientes.nombre as cliente','prospectos_tipos_actividades.nombre as actividad','prospectos_actividades.fecha as fecha')
             ->where('prospectos_actividades.realizada', false)
             ->where('prospectos.es_prospecto', 'si')
-            ->orderBy('prospectos_actividades.fecha','desc')//
+           ->orderBy('prospectos_actividades.fecha','DESC')
             ->get(); 
 
             //$proyectos = Prospecto::with('usuario','vendedor')->where('es_prospecto','si')->get();
@@ -193,8 +193,8 @@ class ProspectosController extends Controller
 
          } else {
 
-             $proyectos = Prospecto::join('prospectos_actividades','prospectos.id','=','prospectos_actividades.prospecto_id')
-            ->join('prospectos_tipos_actividades', 'prospectos_actividades.tipo_id', '=', 'prospectos_tipos_actividades.id')
+             $proyectos = Prospecto::leftjoin('prospectos_actividades','prospectos.id','=','prospectos_actividades.prospecto_id')
+            ->leftjoin('prospectos_tipos_actividades', 'prospectos_actividades.tipo_id', '=', 'prospectos_tipos_actividades.id')
             ->leftjoin('users', 'prospectos.user_id', '=', 'users.id')
             ->leftjoin('clientes', 'prospectos.cliente_id', '=', 'clientes.id')
             ->leftjoin('vendedores', 'prospectos.vendedor_id', '=', 'vendedores.id')
@@ -202,7 +202,7 @@ class ProspectosController extends Controller
             ->where('prospectos_actividades.realizada', false)
             ->where('prospectos.es_prospecto', 'si')
             ->where('prospectos.user_id', '=', Auth()->user()->id)
-            ->orderBy('prospectos_actividades.fecha','desc')//
+            ->orderBy('prospectos_actividades.fecha','DESC')
             ->get(); 
 
             //$proyectos = Prospecto::with('usuario','vendedor')->where('es_prospecto','si')->get();
