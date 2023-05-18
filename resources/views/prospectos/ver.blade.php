@@ -66,9 +66,9 @@
                         <div class="row" >
                           <div class="col-md-3">
                               <div class="form-group">
-                                <label for="prospecto.fecha_cierre" class="control-label">Fecha aproximada de cierre</label>
+                                <label for="prospecto.proxima_actividad.fecha" class="control-label">Fecha aproximada de cierre</label>
                                 <br />
-                                <span class="form-control">{{$prospecto->fecha_cierre_formated}}</span>
+                                <span class="form-control">{{$prospecto->proxima_actividad->fecha_formated}}</span>
                               </div>
                             </div>
                             <div class="col-md-3">
@@ -1364,7 +1364,7 @@
                 this.embarcar.numero=orden.numero;
                 this.openEmbarcar=true;
               },
-              fronteraModal(orden){
+                fronteraModal(orden){
                 this.frontera.orden_id=orden.id;
                 this.frontera.numero=orden.numero;
                 this.openFrontera=true;
@@ -1390,6 +1390,12 @@
               },
               fijarDocumentoEntrega(documento){
                 this.entrega[documento] = this.$refs[documento].files[0];
+              },
+
+               format_date(value){
+                 if (value) {
+                   return moment(String(value)).format('DD/MM/YYYY')
+                  }
               },
               updateStatus(orden){
                 this.cargando = true;

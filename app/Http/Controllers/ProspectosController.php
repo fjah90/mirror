@@ -152,6 +152,7 @@ class ProspectosController extends Controller
             ->where('prospectos_actividades.realizada', false)
             ->where('prospectos.es_prospecto', 'si')
             ->where('prospectos.estatus', $estatus)
+            //->orderBy('prospectos_actividades.fecha','DESC')
             ->get();
 
               //$proyectos = Prospecto::with('usuario','vendedor')->where('es_prospecto','si')->get();
@@ -169,14 +170,15 @@ class ProspectosController extends Controller
 
         if(Auth::user()->roles[0]->name =='Administrador' || Auth::user()->roles[0]->name =='Dirección'){
 
-          $proyectos = Prospecto::leftjoin('prospectos_actividades','prospectos.id','=','prospectos_actividades.prospecto_id')
-            ->leftjoin('prospectos_tipos_actividades', 'prospectos_actividades.tipo_id', '=', 'prospectos_tipos_actividades.id')
+          $proyectos = Prospecto::join('prospectos_actividades','prospectos.id','=','prospectos_actividades.prospecto_id')
+            ->join('prospectos_tipos_actividades', 'prospectos_actividades.tipo_id', '=', 'prospectos_tipos_actividades.id')
             ->leftjoin('users', 'prospectos.user_id', '=', 'users.id')
             ->leftjoin('clientes', 'prospectos.cliente_id', '=', 'clientes.id')
             ->leftjoin('vendedores', 'prospectos.vendedor_id', '=', 'vendedores.id')
             ->select('vendedores.nombre as vendedor','prospectos.*','users.name as usuario','clientes.nombre as cliente','prospectos_tipos_actividades.nombre as actividad','prospectos_actividades.fecha as fecha')
             ->where('prospectos_actividades.realizada', false)
             ->where('prospectos.es_prospecto', 'si')
+            ->orderBy('prospectos_actividades.fecha','desc')//
             ->get(); 
 
             //$proyectos = Prospecto::with('usuario','vendedor')->where('es_prospecto','si')->get();
@@ -191,8 +193,8 @@ class ProspectosController extends Controller
 
          } else {
 
-             $proyectos = Prospecto::leftjoin('prospectos_actividades','prospectos.id','=','prospectos_actividades.prospecto_id')
-            ->leftjoin('prospectos_tipos_actividades', 'prospectos_actividades.tipo_id', '=', 'prospectos_tipos_actividades.id')
+             $proyectos = Prospecto::join('prospectos_actividades','prospectos.id','=','prospectos_actividades.prospecto_id')
+            ->join('prospectos_tipos_actividades', 'prospectos_actividades.tipo_id', '=', 'prospectos_tipos_actividades.id')
             ->leftjoin('users', 'prospectos.user_id', '=', 'users.id')
             ->leftjoin('clientes', 'prospectos.cliente_id', '=', 'clientes.id')
             ->leftjoin('vendedores', 'prospectos.vendedor_id', '=', 'vendedores.id')
@@ -200,6 +202,7 @@ class ProspectosController extends Controller
             ->where('prospectos_actividades.realizada', false)
             ->where('prospectos.es_prospecto', 'si')
             ->where('prospectos.user_id', '=', Auth()->user()->id)
+            ->orderBy('prospectos_actividades.fecha','desc')//
             ->get(); 
 
             //$proyectos = Prospecto::with('usuario','vendedor')->where('es_prospecto','si')->get();
@@ -638,6 +641,7 @@ class ProspectosController extends Controller
 
         $prospecto->load('vendedor','cotizaciones','cotizaciones.proyecto_aprobado','cotizaciones.entradas','cotizaciones.entradas.producto.proveedor','cotizaciones_aprobadas','cotizaciones_aprobadas.proyecto_aprobado','cotizaciones_aprobadas.entradas','cotizaciones_aprobadas.entradas.producto.proveedor','cliente', 'actividades.tipo', 'actividades.productos_ofrecidos');
 
+
       $ordenes = OrdenCompra::wherehas('proyecto.cotizacion', function($query) use ($prospecto) {
            $query->where('prospecto_id', $prospecto->id);
         })->with('entradas.producto')
@@ -718,11 +722,14 @@ class ProspectosController extends Controller
             'tipo_id' => 1,
             'tipo'    => '',
         ];
+        //dd($prospecto->fecha_cierre_formated);
 
+        /*******Validacion de la fecha de cierre***/
         if($prospecto->fecha_cierre = null){
             $prospecto->fecha_cierre = $prospecto->fecha_cierre_formated;
         }
-        
+         /*******Validacion de la fecha de cierre***/
+                
         $productos = Producto::with('categoria')->get();
         if($prospecto->es_prospecto == 'si'){
             $tipos  = ProspectoTipoActividad::whereIn('id', [1, 12, 13,14,3,15,5])->get();
