@@ -236,14 +236,13 @@ const app = new Vue({
         },
     },
     mounted(){
-      $.fn.dataTable.moment('DD/MM/YYYY');
+      /*$.fn.dataTable.moment('DD/MM/YYYY');
       this.tabla = $("#tabla").DataTable({
         "dom": 'f<"#fechas_container.pull-left">tlip',
         "order": [[ 4, "desc" ]]
-      });
+      });*/
       //$("#fechas_container").append($("#fecha_ini_control"));
       //$("#fechas_container").append($("#fecha_fin_control"));
-      
       var vue = this;
       
       $.fn.dataTableExt.afnFiltering.push(

@@ -152,8 +152,10 @@ class ProspectosController extends Controller
             ->where('prospectos_actividades.realizada', false)
             ->where('prospectos.es_prospecto', 'si')
             ->where('prospectos.estatus', $estatus)
-            //->orderBy('prospectos_actividades.fecha','DESC')
+            ->orderBy('prospectos_actividades.fecha','DESC')
             ->get();
+
+            $proyectosOrdenados = collect($proyectos)->sortByDesc('fecha');
 
               //$proyectos = Prospecto::with('usuario','vendedor')->where('es_prospecto','si')->get();
                 $cotizaciones = ProspectoCotizacion::leftjoin('prospectos', 'prospectos_cotizaciones.prospecto_id', '=', 'prospectos.id')
@@ -178,8 +180,10 @@ class ProspectosController extends Controller
             ->select('vendedores.nombre as vendedor','prospectos.*','users.name as usuario','clientes.nombre as cliente','prospectos_tipos_actividades.nombre as actividad','prospectos_actividades.fecha as fecha')
             ->where('prospectos_actividades.realizada', false)
             ->where('prospectos.es_prospecto', 'si')
-           ->orderBy('prospectos_actividades.fecha','DESC')
+            ->orderBy('prospectos_actividades.fecha','DESC')
             ->get(); 
+
+            $proyectosOrdenados = collect($proyectos)->sortByDesc('fecha');
 
             //$proyectos = Prospecto::with('usuario','vendedor')->where('es_prospecto','si')->get();
                 $cotizaciones = ProspectoCotizacion::leftjoin('prospectos', 'prospectos_cotizaciones.prospecto_id', '=', 'prospectos.id')
@@ -205,6 +209,8 @@ class ProspectosController extends Controller
             ->orderBy('prospectos_actividades.fecha','DESC')
             ->get(); 
 
+            $proyectosOrdenados = collect($proyectos)->sortByDesc('fecha');
+
             //$proyectos = Prospecto::with('usuario','vendedor')->where('es_prospecto','si')->get();
                 $cotizaciones = ProspectoCotizacion::leftjoin('prospectos', 'prospectos_cotizaciones.prospecto_id', '=', 'prospectos.id')
                 ->leftjoin('clientes', 'prospectos.cliente_id', '=', 'clientes.id')
@@ -220,7 +226,7 @@ class ProspectosController extends Controller
             
         }
         
-        return view('prospectos.indexprospectos', compact('cotizaciones', 'usuarios','proyectos','estatus','estado_observacion'));  
+        return view('prospectos.indexprospectos', compact('cotizaciones', 'usuarios','proyectos','estatus','estado_observacion','proyectosOrdenados'));  
     }
 
 
@@ -710,8 +716,9 @@ class ProspectosController extends Controller
     {
         $prospecto->load([
             'cliente', 'actividades.tipo', 'actividades.productos_ofrecidos',
-            'proxima_actividad.tipo', 'proxima_actividad.productos_ofrecidos',
-        ]);
+            'proxima_actividad.tipo','proxima_actividad.productos_ofrecidos',]);
+
+        //dd($prospecto);
 
         if (is_null($prospecto->proxima_actividad)) {
             $prospecto->proxima_actividad = false;
@@ -722,7 +729,6 @@ class ProspectosController extends Controller
             'tipo_id' => 1,
             'tipo'    => '',
         ];
-        //dd($prospecto->fecha_cierre_formated);
 
         /*******Validacion de la fecha de cierre***/
         if($prospecto->fecha_cierre = null){
