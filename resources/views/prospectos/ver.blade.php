@@ -98,8 +98,12 @@
         </div>
 
         <div class="row">
-          <div class="col-sm-12">
-            <h4>Actividades</h4>
+          <div class="col-lg-12">
+            <div class="panel">
+                <div class="panel-heading" style="background-color:#12160F; color:#B68911;">
+                    <h3 class="panel-title">Actividades Realizadas</h3>
+                </div>
+            </div>
           </div>
         </div>
         <div class="row">
@@ -140,9 +144,38 @@
             </div>
           </div>
         </div>
-        
-
         <div class="row">
+            <div class="col-sm-12">
+                <h4>Próxima Actividad</h4><br>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+               <div class="form-group">
+                <label class="control-label">Fecha</label>
+                <span class="form-control">{{$prospecto->proxima_actividad->fecha_formated}}</span>
+               </div> 
+            </div>
+             <div class="col-md-6">
+               <div class="form-group">
+                <label class="control-label">Tipo</label>
+                <span class="form-control">{{$prospecto->proxima_actividad->tipo->nombre}}</span>
+               </div> 
+            </div>
+        </div>
+        <!--div class="row">
+           <div class="col-md-10">
+               <label class="control-label">Productos Ofrecidos</label>
+                    <span class="form-control"></span><br/>
+            </div> 
+        </div>
+        <div class="row">
+           <div class="col-lg-12">
+               <label>Descripción Actividad</label>
+               <span class="form-control"></span>
+           </div> 
+        </div-->
+        {{--  <div class="row">
             <div class="col-lg-12">
                 <div class="panel">
                     <div class="panel-heading" style="background-color:#12160F; color:#B68911;">
@@ -258,9 +291,9 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div>--}}
 
-        <div class="row">
+        {{--  <div class="row">
             <div class="col-lg-12">
                 <div class="panel">
                     <div class="panel-heading" style="background-color:#12160F; color:#B68911;">
@@ -376,9 +409,9 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div>--}}
 
-        <div class="row">
+       {{-- <div class="row">
             <div class="col-lg-12">
               <div class="panel">
                 <div class="panel-heading" style="background-color:#12160F; color:#B68911;">
@@ -479,9 +512,9 @@
 
               </div>
             </div>
-        </div>
+        </div>--}}
 
-        <div class="row">
+        {{-- <div class="row">
             <div class="col-lg-12">
               <div class="panel">
                 <div class="panel-heading" style="background-color:#12160F; color:#B68911;">
@@ -548,9 +581,9 @@
                 </div>
               </div>
             </div>
-        </div>
+        </div>--}}
 
-        <div class="row">
+        {{-- <div class="row">
             <div class="col-lg-12">
               <div class="panel">
                 <div class="panel-heading" style="background-color:#12160F; color:#B68911;">
@@ -584,15 +617,15 @@
                           <td>@{{orden.orden_compra.proveedor_empresa}}</td>
                           <td>@{{orden.status}}</td>
                           <td class="text-right">
-                            {{-- <a class="btn btn-xs btn-info" title="Ver"
+                            <!--a class="btn btn-xs btn-info" title="Ver"
                               :href="'/proyectos-aprobados/'+orden.proyecto_id+'/ordenes-compra/'+orden.id" target="_blank">
                               <i class="far fa-eye"></i>
-                            </a> --}}
+                            </a-->
                             <button class="btn btn-xs btn-unique"
                               title="Historial" @click="ordenHistorial=orden; openHistorial=true;">
                               <i class="fas fa-history"></i>
                             </button>
-                            {{-- Descarga de archivos --}}
+                            
                             <a v-if="orden.orden_compra.archivo" class="btn btn-xs btn-warning"
                               title="PDF" :href="orden.orden_compra.archivo"
                               :download="'ROBINSON-PO'+orden.numero+orden.orden_compra.proyecto_nombre+'.pdf'">
@@ -642,7 +675,6 @@
                               :download="'Carta de Entrega orden '+orden.numero">
                               <i class="fas fa-people-carry"></i>
                             </a>
-                            {{-- Botones de acciones --}}
                             <button v-if="orden.status=='En fabricación'"
                               class="btn btn-xs btn-brown" title="Embarcar"
                               @click="embarcarModal(orden)">
@@ -689,7 +721,7 @@
                 </div>
               </div>
             </div>
-          </div>
+          </div>--}}
 
           <div class="row">
               <div class="col-md-12 text-right">
