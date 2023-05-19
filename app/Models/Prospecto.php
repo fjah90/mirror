@@ -47,7 +47,7 @@ class Prospecto extends Model
     }
     
     public function actividades(){
-      return $this->hasMany('App\Models\ProspectoActividad', 'prospecto_id', 'id');
+      return $this->hasMany('App\Models\ProspectoActividad', 'prospecto_id', 'id')->orderBy('fecha','asc');
     }
 
     public function cotizaciones(){
