@@ -127,12 +127,6 @@ class ProspectosController extends Controller
             $usuarios = [];
         }
 
-        /*if(Auth::user()->roles[0]->name =='Administrador' || Auth::user()->roles[0]->name =='Dirección'){
-            $usuarios = User::all();
-        } else {
-            $usuarios = [];
-        }*/
-
         /**Consulta para obtener el estatus de los apartador***/
         $estatus=$request->estatus;
 
@@ -723,6 +717,7 @@ class ProspectosController extends Controller
             'tipo_id' => 1,
             'tipo'    => '',
         ];
+
 
         /******Validacion de la fecha de cierre****/
 
