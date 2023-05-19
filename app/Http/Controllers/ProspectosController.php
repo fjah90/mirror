@@ -141,10 +141,7 @@ class ProspectosController extends Controller
             ->where('prospectos_actividades.realizada', false)
             ->where('prospectos.es_prospecto', 'si')
             ->where('prospectos.estatus', $estatus)
-            ->orderBy('prospectos_actividades.fecha','DESC')
             ->get();
-
-            $proyectosOrdenados = collect($proyectos)->sortByDesc('fecha');
 
               //$proyectos = Prospecto::with('usuario','vendedor')->where('es_prospecto','si')->get();
                 $cotizaciones = ProspectoCotizacion::leftjoin('prospectos', 'prospectos_cotizaciones.prospecto_id', '=', 'prospectos.id')
@@ -169,7 +166,6 @@ class ProspectosController extends Controller
             ->select('vendedores.nombre as vendedor','prospectos.*','users.name as usuario','clientes.nombre as cliente','prospectos_tipos_actividades.nombre as actividad','prospectos_actividades.fecha as fecha')
             ->where('prospectos_actividades.realizada', false)
             ->where('prospectos.es_prospecto', 'si')
-            ->orderBy('prospectos_actividades.fecha','DESC')
             ->get(); 
 
              $proyectosOrdenados = collect($proyectos)->sortByDesc('fecha');
@@ -195,7 +191,6 @@ class ProspectosController extends Controller
             ->where('prospectos_actividades.realizada', false)
             ->where('prospectos.es_prospecto', 'si')
             ->where('prospectos.user_id', '=', Auth()->user()->id)
-            ->orderBy('prospectos_actividades.fecha','DESC')
             ->get(); 
 
             $proyectosOrdenados = collect($proyectos)->sortByDesc('fecha');
@@ -215,7 +210,7 @@ class ProspectosController extends Controller
             
         }
         
-        return view('prospectos.indexprospectos', compact('cotizaciones', 'usuarios','proyectos','estatus','proyectosOrdenados'));  
+        return view('prospectos.indexprospectos', compact('cotizaciones', 'usuarios','proyectos','estatus'));  
     }
 
 
@@ -631,7 +626,7 @@ class ProspectosController extends Controller
     public function show(Prospecto $prospecto)
     {
 
-        $proyectos = Prospecto::all();
+        $proyectos = Prospecto::all();//Trae todo los proyectos
         //$proyecto->load('cotizacion','ordenes','cliente','cotizacion.prospecto');
 
         $prospecto->load('vendedor','cotizaciones','cotizaciones.proyecto_aprobado','cotizaciones.entradas','cotizaciones.entradas.producto.proveedor','cotizaciones_aprobadas','cotizaciones_aprobadas.proyecto_aprobado','cotizaciones_aprobadas.entradas','cotizaciones_aprobadas.entradas.producto.proveedor','cliente', 'actividades.tipo', 'actividades.productos_ofrecidos');
@@ -703,10 +698,12 @@ class ProspectosController extends Controller
      */
     public function edit(Prospecto $prospecto)
     {
+
         $prospecto->load([
             'cliente', 'actividades.tipo', 'actividades.productos_ofrecidos',
-            'proxima_actividad.tipo', 'proxima_actividad.productos_ofrecidos',
-        ]);
+            'proxima_actividad.tipo', 'proxima_actividad.productos_ofrecidos']);
+
+        //dd($prospecto);
 
         if (is_null($prospecto->proxima_actividad)) {
             $prospecto->proxima_actividad = false;
