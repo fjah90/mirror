@@ -121,7 +121,7 @@
                   <td id="proyeccion_venta">@{{prospecto.proyeccion_venta|formatoMoneda}}</td>
                   <td>@{{prospecto.factibilidad}}</td>
                   <td>@{{prospecto.actividad}}</td>
-                  <td>@{{prospecto.fecha_cierre_formated}}</td>
+                  <td>@{{format_date(prospecto.fecha)}}</td>
                   <td>@{{prospecto.estatus}}</td>
                   <td class="text-right">
                   @can('Prospectos ver')
@@ -216,7 +216,7 @@ const app = new Vue({
       $.fn.dataTable.moment('DD/MM/YYYY');
       this.tabla = $("#tabla").DataTable({
         "dom": 'f<"#fechas_container.pull-left">tlip',
-        "order": [[ 4, "desc" ]]
+        //"order": [[ 4, "desc" ]]
       });
       //$("#fechas_container").append($("#fecha_ini_control"));
       //$("#fechas_container").append($("#fecha_fin_control"));
@@ -252,6 +252,12 @@ const app = new Vue({
     methods: {
       dateParser(value){
   			return moment(value, 'DD/MM/YYYY').toDate().getTime();
+      },
+
+      format_date(value){
+         if (value) {
+           return moment(String(value)).format('DD/MM/YYYY')
+          }
       },
       cargar(){
         axios.post('/prospectos/listadoprospectos', {id: this.usuarioCargado , anio:this.anio})

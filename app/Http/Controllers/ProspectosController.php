@@ -141,7 +141,10 @@ class ProspectosController extends Controller
             ->where('prospectos_actividades.realizada', false)
             ->where('prospectos.es_prospecto', 'si')
             ->where('prospectos.estatus', $estatus)
+            ->orderBy('prospectos_actividades.fecha','DESC')
             ->get();
+
+            $proyectosOrdenados = collect($proyectos)->sortByDesc('fecha');
 
               //$proyectos = Prospecto::with('usuario','vendedor')->where('es_prospecto','si')->get();
                 $cotizaciones = ProspectoCotizacion::leftjoin('prospectos', 'prospectos_cotizaciones.prospecto_id', '=', 'prospectos.id')
@@ -166,7 +169,10 @@ class ProspectosController extends Controller
             ->select('vendedores.nombre as vendedor','prospectos.*','users.name as usuario','clientes.nombre as cliente','prospectos_tipos_actividades.nombre as actividad','prospectos_actividades.fecha as fecha')
             ->where('prospectos_actividades.realizada', false)
             ->where('prospectos.es_prospecto', 'si')
+            ->orderBy('prospectos_actividades.fecha','DESC')
             ->get(); 
+
+             $proyectosOrdenados = collect($proyectos)->sortByDesc('fecha');
 
             //$proyectos = Prospecto::with('usuario','vendedor')->where('es_prospecto','si')->get();
                 $cotizaciones = ProspectoCotizacion::leftjoin('prospectos', 'prospectos_cotizaciones.prospecto_id', '=', 'prospectos.id')
@@ -189,7 +195,10 @@ class ProspectosController extends Controller
             ->where('prospectos_actividades.realizada', false)
             ->where('prospectos.es_prospecto', 'si')
             ->where('prospectos.user_id', '=', Auth()->user()->id)
+            ->orderBy('prospectos_actividades.fecha','DESC')
             ->get(); 
+
+            $proyectosOrdenados = collect($proyectos)->sortByDesc('fecha');
 
             //$proyectos = Prospecto::with('usuario','vendedor')->where('es_prospecto','si')->get();
                 $cotizaciones = ProspectoCotizacion::leftjoin('prospectos', 'prospectos_cotizaciones.prospecto_id', '=', 'prospectos.id')
@@ -206,7 +215,7 @@ class ProspectosController extends Controller
             
         }
         
-        return view('prospectos.indexprospectos', compact('cotizaciones', 'usuarios','proyectos','estatus'));  
+        return view('prospectos.indexprospectos', compact('cotizaciones', 'usuarios','proyectos','estatus','proyectosOrdenados'));  
     }
 
 
@@ -626,6 +635,7 @@ class ProspectosController extends Controller
         //$proyecto->load('cotizacion','ordenes','cliente','cotizacion.prospecto');
 
         $prospecto->load('vendedor','cotizaciones','cotizaciones.proyecto_aprobado','cotizaciones.entradas','cotizaciones.entradas.producto.proveedor','cotizaciones_aprobadas','cotizaciones_aprobadas.proyecto_aprobado','cotizaciones_aprobadas.entradas','cotizaciones_aprobadas.entradas.producto.proveedor','cliente', 'actividades.tipo', 'actividades.productos_ofrecidos');
+        
 
       $ordenes = OrdenCompra::wherehas('proyecto.cotizacion', function($query) use ($prospecto) {
            $query->where('prospecto_id', $prospecto->id);
@@ -708,10 +718,14 @@ class ProspectosController extends Controller
             'tipo'    => '',
         ];
 
+
+        /******Validacion de la fecha de cierre****/
+
         if($prospecto->fecha_cierre = null){
             $prospecto->fecha_cierre = $prospecto->fecha_cierre_formated;
-        }    
+        }
 
+        /******Validacion de la fecha de cierre****/
         
         $productos = Producto::with('categoria')->get();
         if($prospecto->es_prospecto == 'si'){
