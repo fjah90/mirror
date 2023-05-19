@@ -119,7 +119,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  @foreach($prospecto->actividades as $actividad)
+                  @foreach($prospecto->actividades()->orderBy('fecha','desc')->get() as $actividad)
                   <tr>
                     <td>{{$actividad->fecha_formated}}</td>
                     <td>{{$actividad->tipo->nombre}}</td>
