@@ -168,8 +168,6 @@ class ProspectosController extends Controller
             ->where('prospectos.es_prospecto', 'si')
             ->get(); 
 
-             $proyectosOrdenados = collect($proyectos)->sortByDesc('fecha');
-
             //$proyectos = Prospecto::with('usuario','vendedor')->where('es_prospecto','si')->get();
                 $cotizaciones = ProspectoCotizacion::leftjoin('prospectos', 'prospectos_cotizaciones.prospecto_id', '=', 'prospectos.id')
                 ->leftjoin('clientes', 'prospectos.cliente_id', '=', 'clientes.id')
@@ -192,8 +190,6 @@ class ProspectosController extends Controller
             ->where('prospectos.es_prospecto', 'si')
             ->where('prospectos.user_id', '=', Auth()->user()->id)
             ->get(); 
-
-            $proyectosOrdenados = collect($proyectos)->sortByDesc('fecha');
 
             //$proyectos = Prospecto::with('usuario','vendedor')->where('es_prospecto','si')->get();
                 $cotizaciones = ProspectoCotizacion::leftjoin('prospectos', 'prospectos_cotizaciones.prospecto_id', '=', 'prospectos.id')
