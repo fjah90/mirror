@@ -128,12 +128,6 @@ class ProspectosController extends Controller
             $usuarios = [];
         }
 
-        /*if(Auth::user()->roles[0]->name =='Administrador' || Auth::user()->roles[0]->name =='Dirección'){
-            $usuarios = User::all();
-        } else {
-            $usuarios = [];
-        }*/
-
         /**Consulta para obtener el estatus de los apartador***/
 
         $estado_observacion=GenStatus::whereIn('id', [2,3,4])->pluck('nombre_status','id');
@@ -642,10 +636,11 @@ class ProspectosController extends Controller
     public function show(Prospecto $prospecto)
     {
 
-        $proyectos = Prospecto::all();
+        $proyectos = Prospecto::all();//Trae todo los proyectos
         //$proyecto->load('cotizacion','ordenes','cliente','cotizacion.prospecto');
 
         $prospecto->load('vendedor','cotizaciones','cotizaciones.proyecto_aprobado','cotizaciones.entradas','cotizaciones.entradas.producto.proveedor','cotizaciones_aprobadas','cotizaciones_aprobadas.proyecto_aprobado','cotizaciones_aprobadas.entradas','cotizaciones_aprobadas.entradas.producto.proveedor','cliente', 'actividades.tipo', 'actividades.productos_ofrecidos');
+        
 
 
       $ordenes = OrdenCompra::wherehas('proyecto.cotizacion', function($query) use ($prospecto) {
@@ -714,9 +709,11 @@ class ProspectosController extends Controller
      */
     public function edit(Prospecto $prospecto)
     {
+
         $prospecto->load([
             'cliente', 'actividades.tipo', 'actividades.productos_ofrecidos',
-            'proxima_actividad.tipo','proxima_actividad.productos_ofrecidos',]);
+
+            'proxima_actividad.tipo', 'proxima_actividad.productos_ofrecidos']);
 
         //dd($prospecto);
 
@@ -736,6 +733,7 @@ class ProspectosController extends Controller
         }
          /*******Validacion de la fecha de cierre***/
                 
+
         $productos = Producto::with('categoria')->get();
         if($prospecto->es_prospecto == 'si'){
             $tipos  = ProspectoTipoActividad::whereIn('id', [1, 12, 13,14,3,15,5])->get();
