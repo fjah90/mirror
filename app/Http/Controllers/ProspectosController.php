@@ -124,6 +124,7 @@ class ProspectosController extends Controller
 
        if (auth()->user()->tipo == 'Administrador' || auth()->user()->tipo == 'Dirección') {
             $usuarios = User::all();
+            //$usuarios = User::where('status','ACTIVO')->pluck('name','id');
         } else {
             $usuarios = [];
         }
@@ -146,7 +147,6 @@ class ProspectosController extends Controller
             ->where('prospectos_actividades.realizada', false)
             ->where('prospectos.es_prospecto', 'si')
             ->where('prospectos.estatus', $estatus)
-            ->orderBy('prospectos_actividades.fecha','DESC')
             ->get();
 
             $proyectosOrdenados = collect($proyectos)->sortByDesc('fecha');
@@ -174,7 +174,6 @@ class ProspectosController extends Controller
             ->select('vendedores.nombre as vendedor','prospectos.*','users.name as usuario','clientes.nombre as cliente','prospectos_tipos_actividades.nombre as actividad','prospectos_actividades.fecha as fecha')
             ->where('prospectos_actividades.realizada', false)
             ->where('prospectos.es_prospecto', 'si')
-            ->orderBy('prospectos_actividades.fecha','DESC')
             ->get(); 
 
             $proyectosOrdenados = collect($proyectos)->sortByDesc('fecha');
@@ -200,7 +199,6 @@ class ProspectosController extends Controller
             ->where('prospectos_actividades.realizada', false)
             ->where('prospectos.es_prospecto', 'si')
             ->where('prospectos.user_id', '=', Auth()->user()->id)
-            ->orderBy('prospectos_actividades.fecha','DESC')
             ->get(); 
 
             $proyectosOrdenados = collect($proyectos)->sortByDesc('fecha');

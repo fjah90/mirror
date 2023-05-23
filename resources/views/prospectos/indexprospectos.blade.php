@@ -39,7 +39,7 @@
             <div class="p-10" style="display:inline-block">
               Usuario    
               @role('Administrador|Dirección')
-                <select class="form-control" @change="cargar()" v-model="usuarioCargado" style="width:auto;display:inline-block;">
+                <select class="form-control dataTables_filter" @change="cargar()" v-model="usuarioCargado" style="width:auto;display:inline-block;">
                   <option value="Todos">Todos</option>
                   @foreach($usuarios as $usuario)
                   <option value="{{$usuario->id}}">{{$usuario->name}}</option>
@@ -157,7 +157,7 @@
                 </div>
                 <div class="col-md-12" >
                   <div class="form-group" style="border:1px solid; border-radius:5px;">
-                    {!! Form::textarea('editor1',null,['class'=>'ckeditor form-control','id'=>'editor1','placeholder'=>'Escriba un comentario...'])!!}
+                    {!! Form::textarea('comentarios',null,['class'=>'ckeditor form-control','id'=>'comentarios','placeholder'=>'Escriba un comentario...'])!!}
                   </div>
                 </div>
               </div>
@@ -359,6 +359,7 @@ const app = new Vue({
         else{ 
           window.location.href = "/prospectos/"+this.proyecto_id+"/cotizar";
         }
+
       }
     }
 });
