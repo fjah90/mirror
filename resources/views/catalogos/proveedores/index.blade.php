@@ -22,57 +22,7 @@
 <!-- Main content -->
 <section class="content" id="content">
   <tabs v-model="activeTab">
-    <tab title="Nacionales">
-      <div class="row">
-        <div class="col-lg-12">
-          <div class="panel">
-            <div class="panel-heading" style="background-color:#12160F; color:#B68911;">
-              <h3 class="panel-title text-right">
-                <span class="pull-left p-10">Lista de Proveedores Nacionales</span>
-                <a href="{{route('proveedores.createNacional')}}" class="btn btn-warning" style="color:#000;">
-                  <i class="fas fa-plus"></i> Proveedor
-                </a>
-              </h3>
-            </div>
-            <div class="panel-body">
-              <div class="table-responsive">
-                <table id="tablaNacionales" class="table table-bordred" style="width:100%;"
-                  data-page-length="100">
-                  <thead>
-                    <tr style="background-color:#12160F">
-                      <th class="color_text">#</th>
-                      <th class="color_text">Tipo</th>
-                      <th class="color_text">Empresa</th>
-                      <th class="color_text">RFC</th>
-                      <th style="min-width:70px;"></th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr v-for="(proveedor, index) in proveedoresNacionales">
-                      <td>@{{index+1}}</td>
-                      <td>@{{proveedor.tipo.nombre}}</td>
-                      <td>@{{proveedor.empresa}}</td>
-                      <td>@{{proveedor.identidad_fiscal}}</td>
-                      <td class="text-right">
-                        <a class="btn btn-xs btn-info" title="Ver" :href="'/proveedores/'+proveedor.id">
-                          <i class="far fa-eye"></i>
-                        </a>
-                        <a class="btn btn-xs btn-success" title="Editar" :href="'/proveedores/'+proveedor.id+'/editar'">
-                          <i class="fas fa-pencil-alt"></i>
-                        </a>
-                        <button class="btn btn-xs btn-danger" title="Borrar" @click="borrar('Nacionales',proveedor, index)">
-                          <i class="fas fa-times"></i>
-                        </button>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </tab>
+    
 
     <tab title="Extranjeros">
       <div class="row">
@@ -116,6 +66,57 @@
                         </a>
                         <button class="btn btn-xs btn-danger" title="Borrar"
                           @click="borrar('Extranjeros', proveedor, index)">
+                          <i class="fas fa-times"></i>
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </tab>
+    <tab title="Nacionales">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="panel">
+            <div class="panel-heading" style="background-color:#12160F; color:#B68911;">
+              <h3 class="panel-title text-right">
+                <span class="pull-left p-10">Lista de Proveedores Nacionales</span>
+                <a href="{{route('proveedores.createNacional')}}" class="btn btn-warning" style="color:#000;">
+                  <i class="fas fa-plus"></i> Proveedor
+                </a>
+              </h3>
+            </div>
+            <div class="panel-body">
+              <div class="table-responsive">
+                <table id="tablaNacionales" class="table table-bordred" style="width:100%;"
+                  data-page-length="100">
+                  <thead>
+                    <tr style="background-color:#12160F">
+                      <th class="color_text">#</th>
+                      <th class="color_text">Tipo</th>
+                      <th class="color_text">Empresa</th>
+                      <th class="color_text">RFC</th>
+                      <th style="min-width:70px;"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr v-for="(proveedor, index) in proveedoresNacionales">
+                      <td>@{{index+1}}</td>
+                      <td>@{{proveedor.tipo.nombre}}</td>
+                      <td>@{{proveedor.empresa}}</td>
+                      <td>@{{proveedor.identidad_fiscal}}</td>
+                      <td class="text-right">
+                        <a class="btn btn-xs btn-info" title="Ver" :href="'/proveedores/'+proveedor.id">
+                          <i class="far fa-eye"></i>
+                        </a>
+                        <a class="btn btn-xs btn-success" title="Editar" :href="'/proveedores/'+proveedor.id+'/editar'">
+                          <i class="fas fa-pencil-alt"></i>
+                        </a>
+                        <button class="btn btn-xs btn-danger" title="Borrar" @click="borrar('Nacionales',proveedor, index)">
                           <i class="fas fa-times"></i>
                         </button>
                       </td>

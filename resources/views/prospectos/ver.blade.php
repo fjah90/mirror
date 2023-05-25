@@ -68,7 +68,7 @@
                               <div class="form-group">
                                 <label for="prospecto.proxima_actividad.fecha" class="control-label">Fecha aproximada de cierre</label>
                                 <br />
-                                <span class="form-control">{{$prospecto->proxima_actividad->fecha_formated}}</span>
+                                <span class="form-control">{{$prospecto->fecha_cierre_formated}}</span>
                               </div>
                             </div>
                             <div class="col-md-3">
