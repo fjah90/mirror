@@ -256,7 +256,7 @@
                 <div class="row">
                   <div class="col-sm-12">
                     <label class="control-label">Descripción Actividad</label>
-                    <textarea name="descripcion" rows="5" cols="80" class="form-control" v-model="proxima_actividad.descripcion"></textarea>
+                    <textarea name="descripcion" rows="5" cols="80" class="form-control" v-model="ultima_actividad.descripcion"></textarea>
                   </div>
                 </div>
               </div>
@@ -316,7 +316,7 @@
                  <div class="row">
                   <div class="col-sm-12">
                     <label class="control-label">Descripción Actividad</label>
-                    <textarea name="descripcion" rows="5" cols="80" class="form-control" v-model="ultima_actividad.descripcion"></textarea>
+                    <textarea name="descripcion" rows="5" cols="80" class="form-control" v-model="proxima_actividad.descripcion"></textarea>
                   </div>
                 </div>
                 <div class="row" style="margin-top:25px;">
