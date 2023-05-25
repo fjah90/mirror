@@ -154,7 +154,7 @@
 
           </li>
         -->
-
+    <!--
           <hr class="divider-menu">
           <li {!! (Request::is('prospectos*') ? 'class="active"' : '') !!}>
             <a href="{{ URL::to('prospectos') }}">
@@ -165,7 +165,7 @@
 
 
             <hr class="divider-menu">
-
+  -->
             
 
           <!-- ordenes compra-->
@@ -181,6 +181,7 @@
        
         
         @hasanyrole('Administrador|Usuario')
+        <!--
           <li {!! (Request::is('ordenes-proceso*') ? 'class="active"' : '') !!}  {!! (Request::is('proyectos-aprobados*') ? 'class="active"' : '') !!}><a class="title"><i class="fa fa-cart-arrow-down" style="color:#B68911; font-size: 20px;"></i> <b style="color:#9F9F9F;">Ordenes Compra </b><span class="fa fa-chevron-down" style="color:#9F9F9F;"></span></a>
            <ul class="nav child_menu">  
               <li  {!! (Request::is('proyectos-aprobados*') ? 'class="active"' : '') !!} >
@@ -198,11 +199,13 @@
             </ul>
           </li>
           <hr class="divider-menu">
+  -->
           @endhasanyrole
         
           
         
           @hasanyrole('Administrador|Usuario') 
+          <!--
           <li {!! (Request::is('cuentas-cobrar*') ? 'class="active"' : '') !!} {!! (Request::is('cuentas-pagar*') ? 'class="active"' : '') !!}><a class="title"><i class="fa fa-calculator" style="color:#B68911; font-size:20px;"></i>  <b style="color:#9F9F9F;">Contabilidad</b><span class="fa fa-chevron-down" style="color:#9F9F9F;"></span></a>
            <ul class="nav child_menu">  
               <li {!! (Request::is('cuentas-cobrar*') ? 'class="active"' : '') !!}>
@@ -220,6 +223,7 @@
             </ul> 
           </li>
           <hr class="divider-menu">
+  -->
           
          
           @endhasanyrole
