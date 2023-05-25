@@ -65,7 +65,7 @@ class Prospecto extends Model
 
     public function proxima_actividad(){
       return $this->hasOne('App\Models\ProspectoActividad', 'prospecto_id', 'id')
-        ->where('realizada', 0)->orderBy('id', 'desc');
+        ->where('realizada', 0)->orderBy('id', 'asc');
     }
 
     public function user()
