@@ -77,6 +77,9 @@
               </div>
             </div>
             <div class="p-10">
+              <button style="background-color:#FFCE56; color:#12160F;" class="btn btn-sm btn-primary" @click="modalTareas=true">
+                  <i class="fas fa-star"></i> Tareas
+              </button>
             </div>
             <div class="p-10" style="display:inline-block">
               Año  
@@ -184,7 +187,79 @@
             </div>
         
     </modal>
+
+
+    <!-- Aceptar Modal -->
+    <modal v-model="modalTareas" :title="'Tareas'" :footer="false">
+
+      <table id="tablatareas" class="table table-bordred" style="width:100%;"
+              data-page-length="100">
+              <thead>
+                <tr style="background-color:#12160F">
+                  <th class="hide">#</th>
+                  <th class="color_text">Tarea</th>
+                  <th class="color_text">Status</th>
+                  <th class="color_text">Diseñador</th>
+                  <th class="color_text">Fecha de creación</th>
+                  <th class="color_text">Fecha de edición</th>
+                  <th style="min-width:105px;"></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="(t, index) in tareas">
+                 <td class="hide">@{{index + 1}}</td>
+                 <td>@{{t.tarea}}</td>
+                 <td>@{{t.status}}</td>
+                 <td>@{{t.vendedor.nombre}}</td>
+                 <td>@{{t.created_at}}</td>
+                 <td>@{{t.updated_at}}</td>
+                 <td><button class="btn btn-xs btn-success" title="Editar tarea" @click="editartarea(t, index)" :disabled="editando">
+                      <i class="fas fa-pen"></i>
+                    </button></td>
+                </tr>
+              </tbody>
+            </table>
+
+                  <div class="form-group">
+                      <label class="control-label text-danger">Tarea</label>
+                      <textarea class="form-control" name="tarea" rows="3" cols="80"
+                                v-model="tarea.tarea" requered></textarea>
+                  </div>
+           
+                <div class="form-group">
+                  <label class="control-label">Diseñador</label>
+                  <input type="hidden" name="tarea_id" class="form-control" v-model="tarea.id" />
+                    <select class="form-control" v-model="tarea.vendedor_id" style="width: 300px;" readonly>
+                    @foreach($vendedores as $vendedor)
+                    <option value="{{$vendedor->id}}">{{$vendedor->nombre}}</option>
+                    @endforeach
+                  </select>
+                    <label class="control-label">Status</label>
+                    <select name="proyecto_id" v-model="tarea.status"
+                                class="form-control" required id="proyecto-select" style="width: 300px;">
+                      
+                          <option value="Pendiente">Pendiente</option>
+                          <option value="En proceso">En proceso</option>
+                          <option value="Terminada">Terminada</option>
+                    </select>         
+                </div>
+            
+              
+              <div class="form-group text-right">
+                  <button type="submit" class="btn btn-default" :disabled="cargando" @click='guardartarea()'>Guardar</button>
+                  <button type="button" class="btn btn-default"
+                          @click="proyecto_id=0; modalTareas=false;">
+                      Cancelar
+                  </button>
+              </div>
+          
+        
+    </modal>
 </section>
+
+
+
+
 <!-- /.content -->
 @stop
 
@@ -198,14 +273,25 @@ const app = new Vue({
       cotizaciones: {!! json_encode($cotizaciones) !!},
       prospectos: {!! json_encode($proyectos) !!},
       usuarioCargado: {{auth()->user()->id}},
+      vendedores:{!! json_encode($vendedores) !!},
       anio:'2023-12-31',
       tabla: {},
+      tabla2:{},
+      tareas: {!! json_encode($tareas) !!},
+      tarea:{
+        id:'',
+        tarea: '',
+        status:'',
+        vendedor_id: ''
+      },
+      modalTareas: false,
       locale: localeES,
       modalNuecaCotizacion: false,
       fecha_ini: '',
       fecha_fin: '',
       proyecto_id: '',
-      cargando: false
+      cargando: false,
+      editando : false
     },
     filters: {
         formatoMoneda(numero) {
@@ -216,6 +302,9 @@ const app = new Vue({
       $.fn.dataTable.moment('DD/MM/YYYY');
       this.tabla = $("#tabla").DataTable({
         "dom": 'f<"#fechas_container.pull-left">tlip',
+        //"order": [[ 4, "desc" ]]
+      });
+      this.tabla = $("#tablatareas").DataTable({
         //"order": [[ 4, "desc" ]]
       });
       //$("#fechas_container").append($("#fecha_ini_control"));
@@ -259,7 +348,68 @@ const app = new Vue({
            return moment(String(value)).format('DD/MM/YYYY')
           }
       },
+      editartarea(tarea , index){
+        this.editando = true;
+        this.tarea = tarea;
+      },
+     guardartarea(){
+        var formData = objectToFormData(this.tarea, {indices: true});
+        this.cargando = true;
+        if(this.tarea.id == ''){
+          axios.post('/tareas', formData, {
+              headers: {'Content-Type': 'multipart/form-data'}
+          })
+          .then(({data}) => {
+            this.tarea.tarea = '';
+            this.tarea.id = '';
+            this.tareas.push(data.tarea);    
+              swal({
+                  title: "Exito",
+                  text: "La tarea ha sido guardada",
+                  type: "success"
+              });
+              this.cargando = false;
+          })
+          .catch(({response}) => {
+              console.error(response);
+              this.cargando = false;
+              swal({
+                  title: "Error",
+                  text: response.data.message || "Ocurrio un error inesperado, intente mas tarde",
+                  type: "error"
+              });
+          });
+          
+        }else{
+          console.log(this.tarea);
+          axios.post('/tareasactualizar/', formData, {
+              headers: {'Content-Type': 'multipart/form-data'}
+          })
+          .then(({data}) => {
+              swal({
+                  title: "Exito",
+                  text: "La tarea ha sido actualizada",
+                  type: "success"
+              });
+              window.location.href = "/prospectos/prospectos";
+          })
+          .catch(({response}) => {
+              console.error(response);
+              this.cargando = false;
+              swal({
+                  title: "Error",
+                  text: response.data.message || "Ocurrio un error inesperado, intente mas tarde",
+                  type: "error"
+              });
+          });
+        }
+       
+        
+      },
       cargar(){
+        console.log(this.usuarioCargado);
+        this.tarea.vendedor = this.usuarioCargado.name;
+        this.tarea.vendedor_id  = this.usuarioCargado.id;
         axios.post('/prospectos/listadoprospectos', {id: this.usuarioCargado , anio:this.anio})
         .then(({data}) => {
           //$("#oculto").append($("#fecha_ini_control"));
