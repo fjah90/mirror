@@ -18,6 +18,7 @@ use App\Models\ProyectoAprobado;
 use App\Models\OrdenCompra;
 use App\Models\OrdenProceso;
 use App\Models\Vendedor;
+use App\Models\Tarea;
 use App\Models\UnidadMedida;
 use Carbon\Carbon;
 use App\User;
@@ -28,6 +29,7 @@ use Mail;
 use PDF;
 use PDFMerger;
 use Storage;
+use Svg\Tag\Rect;
 use Validator;
 
 class ProspectosController extends Controller
@@ -205,7 +207,10 @@ class ProspectosController extends Controller
             }
         }
 
-        return view('prospectos.indexprospectos', compact('cotizaciones', 'usuarios', 'proyectos', 'estatus'));
+        $tareas = Tarea::with('vendedor')->where('user_id',auth()->user()->id)->get();
+        
+
+        return view('prospectos.indexprospectos', compact('cotizaciones', 'usuarios', 'proyectos', 'estatus','vendedores','tareas'));
     }
 
 
@@ -235,6 +240,7 @@ class ProspectosController extends Controller
 
         return view('prospectos.cotizaciones', compact('prospectos', 'usuarios'));
     }
+
 
     public function listado(Request $request)
     {

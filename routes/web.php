@@ -202,6 +202,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/prospectos/{prospecto}/copiarCotizacion', 'ProspectosController@copiarCotizacion');
     Route::delete('/prospectos/{prospecto}/cotizacion/{cotizacion}', 'ProspectosController@destroyCotizacion');
     Route::resource('/prospectos', 'ProspectosController');
+    Route::resource('/tareas', 'TareasController');
+    Route::post('/tareasactualizar', 'TareasController@actualizar');
 
 
 
