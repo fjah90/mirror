@@ -120,6 +120,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/cuentas-pagar/listado', 'CuentasPagarController@listado');
     Route::post('/ordenes-proceso/listado', 'OrdenesProcesoController@listado');
 
+    Route::resource('/tareas', 'TareasController');
+    Route::post('/tareasactualizar', 'TareasController@actualizar');
+
 
     //Administracion
     Route::middleware('role:Administrador')->group(function () {
