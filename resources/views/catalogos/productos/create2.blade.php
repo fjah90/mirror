@@ -10,6 +10,16 @@ Nuevo Producto | @parent
   .color_text{
     color:#B3B3B3;
   }
+  #loading {
+  position: fixed;
+  inset: 0;
+  background: #0009;
+  display: grid;
+  place-items: center;
+  font-size: 4rem;
+  z-index: 2;
+  color: white;
+}
 </style>
 @stop
 
@@ -56,7 +66,7 @@ Nuevo Producto | @parent
                     Regresar
                   </a>
                 @endif
-                <button type="submit" class="btn btn-primary" :disabled="cargando" @click="actualizarlista()">
+                <button type="submit" class="btn btn-primary" :disabled="cargando" >
                   <i class="fas fa-save"></i>
                   Guardar Producto
                 </button>
@@ -69,6 +79,7 @@ Nuevo Producto | @parent
   </div>
 
 </section>
+<section id='loading' style="display:none">Loading...</section>
 <!-- /.content -->
 @stop
 
@@ -107,43 +118,35 @@ const app = new Vue({
         this.producto[campo] = this.$refs[campo].files[0];
       },
       guardar(){
+        var load = document.querySelector("#loading");
+       
         var formData = objectToFormData(this.producto, {indices:true});
+        load.style.display = "grid";
         this.cargando = true;
-        swal({
-          text: '¿Desea guardar los datos?".',
-          button: {
-            text: "Guardar!",
-            closeModal: false,
-          },
+        axios.post('/productosguardar', formData, {
+          headers: { 'Content-Type': 'multipart/form-data'}
         })
-        .then(results => {
-          swal.showLoading();
-          axios.post('/productosguardar', formData, {
-            headers: { 'Content-Type': 'multipart/form-data'}
-          })
-          .then(({data}) => {
-            
-            this.cargando = false;
-            swal({
-              title: "Producto Guardado",
-              text: "",
-              type: "success"
-            }).then(()=>{
-                window.location = "/productos";
-            });
-          })
-          .catch(({response}) => {
-            console.error(response);
-            this.cargando = false;
-            swal({
-              title: "Error",
-              text: response.data.message || "Ocurrio un error inesperado, intente mas tarde",
-              type: "error"
-            });
-          });
+        .then(({data}) => {
 
-        })
+          swal({
+            title: "Producto Guardado",
+            text: "",
+            type: "success"
+          }).then(()=>{
+              window.location = "/productos";
+          });
+          load.style.display = "none";
           
+        })
+        .catch(({response}) => {
+          console.error(response);
+          this.cargando = false;
+          swal({
+            title: "Error",
+            text: response.data.message || "Ocurrio un error inesperado, intente mas tarde",
+            type: "error"
+          });
+        });
       },//fin cargarPresupuesto
     }
 });
