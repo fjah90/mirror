@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Models\ProyectoAprobado;
 use App\Observers\ProyectoAprobadoObserver;
+use Illuminate\Support\Facades\URL;
 
 class AppServiceProvider extends ServiceProvider
 {
