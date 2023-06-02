@@ -121,7 +121,7 @@ class ProspectosController extends Controller
 
         $user = auth()->user();
         //dd($user);
-
+        $vendedor = Vendedor::where('email',auth()->user()->email)->first();
         if (auth()->user()->tipo == 'Administrador' || auth()->user()->tipo == 'Dirección') {
             $usuarios = Vendedor::all();
         } else {
@@ -143,7 +143,7 @@ class ProspectosController extends Controller
                 ->select('vendedores.nombre as vendedor', 'prospectos.*', 'users.name as usuario', 'clientes.nombre as cliente', 'prospectos_tipos_actividades.nombre as actividad', 'prospectos_actividades.fecha as fecha')
                 ->where('prospectos_actividades.realizada', false)
                 ->where('prospectos.es_prospecto', 'si')
-                ->where('prospectos.vendedor_id',Auth()->user()->id)
+                ->where('prospectos.vendedor_id',$vendedor->id)
                 ->where('prospectos.estatus', $estatus)
                 ->get();
 
@@ -218,7 +218,7 @@ class ProspectosController extends Controller
                     ->select('vendedores.nombre as vendedor', 'prospectos.*', 'users.name as usuario', 'clientes.nombre as cliente', 'prospectos_tipos_actividades.nombre as actividad', 'prospectos_actividades.fecha as fecha')
                     ->where('prospectos_actividades.realizada', false)
                     ->where('prospectos.es_prospecto', 'si')
-                    ->where('prospectos.vendedor_id', '=', Auth()->user()->id)
+                    ->where('prospectos.vendedor_id', '=', $vendedor->id)
                     ->get();
 
                 $proyectosOrdenados = collect($proyectos)->sortByDesc('fecha');
@@ -245,7 +245,7 @@ class ProspectosController extends Controller
                     ->select('vendedores.nombre as vendedor', 'prospectos.*', 'users.name as usuario', 'clientes.nombre as cliente', 'prospectos_tipos_actividades.nombre as actividad', 'prospectos_actividades.fecha as fecha')
                     ->where('prospectos_actividades.realizada', false)
                     ->where('prospectos.es_prospecto', 'si')
-                    ->where('prospectos.user_id', '=', Auth()->user()->id)
+                    ->where('prospectos.user_id', '=', $vendedor->id)
                     ->get();
 
                 $proyectosOrdenados = collect($proyectos)->sortByDesc('fecha');
@@ -264,7 +264,7 @@ class ProspectosController extends Controller
         }
 
         if(Auth::user()->roles[0]->name == 'Diseñadores'){
-            $tareas = Tarea::with('vendedor')->where('vendedor_id',auth()->user()->id)->get();
+            $tareas = Tarea::with('vendedor')->where('vendedor_id',$vendedor->id)->get();
         }
         else{
             $tareas = Tarea::with('vendedor')->get();
