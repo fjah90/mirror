@@ -245,7 +245,7 @@
                     </select>         
                 </div>
             @endrole
-            @role('Diseñador')
+            @role('Diseñadores')
                <div class="form-group">
                       <label class="control-label text-danger">Tarea</label>
                       <textarea class="form-control" name="tarea" rows="3" cols="80"

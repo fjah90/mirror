@@ -133,7 +133,7 @@ class ProspectosController extends Controller
 
         if (!empty($estatus)) {
 
-            if(Auth::user()->roles[0]->name == 'Diseñador'){
+            if(Auth::user()->roles[0]->name == 'Diseñadores'){
 
                 $proyectos = Prospecto::leftjoin('prospectos_actividades', 'prospectos.id', '=', 'prospectos_actividades.prospecto_id')
                 ->leftjoin('prospectos_tipos_actividades', 'prospectos_actividades.tipo_id', '=', 'prospectos_tipos_actividades.id')
@@ -208,7 +208,7 @@ class ProspectosController extends Controller
                     ->where('prospectos_cotizaciones.user_id', '=', $user->id)->whereBetween('prospectos_cotizaciones.created_at', [$inicio, $anio])->orderBy('fecha', 'desc')
                     ->get();
                 $vendedores = Vendedor::all();
-            }else if(Auth::user()->roles[0]->name == 'Diseñador'){
+            }else if(Auth::user()->roles[0]->name == 'Diseñadores'){
 
                 $proyectos = Prospecto::leftjoin('prospectos_actividades', 'prospectos.id', '=', 'prospectos_actividades.prospecto_id')
                     ->leftjoin('prospectos_tipos_actividades', 'prospectos_actividades.tipo_id', '=', 'prospectos_tipos_actividades.id')
@@ -263,7 +263,7 @@ class ProspectosController extends Controller
             }
         }
 
-        if(Auth::user()->roles[0]->name == 'Diseñador'){
+        if(Auth::user()->roles[0]->name == 'Diseñadores'){
             $tareas = Tarea::with('vendedor')->where('vendedor_id',auth()->user()->id)->get();
         }
         else{
