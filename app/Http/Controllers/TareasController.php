@@ -89,8 +89,9 @@ class TareasController extends Controller
             'status'  => $request->status,
         ]);
         $tarea->save();
+        $tareas = Tarea::with('vendedor')->where('vendedor_id',$tarea->vendedor_id)->get();
 
-        return response()->json(['success' => true, "error" => false, 'tarea' => $tarea], 200);
+        return response()->json(['success' => true, "error" => false, 'tareas' => $tareas], 200);
     }
 
  

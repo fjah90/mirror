@@ -37,12 +37,12 @@
 
           <h3 class="panel-title">
             <div class="p-10" style="display:inline-block">
-              Usuario    
+              Vendedor   
               @role('Administrador|Dirección')
                 <select class="form-control" @change="cargar()" v-model="usuarioCargado" style="width:auto;display:inline-block;">
                   <option value="Todos">Todos</option>
                   @foreach($usuarios as $usuario)
-                  <option value="{{$usuario->id}}">{{$usuario->name}}</option>
+                  <option value="{{$usuario->id}}">{{$usuario->nombre}}</option>
                   @endforeach
                 </select>
               @endrole
@@ -190,10 +190,10 @@
 
 
     <!-- Aceptar Modal -->
-    <modal v-model="modalTareas" :title="'Tareas'" :footer="false">
+    <modal v-model="modalTareas" :title="'Tareas'" :footer="false"  size="lg">
 
-      <table id="tablatareas" class="table table-bordred" style="width:100%;"
-              data-page-length="100">
+      <table id="tablatareas" class="table table-bordred"
+              data-page-length="15">
               <thead>
                 <tr style="background-color:#12160F">
                   <th class="hide">#</th>
@@ -219,16 +219,17 @@
                 </tr>
               </tbody>
             </table>
-
+            <input type="hidden" name="tarea_id" class="form-control" v-model="tarea.id" />
+            @role('Administrador|Dirección')
                   <div class="form-group">
                       <label class="control-label text-danger">Tarea</label>
                       <textarea class="form-control" name="tarea" rows="3" cols="80"
                                 v-model="tarea.tarea" requered></textarea>
                   </div>
-           
-                <div class="form-group">
+                  <div class="form-group">
                   <label class="control-label">Diseñador</label>
-                  <input type="hidden" name="tarea_id" class="form-control" v-model="tarea.id" />
+                  
+  
                     <select class="form-control" v-model="tarea.vendedor_id" style="width: 300px;" readonly>
                     @foreach($vendedores as $vendedor)
                     <option value="{{$vendedor->id}}">{{$vendedor->nombre}}</option>
@@ -243,6 +244,34 @@
                           <option value="Terminada">Terminada</option>
                     </select>         
                 </div>
+            @endrole
+            @role('Diseñador')
+               <div class="form-group">
+                      <label class="control-label text-danger">Tarea</label>
+                      <textarea class="form-control" name="tarea" rows="3" cols="80"
+                                v-model="tarea.tarea" readonly></textarea>
+                  </div>
+                  <div class="form-group">
+                  <label class="control-label">Diseñador</label>
+                  
+                    <select class="form-control" v-model="tarea.vendedor_id" style="width: 300px;" disabled>
+                      @foreach($vendedores as $vendedor)
+                      <option value="{{$vendedor->id}}">{{$vendedor->nombre}}</option>
+                      @endforeach
+                    </select>
+                    <label class="control-label">Status</label>
+                    <select name="proyecto_id" v-model="tarea.status"
+                                class="form-control" required id="proyecto-select" style="width: 300px;">
+                      
+                          <option value="Pendiente">Pendiente</option>
+                          <option value="En proceso">En proceso</option>
+                          <option value="Terminada">Terminada</option>
+                    </select>         
+                </div>
+
+            @endrole
+           
+                
             
               
               <div class="form-group text-right">
@@ -302,9 +331,6 @@ const app = new Vue({
       $.fn.dataTable.moment('DD/MM/YYYY');
       this.tabla = $("#tabla").DataTable({
         "dom": 'f<"#fechas_container.pull-left">tlip',
-        //"order": [[ 4, "desc" ]]
-      });
-      this.tabla = $("#tablatareas").DataTable({
         //"order": [[ 4, "desc" ]]
       });
       //$("#fechas_container").append($("#fecha_ini_control"));
@@ -381,7 +407,7 @@ const app = new Vue({
           });
           
         }else{
-          console.log(this.tarea);
+          //console.log(this.tarea);
           axios.post('/tareasactualizar/', formData, {
               headers: {'Content-Type': 'multipart/form-data'}
           })
@@ -391,7 +417,14 @@ const app = new Vue({
                   text: "La tarea ha sido actualizada",
                   type: "success"
               });
-              window.location.href = "/prospectos/prospectos";
+              this.tarea.tarea = '';
+              this.tarea.id = '';   
+              this.tarea.vendedor_id = '';
+              this.tarea.status = 'Pendiente';
+              this.cargando = false;
+              this.editando = false;
+              this.tareas = data.tareas;
+              this.modalTareas = false;
           })
           .catch(({response}) => {
               console.error(response);
@@ -407,15 +440,15 @@ const app = new Vue({
         
       },
       cargar(){
-        console.log(this.usuarioCargado);
-        this.tarea.vendedor = this.usuarioCargado.name;
-        this.tarea.vendedor_id  = this.usuarioCargado.id;
+        this.tarea.vendedor_id  = this.usuarioCargado;
         axios.post('/prospectos/listadoprospectos', {id: this.usuarioCargado , anio:this.anio})
         .then(({data}) => {
           //$("#oculto").append($("#fecha_ini_control"));
           //$("#oculto").append($("#fecha_fin_control"));
           this.tabla.destroy();
-          this.cotizaciones = data.cotizaciones;
+          this.prospectos = data.prospectos;
+          this.tareas = data.tareas;
+          //this.cotizaciones = data.cotizaciones;
           swal({
             title: "Exito",
             text: "Datos Cargados",
