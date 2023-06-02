@@ -108,30 +108,42 @@ const app = new Vue({
       },
       guardar(){
         var formData = objectToFormData(this.producto, {indices:true});
-
         this.cargando = true;
-        axios.post('/productosguardar', formData, {
-          headers: { 'Content-Type': 'multipart/form-data'}
+        swal({
+          text: '¿Desea guardar los datos?".',
+          button: {
+            text: "Guardar!",
+            closeModal: false,
+          },
         })
-        .then(({data}) => {
-          this.cargando = false;
-          swal({
-            title: "Producto Guardado",
-            text: "",
-            type: "success"
-          }).then(()=>{
-              window.location = "/productos";
+        .then(results => {
+          swal.showLoading();
+          axios.post('/productosguardar', formData, {
+            headers: { 'Content-Type': 'multipart/form-data'}
+          })
+          .then(({data}) => {
+            
+            this.cargando = false;
+            swal({
+              title: "Producto Guardado",
+              text: "",
+              type: "success"
+            }).then(()=>{
+                window.location = "/productos";
+            });
+          })
+          .catch(({response}) => {
+            console.error(response);
+            this.cargando = false;
+            swal({
+              title: "Error",
+              text: response.data.message || "Ocurrio un error inesperado, intente mas tarde",
+              type: "error"
+            });
           });
+
         })
-        .catch(({response}) => {
-          console.error(response);
-          this.cargando = false;
-          swal({
-            title: "Error",
-            text: response.data.message || "Ocurrio un error inesperado, intente mas tarde",
-            type: "error"
-          });
-        });
+          
       },//fin cargarPresupuesto
     }
 });
