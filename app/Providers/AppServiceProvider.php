@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\Route;
 
 use App\Models\ProyectoAprobado;
 use App\Observers\ProyectoAprobadoObserver;
-use Illuminate\Support\Facades\URL;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -21,7 +20,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-      URL::forceScheme('https');
       Schema::defaultStringLength(191);
 
       Blade::directive('format_money', function ($expression) {
