@@ -293,6 +293,16 @@
                 </div>
               </template>
               <div class="row">
+                <div class="col-md-12 text-right">
+                  <button type="submit" class="btn btn-DARK" :disabled="cargando" style="background-color:#12160F; color:#B68911;">
+                    <i class="fas fa-save"></i>
+                    Guardar Actividad reciente
+                  </button>
+                </div>
+              </div>
+            </form>
+            <form class="" @submit.prevent="guardar2()">
+              <div class="row">
                 <div class="col-sm-12">
                   <h4>Próxima Actividad</h4>
                   <hr />
@@ -345,6 +355,12 @@
                   </div>
                 </div>
               </div>
+                <div class="row">
+                  <div class="col-sm-12">
+                    <label class="control-label">Descripción Actividad <strong style="color: grey"> *</strong></label>
+                    <textarea name="descripcion" rows="5" cols="80" class="form-control" v-model="prospecto.nueva_proxima_actividad.descripcion" required></textarea>
+                  </div>
+                </div>
               <div class="row">
                 <div class="col-md-12 text-right">
                   <a href="{{url('/prospectos/prospectos/')}}" class="btn btn-default" style="color:#000; background-color:#B3B3B3;">
@@ -352,7 +368,7 @@
                   </a>  
                   <button type="submit" class="btn btn-DARK" :disabled="cargando" style="background-color:#12160F; color:#B68911;">
                     <i class="fas fa-save"></i>
-                    Guardar Actividades
+                    Guardar Proxima Actividad
                   </button>
                 </div>
               </div>
@@ -416,6 +432,7 @@ const app = new Vue({
     productos: {!! json_encode($productos) !!},
     tipos: {!! json_encode($tipos) !!},
     ofrecido: {nombre:''},
+    ofrecido2: {nombre:''},
     openCatalogo: false,
     cargando: false,
     modalProducto:false,
@@ -459,6 +476,11 @@ const app = new Vue({
       this.prospecto.proxima_actividad.productos_ofrecidos.push(this.ofrecido);
       this.ofrecido = {nombre:''};
     },
+    agregarProducto2(){
+      if(this.ofrecido.id==undefined) return false;
+      this.prospecto.nueva_proxima_actividad.productos_ofrecidos.push(this.ofrecido2);
+      this.ofrecido = {nombre:''};
+    },
     removerProducto(index){
       this.prospecto.proxima_actividad.productos_ofrecidos.splice(index, 1);
     },
@@ -495,11 +517,50 @@ const app = new Vue({
       this.cargando = true;
       axios.post('/prospectos/{{$prospecto->id}}/guardarActividades', {
         proxima: this.prospecto.proxima_actividad,
+        //nueva: this.prospecto.nueva_proxima_actividad,
+      })
+      .then(({data}) => {
+        this.tipos = data.tipos;
+        //if(data.proxima) this.prospecto.actividades.push(data.proxima);
+        this.prospecto = data.prospecto;
+        this.prospecto.proxima_actividad.fecha = this.prospecto.proxima_actividad.fecha_formated;
+        this.prospecto.nueva_proxima_actividad = {
+          fecha: data.prospecto.proxima_actividad.fecha_formated,
+          tipo_id: data.prospecto.proxima_actividad.tipo_id,
+          tipo: ''
+        };
+        /*
+        this.prospecto.proxima_actividad = data.nueva;
+        this.prospecto.proxima_actividad.fecha = this.prospecto.proxima_actividad.fecha_formated;
+        
+        */
+        this.cargando = false;
+        swal({
+          title: "Actividades Guardadas",
+          text: "",
+          type: "success"
+        });
+      })
+      .catch(({response}) => {
+        console.error(response);
+        this.cargando = false;
+        swal({
+          title: "Error",
+          text: response.data.message || "Ocurrio un error inesperado, intente mas tarde",
+          type: "error"
+        });
+      });
+    },
+    guardar2(){
+      this.cargando = true;
+      axios.post('/prospectos/{{$prospecto->id}}/guardarActividades', {
+       
         nueva: this.prospecto.nueva_proxima_actividad,
       })
       .then(({data}) => {
         this.tipos = data.tipos;
-        if(data.proxima) this.prospecto.actividades.push(data.proxima);
+        //if(data.proxima) this.prospecto.actividades.push(data.proxima);
+        this.prospecto = data.prospecto;
         this.prospecto.proxima_actividad = data.nueva;
         this.prospecto.proxima_actividad.fecha = this.prospecto.proxima_actividad.fecha_formated;
         this.prospecto.nueva_proxima_actividad = {
@@ -523,7 +584,7 @@ const app = new Vue({
           type: "error"
         });
       });
-    },//fin cargarPresupuesto
+    },
   }
 });
 </script>
