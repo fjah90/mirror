@@ -408,7 +408,7 @@ const app = new Vue({
           
         }else{
           //console.log(this.tarea);
-          axios.post('/tareasactualizar/', formData, {
+          axios.post('/tareasactualizar', formData, {
               headers: {'Content-Type': 'multipart/form-data'}
           })
           .then(({data}) => {
