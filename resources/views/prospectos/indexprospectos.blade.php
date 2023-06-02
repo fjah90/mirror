@@ -37,7 +37,7 @@
 
           <h3 class="panel-title">
             <div class="p-10" style="display:inline-block">
-              Vendedor   
+              Diseñador  
               @role('Administrador|Dirección')
                 <select class="form-control" @change="cargar()" v-model="usuarioCargado" style="width:auto;display:inline-block;">
                   <option value="Todos">Todos</option>
