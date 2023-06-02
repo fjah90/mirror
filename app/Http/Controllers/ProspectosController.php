@@ -885,6 +885,7 @@ class ProspectosController extends Controller
      */
     public function guardarActividades(Request $request, Prospecto $prospecto)
     {
+        /*
         $validator = Validator::make($request->all(), [
             'proxima'       => 'present',
             'nueva.tipo_id' => 'required',
@@ -897,7 +898,51 @@ class ProspectosController extends Controller
                 "success" => false, "error" => true, "message" => $errors[0],
             ], 422);
         }
+        */
 
+        if (!is_null($request->proxima)) {
+
+            $create = [
+                'prospecto_id' => $prospecto->id,
+                'fecha'        => $request->proxima['fecha'],
+                'realizada'    => 1,
+                'descripcion' => $request->proxima['descripcion'],
+            ];
+            if ($request->proxima['tipo_id'] == 0) { //dar de alta nuevo tipo
+                $tipo              = ProspectoTipoActividad::create(['nombre' => $request->proxima['tipo']]);
+                $create['tipo_id'] = $tipo->id;
+            } else {
+                $create['tipo_id'] = $request->proxima['tipo_id'];
+                
+            }
+    
+            $proxima = ProspectoActividad::create($create);
+            $proxima->load('tipo', 'productos_ofrecidos');
+            $nueva = false;
+            
+        }
+        else{
+
+            $prospecto->load('proxima_actividad.tipo');
+            $nueva = $prospecto->proxima_actividad;
+
+            //actualizar proxima actividad
+            $nueva->update([
+                'tipo_id'     => $request->nueva['tipo_id'],
+                'fecha'       => $request->nueva['fecha'],
+                'descripcion' => $request->nueva['descripcion'],
+            ]);
+            /*
+            //ingresar productos ofrecidos
+            foreach ($request->nueva['productos_ofrecidos'] as $ofrecido) {
+                $nueva->productos_ofrecidos()->attach($ofrecido['id']);
+            }
+            */
+            $nueva->load('productos_ofrecidos','tipo');
+            $proxima = false;
+
+        }
+        /*
         if (!is_null($request->proxima)) {
             $prospecto->load('proxima_actividad.tipo');
             $proxima = $prospecto->proxima_actividad;
@@ -934,12 +979,31 @@ class ProspectosController extends Controller
         $nueva = ProspectoActividad::create($create);
         $nueva->load('tipo', 'productos_ofrecidos');
 
+        
+        */
         //cargar tipos, por si se ingreso nuevo
         $tipos = ProspectoTipoActividad::all();
+        //cargar prospecto
+        $prospecto->load([
+            'cliente', 'actividades.tipo', 'actividades.productos_ofrecidos',
+            'proxima_actividad.tipo', 'proxima_actividad.productos_ofrecidos'
+        ]);
+
+        //dd($prospecto);
+
+        if (is_null($prospecto->proxima_actividad)) {
+            $prospecto->proxima_actividad = false;
+        }
+
+        $prospecto->nueva_proxima_actividad = (object) [
+            'fecha'   => '',
+            'tipo_id' => 1,
+            'tipo'    => '',
+        ];
 
         return response()->json([
             'success' => true, "error"     => false,
-            'proxima' => $proxima, 'nueva' => $nueva, 'tipos' => $tipos,
+            'proxima' => $proxima, 'nueva' => $nueva, 'tipos' => $tipos, 'prospecto' =>  $prospecto
         ], 200);
     }
 
