@@ -129,11 +129,6 @@ class ProspectosController extends Controller
             $usuarios = [];
         }
 
-        /**Consulta para obtener el estatus de los apartador***/
-
-        $estado_observacion=GenStatus::whereIn('id', [2,3,4])->pluck('nombre_status','id');
-        //dd($estado_observacion);
-
         $estatus=$request->estatus;
 
         if(!empty($estatus)){

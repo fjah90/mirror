@@ -150,23 +150,6 @@
                   </tr>
               </tfoot>
             </table>
-            <div class="row">
-              <div class="col-md-12"><h4><b>Observaciones:</b><h4></div>
-                <div class="col-md-12">
-                  <h4></h4>
-                </div>
-                <div class="col-md-12" >
-                  <div class="form-group" style="border:1px solid; border-radius:5px;">
-                    {!! Form::textarea('comentarios',null,['class'=>'ckeditor form-control','id'=>'comentarios','placeholder'=>'Escriba un comentario...'])!!}
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-6">
-                  {!! Form::label('','Asignación de Estatus') !!}
-                  {!!Form::select('gen_status_id',$estado_observacion,null,['placeholder'=>'Seleccione un estatus','class'=>'form-control','id'=>'gen_status_id'])!!}
-                </div>
-              </div>
               <div class="row">
                 <div class="col-md-12" style="text-align:right;">
                   <input type="submit"  name="" id="" class="btn btn-lg btn-dark"  value="Guardar" style="background-color:#12160F; color:#B68911;">
