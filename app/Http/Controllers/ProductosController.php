@@ -23,9 +23,18 @@ class ProductosController extends Controller
      */
     public function index()
     {
+      if(!empty($productos)){
+
+        $productos = Producto::with('proveedor', 'categoria', 'subcategoria')
+            ->has('categoria')
+            ->where('status', 'ACTIVO')
+            ->get();
+      }else{
+        
         $productos = Producto::with('proveedor', 'categoria', 'subcategoria')
             ->has('categoria')
             ->get();
+      }
 
         return view('catalogos.productos.index', compact('productos'));
     }
@@ -451,4 +460,27 @@ class ProductosController extends Controller
         $producto->delete();
         return response()->json(['success' => true, "error" => false], 200);
     }
+
+     public function activar($id)
+    {
+        $producto = Producto::findOrFail($id);
+        
+        $producto->status = 'ACTIVO';
+
+        $producto->save();
+        
+        return redirect()->route('productos.index');
+    }
+
+    public function desactivar($id)
+    {
+        $producto = Producto::findOrFail($id);
+        
+        $producto->status = 'NOACTIVO';
+
+        $producto->save();
+        
+        return redirect()->route('productos.index');
+    }
+    
 }

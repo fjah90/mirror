@@ -27,6 +27,16 @@
         <div class="panel-heading" style="background-color:#12160F; color:#B68911;">
           <h3 class="panel-title text-right">
             <span class="pull-left p-10">Lista de Productos</span>
+             <button type="submit" class="btn btn-dark" style="background-color:#FFCE56; color:#12160F;">
+                <a href="{{route('productos.index')}}" style="color:#000;" id="">
+                  <i class="fas fa-user-book"></i>ACTIVOS
+                </a>
+              </button>
+               <button type="submit" class="btn btn-dark" style="background-color:#FFCE56; color:#12160F;">
+                <a href="{{route('productos.index')}}" style="color:#000;" id="">
+                  <i class="fas fa-user-book"></i>INACTIVOS
+                </a>
+              </button>
             <a href="{{route('productos.create2')}}" class="btn btn-warning" style="color: #000;">
               <i class="fas fa-plus"></i> Carga masiva
             </a>
@@ -56,15 +66,25 @@
                   <td>@{{producto.proveedor.empresa}}</td>
                   <td>@{{producto.subcategoria.nombre}}</td>
                   <td>@{{producto.categoria.nombre}}</td>
-                  <td class="text-right">
+                  <td class="text-right col-md-3">
                     <a class="btn btn-xs btn-info" data-toggle="tooltip" title="Ver"
                       :href="'/productos/'+producto.id">
-                      <i class="far fa-eye"></i>
+                      <i class="fas fa-eye"></i>
                     </a>
                     <a class="btn btn-xs btn-success" data-toggle="tooltip" title="Editar"
                       :href="'/productos/'+producto.id+'/editar'">
                       <i class="fas fa-pencil-alt"></i>
                     </a>
+                    <!--productos activos-->
+                    
+                        <a href="#" class="btn btn-xs label-default float-left" data-toggle="tooltip" data-placement="top" title="Desactivar">
+                          <i class="fas fa-ban"></i>
+                        </a>
+                        <!--a href="#" class="btn btn-xs btn-success float-left" data-toggle="tooltip" data-placement="top" title="Activar">
+                          <i class="fas fa-check"></i>
+                        </a-->
+                   
+                    <!--productos activos-->
                     @hasrole('Administrador')
                     <button class="btn btn-xs btn-danger" data-toggle="tooltip" title="Borrar"
                       @click="borrar(producto, index)">
