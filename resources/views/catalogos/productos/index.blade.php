@@ -30,13 +30,13 @@
 
              <button type="submit" class="btn btn-dark" style="background-color:#FFCE56; color:#12160F;">
            
-                <a href="{{route('productos.index')}}" style="color:#000;" id="">
+                <a href="{{route('productos.index')}}" style="color:#000;">
                   <i class="fas fa-user-book"></i>ACTIVOS
                 </a>
               </button>
        
                <button type="submit" class="btn btn-dark" style="background-color:#FFCE56; color:#12160F;">
-                <a href="{{route('productos.index')}}" style="color:#000;" id="">
+                <a href="{{route('productos.index')}}" style="color:#000;">
                   <i class="fas fa-user-book"></i>INACTIVOS
                 </a>
               </button>
@@ -80,14 +80,15 @@
                       <i class="fas fa-pencil-alt"></i>
                     </a>
                     <!--productos activos-->
-                    
-                        <a href="#" class="btn btn-xs label-default float-left" data-toggle="tooltip" data-placement="top" title="Desactivar">
+                    @if($productos->status == 'ACTIVO')
+                        <a href="{{ route('productos.desactivar', ['id' => $producto->id]) }}" class="btn btn-xs label-default float-left" data-toggle="tooltip" data-placement="top" title="Desactivar">
                           <i class="fas fa-ban"></i>
                         </a>
-
-                        <!--a href="#" class="btn btn-xs btn-success float-left" data-toggle="tooltip" data-placement="top" title="Activar">
+                      @else
+                        <a href="{{ route('productos.activar', ['id' => $producto->id]) }}" class="btn btn-xs btn-success float-left" data-toggle="tooltip" data-placement="top" title="Activar">
                           <i class="fas fa-check"></i>
-                        </a-->
+                        </a>
+                    @endif
                     <!--productos activos-->
                     @hasrole('Administrador')
                     <button class="btn btn-xs btn-danger" data-toggle="tooltip" title="Borrar"

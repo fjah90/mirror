@@ -75,26 +75,37 @@
                                     <input type="text" class="form-control" name="preferencias" v-model="cliente.preferencias">
                                 </div>
                             </div>
-                            <div class="row form-group">
-                                <div class="col-md-8">
+                            <div class="row">
+                                <div class="col-md-6">
                                     <label class="control-label">Nombre<strong style="color: grey"> *</strong></label>
                                     <input type="text" class="form-control" name="nombre" v-model="cliente.nombre"
                                            required/>
                                 </div>
+                                 <div class="col-md-6">
+                                    <label class="control-label">Razon Social</label>
+                                    <input type="text" class="form-control" name="razon_social"
+                                           v-model="cliente.razon_social"/>
+                                </div>
                             </div>
-                            <div class="row form-group">
+                            <!--div class="row form-group">
                                 {{--@if($nacional)
                                     <div class="col-md-4">
                                         <label class="control-label">RFC</label>
                                         <input type="text" class="form-control" name="rfc" v-model="cliente.rfc"/>
                                     </div>
                                 @endif--}}
+                            </div--><br>
+                              <div class="row form-group">
+                                    <div class="col-md-4">
+                                        <label class="control-label">Telefono</label>
+                                        <input type="text" class="form-control" name=""/>
+                                    </div>
                                 <div class="col-md-8">
-                                    <label class="control-label">Razon Social</label>
-                                    <input type="text" class="form-control" name="razon_social"
-                                           v-model="cliente.razon_social"/>
+                                    <label class="control-label">Email</label>
+                                    <input type="text" class="form-control" name=""/>
                                 </div>
                             </div>
+                            
                         </div>
                     </div>
 
@@ -261,6 +272,8 @@
                     nombre: '',
                     rfc: '',
                     razon_social: '',
+                    telefono: '',
+                    email: '',
                     calle: '',
                     nexterior: '',
                     ninterior: '',

@@ -14,7 +14,7 @@ class Cliente extends Model
         'calle', 'nexterior', 'ninterior',
         'colonia', 'delegacion', 'cp', 'ciudad', 'estado', 'pais',
         'pagina_web', 'adicionales', 'nacional', 'usuario_nombre',
-        'vendedor_id','categoria_cliente_id','preferencias'
+        'vendedor_id','categoria_cliente_id','preferencias','telefono','email'
     ];
 
     protected $casts = [

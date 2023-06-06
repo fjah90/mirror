@@ -26,6 +26,7 @@ class ProductosController extends Controller
 
             $productos = Producto::with('proveedor', 'categoria', 'subcategoria')
             ->has('categoria')
+            ->where('status', 'ACTIVO')
             ->get();
 
             //dd($productos);
@@ -455,9 +456,13 @@ class ProductosController extends Controller
         return response()->json(['success' => true, "error" => false], 200);
     }
 
-     public function activar($id)
+
+     public function activar(Request $request)
     {
-        $producto = Producto::findOrFail($id);
+        dd($request->all());
+        $producto = Producto::find($request->$id);
+
+        //dd($producto);
         
         $producto->status = 'ACTIVO';
 
@@ -466,11 +471,13 @@ class ProductosController extends Controller
         return redirect()->route('productos.index');
     }
 
-    public function desactivar($id)
+    public function desactivar(Request $request)
     {
-        $producto = Producto::findOrFail($id);
+        dd($request->all());
+        $producto = Producto::find($request->$id);
+        //dd($producto);
         
-        $producto->status = 'NOACTIVO';
+        $producto->status = 'INACTIVO';
 
         $producto->save();
         
