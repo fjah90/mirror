@@ -23,18 +23,12 @@ class ProductosController extends Controller
      */
     public function index()
     {
-      if(!empty($productos)){
 
-        $productos = Producto::with('proveedor', 'categoria', 'subcategoria')
-            ->has('categoria')
-            ->where('status', 'ACTIVO')
-            ->get();
-      }else{
-        
-        $productos = Producto::with('proveedor', 'categoria', 'subcategoria')
+            $productos = Producto::with('proveedor', 'categoria', 'subcategoria')
             ->has('categoria')
             ->get();
-      }
+
+            //dd($productos);
 
         return view('catalogos.productos.index', compact('productos'));
     }
