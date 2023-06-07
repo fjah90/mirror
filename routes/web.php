@@ -107,9 +107,12 @@ Route::middleware('auth')->group(function () {
     Route::resource('/subproyectos', 'SubProyectosController');
     Route::post('/productos/{producto}', 'ProductosController@update');
 
-    Route::get('productos/{id}/activar', 'ProductosController@activar');
 
-    Route::get('productos/{id}/desactivar', 'ProductosController@desactivar');
+    Route::get('productos/{id}/activar', 'ProductosController@activar')->name('productos.activar');
+
+    Route::get('productos/inactivos','ProductosController@productosinactivos')->name('productos.inactivo');
+
+    Route::get('productos/{id}/desactivar', 'ProductosController@desactivar')->name('productos.desactivar');
 
     Route::resource('/productos', 'ProductosController');
     Route::resource('/categorias', 'CategoriasController');

@@ -23,16 +23,25 @@ class ProductosController extends Controller
      */
     public function index()
     {
-
             $productos = Producto::with('proveedor', 'categoria', 'subcategoria')
             ->has('categoria')
             ->where('status', 'ACTIVO')
             ->get();
 
-            //dd($productos);
+        return view('catalogos.productos.index', compact('productos'));
+    }
+
+
+    public function productosinactivos(){
+
+        $productos = Producto::with('proveedor', 'categoria', 'subcategoria')
+            ->has('categoria')
+            ->where('status', 'INACTIVO')
+            ->get();
 
         return view('catalogos.productos.index', compact('productos'));
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -457,25 +466,20 @@ class ProductosController extends Controller
     }
 
 
-     public function activar(Request $request)
+     public function activar($id)
     {
-        dd($request->all());
-        $producto = Producto::find($request->$id);
-
-        //dd($producto);
+        $producto = Producto::find($id);
         
         $producto->status = 'ACTIVO';
 
         $producto->save();
         
-        return redirect()->route('productos.index');
+        return redirect()->route('productos.inactivo');
     }
 
-    public function desactivar(Request $request)
+    public function desactivar($id)
     {
-        dd($request->all());
-        $producto = Producto::find($request->$id);
-        //dd($producto);
+        $producto = Producto::find($id);
         
         $producto->status = 'INACTIVO';
 
