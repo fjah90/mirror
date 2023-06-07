@@ -96,16 +96,15 @@
                                 @endif--}}
                             </div--><br>
                               <div class="row form-group">
-                                    <div class="col-md-4">
+                                    <div class="col-md-6">
                                         <label class="control-label">Telefono</label>
-                                        <input type="text" class="form-control" name=""/>
+                                        <input type="text" class="form-control" name="telefono" v-model="cliente.telefono"/>
                                     </div>
-                                <div class="col-md-8">
+                                <div class="col-md-6">
                                     <label class="control-label">Email</label>
-                                    <input type="text" class="form-control" name=""/>
+                                    <input type="text" class="form-control" name="email" v-model="cliente.email"/>
                                 </div>
                             </div>
-                            
                         </div>
                     </div>
 

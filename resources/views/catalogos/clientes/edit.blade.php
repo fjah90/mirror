@@ -76,13 +76,18 @@
                                         </div>
                                     </div>
                                     <div class="row form-group">
-                                        <div class="col-md-8">
+                                        <div class="col-md-6">
                                             <label class="control-label">Nombre</label>
                                             <input type="text" class="form-control" name="nombre"
                                                    v-model="cliente.nombre" required/>
                                         </div>
+                                         <div class="col-md-6">
+                                            <label class="control-label">Razon Social</label>
+                                            <input type="text" class="form-control" name="razon_social"
+                                                   v-model="cliente.razon_social"/>
+                                        </div>
                                     </div>
-                                    <div class="row form-group">
+                                    <!--div class="row form-group">
                                         {{--@if($cliente->nacional)
                                             <div class="col-md-4">
                                                 <label class="control-label">RFC</label>
@@ -90,10 +95,16 @@
                                                        v-model="cliente.rfc"/>
                                             </div>
                                         @endif--}}
-                                        <div class="col-md-8">
-                                            <label class="control-label">Razon Social</label>
-                                            <input type="text" class="form-control" name="razon_social"
-                                                   v-model="cliente.razon_social"/>
+                                       
+                                    </div-->
+                                    <div class="row form-group">
+                                        <div class="col-md-6">
+                                            <label class="control-label">Telefono</label>
+                                            <input type="text" class="form-control" name="telefono" v-model="cliente.telefono"/>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="control-label">Email</label>
+                                            <input type="text" class="form-control" name="email" v-model="cliente.email"/>
                                         </div>
                                     </div>
                                 </div>
