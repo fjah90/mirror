@@ -470,7 +470,8 @@
                     nombre: '',
                     cargo: '',
                     emails: [],
-                    telefonos: []
+                    telefonos: [],
+                    fax: ''
                 },
                 user: {
                     users: [
@@ -519,7 +520,8 @@
                                 nombre: '',
                                 cargo: '',
                                 emails: [],
-                                telefonos: []
+                                telefonos: [],
+                                fax: ''
                             };
                             this.cargando = false;
                             swal({
@@ -542,7 +544,7 @@
                 actualizarContacto() {
                     this.cargando = true;
                     axios.put('/contactos/' + this.contacto.id,
-                        {'tipo': 'cliente', nombre: this.contacto.nombre, cargo: this.contacto.cargo})
+                        {'tipo': 'cliente', nombre: this.contacto.nombre, cargo: this.contacto.cargo, fax: this.contacto.fax})//
                         .then(({data}) => {
                             this.cliente.contactos.push(this.contacto);
                             this.contacto = {
@@ -551,7 +553,8 @@
                                 nombre: '',
                                 cargo: '',
                                 emails: [],
-                                telefonos: []
+                                telefonos: [],
+                                fax: ''
                             };
                             this.cargando = false;
                             swal({

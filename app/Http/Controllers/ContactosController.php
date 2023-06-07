@@ -47,6 +47,7 @@ class ContactosController extends Controller
       'tipo' => 'required',
       'nombre' => 'required',
       'cargo' => 'required',
+      'fax'   =>'required',
     ]);
 
     if ($validator->fails()) {
@@ -61,7 +62,7 @@ class ContactosController extends Controller
     else
       $contacto = ProveedorContacto::findOrFail($contacto_id);
 
-    $contacto->update($request->only(['nombre','cargo']));
+    $contacto->update($request->only(['nombre','cargo','fax']));
 
     return response()->json(['success'=>true,'error'=>false], 200);
   }
