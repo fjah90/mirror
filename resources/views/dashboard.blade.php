@@ -1013,7 +1013,7 @@ Dashboard | @parent
         if (table == '#tablaCompras') {
           newTable=$(table).DataTable({
           "dom": 'f<"#'+prefix+'_fechas_container.pull-left">ltip',
-           // "order":[[0,'asc']],
+           "order":[[0,'asc']],
 
             //
             "footerCallback": function ( row, data, start, end, display ) {
