@@ -292,17 +292,17 @@ class ProspectosController extends Controller
             ->whereBetween('prospectos.created_at', [$inicio, $anio])
             ->has('cliente')
             ->get();
-
         //dd($prospectos);
+        $vendedores = Vendedor::all();
 
-       $vendedor = Vendedor::where('email',auth()->user()->email)->first();
+        $vendedor = Vendedor::where('email',auth()->user()->email)->first();
         if (auth()->user()->tipo == 'Administrador' || auth()->user()->tipo == 'Dirección') {
             $usuarios = Vendedor::all();
         } else {
             $usuarios = [];
         }
 
-        return view('prospectos.cotizaciones', compact('prospectos', 'usuarios','vendedor'));
+        return view('prospectos.cotizaciones', compact('prospectos', 'usuarios','vendedores'));
     }
 
 

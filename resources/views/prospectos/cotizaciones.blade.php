@@ -115,7 +115,7 @@
               <thead>
                 <tr style="background-color:#12160F">
                   <th class="hide">#</th>
-                  <th class="color_text">Usuario</th>
+                  <th class="color_text">Diseñador</th>
                   <th class="color_text">Cliente</th>
                   <th class="color_text">Nombre de Proyecto</th>
                   <th class="color_text">Cotizaciones</th>
@@ -127,8 +127,8 @@
               <tbody>
                 <tr v-for="(prospecto, index) in prospectos">
                   <td class="hide">@{{index+1}}</td>
-                  <template v-if="prospecto.user">
-                    <td>@{{prospecto.user.name}}</td>
+                  <template v-if="prospecto.vendedor">
+                    <td>@{{prospecto.vendedor}}</td>
                   </template>
                   <template v-else>
                     <td>@{{prospecto.cliente.usuario_nombre}} </td>
@@ -177,6 +177,7 @@ const app = new Vue({
     data: {
       prospectos: {!! json_encode($prospectos) !!},
       usuarioCargado: {{auth()->user()->id}},
+      vendedores:{!! json_encode($vendedores) !!},
       anio:'2023-12-31',
       tabla: {},
       locale: localeES,
