@@ -284,16 +284,18 @@ class ProspectosController extends Controller
                 $query->where("usuario_id", $user->id);
             })->get();
         */
+
         $inicio = Carbon::parse('2023-01-01'); //se ajusto por el año en curso
         $anio = Carbon::parse('2023-12-31'); // se ajusto por el año
+
+        $vendedores = Vendedor::all();
+
         $prospectos = Prospecto::with('cliente', 'ultima_actividad.tipo', 'proxima_actividad.tipo', 'user', 'cotizaciones')
             ->where('user_id', $user->id)
             ->where('es_prospecto', 'no')
             ->whereBetween('prospectos.created_at', [$inicio, $anio])
             ->has('cliente')
             ->get();
-        //dd($prospectos);
-        $vendedores = Vendedor::all();
 
         $vendedor = Vendedor::where('email',auth()->user()->email)->first();
         if (auth()->user()->tipo == 'Administrador' || auth()->user()->tipo == 'Dirección') {
