@@ -167,7 +167,7 @@ Dashboard | @parent
 </section>
 <!-- Main content -->
 <section class="content" id="content">
-  @role('Administrador')
+  @role('Administrador|Dirección')
     <div class="row">
       <div class="col-md-4 form-horizontal">
         <div class="form-group p-10">

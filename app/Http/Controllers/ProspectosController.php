@@ -179,8 +179,6 @@ class ProspectosController extends Controller
 
             }
 
-            
-
             $vendedores = Vendedor::all();
         } else {
 
@@ -295,13 +293,16 @@ class ProspectosController extends Controller
             ->has('cliente')
             ->get();
 
-        if (auth()->user()->tipo == 'Administrador') {
-            $usuarios = User::all();
+        //dd($prospectos);
+
+       $vendedor = Vendedor::where('email',auth()->user()->email)->first();
+        if (auth()->user()->tipo == 'Administrador' || auth()->user()->tipo == 'Dirección') {
+            $usuarios = Vendedor::all();
         } else {
             $usuarios = [];
         }
 
-        return view('prospectos.cotizaciones', compact('prospectos', 'usuarios'));
+        return view('prospectos.cotizaciones', compact('prospectos', 'usuarios','vendedor'));
     }
 
 
@@ -1229,7 +1230,6 @@ class ProspectosController extends Controller
             'cliente_contacto_id' => 'required',
             'entrega'             => 'required',
             'moneda'              => 'required',
-            'planos'              => 'image|mimes:jpg,jpeg,png',
             'factibilidad'        => 'required',
             'condicion'           => 'required',
             'iva'                 => 'required',
