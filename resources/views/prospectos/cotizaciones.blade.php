@@ -35,9 +35,9 @@
               @role('Administrador|Dirección')
                 de
                 <select class="form-control" @change="cargar()" v-model="usuarioCargado" style="width:auto;display:inline-block;">
-                    <option value="Todos">Todos</option>
-                    @foreach($usuarios as $usuario)
-                    <option value="{{$usuario->id}}">{{$usuario->nombre}}</option>
+                      <option value="Todos">Todos</option>
+                      @foreach($usuarios as $usuario)
+                      <option value="{{$usuario->id}}">{{$usuario->nombre}}</option>
                     @endforeach
                 </select>
               @endrole
@@ -61,6 +61,7 @@
                   <option value="2021-12-31">2021</option>
                   <option value="2022-12-31">2022</option>
                   <option value="2023-12-31">2023</option>
+                  <option value="2024-12-31">2024</option>
                 </select>
             </div>
             <div class="p-10" style="display:inline-block">
@@ -128,7 +129,7 @@
                 <tr v-for="(prospecto, index) in prospectos">
                   <td class="hide">@{{index+1}}</td>
                   <template v-if="prospecto.vendedor">
-                    <td>@{{prospecto.vendedor}}</td>
+                    <td>@{{prospecto.vendedor.nombre}}</td>
                   </template>
                   <template v-else>
                     <td>@{{prospecto.cliente.usuario_nombre}} </td>
