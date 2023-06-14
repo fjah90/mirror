@@ -35,10 +35,10 @@
               @role('Administrador|Dirección')
                 de
                 <select class="form-control" @change="cargar()" v-model="usuarioCargado" style="width:auto;display:inline-block;">
-                      <option value="Todos">Todos</option>
-                      @foreach($usuarios as $usuario)
-                      <option value="{{$usuario->id}}">{{$usuario->nombre}}</option>
-                    @endforeach
+                       <option value="Todos">Todos</option>
+                        @foreach($vendedores as $vendedor)
+                          <option value="{{$vendedor->id}}">{{$vendedor->nombre}}</option>
+                        @endforeach
                 </select>
               @endrole
             </div>
