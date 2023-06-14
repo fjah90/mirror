@@ -283,7 +283,7 @@ class ProspectosController extends Controller
 
        
 
-        $vendedor = Vendedor::where('email',auth()->user()->email)->first();
+        $vendedor = Vendedor::where('email',auth()->user()->email)->first();//filtro por email
 
         if (auth()->user()->tipo == 'Administrador' || auth()->user()->tipo == 'Dirección') {
             $usuarios = Vendedor::all();
@@ -331,12 +331,14 @@ class ProspectosController extends Controller
         if ($request->id == 'Todos') {
 
             if ($request->anio == 'Todos') {
-                $prospectos = Prospecto::with('cliente', 'ultima_actividad.tipo', 'proxima_actividad.tipo', 'user', 'cotizaciones')
+                $prospectos = Prospecto::with('vendedor', 'ultima_actividad.tipo', 'proxima_actividad.tipo', 'user', 'cotizaciones')
                     ->has('cliente')->orderBy('id', 'desc')->get();
+
+
             } else {
-                $anio = Carbon::parse($request->anio);
+                $anio = Carbon::parse($request->anio);//aqui me error inesperado
                 $prospectos = Prospecto::whereBetween('created_at', [$inicio, $anio])
-                    ->with('cliente', 'ultima_actividad.tipo', 'proxima_actividad.tipo', 'user', 'cotizaciones')
+                    ->with('vendedor', 'ultima_actividad.tipo', 'proxima_actividad.tipo', 'user', 'cotizaciones')
                     ->has('cliente')->orderBy('id', 'desc')->get();
             }
         } else {
@@ -349,20 +351,25 @@ class ProspectosController extends Controller
             }*/
 
             if ($request->anio == 'Todos') {
-                $prospectos = Prospecto::with('cliente', 'ultima_actividad.tipo', 'proxima_actividad.tipo', 'user', 'cotizaciones')
-                    ->where('user_id', $request->id)->orWhereHas("cliente", function ($query) use ($request) {
-                        $query->where("usuario_id", $request->id);
+                $prospectos = Prospecto::with('vendedor', 'ultima_actividad.tipo', 'proxima_actividad.tipo', 'cotizaciones')
+                    ->where('vendedor_id', $request->id)->orWhereHas("cliente", function ($query) use ($request) {
+                        $query->where("vendedor_id", $request->id);
                     })->get();
+
+                dd($prospectos);
+
             } else {
                 $anio = Carbon::parse($request->anio);
-                $prospectos = Prospecto::with('cliente', 'ultima_actividad.tipo', 'proxima_actividad.tipo', 'user', 'cotizaciones')
-                    ->where('user_id', $request->id)
+                $prospectos = Prospecto::with('vendedor', 'ultima_actividad.tipo', 'proxima_actividad.tipo', 'cotizaciones')
+                    ->where('vendedor_id', $request->id)
                     ->whereHas('ultima_actividad', function ($query) use ($inicio, $anio) {
                         $query->whereBetween('created_at', [$inicio, $anio]);
                     })
                     //->whereBetween('prospectos.created_at', [$inicio, $anio])
                     ->has('cliente')
                     ->get();
+
+                //dd($prospectos);
 
                 /*$prospectos = Prospecto::with('cliente', 'ultima_actividad.tipo', 'proxima_actividad.tipo', 'user','cotizaciones')
                 ->where('user_id', $request->id)

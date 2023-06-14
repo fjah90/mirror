@@ -132,7 +132,7 @@
                     <td>@{{prospecto.vendedor.nombre}}</td>
                   </template>
                   <template v-else>
-                    <td>@{{prospecto.cliente.usuario_nombre}} </td>
+                    <td>@{{prospecto.cliente.usuario_nombre}}</td>
                   </template>
                   <td>@{{prospecto.cliente.nombre}}</td>
                   <td>@{{prospecto.nombre}}</td>
