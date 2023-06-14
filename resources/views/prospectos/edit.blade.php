@@ -363,9 +363,15 @@
                 </div>
               <div class="row">
                 <div class="col-md-12 text-right">
-                  <a href="{{url('/prospectos/prospectos/')}}" class="btn btn-default" style="color:#000; background-color:#B3B3B3;">
+                  @if($prospecto->es_prospecto =='Si')
+                  <a href="{{url('/prospectos/prospectos/')}}" style="margin-top:25px; color:#000; background-color:#B3B3B3;" class="btn btn-default">
                     Regresar
-                  </a>  
+                  </a>
+                  @else 
+                   <a href="{{url('/prospectos/cotizaciones/')}}" style="margin-top:25px; color:#000; background-color:#B3B3B3;" class="btn btn-default">
+                      Regresar
+                    </a>
+                 @endif
                   <button type="submit" class="btn btn-DARK" :disabled="cargando" style="background-color:#12160F; color:#B68911;">
                     <i class="fas fa-save"></i>
                     Guardar Proxima Actividad
