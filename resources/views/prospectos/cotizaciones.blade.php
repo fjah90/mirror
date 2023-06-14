@@ -32,13 +32,13 @@
           <h3 class="panel-title">
             <div class="p-10" style="display:inline-block;">
               Proyectos
-              @role('Administrador')
+              @role('Administrador|Dirección')
                 de
                 <select class="form-control" @change="cargar()" v-model="usuarioCargado" style="width:auto;display:inline-block;">
-                  <option value="Todos">Todos</option>
-                  @foreach($usuarios as $usuario)
-                  <option value="{{$usuario->id}}">{{$usuario->name}}</option>
-                  @endforeach
+                       <option value="Todos">Todos</option>
+                        @foreach($vendedores as $vendedor)
+                          <option value="{{$vendedor->id}}">{{$vendedor->nombre}}</option>
+                        @endforeach
                 </select>
               @endrole
             </div>
@@ -61,6 +61,7 @@
                   <option value="2021-12-31">2021</option>
                   <option value="2022-12-31">2022</option>
                   <option value="2023-12-31">2023</option>
+                  <option value="2024-12-31">2024</option>
                 </select>
             </div>
             <div class="p-10" style="display:inline-block">
@@ -115,7 +116,7 @@
               <thead>
                 <tr style="background-color:#12160F">
                   <th class="hide">#</th>
-                  <th class="color_text">Usuario</th>
+                  <th class="color_text">Diseñador</th>
                   <th class="color_text">Cliente</th>
                   <th class="color_text">Nombre de Proyecto</th>
                   <th class="color_text">Cotizaciones</th>
@@ -127,11 +128,11 @@
               <tbody>
                 <tr v-for="(prospecto, index) in prospectos">
                   <td class="hide">@{{index+1}}</td>
-                  <template v-if="prospecto.user">
-                    <td>@{{prospecto.user.name}}</td>
+                  <template v-if="prospecto.vendedor">
+                    <td>@{{prospecto.vendedor.nombre}}</td>
                   </template>
                   <template v-else>
-                    <td>@{{prospecto.cliente.usuario_nombre}} </td>
+                    <td>@{{prospecto.cliente.usuario_nombre}}</td>
                   </template>
                   <td>@{{prospecto.cliente.nombre}}</td>
                   <td>@{{prospecto.nombre}}</td>
@@ -177,6 +178,7 @@ const app = new Vue({
     data: {
       prospectos: {!! json_encode($prospectos) !!},
       usuarioCargado: {{auth()->user()->id}},
+      vendedores:{!! json_encode($vendedores) !!},
       anio:'2023-12-31',
       tabla: {},
       locale: localeES,
