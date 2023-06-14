@@ -730,6 +730,8 @@
                 </a>
               </div>
             </div>
+
+
           <!-- Enviar Modal -->
         <modal v-model="openNotas" :title="'Notas Cotización '+notas.cotizacion_id" :footer="false">
             <form class="" @submit.prevent="notasCotizacion()">
