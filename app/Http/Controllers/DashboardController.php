@@ -65,7 +65,7 @@ class DashboardController extends Controller
             ->leftjoin('clientes', 'prospectos.cliente_id', '=', 'clientes.id')
             ->leftjoin('prospectos_tipos_actividades', 'prospectos_actividades.tipo_id', '=', 'prospectos_tipos_actividades.id')
             ->select('prospectos_actividades.*', 'prospectos.nombre as prospecto_nombre','prospectos.es_prospecto as es_prospecto', 'prospectos.id as prospecto_id', 'clientes.nombre as cliente_nombre', 'prospectos_tipos_actividades.nombre as tipo_actividad')
-            ->whereIn('prospecto_id', $prospectosId)->where('realizada', false)->whereBetween('prospectos_actividades.created_at', [$inicio, $anio])->orderBy('fecha', 'desc')->get();
+            ->whereIn('prospecto_id', $prospectosId)->where('realizada', false)->whereBetween('prospectos_actividades.created_at', [$inicio, $anio])->orderBy('fecha', 'asc')->get();
 
         $usuarios = User::select('id', 'name')->get();
 
@@ -215,7 +215,7 @@ class DashboardController extends Controller
             $anio = Carbon::parse($request->anio);
             $proximasActividades->whereBetween('prospectos_actividades.created_at', [$inicio, $anio]);
         }
-        $proximasActividades = $proximasActividades->where('realizada', false)->orderBy('fecha', 'desc')->get();
+        $proximasActividades = $proximasActividades->where('realizada', false)->orderBy('fecha', 'asc')->get();
 
         $usuarios = User::select('id', 'name')->get();
 
