@@ -725,13 +725,17 @@
 
           <div class="row">
               <div class="col-md-12 text-right">
+                @if($prospecto->es_prospecto =='si')
                 <a href="{{url('/prospectos/prospectos/')}}" style="margin-top:25px; color:#000; background-color:#B3B3B3" class="btn btn-default">
-                  Regresar
+                    Regresar
                 </a>
+                @elseif($prospecto->es_prospecto =='no')
+                <a href="{{url('/prospectos/cotizaciones/')}}" style="margin-top:25px; color:#000; background-color:#B3B3B3" class="btn btn-default">
+                    Regresar
+                </a>
+                @endif
               </div>
             </div>
-
-
           <!-- Enviar Modal -->
         <modal v-model="openNotas" :title="'Notas Cotización '+notas.cotizacion_id" :footer="false">
             <form class="" @submit.prevent="notasCotizacion()">
