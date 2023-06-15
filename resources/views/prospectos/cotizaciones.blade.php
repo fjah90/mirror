@@ -224,7 +224,7 @@ const app = new Vue({
     },
     methods: {
       dateParser(value){
-  			return moment(value, 'DD/MM/YYYY').toDate().getTime();
+        return moment(value, 'DD/MM/YYYY').toDate().getTime();
       },
       cargar(){
         axios.post('/prospectos/listado', {id: this.usuarioCargado , anio:this.anio})
