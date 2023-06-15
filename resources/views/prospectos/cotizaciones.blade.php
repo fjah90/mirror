@@ -64,7 +64,7 @@
                   <option value="2024-12-31">2024</option>
                 </select>
             </div>
-            <div class="p-10" style="display:inline-block">
+            <!--div class="p-10" style="display:inline-block">
               <dropdown id="fecha_ini_control" class="marg025" style="padding-bottom: 10px;">
               <div class="input-group">
                 <div class="input-group-btn">
@@ -105,7 +105,7 @@
                 </li>
               </template>
             </dropdown>
-            </div>
+            </div-->
           </h3>
         </div>
         <div class="panel-body">
