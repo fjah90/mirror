@@ -1128,7 +1128,6 @@ class ProspectosController extends Controller
      */
     public function edit(Prospecto $prospecto)
     {
-
         $prospecto->load([
             'cliente', 'actividades.tipo', 'actividades.productos_ofrecidos',
             'proxima_actividad.tipo', 'proxima_actividad.productos_ofrecidos'
@@ -1156,6 +1155,38 @@ class ProspectosController extends Controller
 
         $vendedores = Vendedor::all();
         return view('prospectos.edit', compact('prospecto', 'productos', 'tipos', 'vendedores'));
+    }
+
+
+    public function prospectoseditar(Prospecto $prospecto,$disenador_id,$anio)
+    {
+        $prospecto->load([
+            'cliente', 'actividades.tipo', 'actividades.productos_ofrecidos',
+            'proxima_actividad.tipo', 'proxima_actividad.productos_ofrecidos'
+        ]);
+
+        //dd($prospecto);
+
+        if (is_null($prospecto->proxima_actividad)) {
+            $prospecto->proxima_actividad = false;
+        }
+
+        $prospecto->nueva_proxima_actividad = (object) [
+            'fecha'   => '',
+            'tipo_id' => 1,
+            'tipo'    => '',
+        ];
+
+
+        $productos = Producto::with('categoria')->get();
+        if ($prospecto->es_prospecto == 'si') {
+            $tipos  = ProspectoTipoActividad::whereIn('id', [1, 12, 13, 14, 3, 15, 5])->get();
+        } else {
+            $tipos  = ProspectoTipoActividad::whereIn('id', [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11])->get();
+        }
+
+        $vendedores = Vendedor::all();
+        return view('prospectos.edit', compact('prospecto', 'productos', 'tipos', 'vendedores','disenador_id','anio'));
     }
 
     /**
