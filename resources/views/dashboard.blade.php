@@ -829,6 +829,7 @@ Dashboard | @parent
 {{-- footer_scripts --}}
 @section('footer_scripts')
 <script src="{{ URL::asset('js/plugins/chartist/Chart.min.js') }}" ></script>
+<script src="{{ URL::asset('js/plugins/date-time/datetime-moment.js') }}" ></script>
 <link href="{{ URL::asset('css/Chart.min.css') }}" rel="stylesheet" type="text/css">
 <script>
   const app = new Vue({

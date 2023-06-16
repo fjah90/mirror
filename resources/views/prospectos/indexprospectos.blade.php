@@ -138,9 +138,13 @@
                   -->
                   @endcan
                   @can('Prospectos editar')
+                  <button class="btn btn-xs btn-warning" title="Editar" @click="clickeditar(prospecto.id)"
+                  ><i class="fas fa-pencil-alt"></i></button>
+                  <!--
                   <a class="btn btn-xs btn-warning" title="Editar" :href="'/prospectos/'+prospecto.id+'/editar'">
                       <i class="fas fa-pencil-alt"></i>
                   </a>
+                  -->
                   @endcan
                   @can('Prospectos convertir')
                   <button class="btn btn-xs btn-success" title="Convertir el Proyecto" @click="convertirenproyecto(prospecto, index)">
@@ -484,6 +488,19 @@ const app = new Vue({
         else{
           var vend_id = {!! json_encode($disenador_id) !!};
           window.location.href = '/prospectos/'+prospecto_id+'/disenador/'+vend_id +'/anio/'+this.anio;
+        }
+        
+       
+      },
+      clickeditar(prospecto_id){
+        var rol = {!! json_encode(auth()->user()->roles[0]->name) !!}; 
+      
+        if( rol == 'Administrador' ||  rol == 'Dirección'){
+          window.location.href = '/prospectos/'+prospecto_id+'/disenador/'+this.usuarioCargado+'/anio/'+this.anio+'/editar';
+        }
+        else{
+          var vend_id = {!! json_encode($disenador_id) !!};
+          window.location.href = '/prospectos/'+prospecto_id+'/disenador/'+vend_id +'/anio/'+this.anio+'/editar';
         }
         
        
