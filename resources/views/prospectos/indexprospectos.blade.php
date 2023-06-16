@@ -129,9 +129,13 @@
                   <td>@{{prospecto.estatus}}</td>
                   <td class="text-right">
                   @can('Prospectos ver')
-                  <a class="btn btn-xs btn-info" title="Ver" :href="'/prospectos/'+prospecto.id">
+                  <button class="btn btn-xs btn-info" title="Ver" @click="clickver(prospecto.id)"
+                  ><i class="far fa-eye"></i></button>
+                  <!--
+                  <a class="btn btn-xs btn-info" title="Ver" :href="'/prospectos/'+prospecto.id+'/disenador/{{$disenador_id}}/anio/{{$anio2}}'">
                     <i class="far fa-eye"></i>
                   </a>
+                  -->
                   @endcan
                   @can('Prospectos editar')
                   <a class="btn btn-xs btn-warning" title="Editar" :href="'/prospectos/'+prospecto.id+'/editar'">
@@ -149,7 +153,7 @@
                <tfoot>
                   <tr>
                       <th colspan="3" style="text-align:right;">Total:</th>
-                      <th colspan="6">${{number_format($proyectos->sum('proyeccion_venta'), 2, '.', ',')}}</th>
+                      <th colspan="6" id='totalsum'>${{number_format($proyectos->sum('proyeccion_venta'), 2, '.', ',')}}</th>
                   </tr>
               </tfoot>
             </table>
@@ -229,8 +233,6 @@
                   </div>
                   <div class="form-group">
                   <label class="control-label">Diseñador</label>
-                  
-  
                     <select class="form-control" v-model="tarea.vendedor_id" style="width: 300px;" readonly>
                     @foreach($vendedores as $vendedor)
                     <option value="{{$vendedor->id}}">{{$vendedor->nombre}}</option>
@@ -302,9 +304,9 @@ const app = new Vue({
     data: {
       cotizaciones: {!! json_encode($cotizaciones) !!},
       prospectos: {!! json_encode($proyectos) !!},
-      usuarioCargado: {{auth()->user()->id}},
+      usuarioCargado: {!! json_encode($disenador_id) !!},
       vendedores:{!! json_encode($vendedores) !!},
-      anio:'2023-12-31',
+      anio:{!! json_encode($anio2) !!},
       tabla: {},
       tabla2:{},
       tareas: {!! json_encode($tareas) !!},
@@ -449,6 +451,7 @@ const app = new Vue({
           this.tabla.destroy();
           this.prospectos = data.prospectos;
           this.tareas = data.tareas;
+          document.getElementById('totalsum').innerHTML= '$'+data.total;
           //this.cotizaciones = data.cotizaciones;
           swal({
             title: "Exito",
@@ -471,6 +474,19 @@ const app = new Vue({
             type: "error"
           });
         });
+      },
+      clickver(prospecto_id){
+        var rol = {!! json_encode(auth()->user()->roles[0]->name) !!}; 
+      
+        if( rol == 'Administrador' ||  rol == 'Dirección'){
+          window.location.href = '/prospectos/'+prospecto_id+'/disenador/'+this.usuarioCargado+'/anio/'+this.anio;
+        }
+        else{
+          var vend_id = {!! json_encode($disenador_id) !!};
+          window.location.href = '/prospectos/'+prospecto_id+'/disenador/'+vend_id +'/anio/'+this.anio;
+        }
+        
+       
       },
       convertirenproyecto(prospecto, index){
         swal({
