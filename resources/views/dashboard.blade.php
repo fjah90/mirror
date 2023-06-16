@@ -900,7 +900,7 @@ Dashboard | @parent
       this.tablaCotizaciones = this.tableFactory("#tablaCotizaciones", "cotizaciones", this.datos_select_cotizaciones);
       this.tablaCompras = this.tableFactory("#tablaCompras", "compras", this.datos_select_compras);
       this.tablaAceptadas = this.tableFactory("#tablaAceptadas", "aceptadas", this.datos_select_aceptadas);
-      this.tablaActividades=this.tableFactory("#tablaActividades", "actividades", this.datos_select_actividades);
+      this.tablaActividades = this.tableFactory("#tablaActividades", "actividades", this.datos_select_actividades);
       var vue = this;
       this.porCobrar_data=this.data.cuentasCobrar;
       this.grafica();
@@ -1014,7 +1014,7 @@ Dashboard | @parent
         if (table == '#tablaCompras') {
           newTable=$(table).DataTable({
           "dom": 'f<"#'+prefix+'_fechas_container.pull-left">ltip',
-           "order":[[0,'asc']],
+            "order":[[0,'desc']],
 
             //
             "footerCallback": function ( row, data, start, end, display ) {
@@ -1223,7 +1223,7 @@ Dashboard | @parent
             this.tablaCotizaciones = this.tableFactory("#tablaCotizaciones", "cotizaciones", this.datos_select_cotizaciones);
             this.tablaCompras = this.tableFactory("#tablaCompras", "compras", this.datos_select_compras);
             this.tablaAceptadas = this.tableFactory("#tablaAceptadas", "aceptadas", this.datos_select_aceptadas);
-            this.tablaActividades=this.tableFactory("#tablaActividades", "actividades", this.datos_select_actividades);
+            this.tablaActividades = this.tableFactory("#tablaActividades", "actividades", this.datos_select_actividades);
             
             this.grafica();
           });
