@@ -896,6 +896,7 @@ Dashboard | @parent
         }
     },
     mounted(){
+      $.fn.dataTable.moment('DD/MM/YYYY');
       //Tabla cotizaciones
       this.tablaCotizaciones = this.tableFactory("#tablaCotizaciones", "cotizaciones", this.datos_select_cotizaciones);
       this.tablaCompras = this.tableFactory("#tablaCompras", "compras", this.datos_select_compras);
