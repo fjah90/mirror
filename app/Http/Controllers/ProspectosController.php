@@ -519,8 +519,20 @@ class ProspectosController extends Controller
         $vendedores = Vendedor::where('email',auth()->user()->email)->first();//filtro por email
 
         if (auth()->user()->tipo == 'Administrador' || auth()->user()->tipo == 'Dirección') {
+            $prospectos = Prospecto::with('cliente', 'ultima_actividad.tipo', 'proxima_actividad.tipo', 'vendedor', 'cotizaciones')
+            ->where('es_prospecto', 'no')
+            ->whereBetween('prospectos.created_at', [$inicio, $anio])
+            ->has('cliente')
+            ->get();
             $usuarios = Vendedor::all();
         } else {
+            $vendedor = Vendedor::where('email',auth()->user()->email)->first();
+            $prospectos = Prospecto::with('cliente', 'ultima_actividad.tipo', 'proxima_actividad.tipo', 'vendedor', 'cotizaciones')
+            ->where('vendedor_id', $vendedor->id)
+            ->where('es_prospecto', 'no')
+            ->whereBetween('prospectos.created_at', [$inicio, $anio])
+            ->has('cliente')
+            ->get();
             $usuarios = [];
         }
 
@@ -529,13 +541,9 @@ class ProspectosController extends Controller
                 $query->where("usuario_id", $user->id);
             })->get();
         */
+    
         
-        $prospectos = Prospecto::with('cliente', 'ultima_actividad.tipo', 'proxima_actividad.tipo', 'vendedor', 'cotizaciones')
-            ->where('user_id', $user->id)
-            ->where('es_prospecto', 'no')
-            ->whereBetween('prospectos.created_at', [$inicio, $anio])
-            ->has('cliente')
-            ->get();
+        
 
        $vendedores = Vendedor::all();
 
