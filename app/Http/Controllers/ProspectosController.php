@@ -564,14 +564,15 @@ class ProspectosController extends Controller
         if ($request->id == 'Todos') {
 
             if ($request->anio == 'Todos') {
-                $prospectos = Prospecto::with('vendedor', 'ultima_actividad.tipo', 'proxima_actividad.tipo', 'user', 'cotizaciones','cliente')->has('cliente')->orderBy('id', 'desc')->get();
+                $prospectos = Prospecto::with('vendedor', 'ultima_actividad.tipo', 'proxima_actividad.tipo', 'user', 'cotizaciones','cliente')->has('cliente')->where('prospectos.es_prospecto', 'no')->orderBy('id', 'desc')->get();
 
 
             } else {
                 $anio = Carbon::parse($request->anio);//aqui me error inesperado
                 $prospectos = Prospecto::whereBetween('created_at', [$inicio, $anio])
                     ->with('vendedor', 'ultima_actividad.tipo', 'proxima_actividad.tipo', 'user', 'cotizaciones','cliente')
-                    ->has('cliente')->orderBy('id', 'desc')->get();
+                    ->has('cliente')
+                    ->where('prospectos.es_prospecto', 'no')->orderBy('id', 'desc')->get();
             }
         } else {
             /*$user = User::with('prospectos.cliente', 'prospectos.ultima_actividad.tipo', 'prospectos.proxima_actividad.tipo')
@@ -584,12 +585,14 @@ class ProspectosController extends Controller
 
             if ($request->anio == 'Todos') {
                 $prospectos = Prospecto::with('vendedor', 'ultima_actividad.tipo', 'proxima_actividad.tipo', 'cotizaciones','cliente')
-                    ->where('vendedor_id', $request->id)->has('cliente')->get();
+                    ->where('vendedor_id', $request->id)
+                    ->where('prospectos.es_prospecto', 'no')->has('cliente')->get();
 
             } else {
                 $anio = Carbon::parse($request->anio);
                 $prospectos = Prospecto::with('vendedor', 'ultima_actividad.tipo', 'proxima_actividad.tipo', 'cotizaciones','cliente')
                     ->where('vendedor_id', $request->id)
+                    ->where('prospectos.es_prospecto', 'no')
                     ->whereHas('ultima_actividad', function ($query) use ($inicio, $anio) {
                         $query->whereBetween('created_at', [$inicio, $anio]);
                     })
