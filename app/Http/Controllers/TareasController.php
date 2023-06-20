@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Tarea;
+use App\Models\Vendedor;
+use App\User;
+use Auth;
 
 class TareasController extends Controller
 {
@@ -37,12 +40,13 @@ class TareasController extends Controller
     {
         $tarea = Tarea::create([
             'vendedor_id' => $request->vendedor_id,
+            'director_id' => $request->director_id,
             'tarea'      => $request->tarea,
             'user_id'  => Auth()->user()->id,
             'status'  => $request->status,
         ]);
         $tarea->save();
-        $tarea->load('vendedor');
+        $tarea->load('vendedor','director');
         return response()->json(['success' => true, "error" => false, 'tarea' => $tarea], 200);
     }
 
@@ -85,13 +89,37 @@ class TareasController extends Controller
         $tarea = Tarea::findOrfail($request->id);
         $tarea->update([
             'vendedor_id' => $request->vendedor_id,
+            'director_id' => $request->director_id,
             'tarea'      => $request->tarea,
             'status'  => $request->status,
         ]);
         $tarea->save();
-        $tareas = Tarea::with('vendedor')->where('vendedor_id',$tarea->vendedor_id)->get();
+        $tarea->load('vendedor','director');
+        //obetenemos el usuario del vendedor
+        if(Auth::user()->roles[0]->name == 'Diseñadores'){
+            $vendedor = Vendedor::where('email',auth()->user()->email)->first();
+            //obtenemos el usuario del vendedor
+            $usuario_vendedor = User::where('email',$vendedor->email)->first();
+            //
+            $tareas = Tarea::with('vendedor','director')->where('vendedor_id',$vendedor->id)->orwhere('user_id',$usuario_vendedor->id)->get();
+        }
+        else{
+            if($request->vendedor_id == null){
+                //si no tiene vendedor significa que un vendedor creo la tarea para un director 
+                $us = User::where('id',$tarea->user_id)->first();
+                $vend = Vendedor::where('email',$us->email)->first();
+                $tareas = Tarea::with('vendedor','director')->where('vendedor_id',$vend->id)->orwhere('user_id',$us->id)->get();
+            }
+            else{
+                $vend = Vendedor::where('id',$request->vendedor_id)->first();
+                $us = User::where('email',$vend->email)->first();
+                $tareas = Tarea::with('vendedor','director')->where('vendedor_id',$request->vendedor_id)->orwhere('director_id',auth()->user()->id)->get();
+            }
 
-        return response()->json(['success' => true, "error" => false, 'tareas' => $tareas], 200);
+        }
+        
+
+        return response()->json(['success' => true, "error" => false, 'tareas' => $tareas,'tarea'=>$tarea], 200);
     }
 
  

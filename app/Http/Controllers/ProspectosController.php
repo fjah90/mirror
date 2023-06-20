@@ -195,7 +195,7 @@ class ProspectosController extends Controller
                 }
         
                 if ($disenador_id == 'Todos') {
-                    $tareas = Tarea::with('vendedor')->get();
+                   
                     if ($anio2 == 'Todos') {
         
                         
@@ -227,7 +227,7 @@ class ProspectosController extends Controller
                     }
                 } else {
                    
-                    $tareas = Tarea::with('vendedor')->where('vendedor_id',$disenador_id)->get();
+                   
                     if ($anio2 == 'Todos') {
         
                         $proyectos = Prospecto::leftjoin('prospectos_actividades', 'prospectos.id', '=', 'prospectos_actividades.prospecto_id')
@@ -324,17 +324,39 @@ class ProspectosController extends Controller
             }
         }
 
-        if(Auth::user()->roles[0]->name == 'Diseñadores'){
-            $tareas = Tarea::with('vendedor')->where('vendedor_id',$vendedor->id)->get();
+        //carga de tareas
+        if ($disenador_id == 'Todos') {
+            //es un director y quiere ver todas las tareas de todos
+            $tareas = Tarea::with('vendedor','director')->get();
         }
         else{
-            $tareas = Tarea::with('vendedor')->get();
+            if(Auth::user()->roles[0]->name == 'Diseñadores'){
+                //obtenemos el usuario del vendedor
+                $usuario_vendedor = User::where('email',$vendedor->email)->first();
+                //
+                $tareas = Tarea::with('vendedor','director')->where('vendedor_id',$vendedor->id)->orwhere('user_id',$usuario_vendedor->id)->get();
+            }
+            else{
+                //obetenemos el usuario del vendedor
+                $vend = Vendedor::where('id',$disenador_id)->first();
+                $us = USer::where('email',$vend->email)->first();
+                $tareas = Tarea::with('vendedor','director')->where('vendedor_id',$disenador_id)->orwhere('user_id',$us->id)->get();
+            }
+
         }
-
+        //revisamos si tiene tareas pendientes
+        if(Auth::user()->roles[0]->name == 'Diseñadores'){
+            $tareas = Tarea::where('vendedor_id',$vendedo_id)->where('status','Pendiente')->get();
+        }
+        else{
+            $tareas_pendientes = Tarea::where('director_id',auth()->user()->id)->where('status','Pendiente')->get();
+        }
+        
+        
         
         
 
-        return view('prospectos.indexprospectos', compact('cotizaciones', 'usuarios', 'proyectos', 'estatus','vendedores','tareas','disenador_id','anio2'));
+        return view('prospectos.indexprospectos', compact('cotizaciones', 'usuarios', 'proyectos', 'estatus','vendedores','tareas','disenador_id','anio2','tareas_pendientes'));
     }
 
 
@@ -351,6 +373,12 @@ class ProspectosController extends Controller
         $anio2 = '2023-12-31';
 
         $user = auth()->user();
+        $directores = User::whereHas(
+            'roles', function($q){
+                $q->where('name', 'Dirección');
+            }
+        )->get();
+       
         //dd($user);
         $vendedor = Vendedor::where('email',auth()->user()->email)->first();
         if (auth()->user()->tipo == 'Administrador' || auth()->user()->tipo == 'Dirección') {   
@@ -494,17 +522,39 @@ class ProspectosController extends Controller
             }
         }
 
-        if(Auth::user()->roles[0]->name == 'Diseñadores'){
-            $tareas = Tarea::with('vendedor')->where('vendedor_id',$vendedor->id)->get();
+        //carga de tareas
+        if ($disenador_id == 'Todos') {
+            //es un director y quiere ver todas las tareas de todos
+            $tareas = Tarea::with('vendedor','director')->get();
         }
         else{
-            $tareas = Tarea::with('vendedor')->get();
+            if(Auth::user()->roles[0]->name == 'Diseñadores'){
+                //obtenemos el usuario del vendedor
+                $usuario_vendedor = User::where('email',$vendedor->email)->first();
+                //
+                $tareas = Tarea::with('vendedor','director')->where('vendedor_id',$vendedor->id)->orwhere('user_id',$usuario_vendedor->id)->get();
+            }
+            else{
+                //obetenemos el usuario del vendedor
+                $vend = Vendedor::where('id',$disenador_id)->first();
+                $us = User::where('email',$vend->email)->first();
+                $tareas = Tarea::with('vendedor','director')->where('vendedor_id',$disenador_id)->orwhere('user_id',$us->id)->get();
+            }
+
+        }
+
+        //revisamos si tiene tareas pendientes
+        if(Auth::user()->roles[0]->name == 'Diseñadores'){
+            $tareas_pendientes = Tarea::where('vendedor_id',$vendedor->id)->where('status','Pendiente')->get();
+        }
+        else{
+            $tareas_pendientes = Tarea::where('director_id',auth()->user()->id)->where('status','Pendiente')->get();
         }
 
         
         
 
-        return view('prospectos.indexprospectos', compact('cotizaciones', 'usuarios', 'proyectos', 'estatus','vendedores','tareas','disenador_id','anio2'));
+        return view('prospectos.indexprospectos', compact('cotizaciones', 'usuarios', 'proyectos', 'estatus','vendedores','tareas','disenador_id','anio2','directores','tareas_pendientes'));
     }
 
 
