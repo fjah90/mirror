@@ -7,6 +7,7 @@ use App\Models\Tarea;
 use App\Models\Vendedor;
 use App\User;
 use Auth;
+use Mail;
 
 class TareasController extends Controller
 {
@@ -47,6 +48,28 @@ class TareasController extends Controller
         ]);
         $tarea->save();
         $tarea->load('vendedor','director');
+        //sacamos el email del destinatario
+        if($request->vendedor_id == null){
+            $usuario_destino = User::findOrFail($request->director_id);
+        
+        }
+        else{
+            $usuario_destino = Vendedor::findOrFail($request->vendedor_id);
+            
+        }
+        //sacamos el usuario remitente
+        $usuario_remitente     = auth()->user();
+        $mensaje = 'Usted tiene una nueva tarea asiganada por';
+
+        Mail::send('email', ['mensaje' => $mensaje], function ($message)
+         {
+            $message->to('eduardo.santana@tigears.com')
+                //->cc('abraham@intercorp.mx')
+                //->replyTo($user->email, $user->name)
+                ->subject('Nueva tarea Robinson');
+        });
+
+
         return response()->json(['success' => true, "error" => false, 'tarea' => $tarea], 200);
     }
 
