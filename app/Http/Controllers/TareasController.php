@@ -59,11 +59,11 @@ class TareasController extends Controller
         }
         //sacamos el usuario remitente
         $usuario_remitente     = auth()->user();
-        $mensaje = 'Usted tiene una nueva tarea asiganada por';
+        $mensaje = 'Usted tiene una nueva tarea asiganada por '. $usuario_remitente->name .' favor de atenderla a la brevedad.';
 
         Mail::send('email', ['mensaje' => $mensaje], function ($message)
-         {
-            $message->to('eduardo.santana@tigears.com')
+        use ($usuario_destino) {
+            $message->to($usuario_destino->email)
                 //->cc('abraham@intercorp.mx')
                 //->replyTo($user->email, $user->name)
                 ->subject('Nueva tarea Robinson');
