@@ -79,6 +79,9 @@
             <div class="p-10">
               <button style="background-color:#FFCE56; color:#12160F;" class="btn btn-sm btn-primary" @click="modalTareas=true">
                   <i class="fas fa-star"></i> Tareas
+                  @if( count ($tareas_pendientes) > 0)
+                  <i class="fas fa-bell" style="    color: red; font-size: 22px; position: absolute; margin-top: -12px;"></i>
+                  @endif
               </button>
             </div>
             <div class="p-10" style="display:inline-block">
@@ -209,6 +212,7 @@
                   <th class="color_text">Tarea</th>
                   <th class="color_text">Status</th>
                   <th class="color_text">Diseñador</th>
+                  <th class="color_text">Director</th>
                   <th class="color_text">Fecha de creación</th>
                   <th class="color_text">Fecha de edición</th>
                   <th style="min-width:105px;"></th>
@@ -219,7 +223,10 @@
                  <td class="hide">@{{index + 1}}</td>
                  <td>@{{t.tarea}}</td>
                  <td>@{{t.status}}</td>
-                 <td>@{{t.vendedor.nombre}}</td>
+                 <td v-if="t.vendedor_id != null">@{{t.vendedor.nombre}}</td>
+                 <td v-else></td>
+                 <td v-if="t.director_id != null">@{{t.director.name}}</td>
+                 <td v-else></td>
                  <td>@{{t.created_at}}</td>
                  <td>@{{t.updated_at}}</td>
                  <td><button class="btn btn-xs btn-success" title="Editar tarea" @click="editartarea(t, index)" :disabled="editando">
@@ -243,7 +250,7 @@
                     @endforeach
                   </select>
                     <label class="control-label">Status</label>
-                    <select name="proyecto_id" v-model="tarea.status"
+                    <select name="status" v-model="tarea.status"
                                 class="form-control" required id="proyecto-select" style="width: 300px;">
                       
                           <option value="Pendiente">Pendiente</option>
@@ -253,21 +260,27 @@
                 </div>
             @endrole
             @role('Diseñadores')
-               <div class="form-group">
+                  <div class="form-group">
                       <label class="control-label text-danger">Tarea</label>
                       <textarea class="form-control" name="tarea" rows="3" cols="80"
-                                v-model="tarea.tarea" readonly></textarea>
+                                v-model="tarea.tarea"></textarea>
                   </div>
                   <div class="form-group">
-                  <label class="control-label">Diseñador</label>
+                  <label style="display:none;"  class="control-label">Diseñador</label>
                   
-                    <select class="form-control" v-model="tarea.vendedor_id" style="width: 300px;" disabled>
+                    <select style="display:none;"  class="form-control" v-model="tarea.vendedor_id" style="width: 300px;" disabled>
                       @foreach($vendedores as $vendedor)
                       <option value="{{$vendedor->id}}">{{$vendedor->nombre}}</option>
                       @endforeach
                     </select>
+                    <label id="directores_title" class="control-label">Directores</label>
+                    <select id="directores_select" class="form-control" v-model="tarea.director_id" style="width: 300px;">
+                      @foreach($directores as $director)
+                      <option value="{{$director->id}}">{{$director->name}}</option>
+                      @endforeach
+                    </select>
                     <label class="control-label">Status</label>
-                    <select name="proyecto_id" v-model="tarea.status"
+                    <select name="status" v-model="tarea.status"
                                 class="form-control" required id="proyecto-select" style="width: 300px;">
                       
                           <option value="Pendiente">Pendiente</option>
@@ -284,7 +297,7 @@
               <div class="form-group text-right">
                   <button type="submit" class="btn btn-default" :disabled="cargando" @click='guardartarea()'>Guardar</button>
                   <button type="button" class="btn btn-default"
-                          @click="proyecto_id=0; modalTareas=false;">
+                          @click="cancelartarea(); modalTareas=false;">
                       Cancelar
                   </button>
               </div>
@@ -318,9 +331,10 @@ const app = new Vue({
         id:'',
         tarea: '',
         status:'',
-        vendedor_id: ''
+        vendedor_id: '',
+        director_id:''
       },
-      modalTareas: false,
+      modalTareas: true,
       locale: localeES,
       modalNuecaCotizacion: false,
       fecha_ini: '',
@@ -382,8 +396,37 @@ const app = new Vue({
           }
       },
       editartarea(tarea , index){
+        var rol = {!! json_encode(auth()->user()->roles[0]->name) !!}; 
+        if(rol == 'Diseñadores'){
+          $('#directores_select').css('display','none');
+          $('#directores_title').css('display','none');
+          
+        }
+        else{
+          $('#directores_select').css('display','block');
+          $('#directores_title').css('display','block');
+        }
         this.editando = true;
         this.tarea = tarea;
+      },
+      cancelartarea(){
+        this.tarea.tarea = '';
+        this.tarea.id = '';   
+        this.tarea.vendedor_id = null;
+        this.tarea.director_id = null;
+        this.tarea.status = 'Pendiente';
+        this.cargando = false;
+        this.editando = false;
+        var rol = {!! json_encode(auth()->user()->roles[0]->name) !!}; 
+        if(rol == 'Diseñadores'){        
+          $('#directores_select').css('display','block');
+          $('#directores_title').css('display','block');
+        }
+        else{
+          $('#directores_select').css('display','none');
+          $('#directores_title').css('display','none');
+        }
+        
       },
      guardartarea(){
         var formData = objectToFormData(this.tarea, {indices: true});
@@ -427,6 +470,7 @@ const app = new Vue({
               this.tarea.tarea = '';
               this.tarea.id = '';   
               this.tarea.vendedor_id = '';
+              this.tarea.director_id = '';
               this.tarea.status = 'Pendiente';
               this.cargando = false;
               this.editando = false;
