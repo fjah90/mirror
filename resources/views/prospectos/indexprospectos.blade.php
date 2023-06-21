@@ -397,7 +397,7 @@ const app = new Vue({
       },
       editartarea(tarea , index){
         var rol = {!! json_encode(auth()->user()->roles[0]->name) !!}; 
-        if(rol = 'Diseñadores'){
+        if(rol == 'Diseñadores'){
           $('#directores_select').css('display','none');
           $('#directores_title').css('display','none');
           
@@ -412,13 +412,13 @@ const app = new Vue({
       cancelartarea(){
         this.tarea.tarea = '';
         this.tarea.id = '';   
-        this.tarea.vendedor_id = '';
-        this.tarea.director_id = '';
+        this.tarea.vendedor_id = null;
+        this.tarea.director_id = null;
         this.tarea.status = 'Pendiente';
         this.cargando = false;
         this.editando = false;
         var rol = {!! json_encode(auth()->user()->roles[0]->name) !!}; 
-        if(rol = 'Diseñadores'){        
+        if(rol == 'Diseñadores'){        
           $('#directores_select').css('display','block');
           $('#directores_title').css('display','block');
         }
