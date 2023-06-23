@@ -39,6 +39,15 @@
             <div class="p-10" style="display:inline-block">
               Diseñador  
               @role('Administrador|Dirección')
+                <select class="form-control"  v-model="valor_disenadores" style="width:auto;display:inline-block;">
+                <option v-for="(option, index) in select_disenadores" v-bind:value="option.valor" >
+                  @{{ option.opcion }}
+                </option>
+                </select>
+              @endrole
+
+              <!--
+              @role('Administrador|Dirección')
                 <select class="form-control" @change="cargar()" v-model="usuarioCargado" style="width:auto;display:inline-block;">
                   <option value="Todos">Todos</option>
                   @foreach($usuarios as $usuario)
@@ -46,6 +55,7 @@
                   @endforeach
                 </select>
               @endrole
+-->
             </div>
             <div class="p-10 " style="display:inline-block;float: right;">
               <button class="btn btn-warning btn-sm btn">
@@ -132,22 +142,24 @@
                   <td>@{{prospecto.estatus}}</td>
                   <td class="text-right">
                   @can('Prospectos ver')
+                   <!--
                   <button class="btn btn-xs btn-info" title="Ver" @click="clickver(prospecto.id)"
                   ><i class="far fa-eye"></i></button>
-                  <!--
-                  <a class="btn btn-xs btn-info" title="Ver" :href="'/prospectos/'+prospecto.id+'/disenador/{{$disenador_id}}/anio/{{$anio2}}'">
+                   -->
+                  <a class="btn btn-xs btn-info" title="Ver" :href="'/prospectos/'+prospecto.id">
                     <i class="far fa-eye"></i>
                   </a>
-                  -->
+                
                   @endcan
                   @can('Prospectos editar')
+                  <!--
                   <button class="btn btn-xs btn-warning" title="Editar" @click="clickeditar(prospecto.id)"
                   ><i class="fas fa-pencil-alt"></i></button>
-                  <!--
+                   -->
                   <a class="btn btn-xs btn-warning" title="Editar" :href="'/prospectos/'+prospecto.id+'/editar'">
                       <i class="fas fa-pencil-alt"></i>
                   </a>
-                  -->
+                 
                   @endcan
                   @can('Prospectos convertir')
                   <button class="btn btn-xs btn-success" title="Convertir el Proyecto" @click="convertirenproyecto(prospecto, index)">
@@ -341,7 +353,9 @@ const app = new Vue({
       fecha_fin: '',
       proyecto_id: '',
       cargando: false,
-      editando : false
+      editando : false,
+      select_disenadores:[],
+      valor_disenadores:'Diseñadores',
     },
     filters: {
         formatoMoneda(numero) {
@@ -349,9 +363,33 @@ const app = new Vue({
         },
     },
     mounted(){
+      var vue =this;
       $.fn.dataTable.moment('DD/MM/YYYY');
       this.tabla = $("#tabla").DataTable({
+        stateSave: true,
         "dom": 'f<"#fechas_container.pull-left">tlip',
+       
+        initComplete: function () {
+            //llenamos los datos para el select de disenadores seleccionamos la columna de la que vamos a sacar los datos pata el select en este caso column(3)
+            vue.select_disenadores.push({opcion :'Todos', valor :''})
+            //vue.datos_select.clientes.push('');
+            this.api().column(3).data().sort().unique().each(function(d,j){   
+              var b = d.replace("&amp;", " &");
+
+              var a = {
+                opcion : b,
+                valor : b
+              };  
+
+              if (b == "") {
+                vue.select_disenadores.push({opcion :'Todos', valor :''})
+              }
+              else{
+                vue.select_disenadores.push(a);
+              }
+            });
+            ///fin llenara datos para select de vendedores
+        },
         //"order": [[ 4, "desc" ]]
       });
       //$("#fechas_container").append($("#fecha_ini_control"));
@@ -383,7 +421,11 @@ const app = new Vue({
       },
       fecha_fin: function (val) {
         this.tabla.draw();
-      }
+      },
+      //filtramos por el disenador seleccionado
+      valor_disenadores:function(val){
+        this.tabla.columns(3).search(this.valor_disenadores).draw();
+      },
     },
     methods: {
       dateParser(value){
@@ -523,6 +565,7 @@ const app = new Vue({
           });
         });
       },
+      /*
       clickver(prospecto_id){
         var rol = {!! json_encode(auth()->user()->roles[0]->name) !!}; 
       
@@ -549,6 +592,7 @@ const app = new Vue({
         
        
       },
+      */
       convertirenproyecto(prospecto, index){
         swal({
           title: 'Cuidado',
