@@ -40,9 +40,10 @@
               Diseñador  
               @role('Administrador|Dirección')
                 <select class="form-control"  v-model="valor_disenadores" style="width:auto;display:inline-block;">
-                <option v-for="(option, index) in select_disenadores" v-bind:value="option.valor" >
-                  @{{ option.opcion }}
-                </option>
+                <option value="">Todos</option>
+                  @foreach($usuarios as $usuario)
+                  <option value="{{$usuario->nombre}}">{{$usuario->nombre}}</option>
+                  @endforeach
                 </select>
               @endrole
 
@@ -369,28 +370,7 @@ const app = new Vue({
         stateSave: true,
         "dom": 'f<"#fechas_container.pull-left">tlip',
        
-        initComplete: function () {
-            //llenamos los datos para el select de disenadores seleccionamos la columna de la que vamos a sacar los datos pata el select en este caso column(3)
-            vue.select_disenadores.push({opcion :'Todos', valor :''})
-            //vue.datos_select.clientes.push('');
-            this.api().column(3).data().sort().unique().each(function(d,j){   
-              var b = d.replace("&amp;", " &");
-
-              var a = {
-                opcion : b,
-                valor : b
-              };  
-
-              if (b == "") {
-                vue.select_disenadores.push({opcion :'Todos', valor :''})
-              }
-              else{
-                vue.select_disenadores.push(a);
-              }
-            });
-            ///fin llenara datos para select de vendedores
-        },
-        //"order": [[ 4, "desc" ]]
+        
       });
       //$("#fechas_container").append($("#fecha_ini_control"));
       //$("#fechas_container").append($("#fecha_fin_control"));
