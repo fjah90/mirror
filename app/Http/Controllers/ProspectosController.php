@@ -553,7 +553,7 @@ class ProspectosController extends Controller
 
         $proximas_actividades = Prospecto::leftjoin('prospectos_actividades', 'prospectos_actividades.prospecto_id', '=', 'prospectos.id')
         ->leftjoin('prospectos_tipos_actividades', 'prospectos_actividades.tipo_id', '=', 'prospectos_tipos_actividades.id')
-        ->select('prospectos.nombre as nombre', 'prospectos_tipos_actividades.nombre as title', 'prospectos_actividades.descripcion as description', 'prospectos_actividades.fecha as start')
+        ->select('prospectos.nombre as title', 'prospectos_tipos_actividades.nombre as description', 'prospectos_actividades.descripcion as texto', 'prospectos_actividades.fecha as start')
         ->where('prospectos_actividades.realizada',0)
         ->get()->toArray();
 
