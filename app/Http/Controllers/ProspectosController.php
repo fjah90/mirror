@@ -551,10 +551,15 @@ class ProspectosController extends Controller
             $tareas_pendientes = Tarea::where('director_id',auth()->user()->id)->where('status','Pendiente')->get();
         }
 
-        
-        
+        $proximas_actividades = Prospecto::leftjoin('prospectos_actividades', 'prospectos_actividades.prospecto_id', '=', 'prospectos.id')
+        ->leftjoin('prospectos_tipos_actividades', 'prospectos_actividades.tipo_id', '=', 'prospectos_tipos_actividades.id')
+        ->select('prospectos.nombre as nombre', 'prospectos_tipos_actividades.nombre as title', 'prospectos_actividades.descripcion as description', 'prospectos_actividades.fecha as start')
+        ->where('prospectos_actividades.realizada',0)
+        ->get()->toArray();
 
-        return view('prospectos.indexprospectos', compact('cotizaciones', 'usuarios', 'proyectos', 'estatus','vendedores','tareas','disenador_id','anio2','directores','tareas_pendientes'));
+
+
+        return view('prospectos.indexprospectos', compact('cotizaciones', 'usuarios', 'proyectos', 'estatus','vendedores','tareas','disenador_id','anio2','directores','tareas_pendientes','proximas_actividades'));
     }
 
 
