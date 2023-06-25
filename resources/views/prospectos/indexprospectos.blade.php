@@ -59,6 +59,8 @@
 -->
             </div>
             <div class="p-10 " style="display:inline-block;float: right;">
+            <a href="#myModal" role="button" class="btn btn-warning btn-sm btn" data-toggle="modal" style="color:#000">
+            <i class="fas fa-calendar"></i> </a>
               <button class="btn btn-warning btn-sm btn">
               @can('Prospectos nuevo')
                 <a href="{{route('prospectos.create2')}}" style="color:#000;">
@@ -317,6 +319,48 @@
           
         
     </modal>
+
+
+    <!-- Modal eventos -->
+    <modal v-model="modalEventos" :title="'Actividad'" :footer="false"  size="md">
+        <div class="modal-header">
+            <h4 class="modal-title" id="titulo_evento">Modal title</h4>
+          </div>
+          <div class="modal-body" id="descripcion_evento">
+            <p>Modal body text goes here.</p>
+          </div>
+    
+      <div class="form-group text-right">
+          <button type="button" class="btn btn-default"
+                  @click="modalEventos=false;">
+              Cancelar
+          </button>
+      </div>
+          
+        
+    </modal>
+
+    <div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h3 id="myModalLabel">Actividades</h3>
+            </div>
+            <div class="modal-body">
+                
+                        <div id="calendar"></div>
+                      
+            </div>
+            <div class="modal-footer">
+                <button class="btn" data-dismiss="modal" aria-hidden="true">Cerrar</button>
+            </div>
+        </div>
+      </div>
+    </div>
+
+
+   
 </section>
 
 
@@ -348,6 +392,8 @@ const app = new Vue({
         director_id:''
       },
       modalTareas: true,
+      modalEventos: false,
+      modalCalendario:false,
       locale: localeES,
       modalNuecaCotizacion: false,
       fecha_ini: '',
@@ -372,6 +418,26 @@ const app = new Vue({
        
         
       });
+  
+
+      document.addEventListener('DOMContentLoaded', function() {
+        var calendarEl = document.getElementById('calendar');
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+          initialView: 'dayGridMonth',
+          events: {!! json_encode($proximas_actividades) !!},
+          eventColor: '#800080',
+          eventClick: function(info) {
+            document.getElementById("titulo_evento").innerHTML = info.event.title;
+            document.getElementById("descripcion_evento").innerHTML = info.event.extendedProps.description;
+              vue.modalEventos = true;
+            }
+        });
+        $('#myModal').on('shown.bs.modal', function () {
+            calendar.render();
+          });
+        
+      });
+
       //$("#fechas_container").append($("#fecha_ini_control"));
       //$("#fechas_container").append($("#fecha_fin_control"));
       
