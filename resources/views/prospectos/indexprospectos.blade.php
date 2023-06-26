@@ -341,7 +341,7 @@
     </modal>
 
     <div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
+      <div class="modal-dialog" style="width: 1000px;">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
@@ -415,6 +415,28 @@ const app = new Vue({
       this.tabla = $("#tabla").DataTable({
         stateSave: true,
         "dom": 'f<"#fechas_container.pull-left">tlip',
+        //Aqui lo que hace es que cambia los datos del footer siempre que haya un filtrado
+        "footerCallback": function ( row, data, start, end, display ) {
+          //tomamos los datos de nuestra tabla
+            var api = this.api(), data;
+            //como las cantidades vienen en formato les quitamos el formato y dejamo solo los valores numericos
+            var formato = function ( i ) {
+                return typeof i === 'string' ?
+                    i.replace(/[\$,]/g, '')*1 :
+                    typeof i === 'number' ?
+                        i : 0;
+            };
+            //datos de la tabla con filtros aplicados
+            var datos= api.columns([4], {search: 'applied'}).data();
+            var totalMxn = 0;
+            //suma de montos
+            datos[0].forEach(function(element, index){      
+                    totalMxn+=formato(element)
+            });
+            // Actualizar el campo
+            var nCells = row.getElementsByTagName('th');
+            nCells[1].innerHTML = accounting.formatMoney(totalMxn, "$", 2);
+        }
        
         
       });
@@ -423,6 +445,8 @@ const app = new Vue({
       document.addEventListener('DOMContentLoaded', function() {
         var calendarEl = document.getElementById('calendar');
         var calendar = new FullCalendar.Calendar(calendarEl, {
+          height: 650,
+          aspectRatio: 2,
           initialView: 'dayGridMonth',
           events: {!! json_encode($proximas_actividades) !!},
           eventColor: '#800080',
@@ -430,7 +454,8 @@ const app = new Vue({
             document.getElementById("titulo_evento").innerHTML = info.event.title;
             document.getElementById("descripcion_evento").innerHTML = info.event.extendedProps.description;
               vue.modalEventos = true;
-            }
+            },
+
         });
         $('#myModal').on('shown.bs.modal', function () {
             calendar.render();

@@ -21,6 +21,7 @@ use App\Models\Vendedor;
 use App\Models\Tarea;
 use App\Models\UnidadMedida;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 use App\User;
 use Auth;
 use DateTime;
@@ -553,7 +554,8 @@ class ProspectosController extends Controller
 
         $proximas_actividades = Prospecto::leftjoin('prospectos_actividades', 'prospectos_actividades.prospecto_id', '=', 'prospectos.id')
         ->leftjoin('prospectos_tipos_actividades', 'prospectos_actividades.tipo_id', '=', 'prospectos_tipos_actividades.id')
-        ->select('prospectos.nombre as title', 'prospectos_tipos_actividades.nombre as description', 'prospectos_actividades.descripcion as texto', 'prospectos_actividades.fecha as start')
+        ->leftjoin('vendedores', 'prospectos.vendedor_id', '=', 'vendedores.id')
+        ->select(DB::raw('CONCAT(prospectos.nombre , " - ", vendedores.nombre) AS title'),'vendedores.nombre as vendedor','prospectos_tipos_actividades.nombre as description', 'prospectos_actividades.descripcion as texto', 'prospectos_actividades.fecha as start' )
         ->where('prospectos_actividades.realizada',0)
         ->get()->toArray();
 
