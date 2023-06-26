@@ -229,7 +229,7 @@ Dashboard | @parent
         </div>
         <div class="text-right">
           <h3><b id="widget_count3">@{{data.prospectos}}</b></h3>
-          <p>Proyectos en proceso</p>
+          <p>Proyectos Prospectos</p>
         </div>
       </div>
     </div>
@@ -829,6 +829,7 @@ Dashboard | @parent
 {{-- footer_scripts --}}
 @section('footer_scripts')
 <script src="{{ URL::asset('js/plugins/chartist/Chart.min.js') }}" ></script>
+<script src="{{ URL::asset('js/plugins/date-time/datetime-moment.js') }}" ></script>
 <link href="{{ URL::asset('css/Chart.min.css') }}" rel="stylesheet" type="text/css">
 <script>
   const app = new Vue({
@@ -896,6 +897,7 @@ Dashboard | @parent
         }
     },
     mounted(){
+      $.fn.dataTable.moment('DD/MM/YYYY');
       //Tabla cotizaciones
       this.tablaCotizaciones = this.tableFactory("#tablaCotizaciones", "cotizaciones", this.datos_select_cotizaciones);
       this.tablaCompras = this.tableFactory("#tablaCompras", "compras", this.datos_select_compras);

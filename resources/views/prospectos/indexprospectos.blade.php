@@ -39,6 +39,16 @@
             <div class="p-10" style="display:inline-block">
               Diseñador  
               @role('Administrador|Dirección')
+                <select class="form-control"  v-model="valor_disenadores" style="width:auto;display:inline-block;">
+                <option value="">Todos</option>
+                  @foreach($usuarios as $usuario)
+                  <option value="{{$usuario->nombre}}">{{$usuario->nombre}}</option>
+                  @endforeach
+                </select>
+              @endrole
+
+              <!--
+              @role('Administrador|Dirección')
                 <select class="form-control" @change="cargar()" v-model="usuarioCargado" style="width:auto;display:inline-block;">
                   <option value="Todos">Todos</option>
                   @foreach($usuarios as $usuario)
@@ -46,8 +56,11 @@
                   @endforeach
                 </select>
               @endrole
+-->
             </div>
             <div class="p-10 " style="display:inline-block;float: right;">
+            <a href="#myModal" role="button" class="btn btn-warning btn-sm btn" data-toggle="modal" style="color:#000">
+            <i class="fas fa-calendar"></i> </a>
               <button class="btn btn-warning btn-sm btn">
               @can('Prospectos nuevo')
                 <a href="{{route('prospectos.create2')}}" style="color:#000;">
@@ -79,6 +92,9 @@
             <div class="p-10">
               <button style="background-color:#FFCE56; color:#12160F;" class="btn btn-sm btn-primary" @click="modalTareas=true">
                   <i class="fas fa-star"></i> Tareas
+                  @if( count ($tareas_pendientes) > 0)
+                  <i class="fas fa-bell" style="    color: red; font-size: 22px; position: absolute; margin-top: -12px;"></i>
+                  @endif
               </button>
             </div>
             <div class="p-10" style="display:inline-block">
@@ -129,14 +145,24 @@
                   <td>@{{prospecto.estatus}}</td>
                   <td class="text-right">
                   @can('Prospectos ver')
+                   <!--
+                  <button class="btn btn-xs btn-info" title="Ver" @click="clickver(prospecto.id)"
+                  ><i class="far fa-eye"></i></button>
+                   -->
                   <a class="btn btn-xs btn-info" title="Ver" :href="'/prospectos/'+prospecto.id">
                     <i class="far fa-eye"></i>
                   </a>
+                
                   @endcan
                   @can('Prospectos editar')
+                  <!--
+                  <button class="btn btn-xs btn-warning" title="Editar" @click="clickeditar(prospecto.id)"
+                  ><i class="fas fa-pencil-alt"></i></button>
+                   -->
                   <a class="btn btn-xs btn-warning" title="Editar" :href="'/prospectos/'+prospecto.id+'/editar'">
                       <i class="fas fa-pencil-alt"></i>
                   </a>
+                 
                   @endcan
                   @can('Prospectos convertir')
                   <button class="btn btn-xs btn-success" title="Convertir el Proyecto" @click="convertirenproyecto(prospecto, index)">
@@ -149,7 +175,7 @@
                <tfoot>
                   <tr>
                       <th colspan="3" style="text-align:right;">Total:</th>
-                      <th colspan="6">${{number_format($proyectos->sum('proyeccion_venta'), 2, '.', ',')}}</th>
+                      <th colspan="6" id='totalsum'>${{number_format($proyectos->sum('proyeccion_venta'), 2, '.', ',')}}</th>
                   </tr>
               </tfoot>
             </table>
@@ -201,6 +227,7 @@
                   <th class="color_text">Tarea</th>
                   <th class="color_text">Status</th>
                   <th class="color_text">Diseñador</th>
+                  <th class="color_text">Director</th>
                   <th class="color_text">Fecha de creación</th>
                   <th class="color_text">Fecha de edición</th>
                   <th style="min-width:105px;"></th>
@@ -211,7 +238,10 @@
                  <td class="hide">@{{index + 1}}</td>
                  <td>@{{t.tarea}}</td>
                  <td>@{{t.status}}</td>
-                 <td>@{{t.vendedor.nombre}}</td>
+                 <td v-if="t.vendedor_id != null">@{{t.vendedor.nombre}}</td>
+                 <td v-else></td>
+                 <td v-if="t.director_id != null">@{{t.director.name}}</td>
+                 <td v-else></td>
                  <td>@{{t.created_at}}</td>
                  <td>@{{t.updated_at}}</td>
                  <td><button class="btn btn-xs btn-success" title="Editar tarea" @click="editartarea(t, index)" :disabled="editando">
@@ -229,15 +259,13 @@
                   </div>
                   <div class="form-group">
                   <label class="control-label">Diseñador</label>
-                  
-  
                     <select class="form-control" v-model="tarea.vendedor_id" style="width: 300px;" readonly>
                     @foreach($vendedores as $vendedor)
                     <option value="{{$vendedor->id}}">{{$vendedor->nombre}}</option>
                     @endforeach
                   </select>
                     <label class="control-label">Status</label>
-                    <select name="proyecto_id" v-model="tarea.status"
+                    <select name="status" v-model="tarea.status"
                                 class="form-control" required id="proyecto-select" style="width: 300px;">
                       
                           <option value="Pendiente">Pendiente</option>
@@ -247,21 +275,27 @@
                 </div>
             @endrole
             @role('Diseñadores')
-               <div class="form-group">
+                  <div class="form-group">
                       <label class="control-label text-danger">Tarea</label>
                       <textarea class="form-control" name="tarea" rows="3" cols="80"
-                                v-model="tarea.tarea" readonly></textarea>
+                                v-model="tarea.tarea"></textarea>
                   </div>
                   <div class="form-group">
-                  <label class="control-label">Diseñador</label>
+                  <label style="display:none;"  class="control-label">Diseñador</label>
                   
-                    <select class="form-control" v-model="tarea.vendedor_id" style="width: 300px;" disabled>
+                    <select style="display:none;"  class="form-control" v-model="tarea.vendedor_id" style="width: 300px;" disabled>
                       @foreach($vendedores as $vendedor)
                       <option value="{{$vendedor->id}}">{{$vendedor->nombre}}</option>
                       @endforeach
                     </select>
+                    <label id="directores_title" class="control-label">Directores</label>
+                    <select id="directores_select" class="form-control" v-model="tarea.director_id" style="width: 300px;">
+                      @foreach($directores as $director)
+                      <option value="{{$director->id}}">{{$director->name}}</option>
+                      @endforeach
+                    </select>
                     <label class="control-label">Status</label>
-                    <select name="proyecto_id" v-model="tarea.status"
+                    <select name="status" v-model="tarea.status"
                                 class="form-control" required id="proyecto-select" style="width: 300px;">
                       
                           <option value="Pendiente">Pendiente</option>
@@ -278,13 +312,55 @@
               <div class="form-group text-right">
                   <button type="submit" class="btn btn-default" :disabled="cargando" @click='guardartarea()'>Guardar</button>
                   <button type="button" class="btn btn-default"
-                          @click="proyecto_id=0; modalTareas=false;">
+                          @click="cancelartarea(); modalTareas=false;">
                       Cancelar
                   </button>
               </div>
           
         
     </modal>
+
+
+    <!-- Modal eventos -->
+    <modal v-model="modalEventos" :title="'Actividad'" :footer="false"  size="md">
+        <div class="modal-header">
+            <h4 class="modal-title" id="titulo_evento">Modal title</h4>
+          </div>
+          <div class="modal-body" id="descripcion_evento">
+            <p>Modal body text goes here.</p>
+          </div>
+    
+      <div class="form-group text-right">
+          <button type="button" class="btn btn-default"
+                  @click="modalEventos=false;">
+              Cancelar
+          </button>
+      </div>
+          
+        
+    </modal>
+
+    <div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h3 id="myModalLabel">Próximas Actividades</h3>
+            </div>
+            <div class="modal-body">
+                
+                        <div id="calendar"></div>
+                      
+            </div>
+            <div class="modal-footer">
+                <button class="btn" data-dismiss="modal" aria-hidden="true">Cerrar</button>
+            </div>
+        </div>
+      </div>
+    </div>
+
+
+   
 </section>
 
 
@@ -302,9 +378,9 @@ const app = new Vue({
     data: {
       cotizaciones: {!! json_encode($cotizaciones) !!},
       prospectos: {!! json_encode($proyectos) !!},
-      usuarioCargado: {{auth()->user()->id}},
+      usuarioCargado: {!! json_encode($disenador_id) !!},
       vendedores:{!! json_encode($vendedores) !!},
-      anio:'2023-12-31',
+      anio:{!! json_encode($anio2) !!},
       tabla: {},
       tabla2:{},
       tareas: {!! json_encode($tareas) !!},
@@ -312,16 +388,21 @@ const app = new Vue({
         id:'',
         tarea: '',
         status:'',
-        vendedor_id: ''
+        vendedor_id: '',
+        director_id:''
       },
-      modalTareas: false,
+      modalTareas: true,
+      modalEventos: false,
+      modalCalendario:false,
       locale: localeES,
       modalNuecaCotizacion: false,
       fecha_ini: '',
       fecha_fin: '',
       proyecto_id: '',
       cargando: false,
-      editando : false
+      editando : false,
+      select_disenadores:[],
+      valor_disenadores:'Diseñadores',
     },
     filters: {
         formatoMoneda(numero) {
@@ -329,11 +410,34 @@ const app = new Vue({
         },
     },
     mounted(){
+      var vue =this;
       $.fn.dataTable.moment('DD/MM/YYYY');
       this.tabla = $("#tabla").DataTable({
+        stateSave: true,
         "dom": 'f<"#fechas_container.pull-left">tlip',
-        //"order": [[ 4, "desc" ]]
+       
+        
       });
+  
+
+      document.addEventListener('DOMContentLoaded', function() {
+        var calendarEl = document.getElementById('calendar');
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+          initialView: 'dayGridMonth',
+          events: {!! json_encode($proximas_actividades) !!},
+          eventColor: '#800080',
+          eventClick: function(info) {
+            document.getElementById("titulo_evento").innerHTML = info.event.title;
+            document.getElementById("descripcion_evento").innerHTML = info.event.extendedProps.description;
+              vue.modalEventos = true;
+            }
+        });
+        $('#myModal').on('shown.bs.modal', function () {
+            calendar.render();
+          });
+        
+      });
+
       //$("#fechas_container").append($("#fecha_ini_control"));
       //$("#fechas_container").append($("#fecha_fin_control"));
       
@@ -363,7 +467,11 @@ const app = new Vue({
       },
       fecha_fin: function (val) {
         this.tabla.draw();
-      }
+      },
+      //filtramos por el disenador seleccionado
+      valor_disenadores:function(val){
+        this.tabla.columns(3).search(this.valor_disenadores).draw();
+      },
     },
     methods: {
       dateParser(value){
@@ -376,8 +484,37 @@ const app = new Vue({
           }
       },
       editartarea(tarea , index){
+        var rol = {!! json_encode(auth()->user()->roles[0]->name) !!}; 
+        if(rol == 'Diseñadores'){
+          $('#directores_select').css('display','none');
+          $('#directores_title').css('display','none');
+          
+        }
+        else{
+          $('#directores_select').css('display','block');
+          $('#directores_title').css('display','block');
+        }
         this.editando = true;
         this.tarea = tarea;
+      },
+      cancelartarea(){
+        this.tarea.tarea = '';
+        this.tarea.id = '';   
+        this.tarea.vendedor_id = null;
+        this.tarea.director_id = null;
+        this.tarea.status = 'Pendiente';
+        this.cargando = false;
+        this.editando = false;
+        var rol = {!! json_encode(auth()->user()->roles[0]->name) !!}; 
+        if(rol == 'Diseñadores'){        
+          $('#directores_select').css('display','block');
+          $('#directores_title').css('display','block');
+        }
+        else{
+          $('#directores_select').css('display','none');
+          $('#directores_title').css('display','none');
+        }
+        
       },
      guardartarea(){
         var formData = objectToFormData(this.tarea, {indices: true});
@@ -421,6 +558,7 @@ const app = new Vue({
               this.tarea.tarea = '';
               this.tarea.id = '';   
               this.tarea.vendedor_id = '';
+              this.tarea.director_id = '';
               this.tarea.status = 'Pendiente';
               this.cargando = false;
               this.editando = false;
@@ -449,6 +587,7 @@ const app = new Vue({
           this.tabla.destroy();
           this.prospectos = data.prospectos;
           this.tareas = data.tareas;
+          document.getElementById('totalsum').innerHTML= '$'+data.total;
           //this.cotizaciones = data.cotizaciones;
           swal({
             title: "Exito",
@@ -472,6 +611,34 @@ const app = new Vue({
           });
         });
       },
+      /*
+      clickver(prospecto_id){
+        var rol = {!! json_encode(auth()->user()->roles[0]->name) !!}; 
+      
+        if( rol == 'Administrador' ||  rol == 'Dirección'){
+          window.location.href = '/prospectos/'+prospecto_id+'/disenador/'+this.usuarioCargado+'/anio/'+this.anio;
+        }
+        else{
+          var vend_id = {!! json_encode($disenador_id) !!};
+          window.location.href = '/prospectos/'+prospecto_id+'/disenador/'+vend_id +'/anio/'+this.anio;
+        }
+        
+       
+      },
+      clickeditar(prospecto_id){
+        var rol = {!! json_encode(auth()->user()->roles[0]->name) !!}; 
+      
+        if( rol == 'Administrador' ||  rol == 'Dirección'){
+          window.location.href = '/prospectos/'+prospecto_id+'/disenador/'+this.usuarioCargado+'/anio/'+this.anio+'/editar';
+        }
+        else{
+          var vend_id = {!! json_encode($disenador_id) !!};
+          window.location.href = '/prospectos/'+prospecto_id+'/disenador/'+vend_id +'/anio/'+this.anio+'/editar';
+        }
+        
+       
+      },
+      */
       convertirenproyecto(prospecto, index){
         swal({
           title: 'Cuidado',

@@ -191,6 +191,13 @@ Route::middleware('auth')->group(function () {
     //Prospectos
     Route::get('/prospectos/cotizaciones', 'ProspectosController@cotizaciones');
     Route::get('/prospectos/prospectos', 'ProspectosController@prospectos')->name('prospectos.indexprospectos');
+    //prospectos ver nuevo 
+    Route::get('/prospectos/{prospecto}/disenador/{disenador}/anio/{anio}', 'ProspectosController@prospectosver')->name('prospectos.prospectosver');
+    //prospectos editar nuevo 
+    Route::get('/prospectos/{prospecto}/disenador/{disenador}/anio/{anio}/editar', 'ProspectosController@prospectoseditar')->name('prospectos.prospectoseditar');
+    //prospectos index nuevo
+    Route::get('/prospectos/{disenador}/anio/{anio}/index', 'ProspectosController@prospectosindex')->name('prospectos.prospectosindex');
+
     Route::get('/prospectos/{estatus}/indexprospectos', 'ProspectosController@prospectos');//Ruta para los estatus de apartado//
 
 
