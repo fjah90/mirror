@@ -178,6 +178,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         App\Providers\HelperServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
+        Venturecraft\Revisionable\RevisionableServiceProvider::class,
 
 
         /*

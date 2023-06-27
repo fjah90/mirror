@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Tarea;
 use App\Models\Vendedor;
 use App\User;
+use Carbon\Carbon;
 use Auth;
 use Mail;
 
@@ -29,6 +30,22 @@ class TareasController extends Controller
     public function create()
     {
         
+    }
+
+    public function gethistorial($tarea_id){
+       $tarea = Tarea::findOrFail($tarea_id);
+       $historial= [];
+       foreach($tarea->revisionHistory as $history)
+       {
+         $h =[];
+         $h['usuario'] = $history->userResponsible()->name;
+         $h['fecha'] = Carbon::parse($history->created_at)->format('d/m/Y');
+         $h['anterior'] = $history->oldValue();
+         $h['nuevo'] = $history->newValue();
+         array_push($historial, $h);
+       }
+
+       return response()->json(['success' => true, "error" => false, 'historial' => $historial], 200);
     }
 
     /**
@@ -58,12 +75,13 @@ class TareasController extends Controller
             
         }
         //sacamos el usuario remitente
-        $usuario_remitente     = auth()->user();
-        $mensaje = 'Usted tiene una nueva tarea asiganada por '. $usuario_remitente->name .' favor de atenderla a la brevedad.';
+        $usuario_remitente  = auth()->user()->name;
+        $mensaje = 'Usted tiene la siguiente tarea asiganada por '. $usuario_remitente . ': '. $tarea->tarea .' Favor de atenderla a la brevedad.';
 
         Mail::send('email', ['mensaje' => $mensaje], function ($message)
         use ($usuario_destino) {
             $message->to($usuario_destino->email)
+            //$message->to('eduardo.santana@tigears.com')
                 //->cc('abraham@intercorp.mx')
                 //->replyTo($user->email, $user->name)
                 ->subject('Nueva tarea Robinson');

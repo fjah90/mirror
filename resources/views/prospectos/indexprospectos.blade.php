@@ -230,8 +230,8 @@
     </modal>
 
 
-    <!-- Aceptar Modal -->
-    <modal v-model="modalTareas" :title="'Tareas'" :footer="false"  size="lg">
+    <!-- Tareas Modal -->
+    <modal id='modal_tareas' v-model="modalTareas" :title="'Tareas'" :footer="false"  size="lg">
 
       <table id="tablatareas" class="table table-bordred"
               data-page-length="15">
@@ -258,9 +258,16 @@
                  <td v-else></td>
                  <td>@{{t.created_at}}</td>
                  <td>@{{t.updated_at}}</td>
-                 <td><button class="btn btn-xs btn-success" title="Editar tarea" @click="editartarea(t, index)" :disabled="editando">
+                 <td>
+                  <button class="btn btn-xs btn-success" title="Editar tarea" @click="editartarea(t, index)" :disabled="editando">
                       <i class="fas fa-pen"></i>
-                    </button></td>
+                    </button>
+                    <!--
+                    <button class="btn btn-xs btn-warning" title="Historial de tarea" @click="historialtarea(t, index)" :disabled="historialcargando">
+                      <i class="fas fa-list"></i>
+                    </button>
+-->
+                  </td>
                 </tr>
               </tbody>
             </table>
@@ -334,6 +341,40 @@
         
     </modal>
 
+    <!-- Historial Tareas Modal -->
+    <modal id='modal_historial' v-model="modalHistorial" :title="'Historial de Tareas'" :footer="false"  size="lg">
+
+      <table id="tablahistorial" class="table table-bordred"
+              data-page-length="15" style="width:100%;">
+              <thead>
+                <tr style="background-color:#12160F">
+                  <th class="hide">#</th>
+                  <th class="color_text">Usuario</th>
+                  <th class="color_text">Valor Anterior</th>
+                  <th class="color_text">Valor Nuevo</th>
+                  <th class="color_text">Fecha de edición</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="(h, index) in historial">
+                 <td class="hide">@{{index + 1}}</td>
+                 <td>@{{h.usuario}}</td>
+                 <td>@{{h.anterior}}</td>
+                 <td>@{{h.nuevo}}</td>
+                 <td>@{{h.fecha}}</td>
+                </tr>
+              </tbody>
+            </table>    
+            <div class="form-group text-right">
+                <button type="button" class="btn btn-default"
+                        @click="cancelarhistorial(); modalHistorial=false;">
+                    Cancelar
+                </button>
+            </div>
+          
+        
+    </modal>
+
 
     <!-- Modal eventos -->
     <modal v-model="modalEventos" :title="'Actividad'" :footer="false"  size="md">
@@ -397,7 +438,9 @@ const app = new Vue({
       anio:{!! json_encode($anio2) !!},
       tabla: {},
       tabla2:{},
+      tablahistorial:{},
       tareas: {!! json_encode($tareas) !!},
+      historial:[],
       tarea:{
         id:'',
         tarea: '',
@@ -406,6 +449,7 @@ const app = new Vue({
         director_id:''
       },
       modalTareas: true,
+      modalHistorial:false,
       modalEventos: false,
       modalCalendario:false,
       locale: localeES,
@@ -415,6 +459,7 @@ const app = new Vue({
       proyecto_id: '',
       cargando: false,
       editando : false,
+      historialcargando : false,
       select_disenadores:[],
       valor_disenadores:'Diseñadores',
       select_clientes:[],//Se crea variable para seleccionar al cliente
@@ -456,6 +501,9 @@ const app = new Vue({
             nCells[1].innerHTML = accounting.formatMoney(totalMxn, "$", 2);
         }
         
+      });
+
+      this.tablahistorial = $("#tablahistorial").DataTable({
       });
   
 
@@ -547,6 +595,37 @@ const app = new Vue({
         this.editando = true;
         this.tarea = tarea;
       },
+      historialtarea(tarea , index){
+        this.historialcargando = true;
+        axios.get('/gethistorialtarea/'+tarea.id, {
+        })
+        .then(({data}) => {
+          $('#tablahistorial').DataTable().destroy();
+          //this.tablahistorial.destroy();
+          console.log(data.historial);
+          this.historial = data.historial;
+          this.historialcargando = false;
+          })
+          .catch(({response}) => {
+              console.error(response);
+              this.cargando = false;
+              swal({
+                  title: "Error",
+                  text: response.data.message || "Ocurrio un error inesperado, intente mas tarde",
+                  type: "error"
+              });
+          });
+
+        this.modalHistorial = true;
+        $('#modal_tareas').css('z-index','1039');
+        $('#modal_historial').css('z-index','1071');
+        
+      },
+      cancelarhistorial(){
+        $('#modal_tareas').css('z-index','1071');
+        $('#modal_historial').css('z-index','1039');
+        this.historialcargando = false;
+      },
       cancelartarea(){
         this.tarea.tarea = '';
         this.tarea.id = '';   
@@ -555,6 +634,7 @@ const app = new Vue({
         this.tarea.status = 'Pendiente';
         this.cargando = false;
         this.editando = false;
+        this.historialcargando = false;
         var rol = {!! json_encode(auth()->user()->roles[0]->name) !!}; 
         if(rol == 'Diseñadores'){        
           $('#directores_select').css('display','block');
