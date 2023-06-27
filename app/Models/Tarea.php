@@ -3,10 +3,11 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use \Venturecraft\Revisionable\RevisionableTrait;
 
 class Tarea extends Model
 {
-    
+    use RevisionableTrait;
     protected $table = 'tareas';
 
     protected $fillable = ['tarea','status','user_id', 'vendedor_id','director_id'];
