@@ -21,4 +21,8 @@ class Tarea extends Model
     {
         return $this->belongsTo(User::class,'director_id');
     }
+
+    public function comentarios(){
+        return $this->hasMany('App\Models\TareasComentario', 'tarea_id', 'id');
+    }
 }
