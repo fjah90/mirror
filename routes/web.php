@@ -220,6 +220,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('/prospectos', 'ProspectosController');
     Route::resource('/tareas', 'TareasController');
     Route::post('/tareasactualizar', 'TareasController@actualizar');
+    Route::post('/comentarios', 'TareasController@guardarcomentario');
 
 
 
