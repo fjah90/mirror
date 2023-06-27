@@ -188,6 +188,7 @@ Route::middleware('auth')->group(function () {
 
     });
 
+    Route::get('/gethistorialtarea/{tarea}', 'TareasController@gethistorial')->name('tareas.gethistorial');
     //Prospectos
     Route::get('/prospectos/cotizaciones', 'ProspectosController@cotizaciones');
     Route::get('/prospectos/prospectos', 'ProspectosController@prospectos')->name('prospectos.indexprospectos');
