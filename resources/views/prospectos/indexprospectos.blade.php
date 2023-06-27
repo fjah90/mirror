@@ -83,7 +83,6 @@
               @endcan
               </button>
             </div>
-            <!--Botones para apartados de proyectos activos o cancelados-->
             <div class="row">
               <div class="col-md-12 text-right">
                 <button type="submit" class="btn btn-dark" style="background-color:#FFCE56; color:#12160F;">
@@ -126,7 +125,6 @@
           </h3>
         </div>
         <div class="panel-body">
-          
           <div class="table-responsive">
             <table id="tabla" class="table table-bordred" style="width:100%;"
               data-page-length="100">
@@ -326,10 +324,6 @@
                 </div>
 
             @endrole
-           
-                
-            
-              
               <div class="form-group text-right">
                   <button type="submit" class="btn btn-default" :disabled="cargando" @click='guardartarea()'>Guardar</button>
                   <button type="button" class="btn btn-default"
@@ -337,8 +331,6 @@
                       Cancelar
                   </button>
               </div>
-          
-        
     </modal>
 
     <!-- Historial Tareas Modal -->
@@ -371,8 +363,6 @@
                     Cancelar
                 </button>
             </div>
-          
-        
     </modal>
 
 
@@ -413,14 +403,7 @@
         </div>
       </div>
     </div>
-
-
-   
 </section>
-
-
-
-
 <!-- /.content -->
 @stop
 
@@ -564,7 +547,7 @@ const app = new Vue({
       },
 
       valor_clientes:function(val){
-        this.tabla.columns(0).search(this.valor_clientes).draw();
+        this.tabla.columns(1).search(this.valor_clientes).draw();
       },
 
        valor_factibilidad:function(val){
