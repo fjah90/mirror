@@ -46,6 +46,20 @@
                   @endforeach
                 </select>
               @endrole
+              Clientes
+               <select class="form-control"  v-model="valor_clientes" style="width:auto;display:inline-block;">
+                <option value="">Todos</option>
+                  @foreach($clientes as $cliente)
+                  <option value="{{$cliente->nombre}}">{{$cliente->nombre}}</option>
+                  @endforeach
+                </select>
+                Factibilidad
+               <select class="form-control"  v-model="valor_factibilidad" style="width:auto;display:inline-block;">
+                <option value="">Todos</option>
+                  @foreach($proyectos as $proyecto)
+                  <option value="{{$proyecto->id}}">{{$proyecto->factibilidad}}</option>
+                  @endforeach
+                </select>
 
               <!--
               @role('Administrador|Dirección')
@@ -56,7 +70,7 @@
                   @endforeach
                 </select>
               @endrole
--->
+                -->
             </div>
             <div class="p-10 " style="display:inline-block;float: right;">
             <a href="#myModal" role="button" class="btn btn-warning btn-sm btn" data-toggle="modal" style="color:#000">
@@ -403,6 +417,10 @@ const app = new Vue({
       editando : false,
       select_disenadores:[],
       valor_disenadores:'Diseñadores',
+      select_clientes:[],//Se crea variable para seleccionar al cliente
+      valor_clientes:'Clientes',// valor del cliente 
+      select_factibilidad:[],
+      valor_factibilidad:'Factibilidad',
     },
     filters: {
         formatoMoneda(numero) {
@@ -437,7 +455,6 @@ const app = new Vue({
             var nCells = row.getElementsByTagName('th');
             nCells[1].innerHTML = accounting.formatMoney(totalMxn, "$", 2);
         }
-       
         
       });
   
@@ -496,6 +513,14 @@ const app = new Vue({
       //filtramos por el disenador seleccionado
       valor_disenadores:function(val){
         this.tabla.columns(3).search(this.valor_disenadores).draw();
+      },
+
+      valor_clientes:function(val){
+        this.tabla.columns(0).search(this.valor_clientes).draw();
+      },
+
+       valor_factibilidad:function(val){
+        this.tabla.columns(5).search(this.valor_factibilidad).draw();
       },
     },
     methods: {

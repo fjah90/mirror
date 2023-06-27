@@ -560,8 +560,13 @@ class ProspectosController extends Controller
         ->get()->toArray();
 
 
+        $clientes = Cliente::all();
 
-        return view('prospectos.indexprospectos', compact('cotizaciones', 'usuarios', 'proyectos', 'estatus','vendedores','tareas','disenador_id','anio2','directores','tareas_pendientes','proximas_actividades'));
+        //$factibilidad=Prospecto::all()->pluck('factibilidad','id');
+
+        //dd($factibilidad);
+
+        return view('prospectos.indexprospectos', compact('cotizaciones', 'usuarios', 'proyectos', 'estatus','vendedores','tareas','disenador_id','anio2','directores','tareas_pendientes','proximas_actividades','clientes'));
     }
 
 
