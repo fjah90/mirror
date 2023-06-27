@@ -248,9 +248,12 @@
                   <button class="btn btn-xs btn-success" title="Editar tarea" @click="editartarea(t, index)" :disabled="editando">
                       <i class="fas fa-pen"></i>
                     </button>
+                    <!--
                     <button class="btn btn-xs btn-warning" title="Historial de tarea" @click="historialtarea(t, index)" :disabled="historialcargando">
                       <i class="fas fa-list"></i>
-                    </button></td>
+                    </button>
+-->
+                  </td>
                 </tr>
               </tbody>
             </table>
