@@ -565,7 +565,6 @@ class ProspectosController extends Controller
         ->where('prospectos_actividades.realizada',0)
         ->get()->toArray();
 
-
         $clientes = Cliente::all();
 
         return view('prospectos.indexprospectos', compact('cotizaciones', 'usuarios', 'proyectos', 'estatus','vendedores','tareaspendiente','tareasterminadas','tareasproceso','disenador_id','anio2','directores','tareas_pendientes','proximas_actividades','clientes'));

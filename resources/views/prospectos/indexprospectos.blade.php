@@ -55,12 +55,11 @@
                 </select>
                 Factibilidad
                <select class="form-control"  v-model="valor_factibilidad" style="width:auto;display:inline-block;">
-                <option value="">Todos</option>
-                  @foreach($proyectos as $proyecto)
-                  <option value="{{$proyecto->id}}">{{$proyecto->factibilidad}}</option>
-                  @endforeach
+                  <option value="">Todos</option>
+                   <option value="Alta">Alta</option>
+                   <option value="Media">Media</option>
+                   <option value="Baja">Baja</option>
                 </select>
-
               <!--
               @role('Administrador|Dirección')
                 <select class="form-control" @change="cargar()" v-model="usuarioCargado" style="width:auto;display:inline-block;">
