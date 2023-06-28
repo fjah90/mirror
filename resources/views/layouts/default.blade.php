@@ -668,6 +668,7 @@
 <script src="https://cdn.jsdelivr.net/npm/accounting@0.4.1/accounting.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.7.2/dist/Chart.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@0.4.0/dist/chartjs-plugin-datalabels.min.js"></script>
+<script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js'></script>
 <script src="{{ mix('js/app.js') }}"></script>
 @if (Auth::user())
   <script>
