@@ -47,14 +47,14 @@
                 </select>
               @endrole
               Clientes
-               <select class="form-control"  v-model="valor_clientes" style="width:155px;display:inline-block;">
+               <select class="p-10 form-control"  v-model="valor_clientes" style="width:155px;display:inline-block;">
                 <option value="">Todos</option>
                   @foreach($clientes as $cliente)
                   <option value="{{$cliente->nombre}}" style="width:auto;display:inline-block;">{{$cliente->nombre}}</option>
                   @endforeach
                 </select>
                 Factibilidad
-               <select class=" p-10 form-control"  v-model="valor_factibilidad" style="width:auto;display:inline-block;">
+               <select class="p-10 form-control"  v-model="valor_factibilidad" style="width:auto;display:inline-block;">
                   <option value="">Todos</option>
                    <option value="Alta">Alta</option>
                    <option value="Media">Media</option>
