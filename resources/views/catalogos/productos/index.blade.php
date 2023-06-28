@@ -7,6 +7,10 @@
 
 @section('header_styles')
 <style>
+  .marg025 {margin: 0 25px;}
+  #tabla_length{
+    float: right !important;
+  }
   .color_text{
     color:#B3B3B3;
   }
@@ -51,7 +55,7 @@
         <div class="panel-body">
           <div class="table-responsive">
             <table id="tabla" class="table table-bordred"  style="width:100%;"
-            data-page-length="-1">
+            data-page-length="100">
               <thead>
                 <tr style="background-color:#12160F">
                   <th class="color_text">#</th>
