@@ -44,7 +44,8 @@ class DashboardController extends Controller
         $clientes           = sizeof($clientesId);
         $proyectosAprobados = ProyectoAprobado::whereIn('cliente_id', $clientesId)->whereBetween('proyectos_aprobados.created_at', [$inicio, $anio])->get()->count();
         $prospectosId       = auth()->user()->prospectos()->whereBetween('prospectos.created_at', [$inicio, $anio])->get()->pluck('id');
-        $prospectos         = sizeof($prospectosId);
+        $prospectos         = Prospecto::where('es_prospecto','=','si')->get()->count();///
+        //$prospectos         = sizeof($prospectosId);
         $ordenesProceso     = OrdenProceso::whereIn('orden_compra_id', OrdenCompra::whereIn('cliente_id', $clientesId)->pluck('id'))->whereBetween('ordenes_proceso.created_at', [$inicio, $anio])->get()->count();
 
         $cotizaciones = ProspectoCotizacion::leftjoin('prospectos', 'prospectos_cotizaciones.prospecto_id', '=', 'prospectos.id')

@@ -317,7 +317,7 @@
                   <div class="row form-group">
                     <div class="col-md-6">
                       <label class="control-label">Fax</label>
-                      <input type="text" class="form-control" name="fax" v-model="contacto.fax">
+                      <input type="text" class="form-control" name="fax" v-model="contacto.fax"/>
                     </div>
                   </div>
                   <div class="row" style="margin-top:40px;">

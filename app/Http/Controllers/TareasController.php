@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Tarea;
+use App\Models\TareasComentario;
 use App\Models\Vendedor;
 use App\User;
+use Carbon\Carbon;
 use Auth;
 use Mail;
 
@@ -29,6 +31,22 @@ class TareasController extends Controller
     public function create()
     {
         
+    }
+
+    public function gethistorial($tarea_id){
+       $tarea = Tarea::findOrFail($tarea_id);
+       $historial= [];
+       foreach($tarea->revisionHistory as $history)
+       {
+         $h =[];
+         $h['usuario'] = $history->userResponsible()->name;
+         $h['fecha'] = Carbon::parse($history->created_at)->format('d/m/Y');
+         $h['anterior'] = $history->oldValue();
+         $h['nuevo'] = $history->newValue();
+         array_push($historial, $h);
+       }
+
+       return response()->json(['success' => true, "error" => false, 'historial' => $historial], 200);
     }
 
     /**
@@ -58,12 +76,13 @@ class TareasController extends Controller
             
         }
         //sacamos el usuario remitente
-        $usuario_remitente     = auth()->user();
-        $mensaje = 'Usted tiene una nueva tarea asiganada por '. $usuario_remitente->name .' favor de atenderla a la brevedad.';
+        $usuario_remitente  = auth()->user()->name;
+        $mensaje = 'Usted tiene la siguiente tarea asiganada por '. $usuario_remitente . ': '. $tarea->tarea .' Favor de atenderla a la brevedad.';
 
         Mail::send('email', ['mensaje' => $mensaje], function ($message)
         use ($usuario_destino) {
             $message->to($usuario_destino->email)
+            //$message->to('eduardo.santana@tigears.com')
                 //->cc('abraham@intercorp.mx')
                 //->replyTo($user->email, $user->name)
                 ->subject('Nueva tarea Robinson');
@@ -73,6 +92,23 @@ class TareasController extends Controller
         return response()->json(['success' => true, "error" => false, 'tarea' => $tarea], 200);
     }
 
+
+
+    //Guarda un comentario sobre una tarea y regresa el histroial de comentarios de la tarea
+    public function guardarcomentario(Request $request)
+    {
+        $comentario = TareasComentario::create([
+            'tarea_id' => $request->id,
+            'comentario' => $request->comentario,
+            'user_id'  => Auth()->user()->id,
+        ]);
+        $comentario->save();
+        $tarea = Tarea::findOrFail($request->id);
+        $tarea->load('vendedor','director','comentarios','comentarios.usuario');
+        $comentarios = $tarea->comentarios;
+        
+        return response()->json(['success' => true, "error" => false, 'comentarios' => $comentarios], 200);
+    }
     /**
      * Display the specified resource.
      *
@@ -124,25 +160,34 @@ class TareasController extends Controller
             //obtenemos el usuario del vendedor
             $usuario_vendedor = User::where('email',$vendedor->email)->first();
             //
-            $tareas = Tarea::with('vendedor','director')->where('vendedor_id',$vendedor->id)->orwhere('user_id',$usuario_vendedor->id)->get();
+            $tareaspendiente = Tarea::with('vendedor','director','comentarios','comentarios.usuario')->where('status','Pendiente')->where('vendedor_id',$vendedor->id)->orwhere('user_id',$usuario_vendedor->id)->get();
+            $tareasproceso = Tarea::with('vendedor','director','comentarios','comentarios.usuario')->where('status','En proceso')->where('vendedor_id',$vendedor->id)->orwhere('user_id',$usuario_vendedor->id)->get();
+            $tareasterminadas = Tarea::with('vendedor','director','comentarios','comentarios.usuario')->where('status','Terminada')->where('vendedor_id',$vendedor->id)->orwhere('user_id',$usuario_vendedor->id)->get();
         }
         else{
             if($request->vendedor_id == null){
                 //si no tiene vendedor significa que un vendedor creo la tarea para un director 
                 $us = User::where('id',$tarea->user_id)->first();
                 $vend = Vendedor::where('email',$us->email)->first();
-                $tareas = Tarea::with('vendedor','director')->where('vendedor_id',$vend->id)->orwhere('user_id',$us->id)->get();
+                $tareaspendiente = Tarea::with('vendedor','director','comentarios','comentarios.usuario')->where('status','Pendiente')->where('vendedor_id',$vend->id)->orwhere('user_id',$us->id)->get();
+                $tareasproceso = Tarea::with('vendedor','director','comentarios','comentarios.usuario')->where('status','En proceso')->where('vendedor_id',$vend->id)->orwhere('user_id',$us->id)->get();
+                $tareasterminadas = Tarea::with('vendedor','director')->where('status','Terminada')->where('vendedor_id',$vend->id)->orwhere('user_id',$us->id)->get();
             }
             else{
                 $vend = Vendedor::where('id',$request->vendedor_id)->first();
                 $us = User::where('email',$vend->email)->first();
-                $tareas = Tarea::with('vendedor','director')->where('vendedor_id',$request->vendedor_id)->orwhere('director_id',auth()->user()->id)->get();
+
+                $tareaspendiente = Tarea::with('vendedor','director','comentarios','comentarios.usuario')->where('status','Pendiente')->where('user_id',auth()->user()->id)->orwhere('director_id',auth()->user()->id)->get();
+
+                $tareasproceso = Tarea::with('vendedor','director','comentarios','comentarios.usuario')->where('status','En proceso')->where('user_id',auth()->user()->id)->orwhere('director_id',auth()->user()->id)->get();
+
+                $tareasterminadas = Tarea::with('vendedor','director','comentarios','comentarios.usuario')->where('status','Terminada')->where('user_id',auth()->user()->id)->orwhere('director_id',auth()->user()->id)->get();
             }
 
         }
         
 
-        return response()->json(['success' => true, "error" => false, 'tareas' => $tareas,'tarea'=>$tarea], 200);
+        return response()->json(['success' => true, "error" => false, 'tareaspendiente' => $tareaspendiente,'tareasproceso'=>$tareasproceso,'tareasterminadas'=> $tareasterminadas,'tarea'=>$tarea], 200);
     }
 
  

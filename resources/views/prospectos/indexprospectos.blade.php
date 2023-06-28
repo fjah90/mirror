@@ -39,6 +39,16 @@
             <div class="p-10" style="display:inline-block">
               Diseñador  
               @role('Administrador|Dirección')
+                <select class="form-control"  v-model="valor_disenadores" style="width:auto;display:inline-block;">
+                <option value="">Todos</option>
+                  @foreach($usuarios as $usuario)
+                  <option value="{{$usuario->nombre}}">{{$usuario->nombre}}</option>
+                  @endforeach
+                </select>
+              @endrole
+
+              <!--
+              @role('Administrador|Dirección')
                 <select class="form-control" @change="cargar()" v-model="usuarioCargado" style="width:auto;display:inline-block;">
                   <option value="Todos">Todos</option>
                   @foreach($usuarios as $usuario)
@@ -46,8 +56,11 @@
                   @endforeach
                 </select>
               @endrole
+-->
             </div>
             <div class="p-10 " style="display:inline-block;float: right;">
+            <a href="#myModal" role="button" class="btn btn-warning btn-sm btn" data-toggle="modal" style="color:#000">
+            <i class="fas fa-calendar"></i> </a>
               <button class="btn btn-warning btn-sm btn">
               @can('Prospectos nuevo')
                 <a href="{{route('prospectos.create2')}}" style="color:#000;">
@@ -132,22 +145,24 @@
                   <td>@{{prospecto.estatus}}</td>
                   <td class="text-right">
                   @can('Prospectos ver')
+                   <!--
                   <button class="btn btn-xs btn-info" title="Ver" @click="clickver(prospecto.id)"
                   ><i class="far fa-eye"></i></button>
-                  <!--
-                  <a class="btn btn-xs btn-info" title="Ver" :href="'/prospectos/'+prospecto.id+'/disenador/{{$disenador_id}}/anio/{{$anio2}}'">
+                   -->
+                  <a class="btn btn-xs btn-info" title="Ver" :href="'/prospectos/'+prospecto.id">
                     <i class="far fa-eye"></i>
                   </a>
-                  -->
+                
                   @endcan
                   @can('Prospectos editar')
+                  <!--
                   <button class="btn btn-xs btn-warning" title="Editar" @click="clickeditar(prospecto.id)"
                   ><i class="fas fa-pencil-alt"></i></button>
-                  <!--
+                   -->
                   <a class="btn btn-xs btn-warning" title="Editar" :href="'/prospectos/'+prospecto.id+'/editar'">
                       <i class="fas fa-pencil-alt"></i>
                   </a>
-                  -->
+                 
                   @endcan
                   @can('Prospectos convertir')
                   <button class="btn btn-xs btn-success" title="Convertir el Proyecto" @click="convertirenproyecto(prospecto, index)">
@@ -201,40 +216,136 @@
     </modal>
 
 
-    <!-- Aceptar Modal -->
-    <modal v-model="modalTareas" :title="'Tareas'" :footer="false"  size="lg">
+    <!-- Tareas Modal -->
+    <modal id='modal_tareas' v-model="modalTareas" :title="'Tareas'" :footer="false"  size="lg">
+    <tabs v-model="activeTab">
+      <tab title="Pendientes">
+        <table id="tablatareaspendientes" class="table table-bordred" data-page-length="15">
+          <thead>
+            <tr style="background-color:#12160F">
+              <th class="hide">#</th>
+              <th class="color_text">Tarea</th>
+              <th class="color_text">Status</th>
+              <th class="color_text">Diseñador</th>
+              <th class="color_text">Director</th>
+              <th class="color_text">Fecha de creación</th>
+              <th class="color_text">Fecha de edición</th>
+              <th style="min-width:105px;"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(t, index) in tareaspendientes">
+              <td class="hide">@{{index + 1}}</td>
+              <td>@{{t.tarea}}</td>
+              <td>@{{t.status}}</td>
+              <td v-if="t.vendedor_id != null">@{{t.vendedor.nombre}}</td>
+              <td v-else></td>
+              <td v-if="t.director_id != null">@{{t.director.name}}</td>
+              <td v-else></td>
+              <td>@{{t.created_at}}</td>
+              <td>@{{t.updated_at}}</td>
+              <td>
+              <button class="btn btn-xs btn-success" title="Editar tarea" @click="editartarea(t, index)" :disabled="editando">
+                  <i class="fas fa-pen"></i>
+                </button>
 
-      <table id="tablatareas" class="table table-bordred"
-              data-page-length="15">
-              <thead>
-                <tr style="background-color:#12160F">
-                  <th class="hide">#</th>
-                  <th class="color_text">Tarea</th>
-                  <th class="color_text">Status</th>
-                  <th class="color_text">Diseñador</th>
-                  <th class="color_text">Director</th>
-                  <th class="color_text">Fecha de creación</th>
-                  <th class="color_text">Fecha de edición</th>
-                  <th style="min-width:105px;"></th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr v-for="(t, index) in tareas">
-                 <td class="hide">@{{index + 1}}</td>
-                 <td>@{{t.tarea}}</td>
-                 <td>@{{t.status}}</td>
-                 <td v-if="t.vendedor_id != null">@{{t.vendedor.nombre}}</td>
-                 <td v-else></td>
-                 <td v-if="t.director_id != null">@{{t.director.name}}</td>
-                 <td v-else></td>
-                 <td>@{{t.created_at}}</td>
-                 <td>@{{t.updated_at}}</td>
-                 <td><button class="btn btn-xs btn-success" title="Editar tarea" @click="editartarea(t, index)" :disabled="editando">
-                      <i class="fas fa-pen"></i>
-                    </button></td>
-                </tr>
-              </tbody>
-            </table>
+                <button class="btn btn-xs btn-warning" title="Comentarios de tarea" @click="comentariostarea(t, index)" :disabled="comentarioscargando">
+                  <i class="fas fa-list"></i>
+                </button>
+              <!--
+                <button class="btn btn-xs btn-warning" title="Historial de tarea" @click="historialtarea(t, index)" :disabled="historialcargando">
+                  <i class="fas fa-list"></i>
+                </button>
+                -->
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </tab>
+      <tab title="En proceso">
+        <table id="tablatareasproceso" class="table table-bordred" data-page-length="15">
+          <thead>
+            <tr style="background-color:#12160F">
+              <th class="hide">#</th>
+              <th class="color_text">Tarea</th>
+              <th class="color_text">Status</th>
+              <th class="color_text">Diseñador</th>
+              <th class="color_text">Director</th>
+              <th class="color_text">Fecha de creación</th>
+              <th class="color_text">Fecha de edición</th>
+              <th style="min-width:105px;"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(t, index) in tareasproceso">
+              <td class="hide">@{{index + 1}}</td>
+              <td>@{{t.tarea}}</td>
+              <td>@{{t.status}}</td>
+              <td v-if="t.vendedor_id != null">@{{t.vendedor.nombre}}</td>
+              <td v-else></td>
+              <td v-if="t.director_id != null">@{{t.director.name}}</td>
+              <td v-else></td>
+              <td>@{{t.created_at}}</td>
+              <td>@{{t.updated_at}}</td>
+              <td>
+              <button class="btn btn-xs btn-success" title="Editar tarea" @click="editartarea(t, index)" :disabled="editando">
+                  <i class="fas fa-pen"></i>
+                </button>
+
+                <button class="btn btn-xs btn-warning" title="Comentarios de tarea" @click="comentariostarea(t, index)" :disabled="comentarioscargando">
+                  <i class="fas fa-list"></i>
+                </button>
+              <!--
+                <button class="btn btn-xs btn-warning" title="Historial de tarea" @click="historialtarea(t, index)" :disabled="historialcargando">
+                  <i class="fas fa-list"></i>
+                </button>
+                -->
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </tab>
+      <tab title="Terminadas">
+        <table id="tablatareasterminadas" class="table table-bordred" data-page-length="15">
+          <thead>
+            <tr style="background-color:#12160F">
+              <th class="hide">#</th>
+              <th class="color_text">Tarea</th>
+              <th class="color_text">Status</th>
+              <th class="color_text">Diseñador</th>
+              <th class="color_text">Director</th>
+              <th class="color_text">Fecha de creación</th>
+              <th class="color_text">Fecha de edición</th>
+              <th style="min-width:105px;"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(t, index) in tareasterminadas">
+              <td class="hide">@{{index + 1}}</td>
+              <td>@{{t.tarea}}</td>
+              <td>@{{t.status}}</td>
+              <td v-if="t.vendedor_id != null">@{{t.vendedor.nombre}}</td>
+              <td v-else></td>
+              <td v-if="t.director_id != null">@{{t.director.name}}</td>
+              <td v-else></td>
+              <td>@{{t.created_at}}</td>
+              <td>@{{t.updated_at}}</td>
+              <td>
+
+                <button class="btn btn-xs btn-warning" title="Comentarios de tarea" @click="comentariostarea(t, index)" :disabled="comentarioscargando">
+                  <i class="fas fa-list"></i>
+                </button>
+              <!--
+                <button class="btn btn-xs btn-warning" title="Historial de tarea" @click="historialtarea(t, index)" :disabled="historialcargando">
+                  <i class="fas fa-list"></i>
+                </button>
+                -->
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </tab>
+    </tabs>
             <input type="hidden" name="tarea_id" class="form-control" v-model="tarea.id" />
             @role('Administrador|Dirección')
                   <div class="form-group">
@@ -304,6 +415,117 @@
           
         
     </modal>
+
+    <!-- Historial Tareas Modal -->
+    <modal id='modal_historial' v-model="modalHistorial" :title="'Historial de Tareas'" :footer="false"  size="lg">
+
+      <table id="tablahistorial" class="table table-bordred"
+              data-page-length="15" style="width:100%;">
+              <thead>
+                <tr style="background-color:#12160F">
+                  <th class="hide">#</th>
+                  <th class="color_text">Usuario</th>
+                  <th class="color_text">Valor Anterior</th>
+                  <th class="color_text">Valor Nuevo</th>
+                  <th class="color_text">Fecha de edición</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="(h, index) in historial">
+                 <td class="hide">@{{index + 1}}</td>
+                 <td>@{{h.usuario}}</td>
+                 <td>@{{h.anterior}}</td>
+                 <td>@{{h.nuevo}}</td>
+                 <td>@{{h.fecha}}</td>
+                </tr>
+              </tbody>
+            </table>    
+            <div class="form-group text-right">
+                <button type="button" class="btn btn-default"
+                        @click="cancelarhistorial(); modalHistorial=false;">
+                    Cancelar
+                </button>
+            </div>
+    </modal>
+
+
+    <!-- Comentarios Tareas Modal -->
+    <modal id='modal_comentarios' v-model="modalComentarios" :title="'Comentarios de Tareas'" :footer="false"  size="lg">
+
+      <table id="tablacomentarios" class="table table-bordred"
+              data-page-length="15" style="width:100%;">
+              <thead>
+                <tr style="background-color:#12160F">
+                  <th class="hide">#</th>
+                  <th class="color_text">Usuario</th>
+                  <th class="color_text">Comentario</th>
+                  <th class="color_text">Fecha</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="(c, index) in comentarios">
+                 <td class="hide">@{{index + 1}}</td>
+                 <td>@{{c.usuario.name}}</td>
+                 <td>@{{c.comentario}}</td>
+                 <td>@{{c.created_at}}</td>
+                </tr>
+              </tbody>
+            </table>    
+            <div class="form-group">
+                <label class="control-label text-danger">Comentario</label>
+                <textarea class="form-control" name="tarea" rows="3" cols="80"
+                          v-model="tarea.comentario" ></textarea>
+            </div>
+            <div class="form-group text-right">
+                <button type="submit" class="btn btn-default" :disabled="comentarioscargando" @click='guardarcomentario()'>Guardar</button>
+                <button type="button" class="btn btn-default"
+                        @click="cancelarcomentario(); modalComentarios=false;">
+                    Cancelar
+                </button>
+            </div>
+    </modal>
+
+
+    <!-- Modal eventos -->
+    <modal v-model="modalEventos" :title="'Actividad'" :footer="false"  size="md">
+        <div class="modal-header">
+            <h4 class="modal-title" id="titulo_evento">Modal title</h4>
+          </div>
+          <div class="modal-body" id="descripcion_evento">
+            <p>Modal body text goes here.</p>
+          </div>
+    
+      <div class="form-group text-right">
+          <button type="button" class="btn btn-default"
+                  @click="modalEventos=false;">
+              Cancelar
+          </button>
+      </div>
+          
+        
+    </modal>
+
+    <div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog" style="width: 1000px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h3 id="myModalLabel">Próximas Actividades</h3>
+            </div>
+            <div class="modal-body">
+                
+                        <div id="calendar"></div>
+                      
+            </div>
+            <div class="modal-footer">
+                <button class="btn" data-dismiss="modal" aria-hidden="true">Cerrar</button>
+            </div>
+        </div>
+      </div>
+    </div>
+
+
+   
 </section>
 
 
@@ -319,6 +541,7 @@
 const app = new Vue({
     el: '#content',
     data: {
+      activeTab: 'Pendientes',
       cotizaciones: {!! json_encode($cotizaciones) !!},
       prospectos: {!! json_encode($proyectos) !!},
       usuarioCargado: {!! json_encode($disenador_id) !!},
@@ -326,22 +549,36 @@ const app = new Vue({
       anio:{!! json_encode($anio2) !!},
       tabla: {},
       tabla2:{},
-      tareas: {!! json_encode($tareas) !!},
+      tablahistorial:{},
+      tareaspendientes: {!! json_encode($tareaspendiente) !!},
+      tareasproceso: {!! json_encode($tareasproceso) !!},
+      tareasterminadas: {!! json_encode($tareasterminadas) !!},
+      historial:[],
+      comentarios:[],
       tarea:{
         id:'',
         tarea: '',
         status:'',
         vendedor_id: '',
-        director_id:''
+        director_id:'',
+        comentario:''
       },
       modalTareas: true,
+      modalHistorial:false,
+      modalComentarios:false,
+      modalEventos: false,
+      modalCalendario:false,
       locale: localeES,
       modalNuecaCotizacion: false,
       fecha_ini: '',
       fecha_fin: '',
       proyecto_id: '',
       cargando: false,
-      editando : false
+      editando : false,
+      historialcargando : false,
+      comentarioscargando : false,
+      select_disenadores:[],
+      valor_disenadores:'Diseñadores',
     },
     filters: {
         formatoMoneda(numero) {
@@ -349,11 +586,62 @@ const app = new Vue({
         },
     },
     mounted(){
+      var vue =this;
       $.fn.dataTable.moment('DD/MM/YYYY');
       this.tabla = $("#tabla").DataTable({
+        stateSave: true,
         "dom": 'f<"#fechas_container.pull-left">tlip',
-        //"order": [[ 4, "desc" ]]
+        //Aqui lo que hace es que cambia los datos del footer siempre que haya un filtrado
+        "footerCallback": function ( row, data, start, end, display ) {
+          //tomamos los datos de nuestra tabla
+            var api = this.api(), data;
+            //como las cantidades vienen en formato les quitamos el formato y dejamo solo los valores numericos
+            var formato = function ( i ) {
+                return typeof i === 'string' ?
+                    i.replace(/[\$,]/g, '')*1 :
+                    typeof i === 'number' ?
+                        i : 0;
+            };
+            //datos de la tabla con filtros aplicados
+            var datos= api.columns([4], {search: 'applied'}).data();
+            var totalMxn = 0;
+            //suma de montos
+            datos[0].forEach(function(element, index){      
+                    totalMxn+=formato(element)
+            });
+            // Actualizar el campo
+            var nCells = row.getElementsByTagName('th');
+            nCells[1].innerHTML = accounting.formatMoney(totalMxn, "$", 2);
+        }
+       
+        
       });
+
+      this.tablahistorial = $("#tablahistorial").DataTable({
+      });
+  
+
+      document.addEventListener('DOMContentLoaded', function() {
+        var calendarEl = document.getElementById('calendar');
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+          height: 650,
+          aspectRatio: 2,
+          initialView: 'dayGridMonth',
+          events: {!! json_encode($proximas_actividades) !!},
+          eventColor: '#800080',
+          eventClick: function(info) {
+            document.getElementById("titulo_evento").innerHTML = info.event.title;
+            document.getElementById("descripcion_evento").innerHTML = info.event.extendedProps.description;
+              vue.modalEventos = true;
+            },
+
+        });
+        $('#myModal').on('shown.bs.modal', function () {
+            calendar.render();
+          });
+        
+      });
+
       //$("#fechas_container").append($("#fecha_ini_control"));
       //$("#fechas_container").append($("#fecha_fin_control"));
       
@@ -383,7 +671,11 @@ const app = new Vue({
       },
       fecha_fin: function (val) {
         this.tabla.draw();
-      }
+      },
+      //filtramos por el disenador seleccionado
+      valor_disenadores:function(val){
+        this.tabla.columns(3).search(this.valor_disenadores).draw();
+      },
     },
     methods: {
       dateParser(value){
@@ -409,6 +701,53 @@ const app = new Vue({
         this.editando = true;
         this.tarea = tarea;
       },
+      historialtarea(tarea , index){
+        this.historialcargando = true;
+        axios.get('/gethistorialtarea/'+tarea.id, {
+        })
+        .then(({data}) => {
+          $('#tablahistorial').DataTable().destroy();
+          //this.tablahistorial.destroy();
+          console.log(data.historial);
+          this.historial = data.historial;
+          this.historialcargando = false;
+          })
+          .catch(({response}) => {
+              console.error(response);
+              this.cargando = false;
+              swal({
+                  title: "Error",
+                  text: response.data.message || "Ocurrio un error inesperado, intente mas tarde",
+                  type: "error"
+              });
+          });
+
+        this.modalHistorial = true;
+        $('#modal_tareas').css('z-index','1039');
+        $('#modal_historial').css('z-index','1071');
+        
+      },
+      cancelarhistorial(){
+        $('#modal_tareas').css('z-index','1071');
+        $('#modal_historial').css('z-index','1039');
+        this.historialcargando = false;
+      },
+      comentariostarea(tarea , index){
+        $('#tablacomentarios').DataTable().destroy();
+        this.modalComentarios = true;
+        this.tarea.id = tarea.id;
+        this.comentarios = tarea.comentarios;
+        $('#modal_tareas').css('z-index','1039');
+        $('#modal_comentarios').css('z-index','1071');
+        
+      },
+      cancelarcomentario(){
+        this.tarea.id= '';
+        this.tarea.comentario = '';
+        $('#modal_tareas').css('z-index','1091');
+        $('#modal_comentarios').css('z-index','1039');
+        this.comentarioscargando = false;
+      },
       cancelartarea(){
         this.tarea.tarea = '';
         this.tarea.id = '';   
@@ -417,6 +756,7 @@ const app = new Vue({
         this.tarea.status = 'Pendiente';
         this.cargando = false;
         this.editando = false;
+        this.historialcargando = false;
         var rol = {!! json_encode(auth()->user()->roles[0]->name) !!}; 
         if(rol == 'Diseñadores'){        
           $('#directores_select').css('display','block');
@@ -428,6 +768,29 @@ const app = new Vue({
         }
         
       },
+      guardarcomentario(){
+        var formData = objectToFormData(this.tarea, {indices: true});
+        this.comentarioscargando = true;
+        axios.post('/comentarios', formData, {
+              headers: {'Content-Type': 'multipart/form-data'}
+          })
+          .then(({data}) => {
+            $('#tablacomentarios').DataTable().destroy();
+            this.comentarios = data.comentarios;
+            this.tarea.id = '';
+            this.tarea.comentario = '';
+      
+          })
+          .catch(({response}) => {
+              console.error(response);
+              this.comentarioscargando = false;
+              swal({
+                  title: "Error",
+                  text: response.data.message || "Ocurrio un error inesperado, intente mas tarde",
+                  type: "error"
+              });
+          });
+      },
      guardartarea(){
         var formData = objectToFormData(this.tarea, {indices: true});
         this.cargando = true;
@@ -438,7 +801,7 @@ const app = new Vue({
           .then(({data}) => {
             this.tarea.tarea = '';
             this.tarea.id = '';
-            this.tareas.push(data.tarea);    
+            this.tareaspendientes.push(data.tarea);    
               swal({
                   title: "Exito",
                   text: "La tarea ha sido guardada",
@@ -462,6 +825,7 @@ const app = new Vue({
               headers: {'Content-Type': 'multipart/form-data'}
           })
           .then(({data}) => {
+            
               swal({
                   title: "Exito",
                   text: "La tarea ha sido actualizada",
@@ -474,7 +838,13 @@ const app = new Vue({
               this.tarea.status = 'Pendiente';
               this.cargando = false;
               this.editando = false;
-              this.tareas = data.tareas;
+              $('#tablatareaspendientes').DataTable().destroy();
+              this.tareaspendientes = data.tareaspendiente;
+              $('#tablatareasproceso').DataTable().destroy();
+              this.tareasproceso = data.tareasproceso;
+              $('#tablatareasterminadas').DataTable().destroy();
+              this.tareasterminadas = data.tareasterminadas;
+              
               this.modalTareas = false;
           })
           .catch(({response}) => {
@@ -523,6 +893,7 @@ const app = new Vue({
           });
         });
       },
+      /*
       clickver(prospecto_id){
         var rol = {!! json_encode(auth()->user()->roles[0]->name) !!}; 
       
@@ -549,6 +920,7 @@ const app = new Vue({
         
        
       },
+      */
       convertirenproyecto(prospecto, index){
         swal({
           title: 'Cuidado',

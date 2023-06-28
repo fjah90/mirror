@@ -21,6 +21,7 @@ use App\Models\Vendedor;
 use App\Models\Tarea;
 use App\Models\UnidadMedida;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 use App\User;
 use Auth;
 use DateTime;
@@ -525,20 +526,26 @@ class ProspectosController extends Controller
         //carga de tareas
         if ($disenador_id == 'Todos') {
             //es un director y quiere ver todas las tareas de todos
-            $tareas = Tarea::with('vendedor','director')->get();
+            $tareaspendiente = Tarea::with('vendedor','director','comentarios','comentarios.usuario')->where('status','Pendiente')->get();
+            $tareasproceso= Tarea::with('vendedor','director','comentarios','comentarios.usuario')->where('status','En proceso')->get();
+            $tareasterminadas = Tarea::with('vendedor','director','comentarios','comentarios.usuario')->where('status','Terminada')->get();
         }
         else{
             if(Auth::user()->roles[0]->name == 'Diseñadores'){
                 //obtenemos el usuario del vendedor
                 $usuario_vendedor = User::where('email',$vendedor->email)->first();
                 //
-                $tareas = Tarea::with('vendedor','director')->where('vendedor_id',$vendedor->id)->orwhere('user_id',$usuario_vendedor->id)->get();
+                $tareaspendiente = Tarea::with('vendedor','director','comentarios','comentarios.usuario')->where('status','Pendiente')->where('vendedor_id',$vendedor->id)->orwhere('user_id',$usuario_vendedor->id)->get();
+                $tareasproceso = Tarea::with('vendedor','director','comentarios','comentarios.usuario')->where('status','En proceso')->where('vendedor_id',$vendedor->id)->orwhere('user_id',$usuario_vendedor->id)->get();
+                $tareasterminadas = Tarea::with('vendedor','director','comentarios','comentarios.usuario')->where('status','Terminada')->where('vendedor_id',$vendedor->id)->orwhere('user_id',$usuario_vendedor->id)->get();
             }
             else{
                 //obetenemos el usuario del vendedor
                 $vend = Vendedor::where('id',$disenador_id)->first();
                 $us = User::where('email',$vend->email)->first();
-                $tareas = Tarea::with('vendedor','director')->where('vendedor_id',$disenador_id)->orwhere('user_id',$us->id)->get();
+                $tareaspendiente = Tarea::with('vendedor','director','comentarios','comentarios.usuario')->where('status','Pendiente')->where('vendedor_id',$disenador_id)->orwhere('user_id',$us->id)->get();
+                $tareasproceso = Tarea::with('vendedor','director','comentarios','comentarios.usuario')->where('status','En proceso')->where('vendedor_id',$disenador_id)->orwhere('user_id',$us->id)->get();
+                $tareasterminadas= Tarea::with('vendedor','director','comentarios','comentarios.usuario')->where('status','Terminada')->where('vendedor_id',$disenador_id)->orwhere('user_id',$us->id)->get();
             }
 
         }
@@ -551,10 +558,16 @@ class ProspectosController extends Controller
             $tareas_pendientes = Tarea::where('director_id',auth()->user()->id)->where('status','Pendiente')->get();
         }
 
-        
-        
+        $proximas_actividades = Prospecto::leftjoin('prospectos_actividades', 'prospectos_actividades.prospecto_id', '=', 'prospectos.id')
+        ->leftjoin('prospectos_tipos_actividades', 'prospectos_actividades.tipo_id', '=', 'prospectos_tipos_actividades.id')
+        ->leftjoin('vendedores', 'prospectos.vendedor_id', '=', 'vendedores.id')
+        ->select(DB::raw('CONCAT(prospectos.nombre , " - ", vendedores.nombre) AS title'),'vendedores.nombre as vendedor','prospectos_tipos_actividades.nombre as description', 'prospectos_actividades.descripcion as texto', 'prospectos_actividades.fecha as start' )
+        ->where('prospectos_actividades.realizada',0)
+        ->get()->toArray();
 
-        return view('prospectos.indexprospectos', compact('cotizaciones', 'usuarios', 'proyectos', 'estatus','vendedores','tareas','disenador_id','anio2','directores','tareas_pendientes'));
+
+
+        return view('prospectos.indexprospectos', compact('cotizaciones', 'usuarios', 'proyectos', 'estatus','vendedores','tareaspendiente','tareasterminadas','tareasproceso','disenador_id','anio2','directores','tareas_pendientes','proximas_actividades'));
     }
 
 

@@ -188,6 +188,7 @@ Route::middleware('auth')->group(function () {
 
     });
 
+    Route::get('/gethistorialtarea/{tarea}', 'TareasController@gethistorial')->name('tareas.gethistorial');
     //Prospectos
     Route::get('/prospectos/cotizaciones', 'ProspectosController@cotizaciones');
     Route::get('/prospectos/prospectos', 'ProspectosController@prospectos')->name('prospectos.indexprospectos');
@@ -219,6 +220,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('/prospectos', 'ProspectosController');
     Route::resource('/tareas', 'TareasController');
     Route::post('/tareasactualizar', 'TareasController@actualizar');
+    Route::post('/comentarios', 'TareasController@guardarcomentario');
 
 
 
