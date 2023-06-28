@@ -71,15 +71,25 @@
               @endrole
 -->
             </div>
+            <br><br><br>
             <div class="p-10 " style="display:inline-block;float: right;">
-            <a href="#myModal" role="button" class="btn btn-warning btn-sm btn" data-toggle="modal" style="color:#000">
-            <i class="fas fa-calendar"></i> </a>
-              <button class="btn btn-warning btn-sm btn">
-              @can('Prospectos nuevo')
-                <a href="{{route('prospectos.create2')}}" style="color:#000;">
-                  <i class="fas fa-address-book"></i> Nuevo Proyecto Prospecto
-                </a>
-              @endcan
+              <a href="#myModal" role="button" class="btn btn-warning btn-sm btn" data-toggle="modal" style="color:#000">
+                <i class="fas fa-calendar"></i> </a>
+                <button class="btn btn-warning btn-sm btn">
+                @can('Prospectos nuevo')
+                  <a href="{{route('prospectos.create2')}}" style="color:#000;">
+                    <i class="fas fa-address-book"></i> Nuevo Proyecto Prospecto
+                  </a>
+                @endcan
+                </button>
+            </div>
+
+            <div class="p-10">
+              <button style="background-color:#FFCE56; color:#12160F;" class="btn btn-sm btn-primary" @click="modalTareas=true">
+                  <i class="fas fa-star"></i> Tareas
+                  @if( count ($tareas_pendientes) > 0)
+                  <i class="fas fa-bell" style="    color: red; font-size: 22px; position: absolute; margin-top: -12px;"></i>
+                  @endif
               </button>
             </div>
             <!--Botones para apartados de proyectos activos o cancelados-->
@@ -101,14 +111,6 @@
                   </a>
                 </button>
               </div>
-            </div>
-            <div class="p-10">
-              <button style="background-color:#FFCE56; color:#12160F;" class="btn btn-sm btn-primary" @click="modalTareas=true">
-                  <i class="fas fa-star"></i> Tareas
-                  @if( count ($tareas_pendientes) > 0)
-                  <i class="fas fa-bell" style="    color: red; font-size: 22px; position: absolute; margin-top: -12px;"></i>
-                  @endif
-              </button>
             </div>
             <div class="p-10" style="display:inline-block">
               Año  
