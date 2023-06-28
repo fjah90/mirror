@@ -69,7 +69,7 @@
                   @endforeach
                 </select>
               @endrole
-                -->
+-->
             </div>
             <div class="p-10 " style="display:inline-block;float: right;">
             <a href="#myModal" role="button" class="btn btn-warning btn-sm btn" data-toggle="modal" style="color:#000">
@@ -82,6 +82,7 @@
               @endcan
               </button>
             </div>
+            <!--Botones para apartados de proyectos activos o cancelados-->
             <div class="row">
               <div class="col-md-12 text-right">
                 <button type="submit" class="btn btn-dark" style="background-color:#FFCE56; color:#12160F;">
@@ -124,6 +125,7 @@
           </h3>
         </div>
         <div class="panel-body">
+          
           <div class="table-responsive">
             <table id="tabla" class="table table-bordred" style="width:100%;"
               data-page-length="100">
@@ -412,6 +414,10 @@
                 </div>
 
             @endrole
+           
+                
+            
+              
               <div class="form-group text-right">
                   <button type="submit" class="btn btn-default" :disabled="cargando" @click='guardartarea()'>Guardar</button>
                   <button type="button" class="btn btn-default"
@@ -419,6 +425,8 @@
                       Cancelar
                   </button>
               </div>
+          
+        
     </modal>
 
     <!-- Historial Tareas Modal -->
@@ -528,7 +536,14 @@
         </div>
       </div>
     </div>
+
+
+   
 </section>
+
+
+
+
 <!-- /.content -->
 @stop
 
@@ -577,8 +592,8 @@ const app = new Vue({
       comentarioscargando : false,
       select_disenadores:[],
       valor_disenadores:'Diseñadores',
-      select_clientes:[],//Se crea variable para seleccionar al cliente
-      valor_clientes:'Clientes',// valor del cliente 
+      select_clientes:[],
+      valor_clientes:'Clientes',
       select_factibilidad:[],
       valor_factibilidad:'Factibilidad',
     },
@@ -615,6 +630,7 @@ const app = new Vue({
             var nCells = row.getElementsByTagName('th');
             nCells[1].innerHTML = accounting.formatMoney(totalMxn, "$", 2);
         }
+       
         
       });
 
@@ -677,8 +693,7 @@ const app = new Vue({
       valor_disenadores:function(val){
         this.tabla.columns(3).search(this.valor_disenadores).draw();
       },
-
-      valor_clientes:function(val){
+       valor_clientes:function(val){
         this.tabla.columns(1).search(this.valor_clientes).draw();
       },
 
