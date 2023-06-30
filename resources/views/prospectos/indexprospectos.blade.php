@@ -2,7 +2,7 @@
 
 {{-- Page title --}}
 @section('title')
-  Proyectos | @parent
+  Prospectos | @parent
 @stop
 
 @section('header_styles')
