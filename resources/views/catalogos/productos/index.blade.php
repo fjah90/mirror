@@ -55,7 +55,7 @@
         <div class="panel-body">
           <div class="table-responsive">
             <table id="tabla" class="table table-bordred"  style="width:100%;"
-            data-page-length="100">
+            data-page-length="500">
               <thead>
                 <tr style="background-color:#12160F">
                   <th class="color_text">#</th>
@@ -121,6 +121,7 @@ const app = new Vue({
     mounted(){
       $("#tabla").DataTable({
         "order": [[ 1, "asc" ]],
+        "paging": true,
         "columnDefs": [
           { "width": "120px", "targets": 4 }
         ]
