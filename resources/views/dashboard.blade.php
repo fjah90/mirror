@@ -229,7 +229,7 @@ Dashboard | @parent
         </div>
         <div class="text-right">
           <h3><b id="widget_count3">@{{data.prospectos}}</b></h3>
-          <p>Proyectos Prospectos</p>
+          <p>Prospectos</p>
         </div>
       </div>
     </div>
