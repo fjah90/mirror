@@ -55,7 +55,7 @@
         <div class="panel-body">
           <div class="table-responsive">
             <table id="tabla" class="table table-bordred"  style="width:100%;"
-            data-page-length="500">
+            data-page-length="20">
               <thead>
                 <tr style="background-color:#12160F">
                   <th class="color_text">#</th>

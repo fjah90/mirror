@@ -41,8 +41,8 @@
       <ul class="nav navbar-nav">
         <li class="dropdown notifications-menu">
           <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">
-            <i class="far fa-bell black"></i>
-            <span class="label label-danger">0</span>
+            <!--i class="far fa-bell black"--></i>
+            <!--span class="label label-danger">0</span-->
           </a>
           <ul class="dropdown-menu dropdown-notifications table-striped">
             <li class="dropdown-footer"><a href="javascript:void(0)">View All messages</a></li>
