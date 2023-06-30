@@ -77,8 +77,8 @@ class TareasController extends Controller
         }
         //sacamos el usuario remitente
         $usuario_remitente  = auth()->user()->name;
-        $mensaje = 'Usted tiene la siguiente tarea asignada por '. $usuario_remitente . ': '. $tarea->tarea .' Favor de atenderla a la brevedad.';
-
+        $mensaje = '<b>'.$usuario_destino->nombre.'</b> tienes la siguiente tarea asignada por <b>'.$usuario_remitente .'</b>:<br><br><br>'.$tarea->tarea .'<br><br><br> Favor de atenderla a la brevedad.';
+        
         Mail::send('email', ['mensaje' => $mensaje], function ($message)
         use ($usuario_destino) {
             $message->to($usuario_destino->email)
