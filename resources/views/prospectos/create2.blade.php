@@ -46,7 +46,7 @@
 @section('content')
   <!-- Content Header (Page header) -->
   <section class="content-header" style="background-color:#12160F; color:#B68911;">
-    <h1 style="font-weight: bolder;">Proyectos</h1>
+    <h1 style="font-weight: bolder;">Prospectos</h1>
   </section>
   <!-- Main content -->
   <section class="content" id="content">
@@ -54,7 +54,7 @@
       <div class="col-lg-12">
         <div class="panel ">
           <div class="panel-heading" style="background-color:#12160F; color:#B68911;">
-            <h3 class="panel-title">Nuevo Proyecto Prospecto</h3>
+            <h3 class="panel-title">Nuevo Prospecto</h3>
           </div>
           {{-- <div>
             <h2>Wizard generated from HTML</h2>
