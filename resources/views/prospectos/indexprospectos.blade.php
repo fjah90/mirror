@@ -45,8 +45,7 @@
                   <option value="{{$usuario->nombre}}">{{$usuario->nombre}}</option>
                   @endforeach
                 </select>
-              @endrole
-              Clientes
+                Clientes
                <select class="p-10 form-control"  v-model="valor_clientes" style="width:155px;display:inline-block;">
                 <option value="">Todos</option>
                   @foreach($clientes as $cliente)
@@ -60,6 +59,7 @@
                    <option value="Media">Media</option>
                    <option value="Baja">Baja</option>
                 </select>
+              @endrole
               <!--
               @role('Administrador|Dirección')
                 <select class="form-control" @change="cargar()" v-model="usuarioCargado" style="width:auto;display:inline-block;">
