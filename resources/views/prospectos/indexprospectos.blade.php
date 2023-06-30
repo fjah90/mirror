@@ -78,7 +78,7 @@
                 <button class="btn btn-warning btn-sm btn">
                 @can('Prospectos nuevo')
                   <a href="{{route('prospectos.create2')}}" style="color:#000;">
-                    <i class="fas fa-address-book"></i> Nuevo Proyecto Prospecto
+                    <i class="fas fa-address-book"></i> Nuevo Prospecto
                   </a>
                 @endcan
                 </button>
