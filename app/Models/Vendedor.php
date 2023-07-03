@@ -9,7 +9,7 @@ class Vendedor extends Model
     protected $table = 'vendedores';
 
     protected $fillable = [
-        'nombre', 'presupuesto_anual', 'comision_base', 'pago_comision','email'
+        'nombre', 'presupuesto_anual', 'comision_base', 'pago_comision','email','color'
     ];
 
 }

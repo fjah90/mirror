@@ -60,6 +60,12 @@
                     <input type="text" class="form-control" name="pago_comision" v-model="vendedor.pago_comision" required />
                   </div>
                 </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="control-label">Color en hexadecimal (para los eventos)</label>
+                    <input type="text" class="form-control" name="color" v-model="vendedor.color" required />
+                  </div>
+                </div>
               </div>
               <div class="row" style="margin-top:25px;">
                 <div class="col-md-12 text-right">
@@ -94,6 +100,7 @@ const app = new Vue({
             comision_base: '',
             pago_comision: '',
             email:'',
+            color:'',
         },
         cargando: false,
     },
