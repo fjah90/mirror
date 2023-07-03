@@ -368,6 +368,7 @@ class ProspectosController extends Controller
      */
     public function prospectos(Request $request)
     {
+       
 
         $inicio = Carbon::parse('2023-01-01');
         $anio = Carbon::parse('2023-12-31');
@@ -389,12 +390,14 @@ class ProspectosController extends Controller
             $disenador_id = $vendedor->id;
             $usuarios = [];
         }
+       
+        
 
         /**Consulta para obtener el estatus de los apartador***/
         $estatus = $request->estatus;
 
         if (!empty($estatus)) {
-
+            
             if(Auth::user()->roles[0]->name == 'Diseñadores'){
 
                 $proyectos = Prospecto::leftjoin('prospectos_actividades', 'prospectos.id', '=', 'prospectos_actividades.prospecto_id')
@@ -444,9 +447,9 @@ class ProspectosController extends Controller
             $vendedores = Vendedor::all();
         } else {
 
-
+            
             if (Auth::user()->roles[0]->name == 'Administrador' || Auth::user()->roles[0]->name == 'Dirección') {
-
+                
                 $proyectos = Prospecto::leftjoin('prospectos_actividades', 'prospectos.id', '=', 'prospectos_actividades.prospecto_id')
                     ->leftjoin('prospectos_tipos_actividades', 'prospectos_actividades.tipo_id', '=', 'prospectos_tipos_actividades.id')
                     ->leftjoin('users', 'prospectos.user_id', '=', 'users.id')
@@ -469,7 +472,7 @@ class ProspectosController extends Controller
                     ->get();
                 $vendedores = Vendedor::all();
             }else if(Auth::user()->roles[0]->name == 'Diseñadores'){
-
+                
                 $proyectos = Prospecto::leftjoin('prospectos_actividades', 'prospectos.id', '=', 'prospectos_actividades.prospecto_id')
                     ->leftjoin('prospectos_tipos_actividades', 'prospectos_actividades.tipo_id', '=', 'prospectos_tipos_actividades.id')
                     ->leftjoin('users', 'prospectos.user_id', '=', 'users.id')
@@ -553,17 +556,32 @@ class ProspectosController extends Controller
         //revisamos si tiene tareas pendientes
         if(Auth::user()->roles[0]->name == 'Diseñadores'){
             $tareas_pendientes = Tarea::where('vendedor_id',$vendedor->id)->where('status','Pendiente')->get();
+
+            $proximas_actividades = Prospecto::leftjoin('prospectos_actividades', 'prospectos_actividades.prospecto_id', '=', 'prospectos.id')
+            ->leftjoin('prospectos_tipos_actividades', 'prospectos_actividades.tipo_id', '=', 'prospectos_tipos_actividades.id')
+            ->leftjoin('vendedores', 'prospectos.vendedor_id', '=', 'vendedores.id')
+            ->select(DB::raw('CONCAT(prospectos.nombre , " - ", vendedores.nombre) AS title'),'vendedores.nombre as vendedor','prospectos_tipos_actividades.nombre as description', 'prospectos_actividades.descripcion as texto', 'prospectos_actividades.fecha as start','vendedores.id as userId','vendedores.color as color',DB::raw('CONCAT("/prospectos/",prospectos.id,"/editar" ) AS liga'))
+            ->where('prospectos_actividades.realizada',0)
+            ->where('prospectos.vendedor_id',$vendedor->id)
+            ->get()->toArray();
         }
         else{
             $tareas_pendientes = Tarea::where('director_id',auth()->user()->id)->where('status','Pendiente')->get();
+
+            $proximas_actividades = Prospecto::leftjoin('prospectos_actividades', 'prospectos_actividades.prospecto_id', '=', 'prospectos.id')
+            ->leftjoin('prospectos_tipos_actividades', 'prospectos_actividades.tipo_id', '=', 'prospectos_tipos_actividades.id')
+            ->leftjoin('vendedores', 'prospectos.vendedor_id', '=', 'vendedores.id')
+            ->select(DB::raw('CONCAT(prospectos.nombre , " - ", vendedores.nombre) AS title'),'vendedores.nombre as vendedor','prospectos_tipos_actividades.nombre as description', 'prospectos_actividades.descripcion as texto', 'prospectos_actividades.fecha as start','vendedores.id as userId','vendedores.color as color',DB::raw('CONCAT("/prospectos/",prospectos.id,"/editar" ) AS liga'))
+            ->where('prospectos_actividades.realizada',0)
+            ->get()->toArray();
         }
 
-        $proximas_actividades = Prospecto::leftjoin('prospectos_actividades', 'prospectos_actividades.prospecto_id', '=', 'prospectos.id')
-        ->leftjoin('prospectos_tipos_actividades', 'prospectos_actividades.tipo_id', '=', 'prospectos_tipos_actividades.id')
-        ->leftjoin('vendedores', 'prospectos.vendedor_id', '=', 'vendedores.id')
-        ->select(DB::raw('CONCAT(prospectos.nombre , " - ", vendedores.nombre) AS title'),'vendedores.nombre as vendedor','prospectos_tipos_actividades.nombre as description', 'prospectos_actividades.descripcion as texto', 'prospectos_actividades.fecha as start' )
-        ->where('prospectos_actividades.realizada',0)
-        ->get()->toArray();
+
+
+
+       
+
+        
 
 
 

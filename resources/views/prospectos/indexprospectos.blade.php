@@ -494,6 +494,9 @@
           <div class="modal-body" id="descripcion_evento">
             <p>Modal body text goes here.</p>
           </div>
+          <a class="btn btn-xs btn-warning" title="Editar" href="" id="liga_evento">
+              <i class="fas fa-pencil-alt"></i>
+          </a>
     
       <div class="form-group text-right">
           <button type="button" class="btn btn-default"
@@ -506,15 +509,31 @@
     </modal>
 
     <div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-      <div class="modal-dialog" style="width: 1000px;">
+      <div class="modal-dialog" style="width: 1200px;">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                 <h3 id="myModalLabel">Próximas Actividades</h3>
             </div>
             <div class="modal-body">
-                
-                        <div id="calendar"></div>
+            @role('Administrador|Dirección')
+              <label >Vendedores</label>
+            <select class="form-control" id="selector" style="width: 200px;">
+              <option value="all">Todos</option>
+              @foreach($vendedores as $vendedor)
+              <option value="{{$vendedor->id}}">{{$vendedor->nombre}}</option>
+              @endforeach
+            </select>
+            @endrole
+            @role('Diseñadores')
+            <select class="form-control" id="selector" style="display:none">
+              <option value="all">Todos</option>
+              @foreach($vendedores as $vendedor)
+              <option value="{{$vendedor->id}}">{{$vendedor->nombre}}</option>
+              @endforeach
+            </select>
+            @endrole
+            <div id="calendar"></div>
                       
             </div>
             <div class="modal-footer">
@@ -622,24 +641,37 @@ const app = new Vue({
   
 
       document.addEventListener('DOMContentLoaded', function() {
+        let selector = document.querySelector("#selector");
         var calendarEl = document.getElementById('calendar');
         var calendar = new FullCalendar.Calendar(calendarEl, {
           height: 650,
           aspectRatio: 2,
           initialView: 'dayGridMonth',
-          events: {!! json_encode($proximas_actividades) !!},
           eventColor: '#800080',
           eventClick: function(info) {
-            document.getElementById("titulo_evento").innerHTML = info.event.title;
-            document.getElementById("descripcion_evento").innerHTML = info.event.extendedProps.description;
-              vue.modalEventos = true;
-            },
-
-        });
-        $('#myModal').on('shown.bs.modal', function () {
+          document.getElementById("titulo_evento").innerHTML = info.event.title;
+          document.getElementById("descripcion_evento").innerHTML = info.event.extendedProps.description;
+          document.getElementById("liga_evento").href=info.event.extendedProps.liga; 
+            vue.modalEventos = true;
+          },
+          eventDidMount: function(arg) {
+            let val = selector.value;
+            if (!(val == arg.event.extendedProps.userId || val == "all")) {
+              arg.el.style.display = "none";
+            }
+          },
+          events: function (fetchInfo, successCallback, failureCallback) {
+              successCallback({!! json_encode($proximas_actividades) !!});
+            }
+          });
+          
+          $('#myModal').on('shown.bs.modal', function () {
             calendar.render();
           });
-        
+
+          selector.addEventListener('change', function() {
+            calendar.refetchEvents();
+          });
       });
 
       //$("#fechas_container").append($("#fecha_ini_control"));
