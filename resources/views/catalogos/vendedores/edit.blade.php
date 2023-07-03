@@ -61,6 +61,12 @@
                   </div>
                 </div>
               </div>
+              <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="control-label">Color en hexadecimal (para los eventos)</label>
+                    <input type="text" class="form-control" name="color" v-model="vendedor.color" required />
+                  </div>
+                </div>
               <div class="row" style="margin-top:25px;">
                 <div class="col-md-12 text-right">
                   <a class="btn btn-default" href="{{route('vendedores.index')}}" style="margin-right:20px; color:#000; background-color:#B3B3B3;">
@@ -94,6 +100,7 @@ const app = new Vue({
         comision_base: '{{$vendedor->comision_base}}',
         pago_comision: '{{$vendedor->pago_comision}}',
         email: '{{$vendedor->email}}',
+        color:'{{$vendedor->color}}'
       },
       cargando: false,
     },
