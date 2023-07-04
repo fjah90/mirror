@@ -52,7 +52,7 @@
                   <option value="{{$cliente->nombre}}" style="width:auto;display:inline-block;">{{$cliente->nombre}}</option>
                   @endforeach
                 </select>
-                Factibilidad
+                Factibilidadd
                <select class="p-10 form-control"  v-model="valor_factibilidad" style="width:auto;display:inline-block;">
                   <option value="">Todos</option>
                    <option value="Alta">Alta</option>
