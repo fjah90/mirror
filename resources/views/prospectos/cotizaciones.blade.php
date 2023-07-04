@@ -149,7 +149,10 @@
                     </a>
                     <a class="btn btn-xs btn-warning" title="Editar" :href="'/prospectos/'+prospecto.id+'/editar'">
                       <i class="fas fa-pencil-alt"></i>
-                  </a>
+                    </a>
+                    <a class="btn btn-xs btn-success" title="Cotizar" :href="'/prospectos/'+prospecto.id+'/cotizar'">
+                      <i class="far fa-file-alt"></i>
+                    </a>
                   </td>
                   <td class="hide">
                     <template v-for="(cotizacion, index) in prospecto.cotizaciones">
