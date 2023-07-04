@@ -87,9 +87,9 @@
             <div class="p-10">
               <button style="background-color:#FFCE56; color:#12160F;" class="btn btn-sm btn-primary" @click="modalTareas=true">
                   <i class="fas fa-star"></i> Tareas
-                  @if( count ($tareas_pendientes) > 0)
-                  <i class="fas fa-bell" style="    color: red; font-size: 22px; position: absolute; margin-top: -12px;"></i>
-                  @endif
+              </button>
+              <button style="background-color:#FFCE56; color:#12160F;" class="btn btn-sm btn-primary" @click="modalNotificaciones=true">
+                <i class="fas fa-bell" ></i><div style="color: red; background-color:red;border-radius:50%;color:white;width:20px;height:20px;position: absolute ;margin-top: -34px;margin-left: 12px;"  v-html="cant_notificaciones"></div>
               </button>
             </div>
             <!--Botones para apartados de proyectos activos o cancelados-->
@@ -432,6 +432,42 @@
     </modal>
 
     <!-- Historial Tareas Modal -->
+    <modal id='modal_notificaciones' v-model="modalNotificaciones" :title="'Notificaciones'" :footer="false"  size="lg">
+
+      <table id="tablanotificaciones" class="table table-bordred"
+              data-page-length="15" style="width:100%;">
+              <thead>
+                <tr style="background-color:#12160F">
+                  <th class="hide">#</th>
+                  <th class="color_text">Usuario</th>
+                  <th class="color_text">Texto</th>
+                  <th class="color_text">Fecha</th>
+                  <th class="color_text">Marcar como leida</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="(notificacion, index) in notificaciones">
+                 <td class="hide">@{{index + 1}}</td>
+                 <td>@{{notificacion.usercreo.name}}</td>
+                 <td>@{{notificacion.texto}}</td>
+                 <td>@{{notificacion.created_at}}</td>
+                 <td>
+                 <button class="btn btn-xs btn-warning" title="Marcar como leida" @click="marcarleida(notificacion, index)" :disabled="marcandoleida">
+                  <i class="fas fa-check"></i>
+                </button>
+                 </td>
+                </tr>
+              </tbody>
+            </table>    
+            <div class="form-group text-right">
+                <button type="button" class="btn btn-default"
+                @click="modalNotificaciones=false;">
+                    Cancelar
+                </button>
+            </div>
+    </modal>
+
+    <!-- Historial Tareas Modal -->
     <modal id='modal_historial' v-model="modalHistorial" :title="'Historial de Tareas'" :footer="false"  size="lg">
 
       <table id="tablahistorial" class="table table-bordred"
@@ -588,6 +624,8 @@ const app = new Vue({
       tareasproceso: {!! json_encode($tareasproceso) !!},
       tareasterminadas: {!! json_encode($tareasterminadas) !!},
       historial:[],
+      cant_notificaciones : {!! count($notificaciones) !!},
+      notificaciones:{!! json_encode($notificaciones) !!},
       comentarios:[],
       tarea:{
         id:'',
@@ -598,6 +636,7 @@ const app = new Vue({
         comentario:''
       },
       modalTareas: true,
+      modalNotificaciones: false,
       modalHistorial:false,
       modalComentarios:false,
       modalEventos: false,
@@ -608,6 +647,7 @@ const app = new Vue({
       fecha_fin: '',
       proyecto_id: '',
       cargando: false,
+      marcandoleida: false,
       editando : false,
       historialcargando : false,
       comentarioscargando : false,
@@ -825,6 +865,29 @@ const app = new Vue({
           $('#directores_title').css('display','none');
         }
         
+      },
+      marcarleida(notificacion,index){
+        var formData = objectToFormData(notificacion, {indices: true});
+        this.marcandoleida = true;
+        axios.post('/marcarleida', formData, {
+              headers: {'Content-Type': 'multipart/form-data'}
+          })
+          .then(({data}) => {
+            this.marcandoleida = false;
+            $('#tablanotificaciones').DataTable().destroy();
+            this.notificaciones = data.notificaciones;
+            this.cant_notificaciones =  data.cant_notificaciones;
+          })
+          .catch(({response}) => {
+              console.error(response);
+              this.marcandoleida = false;
+              swal({
+                  title: "Error",
+                  text: response.data.message || "Ocurrio un error inesperado, intente mas tarde",
+                  type: "error"
+              });
+          });
+          
       },
       guardarcomentario(){
         var formData = objectToFormData(this.tarea, {indices: true});
