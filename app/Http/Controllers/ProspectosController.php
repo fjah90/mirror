@@ -19,6 +19,7 @@ use App\Models\OrdenCompra;
 use App\Models\OrdenProceso;
 use App\Models\Vendedor;
 use App\Models\Tarea;
+use App\Models\Notificacion;
 use App\Models\UnidadMedida;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -577,7 +578,8 @@ class ProspectosController extends Controller
         }
 
 
-
+        //Sacamos la notificaciones del usuario logueado
+        $notificaciones = Notificacion::with('usercreo','userdirigido')->where('user_dirigido',auth()->user()->id)->where('status','sin leer')->get();
 
        
 
@@ -585,7 +587,7 @@ class ProspectosController extends Controller
 
         $clientes = Cliente::all();
 
-        return view('prospectos.indexprospectos', compact('cotizaciones', 'usuarios', 'proyectos', 'estatus','vendedores','tareaspendiente','tareasterminadas','tareasproceso','disenador_id','anio2','directores','tareas_pendientes','proximas_actividades','clientes'));
+        return view('prospectos.indexprospectos', compact('cotizaciones', 'usuarios', 'proyectos', 'estatus','vendedores','tareaspendiente','tareasterminadas','tareasproceso','disenador_id','anio2','directores','tareas_pendientes','proximas_actividades','clientes','notificaciones'));
     }
 
 

@@ -221,6 +221,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('/tareas', 'TareasController');
     Route::post('/tareasactualizar', 'TareasController@actualizar');
     Route::post('/comentarios', 'TareasController@guardarcomentario');
+    Route::post('/marcarleida', 'TareasController@marcarleida');
 
 
 
