@@ -76,6 +76,7 @@ class TareasController extends Controller
             $usuario_destino = Vendedor::findOrFail($request->vendedor_id);
             
         }
+        dd($usuario_destino);
         //sacamos el usuario remitente
         $usuario_remitente  = auth()->user()->name;
         $mensaje = '<b>'.$usuario_destino->nombre.'</b> tienes la siguiente tarea asignada por <b>'.$usuario_remitente .'</b>:<br><br><br>'.$tarea->tarea .'<br><br><br> Favor de atenderla a la brevedad.';
