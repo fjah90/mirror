@@ -467,7 +467,7 @@
             </div>
     </modal>
 
-    <!-- Historial Tareas Modal -->
+    <!-- Historial Tareas Modal
     <modal id='modal_historial' v-model="modalHistorial" :title="'Historial de Tareas'" :footer="false"  size="lg">
 
       <table id="tablahistorial" class="table table-bordred"
@@ -498,43 +498,10 @@
                 </button>
             </div>
     </modal>
+     -->
 
 
-    <!-- Comentarios Tareas Modal -->
-    <modal id='modal_comentarios' v-model="modalComentarios" :title="'Comentarios de Tareas'" :footer="false"  size="lg">
-
-      <table id="tablacomentarios" class="table table-bordred"
-              data-page-length="15" style="width:100%;">
-              <thead>
-                <tr style="background-color:#12160F">
-                  <th class="hide">#</th>
-                  <th class="color_text">Usuario</th>
-                  <th class="color_text">Comentario</th>
-                  <th class="color_text">Fecha</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr v-for="(c, index) in comentarios">
-                 <td class="hide">@{{index + 1}}</td>
-                 <td>@{{c.usuario.name}}</td>
-                 <td>@{{c.comentario}}</td>
-                 <td>@{{c.created_at}}</td>
-                </tr>
-              </tbody>
-            </table>    
-            <div class="form-group">
-                <label class="control-label text-danger">Comentario</label>
-                <textarea class="form-control" name="tarea" rows="3" cols="80"
-                          v-model="tarea.comentario" ></textarea>
-            </div>
-            <div class="form-group text-right">
-                <button type="submit" class="btn btn-default" :disabled="comentarioscargando" @click='guardarcomentario()'>Guardar</button>
-                <button type="button" class="btn btn-default"
-                        @click="cancelarcomentario(); modalComentarios=false;">
-                    Cancelar
-                </button>
-            </div>
-    </modal>
+    
 
 
     <!-- Modal eventos -->
@@ -593,6 +560,42 @@
         </div>
       </div>
     </div>
+
+    <!-- Comentarios Tareas Modal -->
+    <modal id='modal_comentarios' v-model="modalComentarios" :title="'Comentarios de Tareas'" :footer="false"  size="lg">
+
+      <table id="tablacomentarios" class="table table-bordred"
+              data-page-length="15" style="width:100%;">
+              <thead>
+                <tr style="background-color:#12160F">
+                  <th class="hide">#</th>
+                  <th class="color_text">Usuario</th>
+                  <th class="color_text">Comentario</th>
+                  <th class="color_text">Fecha</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="(c, index) in comentarios">
+                 <td class="hide">@{{index + 1}}</td>
+                 <td>@{{c.usuario.name}}</td>
+                 <td>@{{c.comentario}}</td>
+                 <td>@{{c.created_at}}</td>
+                </tr>
+              </tbody>
+            </table>    
+            <div class="form-group">
+                <label class="control-label text-danger">Comentario</label>
+                <textarea class="form-control" name="tarea" rows="3" cols="80"
+                          v-model="tarea.comentario" ></textarea>
+            </div>
+            <div class="form-group text-right">
+                <button type="submit" class="btn btn-default" :disabled="comentarioscargando" @click='guardarcomentario()'>Guardar</button>
+                <button type="button" class="btn btn-default"
+                        @click="cancelarcomentario(); modalComentarios=false;">
+                    Cancelar
+                </button>
+            </div>
+    </modal>
 
 
    
@@ -934,6 +937,7 @@ const app = new Vue({
                   type: "success"
               });
               this.cargando = false;
+              this.modalTareas = false;
           })
           .catch(({response}) => {
               console.error(response);
