@@ -154,7 +154,7 @@
 
           </li>
         -->
-        <!--
+       
           <hr class="divider-menu">
           <li {!! (Request::is('prospectos*') ? 'class="active"' : '') !!}>
             <a href="{{ URL::to('prospectos') }}">
@@ -162,7 +162,7 @@
               <span class="mm-text" style="color:#9F9F9F;">Cotizaciones</span>
             </a>
           </li>
-
+ <!--
 
             <hr class="divider-menu">
 
