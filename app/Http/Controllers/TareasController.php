@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Tarea;
 use App\Models\TareasComentario;
 use App\Models\Vendedor;
+use App\Models\Notificacion;
 use App\User;
 use Carbon\Carbon;
 use Auth;
@@ -69,12 +70,15 @@ class TareasController extends Controller
         //sacamos el email del destinatario
         if($request->vendedor_id == null){
             $usuario_destino = User::findOrFail($request->director_id);
+            $usuario_des = $usuario_destino;
         
         }
         else{
             $usuario_destino = Vendedor::findOrFail($request->vendedor_id);
+            $usuario_des = User::where('email',$usuario_destino->email)->first();
             
         }
+        
         //sacamos el usuario remitente
         $usuario_remitente  = auth()->user()->name;
         $mensaje = '<b>'.$usuario_destino->nombre.'</b> tienes la siguiente tarea asignada por <b>'.$usuario_remitente .'</b>:<br><br><br>'.$tarea->tarea .'<br><br><br> Favor de atenderla a la brevedad.';
@@ -88,11 +92,31 @@ class TareasController extends Controller
                 ->subject('Nueva tarea Robinson');
         });
 
+        $notificacion = Notificacion::create([
+            'user_creo' => auth()->user()->id,
+            'user_dirigido' => $usuario_des->id,
+            'texto'      => 'Creo una nueva tarea',
+        ]);
+
+
 
         return response()->json(['success' => true, "error" => false, 'tarea' => $tarea], 200);
     }
 
+    //Marca una notificacion como leida
+    public function marcarleida(Request $request)
+    {
+        $notificacion = Notificacion::findOrFail($request->id);
 
+        $notificacion->status = 'leida';
+        $notificacion->save();
+        //Sacamos la notificaciones del usuario logueado
+        $notificaciones = Notificacion::with('usercreo','userdirigido')->where('user_dirigido',auth()->user()->id)->where('status','sin leer')->get();
+        $cant_notificaciones = count($notificaciones);
+
+        return response()->json(['success' => true, "error" => false, 'notificaciones' => $notificaciones,'cant_notificaciones' => $cant_notificaciones], 200);
+
+    }
 
     //Guarda un comentario sobre una tarea y regresa el histroial de comentarios de la tarea
     public function guardarcomentario(Request $request)
@@ -106,6 +130,30 @@ class TareasController extends Controller
         $tarea = Tarea::findOrFail($request->id);
         $tarea->load('vendedor','director','comentarios','comentarios.usuario');
         $comentarios = $tarea->comentarios;
+
+        //Si el usuario que creo el comentario es el mismo que creo la tarea ,la notificacion va dirigida a quien se le asigno la tarea
+        if(auth()->user()->id == $tarea->user_id){
+            if($tarea->vendedor_id == null){
+                $user_dirigido = $tarea->director_id;
+            }
+            else{
+                $user = User::where('email',$tarea->vendedor->email)->first();
+                $user_dirigido = $user->id;
+            }
+        }
+        //si el usuario que creo el comentario NO es el mismo que creo la tarea entonces la notificacion va dirigida a quien creo la tarea
+        else{
+            $user_dirigido = $tarea->user_id;
+
+        }
+
+        
+
+        $notificacion = Notificacion::create([
+            'user_creo' => auth()->user()->id,
+            'user_dirigido' => $user_dirigido,
+            'texto'      => 'Realizó un comentarios en una tarea',
+        ]);
         
         return response()->json(['success' => true, "error" => false, 'comentarios' => $comentarios], 200);
     }
@@ -185,6 +233,20 @@ class TareasController extends Controller
             }
 
         }
+
+        if($tarea->vendedor_id == null){
+            $user_dirigido = $tarea->director_id;
+        }
+        else{
+            $user = User::where('email',$tarea->vendedor->email)->first();
+            $user_dirigido = $user->id;
+        }
+
+        $notificacion = Notificacion::create([
+            'user_creo' => auth()->user()->id,
+            'user_dirigido' => $user_dirigido,
+            'texto'      => 'Editó una tarea',
+        ]);
         
 
         return response()->json(['success' => true, "error" => false, 'tareaspendiente' => $tareaspendiente,'tareasproceso'=>$tareasproceso,'tareasterminadas'=> $tareasterminadas,'tarea'=>$tarea], 200);

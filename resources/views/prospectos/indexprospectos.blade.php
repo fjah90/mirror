@@ -87,9 +87,9 @@
             <div class="p-10">
               <button style="background-color:#FFCE56; color:#12160F;" class="btn btn-sm btn-primary" @click="modalTareas=true">
                   <i class="fas fa-star"></i> Tareas
-                  @if( count ($tareas_pendientes) > 0)
-                  <i class="fas fa-bell" style="    color: red; font-size: 22px; position: absolute; margin-top: -12px;"></i>
-                  @endif
+              </button>
+              <button style="background-color:#FFCE56; color:#12160F;" class="btn btn-sm btn-primary" @click="modalNotificaciones=true">
+                <i class="fas fa-bell" ></i><div style="color: red; background-color:red;border-radius:50%;color:white;width:20px;height:20px;position: absolute ;margin-top: -34px;margin-left: 12px;"  v-html="cant_notificaciones"></div>
               </button>
             </div>
             <!--Botones para apartados de proyectos activos o cancelados-->
@@ -432,6 +432,42 @@
     </modal>
 
     <!-- Historial Tareas Modal -->
+    <modal id='modal_notificaciones' v-model="modalNotificaciones" :title="'Notificaciones'" :footer="false"  size="lg">
+
+      <table id="tablanotificaciones" class="table table-bordred"
+              data-page-length="15" style="width:100%;">
+              <thead>
+                <tr style="background-color:#12160F">
+                  <th class="hide">#</th>
+                  <th class="color_text">Usuario</th>
+                  <th class="color_text">Texto</th>
+                  <th class="color_text">Fecha</th>
+                  <th class="color_text">Marcar como leida</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="(notificacion, index) in notificaciones">
+                 <td class="hide">@{{index + 1}}</td>
+                 <td>@{{notificacion.usercreo.name}}</td>
+                 <td>@{{notificacion.texto}}</td>
+                 <td>@{{notificacion.created_at}}</td>
+                 <td>
+                 <button class="btn btn-xs btn-warning" title="Marcar como leida" @click="marcarleida(notificacion, index)" :disabled="marcandoleida">
+                  <i class="fas fa-check"></i>
+                </button>
+                 </td>
+                </tr>
+              </tbody>
+            </table>    
+            <div class="form-group text-right">
+                <button type="button" class="btn btn-default"
+                @click="modalNotificaciones=false;">
+                    Cancelar
+                </button>
+            </div>
+    </modal>
+
+    <!-- Historial Tareas Modal
     <modal id='modal_historial' v-model="modalHistorial" :title="'Historial de Tareas'" :footer="false"  size="lg">
 
       <table id="tablahistorial" class="table table-bordred"
@@ -462,7 +498,68 @@
                 </button>
             </div>
     </modal>
+     -->
 
+
+    
+
+
+    <!-- Modal eventos -->
+    <modal v-model="modalEventos" :title="'Actividad'" :footer="false"  size="md">
+        <div class="modal-header">
+            <h4 class="modal-title" id="titulo_evento">Modal title</h4>
+          </div>
+          <div class="modal-body" id="descripcion_evento">
+            <p>Modal body text goes here.</p>
+          </div>
+          <a class="btn btn-xs btn-warning" title="Editar" href="" id="liga_evento">
+              <i class="fas fa-pencil-alt"></i>
+          </a>
+    
+      <div class="form-group text-right">
+          <button type="button" class="btn btn-default"
+                  @click="modalEventos=false;">
+              Cancelar
+          </button>
+      </div>
+          
+        
+    </modal>
+
+    <div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog" style="width: 1200px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h3 id="myModalLabel">Próximas Actividades</h3>
+            </div>
+            <div class="modal-body">
+            @role('Administrador|Dirección')
+              <label >Vendedores</label>
+            <select class="form-control" id="selector" style="width: 200px;">
+              <option value="all">Todos</option>
+              @foreach($vendedores as $vendedor)
+              <option value="{{$vendedor->id}}">{{$vendedor->nombre}}</option>
+              @endforeach
+            </select>
+            @endrole
+            @role('Diseñadores')
+            <select class="form-control" id="selector" style="display:none">
+              <option value="all">Todos</option>
+              @foreach($vendedores as $vendedor)
+              <option value="{{$vendedor->id}}">{{$vendedor->nombre}}</option>
+              @endforeach
+            </select>
+            @endrole
+            <div id="calendar"></div>
+                      
+            </div>
+            <div class="modal-footer">
+                <button class="btn" data-dismiss="modal" aria-hidden="true">Cerrar</button>
+            </div>
+        </div>
+      </div>
+    </div>
 
     <!-- Comentarios Tareas Modal -->
     <modal id='modal_comentarios' v-model="modalComentarios" :title="'Comentarios de Tareas'" :footer="false"  size="lg">
@@ -501,45 +598,6 @@
     </modal>
 
 
-    <!-- Modal eventos -->
-    <modal v-model="modalEventos" :title="'Actividad'" :footer="false"  size="md">
-        <div class="modal-header">
-            <h4 class="modal-title" id="titulo_evento">Modal title</h4>
-          </div>
-          <div class="modal-body" id="descripcion_evento">
-            <p>Modal body text goes here.</p>
-          </div>
-    
-      <div class="form-group text-right">
-          <button type="button" class="btn btn-default"
-                  @click="modalEventos=false;">
-              Cancelar
-          </button>
-      </div>
-          
-        
-    </modal>
-
-    <div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-      <div class="modal-dialog" style="width: 1000px;">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h3 id="myModalLabel">Próximas Actividades</h3>
-            </div>
-            <div class="modal-body">
-                
-                        <div id="calendar"></div>
-                      
-            </div>
-            <div class="modal-footer">
-                <button class="btn" data-dismiss="modal" aria-hidden="true">Cerrar</button>
-            </div>
-        </div>
-      </div>
-    </div>
-
-
    
 </section>
 
@@ -569,6 +627,8 @@ const app = new Vue({
       tareasproceso: {!! json_encode($tareasproceso) !!},
       tareasterminadas: {!! json_encode($tareasterminadas) !!},
       historial:[],
+      cant_notificaciones : {!! count($notificaciones) !!},
+      notificaciones:{!! json_encode($notificaciones) !!},
       comentarios:[],
       tarea:{
         id:'',
@@ -579,6 +639,7 @@ const app = new Vue({
         comentario:''
       },
       modalTareas: true,
+      modalNotificaciones: false,
       modalHistorial:false,
       modalComentarios:false,
       modalEventos: false,
@@ -589,6 +650,7 @@ const app = new Vue({
       fecha_fin: '',
       proyecto_id: '',
       cargando: false,
+      marcandoleida: false,
       editando : false,
       historialcargando : false,
       comentarioscargando : false,
@@ -641,24 +703,37 @@ const app = new Vue({
   
 
       document.addEventListener('DOMContentLoaded', function() {
+        let selector = document.querySelector("#selector");
         var calendarEl = document.getElementById('calendar');
         var calendar = new FullCalendar.Calendar(calendarEl, {
           height: 650,
           aspectRatio: 2,
           initialView: 'dayGridMonth',
-          events: {!! json_encode($proximas_actividades) !!},
           eventColor: '#800080',
           eventClick: function(info) {
-            document.getElementById("titulo_evento").innerHTML = info.event.title;
-            document.getElementById("descripcion_evento").innerHTML = info.event.extendedProps.description;
-              vue.modalEventos = true;
-            },
-
-        });
-        $('#myModal').on('shown.bs.modal', function () {
+          document.getElementById("titulo_evento").innerHTML = info.event.title;
+          document.getElementById("descripcion_evento").innerHTML = info.event.extendedProps.description;
+          document.getElementById("liga_evento").href=info.event.extendedProps.liga; 
+            vue.modalEventos = true;
+          },
+          eventDidMount: function(arg) {
+            let val = selector.value;
+            if (!(val == arg.event.extendedProps.userId || val == "all")) {
+              arg.el.style.display = "none";
+            }
+          },
+          events: function (fetchInfo, successCallback, failureCallback) {
+              successCallback({!! json_encode($proximas_actividades) !!});
+            }
+          });
+          
+          $('#myModal').on('shown.bs.modal', function () {
             calendar.render();
           });
-        
+
+          selector.addEventListener('change', function() {
+            calendar.refetchEvents();
+          });
       });
 
       //$("#fechas_container").append($("#fecha_ini_control"));
@@ -725,7 +800,12 @@ const app = new Vue({
           $('#directores_title').css('display','block');
         }
         this.editando = true;
-        this.tarea = tarea;
+        this.tarea.id = tarea.id;
+        this.tarea.tarea = tarea.tarea;
+        this.tarea.vendedor_id = tarea.vendedor_id;
+        this.tarea.status = tarea.status;
+        this.tarea.director_id = tarea.director_id;  
+        //this.tarea == tarea;
       },
       historialtarea(tarea , index){
         this.historialcargando = true;
@@ -775,8 +855,8 @@ const app = new Vue({
         this.comentarioscargando = false;
       },
       cancelartarea(){
-        this.tarea.tarea = '';
-        this.tarea.id = '';   
+        this.tarea.tarea = null;
+        this.tarea.id = null;   
         this.tarea.vendedor_id = null;
         this.tarea.director_id = null;
         this.tarea.status = 'Pendiente';
@@ -793,6 +873,29 @@ const app = new Vue({
           $('#directores_title').css('display','none');
         }
         
+      },
+      marcarleida(notificacion,index){
+        var formData = objectToFormData(notificacion, {indices: true});
+        this.marcandoleida = true;
+        axios.post('/marcarleida', formData, {
+              headers: {'Content-Type': 'multipart/form-data'}
+          })
+          .then(({data}) => {
+            this.marcandoleida = false;
+            $('#tablanotificaciones').DataTable().destroy();
+            this.notificaciones = data.notificaciones;
+            this.cant_notificaciones =  data.cant_notificaciones;
+          })
+          .catch(({response}) => {
+              console.error(response);
+              this.marcandoleida = false;
+              swal({
+                  title: "Error",
+                  text: response.data.message || "Ocurrio un error inesperado, intente mas tarde",
+                  type: "error"
+              });
+          });
+          
       },
       guardarcomentario(){
         var formData = objectToFormData(this.tarea, {indices: true});
@@ -834,6 +937,7 @@ const app = new Vue({
                   type: "success"
               });
               this.cargando = false;
+              this.modalTareas = false;
           })
           .catch(({response}) => {
               console.error(response);

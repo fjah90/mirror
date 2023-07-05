@@ -124,14 +124,17 @@
                                         
                                             </td>
                                             <td class="text-right">
+                                                <!--
                                                 <button class="btn btn-xs btn-default" title="Notas"
                                                         @click="notas.cotizacion_id=cotizacion.id;notas.mensaje=cotizacion.notas2;openNotas=true;">
                                                     <i class="far fa-sticky-note"></i>
                                                 </button>
+                                                -->
                                                 <a class="btn btn-xs btn-success" title="PDF" :href="cotizacion.archivo"
                                                    :download="'C '+cotizacion.numero+' Robinson'+prospecto.cliente.nombre+' '+prospecto.nombre+'.pdf'">
                                                     <i class="far fa-file-pdf"></i>
                                                 </a>
+                                                <!--
                                                 <button class="btn btn-xs btn-info" title="Enviar"
                                                         @click="enviar.cotizacion_id=cotizacion.id; enviar.numero=cotizacion.numero; openEnviar=true;">
                                                     <i class="far fa-envelope"></i>
@@ -149,16 +152,19 @@
                                                target="_blank">
                                                 <i class="fas fa-arrow-up"></i>
                                                 </a>
+                                                -->
                                                 
                                                 <template v-else>
                                                     <button class="btn btn-xs btn-warning" title="Editar"
                                                             @click="editar(index, cotizacion)">
                                                         <i class="fas fa-pencil-alt"></i>
                                                     </button>
+                                                    <!--
                                                     <button class="btn btn-xs btn-primary" title="Aceptar"
                                                             @click="aceptar.cotizacion_id=cotizacion.id; openAceptar=true;">
                                                         <i class="fas fa-user-check"></i>
                                                     </button>
+                                                    -->
                                                     @role('Administrador')
                                                     <button class="btn btn-xs btn-danger" title="Eliminar"
                                                             @click="borrar(index, cotizacion)">
@@ -166,6 +172,7 @@
                                                     </button>
                                                     @endrole
                                                 </template>
+                                                <!--
                                                 <button class="btn btn-xs btn-white" title="Copiar"
                                                         @click="copiar(index, cotizacion)">
                                                     <i class="far fa-copy"></i>
@@ -174,6 +181,7 @@
                                                         @click="copiar2(index, cotizacion); openCopiar=true ">
                                                     <i class="far fa-copy"></i>
                                                 </button>
+                                                -->
 
                                             </td>
                                         </tr>
