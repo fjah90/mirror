@@ -70,13 +70,15 @@ class TareasController extends Controller
         //sacamos el email del destinatario
         if($request->vendedor_id == null){
             $usuario_destino = User::findOrFail($request->director_id);
+            $usuario_des = $usuario_destino;
         
         }
         else{
             $usuario_destino = Vendedor::findOrFail($request->vendedor_id);
+            $usuario_des = User::where('email',$usuario_destino->email)->first();
             
         }
-        dd($usuario_destino);
+        
         //sacamos el usuario remitente
         $usuario_remitente  = auth()->user()->name;
         $mensaje = '<b>'.$usuario_destino->nombre.'</b> tienes la siguiente tarea asignada por <b>'.$usuario_remitente .'</b>:<br><br><br>'.$tarea->tarea .'<br><br><br> Favor de atenderla a la brevedad.';
@@ -92,7 +94,7 @@ class TareasController extends Controller
 
         $notificacion = Notificacion::create([
             'user_creo' => auth()->user()->id,
-            'user_dirigido' => $usuario_destino->id,
+            'user_dirigido' => $usuario_des->id,
             'texto'      => 'Creo una nueva tarea',
         ]);
 

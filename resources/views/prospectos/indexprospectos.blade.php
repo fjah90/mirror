@@ -797,7 +797,12 @@ const app = new Vue({
           $('#directores_title').css('display','block');
         }
         this.editando = true;
-        this.tarea = tarea;
+        this.tarea.id = tarea.id;
+        this.tarea.tarea = tarea.tarea;
+        this.tarea.vendedor_id = tarea.vendedor_id;
+        this.tarea.status = tarea.status;
+        this.tarea.director_id = tarea.director_id;  
+        //this.tarea == tarea;
       },
       historialtarea(tarea , index){
         this.historialcargando = true;
@@ -847,8 +852,8 @@ const app = new Vue({
         this.comentarioscargando = false;
       },
       cancelartarea(){
-        this.tarea.tarea = '';
-        this.tarea.id = '';   
+        this.tarea.tarea = null;
+        this.tarea.id = null;   
         this.tarea.vendedor_id = null;
         this.tarea.director_id = null;
         this.tarea.status = 'Pendiente';
