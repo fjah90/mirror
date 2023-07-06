@@ -10,6 +10,8 @@ use App\Models\Proveedor;
 use App\Models\Subcategoria;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Http\Response;
 use Mail;
 use Storage;
 use Validator;
@@ -23,16 +25,23 @@ class ProductosController extends Controller
      */
     public function index()
     {
-            $productos = Producto::with('proveedor', 'categoria', 'subcategoria')
-            ->has('categoria')
-            ->where('status', 'ACTIVO')
-            ->get();
 
-        return view('catalogos.productos.index', compact('productos'));
+        $productos = Cache::remember('productos', 60, function () {
+            return Producto::with('proveedor', 'categoria', 'subcategoria')
+                ->has('categoria')
+                ->where('status', 'ACTIVO')
+                ->get();
+        });
+
+        $productos = Cache::get('productos');
+
+        $view = view('catalogos.productos.index', compact('productos'));
+        return response($view);
     }
 
 
-    public function productosinactivos(){
+    public function productosinactivos()
+    {
 
         $productos = Producto::with('proveedor', 'categoria', 'subcategoria')
             ->has('categoria')
@@ -50,8 +59,8 @@ class ProductosController extends Controller
      */
     public function create2(Request $request)
     {
-        $layout        = $request->layout;
-        return view('catalogos.productos.create2', compact( 'layout'));
+        $layout = $request->layout;
+        return view('catalogos.productos.create2', compact('layout'));
     }
 
     /**
@@ -61,9 +70,9 @@ class ProductosController extends Controller
      */
     public function create(Request $request)
     {
-        $layout        = $request->layout;
-        $proveedores   = Proveedor::orderBy('empresa')->get();
-        $categorias    = Categoria::with('descripciones')->orderBy('nombre')->get();
+        $layout = $request->layout;
+        $proveedores = Proveedor::orderBy('empresa')->get();
+        $categorias = Categoria::with('descripciones')->orderBy('nombre')->get();
         $subcategorias = Subcategoria::orderBy('nombre')->get();
         return view('catalogos.productos.create', compact('proveedores', 'categorias', 'subcategorias', 'layout'));
     }
@@ -78,17 +87,20 @@ class ProductosController extends Controller
     {
         //dd($request->all());
         $validator = Validator::make($request->all(), [
-            'proveedor_id' => 'required',
-            'subcategoria_id' => 'required',//
-            'categoria_id' => 'required',
-            'nombre'       => 'required',
-            'precio'      =>'required',
+            'proveedor_id'    => 'required',
+            'subcategoria_id' => 'required',
+            //
+            'categoria_id'    => 'required',
+            'nombre'          => 'required',
+            'precio'          => 'required',
         ]);
 
         if ($validator->fails()) {
             $errors = $validator->errors()->all();
             return response()->json([
-                "success" => false, "error" => true, "message" => $errors[0],
+                "success" => false,
+                "error"   => true,
+                "message" => $errors[0],
             ], 422);
         }
 
@@ -103,13 +115,14 @@ class ProductosController extends Controller
 
         //$producto = Producto::create($create);
 
-            $producto = Producto::create([
-                'proveedor_id'  => $request->proveedor_id,
-                'subcategoria_id'  => $request->subcategoria_id,//
-                'categoria_id'      => $request->categoria_id,
-                'nombre' => $request->nombre,
-                'precio' => $request->precio,
-            ]);
+        $producto = Producto::create([
+            'proveedor_id'    => $request->proveedor_id,
+            'subcategoria_id' => $request->subcategoria_id,
+            //
+            'categoria_id'    => $request->categoria_id,
+            'nombre'          => $request->nombre,
+            'precio'          => $request->precio,
+        ]);
 
         if (isset($request->foto)) {
             $foto = Storage::putFile('public/productos', $request->file('foto'));
@@ -117,7 +130,7 @@ class ProductosController extends Controller
             $producto->update(['foto' => $foto]);
         }
         if (isset($request->ficha_tecnica)) {
-            $nombre_temp  = "temp" . time() . ".pdf";
+            $nombre_temp = "temp" . time() . ".pdf";
             $nombre_bueno = "ficha_tecnica_producto_" . $producto->id . ".pdf";
 
             Storage::putFileAs('public/productos', $request->file('ficha_tecnica'), $nombre_temp);
@@ -168,71 +181,73 @@ class ProductosController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    
-
-        
     public function guardar(Request $request)
-    {    
+    {
         if (isset($request->archivo)) {
             $file = $request->file('archivo');
-            $archivo = time().$file->getClientOriginalName();
-            $file->move(public_path().'/archivos/', $archivo);
+            $archivo = time() . $file->getClientOriginalName();
+            $file->move(public_path() . '/archivos/', $archivo);
 
-            $path = public_path().'/archivos/'.$archivo;
+            $path = public_path() . '/archivos/' . $archivo;
             $data = array_map('str_getcsv', file($path));
             if (count($data) > 1) {
 
                 array_shift($data);
-    
+
                 $this->storeImports($data);
                 return response()->json(['success' => true, "error" => false], 200);
-            } else {
+            }
+            else {
                 return response()->json([
-                    "success" => false, "error" => true, "message" => 'Error con el archivo',
+                    "success" => false,
+                    "error"   => true,
+                    "message" => 'Error con el archivo',
                 ], 422);
             }
         }
-        else{
+        else {
             return response()->json([
-                "success" => false, "error" => true, "message" => 'Falta archivo',
+                "success" => false,
+                "error"   => true,
+                "message" => 'Falta archivo',
             ], 422);
 
         }
-        
+
     }
 
     private function storeImports($rows)
     {
         foreach ($rows as $key => $row) {
-            $proveedor = Proveedor::where('empresa',$row[1])->first();
-            $categoria = Categoria::where('nombre',$row[2])->first();
+            $proveedor = Proveedor::where('empresa', $row[1])->first();
+            $categoria = Categoria::where('nombre', $row[2])->first();
 
-            if($row[3] == null || $row[3] == ""){
+            if ($row[3] == null || $row[3] == "") {
                 $subcategoria = null;
             }
-            else{
-                $sub = Subcategoria::where('nombre',$row[3])->first();
-                if($sub){
+            else {
+                $sub = Subcategoria::where('nombre', $row[3])->first();
+                if ($sub) {
                     $subcategoria = $sub->id;
                 }
-                else{
+                else {
                     $subcategoria = null;
-                } 
+                }
             }
 
             $producto = [
-                "proveedor_id" => $proveedor->id,
-                "categoria_id" => $categoria->id,
-                "nombre" => $row[0],
+                "proveedor_id"    => $proveedor->id,
+                "categoria_id"    => $categoria->id,
+                "nombre"          => $row[0],
                 "subcategoria_id" => $subcategoria,
-                "precio" => $row[4]
+                "precio"          => $row[4]
             ];
 
-            $p = Producto::where('nombre',$row[0])->first();
-            if($p){
+            $p = Producto::where('nombre', $row[0])->first();
+            if ($p) {
                 $p->update($producto);
             }
-            else{
+            else {
                 $p = Producto::create($producto);
             }
 
@@ -256,38 +271,37 @@ class ProductosController extends Controller
                 "Repeat HV",
                 "Unidad de venta",
                 "Notas/otros",
-                "Backing",    
+                "Backing",
             ];
-            
 
-            for($i = 5  ; $i<22 ; $i++){
-                
+
+            for ($i = 5; $i < 22; $i++) {
+
                 $update = array(
                     "valor" => $row[$i]
                 );
 
-                $descripcion = CategoriaDescripcion::where('categoria_id',$categoria->id)->where('nombre',$descripciones[$i-5])->first();
-                if($descripcion){
-                    $productodescripcion = ProductoDescripcion::where('producto_id',$p->id)->where('categoria_descripcion_id',$descripcion['id'])->first();
-                    if($productodescripcion){
+                $descripcion = CategoriaDescripcion::where('categoria_id', $categoria->id)->where('nombre', $descripciones[$i - 5])->first();
+                if ($descripcion) {
+                    $productodescripcion = ProductoDescripcion::where('producto_id', $p->id)->where('categoria_descripcion_id', $descripcion['id'])->first();
+                    if ($productodescripcion) {
                         $productodescripcion->update($update);
                     }
-                    else{     
+                    else {
                         $create = array(
                             "producto_id"              => $p->id,
                             "categoria_descripcion_id" => $descripcion['id'],
-                            "valor" => $row[$i]
+                            "valor"                    => $row[$i]
                         );
                         ProductoDescripcion::create($create);
                     }
-                    
+
                 }
-                
+
             }
-        
+
         }
 
-        
     }
 
     /**
@@ -318,15 +332,15 @@ class ProductosController extends Controller
      */
     public function edit(Producto $producto)
     {
-        $proveedores   = Proveedor::orderBy('empresa')->get();
-        $categorias    = Categoria::with('descripciones')->orderBy('nombre')->get();
+        $proveedores = Proveedor::orderBy('empresa')->get();
+        $categorias = Categoria::with('descripciones')->orderBy('nombre')->get();
         $subcategorias = Subcategoria::orderBy('nombre')->get();
         $producto->load('proveedor', 'categoria.descripciones', 'subcategoria', 'descripciones.descripcionNombre');
         //dd($producto);
 
         //dd(1);
 
-        $producto_descripciones  = $producto->descripciones->count();
+        $producto_descripciones = $producto->descripciones->count();
         $categoria_descripciones = $producto->categoria->descripciones->count();
         // dd($producto_descripciones, $categoria_descripciones);
         if ($producto_descripciones < $categoria_descripciones) {
@@ -345,7 +359,7 @@ class ProductosController extends Controller
 
         foreach ($producto->descripciones as $descripcion) {
             $descripcion->nombre = $descripcion->descripcionNombre->nombre;
-            $descripcion->name   = $descripcion->descripcionNombre->name;
+            $descripcion->name = $descripcion->descripcionNombre->name;
         }
 
         if ($producto->foto) {
@@ -367,7 +381,7 @@ class ProductosController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Producto $producto)
-    {   
+    {
         //dd($request->all());
         $validator = Validator::make($request->all(), [
             'proveedor_id' => 'required',
@@ -378,11 +392,13 @@ class ProductosController extends Controller
         if ($validator->fails()) {
             $errors = $validator->errors()->all();
             return response()->json([
-                "success" => false, "error" => true, "message" => $errors[0],
+                "success" => false,
+                "error"   => true,
+                "message" => $errors[0],
             ], 422);
         }
 
-        $update                 = $request->only('categoria_id', 'nombre');
+        $update = $request->only('categoria_id', 'nombre');
         $update['proveedor_id'] = ($request->proveedor_id != 0) ? $request->proveedor_id : null;
         if (!is_null($request->foto)) {
             Storage::delete('public/' . $producto->foto);
@@ -391,7 +407,7 @@ class ProductosController extends Controller
         }
         if (!is_null($request->ficha_tecnica)) {
             Storage::delete('public/' . $producto->ficha_tecnica);
-            $nombre_temp  = "temp" . time() . ".pdf";
+            $nombre_temp = "temp" . time() . ".pdf";
             $nombre_bueno = "ficha_tecnica_producto_" . $producto->id . "t" . time() . ".pdf";
 
             Storage::putFileAs('public/productos', $request->file('ficha_tecnica'), $nombre_temp);
@@ -404,21 +420,22 @@ class ProductosController extends Controller
         }
         if (is_null($request->subcategoria_id)) {
             $update['subcategoria_id'] = null;
-        } else {
+        }
+        else {
             $update['subcategoria_id'] = $request->subcategoria_id;
         }
 
         //$producto->update($update);
-        
+
         $producto->update($update);
-            $producto->precio = $request->precio;
-            $producto->save();
+        $producto->precio = $request->precio;
+        $producto->save();
 
         //actualizar descripciones nuevas que ya existan en descripciones actuales
         $producto->load('descripciones');
-        $nuevas   = collect($request->descripciones);
+        $nuevas = collect($request->descripciones);
         $actuales = $producto->descripciones;
-        $n        = $actuales->count();
+        $n = $actuales->count();
         for ($i = 0; $i < $n; $i++) {
             $actual = $actuales->shift();
 
@@ -432,7 +449,8 @@ class ProductosController extends Controller
             });
             if ($index === false) { //actual no existe en nuevas, borrarla
                 $actual->delete();
-            } else {
+            }
+            else {
                 $nueva = $nuevas->pull($index);
                 $actual->update(['valor' => $nueva['valor'], 'valor_ingles' => $nueva['valor_ingles']]);
             }
@@ -468,26 +486,26 @@ class ProductosController extends Controller
     }
 
 
-     public function activar($id)
+    public function activar($id)
     {
         $producto = Producto::find($id);
-        
+
         $producto->status = 'ACTIVO';
 
         $producto->save();
-        
+
         return redirect()->route('productos.inactivo');
     }
 
     public function desactivar($id)
     {
         $producto = Producto::find($id);
-        
+
         $producto->status = 'INACTIVO';
 
         $producto->save();
-        
+
         return redirect()->route('productos.index');
     }
-    
+
 }
