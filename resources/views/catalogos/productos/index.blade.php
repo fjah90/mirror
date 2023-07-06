@@ -37,13 +37,11 @@
                   <i class="fas fa-user-book"></i>ACTIVOS
                 </a>
               </button>
-       
               <button type="submit" class="btn btn-dark" style="background-color:#FFCE56; color:#12160F;">
                 <a href="{{route('productos.inactivo')}}" style="color:#000;">
                   <i class="fas fa-user-book"></i>INACTIVOS
                 </a>
               </button>
-         
             <a href="{{route('productos.create2')}}" class="btn btn-warning" style="color: #000;">
               <i class="fas fa-plus"></i> Carga masiva
             </a>
@@ -82,11 +80,9 @@
                       :href="'/productos/'+producto.id+'/editar'">
                       <i class="fas fa-pencil-alt"></i>
                     </a>
-
                     <a v-if="producto.status =='ACTIVO'" :href="'/productos/'+producto.id+'/desactivar'" class="btn btn-xs label-default float-left" data-toggle="tooltip" data-placement="top" title="Desactivar">
                       <i class="fas fa-ban"></i>
                     </a>
-                
                     <a v-else ="producto.status =='INACTIVO'" :href="'/productos/'+producto.id+'/activar'" class="btn btn-xs btn-success float-left" data-toggle="tooltip" data-placement="top" title="Activar">
                       <i class="fas fa-check"></i>
                     </a>
