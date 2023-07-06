@@ -11,14 +11,16 @@
 |
  */
 
-Route::get('/', function () {
-    $user = Auth::user();
-    if (is_null($user)) {
-        return view('auth.login');
-    }
-    return redirect('/dashboard');
-    //return redirect('/denied');
-});
+// Route::get('/', function () {
+//     $user = Auth::user();
+//     if (is_null($user)) {
+//         return view('auth.login');
+//     }
+//     return redirect('/dashboard');
+//     //return redirect('/denied');
+// });
+
+Route::get('/', 'Auth\LoginController@getAuthUser');
 
 Route::get('check-session', 'Auth\LoginController@checkSession');
 Route::post('login2', 'UsuariosController@login2')->name('login2');
@@ -28,14 +30,18 @@ Auth::routes();
 Route::middleware('auth')->group(function () {
     session(['database_name' => 'mysql2']);
 
-    Route::get('/500', function () {return view('500');});
-    Route::get('/denied', function () {return view('access_denied');});
+    Route::get('/500', function () {
+        return view('500');
+    });
+    Route::get('/denied', function () {
+        return view('access_denied');
+    });
 
     //Dashboard
     Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
-   
-   //Historial
-    Route::resource('/historialCompra','HistorialCompraController', ['parameters'=>['historialCompra'=>'historial']]);
+
+    //Historial
+    Route::resource('/historialCompra', 'HistorialCompraController', ['parameters' => ['historialCompra' => 'historial']]);
     //fin de ruta
 
     //Mi Cuenta
@@ -43,10 +49,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/mi_cuenta', 'MiCuentaController@index')->name('mi_cuenta');
     Route::post('/mi_cuenta', 'MiCuentaController@update');
 
-    Route::resource('/categoriaClientes', 'CategoriaClientesController', ['parameters' => [
-        'categoriaClientes' => 'categoria',
-    ]]);
-    
+    Route::resource('/categoriaClientes', 'CategoriaClientesController', [
+        'parameters' => [
+            'categoriaClientes' => 'categoria',
+        ]
+    ]);
+
 
     //Dashboard
     Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
@@ -55,37 +63,52 @@ Route::middleware('auth')->group(function () {
     Route::get('/permisosusuarios/{user}/edit', 'UsuariosController@editpermisosusuarios')->name('usuarios.permisos');
     Route::post('/permisos/{rol}/actualizar', 'UsuariosController@updatepermisos');
     Route::post('/permisosusuarios/{rol}/actualizar', 'UsuariosController@updatepermisosusuarios');
-    Route::get('/permisos/{rol}/create', 'UsuariosController@create');///
-    Route::resource('/permisos', 'PermisosController', ['parameters' => [
-    'permisos' => 'permiso']]);
-    
+    Route::get('/permisos/{rol}/create', 'UsuariosController@create'); ///
+    Route::resource('/permisos', 'PermisosController', [
+        'parameters' => [
+            'permisos' => 'permiso'
+        ]
+    ]);
+
 
     //Catalogos
     Route::resource('/observacionesCotizacion', 'ObservacionesCotizacionController', [
         'only'       => ['store', 'destroy'],
         'parameters' => ['observacionesCotizacion' => 'observacion'],
     ]);
-    Route::resource('/tiposClientes', 'TiposClientesController', ['parameters' => [
-        'tiposClientes' => 'tipo',
-    ]]);
+    Route::resource('/tiposClientes', 'TiposClientesController', [
+        'parameters' => [
+            'tiposClientes' => 'tipo',
+        ]
+    ]);
     /*categoria del cliente*/
-    Route::resource('/categoriaClientes', 'CategoriaClientesController', ['parameters' => [
-    'categoriaClientes' => 'categoria',
-    ]]);
+    Route::resource('/categoriaClientes', 'CategoriaClientesController', [
+        'parameters' => [
+            'categoriaClientes' => 'categoria',
+        ]
+    ]);
     /*categoria del cliente*/
-    Route::resource('/tiposProveedores', 'TiposProveedoresController', ['parameters' => [
-        'tiposProveedores' => 'tipo',
-    ]]);
-    Route::resource('/unidadesMedida', 'UnidadesMedidaController', ['parameters' => [
-        'unidadesMedida' => 'unidad',
-    ]]);
-    Route::resource('/agentesAduanales', 'AgentesAduanalesController', ['parameters' => [
-        'agentesAduanales' => 'agente',
-    ]]);
+    Route::resource('/tiposProveedores', 'TiposProveedoresController', [
+        'parameters' => [
+            'tiposProveedores' => 'tipo',
+        ]
+    ]);
+    Route::resource('/unidadesMedida', 'UnidadesMedidaController', [
+        'parameters' => [
+            'unidadesMedida' => 'unidad',
+        ]
+    ]);
+    Route::resource('/agentesAduanales', 'AgentesAduanalesController', [
+        'parameters' => [
+            'agentesAduanales' => 'agente',
+        ]
+    ]);
 
-    Route::resource('/vendedores', 'VendedoresController', ['parameters' => [
-        'vendedores' => 'vendedor',
-    ]]);
+    Route::resource('/vendedores', 'VendedoresController', [
+        'parameters' => [
+            'vendedores' => 'vendedor',
+        ]
+    ]);
 
     Route::resource('/condicionesCotizacion', 'CondicionesCotizacionController', [
         'only'       => ['update', 'destroy'],
@@ -110,7 +133,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('productos/{id}/activar', 'ProductosController@activar')->name('productos.activar');
 
-    Route::get('productos/inactivos','ProductosController@productosinactivos')->name('productos.inactivo');
+    Route::get('productos/inactivos', 'ProductosController@productosinactivos')->name('productos.inactivo');
 
     Route::get('productos/{id}/desactivar', 'ProductosController@desactivar')->name('productos.desactivar');
 
@@ -134,24 +157,29 @@ Route::middleware('auth')->group(function () {
         Route::post('/usuarios/{usuario}', 'UsuariosController@update');
         Route::resource('/usuarios', 'UsuariosController');
 
-        Route::get('usuarios/{id}/activar', 'UsuariosController@activar',['parameters' => ['usuarios' => 'usuario'],  
+        Route::get('usuarios/{id}/activar', 'UsuariosController@activar', [
+            'parameters' => ['usuarios' => 'usuario'],
         ])->name('usuarios.activar');
 
-        Route::get('usuarios/{id}/desactivar', 'UsuariosController@desactivar',['parameters' => ['usuarios' => 'usuario'],  
+        Route::get('usuarios/{id}/desactivar', 'UsuariosController@desactivar', [
+            'parameters' => ['usuarios' => 'usuario'],
         ])->name('usuarios.desactivar');
 
         Route::get('usuarios/permisos', 'UsuariosController@permisos')->name('permisos.usuarios');
         Route::get('/permisos/{rol}/edit', 'UsuariosController@editpermisos')->name('permisos.edit');
         Route::post('/permisos/{rol}/actualizar', 'UsuariosController@updatepermisos');
-        Route::get('/permisos/{rol}/create', 'UsuariosController@create');///
-        Route::resource('/permisos', 'PermisosController', ['parameters' => [
-        'permisos' => 'permiso']]);
+        Route::get('/permisos/{rol}/create', 'UsuariosController@create'); ///
+        Route::resource('/permisos', 'PermisosController', [
+            'parameters' => [
+                'permisos' => 'permiso'
+            ]
+        ]);
 
         Route::delete('/productos/{producto}', 'ProductosController@destroy');
         Route::delete('/clientes/{cliente}', 'ClientesController@destroy');
         Route::resource('/subcategorias', 'SubcategoriasController', ['only' => ['create', 'store', 'edit', 'update', 'delete']]);
         Route::resource('/categorias', 'CategoriasController', ['only' => ['create', 'store', 'edit', 'update', 'delete']]);
-        Route::resource('/categoriaClientes', 'CategoriaClientesController', ['only' => ['create', 'store', 'edit', 'update', 'delete']]);//
+        Route::resource('/categoriaClientes', 'CategoriaClientesController', ['only' => ['create', 'store', 'edit', 'update', 'delete']]); //
         Route::resource('/tiposClientes', 'TiposClientesController', ['only' => ['create', 'store', 'edit', 'update', 'delete']]);
 
         Route::resource('/historialCompra', 'HistorialCompraController', ['only' => ['create', 'store', 'edit', 'update', 'delete']]);
@@ -192,15 +220,14 @@ Route::middleware('auth')->group(function () {
     //Prospectos
     Route::get('/prospectos/cotizaciones', 'ProspectosController@cotizaciones');
     Route::get('/prospectos/prospectos', 'ProspectosController@prospectos')->name('prospectos.indexprospectos');
-    //prospectos ver nuevo 
+    //prospectos ver nuevo
     Route::get('/prospectos/{prospecto}/disenador/{disenador}/anio/{anio}', 'ProspectosController@prospectosver')->name('prospectos.prospectosver');
-    //prospectos editar nuevo 
+    //prospectos editar nuevo
     Route::get('/prospectos/{prospecto}/disenador/{disenador}/anio/{anio}/editar', 'ProspectosController@prospectoseditar')->name('prospectos.prospectoseditar');
     //prospectos index nuevo
     Route::get('/prospectos/{disenador}/anio/{anio}/index', 'ProspectosController@prospectosindex')->name('prospectos.prospectosindex');
 
-    Route::get('/prospectos/{estatus}/indexprospectos', 'ProspectosController@prospectos');//Ruta para los estatus de apartado//
-
+    Route::get('/prospectos/{estatus}/indexprospectos', 'ProspectosController@prospectos'); //Ruta para los estatus de apartado//
 
     Route::get('/prospectos/create2', 'ProspectosController@create2')->name('prospectos.create2');
     Route::get('/productosmasivo', 'ProductosController@create2')->name('productos.create2');
@@ -222,11 +249,6 @@ Route::middleware('auth')->group(function () {
     Route::post('/tareasactualizar', 'TareasController@actualizar');
     Route::post('/comentarios', 'TareasController@guardarcomentario');
     Route::post('/marcarleida', 'TareasController@marcarleida');
-
-
-
-
-    
 
     //Proyectos Aprobados
     Route::get('/proyectos-aprobados', 'ProyectosAprobadosController@index')->name('proyectos-aprobados.index');
@@ -274,10 +296,5 @@ Route::middleware('auth')->group(function () {
     Route::post('/ordenes-proceso/{orden}/frontera', 'OrdenesProcesoController@frontera');
     Route::post('/ordenes-proceso/{orden}/aduana', 'OrdenesProcesoController@aduana');
     Route::post('/ordenes-proceso/{orden}/entrega', 'OrdenesProcesoController@entrega');
-    
-    
-
-    
-
 
 });
