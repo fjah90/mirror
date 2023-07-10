@@ -167,7 +167,6 @@
                   <a class="btn btn-xs btn-info" title="Ver" :href="'/prospectos/'+prospecto.id">
                     <i class="far fa-eye"></i>
                   </a>
-                
                   @endcan
                   @can('Prospectos editar')
                   <!--
@@ -175,16 +174,18 @@
                   ><i class="fas fa-pencil-alt"></i></button>
                    -->
                   <a class="btn btn-xs btn-warning" title="Editar" :href="'/prospectos/'+prospecto.id+'/editar'">
-                      <i class="fas fa-pencil-alt"></i>
+                    <i class="fas fa-pencil-alt"></i>
                   </a>
-                 
                   @endcan
                   @can('Prospectos convertir')
                   <button class="btn btn-xs btn-success" title="Convertir el Proyecto" @click="convertirenproyecto(prospecto, index)">
-                      <i class="fas fa-upload"></i>
-                    </button>
+                    <i class="fas fa-upload"></i>
+                  </button>
                   @endcan
-                  </td>  
+                  <a class="btn btn-xs btn-success" title="Cotizar" :href="'/prospectos/'+prospecto.id+'/cotizar'">
+                    <i class="far fa-file-alt"></i>
+                  </a>
+                  </td>
                 </tr>
               </tbody>
                <tfoot>
@@ -202,8 +203,6 @@
 
   <!-- Aceptar Modal -->
     <modal v-model="modalNuecaCotizacion" :title="'Nueva Cotización'" :footer="false">
-        
-            
             <div class="form-group">
                 <label class="control-label">Seleccione un proyecto</label>
                 <select name="proyecto_id" v-model="proyecto_id"
