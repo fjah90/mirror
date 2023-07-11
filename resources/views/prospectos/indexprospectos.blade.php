@@ -221,7 +221,7 @@
             </select>
           </div>
           <div class="form-group text-right">
-              <button class="btn btn-warning btn-sm btn" >
+              <button class="btn btn-warning btn-sm btn float-left" >
                 <a href="{{route('prospectos.create')}}" style="color:white;">
                   <i class="fas fa-address-book"></i> Nuevo Proyecto
                 </a>
