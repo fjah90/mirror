@@ -50,10 +50,9 @@
               </button>
             </div>
             <div class="p-10">
-              
             </div>
             <div class="p-10" style="display:inline-block">
-              Año  
+              Año
                 <select class="form-control" @change="cargar()" v-model="anio" style="width:auto;display:inline-block;">
                   <option value="Todos">Todos</option>
                   <option value="2019-12-31">2019</option>
@@ -106,13 +105,11 @@
             </dropdown>
 
             </div>
-            
           </h3>
         </div>
         <div class="panel-body">
           <!--
           <div id="oculto" class="hide">
-            
           </div>
         -->
           <div class="table-responsive">
@@ -177,7 +174,6 @@
                     <template v-for="(cotizacion, index) in prospecto.cotizaciones">
                         <span>@{{cotizacion.numero}}</span><br/>
                     </template>
-                    
                   </td>
                 </tr>
               </tbody>

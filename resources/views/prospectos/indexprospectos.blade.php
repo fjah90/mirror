@@ -37,7 +37,7 @@
 
           <h3 class="panel-title">
             <div class="p-10" style="display:inline-block">
-              Diseñador  
+              Diseñador
               @role('Administrador|Dirección')
                 <select class="form-control"  v-model="valor_disenadores" style="width:auto;display:inline-block;">
                 <option value="">Todos</option>
@@ -70,6 +70,15 @@
                 </select>
               @endrole
 -->
+            </div>
+            <div class="p-10 " style="display:inline-block;float: right;">
+              @can('Prospectos nuevo')
+                <button @click="modalNuevaCotizacion=true;" class="btn btn-warning btn-sm btn">
+                    <a href="#modalNuevaCotizacion" style="color:#000;">
+                      <i class="far fa-file-alt"></i> Nueva Cotización
+                    </a>
+                </button>
+              @endcan
             </div>
             <br><br><br>
             <div class="p-10 " style="display:inline-block;float: right;">
@@ -113,7 +122,7 @@
               </div>
             </div>
             <div class="p-10" style="display:inline-block">
-              Año  
+              Año
                 <select class="form-control" @change="cargar()" v-model="anio" style="width:auto;display:inline-block;">
                   <option value="Todos">Todos</option>
                   <option value="2019-12-31">2019</option>
@@ -123,11 +132,10 @@
                   <option value="2023-12-31">2023</option>
                   <option value="2024-12-31">2024</option>
                 </select>
-            </div>          
+            </div>
           </h3>
         </div>
         <div class="panel-body">
-          
           <div class="table-responsive">
             <table id="tabla" class="table table-bordred" style="width:100%;"
               data-page-length="100">
@@ -202,31 +210,28 @@
   </div>
 
   <!-- Aceptar Modal -->
-    <modal v-model="modalNuecaCotizacion" :title="'Nueva Cotización'" :footer="false">
-            <div class="form-group">
-                <label class="control-label">Seleccione un proyecto</label>
-                <select name="proyecto_id" v-model="proyecto_id"
-                            class="form-control" required id="proyecto-select" style="width: 300px;">
-                  @foreach($proyectos as $proyecto)
-                      <option value="{{$proyecto->id}}">{{$proyecto->nombre}}--{{$proyecto->cliente}}</option>
-                  @endforeach
-                </select>
-                
-                  <button class="btn btn-sm btn" >
-                  <a href="{{route('prospectos.create')}}" style="color:white;">
-                    <i class="fas fa-address-book"></i> Nuevo Proyecto
-                  </a>
-                  </button>           
-            </div>
-
-            <div class="form-group text-right">
-                <button type="submit" class="" :disabled="cargando" @click='cotizacionueva()'>Aceptar</button>
-                <button type="button" class="btn btn-default"
-                        @click="proyecto_id=0; modalNuecaCotizacion=false;">
-                    Cancelar
-                </button>
-            </div>
-        
+    <modal v-if="modalNuevaCotizacion" v-model="modalNuevaCotizacion" :title="'Nueva Cotización'" :footer="false">
+        <div class="form-group">
+            <label class="control-label">Seleccione un proyecto</label>
+            <select name="proyecto_id" v-model="proyecto_id"
+                        class="form-control" required id="proyecto-select" style="width: 300px;">
+              @foreach($proyectos as $proyecto)
+                  <option value="{{$proyecto->id}}">{{$proyecto->nombre}}--{{$proyecto->cliente}}</option>
+              @endforeach
+            </select>
+          </div>
+          <div class="form-group text-right">
+              <button class="btn btn-warning btn-sm btn" >
+                <a href="{{route('prospectos.create')}}" style="color:white;">
+                  <i class="fas fa-address-book"></i> Nuevo Proyecto
+                </a>
+              </button>
+            <button type="submit" class="" :disabled="cargando" @click='cotizacionueva()'>Aceptar</button>
+            <button type="button" class="btn btn-default"
+                    @click="proyecto_id=0; modalNuevaCotizacion=false;">
+                Cancelar
+            </button>
+        </div>
     </modal>
 
 
@@ -377,11 +382,10 @@
                     <label class="control-label">Status</label>
                     <select name="status" v-model="tarea.status"
                                 class="form-control" required id="proyecto-select" style="width: 300px;">
-                      
                           <option value="Pendiente">Pendiente</option>
                           <option value="En proceso">En proceso</option>
                           <option value="Terminada">Terminada</option>
-                    </select>         
+                    </select>
                 </div>
             @endrole
             @role('Diseñadores')
@@ -392,7 +396,6 @@
                   </div>
                   <div class="form-group">
                   <label style="display:none;"  class="control-label">Diseñador</label>
-                  
                     <select style="display:none;"  class="form-control" v-model="tarea.vendedor_id" style="width: 300px;" disabled>
                       @foreach($vendedores as $vendedor)
                       <option value="{{$vendedor->id}}">{{$vendedor->nombre}}</option>
@@ -407,18 +410,13 @@
                     <label class="control-label">Status</label>
                     <select name="status" v-model="tarea.status"
                                 class="form-control" required id="proyecto-select" style="width: 300px;">
-                      
                           <option value="Pendiente">Pendiente</option>
                           <option value="En proceso">En proceso</option>
                           <option value="Terminada">Terminada</option>
-                    </select>         
+                    </select>
                 </div>
 
             @endrole
-           
-                
-            
-              
               <div class="form-group text-right">
                   <button type="submit" class="btn btn-default" :disabled="cargando" @click='guardartarea()'>Guardar</button>
                   <button type="button" class="btn btn-default"
@@ -426,8 +424,6 @@
                       Cancelar
                   </button>
               </div>
-          
-        
     </modal>
 
     <!-- Historial Tareas Modal -->
@@ -457,7 +453,7 @@
                  </td>
                 </tr>
               </tbody>
-            </table>    
+            </table>
             <div class="form-group text-right">
                 <button type="button" class="btn btn-default"
                 @click="modalNotificaciones=false;">
@@ -489,7 +485,7 @@
                  <td>@{{h.fecha}}</td>
                 </tr>
               </tbody>
-            </table>    
+            </table>
             <div class="form-group text-right">
                 <button type="button" class="btn btn-default"
                         @click="cancelarhistorial(); modalHistorial=false;">
@@ -498,11 +494,6 @@
             </div>
     </modal>
      -->
-
-
-    
-
-
     <!-- Modal eventos -->
     <modal v-model="modalEventos" :title="'Actividad'" :footer="false"  size="md">
         <div class="modal-header">
@@ -514,15 +505,12 @@
           <a class="btn btn-xs btn-warning" title="Editar" href="" id="liga_evento">
               <i class="fas fa-pencil-alt"></i>
           </a>
-    
       <div class="form-group text-right">
           <button type="button" class="btn btn-default"
                   @click="modalEventos=false;">
               Cancelar
           </button>
       </div>
-          
-        
     </modal>
 
     <div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -551,7 +539,6 @@
             </select>
             @endrole
             <div id="calendar"></div>
-                      
             </div>
             <div class="modal-footer">
                 <button class="btn" data-dismiss="modal" aria-hidden="true">Cerrar</button>
@@ -581,7 +568,7 @@
                  <td>@{{c.created_at}}</td>
                 </tr>
               </tbody>
-            </table>    
+            </table>
             <div class="form-group">
                 <label class="control-label text-danger">Comentario</label>
                 <textarea class="form-control" name="tarea" rows="3" cols="80"
@@ -596,8 +583,6 @@
             </div>
     </modal>
 
-
-   
 </section>
 
 
@@ -644,7 +629,7 @@ const app = new Vue({
       modalEventos: false,
       modalCalendario:false,
       locale: localeES,
-      modalNuecaCotizacion: false,
+      modalNuevaCotizacion: false,
       fecha_ini: '',
       fecha_fin: '',
       proyecto_id: '',
@@ -686,20 +671,17 @@ const app = new Vue({
             var datos= api.columns([4], {search: 'applied'}).data();
             var totalMxn = 0;
             //suma de montos
-            datos[0].forEach(function(element, index){      
+            datos[0].forEach(function(element, index){
                     totalMxn+=formato(element)
             });
             // Actualizar el campo
             var nCells = row.getElementsByTagName('th');
             nCells[1].innerHTML = accounting.formatMoney(totalMxn, "$", 2);
         }
-       
-        
       });
 
       this.tablahistorial = $("#tablahistorial").DataTable({
       });
-  
 
       document.addEventListener('DOMContentLoaded', function() {
         let selector = document.querySelector("#selector");
@@ -712,7 +694,7 @@ const app = new Vue({
           eventClick: function(info) {
           document.getElementById("titulo_evento").innerHTML = info.event.title;
           document.getElementById("descripcion_evento").innerHTML = info.event.extendedProps.description;
-          document.getElementById("liga_evento").href=info.event.extendedProps.liga; 
+          document.getElementById("liga_evento").href=info.event.extendedProps.liga;
             vue.modalEventos = true;
           },
           eventDidMount: function(arg) {
@@ -725,7 +707,6 @@ const app = new Vue({
               successCallback({!! json_encode($proximas_actividades) !!});
             }
           });
-          
           $('#myModal').on('shown.bs.modal', function () {
             calendar.render();
           });
@@ -737,9 +718,7 @@ const app = new Vue({
 
       //$("#fechas_container").append($("#fecha_ini_control"));
       //$("#fechas_container").append($("#fecha_fin_control"));
-      
       var vue = this;
-      
       $.fn.dataTableExt.afnFiltering.push(
         function( settings, data, dataIndex ) {
           var min  = vue.fecha_ini;
@@ -788,11 +767,11 @@ const app = new Vue({
           }
       },
       editartarea(tarea , index){
-        var rol = {!! json_encode(auth()->user()->roles[0]->name) !!}; 
+        var rol = {!! json_encode(auth()->user()->roles[0]->name) !!};
         if(rol == 'Diseñadores'){
           $('#directores_select').css('display','none');
           $('#directores_title').css('display','none');
-          
+
         }
         else{
           $('#directores_select').css('display','block');
@@ -803,7 +782,7 @@ const app = new Vue({
         this.tarea.tarea = tarea.tarea;
         this.tarea.vendedor_id = tarea.vendedor_id;
         this.tarea.status = tarea.status;
-        this.tarea.director_id = tarea.director_id;  
+        this.tarea.director_id = tarea.director_id;
         //this.tarea == tarea;
       },
       historialtarea(tarea , index){
@@ -830,7 +809,6 @@ const app = new Vue({
         this.modalHistorial = true;
         $('#modal_tareas').css('z-index','1039');
         $('#modal_historial').css('z-index','1071');
-        
       },
       cancelarhistorial(){
         $('#modal_tareas').css('z-index','1071');
@@ -844,7 +822,7 @@ const app = new Vue({
         this.comentarios = tarea.comentarios;
         $('#modal_tareas').css('z-index','1039');
         $('#modal_comentarios').css('z-index','1071');
-        
+
       },
       cancelarcomentario(){
         this.tarea.id= '';
@@ -855,15 +833,15 @@ const app = new Vue({
       },
       cancelartarea(){
         this.tarea.tarea = null;
-        this.tarea.id = null;   
+        this.tarea.id = null;
         this.tarea.vendedor_id = null;
         this.tarea.director_id = null;
         this.tarea.status = 'Pendiente';
         this.cargando = false;
         this.editando = false;
         this.historialcargando = false;
-        var rol = {!! json_encode(auth()->user()->roles[0]->name) !!}; 
-        if(rol == 'Diseñadores'){        
+        var rol = {!! json_encode(auth()->user()->roles[0]->name) !!};
+        if(rol == 'Diseñadores'){
           $('#directores_select').css('display','block');
           $('#directores_title').css('display','block');
         }
@@ -871,7 +849,6 @@ const app = new Vue({
           $('#directores_select').css('display','none');
           $('#directores_title').css('display','none');
         }
-        
       },
       marcarleida(notificacion,index){
         var formData = objectToFormData(notificacion, {indices: true});
@@ -894,7 +871,6 @@ const app = new Vue({
                   type: "error"
               });
           });
-          
       },
       guardarcomentario(){
         var formData = objectToFormData(this.tarea, {indices: true});
@@ -907,7 +883,6 @@ const app = new Vue({
             this.comentarios = data.comentarios;
             this.tarea.id = '';
             this.tarea.comentario = '';
-      
           })
           .catch(({response}) => {
               console.error(response);
@@ -929,7 +904,7 @@ const app = new Vue({
           .then(({data}) => {
             this.tarea.tarea = '';
             this.tarea.id = '';
-            this.tareaspendientes.push(data.tarea);    
+            this.tareaspendientes.push(data.tarea);
               swal({
                   title: "Exito",
                   text: "La tarea ha sido guardada",
@@ -947,14 +922,12 @@ const app = new Vue({
                   type: "error"
               });
           });
-          
         }else{
           //console.log(this.tarea);
           axios.post('/tareasactualizar', formData, {
               headers: {'Content-Type': 'multipart/form-data'}
           })
           .then(({data}) => {
-            
               swal({
                   title: "Exito",
                   text: "La tarea ha sido actualizada",
@@ -973,7 +946,6 @@ const app = new Vue({
               this.tareasproceso = data.tareasproceso;
               $('#tablatareasterminadas').DataTable().destroy();
               this.tareasterminadas = data.tareasterminadas;
-              
               this.modalTareas = false;
           })
           .catch(({response}) => {
@@ -986,8 +958,6 @@ const app = new Vue({
               });
           });
         }
-       
-        
       },
       cargar(){
         this.tarea.vendedor_id  = this.usuarioCargado;
@@ -1090,10 +1060,10 @@ const app = new Vue({
               type: "error"
           });
         }
-        else{ 
+        else{
           window.location.href = "/prospectos/"+this.proyecto_id+"/cotizar";
         }
-      }
+      },
     }
 });
 </script>

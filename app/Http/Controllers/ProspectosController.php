@@ -82,7 +82,8 @@ class ProspectosController extends Controller
 
         if (auth()->user()->tipo == 'Administrador') {
             $usuarios = User::all();
-        } else {
+        }
+        else {
             $usuarios = [];
         }
         $proyectos = Prospecto::all();
@@ -95,7 +96,8 @@ class ProspectosController extends Controller
                 ->select('prospectos_cotizaciones.*', 'users.name as user_name', 'prospectos.nombre as prospecto_nombre', 'prospectos.id as prospecto_id', 'clientes.nombre as cliente_nombre')
                 ->where('prospectos.es_prospecto', 'no')
                 ->where('cliente_users.user_id', '=', $user->id)->whereBetween('prospectos_cotizaciones.created_at', [$inicio, $anio])->orderBy('fecha', 'desc')->get();
-        } else {
+        }
+        else {
             $cotizaciones = ProspectoCotizacion::leftjoin('prospectos', 'prospectos_cotizaciones.prospecto_id', '=', 'prospectos.id')
                 ->leftjoin('clientes', 'prospectos.cliente_id', '=', 'clientes.id')
                 ->leftjoin('users', 'prospectos_cotizaciones.user_id', '=', 'users.id')
@@ -109,18 +111,19 @@ class ProspectosController extends Controller
         return view('prospectos.cotizaciones2', compact('cotizaciones', 'usuarios', 'proyectos', 'vendedores'));
     }
 
-    public function prospectosindex(Request $request,$disenador_id,$anio2)
+    public function prospectosindex(Request $request, $disenador_id, $anio2)
     {
-        
+
         $inicio = Carbon::parse('2023-01-01');
         $anio = Carbon::parse('2023-12-31');
 
         $user = auth()->user();
         //dd($user);
-        $vendedor = Vendedor::where('email',auth()->user()->email)->first();
+        $vendedor = Vendedor::where('email', auth()->user()->email)->first();
         if (auth()->user()->tipo == 'Administrador' || auth()->user()->tipo == 'Dirección') {
             $usuarios = Vendedor::all();
-        } else {
+        }
+        else {
             $usuarios = [];
         }
 
@@ -129,132 +132,142 @@ class ProspectosController extends Controller
 
         if (!empty($estatus)) {
 
-            if(Auth::user()->roles[0]->name == 'Diseñadores'){
+            if (Auth::user()->roles[0]->name == 'Diseñadores') {
 
                 $proyectos = Prospecto::leftjoin('prospectos_actividades', 'prospectos.id', '=', 'prospectos_actividades.prospecto_id')
-                ->leftjoin('prospectos_tipos_actividades', 'prospectos_actividades.tipo_id', '=', 'prospectos_tipos_actividades.id')
-                ->leftjoin('users', 'prospectos.user_id', '=', 'users.id')
-                ->leftjoin('clientes', 'prospectos.cliente_id', '=', 'clientes.id')
-                ->leftjoin('vendedores', 'prospectos.vendedor_id', '=', 'vendedores.id')
-                ->select('vendedores.nombre as vendedor', 'prospectos.*', 'users.name as usuario', 'clientes.nombre as cliente', 'prospectos_tipos_actividades.nombre as actividad', 'prospectos_actividades.fecha as fecha')
-                ->where('prospectos_actividades.realizada', false)
-                ->where('prospectos.es_prospecto', 'si')
-                ->where('prospectos.vendedor_id',$vendedor->id)
-                ->where('prospectos.estatus', $estatus)
-                ->get();
+                    ->leftjoin('prospectos_tipos_actividades', 'prospectos_actividades.tipo_id', '=', 'prospectos_tipos_actividades.id')
+                    ->leftjoin('users', 'prospectos.user_id', '=', 'users.id')
+                    ->leftjoin('clientes', 'prospectos.cliente_id', '=', 'clientes.id')
+                    ->leftjoin('vendedores', 'prospectos.vendedor_id', '=', 'vendedores.id')
+                    ->select('vendedores.nombre as vendedor', 'prospectos.*', 'users.name as usuario', 'clientes.nombre as cliente', 'prospectos_tipos_actividades.nombre as actividad', 'prospectos_actividades.fecha as fecha')
+                    ->where('prospectos_actividades.realizada', false)
+                    ->where('prospectos.es_prospecto', 'si')
+                    ->where('prospectos.vendedor_id', $vendedor->id)
+                    ->where('prospectos.estatus', $estatus)
+                    ->get();
 
-            //$proyectos = Prospecto::with('usuario','vendedor')->where('es_prospecto','si')->get();
-            $cotizaciones = ProspectoCotizacion::leftjoin('prospectos', 'prospectos_cotizaciones.prospecto_id', '=', 'prospectos.id')
-                ->leftjoin('clientes', 'prospectos.cliente_id', '=', 'clientes.id')
-                ->leftjoin('users', 'prospectos_cotizaciones.user_id', '=', 'users.id')
-                ->select('prospectos_cotizaciones.*', 'users.name as user_name', 'prospectos.nombre as prospecto_nombre', 'prospectos.id as prospecto_id', 'clientes.nombre as cliente_nombre')
-                ->where('prospectos.es_prospecto', 'si')
-                ->where('prospectos_cotizaciones.user_id', '=', $user->id)->whereBetween('prospectos_cotizaciones.created_at', [$inicio, $anio])->orderBy('fecha', 'desc')->get();
+                //$proyectos = Prospecto::with('usuario','vendedor')->where('es_prospecto','si')->get();
+                $cotizaciones = ProspectoCotizacion::leftjoin('prospectos', 'prospectos_cotizaciones.prospecto_id', '=', 'prospectos.id')
+                    ->leftjoin('clientes', 'prospectos.cliente_id', '=', 'clientes.id')
+                    ->leftjoin('users', 'prospectos_cotizaciones.user_id', '=', 'users.id')
+                    ->select('prospectos_cotizaciones.*', 'users.name as user_name', 'prospectos.nombre as prospecto_nombre', 'prospectos.id as prospecto_id', 'clientes.nombre as cliente_nombre')
+                    ->where('prospectos.es_prospecto', 'si')
+                    ->where('prospectos_cotizaciones.user_id', '=', $user->id)->whereBetween('prospectos_cotizaciones.created_at', [$inicio, $anio])->orderBy('fecha', 'desc')->get();
 
 
-            }else{
+            }
+            else {
 
                 $proyectos = Prospecto::leftjoin('prospectos_actividades', 'prospectos.id', '=', 'prospectos_actividades.prospecto_id')
-                ->leftjoin('prospectos_tipos_actividades', 'prospectos_actividades.tipo_id', '=', 'prospectos_tipos_actividades.id')
-                ->leftjoin('users', 'prospectos.user_id', '=', 'users.id')
-                ->leftjoin('clientes', 'prospectos.cliente_id', '=', 'clientes.id')
-                ->leftjoin('vendedores', 'prospectos.vendedor_id', '=', 'vendedores.id')
-                ->select('vendedores.nombre as vendedor', 'prospectos.*', 'users.name as usuario', 'clientes.nombre as cliente', 'prospectos_tipos_actividades.nombre as actividad', 'prospectos_actividades.fecha as fecha')
-                ->where('prospectos_actividades.realizada', false)
-                ->where('prospectos.es_prospecto', 'si')
-                ->where('prospectos.estatus', $estatus)
-                ->get();
+                    ->leftjoin('prospectos_tipos_actividades', 'prospectos_actividades.tipo_id', '=', 'prospectos_tipos_actividades.id')
+                    ->leftjoin('users', 'prospectos.user_id', '=', 'users.id')
+                    ->leftjoin('clientes', 'prospectos.cliente_id', '=', 'clientes.id')
+                    ->leftjoin('vendedores', 'prospectos.vendedor_id', '=', 'vendedores.id')
+                    ->select('vendedores.nombre as vendedor', 'prospectos.*', 'users.name as usuario', 'clientes.nombre as cliente', 'prospectos_tipos_actividades.nombre as actividad', 'prospectos_actividades.fecha as fecha')
+                    ->where('prospectos_actividades.realizada', false)
+                    ->where('prospectos.es_prospecto', 'si')
+                    ->where('prospectos.estatus', $estatus)
+                    ->get();
 
-            //$proyectos = Prospecto::with('usuario','vendedor')->where('es_prospecto','si')->get();
-            $cotizaciones = ProspectoCotizacion::leftjoin('prospectos', 'prospectos_cotizaciones.prospecto_id', '=', 'prospectos.id')
-                ->leftjoin('clientes', 'prospectos.cliente_id', '=', 'clientes.id')
-                ->leftjoin('users', 'prospectos_cotizaciones.user_id', '=', 'users.id')
-                ->select('prospectos_cotizaciones.*', 'users.name as user_name', 'prospectos.nombre as prospecto_nombre', 'prospectos.id as prospecto_id', 'clientes.nombre as cliente_nombre')
-                ->where('prospectos.es_prospecto', 'si')
-                ->where('prospectos_cotizaciones.user_id', '=', $user->id)->whereBetween('prospectos_cotizaciones.created_at', [$inicio, $anio])->orderBy('fecha', 'desc')->get();
+                //$proyectos = Prospecto::with('usuario','vendedor')->where('es_prospecto','si')->get();
+                $cotizaciones = ProspectoCotizacion::leftjoin('prospectos', 'prospectos_cotizaciones.prospecto_id', '=', 'prospectos.id')
+                    ->leftjoin('clientes', 'prospectos.cliente_id', '=', 'clientes.id')
+                    ->leftjoin('users', 'prospectos_cotizaciones.user_id', '=', 'users.id')
+                    ->select('prospectos_cotizaciones.*', 'users.name as user_name', 'prospectos.nombre as prospecto_nombre', 'prospectos.id as prospecto_id', 'clientes.nombre as cliente_nombre')
+                    ->where('prospectos.es_prospecto', 'si')
+                    ->where('prospectos_cotizaciones.user_id', '=', $user->id)->whereBetween('prospectos_cotizaciones.created_at', [$inicio, $anio])->orderBy('fecha', 'desc')->get();
 
             }
 
             $vendedores = Vendedor::all();
-        } else {
+        }
+        else {
 
-           
+
             if (Auth::user()->roles[0]->name == 'Administrador' || Auth::user()->roles[0]->name == 'Dirección') {
 
                 //Cargamos los poroyectos filtrados
                 if ($anio2 == '2019-12-31') {
                     $inicio = Carbon::parse('2019-01-01');
-                } elseif ($anio2 == '2020-12-31') {
+                }
+                elseif ($anio2 == '2020-12-31') {
                     $inicio = Carbon::parse('2020-01-01');
-                } elseif ($anio2 == '2022-12-31') {
+                }
+                elseif ($anio2 == '2022-12-31') {
                     $inicio = Carbon::parse('2022-01-01');
-                } elseif ($anio2 == '2023-12-31') {
+                }
+                elseif ($anio2 == '2023-12-31') {
                     $inicio = Carbon::parse('2023-01-01');
-                } elseif ($anio2 == '2024-12-31') {
+                }
+                elseif ($anio2 == '2024-12-31') {
                     $inicio = Carbon::parse('2024-01-01');
-                } else {
+                }
+                else {
                     $inicio = Carbon::parse('2021-01-01');
                 }
-        
+
                 if ($disenador_id == 'Todos') {
-                   
+
                     if ($anio2 == 'Todos') {
-        
-                        
+
+
                         $proyectos = Prospecto::leftjoin('prospectos_actividades', 'prospectos.id', '=', 'prospectos_actividades.prospecto_id')
-                        ->leftjoin('prospectos_tipos_actividades', 'prospectos_actividades.tipo_id', '=', 'prospectos_tipos_actividades.id')
-                        ->leftjoin('users', 'prospectos.user_id', '=', 'users.id')
-                        ->leftjoin('clientes', 'prospectos.cliente_id', '=', 'clientes.id')
-                        ->leftjoin('vendedores', 'prospectos.vendedor_id', '=', 'vendedores.id')
-                        ->select('vendedores.nombre as vendedor', 'prospectos.*', 'users.name as usuario', 'clientes.nombre as cliente', 'prospectos_tipos_actividades.nombre as actividad', 'prospectos_actividades.fecha as fecha')
-                        ->where('prospectos_actividades.realizada', false)
-                        ->where('prospectos.es_prospecto', 'si')
-                        ->get();
-        
-                    } else {
-                        $anio = Carbon::parse($anio2);
-        
-                        $proyectos = Prospecto::leftjoin('prospectos_actividades', 'prospectos.id', '=', 'prospectos_actividades.prospecto_id')
-                        ->leftjoin('prospectos_tipos_actividades', 'prospectos_actividades.tipo_id', '=', 'prospectos_tipos_actividades.id')
-                        ->leftjoin('users', 'prospectos.user_id', '=', 'users.id')
-                        ->leftjoin('clientes', 'prospectos.cliente_id', '=', 'clientes.id')
-                        ->leftjoin('vendedores', 'prospectos.vendedor_id', '=', 'vendedores.id')
-                        ->select('vendedores.nombre as vendedor', 'prospectos.*', 'users.name as usuario', 'clientes.nombre as cliente', 'prospectos_tipos_actividades.nombre as actividad', 'prospectos_actividades.fecha as fecha')
-                        ->where('prospectos_actividades.realizada', false)
-                        ->where('prospectos.es_prospecto', 'si')
-                        ->whereBetween('prospectos.created_at', [$inicio, $anio])
-                        ->get();
-        
-                       
+                            ->leftjoin('prospectos_tipos_actividades', 'prospectos_actividades.tipo_id', '=', 'prospectos_tipos_actividades.id')
+                            ->leftjoin('users', 'prospectos.user_id', '=', 'users.id')
+                            ->leftjoin('clientes', 'prospectos.cliente_id', '=', 'clientes.id')
+                            ->leftjoin('vendedores', 'prospectos.vendedor_id', '=', 'vendedores.id')
+                            ->select('vendedores.nombre as vendedor', 'prospectos.*', 'users.name as usuario', 'clientes.nombre as cliente', 'prospectos_tipos_actividades.nombre as actividad', 'prospectos_actividades.fecha as fecha')
+                            ->where('prospectos_actividades.realizada', false)
+                            ->where('prospectos.es_prospecto', 'si')
+                            ->get();
+
                     }
-                } else {
-                   
-                   
-                    if ($anio2 == 'Todos') {
-        
+                    else {
+                        $anio = Carbon::parse($anio2);
+
                         $proyectos = Prospecto::leftjoin('prospectos_actividades', 'prospectos.id', '=', 'prospectos_actividades.prospecto_id')
-                        ->leftjoin('prospectos_tipos_actividades', 'prospectos_actividades.tipo_id', '=', 'prospectos_tipos_actividades.id')
-                        ->leftjoin('users', 'prospectos.user_id', '=', 'users.id')
-                        ->leftjoin('clientes', 'prospectos.cliente_id', '=', 'clientes.id')
-                        ->leftjoin('vendedores', 'prospectos.vendedor_id', '=', 'vendedores.id')
-                        ->select('vendedores.nombre as vendedor', 'prospectos.*', 'users.name as usuario', 'clientes.nombre as cliente', 'prospectos_tipos_actividades.nombre as actividad', 'prospectos_actividades.fecha as fecha')
-                        ->where('prospectos_actividades.realizada', false)
-                        ->where('prospectos.es_prospecto', 'si')
-                        ->where('prospectos.vendedor_id',$disenador_id)
-                        ->get();
-                    } else {
+                            ->leftjoin('prospectos_tipos_actividades', 'prospectos_actividades.tipo_id', '=', 'prospectos_tipos_actividades.id')
+                            ->leftjoin('users', 'prospectos.user_id', '=', 'users.id')
+                            ->leftjoin('clientes', 'prospectos.cliente_id', '=', 'clientes.id')
+                            ->leftjoin('vendedores', 'prospectos.vendedor_id', '=', 'vendedores.id')
+                            ->select('vendedores.nombre as vendedor', 'prospectos.*', 'users.name as usuario', 'clientes.nombre as cliente', 'prospectos_tipos_actividades.nombre as actividad', 'prospectos_actividades.fecha as fecha')
+                            ->where('prospectos_actividades.realizada', false)
+                            ->where('prospectos.es_prospecto', 'si')
+                            ->whereBetween('prospectos.created_at', [$inicio, $anio])
+                            ->get();
+
+
+                    }
+                }
+                else {
+
+
+                    if ($anio2 == 'Todos') {
+
+                        $proyectos = Prospecto::leftjoin('prospectos_actividades', 'prospectos.id', '=', 'prospectos_actividades.prospecto_id')
+                            ->leftjoin('prospectos_tipos_actividades', 'prospectos_actividades.tipo_id', '=', 'prospectos_tipos_actividades.id')
+                            ->leftjoin('users', 'prospectos.user_id', '=', 'users.id')
+                            ->leftjoin('clientes', 'prospectos.cliente_id', '=', 'clientes.id')
+                            ->leftjoin('vendedores', 'prospectos.vendedor_id', '=', 'vendedores.id')
+                            ->select('vendedores.nombre as vendedor', 'prospectos.*', 'users.name as usuario', 'clientes.nombre as cliente', 'prospectos_tipos_actividades.nombre as actividad', 'prospectos_actividades.fecha as fecha')
+                            ->where('prospectos_actividades.realizada', false)
+                            ->where('prospectos.es_prospecto', 'si')
+                            ->where('prospectos.vendedor_id', $disenador_id)
+                            ->get();
+                    }
+                    else {
                         $anio = Carbon::parse($anio2);
                         $proyectos = Prospecto::leftjoin('prospectos_actividades', 'prospectos.id', '=', 'prospectos_actividades.prospecto_id')
-                        ->leftjoin('prospectos_tipos_actividades', 'prospectos_actividades.tipo_id', '=', 'prospectos_tipos_actividades.id')
-                        ->leftjoin('users', 'prospectos.user_id', '=', 'users.id')
-                        ->leftjoin('clientes', 'prospectos.cliente_id', '=', 'clientes.id')
-                        ->leftjoin('vendedores', 'prospectos.vendedor_id', '=', 'vendedores.id')
-                        ->select('vendedores.nombre as vendedor', 'prospectos.*', 'users.name as usuario', 'clientes.nombre as cliente', 'prospectos_tipos_actividades.nombre as actividad', 'prospectos_actividades.fecha as fecha')
-                        ->where('prospectos_actividades.realizada', false)
-                        ->where('prospectos.es_prospecto', 'si')
-                        ->where('prospectos.vendedor_id',$disenador_id)
-                        ->whereBetween('prospectos.created_at', [$inicio, $anio])
-                        ->get();
+                            ->leftjoin('prospectos_tipos_actividades', 'prospectos_actividades.tipo_id', '=', 'prospectos_tipos_actividades.id')
+                            ->leftjoin('users', 'prospectos.user_id', '=', 'users.id')
+                            ->leftjoin('clientes', 'prospectos.cliente_id', '=', 'clientes.id')
+                            ->leftjoin('vendedores', 'prospectos.vendedor_id', '=', 'vendedores.id')
+                            ->select('vendedores.nombre as vendedor', 'prospectos.*', 'users.name as usuario', 'clientes.nombre as cliente', 'prospectos_tipos_actividades.nombre as actividad', 'prospectos_actividades.fecha as fecha')
+                            ->where('prospectos_actividades.realizada', false)
+                            ->where('prospectos.es_prospecto', 'si')
+                            ->where('prospectos.vendedor_id', $disenador_id)
+                            ->whereBetween('prospectos.created_at', [$inicio, $anio])
+                            ->get();
                     }
                 }
 
@@ -271,7 +284,8 @@ class ProspectosController extends Controller
                     ->where('prospectos_cotizaciones.user_id', '=', $user->id)->whereBetween('prospectos_cotizaciones.created_at', [$inicio, $anio])->orderBy('fecha', 'desc')
                     ->get();
                 $vendedores = Vendedor::all();
-            }else if(Auth::user()->roles[0]->name == 'Diseñadores'){
+            }
+            else if (Auth::user()->roles[0]->name == 'Diseñadores') {
 
                 $proyectos = Prospecto::leftjoin('prospectos_actividades', 'prospectos.id', '=', 'prospectos_actividades.prospecto_id')
                     ->leftjoin('prospectos_tipos_actividades', 'prospectos_actividades.tipo_id', '=', 'prospectos_tipos_actividades.id')
@@ -297,7 +311,7 @@ class ProspectosController extends Controller
                     ->get();
                 $vendedores = Vendedor::all();
 
-            } 
+            }
             else {
 
                 $proyectos = Prospecto::leftjoin('prospectos_actividades', 'prospectos.id', '=', 'prospectos_actividades.prospecto_id')
@@ -329,38 +343,33 @@ class ProspectosController extends Controller
         //carga de tareas
         if ($disenador_id == 'Todos') {
             //es un director y quiere ver todas las tareas de todos
-            $tareas = Tarea::with('vendedor','director')->get();
+            $tareas = Tarea::with('vendedor', 'director')->get();
         }
-        else{
-            if(Auth::user()->roles[0]->name == 'Diseñadores'){
+        else {
+            if (Auth::user()->roles[0]->name == 'Diseñadores') {
                 //obtenemos el usuario del vendedor
-                $usuario_vendedor = User::where('email',$vendedor->email)->first();
+                $usuario_vendedor = User::where('email', $vendedor->email)->first();
                 //
-                $tareas = Tarea::with('vendedor','director')->where('vendedor_id',$vendedor->id)->orwhere('user_id',$usuario_vendedor->id)->get();
+                $tareas = Tarea::with('vendedor', 'director')->where('vendedor_id', $vendedor->id)->orwhere('user_id', $usuario_vendedor->id)->get();
             }
-            else{
+            else {
                 //obetenemos el usuario del vendedor
-                $vend = Vendedor::where('id',$disenador_id)->first();
-                $us = USer::where('email',$vend->email)->first();
-                $tareas = Tarea::with('vendedor','director')->where('vendedor_id',$disenador_id)->orwhere('user_id',$us->id)->get();
+                $vend = Vendedor::where('id', $disenador_id)->first();
+                $us = USer::where('email', $vend->email)->first();
+                $tareas = Tarea::with('vendedor', 'director')->where('vendedor_id', $disenador_id)->orwhere('user_id', $us->id)->get();
             }
 
         }
         //revisamos si tiene tareas pendientes
-        if(Auth::user()->roles[0]->name == 'Diseñadores'){
-            $tareas = Tarea::where('vendedor_id',$vendedo_id)->where('status','Pendiente')->get();
+        if (Auth::user()->roles[0]->name == 'Diseñadores') {
+            $tareas = Tarea::where('vendedor_id', $vendedo_id)->where('status', 'Pendiente')->get();
         }
-        else{
-            $tareas_pendientes = Tarea::where('director_id',auth()->user()->id)->where('status','Pendiente')->get();
+        else {
+            $tareas_pendientes = Tarea::where('director_id', auth()->user()->id)->where('status', 'Pendiente')->get();
         }
-        
-        
-        
-        
 
-        return view('prospectos.indexprospectos', compact('cotizaciones', 'usuarios', 'proyectos', 'estatus','vendedores','tareas','disenador_id','anio2','tareas_pendientes'));
+        return view('prospectos.indexprospectos', compact('cotizaciones', 'usuarios', 'proyectos', 'estatus', 'vendedores', 'tareas', 'disenador_id', 'anio2', 'tareas_pendientes'));
     }
-
 
     /**
      * Display a listing of the resource of prospectos.
@@ -369,7 +378,7 @@ class ProspectosController extends Controller
      */
     public function prospectos(Request $request)
     {
-       
+
 
         $inicio = Carbon::parse('2023-01-01');
         $anio = Carbon::parse('2023-12-31');
@@ -377,80 +386,84 @@ class ProspectosController extends Controller
 
         $user = auth()->user();
         $directores = User::whereHas(
-            'roles', function($q){
+            'roles',
+            function ($q) {
                 $q->where('name', 'Dirección');
             }
         )->get();
-       
+
         //dd($user);
-        $vendedor = Vendedor::where('email',auth()->user()->email)->first();
-        if (auth()->user()->tipo == 'Administrador' || auth()->user()->tipo == 'Dirección') {   
+        $vendedor = Vendedor::where('email', auth()->user()->email)->first();
+        if (auth()->user()->tipo == 'Administrador' || auth()->user()->tipo == 'Dirección') {
             $disenador_id = 'Todos';
             $usuarios = Vendedor::all();
-        } else {
+        }
+        else {
             $disenador_id = $vendedor->id;
             $usuarios = [];
         }
-       
-        
+
+
 
         /**Consulta para obtener el estatus de los apartador***/
         $estatus = $request->estatus;
 
         if (!empty($estatus)) {
-            
-            if(Auth::user()->roles[0]->name == 'Diseñadores'){
+
+            if (Auth::user()->roles[0]->name == 'Diseñadores') {
 
                 $proyectos = Prospecto::leftjoin('prospectos_actividades', 'prospectos.id', '=', 'prospectos_actividades.prospecto_id')
-                ->leftjoin('prospectos_tipos_actividades', 'prospectos_actividades.tipo_id', '=', 'prospectos_tipos_actividades.id')
-                ->leftjoin('users', 'prospectos.user_id', '=', 'users.id')
-                ->leftjoin('clientes', 'prospectos.cliente_id', '=', 'clientes.id')
-                ->leftjoin('vendedores', 'prospectos.vendedor_id', '=', 'vendedores.id')
-                ->select('vendedores.nombre as vendedor', 'prospectos.*', 'users.name as usuario', 'clientes.nombre as cliente', 'prospectos_tipos_actividades.nombre as actividad', 'prospectos_actividades.fecha as fecha')
-                ->where('prospectos_actividades.realizada', false)
-                ->where('prospectos.es_prospecto', 'si')
-                ->where('prospectos.vendedor_id',$vendedor->id)
-                ->where('prospectos.estatus', $estatus)
-                ->get();
+                    ->leftjoin('prospectos_tipos_actividades', 'prospectos_actividades.tipo_id', '=', 'prospectos_tipos_actividades.id')
+                    ->leftjoin('users', 'prospectos.user_id', '=', 'users.id')
+                    ->leftjoin('clientes', 'prospectos.cliente_id', '=', 'clientes.id')
+                    ->leftjoin('vendedores', 'prospectos.vendedor_id', '=', 'vendedores.id')
+                    ->select('vendedores.nombre as vendedor', 'prospectos.*', 'users.name as usuario', 'clientes.nombre as cliente', 'prospectos_tipos_actividades.nombre as actividad', 'prospectos_actividades.fecha as fecha')
+                    ->where('prospectos_actividades.realizada', false)
+                    ->where('prospectos.es_prospecto', 'si')
+                    ->where('prospectos.vendedor_id', $vendedor->id)
+                    ->where('prospectos.estatus', $estatus)
+                    ->get();
 
-            //$proyectos = Prospecto::with('usuario','vendedor')->where('es_prospecto','si')->get();
-            $cotizaciones = ProspectoCotizacion::leftjoin('prospectos', 'prospectos_cotizaciones.prospecto_id', '=', 'prospectos.id')
-                ->leftjoin('clientes', 'prospectos.cliente_id', '=', 'clientes.id')
-                ->leftjoin('users', 'prospectos_cotizaciones.user_id', '=', 'users.id')
-                ->select('prospectos_cotizaciones.*', 'users.name as user_name', 'prospectos.nombre as prospecto_nombre', 'prospectos.id as prospecto_id', 'clientes.nombre as cliente_nombre')
-                ->where('prospectos.es_prospecto', 'si')
-                ->where('prospectos_cotizaciones.user_id', '=', $user->id)->whereBetween('prospectos_cotizaciones.created_at', [$inicio, $anio])->orderBy('fecha', 'desc')->get();
+                //$proyectos = Prospecto::with('usuario','vendedor')->where('es_prospecto','si')->get();
+                $cotizaciones = ProspectoCotizacion::leftjoin('prospectos', 'prospectos_cotizaciones.prospecto_id', '=', 'prospectos.id')
+                    ->leftjoin('clientes', 'prospectos.cliente_id', '=', 'clientes.id')
+                    ->leftjoin('users', 'prospectos_cotizaciones.user_id', '=', 'users.id')
+                    ->select('prospectos_cotizaciones.*', 'users.name as user_name', 'prospectos.nombre as prospecto_nombre', 'prospectos.id as prospecto_id', 'clientes.nombre as cliente_nombre')
+                    ->where('prospectos.es_prospecto', 'si')
+                    ->where('prospectos_cotizaciones.user_id', '=', $user->id)->whereBetween('prospectos_cotizaciones.created_at', [$inicio, $anio])->orderBy('fecha', 'desc')->get();
 
 
-            }else{
+            }
+            else {
 
                 $proyectos = Prospecto::leftjoin('prospectos_actividades', 'prospectos.id', '=', 'prospectos_actividades.prospecto_id')
-                ->leftjoin('prospectos_tipos_actividades', 'prospectos_actividades.tipo_id', '=', 'prospectos_tipos_actividades.id')
-                ->leftjoin('users', 'prospectos.user_id', '=', 'users.id')
-                ->leftjoin('clientes', 'prospectos.cliente_id', '=', 'clientes.id')
-                ->leftjoin('vendedores', 'prospectos.vendedor_id', '=', 'vendedores.id')
-                ->select('vendedores.nombre as vendedor', 'prospectos.*', 'users.name as usuario', 'clientes.nombre as cliente', 'prospectos_tipos_actividades.nombre as actividad', 'prospectos_actividades.fecha as fecha')
-                ->where('prospectos_actividades.realizada', false)
-                ->where('prospectos.es_prospecto', 'si')
-                ->where('prospectos.estatus', $estatus)
-                ->get();
+                    ->leftjoin('prospectos_tipos_actividades', 'prospectos_actividades.tipo_id', '=', 'prospectos_tipos_actividades.id')
+                    ->leftjoin('users', 'prospectos.user_id', '=', 'users.id')
+                    ->leftjoin('clientes', 'prospectos.cliente_id', '=', 'clientes.id')
+                    ->leftjoin('vendedores', 'prospectos.vendedor_id', '=', 'vendedores.id')
+                    ->select('vendedores.nombre as vendedor', 'prospectos.*', 'users.name as usuario', 'clientes.nombre as cliente', 'prospectos_tipos_actividades.nombre as actividad', 'prospectos_actividades.fecha as fecha')
+                    ->where('prospectos_actividades.realizada', false)
+                    ->where('prospectos.es_prospecto', 'si')
+                    ->where('prospectos.estatus', $estatus)
+                    ->get();
 
-            //$proyectos = Prospecto::with('usuario','vendedor')->where('es_prospecto','si')->get();
-            $cotizaciones = ProspectoCotizacion::leftjoin('prospectos', 'prospectos_cotizaciones.prospecto_id', '=', 'prospectos.id')
-                ->leftjoin('clientes', 'prospectos.cliente_id', '=', 'clientes.id')
-                ->leftjoin('users', 'prospectos_cotizaciones.user_id', '=', 'users.id')
-                ->select('prospectos_cotizaciones.*', 'users.name as user_name', 'prospectos.nombre as prospecto_nombre', 'prospectos.id as prospecto_id', 'clientes.nombre as cliente_nombre')
-                ->where('prospectos.es_prospecto', 'si')
-                ->where('prospectos_cotizaciones.user_id', '=', $user->id)->whereBetween('prospectos_cotizaciones.created_at', [$inicio, $anio])->orderBy('fecha', 'desc')->get();
+                //$proyectos = Prospecto::with('usuario','vendedor')->where('es_prospecto','si')->get();
+                $cotizaciones = ProspectoCotizacion::leftjoin('prospectos', 'prospectos_cotizaciones.prospecto_id', '=', 'prospectos.id')
+                    ->leftjoin('clientes', 'prospectos.cliente_id', '=', 'clientes.id')
+                    ->leftjoin('users', 'prospectos_cotizaciones.user_id', '=', 'users.id')
+                    ->select('prospectos_cotizaciones.*', 'users.name as user_name', 'prospectos.nombre as prospecto_nombre', 'prospectos.id as prospecto_id', 'clientes.nombre as cliente_nombre')
+                    ->where('prospectos.es_prospecto', 'si')
+                    ->where('prospectos_cotizaciones.user_id', '=', $user->id)->whereBetween('prospectos_cotizaciones.created_at', [$inicio, $anio])->orderBy('fecha', 'desc')->get();
 
             }
 
             $vendedores = Vendedor::all();
-        } else {
+        }
+        else {
 
-            
+
             if (Auth::user()->roles[0]->name == 'Administrador' || Auth::user()->roles[0]->name == 'Dirección') {
-                
+
                 $proyectos = Prospecto::leftjoin('prospectos_actividades', 'prospectos.id', '=', 'prospectos_actividades.prospecto_id')
                     ->leftjoin('prospectos_tipos_actividades', 'prospectos_actividades.tipo_id', '=', 'prospectos_tipos_actividades.id')
                     ->leftjoin('users', 'prospectos.user_id', '=', 'users.id')
@@ -472,8 +485,9 @@ class ProspectosController extends Controller
                     ->where('prospectos_cotizaciones.user_id', '=', $user->id)->whereBetween('prospectos_cotizaciones.created_at', [$inicio, $anio])->orderBy('fecha', 'desc')
                     ->get();
                 $vendedores = Vendedor::all();
-            }else if(Auth::user()->roles[0]->name == 'Diseñadores'){
-                
+            }
+            else if (Auth::user()->roles[0]->name == 'Diseñadores') {
+
                 $proyectos = Prospecto::leftjoin('prospectos_actividades', 'prospectos.id', '=', 'prospectos_actividades.prospecto_id')
                     ->leftjoin('prospectos_tipos_actividades', 'prospectos_actividades.tipo_id', '=', 'prospectos_tipos_actividades.id')
                     ->leftjoin('users', 'prospectos.user_id', '=', 'users.id')
@@ -498,7 +512,7 @@ class ProspectosController extends Controller
                     ->get();
                 $vendedores = Vendedor::all();
 
-            } 
+            }
             else {
 
                 $proyectos = Prospecto::leftjoin('prospectos_actividades', 'prospectos.id', '=', 'prospectos_actividades.prospecto_id')
@@ -530,92 +544,92 @@ class ProspectosController extends Controller
         //carga de tareas
         if ($disenador_id == 'Todos') {
             //es un director y quiere ver todas las tareas de todos
-            $tareaspendiente = Tarea::with('vendedor','director','comentarios','comentarios.usuario')->where('status','Pendiente')->get();
-            $tareasproceso= Tarea::with('vendedor','director','comentarios','comentarios.usuario')->where('status','En proceso')->get();
-            $tareasterminadas = Tarea::with('vendedor','director','comentarios','comentarios.usuario')->where('status','Terminada')->get();
+            $tareaspendiente = Tarea::with('vendedor', 'director', 'comentarios', 'comentarios.usuario')->where('status', 'Pendiente')->get();
+            $tareasproceso = Tarea::with('vendedor', 'director', 'comentarios', 'comentarios.usuario')->where('status', 'En proceso')->get();
+            $tareasterminadas = Tarea::with('vendedor', 'director', 'comentarios', 'comentarios.usuario')->where('status', 'Terminada')->get();
         }
-        else{
-            if(Auth::user()->roles[0]->name == 'Diseñadores'){
+        else {
+            if (Auth::user()->roles[0]->name == 'Diseñadores') {
                 //obtenemos el usuario del vendedor
-                $usuario_vendedor = User::where('email',$vendedor->email)->first();
+                $usuario_vendedor = User::where('email', $vendedor->email)->first();
                 //
-                $tareaspendiente = Tarea::with('vendedor','director','comentarios','comentarios.usuario')->where('status','Pendiente')->where('vendedor_id',$vendedor->id)->orwhere('user_id',$usuario_vendedor->id)->get();
-                $tareasproceso = Tarea::with('vendedor','director','comentarios','comentarios.usuario')->where('status','En proceso')->where('vendedor_id',$vendedor->id)->orwhere('user_id',$usuario_vendedor->id)->get();
-                $tareasterminadas = Tarea::with('vendedor','director','comentarios','comentarios.usuario')->where('status','Terminada')->where('vendedor_id',$vendedor->id)->orwhere('user_id',$usuario_vendedor->id)->get();
+                $tareaspendiente = Tarea::with('vendedor', 'director', 'comentarios', 'comentarios.usuario')->where('status', 'Pendiente')->where('vendedor_id', $vendedor->id)->orwhere('user_id', $usuario_vendedor->id)->get();
+                $tareasproceso = Tarea::with('vendedor', 'director', 'comentarios', 'comentarios.usuario')->where('status', 'En proceso')->where('vendedor_id', $vendedor->id)->orwhere('user_id', $usuario_vendedor->id)->get();
+                $tareasterminadas = Tarea::with('vendedor', 'director', 'comentarios', 'comentarios.usuario')->where('status', 'Terminada')->where('vendedor_id', $vendedor->id)->orwhere('user_id', $usuario_vendedor->id)->get();
             }
-            else{
+            else {
                 //obetenemos el usuario del vendedor
-                $vend = Vendedor::where('id',$disenador_id)->first();
-                $us = User::where('email',$vend->email)->first();
-                $tareaspendiente = Tarea::with('vendedor','director','comentarios','comentarios.usuario')->where('status','Pendiente')->where('vendedor_id',$disenador_id)->orwhere('user_id',$us->id)->get();
-                $tareasproceso = Tarea::with('vendedor','director','comentarios','comentarios.usuario')->where('status','En proceso')->where('vendedor_id',$disenador_id)->orwhere('user_id',$us->id)->get();
-                $tareasterminadas= Tarea::with('vendedor','director','comentarios','comentarios.usuario')->where('status','Terminada')->where('vendedor_id',$disenador_id)->orwhere('user_id',$us->id)->get();
+                $vend = Vendedor::where('id', $disenador_id)->first();
+                $us = User::where('email', $vend->email)->first();
+                $tareaspendiente = Tarea::with('vendedor', 'director', 'comentarios', 'comentarios.usuario')->where('status', 'Pendiente')->where('vendedor_id', $disenador_id)->orwhere('user_id', $us->id)->get();
+                $tareasproceso = Tarea::with('vendedor', 'director', 'comentarios', 'comentarios.usuario')->where('status', 'En proceso')->where('vendedor_id', $disenador_id)->orwhere('user_id', $us->id)->get();
+                $tareasterminadas = Tarea::with('vendedor', 'director', 'comentarios', 'comentarios.usuario')->where('status', 'Terminada')->where('vendedor_id', $disenador_id)->orwhere('user_id', $us->id)->get();
             }
 
         }
 
         //revisamos si tiene tareas pendientes
-        if(Auth::user()->roles[0]->name == 'Diseñadores'){
-            $tareas_pendientes = Tarea::where('vendedor_id',$vendedor->id)->where('status','Pendiente')->get();
+        if (Auth::user()->roles[0]->name == 'Diseñadores') {
+            $tareas_pendientes = Tarea::where('vendedor_id', $vendedor->id)->where('status', 'Pendiente')->get();
 
             $proximas_actividades = Prospecto::leftjoin('prospectos_actividades', 'prospectos_actividades.prospecto_id', '=', 'prospectos.id')
-            ->leftjoin('prospectos_tipos_actividades', 'prospectos_actividades.tipo_id', '=', 'prospectos_tipos_actividades.id')
-            ->leftjoin('vendedores', 'prospectos.vendedor_id', '=', 'vendedores.id')
-            ->select(DB::raw('CONCAT(prospectos.nombre , " - ", vendedores.nombre) AS title'),'vendedores.nombre as vendedor','prospectos_tipos_actividades.nombre as description', 'prospectos_actividades.descripcion as texto', 'prospectos_actividades.fecha as start','vendedores.id as userId','vendedores.color as color',DB::raw('CONCAT("/prospectos/",prospectos.id,"/editar" ) AS liga'))
-            ->where('prospectos_actividades.realizada',0)
-            ->where('prospectos.vendedor_id',$vendedor->id)
-            ->get()->toArray();
+                ->leftjoin('prospectos_tipos_actividades', 'prospectos_actividades.tipo_id', '=', 'prospectos_tipos_actividades.id')
+                ->leftjoin('vendedores', 'prospectos.vendedor_id', '=', 'vendedores.id')
+                ->select(DB::raw('CONCAT(prospectos.nombre , " - ", vendedores.nombre) AS title'), 'vendedores.nombre as vendedor', 'prospectos_tipos_actividades.nombre as description', 'prospectos_actividades.descripcion as texto', 'prospectos_actividades.fecha as start', 'vendedores.id as userId', 'vendedores.color as color', DB::raw('CONCAT("/prospectos/",prospectos.id,"/editar" ) AS liga'))
+                ->where('prospectos_actividades.realizada', 0)
+                ->where('prospectos.vendedor_id', $vendedor->id)
+                ->get()->toArray();
         }
-        else{
-            $tareas_pendientes = Tarea::where('director_id',auth()->user()->id)->where('status','Pendiente')->get();
+        else {
+            $tareas_pendientes = Tarea::where('director_id', auth()->user()->id)->where('status', 'Pendiente')->get();
 
             $proximas_actividades = Prospecto::leftjoin('prospectos_actividades', 'prospectos_actividades.prospecto_id', '=', 'prospectos.id')
-            ->leftjoin('prospectos_tipos_actividades', 'prospectos_actividades.tipo_id', '=', 'prospectos_tipos_actividades.id')
-            ->leftjoin('vendedores', 'prospectos.vendedor_id', '=', 'vendedores.id')
-            ->select(DB::raw('CONCAT(prospectos.nombre , " - ", vendedores.nombre) AS title'),'vendedores.nombre as vendedor','prospectos_tipos_actividades.nombre as description', 'prospectos_actividades.descripcion as texto', 'prospectos_actividades.fecha as start','vendedores.id as userId','vendedores.color as color',DB::raw('CONCAT("/prospectos/",prospectos.id,"/editar" ) AS liga'))
-            ->where('prospectos_actividades.realizada',0)
-            ->get()->toArray();
+                ->leftjoin('prospectos_tipos_actividades', 'prospectos_actividades.tipo_id', '=', 'prospectos_tipos_actividades.id')
+                ->leftjoin('vendedores', 'prospectos.vendedor_id', '=', 'vendedores.id')
+                ->select(DB::raw('CONCAT(prospectos.nombre , " - ", vendedores.nombre) AS title'), 'vendedores.nombre as vendedor', 'prospectos_tipos_actividades.nombre as description', 'prospectos_actividades.descripcion as texto', 'prospectos_actividades.fecha as start', 'vendedores.id as userId', 'vendedores.color as color', DB::raw('CONCAT("/prospectos/",prospectos.id,"/editar" ) AS liga'))
+                ->where('prospectos_actividades.realizada', 0)
+                ->get()->toArray();
         }
 
 
         //Sacamos la notificaciones del usuario logueado
-        $notificaciones = Notificacion::with('usercreo','userdirigido')->where('user_dirigido',auth()->user()->id)->where('status','sin leer')->get();
+        $notificaciones = Notificacion::with('usercreo', 'userdirigido')->where('user_dirigido', auth()->user()->id)->where('status', 'sin leer')->get();
 
-       
 
-        
+
+
 
         $clientes = Cliente::all();
 
-        return view('prospectos.indexprospectos', compact('cotizaciones', 'usuarios', 'proyectos', 'estatus','vendedores','tareaspendiente','tareasterminadas','tareasproceso','disenador_id','anio2','directores','tareas_pendientes','proximas_actividades','clientes','notificaciones'));
+        return view('prospectos.indexprospectos', compact('cotizaciones', 'usuarios', 'proyectos', 'estatus', 'vendedores', 'tareaspendiente', 'tareasterminadas', 'tareasproceso', 'disenador_id', 'anio2', 'directores', 'tareas_pendientes', 'proximas_actividades', 'clientes', 'notificaciones'));
     }
 
-
     public function cotizaciones()
-    {  
+    {
         $user = auth()->user();
         $inicio = Carbon::parse('2023-01-01'); //se ajusto por el año en curso
         $anio = Carbon::parse('2023-12-31'); // se ajusto por el año
 
-       
 
-        $vendedores = Vendedor::where('email',auth()->user()->email)->first();//filtro por email
+
+        $vendedores = Vendedor::where('email', auth()->user()->email)->first(); //filtro por email
 
         if (auth()->user()->tipo == 'Administrador' || auth()->user()->tipo == 'Dirección') {
             $prospectos = Prospecto::with('cliente', 'ultima_actividad.tipo', 'proxima_actividad.tipo', 'vendedor', 'cotizaciones')
-            ->where('es_prospecto', 'no')
-            ->whereBetween('prospectos.created_at', [$inicio, $anio])
-            ->has('cliente')
-            ->get();
+                ->where('es_prospecto', 'no')
+                ->whereBetween('prospectos.created_at', [$inicio, $anio])
+                ->has('cliente')
+                ->get();
             $usuarios = Vendedor::all();
-        } else {
-            $vendedor = Vendedor::where('email',auth()->user()->email)->first();
+        }
+        else {
+            $vendedor = Vendedor::where('email', auth()->user()->email)->first();
             $prospectos = Prospecto::with('cliente', 'ultima_actividad.tipo', 'proxima_actividad.tipo', 'vendedor', 'cotizaciones')
-            ->where('vendedor_id', $vendedor->id)
-            ->where('es_prospecto', 'no')
-            ->whereBetween('prospectos.created_at', [$inicio, $anio])
-            ->has('cliente')
-            ->get();
+                ->where('vendedor_id', $vendedor->id)
+                ->where('es_prospecto', 'no')
+                ->whereBetween('prospectos.created_at', [$inicio, $anio])
+                ->has('cliente')
+                ->get();
             $usuarios = [];
         }
 
@@ -624,48 +638,54 @@ class ProspectosController extends Controller
                 $query->where("usuario_id", $user->id);
             })->get();
         */
-    
-        
-        
-
-       $vendedores = Vendedor::all();
 
 
-        return view('prospectos.cotizaciones', compact('prospectos', 'usuarios','vendedores'));
+
+
+        $vendedores = Vendedor::all();
+
+
+        return view('prospectos.cotizaciones', compact('prospectos', 'usuarios', 'vendedores'));
     }
-
 
     public function listado(Request $request)
     {
 
         if ($request->anio == '2019-12-31') {
             $inicio = Carbon::parse('2019-01-01');
-        } elseif ($request->anio == '2020-12-31') {
+        }
+        elseif ($request->anio == '2020-12-31') {
             $inicio = Carbon::parse('2020-01-01');
-        } elseif ($request->anio == '2022-12-31') {
+        }
+        elseif ($request->anio == '2022-12-31') {
             $inicio = Carbon::parse('2022-01-01');
-        } elseif ($request->anio == '2023-12-31') {
+        }
+        elseif ($request->anio == '2023-12-31') {
             $inicio = Carbon::parse('2023-01-01');
-        } elseif ($request->anio == '2024-12-31') {
+        }
+        elseif ($request->anio == '2024-12-31') {
             $inicio = Carbon::parse('2024-01-01');
-        } else {
+        }
+        else {
             $inicio = Carbon::parse('2021-01-01');
         }
 
         if ($request->id == 'Todos') {
 
             if ($request->anio == 'Todos') {
-                $prospectos = Prospecto::with('vendedor', 'ultima_actividad.tipo', 'proxima_actividad.tipo', 'user', 'cotizaciones','cliente')->has('cliente')->where('prospectos.es_prospecto', 'no')->orderBy('id', 'desc')->get();
+                $prospectos = Prospecto::with('vendedor', 'ultima_actividad.tipo', 'proxima_actividad.tipo', 'user', 'cotizaciones', 'cliente')->has('cliente')->where('prospectos.es_prospecto', 'no')->orderBy('id', 'desc')->get();
 
 
-            } else {
-                $anio = Carbon::parse($request->anio);//aqui me error inesperado
+            }
+            else {
+                $anio = Carbon::parse($request->anio); //aqui me error inesperado
                 $prospectos = Prospecto::whereBetween('created_at', [$inicio, $anio])
-                    ->with('vendedor', 'ultima_actividad.tipo', 'proxima_actividad.tipo', 'user', 'cotizaciones','cliente')
+                    ->with('vendedor', 'ultima_actividad.tipo', 'proxima_actividad.tipo', 'user', 'cotizaciones', 'cliente')
                     ->has('cliente')
                     ->where('prospectos.es_prospecto', 'no')->orderBy('id', 'desc')->get();
             }
-        } else {
+        }
+        else {
             /*$user = User::with('prospectos.cliente', 'prospectos.ultima_actividad.tipo', 'prospectos.proxima_actividad.tipo')
                 ->has('prospectos.cliente')->find($request->id);
             if (is_null($user)) {
@@ -675,13 +695,14 @@ class ProspectosController extends Controller
             }*/
 
             if ($request->anio == 'Todos') {
-                $prospectos = Prospecto::with('vendedor', 'ultima_actividad.tipo', 'proxima_actividad.tipo', 'cotizaciones','cliente')
+                $prospectos = Prospecto::with('vendedor', 'ultima_actividad.tipo', 'proxima_actividad.tipo', 'cotizaciones', 'cliente')
                     ->where('vendedor_id', $request->id)
                     ->where('prospectos.es_prospecto', 'no')->has('cliente')->get();
 
-            } else {
+            }
+            else {
                 $anio = Carbon::parse($request->anio);
-                $prospectos = Prospecto::with('vendedor', 'ultima_actividad.tipo', 'proxima_actividad.tipo', 'cotizaciones','cliente')
+                $prospectos = Prospecto::with('vendedor', 'ultima_actividad.tipo', 'proxima_actividad.tipo', 'cotizaciones', 'cliente')
                     ->where('vendedor_id', $request->id)
                     ->where('prospectos.es_prospecto', 'no')
                     ->whereHas('ultima_actividad', function ($query) use ($inicio, $anio) {
@@ -717,15 +738,20 @@ class ProspectosController extends Controller
 
         if ($request->anio == '2019-12-31') {
             $inicio = Carbon::parse('2019-01-01');
-        } elseif ($request->anio == '2020-12-31') {
+        }
+        elseif ($request->anio == '2020-12-31') {
             $inicio = Carbon::parse('2020-01-01');
-        } elseif ($request->anio == '2022-12-31') {
+        }
+        elseif ($request->anio == '2022-12-31') {
             $inicio = Carbon::parse('2022-01-01');
-        } elseif ($request->anio == '2023-12-31') {
+        }
+        elseif ($request->anio == '2023-12-31') {
             $inicio = Carbon::parse('2023-01-01');
-        } elseif ($request->anio == '2024-12-31') {
+        }
+        elseif ($request->anio == '2024-12-31') {
             $inicio = Carbon::parse('2024-01-01');
-        } else {
+        }
+        else {
             $inicio = Carbon::parse('2021-01-01');
         }
 
@@ -738,7 +764,8 @@ class ProspectosController extends Controller
                     ->leftjoin('users', 'prospectos_cotizaciones.user_id', '=', 'users.id')
                     ->select('prospectos_cotizaciones.*', 'users.name as user_name', 'prospectos.nombre as prospecto_nombre', 'prospectos.id as prospecto_id', 'clientes.nombre as cliente_nombre')
                     ->orderBy('fecha', 'desc')->get();
-            } else {
+            }
+            else {
                 $anio = Carbon::parse($request->anio);
                 $cotizaciones = ProspectoCotizacion::leftjoin('prospectos', 'prospectos_cotizaciones.prospecto_id', '=', 'prospectos.id')
                     ->leftjoin('clientes', 'prospectos.cliente_id', '=', 'clientes.id')
@@ -746,7 +773,8 @@ class ProspectosController extends Controller
                     ->select('prospectos_cotizaciones.*', 'users.name as user_name', 'prospectos.nombre as prospecto_nombre', 'prospectos.id as prospecto_id', 'clientes.nombre as cliente_nombre')
                     ->whereBetween('prospectos_cotizaciones.created_at', [$inicio, $anio])->orderBy('fecha', 'desc')->get();
             }
-        } else {
+        }
+        else {
 
 
             if ($request->anio == 'Todos') {
@@ -759,14 +787,16 @@ class ProspectosController extends Controller
                         ->leftjoin('cliente_users', 'clientes.id', '=', 'cliente_users.cliente_id')
                         ->select('prospectos_cotizaciones.*', 'users.name as user_name', 'prospectos.nombre as prospecto_nombre', 'prospectos.id as prospecto_id', 'clientes.nombre as cliente_nombre')
                         ->where('cliente_users.user_id', '=', $request->id)->orderBy('fecha', 'desc')->get();
-                } else {
+                }
+                else {
                     $cotizaciones = ProspectoCotizacion::leftjoin('prospectos', 'prospectos_cotizaciones.prospecto_id', '=', 'prospectos.id')
                         ->leftjoin('clientes', 'prospectos.cliente_id', '=', 'clientes.id')
                         ->leftjoin('users', 'prospectos_cotizaciones.user_id', '=', 'users.id')
                         ->select('prospectos_cotizaciones.*', 'users.name as user_name', 'prospectos.nombre as prospecto_nombre', 'prospectos.id as prospecto_id', 'clientes.nombre as cliente_nombre')
                         ->where('prospectos_cotizaciones.user_id', '=', $request->id)->orderBy('fecha', 'desc')->get();
                 }
-            } else {
+            }
+            else {
                 $anio = Carbon::parse($request->anio);
 
                 if (auth()->user()->tipo == 'Cliente') {
@@ -776,7 +806,8 @@ class ProspectosController extends Controller
                         ->leftjoin('cliente_users', 'clientes.id', '=', 'cliente_users.cliente_id')
                         ->select('prospectos_cotizaciones.*', 'users.name as user_name', 'prospectos.nombre as prospecto_nombre', 'prospectos.id as prospecto_id', 'clientes.nombre as cliente_nombre')
                         ->where('cliente_users.user_id', '=', $request->id)->whereBetween('prospectos_cotizaciones.created_at', [$inicio, $anio])->orderBy('fecha', 'desc')->get();
-                } else {
+                }
+                else {
                     $cotizaciones = ProspectoCotizacion::leftjoin('prospectos', 'prospectos_cotizaciones.prospecto_id', '=', 'prospectos.id')
                         ->leftjoin('clientes', 'prospectos.cliente_id', '=', 'clientes.id')
                         ->leftjoin('users', 'prospectos_cotizaciones.user_id', '=', 'users.id')
@@ -789,8 +820,9 @@ class ProspectosController extends Controller
         return response()->json(['success' => true, "error" => false, 'cotizaciones' => $cotizaciones], 200);
     }
 
-    public function prospectosver(Prospecto $prospecto,$disenador_id,$anio){
-        
+    public function prospectosver(Prospecto $prospecto, $disenador_id, $anio)
+    {
+
         $proyectos = Prospecto::all(); //Trae todo los proyectos
         //$proyecto->load('cotizacion','ordenes','cliente','cotizacion.prospecto');
 
@@ -832,8 +864,10 @@ class ProspectosController extends Controller
             if ($orden->factura) {
                 $orden->factura = asset('storage/' . $orden->factura);
                 $orden->packing = asset('storage/' . $orden->packing);
-                if ($orden->bl) $orden->bl = asset('storage/' . $orden->bl);
-                if ($orden->certificado) $orden->certificado = asset('storage/' . $orden->certificado);
+                if ($orden->bl)
+                    $orden->bl = asset('storage/' . $orden->bl);
+                if ($orden->certificado)
+                    $orden->certificado = asset('storage/' . $orden->certificado);
             }
             if ($orden->deposito_warehouse) {
                 $orden->deposito_warehouse = asset('storage/' . $orden->deposito_warehouse);
@@ -847,29 +881,34 @@ class ProspectosController extends Controller
             }
         }
 
-     
 
-        return view('prospectos.ver', compact('prospecto', 'ordenes', 'cuentas', 'ordenes_proceso', 'proyectos','disenador_id','anio'));
+
+        return view('prospectos.ver', compact('prospecto', 'ordenes', 'cuentas', 'ordenes_proceso', 'proyectos', 'disenador_id', 'anio'));
 
 
 
         //return view('prospectos.show', compact('prospecto','disenador_id','anio'));
     }
 
+    public function listadoprospectos(Request $request)
+    {
 
-    public function listadoprospectos(Request $request){
-        
         if ($request->anio == '2019-12-31') {
             $inicio = Carbon::parse('2019-01-01');
-        } elseif ($request->anio == '2020-12-31') {
+        }
+        elseif ($request->anio == '2020-12-31') {
             $inicio = Carbon::parse('2020-01-01');
-        } elseif ($request->anio == '2022-12-31') {
+        }
+        elseif ($request->anio == '2022-12-31') {
             $inicio = Carbon::parse('2022-01-01');
-        } elseif ($request->anio == '2023-12-31') {
+        }
+        elseif ($request->anio == '2023-12-31') {
             $inicio = Carbon::parse('2023-01-01');
-        } elseif ($request->anio == '2024-12-31') {
+        }
+        elseif ($request->anio == '2024-12-31') {
             $inicio = Carbon::parse('2024-01-01');
-        } else {
+        }
+        else {
             $inicio = Carbon::parse('2021-01-01');
         }
 
@@ -877,69 +916,71 @@ class ProspectosController extends Controller
             $tareas = Tarea::with('vendedor')->get();
             if ($request->anio == 'Todos') {
 
-                
-                $prospectos = Prospecto::leftjoin('prospectos_actividades', 'prospectos.id', '=', 'prospectos_actividades.prospecto_id')
-                ->leftjoin('prospectos_tipos_actividades', 'prospectos_actividades.tipo_id', '=', 'prospectos_tipos_actividades.id')
-                ->leftjoin('users', 'prospectos.user_id', '=', 'users.id')
-                ->leftjoin('clientes', 'prospectos.cliente_id', '=', 'clientes.id')
-                ->leftjoin('vendedores', 'prospectos.vendedor_id', '=', 'vendedores.id')
-                ->select('vendedores.nombre as vendedor', 'prospectos.*', 'users.name as usuario', 'clientes.nombre as cliente', 'prospectos_tipos_actividades.nombre as actividad', 'prospectos_actividades.fecha as fecha')
-                ->where('prospectos_actividades.realizada', false)
-                ->where('prospectos.es_prospecto', 'si')
-                ->get();
 
-            } else {
+                $prospectos = Prospecto::leftjoin('prospectos_actividades', 'prospectos.id', '=', 'prospectos_actividades.prospecto_id')
+                    ->leftjoin('prospectos_tipos_actividades', 'prospectos_actividades.tipo_id', '=', 'prospectos_tipos_actividades.id')
+                    ->leftjoin('users', 'prospectos.user_id', '=', 'users.id')
+                    ->leftjoin('clientes', 'prospectos.cliente_id', '=', 'clientes.id')
+                    ->leftjoin('vendedores', 'prospectos.vendedor_id', '=', 'vendedores.id')
+                    ->select('vendedores.nombre as vendedor', 'prospectos.*', 'users.name as usuario', 'clientes.nombre as cliente', 'prospectos_tipos_actividades.nombre as actividad', 'prospectos_actividades.fecha as fecha')
+                    ->where('prospectos_actividades.realizada', false)
+                    ->where('prospectos.es_prospecto', 'si')
+                    ->get();
+
+            }
+            else {
                 $anio = Carbon::parse($request->anio);
 
                 $prospectos = Prospecto::leftjoin('prospectos_actividades', 'prospectos.id', '=', 'prospectos_actividades.prospecto_id')
-                ->leftjoin('prospectos_tipos_actividades', 'prospectos_actividades.tipo_id', '=', 'prospectos_tipos_actividades.id')
-                ->leftjoin('users', 'prospectos.user_id', '=', 'users.id')
-                ->leftjoin('clientes', 'prospectos.cliente_id', '=', 'clientes.id')
-                ->leftjoin('vendedores', 'prospectos.vendedor_id', '=', 'vendedores.id')
-                ->select('vendedores.nombre as vendedor', 'prospectos.*', 'users.name as usuario', 'clientes.nombre as cliente', 'prospectos_tipos_actividades.nombre as actividad', 'prospectos_actividades.fecha as fecha')
-                ->where('prospectos_actividades.realizada', false)
-                ->where('prospectos.es_prospecto', 'si')
-                ->whereBetween('prospectos.created_at', [$inicio, $anio])
-                ->get();
+                    ->leftjoin('prospectos_tipos_actividades', 'prospectos_actividades.tipo_id', '=', 'prospectos_tipos_actividades.id')
+                    ->leftjoin('users', 'prospectos.user_id', '=', 'users.id')
+                    ->leftjoin('clientes', 'prospectos.cliente_id', '=', 'clientes.id')
+                    ->leftjoin('vendedores', 'prospectos.vendedor_id', '=', 'vendedores.id')
+                    ->select('vendedores.nombre as vendedor', 'prospectos.*', 'users.name as usuario', 'clientes.nombre as cliente', 'prospectos_tipos_actividades.nombre as actividad', 'prospectos_actividades.fecha as fecha')
+                    ->where('prospectos_actividades.realizada', false)
+                    ->where('prospectos.es_prospecto', 'si')
+                    ->whereBetween('prospectos.created_at', [$inicio, $anio])
+                    ->get();
 
-               
+
             }
-        } else {
-           
-            $tareas = Tarea::with('vendedor')->where('vendedor_id',$request->id)->get();
+        }
+        else {
+
+            $tareas = Tarea::with('vendedor')->where('vendedor_id', $request->id)->get();
             if ($request->anio == 'Todos') {
 
                 $prospectos = Prospecto::leftjoin('prospectos_actividades', 'prospectos.id', '=', 'prospectos_actividades.prospecto_id')
-                ->leftjoin('prospectos_tipos_actividades', 'prospectos_actividades.tipo_id', '=', 'prospectos_tipos_actividades.id')
-                ->leftjoin('users', 'prospectos.user_id', '=', 'users.id')
-                ->leftjoin('clientes', 'prospectos.cliente_id', '=', 'clientes.id')
-                ->leftjoin('vendedores', 'prospectos.vendedor_id', '=', 'vendedores.id')
-                ->select('vendedores.nombre as vendedor', 'prospectos.*', 'users.name as usuario', 'clientes.nombre as cliente', 'prospectos_tipos_actividades.nombre as actividad', 'prospectos_actividades.fecha as fecha')
-                ->where('prospectos_actividades.realizada', false)
-                ->where('prospectos.es_prospecto', 'si')
-                ->where('prospectos.vendedor_id',$request->id)
-                ->get();
-            } else {
+                    ->leftjoin('prospectos_tipos_actividades', 'prospectos_actividades.tipo_id', '=', 'prospectos_tipos_actividades.id')
+                    ->leftjoin('users', 'prospectos.user_id', '=', 'users.id')
+                    ->leftjoin('clientes', 'prospectos.cliente_id', '=', 'clientes.id')
+                    ->leftjoin('vendedores', 'prospectos.vendedor_id', '=', 'vendedores.id')
+                    ->select('vendedores.nombre as vendedor', 'prospectos.*', 'users.name as usuario', 'clientes.nombre as cliente', 'prospectos_tipos_actividades.nombre as actividad', 'prospectos_actividades.fecha as fecha')
+                    ->where('prospectos_actividades.realizada', false)
+                    ->where('prospectos.es_prospecto', 'si')
+                    ->where('prospectos.vendedor_id', $request->id)
+                    ->get();
+            }
+            else {
                 $anio = Carbon::parse($request->anio);
                 $prospectos = Prospecto::leftjoin('prospectos_actividades', 'prospectos.id', '=', 'prospectos_actividades.prospecto_id')
-                ->leftjoin('prospectos_tipos_actividades', 'prospectos_actividades.tipo_id', '=', 'prospectos_tipos_actividades.id')
-                ->leftjoin('users', 'prospectos.user_id', '=', 'users.id')
-                ->leftjoin('clientes', 'prospectos.cliente_id', '=', 'clientes.id')
-                ->leftjoin('vendedores', 'prospectos.vendedor_id', '=', 'vendedores.id')
-                ->select('vendedores.nombre as vendedor', 'prospectos.*', 'users.name as usuario', 'clientes.nombre as cliente', 'prospectos_tipos_actividades.nombre as actividad', 'prospectos_actividades.fecha as fecha')
-                ->where('prospectos_actividades.realizada', false)
-                ->where('prospectos.es_prospecto', 'si')
-                ->where('prospectos.vendedor_id',$request->id)
-                ->whereBetween('prospectos.created_at', [$inicio, $anio])
-                ->get();
+                    ->leftjoin('prospectos_tipos_actividades', 'prospectos_actividades.tipo_id', '=', 'prospectos_tipos_actividades.id')
+                    ->leftjoin('users', 'prospectos.user_id', '=', 'users.id')
+                    ->leftjoin('clientes', 'prospectos.cliente_id', '=', 'clientes.id')
+                    ->leftjoin('vendedores', 'prospectos.vendedor_id', '=', 'vendedores.id')
+                    ->select('vendedores.nombre as vendedor', 'prospectos.*', 'users.name as usuario', 'clientes.nombre as cliente', 'prospectos_tipos_actividades.nombre as actividad', 'prospectos_actividades.fecha as fecha')
+                    ->where('prospectos_actividades.realizada', false)
+                    ->where('prospectos.es_prospecto', 'si')
+                    ->where('prospectos.vendedor_id', $request->id)
+                    ->whereBetween('prospectos.created_at', [$inicio, $anio])
+                    ->get();
             }
         }
-        $total  = number_format($prospectos->sum('proyeccion_venta'), 2, '.', ',');
+        $total = number_format($prospectos->sum('proyeccion_venta'), 2, '.', ',');
 
 
-        return response()->json(['success' => true, "error" => false, 'prospectos' => $prospectos,'tareas'=>$tareas,'total' => $total], 200);
+        return response()->json(['success' => true, "error" => false, 'prospectos' => $prospectos, 'tareas' => $tareas, 'total' => $total], 200);
     }
-    
 
     /*
     public function listadoprospectos(Request $request)
@@ -1017,18 +1058,18 @@ class ProspectosController extends Controller
      */
     public function create()
     {
-        $clientes  = Cliente::orderBy('nombre', 'asc')->get();
+        $clientes = Cliente::orderBy('nombre', 'asc')->get();
         $productos = Producto::with('categoria')->get();
-        $tipos  = ProspectoTipoActividad::whereIn('id', [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11])->get();
+        $tipos = ProspectoTipoActividad::whereIn('id', [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11])->get();
         $vendedores = Vendedor::all();
         return view('prospectos.create', compact('clientes', 'productos', 'tipos', 'vendedores'));
     }
 
     public function create2()
     {
-        $clientes  = Cliente::orderBy('nombre', 'asc')->get();
+        $clientes = Cliente::orderBy('nombre', 'asc')->get();
         $productos = Producto::with('categoria')->get();
-        $tipos  = ProspectoTipoActividad::whereIn('id', [1, 12, 13, 14, 3, 15, 5])->get();
+        $tipos = ProspectoTipoActividad::whereIn('id', [1, 12, 13, 14, 3, 15, 5])->get();
         $vendedores = Vendedor::all();
         return view('prospectos.create2', compact('clientes', 'productos', 'tipos', 'vendedores'));
     }
@@ -1058,35 +1099,38 @@ class ProspectosController extends Controller
         if ($validator->fails()) {
             $errors = $validator->errors()->all();
             return response()->json([
-                "success" => false, "error" => true, "message" => $errors[0],
+                "success" => false,
+                "error"   => true,
+                "message" => $errors[0],
             ], 422);
         }
 
         $user = auth()->user();
         if ($request->es_prospecto == 'si') {
 
-            $fecha_cierre   =  Carbon::createFromFormat('d/m/Y', $request->fecha_cierre);
+            $fecha_cierre = Carbon::createFromFormat('d/m/Y', $request->fecha_cierre);
 
             $prospecto = Prospecto::create([
-                'cliente_id'  => $request->cliente_id,
-                'nombre'      => $request->nombre,
-                'descripcion' => $request->descripcion,
-                'es_prospecto' => $request->es_prospecto,
-                'user_id' => $user->id,
-                'vendedor_id' => $request->vendedor_id,
-                'factibilidad' => $request->factibilidad,
-                'fecha_cierre' => $fecha_cierre,
+                'cliente_id'       => $request->cliente_id,
+                'nombre'           => $request->nombre,
+                'descripcion'      => $request->descripcion,
+                'es_prospecto'     => $request->es_prospecto,
+                'user_id'          => $user->id,
+                'vendedor_id'      => $request->vendedor_id,
+                'factibilidad'     => $request->factibilidad,
+                'fecha_cierre'     => $fecha_cierre,
                 'proyeccion_venta' => $request->proyeccion_venta,
-                'estatus' => $request->estatus,
+                'estatus'          => $request->estatus,
             ]);
-        } else {
+        }
+        else {
             $prospecto = Prospecto::create([
-                'cliente_id'  => $request->cliente_id,
-                'nombre'      => $request->nombre,
-                'descripcion' => $request->descripcion,
+                'cliente_id'   => $request->cliente_id,
+                'nombre'       => $request->nombre,
+                'descripcion'  => $request->descripcion,
                 'es_prospecto' => $request->es_prospecto,
-                'user_id' => $user->id,
-                'vendedor_id' => $request->vendedor_id,
+                'user_id'      => $user->id,
+                'vendedor_id'  => $request->vendedor_id,
             ]);
         }
 
@@ -1108,9 +1152,10 @@ class ProspectosController extends Controller
                 'realizada'    => 1,
             ];
             if ($request->ultima_actividad['tipo_id'] == 0) { //dar de alta nuevo tipo
-                $tipo              = ProspectoTipoActividad::create(['nombre' => $request->ultima_actividad['tipo']]);
+                $tipo = ProspectoTipoActividad::create(['nombre' => $request->ultima_actividad['tipo']]);
                 $create['tipo_id'] = $tipo->id;
-            } else {
+            }
+            else {
                 $create['tipo_id'] = $request->ultima_actividad['tipo_id'];
             }
 
@@ -1128,9 +1173,10 @@ class ProspectosController extends Controller
                     'fecha'        => $request->proxima_actividad['fecha'],
                 ];
                 if ($request->proxima_actividad['tipo_id'] == 0) { //dar de alta nuevo tipo
-                    $tipo              = ProspectoTipoActividad::create(['nombre' => $request->proxima_actividad['tipo']]);
+                    $tipo = ProspectoTipoActividad::create(['nombre' => $request->proxima_actividad['tipo']]);
                     $create['tipo_id'] = $tipo->id;
-                } else {
+                }
+                else {
                     $create['tipo_id'] = $request->proxima_actividad['tipo_id'];
                 }
 
@@ -1191,8 +1237,10 @@ class ProspectosController extends Controller
             if ($orden->factura) {
                 $orden->factura = asset('storage/' . $orden->factura);
                 $orden->packing = asset('storage/' . $orden->packing);
-                if ($orden->bl) $orden->bl = asset('storage/' . $orden->bl);
-                if ($orden->certificado) $orden->certificado = asset('storage/' . $orden->certificado);
+                if ($orden->bl)
+                    $orden->bl = asset('storage/' . $orden->bl);
+                if ($orden->certificado)
+                    $orden->certificado = asset('storage/' . $orden->certificado);
             }
             if ($orden->deposito_warehouse) {
                 $orden->deposito_warehouse = asset('storage/' . $orden->deposito_warehouse);
@@ -1223,8 +1271,11 @@ class ProspectosController extends Controller
     public function edit(Prospecto $prospecto)
     {
         $prospecto->load([
-            'cliente', 'actividades.tipo', 'actividades.productos_ofrecidos',
-            'proxima_actividad.tipo', 'proxima_actividad.productos_ofrecidos'
+            'cliente',
+            'actividades.tipo',
+            'actividades.productos_ofrecidos',
+            'proxima_actividad.tipo',
+            'proxima_actividad.productos_ofrecidos'
         ]);
 
         //dd($prospecto);
@@ -1242,21 +1293,24 @@ class ProspectosController extends Controller
 
         $productos = Producto::with('categoria')->get();
         if ($prospecto->es_prospecto == 'si') {
-            $tipos  = ProspectoTipoActividad::whereIn('id', [1, 12, 13, 14, 3, 15, 5])->get();
-        } else {
-            $tipos  = ProspectoTipoActividad::whereIn('id', [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11])->get();
+            $tipos = ProspectoTipoActividad::whereIn('id', [1, 12, 13, 14, 3, 15, 5])->get();
+        }
+        else {
+            $tipos = ProspectoTipoActividad::whereIn('id', [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11])->get();
         }
 
         $vendedores = Vendedor::all();
         return view('prospectos.edit', compact('prospecto', 'productos', 'tipos', 'vendedores'));
     }
 
-
-    public function prospectoseditar(Prospecto $prospecto,$disenador_id,$anio)
+    public function prospectoseditar(Prospecto $prospecto, $disenador_id, $anio)
     {
         $prospecto->load([
-            'cliente', 'actividades.tipo', 'actividades.productos_ofrecidos',
-            'proxima_actividad.tipo', 'proxima_actividad.productos_ofrecidos'
+            'cliente',
+            'actividades.tipo',
+            'actividades.productos_ofrecidos',
+            'proxima_actividad.tipo',
+            'proxima_actividad.productos_ofrecidos'
         ]);
 
         //dd($prospecto);
@@ -1274,13 +1328,14 @@ class ProspectosController extends Controller
 
         $productos = Producto::with('categoria')->get();
         if ($prospecto->es_prospecto == 'si') {
-            $tipos  = ProspectoTipoActividad::whereIn('id', [1, 12, 13, 14, 3, 15, 5])->get();
-        } else {
-            $tipos  = ProspectoTipoActividad::whereIn('id', [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11])->get();
+            $tipos = ProspectoTipoActividad::whereIn('id', [1, 12, 13, 14, 3, 15, 5])->get();
+        }
+        else {
+            $tipos = ProspectoTipoActividad::whereIn('id', [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11])->get();
         }
 
         $vendedores = Vendedor::all();
-        return view('prospectos.edit', compact('prospecto', 'productos', 'tipos', 'vendedores','disenador_id','anio'));
+        return view('prospectos.edit', compact('prospecto', 'productos', 'tipos', 'vendedores', 'disenador_id', 'anio'));
     }
 
     /**
@@ -1300,17 +1355,20 @@ class ProspectosController extends Controller
         if ($validator->fails()) {
             $errors = $validator->errors()->all();
             return response()->json([
-                "success" => false, "error" => true, "message" => $errors[0],
+                "success" => false,
+                "error"   => true,
+                "message" => $errors[0],
             ], 422);
         }
         if ($prospecto->es_prospecto == 'si') {
-            $fecha_cierre   =  Carbon::createFromFormat('d/m/Y', $request->fecha_cierre);
+            $fecha_cierre = Carbon::createFromFormat('d/m/Y', $request->fecha_cierre);
             $update = $request->except('fecha_cierre');
 
             $prospecto->update($update);
             $prospecto->fecha_cierre = $fecha_cierre;
             $prospecto->save();
-        } else {
+        }
+        else {
             $prospecto->update($request->all());
         }
 
@@ -1349,22 +1407,23 @@ class ProspectosController extends Controller
                 'prospecto_id' => $prospecto->id,
                 'fecha'        => $request->proxima['fecha'],
                 'realizada'    => 1,
-                'descripcion' => $request->proxima['descripcion'],
+                'descripcion'  => $request->proxima['descripcion'],
             ];
             if ($request->proxima['tipo_id'] == 0) { //dar de alta nuevo tipo
-                $tipo              = ProspectoTipoActividad::create(['nombre' => $request->proxima['tipo']]);
+                $tipo = ProspectoTipoActividad::create(['nombre' => $request->proxima['tipo']]);
                 $create['tipo_id'] = $tipo->id;
-            } else {
-                $create['tipo_id'] = $request->proxima['tipo_id'];
-                
             }
-    
+            else {
+                $create['tipo_id'] = $request->proxima['tipo_id'];
+
+            }
+
             $proxima = ProspectoActividad::create($create);
             $proxima->load('tipo', 'productos_ofrecidos');
             $nueva = false;
-            
+
         }
-        else{
+        else {
 
             $prospecto->load('proxima_actividad.tipo');
             $nueva = $prospecto->proxima_actividad;
@@ -1381,7 +1440,7 @@ class ProspectosController extends Controller
                 $nueva->productos_ofrecidos()->attach($ofrecido['id']);
             }
             */
-            $nueva->load('productos_ofrecidos','tipo');
+            $nueva->load('productos_ofrecidos', 'tipo');
             $proxima = false;
 
         }
@@ -1428,8 +1487,11 @@ class ProspectosController extends Controller
         $tipos = ProspectoTipoActividad::all();
         //cargar prospecto
         $prospecto->load([
-            'cliente', 'actividades.tipo', 'actividades.productos_ofrecidos',
-            'proxima_actividad.tipo', 'proxima_actividad.productos_ofrecidos'
+            'cliente',
+            'actividades.tipo',
+            'actividades.productos_ofrecidos',
+            'proxima_actividad.tipo',
+            'proxima_actividad.productos_ofrecidos'
         ]);
 
         //dd($prospecto);
@@ -1445,8 +1507,12 @@ class ProspectosController extends Controller
         ];
 
         return response()->json([
-            'success' => true, "error"     => false,
-            'proxima' => $proxima, 'nueva' => $nueva, 'tipos' => $tipos, 'prospecto' =>  $prospecto
+            'success'   => true,
+            "error"     => false,
+            'proxima'   => $proxima,
+            'nueva'     => $nueva,
+            'tipos'     => $tipos,
+            'prospecto' => $prospecto
         ], 200);
     }
 
@@ -1478,8 +1544,8 @@ class ProspectosController extends Controller
     private function getDatosFacturacion($cliente_id)
     {
         $prospectos = Prospecto::with('cotizaciones')->where('cliente_id', $cliente_id)->get();
-        $cliente1   = Cliente::where('id', $cliente_id)->first();
-        $datos      = [];
+        $cliente1 = Cliente::where('id', $cliente_id)->first();
+        $datos = [];
 
         foreach ($prospectos as $prospecto) {
             $datos2 = $prospecto->cotizaciones->reduce(function ($rfcs, $cotizacion) {
@@ -1528,11 +1594,16 @@ class ProspectosController extends Controller
     {
         $proyectos = Prospecto::all();
         $prospecto->load(
-            ['cotizaciones' => function ($query) {
-                $query->orderBy('fecha', 'asc');
-            }, 'cotizaciones.entradas.descripciones', 'cotizaciones.proyecto_aprobado', 'cotizaciones.entradas.producto' => function ($query) {
-                $query->withTrashed()->with('proveedor.contactos', 'descripciones', 'descripciones.descripcionNombre');
-            }],
+            [
+                'cotizaciones'                   => function ($query) {
+                    $query->orderBy('fecha', 'asc');
+                },
+                'cotizaciones.entradas.descripciones',
+                'cotizaciones.proyecto_aprobado',
+                'cotizaciones.entradas.producto' => function ($query) {
+                    $query->withTrashed()->with('proveedor.contactos', 'descripciones', 'descripciones.descripcionNombre');
+                }
+            ],
             'cliente.contactos.emails',
             'cliente.datos_facturacion',
             'cotizaciones.cuentaCobrar',
@@ -1545,20 +1616,21 @@ class ProspectosController extends Controller
                 $producto->ficha_tecnica = asset('storage/' . $producto->ficha_tecnica);
             }
         }
-        $condiciones     = CondicionCotizacion::all();
-        $observaciones   = ObservacionCotizacion::all();
+        $condiciones = CondicionCotizacion::all();
+        $observaciones = ObservacionCotizacion::all();
         $unidades_medida = UnidadMedida::orderBy('simbolo')->get();
         //$unidades_medida = UnidadMedida::with('conversiones')->orderBy('simbolo')->get();
         if (auth()->user()->can('editar numero cotizacion')) {
             $numero_siguiente = ProspectoCotizacion::select('id')->orderBy('id', 'desc')->first()->id + 1;
-        } else {
+        }
+        else {
             $numero_siguiente = 0;
         }
         $rfcs = $this->getDatosFacturacion($prospecto->cliente_id);
 
         if ($prospecto->cliente->datos_facturacion->count() > 0) {
             $rfcs_cat = $prospecto->cliente->datos_facturacion->reduce(function ($carry, $key) {
-                $carry[$key->rfc]  = ($key) ? $key->toArray() : [];
+                $carry[$key->rfc] = ($key) ? $key->toArray() : [];
                 return $carry;
             }, []);
             $rfcs = array_merge($rfcs, $rfcs_cat);
@@ -1654,7 +1726,8 @@ class ProspectosController extends Controller
             'numero_siguiente',
             'direcciones',
             'vendedores'
-        ));
+        )
+        );
     }
 
     /**
@@ -1686,7 +1759,9 @@ class ProspectosController extends Controller
         if ($validator->fails()) {
             $errors = $validator->errors()->all();
             return response()->json([
-                "success" => false, "error" => true, "message" => $errors[0],
+                "success" => false,
+                "error"   => true,
+                "message" => $errors[0],
             ], 422);
         }
 
@@ -1697,15 +1772,15 @@ class ProspectosController extends Controller
         if (!empty($datos_facturacion)) {
 
             $datos_facturacion->update([
-                'rfc' => $request->rfc,
+                'rfc'          => $request->rfc,
                 'razon_social' => $request->razon_social,
-                'calle' => $request->calle,
-                'nexterior' => $request->nexterior,
-                'ninterior' => $request->ninterior,
-                'colonia' => $request->colonia,
-                'cp' => $request->cp,
-                'ciudad' => $request->ciudad,
-                'estado' => $request->estado,
+                'calle'        => $request->calle,
+                'nexterior'    => $request->nexterior,
+                'ninterior'    => $request->ninterior,
+                'colonia'      => $request->colonia,
+                'cp'           => $request->cp,
+                'ciudad'       => $request->ciudad,
+                'estado'       => $request->estado,
             ]);
         }
 
@@ -1719,18 +1794,20 @@ class ProspectosController extends Controller
         }
 
         $create['user_id'] = $user->id;
-        $create['fecha']   = date('Y-m-d');
+        $create['fecha'] = date('Y-m-d');
         if ($request->condicion['id'] == 0) { //nueva condicion, dar de alta
-            $condicion              = CondicionCotizacion::create(['nombre' => $request->condicion['nombre']]);
+            $condicion = CondicionCotizacion::create(['nombre' => $request->condicion['nombre']]);
             $create['condicion_id'] = $condicion->id;
-        } else {
+        }
+        else {
             $create['condicion_id'] = $request->condicion['id'];
         }
 
         if ($request->iva == "1") {
-            $create['iva']   = bcmul($create['subtotal'], 0.16, 2);
+            $create['iva'] = bcmul($create['subtotal'], 0.16, 2);
             $create['total'] = bcmul($create['subtotal'], 1.16, 2);
-        } else {
+        }
+        else {
             $create['total'] = $create['subtotal'];
         }
         $observaciones = "<ul>";
@@ -1757,7 +1834,7 @@ class ProspectosController extends Controller
             }
 
             if ($entrada['fotos']) { //hay fotos
-                $fotos     = "";
+                $fotos = "";
                 $separador = "";
                 foreach ($entrada['fotos'] as $foto_index => $foto) {
                     if (!is_string($foto)) {
@@ -1769,17 +1846,20 @@ class ProspectosController extends Controller
                         $ruta = str_replace('public/', '', $ruta);
                         $fotos .= $separador . $ruta;
                         $separador = "|";
-                    } else {
+                    }
+                    else {
                         $fotos .= $separador . strstr($foto, "cotizaciones/");
                     }
                 }
                 $entrada['fotos'] = $fotos;
-            } else if ($producto->foto) {
+            }
+            else if ($producto->foto) {
                 $extencion = pathinfo(asset($producto->foto), PATHINFO_EXTENSION);
-                $ruta      = "cotizaciones/" . $cotizacion->id . "/entrada_" . ($index + 1) . "_foto_1." . $extencion;
+                $ruta = "cotizaciones/" . $cotizacion->id . "/entrada_" . ($index + 1) . "_foto_1." . $extencion;
                 Storage::copy("public/" . $producto->foto, "public/$ruta");
                 $entrada['fotos'] = $ruta;
-            } else {
+            }
+            else {
                 $entrada['fotos'] = "";
             }
 
@@ -1788,14 +1868,14 @@ class ProspectosController extends Controller
             }
 
             $entrada['cotizacion_id'] = $cotizacion->id;
-            $observaciones            = "<ul>";
+            $observaciones = "<ul>";
             foreach ($entrada['observaciones'] as $obs) {
                 $observaciones .= "<li>$obs</li>";
             }
             $observaciones .= "</ul>";
             $entrada['observaciones'] = ($observaciones == "<ul><li></li></ul>") ? "" : $observaciones;
-            $entrada['orden']         = $index + 1;
-            $modelo_entrada           = ProspectoCotizacionEntrada::create($entrada);
+            $entrada['orden'] = $index + 1;
+            $modelo_entrada = ProspectoCotizacionEntrada::create($entrada);
 
             foreach ($entrada['descripciones'] as $descripcion) {
                 $descripcion['entrada_id'] = $modelo_entrada->id;
@@ -1821,25 +1901,37 @@ class ProspectosController extends Controller
         );
         if ($cotizacion->user->firma) {
             $cotizacion->user->firma = storage_path('app/public/' . $cotizacion->user->firma);
-        } else {
+        }
+        else {
             $cotizacion->user->firma = public_path('images/firma_vacia.png');
         }
 
         //crear pdf de cotizacion
-        $url   = 'cotizaciones/' . $cotizacion->id . '/C ' . $cotizacion->numero . ' Intercorp.pdf';
+        $url = 'cotizaciones/' . $cotizacion->id . '/C ' . $cotizacion->numero . ' Intercorp.pdf';
         $meses = [
-            'ENERO', 'FEBRERO', 'MARZO', 'ABRIL', 'MAYO', 'JUNIO', 'JULIO',
-            'AGOSTO', 'SEPTIEMBRE', 'OCTUBRE', 'NOVIEMBRE', 'DICIEMBRE',
+            'ENERO',
+            'FEBRERO',
+            'MARZO',
+            'ABRIL',
+            'MAYO',
+            'JUNIO',
+            'JULIO',
+            'AGOSTO',
+            'SEPTIEMBRE',
+            'OCTUBRE',
+            'NOVIEMBRE',
+            'DICIEMBRE',
         ];
         list($ano, $mes, $dia) = explode('-', $cotizacion->fecha);
-        $mes                   = $meses[+$mes - 1];
-        $cotizacion->fechaPDF  = "$mes $dia, $ano";
+        $mes = $meses[+$mes - 1];
+        $cotizacion->fechaPDF = "$mes $dia, $ano";
         if ($cotizacion->idioma == 'español') {
             $nombre = "nombre";
-            $view   = 'prospectos.cotizacionPDF';
-        } else {
+            $view = 'prospectos.cotizacionPDF';
+        }
+        else {
             $nombre = "name";
-            $view   = 'prospectos.cotizacionPDFIngles';
+            $view = 'prospectos.cotizacionPDFIngles';
         }
 
         $cotizacionPDF = PDF::loadView($view, compact('cotizacion', 'nombre'));
@@ -1899,7 +1991,9 @@ class ProspectosController extends Controller
         if ($validator->fails()) {
             $errors = $validator->errors()->all();
             return response()->json([
-                "success" => false, "error" => true, "message" => $errors[0],
+                "success" => false,
+                "error"   => true,
+                "message" => $errors[0],
             ], 422);
         }
 
@@ -1909,15 +2003,15 @@ class ProspectosController extends Controller
 
         if (!empty($datos_facturacion)) {
             $datos_facturacion->update([
-                'rfc' => $request->rfc,
+                'rfc'          => $request->rfc,
                 'razon_social' => $request->razon_social,
-                'calle' => $request->calle,
-                'nexterior' => $request->nexterior,
-                'ninterior' => $request->ninterior,
-                'colonia' => $request->colonia,
-                'cp' => $request->cp,
-                'ciudad' => $request->ciudad,
-                'estado' => $request->estado,
+                'calle'        => $request->calle,
+                'nexterior'    => $request->nexterior,
+                'ninterior'    => $request->ninterior,
+                'colonia'      => $request->colonia,
+                'cp'           => $request->cp,
+                'ciudad'       => $request->ciudad,
+                'estado'       => $request->estado,
             ]);
         }
 
@@ -1931,18 +2025,20 @@ class ProspectosController extends Controller
         }
 
         $update['user_id'] = $user->id;
-        $update['fecha']   = date('D-M-Y');
+        $update['fecha'] = date('D-M-Y');
         if ($request->condicion['id'] == 0) { //nueva condicion, dar de alta
-            $condicion              = CondicionCotizacion::create(['nombre' => $request->condicion['nombre']]);
+            $condicion = CondicionCotizacion::create(['nombre' => $request->condicion['nombre']]);
             $update['condicion_id'] = $condicion->id;
-        } else {
+        }
+        else {
             $update['condicion_id'] = $request->condicion['id'];
         }
 
         if ($request->iva == "1") {
-            $update['iva']   = bcmul($update['subtotal'], 0.16, 2);
+            $update['iva'] = bcmul($update['subtotal'], 0.16, 2);
             $update['total'] = bcmul($update['subtotal'], 1.16, 2);
-        } else {
+        }
+        else {
             $update['total'] = $update['subtotal'];
         }
 
@@ -1964,19 +2060,22 @@ class ProspectosController extends Controller
             if (isset($entrada['borrar'])) {
                 ProspectoCotizacionEntrada::destroy($entrada['id']);
                 continue;
-            } else if (isset($entrada['id']) && isset($entrada['actualizar'])) {
+            }
+            else if (isset($entrada['id']) && isset($entrada['actualizar'])) {
                 //recuperar entrada para actualizar
                 $entradaGuardada = ProspectoCotizacionEntrada::find($entrada['id']);
                 unset($entrada['id']);
-            } else if (isset($entrada['id']) && !isset($entrada['actualizar'])) {
+            }
+            else if (isset($entrada['id']) && !isset($entrada['actualizar'])) {
                 continue;
-            } else if (!isset($entrada['id'])) {
+            }
+            else if (!isset($entrada['id'])) {
                 $entradaGuardada = false;
             }
 
             $producto = Producto::find($entrada['producto_id']);
             if ($entrada['fotos'] && !is_string($entrada['fotos'][0])) { //hay fotos
-                $fotos     = "";
+                $fotos = "";
                 $separador = "";
                 foreach ($entrada['fotos'] as $foto_index => $foto) {
                     //borrar archivo actual, si existe
@@ -1991,20 +2090,24 @@ class ProspectosController extends Controller
                     $separador = "|";
                 }
                 $entrada['fotos'] = $fotos;
-            } else if ($entradaGuardada && $entradaGuardada->producto_id == $producto->id) {
+            }
+            else if ($entradaGuardada && $entradaGuardada->producto_id == $producto->id) {
                 if ($entrada['fotos']) {
-                } else {
+                }
+                else {
                     $entrada['fotos'] = '';
                     $entradaGuardada->fotos = '';
                 }
                 unset($entrada['fotos']); //no se actualzan fotos
-            } else if ($producto->foto) {
+            }
+            else if ($producto->foto) {
                 $extencion = pathinfo(asset($producto->foto), PATHINFO_EXTENSION);
-                $ruta      = "cotizaciones/" . $cotizacion->id . "/entrada_" . ($index + 1) . "_foto_1." . $extencion;
+                $ruta = "cotizaciones/" . $cotizacion->id . "/entrada_" . ($index + 1) . "_foto_1." . $extencion;
                 Storage::disk('public')->delete($ruta); //borrar archivo actual, si existe
                 Storage::copy("public/" . $producto->foto, "public/$ruta");
                 $entrada['fotos'] = $ruta;
-            } else {
+            }
+            else {
                 $entrada['fotos'] = "";
             }
 
@@ -2013,7 +2116,7 @@ class ProspectosController extends Controller
             }
 
             $entrada['cotizacion_id'] = $cotizacion->id;
-            $observaciones            = "<ul>";
+            $observaciones = "<ul>";
             foreach ($entrada['observaciones'] as $obs) {
                 $observaciones .= "<li>$obs</li>";
             }
@@ -2032,7 +2135,8 @@ class ProspectosController extends Controller
 
                             if ($entradaDescripcion != null) {
                                 $entradaDescripcion->update(['valor' => $descripcion['valor']]);
-                            } else {
+                            }
+                            else {
                                 $descripcion['entrada_id'] = $entrada->id;
                                 if (is_null($descripcion['nombre'])) {
                                     $descripcion['nombre'] = $descripcion['name'];
@@ -2046,7 +2150,8 @@ class ProspectosController extends Controller
                             }
                         }
                     }
-                } else {
+                }
+                else {
                     $entradaGuardada->load('descripciones');
                     foreach ($entradaGuardada->descripciones as $desc) {
                         $desc->delete();
@@ -2067,7 +2172,8 @@ class ProspectosController extends Controller
                     }
                 }
                 $entradaGuardada->update($entrada);
-            } else {
+            }
+            else {
                 $modelo_entrada = ProspectoCotizacionEntrada::create($entrada);
                 foreach ($entrada['descripciones'] as $descripcion) {
                     $descripcion['entrada_id'] = $modelo_entrada->id;
@@ -2086,11 +2192,12 @@ class ProspectosController extends Controller
 
 
         //recalculate subtotal
-        $update['subtotal']   = round($cotizacion->entradas()->sum('importe'), 2);
+        $update['subtotal'] = round($cotizacion->entradas()->sum('importe'), 2);
         if ($request->iva == "1") {
-            $update['iva']   = bcmul($update['subtotal'], 0.16, 2);
+            $update['iva'] = bcmul($update['subtotal'], 0.16, 2);
             $update['total'] = bcmul($update['subtotal'], 1.16, 2);
-        } else {
+        }
+        else {
             $update['total'] = $update['subtotal'];
         }
         $cotizacion->update($update);
@@ -2105,25 +2212,37 @@ class ProspectosController extends Controller
         );
         if ($cotizacion->user->firma) {
             $cotizacion->user->firma = storage_path('app/public/' . $cotizacion->user->firma);
-        } else {
+        }
+        else {
             $cotizacion->user->firma = public_path('images/firma_vacia.png');
         }
 
         //crear pdf de cotizacion
-        $url   = 'cotizaciones/' . $cotizacion->id . '/C ' . $cotizacion->numero . ' Intercorp.pdf';
+        $url = 'cotizaciones/' . $cotizacion->id . '/C ' . $cotizacion->numero . ' Intercorp.pdf';
         $meses = [
-            'ENERO', 'FEBRERO', 'MARZO', 'ABRIL', 'MAYO', 'JUNIO', 'JULIO',
-            'AGOSTO', 'SEPTIEMBRE', 'OCTUBRE', 'NOVIEMBRE', 'DICIEMBRE',
+            'ENERO',
+            'FEBRERO',
+            'MARZO',
+            'ABRIL',
+            'MAYO',
+            'JUNIO',
+            'JULIO',
+            'AGOSTO',
+            'SEPTIEMBRE',
+            'OCTUBRE',
+            'NOVIEMBRE',
+            'DICIEMBRE',
         ];
         list($ano, $mes, $dia) = explode('-', $cotizacion->fecha);
-        $mes                   = $meses[+$mes - 1];
-        $cotizacion->fechaPDF  = "$mes $dia, $ano";
+        $mes = $meses[+$mes - 1];
+        $cotizacion->fechaPDF = "$mes $dia, $ano";
         if ($cotizacion->idioma == 'español') {
             $nombre = "nombre";
-            $view   = 'prospectos.cotizacionPDF';
-        } else {
+            $view = 'prospectos.cotizacionPDF';
+        }
+        else {
             $nombre = "name";
-            $view   = 'prospectos.cotizacionPDFIngles';
+            $view = 'prospectos.cotizacionPDFIngles';
         }
 
         $cotizacionPDF = PDF::loadView($view, compact('cotizacion', 'nombre'));
@@ -2169,19 +2288,20 @@ class ProspectosController extends Controller
         if ($validator->fails()) {
             $errors = $validator->errors()->all();
             return response()->json([
-                "success" => false, "error" => true, "message" => $errors[0],
+                "success" => false,
+                "error"   => true,
+                "message" => $errors[0],
             ], 422);
         }
 
         $cotizacion = ProspectoCotizacion::with('entradas', 'prospecto')->findOrFail($request->cotizacion_id);
-        $email      = $request->email;
+        $email = $request->email;
         // $pdf_name = basename($cotizacion->archivo);
         $pdf_name = 'C ' . $cotizacion->numero . ' Robinson ' . $cotizacion->prospecto->nombre . '.pdf';
-        $pdf      = Storage::disk('public')->get($cotizacion->archivo);
-        $user     = auth()->user();
+        $pdf = Storage::disk('public')->get($cotizacion->archivo);
+        $user = auth()->user();
 
-        Mail::send('email', ['mensaje' => $request->mensaje], function ($message)
-        use ($email, $pdf, $pdf_name, $user) {
+        Mail::send('email', ['mensaje' => $request->mensaje], function ($message) use ($email, $pdf, $pdf_name, $user) {
             $message->to($email)
                 ->cc('abraham@intercorp.mx')
                 ->replyTo($user->email, $user->name)
@@ -2197,13 +2317,14 @@ class ProspectosController extends Controller
 
     private function registrarActividadDeCotizacionEnviada($cotizacion)
     {
-        $pdf_link  = asset('storage/' . $cotizacion->archivo);
+        $pdf_link = asset('storage/' . $cotizacion->archivo);
         $prospecto = Prospecto::with('proxima_actividad')->find($cotizacion->prospecto_id);
 
         if (!is_null($prospecto->proxima_actividad)) {
             if ($prospecto->proxima_actividad->tipo_id == 4) { //Cotización enviada
                 $nueva = 3; //Email (Seguimiento)
-            } else {
+            }
+            else {
                 $nueva = $prospecto->proxima_actividad->tipo_id;
             }
 
@@ -2227,10 +2348,12 @@ class ProspectosController extends Controller
                 'fecha'        => date('d/m/Y'),
             ];
             ProspectoActividad::create($create);
-        } else {
+        }
+        else {
             $create = [
                 'prospecto_id' => $prospecto->id,
-                'tipo_id'      => 4, //Cotización enviada
+                'tipo_id'      => 4,
+                //Cotización enviada
                 'fecha'        => date('d/m/Y'),
                 'descripcion'  => $pdf_link,
                 'realizada'    => 1,
@@ -2254,15 +2377,17 @@ class ProspectosController extends Controller
     public function aceptarCotizacion(Request $request, Prospecto $prospecto)
     {
         $validator = Validator::make($request->all(), [
-            'cotizacion_id' => 'required',
-            'comprobante'   => 'required|file|mimes:jpeg,jpg,png,pdf',
-            'fecha_comprobante'   => 'required',
+            'cotizacion_id'     => 'required',
+            'comprobante'       => 'required|file|mimes:jpeg,jpg,png,pdf',
+            'fecha_comprobante' => 'required',
         ]);
 
         if ($validator->fails()) {
             $errors = $validator->errors()->all();
             return response()->json([
-                "success" => false, "error" => true, "message" => $errors[0],
+                "success" => false,
+                "error"   => true,
+                "message" => $errors[0],
             ], 422);
         }
 
@@ -2296,7 +2421,7 @@ class ProspectosController extends Controller
             'total'                    => $cotizacion->total,
             'pendiente'                => $cotizacion->total,
             'comprobante_confirmacion' => '',
-            'fecha_comprobante' => '',
+            'fecha_comprobante'        => '',
         ];
 
         $comprobante = Storage::putFileAs(
@@ -2304,7 +2429,7 @@ class ProspectosController extends Controller
             $request->comprobante,
             'comprobante_confirmacion.' . $request->comprobante->guessExtension()
         );
-        $comprobante                        = str_replace('public/', '', $comprobante);
+        $comprobante = str_replace('public/', '', $comprobante);
         $create['comprobante_confirmacion'] = $comprobante;
         $create['fecha_comprobante'] = $request->fecha_comprobante;
 
@@ -2341,7 +2466,9 @@ class ProspectosController extends Controller
         if ($validator->fails()) {
             $errors = $validator->errors()->all();
             return response()->json([
-                "success" => false, "error" => true, "message" => $errors[0],
+                "success" => false,
+                "error"   => true,
+                "message" => $errors[0],
             ], 422);
         }
 
@@ -2351,18 +2478,19 @@ class ProspectosController extends Controller
         return response()->json(['success' => true, 'error' => false], 200);
     }
 
-
     public function copiarCotizacion(Request $request, Prospecto $prospecto)
     {
         $validator = Validator::make($request->all(), [
             'cotizacion_id' => 'required',
-            'proyecto_id'       => 'required',
+            'proyecto_id'   => 'required',
         ]);
 
         if ($validator->fails()) {
             $errors = $validator->errors()->all();
             return response()->json([
-                "success" => false, "error" => true, "message" => $errors[0],
+                "success" => false,
+                "error"   => true,
+                "message" => $errors[0],
             ], 422);
         }
         $proyecto = Prospecto::findOrFail($request->proyecto_id);
@@ -2370,66 +2498,69 @@ class ProspectosController extends Controller
         $numero_siguiente = ProspectoCotizacion::select('id')->orderBy('id', 'desc')->first()->id + 1;
 
         $cotizacion_nueva = ProspectoCotizacion::create([
-            'prospecto_id' => $request->proyecto_id,
-            'fecha'      => $cotizacion->fecha,
-            'subtotal'        => $cotizacion->subtotal,
-            'iva' => $cotizacion->iva,
-            'total'   => $cotizacion->total,
+            'prospecto_id'  => $request->proyecto_id,
+            'fecha'         => $cotizacion->fecha,
+            'subtotal'      => $cotizacion->subtotal,
+            'iva'           => $cotizacion->iva,
+            'total'         => $cotizacion->total,
             'observaciones' => $cotizacion->observaciones,
-            'entrega' => $cotizacion->entrega,
-            'planos' => $cotizacion->planos, //
-            'factibilidad' => $cotizacion->factibilidad, //
-            'moneda' => $cotizacion->moneda,
-            'lugar' => $cotizacion->lugar,
-            'condicion_id' => $cotizacion->condicion_id,
-            'user_id' => $cotizacion->user_id,
-            'numero' => $numero_siguiente,
-            'fotos' => $cotizacion->fotos,
+            'entrega'       => $cotizacion->entrega,
+            'planos'        => $cotizacion->planos,
+            //
+            'factibilidad'  => $cotizacion->factibilidad,
+            //
+            'moneda'        => $cotizacion->moneda,
+            'lugar'         => $cotizacion->lugar,
+            'condicion_id'  => $cotizacion->condicion_id,
+            'user_id'       => $cotizacion->user_id,
+            'numero'        => $numero_siguiente,
+            'fotos'         => $cotizacion->fotos,
         ]);
 
         foreach ($cotizacion->entradas as $key => $entrada) {
 
             if ($entrada['fotos']) { //hay fotos
-                $fotos     = "";
+                $fotos = "";
                 $separador = "";
                 foreach ($entrada['fotos'] as $foto_index => $foto) {
                     $extencion = pathinfo(asset($foto), PATHINFO_EXTENSION);
                     $rutafoto = explode('storage', $foto);
                     $rutafoto = $rutafoto[1];
-                    $ruta      = "cotizaciones/" . $cotizacion_nueva->id . "/entrada_" . ($key + 1) . "_foto_1." . $extencion;
+                    $ruta = "cotizaciones/" . $cotizacion_nueva->id . "/entrada_" . ($key + 1) . "_foto_1." . $extencion;
                     Storage::copy("public/" . $rutafoto, "public/$ruta");
 
                     $fotos .= $separador . $ruta;
                     $separador = "|";
                 }
-            } else {
+            }
+            else {
                 $fotos = "";
             }
 
             $entrada_nueva = ProspectoCotizacionEntrada::create([
-                'cotizacion_id' => $cotizacion_nueva->id,
-                'producto_id'      => $entrada->producto_id,
-                'cantidad'        => $entrada->cantidad,
-                'medida'  => $entrada->medida,
-                'precio'    => $entrada->precio,
-                'importe' => $entrada->importe,
-                'fotos' => $fotos,
-                'observaciones' => $entrada->observaciones,
-                'orden' => $entrada->orden,
-                'precio_compra' => $entrada->precio_compra,
-                'fecha_precio_compra' => $entrada->fecha_precio_compra,
+                'cotizacion_id'         => $cotizacion_nueva->id,
+                'producto_id'           => $entrada->producto_id,
+                'cantidad'              => $entrada->cantidad,
+                'medida'                => $entrada->medida,
+                'precio'                => $entrada->precio,
+                'importe'               => $entrada->importe,
+                'fotos'                 => $fotos,
+                'observaciones'         => $entrada->observaciones,
+                'orden'                 => $entrada->orden,
+                'precio_compra'         => $entrada->precio_compra,
+                'fecha_precio_compra'   => $entrada->fecha_precio_compra,
                 'proveedor_contacto_id' => $entrada->proveedor_contacto_id,
-                'medida_compra' => $entrada->medida_compra,
+                'medida_compra'         => $entrada->medida_compra,
                 'soporte_precio_compra' => $entrada->soporte_precio_compra,
-                'moneda_referencia' => $entrada->moneda_referencia,
+                'moneda_referencia'     => $entrada->moneda_referencia,
             ]);
             foreach ($entrada->descripciones as $key => $descripcion) {
                 $descripcion_nueva = ProspectoCotizacionEntradaDescripcion::create([
-                    'entrada_id' => $entrada_nueva->id,
-                    'nombre'      => $descripcion->nombre,
-                    'name'        => $descripcion->name,
-                    'valor'  => $descripcion->valor,
-                    'valor_ingles'    => $descripcion->valor_ingles,
+                    'entrada_id'   => $entrada_nueva->id,
+                    'nombre'       => $descripcion->nombre,
+                    'name'         => $descripcion->name,
+                    'valor'        => $descripcion->valor,
+                    'valor_ingles' => $descripcion->valor_ingles,
                 ]);
             }
         }
@@ -2460,25 +2591,37 @@ class ProspectosController extends Controller
         )->find($request->cotizacion_id);
         if ($cotizacion->user->firma) {
             $cotizacion->user->firma = storage_path('app/public/' . $cotizacion->user->firma);
-        } else {
+        }
+        else {
             $cotizacion->user->firma = public_path('images/firma_vacia.png');
         }
 
-        $url   = 'cotizaciones/' . $cotizacion->id . '/C ' . $cotizacion->id . ' Intercorp.pdf';
+        $url = 'cotizaciones/' . $cotizacion->id . '/C ' . $cotizacion->id . ' Intercorp.pdf';
         $meses = [
-            'ENERO', 'FEBRERO', 'MARZO', 'ABRIL', 'MAYO', 'JUNIO', 'JULIO',
-            'AGOSTO', 'SEPTIEMBRE', 'OCTUBRE', 'NOVIEMBRE', 'DICIEMBRE',
+            'ENERO',
+            'FEBRERO',
+            'MARZO',
+            'ABRIL',
+            'MAYO',
+            'JUNIO',
+            'JULIO',
+            'AGOSTO',
+            'SEPTIEMBRE',
+            'OCTUBRE',
+            'NOVIEMBRE',
+            'DICIEMBRE',
         ];
         list($ano, $mes, $dia) = explode('-', $cotizacion->fecha);
-        $mes                   = $meses[+$mes - 1];
-        $cotizacion->fechaPDF  = "$mes $dia, $ano";
+        $mes = $meses[+$mes - 1];
+        $cotizacion->fechaPDF = "$mes $dia, $ano";
 
         if ($cotizacion->idioma == 'español') {
             $nombre = "nombre";
-            $view   = 'prospectos.cotizacionPDF';
-        } else {
+            $view = 'prospectos.cotizacionPDF';
+        }
+        else {
             $nombre = "name";
-            $view   = 'prospectos.cotizacionPDFIngles';
+            $view = 'prospectos.cotizacionPDFIngles';
         }
 
         // return view('prospectos.cotizacionPDF', compact('cotizacion', 'nombre'));
@@ -2510,9 +2653,11 @@ class ProspectosController extends Controller
     public function actualizarActividades()
     {
         $prospectos = Prospecto::has('cotizaciones')
-            ->with(['cotizaciones' => function ($query) {
-                $query->orderBy('fecha', 'desc');
-            }], 'actividades')->get();
+            ->with([
+                'cotizaciones' => function ($query) {
+                    $query->orderBy('fecha', 'desc');
+                }
+            ], 'actividades')->get();
 
         foreach ($prospectos as $prospecto) {
             ProspectoActividad::create([
