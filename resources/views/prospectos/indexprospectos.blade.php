@@ -71,7 +71,7 @@
               @endrole
 -->
             </div>
-            <div class="p-10 " style="display:inline-block;float: right;">
+            {{-- <div class="p-10 " style="display:inline-block;float: right;">
               @can('Prospectos nuevo')
                 <button @click="modalNuevaCotizacion=true;" class="btn btn-warning btn-sm btn">
                     <a href="#modalNuevaCotizacion" style="color:#000;">
@@ -79,7 +79,7 @@
                     </a>
                 </button>
               @endcan
-            </div>
+            </div> --}}
             <br><br><br>
             <div class="p-10 " style="display:inline-block;float: right;">
               <a href="#myModal" role="button" class="btn btn-warning btn-sm btn" data-toggle="modal" style="color:#000">
@@ -1016,8 +1016,6 @@ const app = new Vue({
           var vend_id = {!! json_encode($disenador_id) !!};
           window.location.href = '/prospectos/'+prospecto_id+'/disenador/'+vend_id +'/anio/'+this.anio+'/editar';
         }
-        
-       
       },
       */
       convertirenproyecto(prospecto, index){
