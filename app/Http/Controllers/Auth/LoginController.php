@@ -42,4 +42,12 @@ class LoginController extends Controller
     {
         return response()->json(['guest' => Auth::guest()]);
     }
+
+    public function getAuthUser()
+    {
+        if (Auth::user()) {
+            return view('auth.login');
+        }
+        return redirect('/dashboard');
+    }
 }
