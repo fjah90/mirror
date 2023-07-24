@@ -21,22 +21,26 @@
     "datatables.net-rowreorder-dt": "^1.2.5",
     "jquery": "^3.3.1",
     "jszip": "^3.1.5",
-    "laravel-mix": "^1.2.1",
-    "pdfmake": "^0.1.36",
+    "laravel-mix": "^4.1.4",
+    "pdfmake": "^0.2.7",
     "resolve-url-loader": "^2.3.1",
     "sass": "^1.15.2",
-    "sass-loader": "^7.1.0",
+    "sass-loader": "^7.3.1",
     "sweetalert2": "^7.26.11",
     "tinymce": "^4.9.2",
     "uiv": "^0.25.1",
     "vue": "^2.5.17",
     "vue-phone-number-input": "^0.2.0",
     "vue-template-compiler": "^2.5.17",
-    "vue-the-mask": "^0.11.1"
+    "vue-the-mask": "^0.11.1",
+    "webpack": "^4.0.0",
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^3.11.3"
   },
   "dependencies": {
     "imagemin": "^6.0.0",
     "object-to-formdata": "^1.6.2",
-    "select2": "^4.0.6-rc.1"
+    "select2": "^4.0.6-rc.1",
+    "vue-hot-reload-api": "^2.3.4"
   }
 }

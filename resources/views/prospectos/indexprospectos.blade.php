@@ -934,7 +934,7 @@ const app = new Vue({
                   type: "success"
               });
               this.tarea.tarea = '';
-              this.tarea.id = '';   
+              this.tarea.id = '';
               this.tarea.vendedor_id = '';
               this.tarea.director_id = '';
               this.tarea.status = 'Pendiente';
@@ -994,8 +994,7 @@ const app = new Vue({
       },
       /*
       clickver(prospecto_id){
-        var rol = {!! json_encode(auth()->user()->roles[0]->name) !!}; 
-      
+        var rol = {!! json_encode(auth()->user()->roles[0]->name) !!};
         if( rol == 'Administrador' ||  rol == 'Dirección'){
           window.location.href = '/prospectos/'+prospecto_id+'/disenador/'+this.usuarioCargado+'/anio/'+this.anio;
         }
@@ -1003,12 +1002,9 @@ const app = new Vue({
           var vend_id = {!! json_encode($disenador_id) !!};
           window.location.href = '/prospectos/'+prospecto_id+'/disenador/'+vend_id +'/anio/'+this.anio;
         }
-        
-       
       },
-      clickeditar(prospecto_id){
-        var rol = {!! json_encode(auth()->user()->roles[0]->name) !!}; 
-      
+      clickeditar(prospecto_id)
+        var rol = {!! json_encode(auth()->user()->roles[0]->name) !!};
         if( rol == 'Administrador' ||  rol == 'Dirección'){
           window.location.href = '/prospectos/'+prospecto_id+'/disenador/'+this.usuarioCargado+'/anio/'+this.anio+'/editar';
         }

@@ -14,7 +14,7 @@ class ProspectoCotizacion extends Model
     protected $fillable = ['prospecto_id', 'condicion_id', 'fecha', 'subtotal', 'iva',
         'total', 'observaciones', 'notas', 'archivo', 'entrega', 'lugar', 'moneda', 'facturar',
         'user_id', 'idioma', 'aceptada', 'notas2', 'numero', 'rfc', 'razon_social', 'calle',
-        'nexterior', 'ninterior', 'colonia', 'cp', 'ciudad', 'estado', 'fletes', 'cliente_contacto_id',
+        'nexterior', 'ninterior', 'colonia', 'cp', 'ciudad', 'estado', 'fletes', 'ubicacion', 'cliente_contacto_id',
         'direccion', 'dircalle', 'dirnexterior', 'dirninterior', 'dircolonia', 'dircp', 'dirciudad', 'direstado',
         'contacto_email', 'contacto_telefono', 'contacto_nombre','instrucciones','enviar_a','documentacion','factibilidad','vendedor_id'
     ];

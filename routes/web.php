@@ -214,6 +214,17 @@ Route::middleware('auth')->group(function () {
         Route::post('/reportes/utilidades/pdf', 'ReportesController@utilidadespdf');
         Route::post('/reportes/utilidades/excel', 'ReportesController@utilidadesexcel');
 
+        //Cotizar Direccto
+        Route::get('/prospectos/cotizar-directo', 'ProspectosController@directo')->name('prospectos.directo');
+
+        // Crud Notas
+        Route::get('/notas', 'NotaController@index')->name('notas.index');
+        Route::get('/notas/create', 'NotaController@create')->name('notas.create');
+        Route::post('/notas', 'NotaController@store')->name('notas.store');
+        Route::get('/notas/{id}', 'NotaController@show')->name('notas.show');
+        Route::get('/notas/{id}/edit', 'NotaController@edit')->name('notas.edit');
+        Route::put('/notas/{id}', 'NotaController@update')->name('notas.update');
+        Route::delete('/notas/{id}', 'NotaController@destroy')->name('notas.destroy');
     });
 
     Route::get('/gethistorialtarea/{tarea}', 'TareasController@gethistorial')->name('tareas.gethistorial');
@@ -296,5 +307,18 @@ Route::middleware('auth')->group(function () {
     Route::post('/ordenes-proceso/{orden}/frontera', 'OrdenesProcesoController@frontera');
     Route::post('/ordenes-proceso/{orden}/aduana', 'OrdenesProcesoController@aduana');
     Route::post('/ordenes-proceso/{orden}/entrega', 'OrdenesProcesoController@entrega');
+
+    //Cotizar Directo
+    // Route::get('/prospectos/cotizar-directo', 'ProspectosController@directo')->name('prospectos.directo');
+
+    // Crud Notas
+    // Route::resource('/productos', 'ProductosController');
+    Route::get('/notas', 'NotasController@index')->name('notas.index');
+    Route::get('/notas/create', 'NotasController@create')->name('notas.create');
+    Route::post('/notas', 'NotasController@store')->name('notas.store');
+    Route::get('/notas/{id}', 'NotasController@show')->name('notas.show');
+    Route::get('/notas/{id}/editar', 'NotasController@edit')->name('notas.edit');
+    Route::put('/notas/{id}', 'NotasController@update')->name('notas.update');
+    Route::delete('/notas/{id}', 'NotasController@destroy')->name('notas.destroy');
 
 });

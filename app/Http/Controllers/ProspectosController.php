@@ -19,6 +19,7 @@ use App\Models\OrdenCompra;
 use App\Models\OrdenProceso;
 use App\Models\Vendedor;
 use App\Models\Tarea;
+use App\Models\Nota;
 use App\Models\Notificacion;
 use App\Models\UnidadMedida;
 use Carbon\Carbon;
@@ -892,30 +893,32 @@ class ProspectosController extends Controller
 
     public function listadoprospectos(Request $request)
     {
+        $anio = Carbon::parse($request->anio);
+        $inicio = $anio->startOfYear();
 
-        if ($request->anio == '2019-12-31') {
-            $inicio = Carbon::parse('2019-01-01');
-        }
-        elseif ($request->anio == '2020-12-31') {
-            $inicio = Carbon::parse('2020-01-01');
-        }
-        elseif ($request->anio == '2022-12-31') {
-            $inicio = Carbon::parse('2022-01-01');
-        }
-        elseif ($request->anio == '2023-12-31') {
-            $inicio = Carbon::parse('2023-01-01');
-        }
-        elseif ($request->anio == '2024-12-31') {
-            $inicio = Carbon::parse('2024-01-01');
-        }
-        else {
-            $inicio = Carbon::parse('2021-01-01');
-        }
+        // die($inicio);
+        // if ($request->anio == '2019-12-31') {
+        //     $inicio = Carbon::parse('2019-01-01');
+        // }
+        // elseif ($request->anio == '2020-12-31') {
+        //     $inicio = Carbon::parse('2020-01-01');
+        // }
+        // elseif ($request->anio == '2022-12-31') {
+        //     $inicio = Carbon::parse('2022-01-01');
+        // }
+        // elseif ($request->anio == '2023-12-31') {
+        //     $inicio = Carbon::parse('2023-01-01');
+        // }
+        // elseif ($request->anio == '2024-12-31') {
+        //     $inicio = Carbon::parse('2024-01-01');
+        // }
+        // else {
+        //     $inicio = Carbon::parse('2021-01-01');
+        // }
 
         if ($request->id == 'Todos') {
             $tareas = Tarea::with('vendedor')->get();
             if ($request->anio == 'Todos') {
-
 
                 $prospectos = Prospecto::leftjoin('prospectos_actividades', 'prospectos.id', '=', 'prospectos_actividades.prospecto_id')
                     ->leftjoin('prospectos_tipos_actividades', 'prospectos_actividades.tipo_id', '=', 'prospectos_tipos_actividades.id')
@@ -930,7 +933,6 @@ class ProspectosController extends Controller
             }
             else {
                 $anio = Carbon::parse($request->anio);
-
                 $prospectos = Prospecto::leftjoin('prospectos_actividades', 'prospectos.id', '=', 'prospectos_actividades.prospecto_id')
                     ->leftjoin('prospectos_tipos_actividades', 'prospectos_actividades.tipo_id', '=', 'prospectos_tipos_actividades.id')
                     ->leftjoin('users', 'prospectos.user_id', '=', 'users.id')
@@ -939,10 +941,8 @@ class ProspectosController extends Controller
                     ->select('vendedores.nombre as vendedor', 'prospectos.*', 'users.name as usuario', 'clientes.nombre as cliente', 'prospectos_tipos_actividades.nombre as actividad', 'prospectos_actividades.fecha as fecha')
                     ->where('prospectos_actividades.realizada', false)
                     ->where('prospectos.es_prospecto', 'si')
-                    ->whereBetween('prospectos.created_at', [$inicio, $anio])
+                    ->whereBetween('prospectos_actividades.fecha', [$inicio, $anio])
                     ->get();
-
-
             }
         }
         else {
@@ -972,12 +972,11 @@ class ProspectosController extends Controller
                     ->where('prospectos_actividades.realizada', false)
                     ->where('prospectos.es_prospecto', 'si')
                     ->where('prospectos.vendedor_id', $request->id)
-                    ->whereBetween('prospectos.created_at', [$inicio, $anio])
+                    ->whereBetween('prospectos_actividades.fecha', [$inicio, $anio])
                     ->get();
             }
         }
         $total = number_format($prospectos->sum('proyeccion_venta'), 2, '.', ',');
-
 
         return response()->json(['success' => true, "error" => false, 'prospectos' => $prospectos, 'tareas' => $tareas, 'total' => $total], 200);
     }
@@ -1593,6 +1592,7 @@ class ProspectosController extends Controller
     public function cotizar(Prospecto $prospecto)
     {
         $proyectos = Prospecto::all();
+        $notasPreCargadas = Nota::all();
         $prospecto->load(
             [
                 'cotizaciones'                   => function ($query) {
@@ -1715,18 +1715,21 @@ class ProspectosController extends Controller
         exit;*/
         $vendedores = Vendedor::all();
 
-        return view('prospectos.cotizar', compact(
-            'proyectos',
-            'prospecto',
-            'productos',
-            'condiciones',
-            'observaciones',
-            'unidades_medida',
-            'rfcs',
-            'numero_siguiente',
-            'direcciones',
-            'vendedores'
-        )
+        return view(
+            'prospectos.cotizar',
+            compact(
+                'proyectos',
+                'prospecto',
+                'productos',
+                'condiciones',
+                'observaciones',
+                'unidades_medida',
+                'rfcs',
+                'numero_siguiente',
+                'direcciones',
+                'vendedores',
+                'notasPreCargadas'
+            )
         );
     }
 
