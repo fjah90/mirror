@@ -930,7 +930,8 @@ class ProspectosController extends Controller
                     ->where('prospectos.es_prospecto', 'si')
                     ->get();
 
-            } else {
+            }
+            else {
                 $anio = Carbon::parse($request->anio);
                 $prospectos = Prospecto::leftjoin('prospectos_actividades', 'prospectos.id', '=', 'prospectos_actividades.prospecto_id')
                     ->leftjoin('prospectos_tipos_actividades', 'prospectos_actividades.tipo_id', '=', 'prospectos_tipos_actividades.id')
@@ -943,7 +944,8 @@ class ProspectosController extends Controller
                     ->whereBetween('prospectos_actividades.fecha', [$inicio, $anio])
                     ->get();
             }
-        } else {
+        }
+        else {
 
             $tareas = Tarea::with('vendedor')->where('vendedor_id', $request->id)->get();
             if ($request->anio == 'Todos') {
@@ -958,7 +960,8 @@ class ProspectosController extends Controller
                     ->where('prospectos.es_prospecto', 'si')
                     ->where('prospectos.vendedor_id', $request->id)
                     ->get();
-            } else {
+            }
+            else {
                 $anio = Carbon::parse($request->anio);
                 $prospectos = Prospecto::leftjoin('prospectos_actividades', 'prospectos.id', '=', 'prospectos_actividades.prospecto_id')
                     ->leftjoin('prospectos_tipos_actividades', 'prospectos_actividades.tipo_id', '=', 'prospectos_tipos_actividades.id')
@@ -1712,19 +1715,21 @@ class ProspectosController extends Controller
         exit;*/
         $vendedores = Vendedor::all();
 
-        return view('prospectos.cotizar', compact(
-            'proyectos',
-            'prospecto',
-            'productos',
-            'condiciones',
-            'observaciones',
-            'unidades_medida',
-            'rfcs',
-            'numero_siguiente',
-            'direcciones',
-            'vendedores', 
-            'notasPreCargadas',
-        )
+        return view(
+            'prospectos.cotizar',
+            compact(
+                'proyectos',
+                'prospecto',
+                'productos',
+                'condiciones',
+                'observaciones',
+                'unidades_medida',
+                'rfcs',
+                'numero_siguiente',
+                'direcciones',
+                'vendedores',
+                'notasPreCargadas'
+            )
         );
     }
 
