@@ -313,11 +313,11 @@ Route::middleware('auth')->group(function () {
 
     // Crud Notas
     // Route::resource('/productos', 'ProductosController');
-    Route::get('/notas', 'NotasController@index');
+    Route::get('/notas', 'NotasController@index')->name('notas.index');
     Route::get('/notas/create', 'NotasController@create')->name('notas.create');
     Route::post('/notas', 'NotasController@store')->name('notas.store');
     Route::get('/notas/{id}', 'NotasController@show')->name('notas.show');
-    Route::get('/notas/{id}/edit', 'NotasController@edit')->name('notas.edit');
+    Route::get('/notas/{id}/editar', 'NotasController@edit')->name('notas.edit');
     Route::put('/notas/{id}', 'NotasController@update')->name('notas.update');
     Route::delete('/notas/{id}', 'NotasController@destroy')->name('notas.destroy');
 

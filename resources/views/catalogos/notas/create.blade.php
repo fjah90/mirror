@@ -16,41 +16,95 @@
 {{-- Page content --}}
 
 @section('content')
-    <div class="container">
+    <!-- Content Header (Page header) -->
+    <section class="content-header" style="background-color:#12160F; color:#B68911;">
+        <h1>Notas</h1>
+    </section>
+    <!-- Main content -->
+    <section class="content" id="content">
         <div class="row">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header">Crear nota</div>
-
-                    <div class="card-body">
-                        <form action="{{ route('notas.store') }}" method="POST">
-                            @csrf
-
+            <div class="col-lg-12">
+                <div class="panel ">
+                    <div class="panel-heading" style="background-color:#12160F; color:#B68911;">
+                        <h3 class="panel-title">Nuevo Nota</h3>
+                    </div>
+                    <div class="panel-body">
+                        <form @submit.prevent="guardar()" enctype="multipart/form-data">
                             <div class="form-group">
                                 <label for="titulo">Título</label>
-                                <input type="text" name="titulo" id="titulo"
-                                    class="form-control @error('titulo') is-invalid @enderror" value="{{ old('titulo') }}"
-                                    required>
-                                @error('titulo')
-                                    <span class="invalid-feedback">{{ $titulo }}</span>
-                                @enderror
+                                <input type="text" class="form-control" id="titulo" name="titulo"
+                                    v-model="nota.titulo" required>
                             </div>
 
                             <div class="form-group">
                                 <label for="contenido">Contenido</label>
-                                <textarea name="contenido" id="contenido" class="form-control @error('contenido') is-invalid @enderror" rows="5"
-                                    required>{{ old('contenido') }}</textarea>
-                                @error('contenido')
-                                    <span class="invalid-feedback">{{ $contenido }}</span>
-                                @enderror
+                                <textarea class="form-control" id="contenido" name="contenido" v-model="nota.contenido" rows="5" required></textarea>
                             </div>
 
-                            <button type="submit" class="btn btn-primary">Crear</button>
-                            <a href="{{ route('notas.index') }}" class="btn btn-secondary">Cancelar</a>
+                            <button type="submit" class="btn btn-primary">Crear nota</button>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-@endsection
+
+    </section>
+    <!-- /.content -->
+@stop
+
+{{-- footer_scripts --}}
+@section('footer_scripts')
+
+    <script>
+        /* beautify ignore:start */
+        const app = new Vue({
+            el: '#content',
+            data: {
+              nota: {
+                titulo: '',
+                contenido: ''
+              },
+              cargando: false,
+
+            },
+            mounted(){
+
+            },
+            methods: {
+              guardar(){
+                var formData = objectToFormData(this.nota, {indices:true});
+                console.log(formData)
+                this.cargando = true;
+                axios.post('/notas', formData, {
+                  headers: { 'Content-Type': 'multipart/form-data'}
+                })
+                .then(({data}) => {
+                  this.cargando = false;
+                  swal({
+                    title: "Nota Guardada",
+                    text: "",
+                    type: "success"
+                  }).then(()=>{
+                    if(this.is_iframe){
+                      parent.postMessage({message:"OK", tipo:"nota", object: data.nota}, "*")
+                      window.location = "/notas/crear";
+                    }else{
+                      window.location = "/notas";
+                    }     
+                  });
+                })
+                .catch(({response}) => {
+                  console.error(response);
+                  this.cargando = false;
+                  swal({
+                    title: "Error",
+                    text: response.data.message || "Ocurrio un error inesperado, intente mas tarde",
+                    type: "error"
+                  });
+                });
+              },
+            }
+        });
+        /* beautify ignore:end */
+    </script>
+@stop

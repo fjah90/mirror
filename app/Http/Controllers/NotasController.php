@@ -28,16 +28,16 @@ class NotasController extends Controller
      */
     public function index()
     {
-        dd(Nota::all());
-        // $notas = Nota::all();
+        // dd(Nota::all());
+        $notas = Nota::all();
         // return view('catalogos.notas.index', compact('notas'));
 
-        $notas = Cache::remember('notas', 60, function () {
-            return Nota::all();
-        });
+        // $notas = Cache::remember('notas', 60, function () {
+        //     return Nota::all();
+        // });
 
-        $notas = Cache::get('notas');
-
+        // $notas = Cache::get('notas');
+        // dd($notas);
         $view = view('catalogos.notas.index', compact('notas'));
 
         return response($view);
@@ -61,14 +61,24 @@ class NotasController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $request->validate([
-            'titulo'    => 'required|max:255',
+        $request->validate([
+            'titulo'    => 'required',
             'contenido' => 'required',
+        ], [
+            'titulo.required'    => 'El título es obligatorio',
+            'contenido.required' => 'El contenido es obligatorio',
         ]);
 
-        Nota::create($data);
 
-        return redirect()->route('catalogos.notas.index')->with('success', 'Nota creada correctamente.');
+        $nota = new Nota([
+            'titulo'    => $request->input('titulo'),
+            'contenido' => $request->input('contenido'),
+        ]);
+        $nota->save();
+
+        // return response()->json(['nota' => $nota]);
+        return response()->json(['success' => true, "error" => false, "nota" => $nota], 200);
+
     }
 
     /**
@@ -93,7 +103,7 @@ class NotasController extends Controller
     public function edit($id)
     {
         $nota = Nota::findOrFail($id);
-
+        // dd($nota);
         return view('catalogos.notas.edit', compact('nota'));
     }
 
