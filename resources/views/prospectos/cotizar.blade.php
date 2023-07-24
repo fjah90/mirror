@@ -128,11 +128,11 @@
                                                 </td>
                                                 <td class="text-right">
                                                     <!--
-                                                                                    <button class="btn btn-xs btn-default" title="Notas"
-                                                                                            @click="notas.cotizacion_id=cotizacion.id;notas.mensaje=cotizacion.notas2;openNotas=true;">
-                                                                                        <i class="far fa-sticky-note"></i>
-                                                                                    </button>
-                                                                                    -->
+                                                                                                                    <button class="btn btn-xs btn-default" title="Notas"
+                                                                                                                            @click="notas.cotizacion_id=cotizacion.id;notas.mensaje=cotizacion.notas2;openNotas=true;">
+                                                                                                                        <i class="far fa-sticky-note"></i>
+                                                                                                                    </button>
+                                                                                                                    -->
                                                     <a class="btn btn-xs btn-success" title="PDF"
                                                         :href="cotizacion.archivo"
                                                         :download="'C ' + cotizacion.numero + ' Robinson' + prospecto.cliente
@@ -140,28 +140,29 @@
                                                         <i class="far fa-file-pdf"></i>
                                                     </a>
                                                     <!--
-                                                                                    <button class="btn btn-xs btn-info" title="Enviar"
-                                                                                            @click="enviar.cotizacion_id=cotizacion.id; enviar.numero=cotizacion.numero; openEnviar=true;">
-                                                                                        <i class="far fa-envelope"></i>
-                                                                                    </button>
-                                                                                    <a v-if="cotizacion.aceptada" class="btn btn-xs text-primary"
-                                                                                       title="Comprobante Confirmación"
-                                                                                       :href="cotizacion
-                                                                                           .comprobante_confirmacion"
-                                                                                       target="_blank">
-                                                                                        <i class="fas fa-user-check"></i>
-                                                                                    </a>
+                                                                                                                    <button class="btn btn-xs btn-info" title="Enviar"
+                                                                                                                            @click="enviar.cotizacion_id=cotizacion.id; enviar.numero=cotizacion.numero; openEnviar=true;">
+                                                                                                                        <i class="far fa-envelope"></i>
+                                                                                                                    </button>
+                                                                                                                    <a v-if="cotizacion.aceptada" class="btn btn-xs text-primary"
+                                                                                                                       title="Comprobante Confirmación"
+                                                                                                                       :href="cotizacion
+                                                                                                                           .comprobante_confirmacion"
+                                                                                                                       target="_blank">
+                                                                                                                        <i class="fas fa-user-check"></i>
+                                                                                                                    </a>
 
-                                                                                    <a v-if="cotizacion.aceptada" class="btn btn-xs text-warning"
-                                                                                   title="Orden Compra"
-                                                                                   :href="'/proyectos-aprobados/' + cotizacion
-                                                                                       .proyecto_aprobado
-                                                                                       .id +
-                                                                                       '/ordenes-compra'"
-                                                                                   target="_blank">
-                                                                                    <i class="fas fa-arrow-up"></i>
-                                                                                    </a>
-                                                                                    -->
+                                                                                                                    <a v-if="cotizacion.aceptada" class="btn btn-xs text-warning"
+                                                                                                                   title="Orden Compra"
+                                                                                                                   :href="'/proyectos-aprobados/' +
+                                                                                                                   cotizacion
+                                                                                                                       .proyecto_aprobado
+                                                                                                                       .id +
+                                                                                                                       '/ordenes-compra'"
+                                                                                                                   target="_blank">
+                                                                                                                    <i class="fas fa-arrow-up"></i>
+                                                                                                                    </a>
+                                                                                                                    -->
 
                                                     <template v-else>
                                                         <button class="btn btn-xs btn-warning" title="Editar"
@@ -169,11 +170,11 @@
                                                             <i class="fas fa-pencil-alt"></i>
                                                         </button>
                                                         <!--
-                                                                                        <button class="btn btn-xs btn-primary" title="Aceptar"
-                                                                                                @click="aceptar.cotizacion_id=cotizacion.id; openAceptar=true;">
-                                                                                            <i class="fas fa-user-check"></i>
-                                                                                        </button>
-                                                                                        -->
+                                                                                                                        <button class="btn btn-xs btn-primary" title="Aceptar"
+                                                                                                                                @click="aceptar.cotizacion_id=cotizacion.id; openAceptar=true;">
+                                                                                                                            <i class="fas fa-user-check"></i>
+                                                                                                                        </button>
+                                                                                                                        -->
                                                         @role('Administrador')
                                                             <button class="btn btn-xs btn-danger" title="Eliminar"
                                                                 @click="borrar(index, cotizacion)">
@@ -182,15 +183,15 @@
                                                         @endrole
                                                     </template>
                                                     <!--
-                                                                                    <button class="btn btn-xs btn-white" title="Copiar"
-                                                                                            @click="copiar(index, cotizacion)">
-                                                                                        <i class="far fa-copy"></i>
-                                                                                    </button>
-                                                                                    <button class="btn btn-xs btn-green" title="Copiar a otro proyecto"
-                                                                                            @click="copiar2(index, cotizacion); openCopiar=true ">
-                                                                                        <i class="far fa-copy"></i>
-                                                                                    </button>
-                                                                                    -->
+                                                                                                                    <button class="btn btn-xs btn-white" title="Copiar"
+                                                                                                                            @click="copiar(index, cotizacion)">
+                                                                                                                        <i class="far fa-copy"></i>
+                                                                                                                    </button>
+                                                                                                                    <button class="btn btn-xs btn-green" title="Copiar a otro proyecto"
+                                                                                                                            @click="copiar2(index, cotizacion); openCopiar=true ">
+                                                                                                                        <i class="far fa-copy"></i>
+                                                                                                                    </button>
+                                                                                                                    -->
 
                                                 </td>
                                             </tr>
@@ -301,10 +302,10 @@
 
                                     <label class="control-label">Colonia</label>
                                     <!--
-                                                                        <select class="form-control" name="colonia" v-model="cotizacion.colonia" text-uppercase required>
-                                                                            <option v-for="(colonia,index) in colonias" v-bind:value="colonia">@{{ colonia }}</option>
-                                                                        </select>
-                                                                        -->
+                                                                                                        <select class="form-control" name="colonia" v-model="cotizacion.colonia" text-uppercase required>
+                                                                                                            <option v-for="(colonia,index) in colonias" v-bind:value="colonia">@{{ colonia }}</option>
+                                                                                                        </select>
+                                                                                                        -->
 
                                     <input type="text" name="colonia" class="form-control text-uppercase"
                                         v-model="cotizacion.colonia" />
@@ -370,10 +371,10 @@
 
                                     <label class="control-label">Colonia</label>
                                     <!--
-                                                                        <select class="form-control" name="colonia" v-model="cotizacion.dircolonia" text-uppercase required>
-                                                                            <option v-for="(colonia,index) in colonias2" v-bind:value="colonia">@{{ colonia }}</option>
-                                                                        </select>
-                                                                        -->
+                                                                                                        <select class="form-control" name="colonia" v-model="cotizacion.dircolonia" text-uppercase required>
+                                                                                                            <option v-for="(colonia,index) in colonias2" v-bind:value="colonia">@{{ colonia }}</option>
+                                                                                                        </select>
+                                                                                                        -->
                                     <input type="text" name="colonia" class="form-control text-uppercase"
                                         v-model="cotizacion.dircolonia" />
 
@@ -626,7 +627,7 @@
                                     <div class="form-group">
                                         <label class="control-label">Precio</label>
                                         <input type="number" step="0.01" min="0.01" name="precio"
-                                            class="form-control" v-model="entrada.precio" required />
+                                            class="form-control" v-model="entrada.producto.precio" required />
                                     </div>
                                 </div>
                             </div>
@@ -644,7 +645,7 @@
                                         <label class="control-label">Precio de Compra</label>
                                         <input type="number" step="0.01" min="0.01" name="precio_compra"
                                                class="form-control"
-                                               v-model="entrada.precio_compra"/>
+                                               v-model="entrada.producto.precio_compra"/>
                                     </div>
                                 </div>
                                 <div class="col-md-2">
@@ -866,9 +867,21 @@
                         </div> --}}
                         <div class="row">
                             <div class="col-md-12">
+                                <div class="form-group col-md-4 p-0">
+                                    <label class="control-label">Selecione una Nota</label>
+                                    <br />
+                                    <select name="notasPreCargadas_id" v-model="notasPreCargadas.cId"
+                                        class="form-control" id="notas-select" style="width: 300px;"
+                                        @change="cargarNota()">
+                                        @foreach ($notasPreCargadas as $nota)
+                                            <option value="{{ $nota->id }}">{{ $nota->titulo }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
                                 <div class="form-group">
                                     <label class="control-label text-danger">Notas</label>
-                                    <textarea class="form-control" name="notas" rows="3" cols="80" v-model="cotizacion.notas"></textarea>
+                                    <textarea id="notas" class="form-control" name="notas" rows="3" cols="80"
+                                        v-model="cotizacion.notas"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -1098,6 +1111,7 @@
         const app = new Vue({
             el: '#content',
             data: {
+                'notasPreCargadas': {!! json_encode($notasPreCargadas) !!},
                 fechaActual: new Date().toLocaleDateString(),
                 colonias: [],
                 colonias2: [],
@@ -1239,6 +1253,7 @@
                 },
             },
             mounted() {
+                console.log(this.notasPreCargadas);
                 this.$refs.fechaActual = document.querySelector('#fechaActual');
                 this.actualizarFechaActual();
                 let self = this; // ámbito de vue
@@ -1580,7 +1595,7 @@
                             entrada.area,
                             entrada.producto.nombre,
                             entrada.cantidad + " " + entrada.medida,
-                            accounting.formatMoney(entrada.precio, "$", 2),
+                            accounting.formatMoney(entrada.producto.precio, "$", 2),
                             accounting.formatMoney(entrada.importe, "$", 2),
                         ];
                         row.push([
@@ -1693,7 +1708,6 @@
                     this.nuevaObservacionProducto = "";
                 },
                 seleccionarProduco(prod) {
-                    console.log(prod)
                     this.entrada.producto = prod;
                     this.entrada.descripciones = [];
                     prod.descripciones.forEach(function(desc) {
@@ -1743,7 +1757,7 @@
                     }
 
 
-                    this.entrada.importe = this.entrada.cantidad * this.entrada.precio;
+                    this.entrada.importe = this.entrada.cantidad * this.entrada.producto.precio;
                     this.cotizacion.subtotal += this.entrada.importe;
 
                     if (this.entrada.orden == 0)
@@ -2396,6 +2410,19 @@
                     this.$refs.fechaActual.innerHTML = fecha;
                     console.log(fecha)
                 },
+                cargarNota() {
+                    const notaId = this.notasPreCargadas.cId;
+
+                    for (const nota of this.notasPreCargadas) {
+                        if (nota.id.toString() === notaId) {
+                            this.notasPreCargadas.contenido = nota.contenido;
+                            break;
+                        }
+                    }
+
+                    this.cotizacion.notas = this.notasPreCargadas.contenido;
+
+                }
             }
         });
     </script>
