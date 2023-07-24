@@ -606,7 +606,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-2">
-                                    <div class="form-group">
+                                    <div class="form-group"> 
                                         <label class="control-label">Cantidad</label>
                                         <input type="number" step="0.01" min="0.01" name="cantidad"
                                             class="form-control" v-model="entrada.cantidad" required />
@@ -626,7 +626,7 @@
                                     <div class="form-group">
                                         <label class="control-label">Precio</label>
                                         <input type="number" step="0.01" min="0.01" name="precio"
-                                            class="form-control" v-model="entrada.precio" required />
+                                        class="form-control" v-model="entrada.producto.precio" required />
                                     </div>
                                 </div>
                             </div>
@@ -644,7 +644,7 @@
                                         <label class="control-label">Precio de Compra</label>
                                         <input type="number" step="0.01" min="0.01" name="precio_compra"
                                                class="form-control"
-                                               v-model="entrada.precio_compra"/>
+                                               v-model="entrada.producto.precio_compra"/>
                                     </div>
                                 </div>
                                 <div class="col-md-2">
@@ -1580,7 +1580,7 @@
                             entrada.area,
                             entrada.producto.nombre,
                             entrada.cantidad + " " + entrada.medida,
-                            accounting.formatMoney(entrada.precio, "$", 2),
+                            accounting.formatMoney(entrada.producto.precio, "$", 2),
                             accounting.formatMoney(entrada.importe, "$", 2),
                         ];
                         row.push([
@@ -1693,7 +1693,6 @@
                     this.nuevaObservacionProducto = "";
                 },
                 seleccionarProduco(prod) {
-                    console.log(prod)
                     this.entrada.producto = prod;
                     this.entrada.descripciones = [];
                     prod.descripciones.forEach(function(desc) {
@@ -1743,7 +1742,7 @@
                     }
 
 
-                    this.entrada.importe = this.entrada.cantidad * this.entrada.precio;
+                    this.entrada.importe = this.entrada.cantidad * this.entrada.producto.precio;
                     this.cotizacion.subtotal += this.entrada.importe;
 
                     if (this.entrada.orden == 0)
