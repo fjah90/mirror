@@ -19,6 +19,7 @@ use App\Models\OrdenCompra;
 use App\Models\OrdenProceso;
 use App\Models\Vendedor;
 use App\Models\Tarea;
+use App\Models\Nota;
 use App\Models\Notificacion;
 use App\Models\UnidadMedida;
 use Carbon\Carbon;
@@ -1588,6 +1589,7 @@ class ProspectosController extends Controller
     public function cotizar(Prospecto $prospecto)
     {
         $proyectos = Prospecto::all();
+        $notasPreCargadas = Nota::all();
         $prospecto->load(
             [
                 'cotizaciones'                   => function ($query) {
@@ -1720,7 +1722,8 @@ class ProspectosController extends Controller
             'rfcs',
             'numero_siguiente',
             'direcciones',
-            'vendedores'
+            'vendedores', 
+            'notasPreCargadas',
         )
         );
     }
