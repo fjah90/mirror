@@ -369,7 +369,20 @@ class ProspectosController extends Controller
             $tareas_pendientes = Tarea::where('director_id', auth()->user()->id)->where('status', 'Pendiente')->get();
         }
 
-        return view('prospectos.indexprospectos', compact('cotizaciones', 'usuarios', 'proyectos', 'estatus', 'vendedores', 'tareas', 'disenador_id', 'anio2', 'tareas_pendientes'));
+        return view(
+            'prospectos.indexprospectos',
+            compact(
+                'cotizaciones',
+                'usuarios',
+                'proyectos',
+                'estatus',
+                'vendedores',
+                'tareas',
+                'disenador_id',
+                'anio2',
+                'tareas_pendientes'
+            )
+        );
     }
 
     /**
@@ -576,7 +589,17 @@ class ProspectosController extends Controller
             $proximas_actividades = Prospecto::leftjoin('prospectos_actividades', 'prospectos_actividades.prospecto_id', '=', 'prospectos.id')
                 ->leftjoin('prospectos_tipos_actividades', 'prospectos_actividades.tipo_id', '=', 'prospectos_tipos_actividades.id')
                 ->leftjoin('vendedores', 'prospectos.vendedor_id', '=', 'vendedores.id')
-                ->select(DB::raw('CONCAT(prospectos.nombre , " - ", vendedores.nombre) AS title'), 'vendedores.nombre as vendedor', 'prospectos_tipos_actividades.nombre as description', 'prospectos_actividades.descripcion as texto', 'prospectos_actividades.fecha as start', 'vendedores.id as userId', 'vendedores.color as color', DB::raw('CONCAT("/prospectos/",prospectos.id,"/editar" ) AS liga'))
+                ->leftjoin('clientes', 'prospectos.cliente_id', '=', 'clientes.id')
+                ->select(
+                    DB::raw('CONCAT(prospectos.nombre , " - ", vendedores.nombre) AS title'),
+                    'vendedores.nombre as vendedor',
+                    'prospectos_tipos_actividades.nombre as description',
+                    'prospectos_actividades.descripcion as texto',
+                    'prospectos_actividades.fecha as start',
+                    'clientes.nombre as nombreCliente',
+                    'vendedores.id as userId',
+                    'vendedores.color as color', DB::raw('CONCAT("/prospectos/",prospectos.id,"/editar" ) AS liga')
+                )
                 ->where('prospectos_actividades.realizada', 0)
                 ->where('prospectos.vendedor_id', $vendedor->id)
                 ->get()->toArray();
@@ -587,7 +610,17 @@ class ProspectosController extends Controller
             $proximas_actividades = Prospecto::leftjoin('prospectos_actividades', 'prospectos_actividades.prospecto_id', '=', 'prospectos.id')
                 ->leftjoin('prospectos_tipos_actividades', 'prospectos_actividades.tipo_id', '=', 'prospectos_tipos_actividades.id')
                 ->leftjoin('vendedores', 'prospectos.vendedor_id', '=', 'vendedores.id')
-                ->select(DB::raw('CONCAT(prospectos.nombre , " - ", vendedores.nombre) AS title'), 'vendedores.nombre as vendedor', 'prospectos_tipos_actividades.nombre as description', 'prospectos_actividades.descripcion as texto', 'prospectos_actividades.fecha as start', 'vendedores.id as userId', 'vendedores.color as color', DB::raw('CONCAT("/prospectos/",prospectos.id,"/editar" ) AS liga'))
+                ->leftjoin('clientes', 'prospectos.cliente_id', '=', 'clientes.id')
+                ->select(
+                    DB::raw('CONCAT(prospectos.nombre , " - ", vendedores.nombre) AS title'),
+                    'vendedores.nombre as vendedor',
+                    'prospectos_tipos_actividades.nombre as description',
+                    'prospectos_actividades.descripcion as texto',
+                    'prospectos_actividades.fecha as start',
+                    'clientes.nombre as nombreCliente',
+                    'vendedores.id as userId',
+                    'vendedores.color as color', DB::raw('CONCAT("/prospectos/",prospectos.id,"/editar" ) AS liga')
+                )
                 ->where('prospectos_actividades.realizada', 0)
                 ->get()->toArray();
         }
@@ -1940,14 +1973,14 @@ class ProspectosController extends Controller
         $cotizacionPDF = PDF::loadView($view, compact('cotizacion', 'nombre'));
         Storage::disk('public')->put($url, $cotizacionPDF->output());
 
-        $pdf = new PDFMerger();
-        $pdf->addPDF(storage_path("app/public/$url"), 'all');
-        $fichas = array_unique($fichas, SORT_STRING);
-        foreach ($fichas as $ficha) {
-            $pdf->addPDF($ficha, 'all');
-        }
+        // $pdf = new PDFMerger();
+        // $pdf->addPDF(storage_path("app/public/$url"), 'all');
+        // $fichas = array_unique($fichas, SORT_STRING);
+        // foreach ($fichas as $ficha) {
+        //     $pdf->addPDF($ficha, 'all');
+        // }
 
-        $pdf->merge('file', storage_path("app/public/$url"));
+        // $pdf->merge('file', storage_path("app/public/$url"));
 
         unset($cotizacion->fechaPDF);
         $cotizacion->update(['archivo' => $url]);
