@@ -31,13 +31,13 @@
                     <div class="panel-body">
                         <form @submit.prevent="guardar()" enctype="multipart/form-data">
                             <div class="form-group">
-                                <label for="titulo">Título</label>
+                                <label for="titulo">Título *</label>
                                 <input type="text" class="form-control" id="titulo" name="titulo"
                                     v-model="nota.titulo" required>
                             </div>
 
                             <div class="form-group">
-                                <label for="contenido">Contenido</label>
+                                <label for="contenido">Contenido *</label>
                                 <textarea class="form-control" id="contenido" name="contenido" v-model="nota.contenido" rows="5" required></textarea>
                             </div>
 

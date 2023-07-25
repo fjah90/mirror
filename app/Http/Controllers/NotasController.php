@@ -116,15 +116,22 @@ class NotasController extends Controller
      */
     public function update(Request $request, $id)
     {
+
+        $titulo = $request->input('nota.titulo');
+        $contenido = $request->input('contenido');
+
+        // dd($request->all());
         $data = $request->validate([
             'titulo'    => 'required|max:255',
             'contenido' => 'required',
         ]);
 
         $nota = Nota::findOrFail($id);
+
+        // dd($nota);
         $nota->update($data);
 
-        return redirect()->route('catalogos.notas.index')->with('success', 'Nota actualizada correctamente.');
+        return redirect()->route('notas.index')->with('success', 'Nota actualizada correctamente.');
     }
 
     /**
@@ -138,6 +145,6 @@ class NotasController extends Controller
         $nota = Nota::findOrFail($id);
         $nota->delete();
 
-        return redirect()->route('catalogos.notas.index')->with('success', 'Nota eliminada correctamente.');
+        return redirect()->route('notas.index')->with('success', 'Nota eliminada correctamente.');
     }
 }
