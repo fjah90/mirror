@@ -72,8 +72,8 @@
             el: '#content',
             data: {
                 nota: {
-                    titulo: '{{ $nota->titulo }}',
-                    contenido: '{{ $nota->contenido }}',
+                    titulo:  {!! json_encode($nota->titulo) !!},
+                    contenido:  {!! json_encode($nota->contenido) !!},
                 },
                 cargando: false,
             },
