@@ -103,10 +103,13 @@ class NotasController extends Controller
     public function edit($id)
     {
         $nota = Nota::findOrFail($id);
-        // dd($nota);
+
+        // Codificar los caracteres especiales en las propiedades del objeto
+        $nota->titulo = htmlentities($nota->titulo, ENT_QUOTES);
+        $nota->descripcion = htmlentities($nota->descripcion, ENT_QUOTES);
+
         return view('catalogos.notas.edit', compact('nota'));
     }
-
     /**
      * Update the specified resource in storage.
      *

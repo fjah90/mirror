@@ -10,6 +10,9 @@
         .color_text {
             color: #B3B3B3;
         }
+        .h-auto{
+            height: auto !important;
+        }
     </style>
 @stop
 
@@ -36,7 +39,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="contenido">Contenido:</label>
-                                <span class="form-control">{{ $nota->contenido }}</span>
+                                <span class="form-control h-auto">{{ $nota->contenido }}</span>
                             </div>
 
                             <div class="row">
