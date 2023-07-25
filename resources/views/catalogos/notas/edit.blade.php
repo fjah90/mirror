@@ -31,12 +31,12 @@
                         <form class="" @submit.prevent="guardar()">
                             <div class="form-group">
                                 <label for="titulo">Título:</label>
-                                <input type="text" class="form-control" id="titulo" name="titulo"
-                                    value="{{ $nota->titulo }}">
+                                <input type="text" class="form-control" id="titulo" name="titulo" v-model="nota.titulo"
+                                    required>
                             </div>
                             <div class="form-group">
                                 <label for="contenido">Contenido:</label>
-                                <textarea class="form-control" id="contenido" name="contenido">{{ $nota->contenido }}</textarea>
+                                <textarea class="form-control" id="contenido" name="contenido" v-model="nota.contenido"></textarea>
                             </div>
 
                             <div class="row">
@@ -72,22 +72,19 @@
             el: '#content',
             data: {
                 nota: {
-                    titulo: '{{ $nota->titulo ?? '' }}',
-                    contenido: '{{ $nota->contenido ?? '' }}',
+                    titulo: '{{ $nota->titulo }}',
+                    contenido: '{{ $nota->contenido }}',
                 },
                 cargando: false,
             },
-            mounted() {
-
-            },
             methods: {
                 guardar() {
-                    var formData = objectToFormData(this.nota, {
+                    let formData = objectToFormData(this.nota, {
                         indices: true
                     });
-
+                    console.log(formData.get('titulo'));
                     this.cargando = true;
-                    axios.put('/notas/{{ $nota->id }}', formData, {
+                    axios.post('/notas/{{ $nota->id }}', formData, {
                             headers: {
                                 'Content-Type': 'multipart/form-data'
                             }
@@ -107,7 +104,6 @@
                         .catch(({
                             response
                         }) => {
-                            console.error(response);
                             this.cargando = false;
                             swal({
                                 title: "Error",
