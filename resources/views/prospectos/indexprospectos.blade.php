@@ -212,7 +212,7 @@
   <!-- Aceptar Modal -->
     <modal v-if="modalNuevaCotizacion" v-model="modalNuevaCotizacion" :title="'Nueva Cotización'" :footer="false">
         <div class="form-group">
-            <label class="control-label">Seleccione un proyecto</label>
+            <label class="control-label">Seleccione un proyecto *</label>
             <select name="proyecto_id" v-model="proyecto_id"
                         class="form-control" required id="proyecto-select" style="width: 300px;">
               @foreach($proyectos as $proyecto)
@@ -379,7 +379,7 @@
                     <option value="{{$vendedor->id}}">{{$vendedor->nombre}}</option>
                     @endforeach
                   </select>
-                    <label class="control-label">Status</label>
+                    <label class="control-label">Status *</label>
                     <select name="status" v-model="tarea.status"
                                 class="form-control" required id="proyecto-select" style="width: 300px;">
                           <option value="Pendiente">Pendiente</option>
@@ -407,7 +407,7 @@
                       <option value="{{$director->id}}">{{$director->name}}</option>
                       @endforeach
                     </select>
-                    <label class="control-label">Status</label>
+                    <label class="control-label">Status *</label>
                     <select name="status" v-model="tarea.status"
                                 class="form-control" required id="proyecto-select" style="width: 300px;">
                           <option value="Pendiente">Pendiente</option>
@@ -499,8 +499,10 @@
         <div class="modal-header">
             <h4 class="modal-title" id="titulo_evento">Modal title</h4>
           </div>
-          <div class="modal-body" id="descripcion_evento">
-            <p>Modal body text goes here.</p>
+          <div class="modal-body">
+            <p id="descripcion_cliente">Modal body text goes here.</p>
+            <p id="descripcion_evento">Modal body text goes here.</p>
+            <p id="descripcion_texto">Modal body text goes here.</p>
           </div>
           <a class="btn btn-xs btn-warning" title="Editar" href="" id="liga_evento">
               <i class="fas fa-pencil-alt"></i>
@@ -692,8 +694,11 @@ const app = new Vue({
           initialView: 'dayGridMonth',
           eventColor: '#800080',
           eventClick: function(info) {
+            console.log(info)
           document.getElementById("titulo_evento").innerHTML = info.event.title;
+          document.getElementById("descripcion_cliente").innerHTML = info.event.extendedProps.nombreCliente;
           document.getElementById("descripcion_evento").innerHTML = info.event.extendedProps.description;
+          document.getElementById("descripcion_texto").innerHTML = info.event.extendedProps.texto;
           document.getElementById("liga_evento").href=info.event.extendedProps.liga;
             vue.modalEventos = true;
           },
