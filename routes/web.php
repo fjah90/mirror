@@ -223,7 +223,7 @@ Route::middleware('auth')->group(function () {
         Route::post('/notas', 'NotaController@store')->name('notas.store');
         Route::get('/notas/{id}', 'NotaController@show')->name('notas.show');
         Route::get('/notas/{id}/edit', 'NotaController@edit')->name('notas.edit');
-        Route::put('/notas/{id}', 'NotaController@update')->name('notas.update');
+        Route::post('/notas/{id}', 'NotaController@update')->name('notas.update');
         Route::delete('/notas/{id}', 'NotaController@destroy')->name('notas.destroy');
     });
 
@@ -318,7 +318,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/notas', 'NotasController@store')->name('notas.store');
     Route::get('/notas/{id}', 'NotasController@show')->name('notas.show');
     Route::get('/notas/{id}/editar', 'NotasController@edit')->name('notas.edit');
-    Route::put('/notas/{id}', 'NotasController@update')->name('notas.update');
+    Route::post('/notas/{id}', 'NotasController@update')->name('notas.update');
     Route::delete('/notas/{id}', 'NotasController@destroy')->name('notas.destroy');
 
 });
