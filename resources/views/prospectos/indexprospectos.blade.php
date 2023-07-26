@@ -507,6 +507,8 @@
           <a class="btn btn-xs btn-warning" title="Editar" href="" id="liga_evento">
               <i class="fas fa-pencil-alt"></i>
           </a>
+          <p id="horario_texto"></p>
+
       <div class="form-group text-right">
           <button type="button" class="btn btn-default"
                   @click="modalEventos=false;">
@@ -699,6 +701,8 @@ const app = new Vue({
           document.getElementById("descripcion_cliente").innerHTML = info.event.extendedProps.nombreCliente;
           document.getElementById("descripcion_evento").innerHTML = info.event.extendedProps.description;
           document.getElementById("descripcion_texto").innerHTML = info.event.extendedProps.texto;
+          document.getElementById("horario_texto").innerHTML = info.event.extendedProps.horario != null ? "Horario: "+info.event.extendedProps.horario: "";
+          console.log(info.event.extendedProps.horario)
           document.getElementById("liga_evento").href=info.event.extendedProps.liga;
             vue.modalEventos = true;
           },

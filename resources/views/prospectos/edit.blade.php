@@ -12,6 +12,10 @@
             font-size: 10px;
             cursor: pointer;
         }
+
+        .w-140 {
+            width: 140px !important;
+        }
     </style>
 @stop
 
@@ -253,20 +257,20 @@
                                         </div>
                                     </div>
                                     <!--
-                      <div class="col-md-4">
-                        <div class="form-group">
-                          <label class="control-label">Fecha<strong style="color: grey"> *</strong></label>
-                          <span class="form-control">@{{ prospecto.proxima_actividad.fecha_formated }}</span>
-                        </div>
-                      </div>
-                      
-                      <div class="col-md-4">
-                        <div class="form-group">
-                          <label class="control-label">Tipo <strong style="color: grey"> *</strong></label>
-                          <span class="form-control">@{{ prospecto.proxima_actividad.tipo.nombre }}</span>
-                        </div>
-                      </div>
-                    -->
+                                                                      <div class="col-md-4">
+                                                                        <div class="form-group">
+                                                                          <label class="control-label">Fecha<strong style="color: grey"> *</strong></label>
+                                                                          <span class="form-control">@{{ prospecto.proxima_actividad.fecha_formated }}</span>
+                                                                        </div>
+                                                                      </div>
+                                                                      
+                                                                      <div class="col-md-4">
+                                                                        <div class="form-group">
+                                                                          <label class="control-label">Tipo <strong style="color: grey"> *</strong></label>
+                                                                          <span class="form-control">@{{ prospecto.proxima_actividad.tipo.nombre }}</span>
+                                                                        </div>
+                                                                      </div>
+                                                                    -->
                                 </div>
 
                                 <div class="row">
@@ -291,12 +295,12 @@
                                         </button>
                                     </div>
                                     <!--
-                      <div class="col-sm-2" style="padding-top: 25px;">
-                        <button type="button" class="btn btn-primary" @click="modalProducto=true">
-                          Registrar producto
-                        </button>
-                      </div>
-                       -->
+                                                                      <div class="col-sm-2" style="padding-top: 25px;">
+                                                                        <button type="button" class="btn btn-primary" @click="modalProducto=true">
+                                                                          Registrar producto
+                                                                        </button>
+                                                                      </div>
+                                                                       -->
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-12">
@@ -387,6 +391,37 @@
                                         <label class="control-label">Especifique</label>
                                         <input class="form-control" type="text" name="tipo"
                                             v-model="prospecto.nueva_proxima_actividad.tipo" required />
+                                    </div>
+                                </div>
+                                <div class="col-md-4"
+                                    v-if="prospecto.nueva_proxima_actividad.tipo_id==1 || prospecto.nueva_proxima_actividad.tipo_id==12 || prospecto.nueva_proxima_actividad.tipo_id==2 || prospecto.nueva_proxima_actividad.tipo_id==13">
+                                    <div class="form-group">
+                                        <label for="prospecto.nueva_proxima_actividad.horario"
+                                            class="control-label">Horario<strong style="color: grey"> *</strong></label>
+                                        <br />
+                                        {{-- <dropdown> --}}
+                                        <div class="input-group">
+                                            <div class="input-group-btn">
+                                                <btn class="dropdown-toggle" style="background-color:#000; color:#FFF;">
+                                                    <i class="fas fa-clock"></i>
+                                                </btn>
+                                            </div>
+                                            <input type="time" v-model="time_in" value="12:00"
+                                                class="form-control w-140">
+                                            <input type="time" v-model="time_out" value="12:00"
+                                                class="form-control w-140 ml-1"
+                                                @change="actualizarHorarioProximaActividad">
+                                            <input type="hidden" v-model="prospecto.nueva_proxima_actividad.horario"
+                                                value="" class="form-control w-140">
+                                            {{-- <input class="form-control" type="text" name="fecha" placeholder="13:14"
+                                                    readonly /> --}}
+                                        </div>
+                                        {{-- <template slot="dropdown">
+                                                <li>
+                                                    <time-picker v-model="prospecto.nueva_proxima_actividad.horario" />
+                                                </li>
+                                            </template> --}}
+                                        {{-- </dropdown> --}}
                                     </div>
                                 </div>
                             </div>
@@ -488,6 +523,8 @@
                 openCatalogo: false,
                 cargando: false,
                 modalProducto: false,
+                time_in: '',
+                time_out: ''
             },
             mounted() {
                 $("#tablaProductos").DataTable({
@@ -527,6 +564,25 @@
                 }, false);
             },
             methods: {
+                actualizarHorarioProximaActividad() {
+                    console.log('La hora seleccionada es time_in:', this.time_in);
+                    console.log('La hora seleccionada es time_out:', this.time_out);
+                    let setTime;
+                    if (this.time_in < this.time_out) {
+                        if (this.time_in && this.time_out) {
+                            this.prospecto.nueva_proxima_actividad.horario = this.time_in + "-" + this.time_out;;
+                        }
+                    } else {
+                        swal({
+                            title: "Error",
+                            text: "La por favor verificar el horario",
+                            type: "error"
+                        });
+                    }
+
+
+                    // Aquí puedes realizar cualquier acción que desees con el valor de la hora
+                },
                 formatoMoneda(numero) {
                     return accounting.formatMoney(numero, "$ ", 2);
                 },
@@ -592,6 +648,7 @@
                 }, //fin actualizar
                 guardar() {
                     this.cargando = true;
+                    console.log(this.prospecto.proxima_actividad)
                     axios.post('/prospectos/{{ $prospecto->id }}/guardarActividades', {
                             proxima: this.prospecto.proxima_actividad,
                             //nueva: this.prospecto.nueva_proxima_actividad,
@@ -636,6 +693,7 @@
                 },
                 guardar2() {
                     this.cargando = true;
+                    this.actualizarHorarioProximaActividad()
                     axios.post('/prospectos/{{ $prospecto->id }}/guardarActividades', {
 
                             nueva: this.prospecto.nueva_proxima_actividad,
@@ -677,4 +735,41 @@
             }
         });
     </script>
+    {{-- <script src="{{ asset('js/jquery.min.js') }}"></script>
+    <script src="{{ asset('js/clockpicker.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+            $('#hora').clockpicker({
+                donetext: 'Done',
+                placement: "bottom",
+                init: function() {
+                    console.log("colorpicker initiated");
+                },
+                beforeShow: function() {
+                    console.log("before show");
+                },
+                afterShow: function() {
+                    console.log("after show");
+                },
+                beforeHide: function() {
+                    console.log("before hide");
+                },
+                afterHide: function() {
+                    console.log("after hide");
+                },
+                beforeHourSelect: function() {
+                    console.log("before hour selected");
+                },
+                afterHourSelect: function() {
+                    console.log("after hour selected");
+                },
+                beforeDone: function() {
+                    console.log("before done");
+                },
+                afterDone: function() {
+                    console.log("after done");
+                }
+            });
+        });
+    </script> --}}
 @stop

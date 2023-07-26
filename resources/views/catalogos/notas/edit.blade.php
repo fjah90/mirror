@@ -36,7 +36,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="contenido">Contenido:</label>
-                                <textarea class="form-control" id="contenido" name="contenido" v-model="nota.contenido"></textarea>
+                                <textarea class="form-control" id="contenido" name="contenido" v-model="nota.contenido" rows="10"></textarea>
                             </div>
 
                             <div class="row">
