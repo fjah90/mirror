@@ -596,6 +596,7 @@ class ProspectosController extends Controller
                     'prospectos_tipos_actividades.nombre as description',
                     'prospectos_actividades.descripcion as texto',
                     'prospectos_actividades.fecha as start',
+                    'prospectos_actividades.horario as horario',
                     'clientes.nombre as nombreCliente',
                     'vendedores.id as userId',
                     'vendedores.color as color', DB::raw('CONCAT("/prospectos/",prospectos.id,"/editar" ) AS liga')
@@ -617,6 +618,7 @@ class ProspectosController extends Controller
                     'prospectos_tipos_actividades.nombre as description',
                     'prospectos_actividades.descripcion as texto',
                     'prospectos_actividades.fecha as start',
+                    'prospectos_actividades.horario as horario',
                     'clientes.nombre as nombreCliente',
                     'vendedores.id as userId',
                     'vendedores.color as color', DB::raw('CONCAT("/prospectos/",prospectos.id,"/editar" ) AS liga')
