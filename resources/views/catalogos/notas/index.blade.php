@@ -10,6 +10,15 @@
         .color_text {
             color: #B3B3B3;
         }
+
+        .ellipse {
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            line-height: 1.5;
+            text-align: justify;
+        }
     </style>
 @stop
 
@@ -61,7 +70,11 @@
                                     <tr v-for="(nota, index) in notas">
                                         <td>@{{ index + 1 }}</td>
                                         <td>@{{ nota.titulo }}</td>
-                                        <td>@{{ nota.contenido }}</td>
+                                        <td>
+                                            <p class="ellipse">
+                                                @{{ nota.contenido }}
+                                            </p>
+                                        </td>
                                         <td class="text-right col-md-3">
                                             <a class="btn btn-xs btn-info" data-toggle="tooltip" title="Ver"
                                                 :href="'/notas/' + nota.id">

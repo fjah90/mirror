@@ -25,7 +25,7 @@
             <div class="col-lg-12">
                 <div class="panel ">
                     <div class="panel-heading" style="background-color:#12160F; color:#B68911;">
-                        <h3 class="panel-title">Editar Notas</h3>
+                        <h3 class="panel-title">Notas #{{ $nota->id }}</h3>
                     </div>
                     <div class="panel-body">
                         <form class="" @submit.prevent="guardar()">
