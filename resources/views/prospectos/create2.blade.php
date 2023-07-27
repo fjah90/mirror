@@ -443,7 +443,7 @@
                     <thead>
                         <tr>
                             <th>ID</th>
-                            <th>Nombre</th>
+                            <th>Clave</th>
                             <th>Tipo</th>
                             <th></th>
                         </tr>

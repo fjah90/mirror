@@ -482,7 +482,7 @@
                     <thead>
                         <tr>
                             <th>ID</th>
-                            <th>Nombre</th>
+                            <th>Clave</th>
                             <th>Marca</th>
                             <th>Tipo</th>
                             <th></th>
