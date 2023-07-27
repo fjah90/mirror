@@ -256,21 +256,45 @@
                                             </select>
                                         </div>
                                     </div>
+                                    <div class="col-md-4"
+                                        v-if="prospecto.proxima_actividad.tipo_id==1 || prospecto.proxima_actividad.tipo_id==12 || prospecto.proxima_actividad.tipo_id==2 || prospecto.proxima_actividad.tipo_id==13">
+                                        <div class="form-group">
+                                            <label for="prospecto.proxima_actividad.horario"
+                                                class="control-label">Horario<strong style="color: grey">
+                                                    *</strong></label>
+                                            <br />
+                                            <div class="input-group">
+                                                <div class="input-group-btn">
+                                                    <btn class="dropdown-toggle"
+                                                        style="background-color:#000; color:#FFF;">
+                                                        <i class="fas fa-clock"></i>
+                                                    </btn>
+                                                </div>
+                                                <input type="time" v-model="time_in" value="12:00"
+                                                    class="form-control w-140">
+                                                <input type="time" v-model="time_out" value="12:00"
+                                                    class="form-control w-140 ml-1"
+                                                    @change="actualizarHorarioProximaActividad">
+                                                <input type="hidden" v-model="prospecto.proxima_actividad.horario"
+                                                    value="" class="form-control w-140">
+                                            </div>
+                                        </div>
+                                    </div>
                                     <!--
-                                                                      <div class="col-md-4">
-                                                                        <div class="form-group">
-                                                                          <label class="control-label">Fecha<strong style="color: grey"> *</strong></label>
-                                                                          <span class="form-control">@{{ prospecto.proxima_actividad.fecha_formated }}</span>
-                                                                        </div>
-                                                                      </div>
-                                                                      
-                                                                      <div class="col-md-4">
-                                                                        <div class="form-group">
-                                                                          <label class="control-label">Tipo <strong style="color: grey"> *</strong></label>
-                                                                          <span class="form-control">@{{ prospecto.proxima_actividad.tipo.nombre }}</span>
-                                                                        </div>
-                                                                      </div>
-                                                                    -->
+                                                                              <div class="col-md-4">
+                                                                                <div class="form-group">
+                                                                                  <label class="control-label">Fecha<strong style="color: grey"> *</strong></label>
+                                                                                  <span class="form-control">@{{ prospecto.proxima_actividad.fecha_formated }}</span>
+                                                                                </div>
+                                                                              </div>
+                                                                              
+                                                                              <div class="col-md-4">
+                                                                                <div class="form-group">
+                                                                                  <label class="control-label">Tipo <strong style="color: grey"> *</strong></label>
+                                                                                  <span class="form-control">@{{ prospecto.proxima_actividad.tipo.nombre }}</span>
+                                                                                </div>
+                                                                              </div>
+                                                                            -->
                                 </div>
 
                                 <div class="row">
@@ -295,12 +319,12 @@
                                         </button>
                                     </div>
                                     <!--
-                                                                      <div class="col-sm-2" style="padding-top: 25px;">
-                                                                        <button type="button" class="btn btn-primary" @click="modalProducto=true">
-                                                                          Registrar producto
-                                                                        </button>
-                                                                      </div>
-                                                                       -->
+                                                                              <div class="col-sm-2" style="padding-top: 25px;">
+                                                                                <button type="button" class="btn btn-primary" @click="modalProducto=true">
+                                                                                  Registrar producto
+                                                                                </button>
+                                                                              </div>
+                                                                               -->
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-12">
@@ -399,29 +423,20 @@
                                         <label for="prospecto.nueva_proxima_actividad.horario"
                                             class="control-label">Horario<strong style="color: grey"> *</strong></label>
                                         <br />
-                                        {{-- <dropdown> --}}
                                         <div class="input-group">
                                             <div class="input-group-btn">
                                                 <btn class="dropdown-toggle" style="background-color:#000; color:#FFF;">
                                                     <i class="fas fa-clock"></i>
                                                 </btn>
                                             </div>
-                                            <input type="time" v-model="time_in" value="12:00"
+                                            <input type="time" v-model="ntime_in" value="12:00"
                                                 class="form-control w-140">
-                                            <input type="time" v-model="time_out" value="12:00"
+                                            <input type="time" v-model="ntime_out" value="12:00"
                                                 class="form-control w-140 ml-1"
-                                                @change="actualizarHorarioProximaActividad">
+                                                @change="actualizarHorarioProximaActividad(true)">
                                             <input type="hidden" v-model="prospecto.nueva_proxima_actividad.horario"
                                                 value="" class="form-control w-140">
-                                            {{-- <input class="form-control" type="text" name="fecha" placeholder="13:14"
-                                                    readonly /> --}}
                                         </div>
-                                        {{-- <template slot="dropdown">
-                                                <li>
-                                                    <time-picker v-model="prospecto.nueva_proxima_actividad.horario" />
-                                                </li>
-                                            </template> --}}
-                                        {{-- </dropdown> --}}
                                     </div>
                                 </div>
                             </div>
@@ -467,7 +482,7 @@
                     <thead>
                         <tr>
                             <th>ID</th>
-                            <th>Nombre</th>
+                            <th>Clave</th>
                             <th>Marca</th>
                             <th>Tipo</th>
                             <th></th>
@@ -524,7 +539,9 @@
                 cargando: false,
                 modalProducto: false,
                 time_in: '',
-                time_out: ''
+                time_out: '',
+                ntime_in: '',
+                ntime_out: ''
             },
             mounted() {
                 $("#tablaProductos").DataTable({
@@ -564,23 +581,35 @@
                 }, false);
             },
             methods: {
-                actualizarHorarioProximaActividad() {
-                    console.log('La hora seleccionada es time_in:', this.time_in);
-                    console.log('La hora seleccionada es time_out:', this.time_out);
+                actualizarHorarioProximaActividad(nueva= false) {
                     let setTime;
-                    if (this.time_in < this.time_out) {
-                        if (this.time_in && this.time_out) {
-                            this.prospecto.nueva_proxima_actividad.horario = this.time_in + "-" + this.time_out;;
+                    if (nueva) {
+                        if (this.ntime_in < this.ntime_out) {
+                            if (this.ntime_in && this.ntime_out) {
+                                this.prospecto.nueva_proxima_actividad.horario = this.ntime_in + "-" + this
+                                .ntime_out;
+                            }
+                        } else {
+                            swal({
+                                title: "Error",
+                                text: "La por favor verificar el horario",
+                                type: "error"
+                            });
                         }
-                    } else {
-                        swal({
-                            title: "Error",
-                            text: "La por favor verificar el horario",
-                            type: "error"
-                        });
+                    }else{
+                        if (this.time_in < this.time_out) {
+                            if (this.time_in && this.time_out) {
+                                this.prospecto.proxima_actividad.horario = this.time_in + "-" + this
+                                .time_out;;
+                            }
+                        } else {
+                            swal({
+                                title: "Error",
+                                text: "La por favor verificar el horario",
+                                type: "error"
+                            });
+                        }
                     }
-
-
                     // Aquí puedes realizar cualquier acción que desees con el valor de la hora
                 },
                 formatoMoneda(numero) {
@@ -647,6 +676,7 @@
                         });
                 }, //fin actualizar
                 guardar() {
+                    this.actualizarHorarioProximaActividad()
                     this.cargando = true;
                     console.log(this.prospecto.proxima_actividad)
                     axios.post('/prospectos/{{ $prospecto->id }}/guardarActividades', {
@@ -693,7 +723,7 @@
                 },
                 guardar2() {
                     this.cargando = true;
-                    this.actualizarHorarioProximaActividad()
+                    this.actualizarHorarioProximaActividad(true)
                     axios.post('/prospectos/{{ $prospecto->id }}/guardarActividades', {
 
                             nueva: this.prospecto.nueva_proxima_actividad,
