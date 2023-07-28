@@ -93,6 +93,7 @@ class ProductosController extends Controller
             'categoria_id'    => 'required',
             'nombre'          => 'required',
             'precio'          => 'required',
+            'nombre_material' => 'required'
         ]);
 
         if ($validator->fails()) {
@@ -121,6 +122,7 @@ class ProductosController extends Controller
             //
             'categoria_id'    => $request->categoria_id,
             'nombre'          => $request->nombre,
+            'nombre_material' => $request->nombre_material,
             'precio'          => $request->precio,
         ]);
 
@@ -196,41 +198,36 @@ class ProductosController extends Controller
 
                 $this->storeImports($data);
                 return response()->json(['success' => true, "error" => false], 200);
-            }
-            else {
+            } else {
                 return response()->json([
                     "success" => false,
                     "error"   => true,
                     "message" => 'Error con el archivo',
                 ], 422);
             }
-        }
-        else {
+        } else {
             return response()->json([
                 "success" => false,
                 "error"   => true,
                 "message" => 'Falta archivo',
             ], 422);
-
         }
-
     }
 
     private function storeImports($rows)
     {
+        
         foreach ($rows as $key => $row) {
             $proveedor = Proveedor::where('empresa', $row[1])->first();
             $categoria = Categoria::where('nombre', $row[2])->first();
 
             if ($row[3] == null || $row[3] == "") {
                 $subcategoria = null;
-            }
-            else {
+            } else {
                 $sub = Subcategoria::where('nombre', $row[3])->first();
                 if ($sub) {
                     $subcategoria = $sub->id;
-                }
-                else {
+                } else {
                     $subcategoria = null;
                 }
             }
@@ -239,6 +236,7 @@ class ProductosController extends Controller
                 "proveedor_id"    => $proveedor->id,
                 "categoria_id"    => $categoria->id,
                 "nombre"          => $row[0],
+                "nombre_material" => $row[5],
                 "subcategoria_id" => $subcategoria,
                 "precio"          => $row[4]
             ];
@@ -246,16 +244,23 @@ class ProductosController extends Controller
             $p = Producto::where('nombre', $row[0])->first();
             if ($p) {
                 $p->update($producto);
-            }
-            else {
+            } else {
                 $p = Producto::create($producto);
             }
 
             //cargar las desripciones
 
             //descripciones en el orden del archvo
-            $descripciones = [
-                "Nombre del material",
+            $descripciones_tapices= [
+                "Color",
+                "Ancho",
+                "Composición",
+                "Flamabilidad",
+                "Minimos de venta",
+                "Multiplos de venta",
+                "Tamaño de rollo"
+            ];
+            $descripciones_telas = [
                 "Color",
                 "Ancho",
                 "Composición",
@@ -274,34 +279,40 @@ class ProductosController extends Controller
                 "Backing",
             ];
 
-
-            for ($i = 5; $i < 22; $i++) {
-
-                $update = array(
-                    "valor" => $row[$i]
-                );
-
-                $descripcion = CategoriaDescripcion::where('categoria_id', $categoria->id)->where('nombre', $descripciones[$i - 5])->first();
-                if ($descripcion) {
-                    $productodescripcion = ProductoDescripcion::where('producto_id', $p->id)->where('categoria_descripcion_id', $descripcion['id'])->first();
-                    if ($productodescripcion) {
-                        $productodescripcion->update($update);
-                    }
-                    else {
-                        $create = array(
-                            "producto_id"              => $p->id,
-                            "categoria_descripcion_id" => $descripcion['id'],
-                            "valor"                    => $row[$i]
-                        );
-                        ProductoDescripcion::create($create);
-                    }
-
-                }
-
+            if(count($row) == 22){
+                $columnas = 22;
+                $descripciones = $descripciones_telas;
             }
+            else{
+                $columnas = 13;
+                $descripciones = $descripciones_tapices;
+            }
+                for ($i = 6; $i < $columnas; $i++) {
 
+                    $update = array(
+                        "valor" => $row[$i]
+                    );
+    
+                    $descripcion = CategoriaDescripcion::where('categoria_id', $categoria->id)->where('nombre', $descripciones[$i -6])->first();
+                    if ($descripcion) {
+                        $productodescripcion = ProductoDescripcion::where('producto_id', $p->id)->where('categoria_descripcion_id', $descripcion['id'])->first();
+                        if ($productodescripcion) {
+                            $productodescripcion->update($update);
+                        } else {
+                            $create = array(
+                                "producto_id"              => $p->id,
+                                "categoria_descripcion_id" => $descripcion['id'],
+                                "valor"                    => $row[$i]
+                            );
+                            ProductoDescripcion::create($create);
+                        }
+                    }
+                }
+           
+
+            
         }
-
+        
     }
 
     /**
@@ -387,6 +398,7 @@ class ProductosController extends Controller
             'proveedor_id' => 'required',
             'categoria_id' => 'required',
             'nombre'       => 'required',
+            'nombre_material' => 'required'
         ]);
 
         if ($validator->fails()) {
@@ -398,7 +410,7 @@ class ProductosController extends Controller
             ], 422);
         }
 
-        $update = $request->only('categoria_id', 'nombre');
+        $update = $request->only('categoria_id', 'nombre', 'nombre_material');
         $update['proveedor_id'] = ($request->proveedor_id != 0) ? $request->proveedor_id : null;
         if (!is_null($request->foto)) {
             Storage::delete('public/' . $producto->foto);
@@ -420,8 +432,7 @@ class ProductosController extends Controller
         }
         if (is_null($request->subcategoria_id)) {
             $update['subcategoria_id'] = null;
-        }
-        else {
+        } else {
             $update['subcategoria_id'] = $request->subcategoria_id;
         }
 
@@ -449,8 +460,7 @@ class ProductosController extends Controller
             });
             if ($index === false) { //actual no existe en nuevas, borrarla
                 $actual->delete();
-            }
-            else {
+            } else {
                 $nueva = $nuevas->pull($index);
                 $actual->update(['valor' => $nueva['valor'], 'valor_ingles' => $nueva['valor_ingles']]);
             }
@@ -507,5 +517,4 @@ class ProductosController extends Controller
 
         return redirect()->route('productos.index');
     }
-
 }
