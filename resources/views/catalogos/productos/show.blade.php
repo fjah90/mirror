@@ -77,7 +77,7 @@
                         <th colspan="3">Descripciones</th>
                       </tr>
                       <tr>
-                        <th>Nombre</th>
+                        <th>Código</th>
                         <th>Name</th>
                         <th>Valor</th>
                         <th>Valor Ingles</th>

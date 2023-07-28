@@ -370,7 +370,7 @@
                     <thead>
                         <tr>
                             <th>ID</th>
-                            <th>Clave</th>
+                            <th>Código</th>
                             <th>Tipo</th>
                             <th></th>
                         </tr>

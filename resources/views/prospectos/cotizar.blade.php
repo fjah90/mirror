@@ -714,7 +714,7 @@
                                                     <th colspan="3">Descripciones</th>
                                                 </tr>
                                                 <tr>
-                                                    <th>Nombre</th>
+                                                    <th>Código</th>
                                                     <th>Name</th>
                                                     <th>Valor</th>
                                                     <th>Valor Inglés</th>
@@ -940,7 +940,7 @@
                 <table id="tablaProductos" class="table table-bordred">
                     <thead>
                         <tr>
-                            <th>Nombre</th>
+                            <th>Código</th>
                             <th>Proveedor</th>
                             <th>Tipo</th>
                             <th>Ficha Técnica</th>
