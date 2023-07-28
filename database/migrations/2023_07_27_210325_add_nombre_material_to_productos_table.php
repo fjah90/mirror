@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddHorarioToProspectoActividadTable extends Migration
+class AddNombreMaterialToProductosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AddHorarioToProspectoActividadTable extends Migration
      */
     public function up()
     {
-        Schema::table('prospectos_actividades', function (Blueprint $table) {
-            $table->string('horario', 15)->nullable();
+        Schema::table('productos', function (Blueprint $table) {
+            $table->string('nombre_material')->nullable();
         });
     }
 
@@ -25,8 +25,8 @@ class AddHorarioToProspectoActividadTable extends Migration
      */
     public function down()
     {
-        Schema::table('prospectos_actividades', function (Blueprint $table) {
-            $table->dropColumn('horario');
+        Schema::table('productos', function (Blueprint $table) {
+            $table->dropColumn('nombre_material');
         });
     }
 }
