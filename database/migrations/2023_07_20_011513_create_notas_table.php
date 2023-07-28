@@ -19,7 +19,9 @@ class CreateNotasTable extends Migration
             $table->text('contenido');
             $table->timestamp('fecha_creacion')->useCurrent();
             $table->timestamp('fecha_actualizacion')->useCurrent();
+
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

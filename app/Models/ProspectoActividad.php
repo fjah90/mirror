@@ -9,7 +9,7 @@ class ProspectoActividad extends Model
 {
     protected $table = 'prospectos_actividades';
 
-    protected $fillable = ['prospecto_id','tipo_id','fecha','descripcion','realizada'];
+    protected $fillable = ['prospecto_id','tipo_id','fecha', 'horario', 'descripcion','realizada'];
 
     protected $casts = [
       'realizada' => 'bool'

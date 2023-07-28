@@ -7,8 +7,8 @@ Nuevo Producto | @parent
 
 @section('header_styles')
 <style>
-  .color_text{
-    color:#B3B3B3;
+  .color_text {
+    color: #B3B3B3;
   }
 </style>
 @stop
@@ -75,14 +75,22 @@ Nuevo Producto | @parent
                 </div>
               </div>
             </div>
-             <div class="row">
-                <div class="col-md-12">
-                  <div class="form-group">
-                    <label class="control-label">Precio</label>
-                    <input type="text" class="form-control" name="precio" v-model="producto.precio" required />
-                  </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label class="control-label">Nombre del material<strong style="color: grey"> *</strong></label>
+                  <input type="text" class="form-control" name="nombre" v-model="producto.nombre_material" required />
                 </div>
               </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label class="control-label">Precio</label>
+                  <input type="text" class="form-control" name="precio" v-model="producto.precio" required />
+                </div>
+              </div>
+            </div>
             <div class="row">
               <div class="col-md-12">
                 <div class="table-responsive">
@@ -92,7 +100,7 @@ Nuevo Producto | @parent
                         <th colspan="3">Descripciones</th>
                       </tr>
                       <tr>
-                        <th>Nombre</th>
+                        <th>Código</th>
                         <th>Name</th>
                         <th>Valor</th>
                         <th>Valor Inglés</th>
@@ -139,9 +147,9 @@ Nuevo Producto | @parent
             <div class="row" style="margin-top:25px;">
               <div class="col-md-12 text-right">
                 @if($layout !=='iframe')
-                  <a class="btn btn-default" href="{{route('productos.index')}}" style="margin-right: 20px; color:#000; background-color:#B3B3B3">
-                    Regresar
-                  </a>
+                <a class="btn btn-default" href="{{route('productos.index')}}" style="margin-right: 20px; color:#000; background-color:#B3B3B3">
+                  Regresar
+                </a>
                 @endif
                 <button type="submit" class="btn btn-dark" :disabled="cargando" @click="actualizarlista()" style="background-color:#12160F; color:#B68911;">
                   <i class="fas fa-save"></i>
@@ -172,6 +180,7 @@ const app = new Vue({
         categoria_id: '',
         subcategoria_id: '',
         nombre: '',
+        nombre_material:'',
         precio: '',
         foto: '',
         ficha_tecnica: '',

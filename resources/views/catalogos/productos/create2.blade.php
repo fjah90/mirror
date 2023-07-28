@@ -40,10 +40,18 @@ Nuevo Producto | @parent
         <div class="panel-body">
           <form class="" @submit.prevent="guardar()">
             <div class="row">
-            <div class="col-md-8">
+            <div class="col-md-4">
                 <div class="form-group">
-                <label class="control-label" style="display:block;">Archivo de muestra</label>
+                <label class="control-label" style="display:block;">Archivo de muestra de telas</label>
                 <a class="btn btn-xs btn-success" title="archivo" href="/archivos/formato_carga_masiva_productos.xlsx">
+                    <i class="far fa-file"></i>
+                </a>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                <label class="control-label" style="display:block;">Archivo de muestra de tapices</label>
+                <a class="btn btn-xs btn-success" title="archivo" href="/archivos/formato_carga_masiva_productos_tapices.xlsx">
                     <i class="far fa-file"></i>
                 </a>
                 </div>

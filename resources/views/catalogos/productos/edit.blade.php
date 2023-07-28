@@ -82,6 +82,14 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
+                                    <label class="control-label">Nombre del material<strong style="color: grey"> *</strong></label>
+                                    <input type="text" class="form-control" name="nombre" v-model="producto.nombre_material" required />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
                                         <label class="control-label">Precio</label>
                                         <input type="text" class="form-control" name="precio" v-model="producto.precio"
                                             required />
@@ -97,7 +105,7 @@
                                                     <th colspan="3">Descripciones</th>
                                                 </tr>
                                                 <tr>
-                                                    <th>Nombre</th>
+                                                    <th>Código</th>
                                                     <th>Name</th>
                                                     <th>Valor</th>
                                                     <th>Valor Ingles</th>
@@ -213,6 +221,7 @@
                     categoria_id: '{{ $producto->categoria_id }}',
                     subcategoria_id: '{{ $producto->subcategoria->id }}',
                     nombre: '{{ $producto->nombre }}',
+                    nombre_material: '{{$producto->nombre_material}}',
                     precio: '{{ $producto->precio }}',
                     descripciones: {!! $producto->descripciones !!},
                     foto_ori: '{{ $producto->foto }}',
