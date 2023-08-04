@@ -703,6 +703,10 @@
             <td class="text-right" style="width:10%;">@format_money($cotizacion->subtotal)</td>
           </tr>
           <tr>
+            <td class="text-right" style="width:90%;"><strong>Descuentos:</strong></td>
+            <td class="text-right" style="width:10%;">@format_money($cotizacion->descuentos)</td>
+          </tr>
+          <tr>
             <td class="text-right" style="width:90%;"><strong>IVA 16%:</strong></td>
             <td class="text-right" style="width:10%;">@format_money($cotizacion->iva)</td>
           </tr>

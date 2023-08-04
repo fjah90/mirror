@@ -1791,6 +1791,8 @@ class ProspectosController extends Controller
             'entradas.fotos.*'    => 'image|mimes:jpg,jpeg,png',
             'subtotal'            => 'required',
             'total'               => 'required',
+            'descuentos'          => 'required',
+            'tipo_descuento'      => 'required',
         ]);
 
 
@@ -1841,13 +1843,26 @@ class ProspectosController extends Controller
             $create['condicion_id'] = $request->condicion['id'];
         }
 
+        if ($request->descuentos != "0") {
+            if ($request->tipo_descuento == "0") {
+                $create['subtotal'] = bcsub($create['subtotal'], $create['descuento'], 2);
+            }
+            else {
+                $create['descuento'] = bcmul($create['subtotal'], $create['descuento'], 2);
+                $create['descuento'] = bcdiv($create['descuento'], '100', 2);
+                $create['subtotal'] = bcsub($create['subtotal'], $create['descuento'], 2);
+            }
+        }
+
         if ($request->iva == "1") {
+
             $create['iva'] = bcmul($create['subtotal'], 0.16, 2);
-            $create['total'] = bcmul($create['subtotal'], 1.16, 2);
+            $create['total'] = bcadd($create['subtotal'], $create['iva'], 2);
         }
         else {
             $create['total'] = $create['subtotal'];
         }
+
         $observaciones = "<ul>";
         foreach ($request->observaciones as $obs) {
             $observaciones .= "<li>$obs</li>";
