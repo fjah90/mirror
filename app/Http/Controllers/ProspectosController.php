@@ -1199,24 +1199,25 @@ class ProspectosController extends Controller
             foreach ($request->ultima_actividad['ofrecidos'] as $ofrecido) {
                 $actividad->productos_ofrecidos()->attach($ofrecido['id']);
             }
-
-            //proxima actividad
-            if (isset($request->proxima_actividad)) {
-                $create = [
-                    'prospecto_id' => $prospecto->id,
-                    'fecha'        => $request->proxima_actividad['fecha'],
-                ];
-                if ($request->proxima_actividad['tipo_id'] == 0) { //dar de alta nuevo tipo
-                    $tipo = ProspectoTipoActividad::create(['nombre' => $request->proxima_actividad['tipo']]);
-                    $create['tipo_id'] = $tipo->id;
-                }
-                else {
-                    $create['tipo_id'] = $request->proxima_actividad['tipo_id'];
-                }
-
-                $actividad2 = ProspectoActividad::create($create);
-            }
         }
+
+        //proxima actividad
+        if (isset($request->proxima_actividad)) {
+            $create = [
+                'prospecto_id' => $prospecto->id,
+                'fecha'        => $request->proxima_actividad['fecha'],
+            ];
+            if ($request->proxima_actividad['tipo_id'] == 0) { //dar de alta nuevo tipo
+                $tipo = ProspectoTipoActividad::create(['nombre' => $request->proxima_actividad['tipo']]);
+                $create['tipo_id'] = $tipo->id;
+            }
+            else {
+                $create['tipo_id'] = $request->proxima_actividad['tipo_id'];
+            }
+
+            $actividad2 = ProspectoActividad::create($create);
+        }
+        
 
         return response()->json(['success' => true, "error" => false, "prospecto" => $prospecto], 200);
     }
