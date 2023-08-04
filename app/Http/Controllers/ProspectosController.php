@@ -489,7 +489,7 @@ class ProspectosController extends Controller
                     ->get();
                     */
 
-                    $prospectos = Prospecto::leftjoin('prospectos_actividades', 'prospectos.id', '=', 'prospectos_actividades.prospecto_id')
+                    $proyectos = Prospecto::leftjoin('prospectos_actividades', 'prospectos.id', '=', 'prospectos_actividades.prospecto_id')
                     ->leftjoin('prospectos_tipos_actividades', 'prospectos_actividades.tipo_id', '=', 'prospectos_tipos_actividades.id')
                     ->leftjoin('users', 'prospectos.user_id', '=', 'users.id')
                     ->leftjoin('clientes', 'prospectos.cliente_id', '=', 'clientes.id')
