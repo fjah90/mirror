@@ -1842,6 +1842,16 @@ class ProspectosController extends Controller
         else {
             $create['condicion_id'] = $request->condicion['id'];
         }
+        
+        if (!empty($cotizacion->flete_menor)) {
+            $create['subtotal'] = bcadd($create['subtotal'], $create['flete_menor'], 2);
+
+        }
+
+        if (!empty($cotizacion->costo_sobreproduccion)) {
+            $create['subtotal'] = bcadd($create['subtotal'], $create['costo_sobreproduccion'], 2);
+
+        }
 
         if ($request->descuentos != "0") {
             if ($request->tipo_descuento == "0") {
