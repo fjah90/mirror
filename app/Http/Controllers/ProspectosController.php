@@ -477,7 +477,7 @@ class ProspectosController extends Controller
 
 
             if (Auth::user()->roles[0]->name == 'Administrador' || Auth::user()->roles[0]->name == 'Dirección') {
-
+                /*
                 $proyectos = Prospecto::leftjoin('prospectos_actividades', 'prospectos.id', '=', 'prospectos_actividades.prospecto_id')
                     ->leftjoin('prospectos_tipos_actividades', 'prospectos_actividades.tipo_id', '=', 'prospectos_tipos_actividades.id')
                     ->leftjoin('users', 'prospectos.user_id', '=', 'users.id')
@@ -487,6 +487,7 @@ class ProspectosController extends Controller
                     ->where('prospectos_actividades.realizada', false)
                     ->where('prospectos.es_prospecto', 'si')
                     ->get();
+                    */
 
                     $prospectos2 = Prospecto::leftjoin('prospectos_actividades', 'prospectos.id', '=', 'prospectos_actividades.prospecto_id')
                     ->leftjoin('prospectos_tipos_actividades', 'prospectos_actividades.tipo_id', '=', 'prospectos_tipos_actividades.id')
