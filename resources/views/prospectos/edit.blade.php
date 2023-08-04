@@ -272,7 +272,7 @@
                                                 </div>
                                                 <input type="time" v-model="time_in" value="12:00"
                                                     class="form-control w-140">
-                                                <input type="time" v-model="time_out" value="prospecto.proxima_actividad.horario"
+                                                <input type="time" v-model="time_out" value="12:00"
                                                     class="form-control w-140 ml-1"
                                                     @change="actualizarHorarioProximaActividad">
                                                 <input type="hidden" v-model="prospecto.proxima_actividad.horario"
@@ -547,6 +547,11 @@
                 $("#tablaProductos").DataTable({
                     dom: 'ftp'
                 });
+                if(this.prospecto.horario != null){
+                    var horarios  = this.prospecto.horario.split('-');
+                    this.time_in = horarios[0];
+                    this.time_out = horarios[1];
+                }
                 this.prospecto.fecha_cierre = this.prospecto.fecha_cierre_formated;
                 this.prospecto.proxima_actividad.fecha = this.prospecto.proxima_actividad.fecha_formated;
                 this.prospecto.nueva_proxima_actividad.fecha = this.prospecto.proxima_actividad.fecha_formated;
