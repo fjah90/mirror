@@ -577,8 +577,8 @@
                     this.ultima_actividad.ofrecidos.splice(index, 1);
                 },
                 guardar() {
-                  actualizarHorarioProximaActividad(true) 
-                  actualizarHorarioProximaActividad() 
+                  this.actualizarHorarioProximaActividad(true); 
+                  this.actualizarHorarioProximaActividad();
                     var prospecto = $.extend(true, {}, this.prospecto);
                     if (this.ultima_actividad.fecha != "" ||
                         this.ultima_actividad.descripcion != "" ||
