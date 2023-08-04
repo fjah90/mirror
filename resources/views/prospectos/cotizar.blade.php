@@ -490,7 +490,8 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <div class="form-check form-switch">
-                                            <input class="form-check-input" type="checkbox" v-model="cotizacion.isFleteMenor">
+                                             <i :class="{'glyphicon glyphicon-unchecked': !cotizacion.isFleteMenor, 'glyphicon glyphicon-check': cotizacion.isFleteMenor}"
+                                            @click="isFleteMenor()"></i>
                                             <label class="control-label" for="cotizacion.fleteMenor">Flete menor</label>
                                         </div>
                                         <input class="form-control" type="text" name="flete"
@@ -498,8 +499,11 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6">
+                                   {{-- Vacio --}}
+                                </div>
+                                <div class="col-md-6">
                                     <div class="form-group">
-                                        <label class="control-label">Sobreproducción</label>
+                                        <label class="control-label">Costó Sobreproducción</label>
                                         <input class="form-control" type="text" name="sobreproduccion"
                                             v-model="cotizacion.sobreproduccion" />
                                     </div>
@@ -603,6 +607,14 @@
                                                     <td>@{{ cotizacion.subtotal | formatoMoneda }}</td>
                                                     <td></td>
                                                 </tr>
+                                                <tr v-if="cotizacion.descuentos !='0'">
+                                                    <td colspan="3"></td>
+                                                    <td class="text-right"><strong>Descuentos</strong></td>
+                                                    <td v-if="cotizacion.descuentos =='0' && cotizacion.tipoDescuento =='0'">$0.00</td>
+                                                    <td v-if="cotizacion.descuentos !='0' && cotizacion.tipoDescuento =='1'">@{{ (cotizacion.subtotal * cotizacion.descuentos) / 100 | formatoMoneda }}</td>
+                                                    <td v-else>@{{ cotizacion.descuentos | formatoMoneda }}</td>
+                                                    <td></td>
+                                                </tr>
                                                 <tr>
                                                     <td colspan="3"></td>
                                                     <td class="text-right"><strong>IVA</strong></td>
@@ -610,7 +622,7 @@
                                                     <td v-else>@{{ cotizacion.subtotal * 0.16 | formatoMoneda }}</td>
                                                     <td></td>
                                                 </tr>
-                                                <tr>
+                                                <tr >
                                                     <td colspan="3"></td>
                                                     <td class="text-right">
                                                         <strong>Total
@@ -618,9 +630,8 @@
                                                             <span v-else> Pesos</span>
                                                         </strong>
                                                     </td>
-                                                    <td v-if="cotizacion.iva=='0'">@{{ cotizacion.subtotal |
-    formatoMoneda }}
-                                                    </td>
+                                                    <td v-if="cotizacion.iva=='0'">@{{ cotizacion.subtotal | formatoMoneda }} </td>
+                                                    <td v-else-if="cotizacion.descuentos!='0' && cotizacion.subtotal!='0'">@{{ (cotizacion.subtotal - cotizacion.descuentos)* 1.16   | formatoMoneda }}</td>
                                                     <td v-else>@{{ cotizacion.subtotal * 1.16 | formatoMoneda }}</td>
                                                     <td></td>
                                                 </tr>
@@ -1210,8 +1221,8 @@
                     isFleteMenor: false,
                     fleteMenor: '',
                     sobreproduccion: '',
-                    descuentos: '',
-                    tipoDescuento: '',
+                    descuentos: 0,
+                    tipoDescuento: 0,
                     planos: '',
                     factibilidad: '',
                     // moneda: '{{ $prospecto->cliente->nacional ? 'Pesos' : 'Dolares' }}',
@@ -1532,9 +1543,8 @@
                         this.cotizacion.estado = this.rfcs[this.cotizacion.facturar].estado;
                     }
                 },
-                seleccionarTipoDescueto() {
+                seleccionarTipoDescuento() {
                     console.log(this.cotizacion.tipoDescuento)
-
                 },
                 seleccionarDireccion() {
                     if (this.cotizacion.direccion != "0" && this.cotizacion.direccion != "1") {
@@ -1673,6 +1683,9 @@
                 },
                 fijarComprobante() {
                     this.aceptar.comprobante = this.$refs['comprobante'].files[0];
+                },
+                isFleteMenor(){
+                    this.cotizacion.isFleteMenor = this.cotizacion.isFleteMenor ? false: true;
                 },
                 agregarObservacion(observacion) {
                     this.cotizacion.observaciones.push(observacion.texto);
@@ -2124,14 +2137,12 @@
                     console.log(totalcotizacion - totalf);
 
                     var dif = totalcotizacion - totalf;
-
+                    
 
                     if (dif > 0.05) {
                         alert('OCURRIO UN ERROR INESPERADO EL SUBTOTAL NO COINCIDE FAVOR DE RECARGAR LA PAGINA');
                     } else {
-
-
-
+                        
                         cotizacion.entradas.forEach(function(entrada) {
                             entrada.producto_id = entrada.producto.id;
                             delete entrada.producto;
@@ -2199,8 +2210,8 @@
                                     isFleteMenor: false,
                                     fleteMenor: '',
                                     sobreproduccion: '',
-                                    descuentos: '',
-                                    tipoDescuento: '',
+                                    descuentos: 0,
+                                    tipoDescuento: 0,
                                     planos: '',
                                     factibilidad: '',
                                     moneda: '{{ $prospecto->cliente->nacional ? 'Pesos' : 'Dolares' }}',
