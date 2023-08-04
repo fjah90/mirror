@@ -88,6 +88,7 @@ class ProspectosController extends Controller
             $usuarios = [];
         }
         $proyectos = Prospecto::all();
+        dd($proyectos);
 
         if (auth()->user()->tipo == 'Cliente') {
             $cotizaciones = ProspectoCotizacion::leftjoin('prospectos', 'prospectos_cotizaciones.prospecto_id', '=', 'prospectos.id')
