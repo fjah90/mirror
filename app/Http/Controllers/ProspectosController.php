@@ -487,6 +487,7 @@ class ProspectosController extends Controller
                     ->where('prospectos_actividades.realizada', false)
                     ->where('prospectos.es_prospecto', 'si')
                     ->get();
+                    dd($proyectos);
 
                 $proyectosOrdenados = collect($proyectos)->sortByDesc('fecha');
 
@@ -630,9 +631,6 @@ class ProspectosController extends Controller
 
         //Sacamos la notificaciones del usuario logueado
         $notificaciones = Notificacion::with('usercreo', 'userdirigido')->where('user_dirigido', auth()->user()->id)->where('status', 'sin leer')->get();
-
-
-        dd($proyectos);
 
 
         $clientes = Cliente::all();
