@@ -496,8 +496,7 @@ class ProspectosController extends Controller
                     ->select('vendedores.nombre as vendedor', 'prospectos.*', 'users.name as usuario', 'clientes.nombre as cliente', 'prospectos_tipos_actividades.nombre as actividad', 'prospectos_actividades.fecha as fecha')
                     ->where('prospectos.es_prospecto', 'si')
                     ->get();
-                   
-                    dd($prospectos2);
+            
               
 
                 $proyectosOrdenados = collect($proyectos)->sortByDesc('fecha');
