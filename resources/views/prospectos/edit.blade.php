@@ -272,7 +272,7 @@
                                                 </div>
                                                 <input type="time" v-model="time_in" value="12:00"
                                                     class="form-control w-140">
-                                                <input type="time" v-model="time_out" value="12:00"
+                                                <input type="time" v-model="time_out" value="prospecto.proxima_actividad.horario"
                                                     class="form-control w-140 ml-1"
                                                     @change="actualizarHorarioProximaActividad">
                                                 <input type="hidden" v-model="prospecto.proxima_actividad.horario"
