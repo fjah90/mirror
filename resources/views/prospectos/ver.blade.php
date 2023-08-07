@@ -2,24 +2,28 @@
 
 {{-- Page title --}}
 @section('title')
-  Proyectos Aprobados | @parent
+    Proyectos Aprobados | @parent
 @stop
 
 @section('header_styles')
-<style>
-  .color_text{
-    color:#B3B3B3;
-  }
-</style>
+    <style>
+        .color_text {
+            color: #B3B3B3;
+        }
+
+        .w-128 {
+            width: 128px !important;
+        }
+    </style>
 @stop
 
 {{-- Page content --}}
 @section('content')
 
-<section class="content-header" style="background-color:#12160F; color:#B68911;">
-  <h1 style="font-weight: bolder;">Proyecto {{$prospecto->nombre}}</h1>
-</section>
-<!-- Main content -->
+    <section class="content-header" style="background-color:#12160F; color:#B68911;">
+        <h1 style="font-weight: bolder;">Proyecto {{ $prospecto->nombre }}</h1>
+    </section>
+    <!-- Main content -->
     <section class="content" id="content">
         <div class="row">
             <div class="col-lg-12">
@@ -32,7 +36,7 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label class="control-label">Cliente</label>
-                                    <span class="form-control">{{$prospecto->cliente->nombre}}</span>
+                                    <span class="form-control">{{ $prospecto->cliente->nombre }}</span>
                                 </div>
                             </div>
                         </div>
@@ -40,16 +44,16 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="control-label">Nombre de Proyecto</label>
-                                    <span class="form-control">{{$prospecto->nombre}}</span>
+                                    <span class="form-control">{{ $prospecto->nombre }}</span>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="control-label">Diseñador</label>
                                     <span class="form-control">
-                                      @if($prospecto->vendedor_id)
-                                      {{$prospecto->vendedor->nombre}}
-                                      @endif
+                                        @if ($prospecto->vendedor_id)
+                                            {{ $prospecto->vendedor->nombre }}
+                                        @endif
                                     </span>
                                 </div>
                             </div>
@@ -58,39 +62,40 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label class="control-label">Descripción</label>
-                                    <span class="form-control" style="min-height:68px;">{{$prospecto->descripcion}}</span>
+                                    <span class="form-control" style="min-height:68px;">{{ $prospecto->descripcion }}</span>
                                 </div>
                             </div>
                         </div>
-                       @if($prospecto->es_prospecto == "si")
-                        <div class="row" >
-                          <div class="col-md-3">
-                              <div class="form-group">
-                                <label for="prospecto.proxima_actividad.fecha" class="control-label">Fecha aproximada de cierre</label>
-                                <br />
-                                <span class="form-control">{{$prospecto->fecha_cierre_formated}}</span>
-                              </div>
-                            </div>
-                            <div class="col-md-3">
-                              <div class="form-group">
-                                <label class="control-label">Proyección de venta en USD</label>
-                                <span class="form-control" >{{$prospecto->proyeccion_venta}}</span>
-                              </div>
-                            </div>
-                            <div class="col-md-3">
-                              <div class="form-group">
-                                <label class="control-label">Factibilidad</label>
-                                <span class="form-control" >{{$prospecto->factibilidad}}</span>
-                              </div>
-                            </div>
-                            <div class="col-md-3">
-                              <div class="form-group">
-                                <label class="control-label">Estatus</label>
-                                <span class="form-control" >{{$prospecto->estatus}}</span>
-                              </div>
-                            </div>
+                        @if ($prospecto->es_prospecto == 'si')
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="prospecto.proxima_actividad.fecha" class="control-label">Fecha
+                                            aproximada de cierre</label>
+                                        <br />
+                                        <span class="form-control">{{ $prospecto->fecha_cierre_formated }}</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="control-label">Proyección de venta en USD</label>
+                                        <span class="form-control">{{ $prospecto->proyeccion_venta }}</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="control-label">Factibilidad</label>
+                                        <span class="form-control">{{ $prospecto->factibilidad }}</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="control-label">Estatus</label>
+                                        <span class="form-control">{{ $prospecto->estatus }}</span>
+                                    </div>
+                                </div>
 
-                        </div>
+                            </div>
                         @endif
                     </div>
                 </div>
@@ -98,51 +103,53 @@
         </div>
 
         <div class="row">
-          <div class="col-lg-12">
-            <div class="panel">
-                <div class="panel-heading" style="background-color:#12160F; color:#B68911;">
-                    <h3 class="panel-title">Actividades Realizadas</h3>
+            <div class="col-lg-12">
+                <div class="panel">
+                    <div class="panel-heading" style="background-color:#12160F; color:#B68911;">
+                        <h3 class="panel-title">Actividades Realizadas</h3>
+                    </div>
                 </div>
             </div>
-          </div>
         </div>
         <div class="row">
-          <div class="col-md-12">
-            <div class="table-responsive">
-              <table class="table table-bordred">
-                <thead>
-                  <tr>
-                    <th>Fecha</th>
-                    <th>Tipo</th>
-                    <th>Productos Ofrecidos</th>
-                    <th>Descripción</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  @foreach($prospecto->actividades as $actividad)
-                  <tr>
-                    <td>{{$actividad->fecha_formated}}</td>
-                    <td>{{$actividad->tipo->nombre}}</td>
-                    <td>
-                      @foreach($actividad->productos_ofrecidos as $index => $ofrecido)
-                      <span>{{$index+1}}.- {{$ofrecido->nombre}}</span><br />
-                      @endforeach
-                    </td>
-                    @if($actividad->tipo->id==4) <!-- Cotización enviada -->
-                    <td>
-                      <a class="btn btn-warning" title="PDF" href="{{$actividad->descripcion}}" target="_blank">
-                        <i class="far fa-file-pdf"></i>
-                      </a>
-                    </td>
-                    @else
-                    <td>{{$actividad->descripcion}}</td>
-                    @endif
-                  </tr>
-                  @endforeach
-                </tbody>
-              </table>
+            <div class="col-md-12">
+                <div class="table-responsive">
+                    <table class="table table-bordred">
+                        <thead>
+                            <tr>
+                                <th>Fecha</th>
+                                <th>Tipo</th>
+                                <th>Productos Ofrecidos</th>
+                                <th>Descripción</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($prospecto->actividades as $actividad)
+                                <tr>
+                                    <td>{{ $actividad->fecha_formated }}</td>
+                                    <td>{{ $actividad->tipo->nombre }}</td>
+                                    <td>
+                                        @foreach ($actividad->productos_ofrecidos as $index => $ofrecido)
+                                            <span>{{ $index + 1 }}.- {{ $ofrecido->nombre }}</span><br />
+                                        @endforeach
+                                    </td>
+                                    @if ($actividad->tipo->id == 4)
+                                        <!-- Cotización enviada -->
+                                        <td>
+                                            <a class="btn btn-warning" title="PDF" href="{{ $actividad->descripcion }}"
+                                                target="_blank">
+                                                <i class="far fa-file-pdf"></i>
+                                            </a>
+                                        </td>
+                                    @else
+                                        <td>{{ $actividad->descripcion }}</td>
+                                    @endif
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
             </div>
-          </div>
         </div>
         <div class="row">
             <div class="col-sm-12">
@@ -150,31 +157,42 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-6">
-               <div class="form-group">
-                <label class="control-label">Fecha</label>
-                <span class="form-control">{{$prospecto->proxima_actividad->fecha_formated}}</span>
-               </div> 
+            <div class="col-md-{{ $prospecto->proxima_actividad->horario ? '4' : '6' }}">
+                <div class="form-group">
+                    <label class="control-label">Fecha</label>
+                    <span class="form-control">{{ $prospecto->proxima_actividad->fecha_formated }}</span>
+                </div>
             </div>
-             <div class="col-md-6">
-               <div class="form-group">
-                <label class="control-label">Tipo</label>
-                <span class="form-control">{{$prospecto->proxima_actividad->tipo->nombre}}</span>
-               </div> 
+            <div class="col-md-{{ $prospecto->proxima_actividad->horario ? '4' : '6' }}">
+                <div class="form-group">
+                    <label class="control-label">Tipo</label>
+                    <span class="form-control">{{ $prospecto->proxima_actividad->tipo->nombre }}</span>
+                </div>
             </div>
+            @if ($prospecto->proxima_actividad->horario)
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="control-label">Horario</label>
+                        <div style="display: inline-flex;">
+                            <input type="time" v-model="time_in" class="form-control w-128" disabled>
+                            <input type="time" v-model="time_out" class="form-control w-128 ml-1" disabled>
+                        </div>
+                    </div>
+                </div>
+            @endif
         </div>
         <!--div class="row">
-           <div class="col-md-10">
-               <label class="control-label">Productos Ofrecidos</label>
-                    <span class="form-control"></span><br/>
-            </div> 
-        </div>
-        <div class="row">
-           <div class="col-lg-12">
-               <label>Descripción Actividad</label>
-               <span class="form-control"></span>
-           </div> 
-        </div-->
+                                       <div class="col-md-10">
+                                           <label class="control-label">Productos Ofrecidos</label>
+                                                <span class="form-control"></span><br/>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                       <div class="col-lg-12">
+                                           <label>Descripción Actividad</label>
+                                           <span class="form-control"></span>
+                                       </div>
+                                    </div-->
         {{--  <div class="row">
             <div class="col-lg-12">
                 <div class="panel">
@@ -201,11 +219,11 @@
                                         </thead>
                                         <tbody>
                                         <tr v-for="(cotizacion, index) in prospecto.cotizaciones">
-                                            <td>@{{cotizacion.numero}}</td>
-                                            <td>@{{cotizacion.fecha_formated}}</td>
+                                            <td>@{{ cotizacion.numero }}</td>
+                                            <td>@{{ cotizacion.fecha_formated }}</td>
                                             <td>
                                                 <template v-for="(entrada, index) in cotizacion.entradas">
-                                                    <span>@{{index+1}}.- @{{entrada.producto.nombre}} - @{{entrada.producto.proveedor.empresa}} - Area:@{{entrada.area}}</span><br/>
+                                                    <span>@{{ index + 1 }}.- @{{ entrada.producto.nombre }} - @{{ entrada.producto.proveedor.empresa }} - Area:@{{ entrada.area }}</span><br/>
                                                 </template>
                                             </td>
                                             <td>
@@ -214,12 +232,12 @@
                                                     <template v-for="(total, proveedor) in cotizacion.entradas_proveedor_totales">
                                                         <tr>
                                                             <td class="text-right">@{{ proveedor }} |</td>
-                                                            <td class="text-right">@{{total * (cotizacion.iva == 0 ? 1 : 1.16) | formatoMoneda}}</td>
+                                                            <td class="text-right">@{{ total * (cotizacion.iva == 0 ? 1 : 1.16) | formatoMoneda }}</td>
                                                         </tr>
                                                     </template>
                                                     <tr>
                                                         <th class="text-right">Total @{{ cotizacion.moneda }}|</th>
-                                                        <th class="text-right">@{{cotizacion.total | formatoMoneda}} </th>
+                                                        <th class="text-right">@{{ cotizacion.total | formatoMoneda }} </th>
                                                     </tr>
                                                 </table>
                                             </td>
@@ -278,8 +296,8 @@
                                         <tr>
                                             <td colspan="2"></td>
                                             <td class="text-right">Total Pesos <br/> Total Dolares</td>
-                                            <td>@{{totales_cotizaciones.pesos | formatoMoneda}} <br/>
-                                                @{{totales_cotizaciones.dolares | formatoMoneda}}
+                                            <td>@{{ totales_cotizaciones.pesos | formatoMoneda }} <br/>
+                                                @{{ totales_cotizaciones.dolares | formatoMoneda }}
                                             </td>
                                         </tr>
                                         </tfoot>
@@ -291,7 +309,7 @@
                     </div>
                 </div>
             </div>
-        </div>--}}
+        </div> --}}
 
         {{--  <div class="row">
             <div class="col-lg-12">
@@ -319,11 +337,11 @@
                                         </thead>
                                         <tbody>
                                         <tr v-for="(cotizacion, index) in prospecto.cotizaciones_aprobadas">
-                                            <td>@{{cotizacion.numero}}</td>
-                                            <td>@{{cotizacion.fecha_formated}}</td>
+                                            <td>@{{ cotizacion.numero }}</td>
+                                            <td>@{{ cotizacion.fecha_formated }}</td>
                                             <td>
                                                 <template v-for="(entrada, index) in cotizacion.entradas">
-                                                    <span>@{{index+1}}.- @{{entrada.producto.nombre}} - @{{entrada.producto.proveedor.empresa}} - Area:@{{entrada.area}}</span><br/>
+                                                    <span>@{{ index + 1 }}.- @{{ entrada.producto.nombre }} - @{{ entrada.producto.proveedor.empresa }} - Area:@{{ entrada.area }}</span><br/>
                                                 </template>
                                             </td>
                                             <td>
@@ -332,12 +350,12 @@
                                                     <template v-for="(total, proveedor) in cotizacion.entradas_proveedor_totales">
                                                         <tr>
                                                             <td class="text-right">@{{ proveedor }} |</td>
-                                                            <td class="text-right">@{{total * (cotizacion.iva == 0 ? 1 : 1.16) | formatoMoneda}}</td>
+                                                            <td class="text-right">@{{ total * (cotizacion.iva == 0 ? 1 : 1.16) | formatoMoneda }}</td>
                                                         </tr>
                                                     </template>
                                                     <tr>
                                                         <th class="text-right">Total @{{ cotizacion.moneda }}|</th>
-                                                        <th class="text-right">@{{cotizacion.total | formatoMoneda}} </th>
+                                                        <th class="text-right">@{{ cotizacion.total | formatoMoneda }} </th>
                                                     </tr>
                                                 </table>
                                             </td>
@@ -396,8 +414,8 @@
                                         <tr>
                                             <td colspan="2"></td>
                                             <td class="text-right">Total Pesos <br/> Total Dolares</td>
-                                            <td>@{{totales_cotizaciones2.pesos | formatoMoneda}} <br/>
-                                                @{{totales_cotizaciones2.dolares | formatoMoneda}}
+                                            <td>@{{ totales_cotizaciones2.pesos | formatoMoneda }} <br/>
+                                                @{{ totales_cotizaciones2.dolares | formatoMoneda }}
                                             </td>
                                         </tr>
                                         </tfoot>
@@ -409,9 +427,9 @@
                     </div>
                 </div>
             </div>
-        </div>--}}
+        </div> --}}
 
-       {{-- <div class="row">
+        {{-- <div class="row">
             <div class="col-lg-12">
               <div class="panel">
                 <div class="panel-heading" style="background-color:#12160F; color:#B68911;">
@@ -438,23 +456,23 @@
                           </thead>
                           <tbody>
                             <tr v-for="(orden,index) in ordenes">
-                              <td>@{{index+1}}</td>
-                              <td>@{{orden.numero}}</td>
-                              <td>@{{orden.proveedor_empresa}}</td>
+                              <td>@{{ index + 1 }}</td>
+                              <td>@{{ orden.numero }}</td>
+                              <td>@{{ orden.proveedor_empresa }}</td>
                               <td>
                                 <span v-for="(entrada, index) in orden.entradas">
-                                  @{{index+1}}.- @{{entrada.producto.nombre}} <br />
+                                  @{{ index + 1 }}.- @{{ entrada.producto.nombre }} <br />
                                 </span>
                               </td>
                               <td>
                                 <span v-for="(entrada, index) in orden.entradas">
-                                  @{{index+1}}.-
-                                    <span v-if="entrada.conversion">@{{entrada.cantidad_convertida}} @{{entrada.conversion}}</span>
-                                    <span v-else>@{{entrada.cantidad}} @{{entrada.medida}}</span>
+                                  @{{ index + 1 }}.-
+                                    <span v-if="entrada.conversion">@{{ entrada.cantidad_convertida }} @{{ entrada.conversion }}</span>
+                                    <span v-else>@{{ entrada.cantidad }} @{{ entrada.medida }}</span>
                                   <br />
                                 </span>
                               </td>
-                              <td>@{{orden.status}}</td>
+                              <td>@{{ orden.status }}</td>
                               <td class="text-right">
                                 <template v-if="orden.status!='Pendiente' && orden.status!='Cancelada'">
                                   <a class="btn btn-xs btn-info" title="Ver"
@@ -512,7 +530,7 @@
 
               </div>
             </div>
-        </div>--}}
+        </div> --}}
 
         {{-- <div class="row">
             <div class="col-lg-12">
@@ -543,17 +561,17 @@
                       </thead>
                       <tbody>
                         <tr v-for="(cuenta, index) in cuentas">
-                          <td>@{{index+1}}</td>
-                          <td>@{{cuenta.cotizacion.numero}}</td>
-                          <td>@{{cuenta.cotizacion.user.name}}</td>
-                          <td>@{{cuenta.cliente}}</td>
-                          <td>@{{cuenta.proyecto}}</td>
-                          <td>@{{cuenta.condiciones}}</td>
-                          <td >@{{cuenta.moneda}}</td>
-                          <td >@{{cuenta.total | formatoMoneda}}</td>
-                          <td >@{{cuenta.facturado | formatoMoneda}}</td>
-                          <td >@{{cuenta.pagado | formatoMoneda}}</td>
-                          <td >@{{cuenta.pendiente | formatoMoneda}}</td>
+                          <td>@{{ index + 1 }}</td>
+                          <td>@{{ cuenta.cotizacion.numero }}</td>
+                          <td>@{{ cuenta.cotizacion.user.name }}</td>
+                          <td>@{{ cuenta.cliente }}</td>
+                          <td>@{{ cuenta.proyecto }}</td>
+                          <td>@{{ cuenta.condiciones }}</td>
+                          <td >@{{ cuenta.moneda }}</td>
+                          <td >@{{ cuenta.total | formatoMoneda }}</td>
+                          <td >@{{ cuenta.facturado | formatoMoneda }}</td>
+                          <td >@{{ cuenta.pagado | formatoMoneda }}</td>
+                          <td >@{{ cuenta.pendiente | formatoMoneda }}</td>
                           <td class="text-right">
                             <a class="btn btn-xs btn-info" data-toggle="tooltip" title="Ver"
                               :href="'/cuentas-cobrar/'+cuenta.id" target="_blank">
@@ -581,7 +599,7 @@
                 </div>
               </div>
             </div>
-        </div>--}}
+        </div> --}}
 
         {{-- <div class="row">
             <div class="col-lg-12">
@@ -609,13 +627,13 @@
                       </thead>
                       <tbody>
                         <tr v-for="(orden,index) in ordenes_proceso">
-                          <td>@{{orden.numero}}</td>
-                          <td>@{{index+1}}</td>
-                          <td>@{{orden.orden_compra.cliente_nombre}}</td>
-                          <td>@{{orden.orden_compra.proyecto.cotizacion.user.name}}</td>
-                          <td>@{{orden.orden_compra.proyecto_nombre}}</td>
-                          <td>@{{orden.orden_compra.proveedor_empresa}}</td>
-                          <td>@{{orden.status}}</td>
+                          <td>@{{ orden.numero }}</td>
+                          <td>@{{ index + 1 }}</td>
+                          <td>@{{ orden.orden_compra.cliente_nombre }}</td>
+                          <td>@{{ orden.orden_compra.proyecto.cotizacion.user.name }}</td>
+                          <td>@{{ orden.orden_compra.proyecto_nombre }}</td>
+                          <td>@{{ orden.orden_compra.proveedor_empresa }}</td>
+                          <td>@{{ orden.status }}</td>
                           <td class="text-right">
                             <!--a class="btn btn-xs btn-info" title="Ver"
                               :href="'/proyectos-aprobados/'+orden.proyecto_id+'/ordenes-compra/'+orden.id" target="_blank">
@@ -721,27 +739,29 @@
                 </div>
               </div>
             </div>
-          </div>--}}
+          </div> --}}
 
-          <div class="row">
-              <div class="col-md-12 text-right">
-                 @if($prospecto->es_prospecto =='si')
-                 <a href="{{url('/prospectos/prospectos/')}}" style="padding-top:8px; color:#000; background-color:#B3B3B3" class="btn btn-default">
-                      Regresar
-                 </a>
-                {{--  @if($prospecto->es_prospecto =='si')
+        <div class="row">
+            <div class="col-md-12 text-right">
+                @if ($prospecto->es_prospecto == 'si')
+                    <a href="{{ url('/prospectos/prospectos/') }}"
+                        style="padding-top:8px; color:#000; background-color:#B3B3B3" class="btn btn-default">
+                        Regresar
+                    </a>
+                    {{--  @if ($prospecto->es_prospecto == 'si')
                 <a href='/prospectos/{{$disenador_id}}/anio/{{$anio}}/index' style="margin-top:25px; color:#000; background-color:#B3B3B3" class="btn btn-default">
                     Regresar
-                </a>--}}
-                @elseif($prospecto->es_prospecto =='no')
-                <a href="{{url('/prospectos/cotizaciones/')}}" style="margin-top:25px; color:#000; background-color:#B3B3B3" class="btn btn-default">
-                    Regresar
-                </a>
+                </a> --}}
+                @elseif($prospecto->es_prospecto == 'no')
+                    <a href="{{ url('/prospectos/cotizaciones/') }}"
+                        style="margin-top:25px; color:#000; background-color:#B3B3B3" class="btn btn-default">
+                        Regresar
+                    </a>
                 @endif
-              </div>
             </div>
-          <!-- Enviar Modal -->
-        <modal v-model="openNotas" :title="'Notas Cotización '+notas.cotizacion_id" :footer="false">
+        </div>
+        <!-- Enviar Modal -->
+        <modal v-model="openNotas" :title="'Notas Cotización ' + notas.cotizacion_id" :footer="false">
             <form class="" @submit.prevent="notasCotizacion()">
                 <div class="form-group">
                     <label class="control-label">Notas</label>
@@ -751,7 +771,7 @@
                 <div class="form-group text-right">
                     <button type="submit" class="btn btn-primary" :disabled="cargando">Guardar</button>
                     <button type="button" class="btn btn-default"
-                            @click="notas.cotizacion_id=0; notas.mensaje=''; openNotas=false;">
+                        @click="notas.cotizacion_id=0; notas.mensaje=''; openNotas=false;">
                         Cancelar
                     </button>
                 </div>
@@ -760,7 +780,7 @@
         <!-- /.Enviar Modal -->
 
         <!-- Enviar Modal -->
-        <modal v-model="openEnviar" :title="'Enviar Cotizacion '+enviar.numero" :footer="false">
+        <modal v-model="openEnviar" :title="'Enviar Cotizacion ' + enviar.numero" :footer="false">
             <form class="" @submit.prevent="enviarCotizacion()">
                 <div class="form-group">
                     <label class="control-label">Email(s)</label>
@@ -779,13 +799,13 @@
         </modal>
         <!-- /.Enviar Modal -->
         <!-- Aceptar Modal -->
-        <modal v-model="openAceptar" :title="'Aceptar Cotizacion '+aceptar.cotizacion_id" :footer="false">
+        <modal v-model="openAceptar" :title="'Aceptar Cotizacion ' + aceptar.cotizacion_id" :footer="false">
             <form class="" @submit.prevent="aceptarCotizacion()">
                 <div class="form-group">
                     <label class="control-label">Comprobante Confirmacion</label>
                     <div class="file-loading">
                         <input id="comprobante" name="comprobante" type="file" ref="comprobante"
-                               @change="fijarComprobante()" required/>
+                            @change="fijarComprobante()" required />
                     </div>
                     <div id="comprobante-file-errors"></div>
                 </div>
@@ -793,26 +813,26 @@
                     <label class="control-label">Fecha Aceptación</label>
                     <br />
                     <dropdown style="width:100%;">
-                        <div class="input-group" >
+                        <div class="input-group">
                             <div class="input-group-btn">
                                 <btn class="dropdown-toggle" style="background-color:#fff;">
                                     <i class="fas fa-calendar"></i>
                                 </btn>
                             </div>
-                            <input class="form-control" type="text" name="fecha_comprobante" placeholder="DD/MM/YYYY" v-model="aceptar.fecha_comprobante" readonly/>
+                            <input class="form-control" type="text" name="fecha_comprobante" placeholder="DD/MM/YYYY"
+                                v-model="aceptar.fecha_comprobante" readonly />
                         </div>
                         <template slot="dropdown">
                             <li>
                                 <date-picker :locale="locale" :today-btn="false" :clear-btn="false"
-                                             format="dd/MM/yyyy" :date-parser="dateParser" v-model="aceptar.fecha_comprobante"/>
+                                    format="dd/MM/yyyy" :date-parser="dateParser" v-model="aceptar.fecha_comprobante" />
                             </li>
                         </template>
                     </dropdown>
                 </div>
                 <div class="form-group text-right">
                     <button type="submit" class="btn btn-primary" :disabled="cargando">Aceptar</button>
-                    <button type="button" class="btn btn-default"
-                            @click="aceptar.cotizacion_id=0; openAceptar=false;">
+                    <button type="button" class="btn btn-default" @click="aceptar.cotizacion_id=0; openAceptar=false;">
                         Cancelar
                     </button>
                 </div>
@@ -824,17 +844,17 @@
             <form class="" @submit.prevent="copiarCotizacion()">
                 <div class="form-group">
                     <label class="control-label">Proyecto Destino</label>
-                    <select name="proyecto_id" v-model="copiar_cotizacion.proyecto_id"
-                            class="form-control" required id="proyecto-select" style="width: 300px;">
-                        @foreach($proyectos as $proyecto)
-                            <option value="{{$proyecto->id}}" >{{$proyecto->nombre}}--{{$proyecto->cliente->nombre}}</option>
+                    <select name="proyecto_id" v-model="copiar_cotizacion.proyecto_id" class="form-control" required
+                        id="proyecto-select" style="width: 300px;">
+                        @foreach ($proyectos as $proyecto)
+                            <option value="{{ $proyecto->id }}">
+                                {{ $proyecto->nombre }}--{{ $proyecto->cliente->nombre }}</option>
                         @endforeach
                     </select>
                 </div>
                 <div class="form-group text-right">
                     <button type="submit" class="btn btn-primary" :disabled="cargando">Guardar</button>
-                    <button type="button" class="btn btn-default"
-                            @click="openCopiar=false;">
+                    <button type="button" class="btn btn-default" @click="openCopiar=false;">
                         Cancelar
                     </button>
                 </div>
@@ -843,257 +863,251 @@
         <!-- /.Copiar Modal -->
 
         <!-- Confirmar Modal -->
-          <modal v-model="openConfirmar" :title="'Confirmar orden '+ordenModal.numero" :footer="false">
+        <modal v-model="openConfirmar" :title="'Confirmar orden ' + ordenModal.numero" :footer="false">
             <form class="" @submit.prevent="confirmarOrden()">
-              <div class="form-group">
-                <label class="control-label">Confirmación Fabrica</label>
-                <div class="file-loading">
-                  <input id="confirmacion" name="confirmacion" type="file" ref="confirmacion"
-                    @change="fijarConfirmacion()" required />
+                <div class="form-group">
+                    <label class="control-label">Confirmación Fabrica</label>
+                    <div class="file-loading">
+                        <input id="confirmacion" name="confirmacion" type="file" ref="confirmacion"
+                            @change="fijarConfirmacion()" required />
+                    </div>
+                    <div id="confirmacion-file-errors"></div>
+                    <div class="col-md-4">
+                        <label class="control-label">Monto total del Producto</label>
+                        <input type="number" step=0.01 class="form-control" v-model="ordenModal.monto_total_producto"
+                            min="0.0" @change="sumartotal('monto_producto')" />
+                    </div>
+                    <div class="col-md-4">
+                        <label class="control-label">Monto total del Flete</label>
+                        <input type="number" step=0.01 class="form-control" v-model="ordenModal.monto_total_flete"
+                            min="0.0" @change="sumartotal('monto_flete')" />
+                    </div>
+                    <div class="col-md-4">
+                        <label class="control-label">Posibles Aumentos</label>
+                        <input type="number" step=0.01 class="form-control" v-model="ordenModal.posibles_aumentos"
+                            min="0.0" @change="sumartotal('posibles')" />
+                    </div>
+                    <div class="col-md-4">
+                        <label class="control-label">Tax</label>
+                        <input type="number" step=0.01 class="form-control" v-model="ordenModal.tax" min="0.0"
+                            @change="sumartotal('tax')" />
+                    </div>
+                    <div class="col-md-4">
+                        <label class="control-label">Monto total a Pagar</label>
+                        <input type="number" step=0.01 class="form-control" v-model="ordenModal.monto_total_pagar"
+                            min="0.0" readonly />
+                    </div>
                 </div>
-                <div id="confirmacion-file-errors"></div>
-                <div class="col-md-4">
-                  <label class="control-label">Monto total del Producto</label>
-                  <input type="number" step=0.01 class="form-control" v-model="ordenModal.monto_total_producto" min="0.0" @change="sumartotal('monto_producto')"
-                     />
+                <div class="form-group text-right">
+                    <button type="submit" class="btn btn-primary" :disabled="cargando">Aceptar</button>
+                    <button type="button" class="btn btn-default" @click="ordenModal={}; openConfirmar=false;">
+                        Cancelar
+                    </button>
                 </div>
-                <div class="col-md-4">
-                  <label class="control-label">Monto total del Flete</label>
-                  <input type="number" step=0.01 class="form-control" v-model="ordenModal.monto_total_flete" min="0.0" @change="sumartotal('monto_flete')"
-                     />
-                </div>
-                <div class="col-md-4">
-                  <label class="control-label">Posibles Aumentos</label>
-                  <input type="number" step=0.01 class="form-control" v-model="ordenModal.posibles_aumentos" min="0.0" @change="sumartotal('posibles')"
-                     />
-                </div>
-                <div class="col-md-4">
-                  <label class="control-label">Tax</label>
-                  <input type="number" step=0.01 class="form-control" v-model="ordenModal.tax" min="0.0" @change="sumartotal('tax')"
-                     />
-                </div>
-                <div class="col-md-4">
-                  <label class="control-label">Monto total a Pagar</label>
-                  <input type="number" step=0.01 class="form-control" v-model="ordenModal.monto_total_pagar" min="0.0" readonly 
-                     />
-                </div>
-              </div>
-              <div class="form-group text-right">
-                <button type="submit" class="btn btn-primary" :disabled="cargando">Aceptar</button>
-                <button type="button" class="btn btn-default"
-                  @click="ordenModal={}; openConfirmar=false;">
-                  Cancelar
-                </button>
-              </div>
             </form>
-          </modal>
-          <!-- /.Confirmar Modal -->
+        </modal>
+        <!-- /.Confirmar Modal -->
 
 
-          <!-- Historial Modal -->
-          <modal v-model="openHistorial" title="Historial de cambios de status" :footer="false">
+        <!-- Historial Modal -->
+        <modal v-model="openHistorial" title="Historial de cambios de status" :footer="false">
             <div class="row">
-              <div class="col-sm-12">
-                <div class="table-responsive">
-                  <table class="table table-bordred">
-                    <thead>
-                      <th>Status</th>
-                      <th>Fecha estimada</th>
-                      <th>Fecha real</th>
-                    </thead>
-                    <tbody>
-                      <tr v-for="status in statuses">
-                        <td>@{{ status.status }}</td>
-                        <td v-if="ordenHistorial[status.propiedad_estimada]">@{{ ordenHistorial[status.propiedad_estimada] }}</td>
-                        <td v-else>
-                          <dropdown>
-                            <div class="input-group">
-                              <div class="input-group-btn">
-                                <btn class="dropdown-toggle" style="background-color:#fff;">
-                                  <i class="fas fa-calendar"></i>
-                                </btn>
-                              </div>
-                              <input class="form-control" type="text" placeholder="DD/MM/YYYY"
-                                v-model="ordenHistorial[status.propiedad_estimada]" readonly
-                                style="width:120px;"
-                              />
-                            </div>
-                            <template slot="dropdown">
-                              <li>
-                                <date-picker :locale="locale" :today-btn="false" :clear-btn="false"
-                                format="dd/MM/yyyy" :date-parser="dateParser"
-                                v-model="ordenHistorial[status.propiedad_estimada]"/>
-                              </li>
-                            </template>
-                          </dropdown>
-                        </td>
-                        <td>@{{ ordenHistorial[status.propiedad_real] }}</td>
-                      </tr>
-                    </tbody>
-                  </table>
+                <div class="col-sm-12">
+                    <div class="table-responsive">
+                        <table class="table table-bordred">
+                            <thead>
+                                <th>Status</th>
+                                <th>Fecha estimada</th>
+                                <th>Fecha real</th>
+                            </thead>
+                            <tbody>
+                                <tr v-for="status in statuses">
+                                    <td>@{{ status.status }}</td>
+                                    <td v-if="ordenHistorial[status.propiedad_estimada]">@{{ ordenHistorial[status.propiedad_estimada] }}</td>
+                                    <td v-else>
+                                        <dropdown>
+                                            <div class="input-group">
+                                                <div class="input-group-btn">
+                                                    <btn class="dropdown-toggle" style="background-color:#fff;">
+                                                        <i class="fas fa-calendar"></i>
+                                                    </btn>
+                                                </div>
+                                                <input class="form-control" type="text" placeholder="DD/MM/YYYY"
+                                                    v-model="ordenHistorial[status.propiedad_estimada]" readonly
+                                                    style="width:120px;" />
+                                            </div>
+                                            <template slot="dropdown">
+                                                <li>
+                                                    <date-picker :locale="locale" :today-btn="false"
+                                                        :clear-btn="false" format="dd/MM/yyyy"
+                                                        :date-parser="dateParser"
+                                                        v-model="ordenHistorial[status.propiedad_estimada]" />
+                                                </li>
+                                            </template>
+                                        </dropdown>
+                                    </td>
+                                    <td>@{{ ordenHistorial[status.propiedad_real] }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-              </div>
             </div>
             <div class="form-group text-right">
-              <button type="button" class="btn btn-unique" @click="fijarFechasEstimadas()">Fijar fechas estimadas</button>
-              <button type="button" class="btn btn-default" @click="openHistorial=false;">Aceptar</button>
+                <button type="button" class="btn btn-unique" @click="fijarFechasEstimadas()">Fijar fechas
+                    estimadas</button>
+                <button type="button" class="btn btn-default" @click="openHistorial=false;">Aceptar</button>
             </div>
-          </modal>
-          <!-- /.Historial Modal -->
+        </modal>
+        <!-- /.Historial Modal -->
 
-          <!-- Embarcar Modal -->
-          <modal v-model="openEmbarcar" :title="'Embarcar Orden '+embarcar.numero" :footer="false">
+        <!-- Embarcar Modal -->
+        <modal v-model="openEmbarcar" :title="'Embarcar Orden ' + embarcar.numero" :footer="false">
             <h4>Por favor proporcione los siguientes documentos:</h4>
             <form class="" @submit.prevent="embarcarOrden">
-              <div class="row">
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label class="control-label">Factura</label>
-                    <div class="file-loading">
-                      <input id="factura" name="factura" type="file" ref="factura"
-                      @change="fijarDocumentoEmbarque('factura')" required />
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label">Factura</label>
+                            <div class="file-loading">
+                                <input id="factura" name="factura" type="file" ref="factura"
+                                    @change="fijarDocumentoEmbarque('factura')" required />
+                            </div>
+                            <div id="factura-file-errors"></div>
+                        </div>
                     </div>
-                    <div id="factura-file-errors"></div>
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label class="control-label">Packing List</label>
-                    <div class="file-loading">
-                      <input id="packing" name="packing" type="file" ref="packing"
-                      @change="fijarDocumentoEmbarque('packing')" required />
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label">Packing List</label>
+                            <div class="file-loading">
+                                <input id="packing" name="packing" type="file" ref="packing"
+                                    @change="fijarDocumentoEmbarque('packing')" required />
+                            </div>
+                            <div id="packing-file-errors"></div>
+                        </div>
                     </div>
-                    <div id="packing-file-errors"></div>
-                  </div>
                 </div>
-              </div>
-              <div class="row">
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label class="control-label">BL</label>
-                    <div class="file-loading">
-                      <input id="bl" name="bl" type="file" ref="bl"
-                      @change="fijarDocumentoEmbarque('bl')" />
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label">BL</label>
+                            <div class="file-loading">
+                                <input id="bl" name="bl" type="file" ref="bl"
+                                    @change="fijarDocumentoEmbarque('bl')" />
+                            </div>
+                            <div id="bl-file-errors"></div>
+                        </div>
                     </div>
-                    <div id="bl-file-errors"></div>
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label class="control-label">Certificado de Origen</label>
-                    <div class="file-loading">
-                      <input id="certificado" name="certificado" type="file" ref="certificado"
-                      @change="fijarDocumentoEmbarque('certificado')" />
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label">Certificado de Origen</label>
+                            <div class="file-loading">
+                                <input id="certificado" name="certificado" type="file" ref="certificado"
+                                    @change="fijarDocumentoEmbarque('certificado')" />
+                            </div>
+                            <div id="certificado-file-errors"></div>
+                        </div>
                     </div>
-                    <div id="certificado-file-errors"></div>
-                  </div>
                 </div>
-              </div>
-              <div class="form-group text-right">
-                <button type="submit" class="btn btn-primary" :disabled="cargando">Aceptar</button>
-                <button type="button" class="btn btn-default"
-                  @click="embarcar.orden_id=0; openEmbarcar=false;">
-                  Cancelar
-                </button>
-              </div>
+                <div class="form-group text-right">
+                    <button type="submit" class="btn btn-primary" :disabled="cargando">Aceptar</button>
+                    <button type="button" class="btn btn-default" @click="embarcar.orden_id=0; openEmbarcar=false;">
+                        Cancelar
+                    </button>
+                </div>
             </form>
-          </modal>
-          <!-- /.Embarcar Modal -->
+        </modal>
+        <!-- /.Embarcar Modal -->
 
-          <!-- Frontera Modal -->
-          <modal v-model="openFrontera" :title="'Poner orden '+frontera.numero+' en frontera'" :footer="false">
+        <!-- Frontera Modal -->
+        <modal v-model="openFrontera" :title="'Poner orden ' + frontera.numero + ' en frontera'" :footer="false">
             <h4>Por favor proporcione los siguientes documentos:</h4>
             <form class="" @submit.prevent="fronteraOrden">
-              <div class="row">
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label class="control-label">Deposito de warehouse</label>
-                    <div class="file-loading">
-                      <input id="warehouse" name="deposito_warehouse" type="file"
-                      ref="deposito_warehouse" @change="fijarDocumentoFrontera('deposito_warehouse')"
-                      required />
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label">Deposito de warehouse</label>
+                            <div class="file-loading">
+                                <input id="warehouse" name="deposito_warehouse" type="file" ref="deposito_warehouse"
+                                    @change="fijarDocumentoFrontera('deposito_warehouse')" required />
+                            </div>
+                            <div id="warehouse-file-errors"></div>
+                        </div>
                     </div>
-                    <div id="warehouse-file-errors"></div>
-                  </div>
                 </div>
-              </div>
-              <div class="form-group text-right">
-                <button type="submit" class="btn btn-primary" :disabled="cargando">Aceptar</button>
-                <button type="button" class="btn btn-default"
-                  @click="frontera.orden_id=0; openFrontera=false;">
-                  Cancelar
-                </button>
-              </div>
+                <div class="form-group text-right">
+                    <button type="submit" class="btn btn-primary" :disabled="cargando">Aceptar</button>
+                    <button type="button" class="btn btn-default" @click="frontera.orden_id=0; openFrontera=false;">
+                        Cancelar
+                    </button>
+                </div>
             </form>
-          </modal>
-          <!-- /.Frontera Modal -->
+        </modal>
+        <!-- /.Frontera Modal -->
 
-          <!-- Aduana Modal -->
-          <modal v-model="openAduana" :title="'Mandar orden '+aduana.numero+' a Aduana'" :footer="false">
+        <!-- Aduana Modal -->
+        <modal v-model="openAduana" :title="'Mandar orden ' + aduana.numero + ' a Aduana'" :footer="false">
             <h4>Por favor proporcione los siguientes documentos:</h4>
             <form class="" @submit.prevent="aduanaOrden">
-              <div class="row">
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label class="control-label">Cuenta de Gastos</label>
-                    <div class="file-loading">
-                      <input id="gastos" name="gastos" type="file" ref="gastos"
-                      @change="fijarDocumentoAduana('gastos')" required />
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label">Cuenta de Gastos</label>
+                            <div class="file-loading">
+                                <input id="gastos" name="gastos" type="file" ref="gastos"
+                                    @change="fijarDocumentoAduana('gastos')" required />
+                            </div>
+                            <div id="gastos-file-errors"></div>
+                        </div>
                     </div>
-                    <div id="gastos-file-errors"></div>
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label class="control-label">Pago</label>
-                    <div class="file-loading">
-                      <input id="pago" name="pago" type="file" ref="pago"
-                      @change="fijarDocumentoAduana('pago')" required />
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label">Pago</label>
+                            <div class="file-loading">
+                                <input id="pago" name="pago" type="file" ref="pago"
+                                    @change="fijarDocumentoAduana('pago')" required />
+                            </div>
+                            <div id="pago-file-errors"></div>
+                        </div>
                     </div>
-                    <div id="pago-file-errors"></div>
-                  </div>
                 </div>
-              </div>
-              <div class="form-group text-right">
-                <button type="submit" class="btn btn-primary" :disabled="cargando">Aceptar</button>
-                <button type="button" class="btn btn-default"
-                  @click="aduana.orden_id=0; openAduana=false;">
-                  Cancelar
-                </button>
-              </div>
+                <div class="form-group text-right">
+                    <button type="submit" class="btn btn-primary" :disabled="cargando">Aceptar</button>
+                    <button type="button" class="btn btn-default" @click="aduana.orden_id=0; openAduana=false;">
+                        Cancelar
+                    </button>
+                </div>
             </form>
-          </modal>
-          <!-- /.Aduana Modal -->
+        </modal>
+        <!-- /.Aduana Modal -->
 
-          <!-- Frontera Modal -->
-          <modal v-model="openEntrega" :title="'Poner orden '+entrega.numero+' en entrega'" :footer="false">
+        <!-- Frontera Modal -->
+        <modal v-model="openEntrega" :title="'Poner orden ' + entrega.numero + ' en entrega'" :footer="false">
             <h4>Por favor proporcione los siguientes documentos:</h4>
             <form class="" @submit.prevent="entregaOrden">
-              <div class="row">
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label class="control-label">Carta de entrega</label>
-                    <div class="file-loading">
-                      <input id="carta" name="carta_entrega" type="file"
-                      ref="carta_entrega" @change="fijarDocumentoEntrega('carta_entrega')"
-                      required />
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label">Carta de entrega</label>
+                            <div class="file-loading">
+                                <input id="carta" name="carta_entrega" type="file" ref="carta_entrega"
+                                    @change="fijarDocumentoEntrega('carta_entrega')" required />
+                            </div>
+                            <div id="carta-file-errors"></div>
+                        </div>
                     </div>
-                    <div id="carta-file-errors"></div>
-                  </div>
                 </div>
-              </div>
-              <div class="form-group text-right">
-                <button type="submit" class="btn btn-primary" :disabled="cargando">Aceptar</button>
-                <button type="button" class="btn btn-default"
-                  @click="entrega.orden_id=0; openEntrega=false;">
-                  Cancelar
-                </button>
-              </div>
+                <div class="form-group text-right">
+                    <button type="submit" class="btn btn-primary" :disabled="cargando">Aceptar</button>
+                    <button type="button" class="btn btn-default" @click="entrega.orden_id=0; openEntrega=false;">
+                        Cancelar
+                    </button>
+                </div>
             </form>
-          </modal>
-          <!-- /.Frontera Modal -->
+        </modal>
+        <!-- /.Frontera Modal -->
 
-        
+
     </section>
 
 
@@ -1102,10 +1116,9 @@
 
 {{-- footer_scripts --}}
 @section('footer_scripts')
-<script src="{{ URL::asset('js/plugins/date-time/datetime-moment.js') }}" ></script>
-<script>
-
-    // Used for creating a new FileList in a round-about way
+    <script src="{{ URL::asset('js/plugins/date-time/datetime-moment.js') }}"></script>
+    <script>
+        // Used for creating a new FileList in a round-about way
         function FileListItem(a) {
             a = [].slice.call(Array.isArray(a) ? a : arguments)
             for (var c, b = c = a.length, d = !0; b-- && d;) d = a[b] instanceof File
@@ -1114,93 +1127,93 @@
             return b.files
         }
 
-  Vue.config.devtools = true;
+        Vue.config.devtools = true;
         const app = new Vue({
             el: '#content',
             data: {
-                statuses: [
-                {
-                  status: 'En fabricación',
-                  propiedad_estimada: 'fecha_estimada_fabricacion',
-                  propiedad_real: 'fecha_real_fabricacion'
-                },
-                {
-                  status: 'Embarcado de fabrica',
-                  propiedad_estimada: 'fecha_estimada_embarque',
-                  propiedad_real: 'fecha_real_embarque'
-                },
-                {
-                  status: 'En frontera',
-                  propiedad_estimada: 'fecha_estimada_frontera',
-                  propiedad_real: 'fecha_real_frontera'
-                },
-                {
-                  status: 'Aduana',
-                  propiedad_estimada: 'fecha_estimada_aduana',
-                  propiedad_real: 'fecha_real_aduana'
-                },
-                {
-                  status: 'Proceso de Importación',
-                  propiedad_estimada: 'fecha_estimada_importacion',
-                  propiedad_real: 'fecha_real_importacion'
-                },
-                {
-                  status: 'Liberado de Aduana',
-                  propiedad_estimada: 'fecha_estimada_liberado_aduana',
-                  propiedad_real: 'fecha_real_liberado_aduana'
-                },
-                {
-                  status: 'Embarque al destino Final',
-                  propiedad_estimada: 'fecha_estimada_embarque_final',
-                  propiedad_real: 'fecha_real_embarque_final'
-                },
-                {
-                  status: 'Descarga',
-                  propiedad_estimada: 'fecha_estimada_descarga',
-                  propiedad_real: 'fecha_real_descarga'
-                },
-                {
-                  status: 'Entrega',
-                  propiedad_estimada: 'fecha_estimada_entrega',
-                  propiedad_real: 'fecha_real_entrega'
-                },
-                {
-                  status: 'Instalacion',
-                  propiedad_estimada: 'fecha_estimada_instalacion',
-                  propiedad_real: 'fecha_real_instalacion'
-                },
-                {{-- {
+                statuses: [{
+                        status: 'En fabricación',
+                        propiedad_estimada: 'fecha_estimada_fabricacion',
+                        propiedad_real: 'fecha_real_fabricacion'
+                    },
+                    {
+                        status: 'Embarcado de fabrica',
+                        propiedad_estimada: 'fecha_estimada_embarque',
+                        propiedad_real: 'fecha_real_embarque'
+                    },
+                    {
+                        status: 'En frontera',
+                        propiedad_estimada: 'fecha_estimada_frontera',
+                        propiedad_real: 'fecha_real_frontera'
+                    },
+                    {
+                        status: 'Aduana',
+                        propiedad_estimada: 'fecha_estimada_aduana',
+                        propiedad_real: 'fecha_real_aduana'
+                    },
+                    {
+                        status: 'Proceso de Importación',
+                        propiedad_estimada: 'fecha_estimada_importacion',
+                        propiedad_real: 'fecha_real_importacion'
+                    },
+                    {
+                        status: 'Liberado de Aduana',
+                        propiedad_estimada: 'fecha_estimada_liberado_aduana',
+                        propiedad_real: 'fecha_real_liberado_aduana'
+                    },
+                    {
+                        status: 'Embarque al destino Final',
+                        propiedad_estimada: 'fecha_estimada_embarque_final',
+                        propiedad_real: 'fecha_real_embarque_final'
+                    },
+                    {
+                        status: 'Descarga',
+                        propiedad_estimada: 'fecha_estimada_descarga',
+                        propiedad_real: 'fecha_real_descarga'
+                    },
+                    {
+                        status: 'Entrega',
+                        propiedad_estimada: 'fecha_estimada_entrega',
+                        propiedad_real: 'fecha_real_entrega'
+                    },
+                    {
+                        status: 'Instalacion',
+                        propiedad_estimada: 'fecha_estimada_instalacion',
+                        propiedad_real: 'fecha_real_instalacion'
+                    },
+                    {{-- {
                   status: '',
                   propiedad_estimada: fecha_estimada_,
                   propiedad_real: fecha_real_
                 }, --}}
-              ],
+                ],
                 ordenHistorial: {},
-                ordenModal : {},
+                ordenModal: {},
                 locale: localeES,
                 prospecto: {!! json_encode($prospecto) !!},
                 ordenes: {!! json_encode($ordenes) !!},
-                 cuentas: {!! json_encode($cuentas) !!},
-                 ordenes_proceso: {!! json_encode($ordenes_proceso) !!},
-                 notas: {
+                cuentas: {!! json_encode($cuentas) !!},
+                ordenes_proceso: {!! json_encode($ordenes_proceso) !!},
+                notas: {
                     cotizacion_id: 0,
                     mensaje: ""
                 },
-                enviar_a:'',
+                enviar_a: '',
                 enviar: {
                     cotizacion_id: 0,
                     numero: 0,
                     email: [],
                     emailOpciones: [
-                            @foreach($prospecto->cliente->contactos as $contacto)
-                            @foreach($contacto->emails as $email)
-                        {
-                            id: "{{$email->email}}", text: "{{$email->email}}"
-                        },
-                        @endforeach
+                        @foreach ($prospecto->cliente->contactos as $contacto)
+                            @foreach ($contacto->emails as $email)
+                                {
+                                    id: "{{ $email->email }}",
+                                    text: "{{ $email->email }}"
+                                },
+                            @endforeach
                         @endforeach
                     ],
-                    mensaje: "Buenas tardes  .\n\nAnexo a la presente encontrarán la cotización solicitada de {{$prospecto->descripcion}}  para {{$prospecto->nombre}} .\n\nEsperamos esta información les sea de utilidad y quedamos a sus órdenes para cualquier duda o comentario.\n\nSaludos,\n\n{{auth()->user()->name}}.\n{{auth()->user()->email}}\nRobinson Contract Resources"
+                    mensaje: "Buenas tardes  .\n\nAnexo a la presente encontrarán la cotización solicitada de {{ $prospecto->descripcion }}  para {{ $prospecto->nombre }} .\n\nEsperamos esta información les sea de utilidad y quedamos a sus órdenes para cualquier duda o comentario.\n\nSaludos,\n\n{{ auth()->user()->name }}.\n{{ auth()->user()->email }}\nRobinson Contract Resources"
                 },
                 aceptar: {
                     cotizacion_id: 0,
@@ -1208,8 +1221,8 @@
                     fecha_comprobante: ""
                 },
                 copiar_cotizacion: {
-                    proyecto_id : '',
-                    cotizacion_id :'',
+                    proyecto_id: '',
+                    cotizacion_id: '',
                 },
                 embarcar: {
                     orden_id: 0,
@@ -1218,133 +1231,152 @@
                     packing: '',
                     bl: '',
                     certificado: ''
-                  },
-                  frontera: {
+                },
+                frontera: {
                     orden_id: 0,
                     numero: 0,
                     deposito_warehouse: ''
-                  },
-                  aduana: {
+                },
+                aduana: {
                     orden_id: 0,
                     numero: 0,
                     gastos: '',
                     pago: ''
-                  },
-                  entrega: {
+                },
+                entrega: {
                     orden_id: 0,
                     numero: 0,
                     carta_entrega: ''
-                  },
+                },
                 openNotas: false,
                 openAceptar: false,
                 openEnviar: false,
-                openCopiar : false,
+                openCopiar: false,
                 openConfirmar: false,
                 cargando: false,
                 openHistorial: false,
                 openEmbarcar: false,
                 openFrontera: false,
                 openAduana: false,
-                openEntrega: false
+                openEntrega: false,
+                time_in: '',
+                time_out: '',
             },
-            
+
             filters: {
-              formatoMoneda(numero){
-                return accounting.formatMoney(numero, "$", 2);
-              }
+                formatoMoneda(numero) {
+                    return accounting.formatMoney(numero, "$", 2);
+                }
             },
             computed: {
                 totales_cotizaciones() {
-                    var dolares = 0, pesos = 0;
-                    this.prospecto.cotizaciones.forEach(function (cotizacion) {
+                    var dolares = 0,
+                        pesos = 0;
+                    this.prospecto.cotizaciones.forEach(function(cotizacion) {
                         if (cotizacion.moneda == "Pesos") pesos += cotizacion.total;
                         else dolares += cotizacion.total;
                     });
-                    return {"dolares": dolares, "pesos": pesos}
+                    return {
+                        "dolares": dolares,
+                        "pesos": pesos
+                    }
                 },
                 totales_cotizaciones2() {
-                    var dolares = 0, pesos = 0;
-                    this.prospecto.cotizaciones_aprobadas.forEach(function (cotizacion) {
+                    var dolares = 0,
+                        pesos = 0;
+                    this.prospecto.cotizaciones_aprobadas.forEach(function(cotizacion) {
                         if (cotizacion.moneda == "Pesos") pesos += cotizacion.total;
                         else dolares += cotizacion.total;
                     });
-                    return {"dolares": dolares, "pesos": pesos}
+                    return {
+                        "dolares": dolares,
+                        "pesos": pesos
+                    }
                 }
             },
-            mounted(){
+            mounted() {
+                for (const actividad of this.prospecto.actividades) {
+                    if (actividad.horario != null) {
+                        console.log(actividad)
+                        var horarios = actividad.horario.split('-');
+                        this.time_in = horarios[0];
+                        this.time_out = horarios[1];
+                        console.log(this.time_in)
+                    }
+                }
 
                 $("#factura").fileinput({
-                language: 'es',
-                showPreview: false,
-                showUpload: false,
-                showRemove: false,
-                browseLabel: '',
-                allowedFileExtensions: ["jpg", "jpeg", "png", "pdf"],
-                elErrorContainer: '#factura-file-errors',
-              });
-              $("#packing").fileinput({
-                language: 'es',
-                showPreview: false,
-                showUpload: false,
-                showRemove: false,
-                browseLabel: '',
-                allowedFileExtensions: ["jpg", "jpeg", "png", "pdf"],
-                elErrorContainer: '#packing-file-errors',
-              });
-              $("#bl").fileinput({
-                language: 'es',
-                showPreview: false,
-                showUpload: false,
-                showRemove: false,
-                browseLabel: '',
-                allowedFileExtensions: ["jpg", "jpeg", "png", "pdf"],
-                elErrorContainer: '#bl-file-errors',
-              });
-              $("#certificado").fileinput({
-                language: 'es',
-                showPreview: false,
-                showUpload: false,
-                showRemove: false,
-                browseLabel: '',
-                allowedFileExtensions: ["jpg", "jpeg", "png", "pdf"],
-                elErrorContainer: '#certificado-file-errors',
-              });
-              $("#warehouse").fileinput({
-                language: 'es',
-                showPreview: false,
-                showUpload: false,
-                showRemove: false,
-                browseLabel: '',
-                allowedFileExtensions: ["jpg", "jpeg", "png", "pdf"],
-                elErrorContainer: '#warehouse-file-errors',
-              });
-              $("#gastos").fileinput({
-                language: 'es',
-                showPreview: false,
-                showUpload: false,
-                showRemove: false,
-                browseLabel: '',
-                allowedFileExtensions: ["jpg", "jpeg", "png", "pdf"],
-                elErrorContainer: '#gastos-file-errors',
-              });
-              $("#pago").fileinput({
-                language: 'es',
-                showPreview: false,
-                showUpload: false,
-                showRemove: false,
-                browseLabel: '',
-                allowedFileExtensions: ["jpg", "jpeg", "png", "pdf"],
-                elErrorContainer: '#certificado-file-errors',
-              });
-              $("#carta").fileinput({
-                language: 'es',
-                showPreview: false,
-                showUpload: false,
-                showRemove: false,
-                browseLabel: '',
-                allowedFileExtensions: ["jpg", "jpeg", "png", "pdf"],
-                elErrorContainer: '#carta-file-errors',
-              });
+                    language: 'es',
+                    showPreview: false,
+                    showUpload: false,
+                    showRemove: false,
+                    browseLabel: '',
+                    allowedFileExtensions: ["jpg", "jpeg", "png", "pdf"],
+                    elErrorContainer: '#factura-file-errors',
+                });
+                $("#packing").fileinput({
+                    language: 'es',
+                    showPreview: false,
+                    showUpload: false,
+                    showRemove: false,
+                    browseLabel: '',
+                    allowedFileExtensions: ["jpg", "jpeg", "png", "pdf"],
+                    elErrorContainer: '#packing-file-errors',
+                });
+                $("#bl").fileinput({
+                    language: 'es',
+                    showPreview: false,
+                    showUpload: false,
+                    showRemove: false,
+                    browseLabel: '',
+                    allowedFileExtensions: ["jpg", "jpeg", "png", "pdf"],
+                    elErrorContainer: '#bl-file-errors',
+                });
+                $("#certificado").fileinput({
+                    language: 'es',
+                    showPreview: false,
+                    showUpload: false,
+                    showRemove: false,
+                    browseLabel: '',
+                    allowedFileExtensions: ["jpg", "jpeg", "png", "pdf"],
+                    elErrorContainer: '#certificado-file-errors',
+                });
+                $("#warehouse").fileinput({
+                    language: 'es',
+                    showPreview: false,
+                    showUpload: false,
+                    showRemove: false,
+                    browseLabel: '',
+                    allowedFileExtensions: ["jpg", "jpeg", "png", "pdf"],
+                    elErrorContainer: '#warehouse-file-errors',
+                });
+                $("#gastos").fileinput({
+                    language: 'es',
+                    showPreview: false,
+                    showUpload: false,
+                    showRemove: false,
+                    browseLabel: '',
+                    allowedFileExtensions: ["jpg", "jpeg", "png", "pdf"],
+                    elErrorContainer: '#gastos-file-errors',
+                });
+                $("#pago").fileinput({
+                    language: 'es',
+                    showPreview: false,
+                    showUpload: false,
+                    showRemove: false,
+                    browseLabel: '',
+                    allowedFileExtensions: ["jpg", "jpeg", "png", "pdf"],
+                    elErrorContainer: '#certificado-file-errors',
+                });
+                $("#carta").fileinput({
+                    language: 'es',
+                    showPreview: false,
+                    showUpload: false,
+                    showRemove: false,
+                    browseLabel: '',
+                    allowedFileExtensions: ["jpg", "jpeg", "png", "pdf"],
+                    elErrorContainer: '#carta-file-errors',
+                });
 
                 $("#confirmacion").fileinput({
                     language: 'es',
@@ -1353,7 +1385,7 @@
                     showRemove: false,
                     allowedFileExtensions: ["jpg", "jpeg", "png", "pdf"],
                     elErrorContainer: '#confirmacion-file-errors',
-                  });
+                });
 
                 $("#comprobante").fileinput({
                     language: 'es',
@@ -1364,431 +1396,505 @@
                     elErrorContainer: '#comprobante-file-errors',
                 });
 
-              this.tabla = $("#tabla_cuentas").DataTable({
-                "footerCallback": function ( row, data, start, end, display ) {
-                    var api = this.api(), data;
+                this.tabla = $("#tabla_cuentas").DataTable({
+                    "footerCallback": function(row, data, start, end, display) {
+                        var api = this.api(),
+                            data;
 
-                    var formato = function ( i ) {
-                        return typeof i === 'string' ?
-                            i.replace(/[\$,]/g, '')*1 :
-                            typeof i === 'number' ?
+                        var formato = function(i) {
+                            return typeof i === 'string' ?
+                                i.replace(/[\$,]/g, '') * 1 :
+                                typeof i === 'number' ?
                                 i : 0;
-                    };
-                    //datos de la tabla con filtros aplicados
-                    var datos= api.columns([7,6], {search: 'applied'}).data();
-                    var totalMxn = 0;
-                    var totalUsd = 0;
-                    //suma de montos
-                    datos[0].forEach(function(element, index){
-                        if(datos[1][index]=="Dolares"){
-                            totalUsd+=formato(element)
-                        }else{
-                            totalMxn+=formato(element)
-                        }
-                    });
-         
-                    // Actualizar
-                    var nCells = row.getElementsByTagName('th');
-                    nCells[1].innerHTML = accounting.formatMoney(totalMxn, "$", 2);
+                        };
+                        //datos de la tabla con filtros aplicados
+                        var datos = api.columns([7, 6], {
+                            search: 'applied'
+                        }).data();
+                        var totalMxn = 0;
+                        var totalUsd = 0;
+                        //suma de montos
+                        datos[0].forEach(function(element, index) {
+                            if (datos[1][index] == "Dolares") {
+                                totalUsd += formato(element)
+                            } else {
+                                totalMxn += formato(element)
+                            }
+                        });
 
-                    var secondRow = $(row).next()[0]; 
-                    var nCells = secondRow.getElementsByTagName('th');
-                    nCells[1].innerHTML = accounting.formatMoney(totalUsd, "$", 2);
-                }
+                        // Actualizar
+                        var nCells = row.getElementsByTagName('th');
+                        nCells[1].innerHTML = accounting.formatMoney(totalMxn, "$", 2);
 
-              });
+                        var secondRow = $(row).next()[0];
+                        var nCells = secondRow.getElementsByTagName('th');
+                        nCells[1].innerHTML = accounting.formatMoney(totalUsd, "$", 2);
+                    }
+
+                });
             },
-            methods :{
-              embarcarModal(orden){
-                this.embarcar.orden_id=orden.id;
-                this.embarcar.numero=orden.numero;
-                this.openEmbarcar=true;
-              },
-                fronteraModal(orden){
-                this.frontera.orden_id=orden.id;
-                this.frontera.numero=orden.numero;
-                this.openFrontera=true;
-              },
-              aduanaModal(orden){
-                this.aduana.orden_id=orden.id;
-                this.aduana.numero=orden.numero;
-                this.openAduana=true;
-              },
-              entregaModal(orden){
-                this.entrega.orden_id=orden.id;
-                this.entrega.numero=orden.numero;
-                this.openEntrega=true;
-              },
-              fijarDocumentoEmbarque(documento){
-                this.embarcar[documento] = this.$refs[documento].files[0];
-              },
-              fijarDocumentoFrontera(documento){
-                this.frontera[documento] = this.$refs[documento].files[0];
-              },
-              fijarDocumentoAduana(documento){
-                this.aduana[documento] = this.$refs[documento].files[0];
-              },
-              fijarDocumentoEntrega(documento){
-                this.entrega[documento] = this.$refs[documento].files[0];
-              },
+            methods: {
+                embarcarModal(orden) {
+                    this.embarcar.orden_id = orden.id;
+                    this.embarcar.numero = orden.numero;
+                    this.openEmbarcar = true;
+                },
+                fronteraModal(orden) {
+                    this.frontera.orden_id = orden.id;
+                    this.frontera.numero = orden.numero;
+                    this.openFrontera = true;
+                },
+                aduanaModal(orden) {
+                    this.aduana.orden_id = orden.id;
+                    this.aduana.numero = orden.numero;
+                    this.openAduana = true;
+                },
+                entregaModal(orden) {
+                    this.entrega.orden_id = orden.id;
+                    this.entrega.numero = orden.numero;
+                    this.openEntrega = true;
+                },
+                fijarDocumentoEmbarque(documento) {
+                    this.embarcar[documento] = this.$refs[documento].files[0];
+                },
+                fijarDocumentoFrontera(documento) {
+                    this.frontera[documento] = this.$refs[documento].files[0];
+                },
+                fijarDocumentoAduana(documento) {
+                    this.aduana[documento] = this.$refs[documento].files[0];
+                },
+                fijarDocumentoEntrega(documento) {
+                    this.entrega[documento] = this.$refs[documento].files[0];
+                },
 
-               format_date(value){
-                 if (value) {
-                   return moment(String(value)).format('DD/MM/YYYY')
-                  }
-              },
-              updateStatus(orden){
-                this.cargando = true;
-                axios.post('/ordenes-proceso/'+orden.id+'/updateStatus',{status:orden.status})
-                .then(({data}) => {
-                  for (propiedad in data.actualizados){
-                    orden[propiedad] = data.actualizados[propiedad];
-                  }
-
-                  this.cargando = false;
-                  swal({
-                    title: "Orden Actualizada",
-                    text: 'Se ha actualizado la orden',
-                    type: "success"
-                  });
-                })
-                .catch(({response}) => {
-                  console.error(response);
-                  this.cargando = false;
-                  swal({
-                    title: "Error",
-                    text: response.data.message || "Ocurrio un error inesperado, intente mas tarde",
-                    type: "error"
-                  });
-                });
-              },
-              fijarFechasEstimadas(){
-                this.cargando = true;
-                axios.post(
-                  '/ordenes-proceso/'+this.ordenHistorial.id+'/fijarFechasEstimadas',
-                  this.ordenHistorial
-                )
-                .then(({data}) => {
-                  this.ordenes.find(function(orden){
-                    if(this.ordenHistorial.id == orden.id){
-                      for (propiedad in data.actualizados){
-                        orden[propiedad] = data.actualizados[propiedad];
-                      }
-                      return true;
+                format_date(value) {
+                    if (value) {
+                        return moment(String(value)).format('DD/MM/YYYY')
                     }
-                  }, this);
-                  this.cargando = false;
-                  this.openHistorial = false;
-                  this.ordenHistorial = {};
-                  swal({
-                    title: "Fechas Actualizadas",
-                    text: 'Se han actualizado las fechas estimadas de la orden',
-                    type: "success"
-                  });
-                })
-                .catch(({response}) => {
-                  console.error(response);
-                  this.cargando = false;
-                  swal({
-                    title: "Error",
-                    text: response.data.message || "Ocurrio un error inesperado, intente mas tarde",
-                    type: "error"
-                  });
-                });
-              },//fin fijarFechasEstimadas
-              embarcarOrden(){
-                var formData = objectToFormData(this.embarcar, {indices:true});
+                },
+                updateStatus(orden) {
+                    this.cargando = true;
+                    axios.post('/ordenes-proceso/' + orden.id + '/updateStatus', {
+                            status: orden.status
+                        })
+                        .then(({
+                            data
+                        }) => {
+                            for (propiedad in data.actualizados) {
+                                orden[propiedad] = data.actualizados[propiedad];
+                            }
 
-                this.cargando = true;
-                axios.post('/ordenes-proceso/'+this.embarcar.orden_id+'/embarcar', formData, {
-                  headers: { 'Content-Type': 'multipart/form-data'}
-                })
-                .then(({data}) => {
-                  this.ordenes.find(function(orden){
-                    if(this.embarcar.orden_id == orden.id){
-                      orden.status = data.orden.status;
-                      orden.factura = data.orden.factura;
-                      orden.packing = data.orden.packing;
-                      orden.bl = data.orden.bl;
-                      orden.certificado = data.orden.certificado;
-                      orden.fecha_real_fabricacion = data.orden.fecha_real_fabricacion;
-                      return true;
-                    }
-                  }, this);
+                            this.cargando = false;
+                            swal({
+                                title: "Orden Actualizada",
+                                text: 'Se ha actualizado la orden',
+                                type: "success"
+                            });
+                        })
+                        .catch(({
+                            response
+                        }) => {
+                            console.error(response);
+                            this.cargando = false;
+                            swal({
+                                title: "Error",
+                                text: response.data.message ||
+                                    "Ocurrio un error inesperado, intente mas tarde",
+                                type: "error"
+                            });
+                        });
+                },
+                fijarFechasEstimadas() {
+                    this.cargando = true;
+                    axios.post(
+                            '/ordenes-proceso/' + this.ordenHistorial.id + '/fijarFechasEstimadas',
+                            this.ordenHistorial
+                        )
+                        .then(({
+                            data
+                        }) => {
+                            this.ordenes.find(function(orden) {
+                                if (this.ordenHistorial.id == orden.id) {
+                                    for (propiedad in data.actualizados) {
+                                        orden[propiedad] = data.actualizados[propiedad];
+                                    }
+                                    return true;
+                                }
+                            }, this);
+                            this.cargando = false;
+                            this.openHistorial = false;
+                            this.ordenHistorial = {};
+                            swal({
+                                title: "Fechas Actualizadas",
+                                text: 'Se han actualizado las fechas estimadas de la orden',
+                                type: "success"
+                            });
+                        })
+                        .catch(({
+                            response
+                        }) => {
+                            console.error(response);
+                            this.cargando = false;
+                            swal({
+                                title: "Error",
+                                text: response.data.message ||
+                                    "Ocurrio un error inesperado, intente mas tarde",
+                                type: "error"
+                            });
+                        });
+                }, //fin fijarFechasEstimadas
+                embarcarOrden() {
+                    var formData = objectToFormData(this.embarcar, {
+                        indices: true
+                    });
 
-                  this.embarcar = {
-                    orden_id: 0,
-                    factura: '',
-                    packing: '',
-                    bl: '',
-                    certificado: ''
-                  };
-                  $("#factura").fileinput('clear');
-                  $("#packing").fileinput('clear');
-                  $("#bl").fileinput('clear');
-                  $("#certificado").fileinput('clear');
-                  this.openEmbarcar = false;
-                  this.cargando = false;
-                  swal({
-                    title: "Orden Embarcada",
-                    text: 'La orden ha pasado al status "Embarcado de fabrica"',
-                    type: "success"
-                  });
-                })
-                .catch(({response}) => {
-                  console.error(response);
-                  this.cargando = false;
-                  swal({
-                    title: "Error",
-                    text: response.data.message || "Ocurrio un error inesperado, intente mas tarde",
-                    type: "error"
-                  });
-                });
-              },//fin embarcarOrden
-              fronteraOrden(){
-                var formData = objectToFormData(this.frontera, {indices:true});
+                    this.cargando = true;
+                    axios.post('/ordenes-proceso/' + this.embarcar.orden_id + '/embarcar', formData, {
+                            headers: {
+                                'Content-Type': 'multipart/form-data'
+                            }
+                        })
+                        .then(({
+                            data
+                        }) => {
+                            this.ordenes.find(function(orden) {
+                                if (this.embarcar.orden_id == orden.id) {
+                                    orden.status = data.orden.status;
+                                    orden.factura = data.orden.factura;
+                                    orden.packing = data.orden.packing;
+                                    orden.bl = data.orden.bl;
+                                    orden.certificado = data.orden.certificado;
+                                    orden.fecha_real_fabricacion = data.orden.fecha_real_fabricacion;
+                                    return true;
+                                }
+                            }, this);
 
-                this.cargando = true;
-                axios.post('/ordenes-proceso/'+this.frontera.orden_id+'/frontera', formData, {
-                  headers: { 'Content-Type': 'multipart/form-data'}
-                })
-                .then(({data}) => {
-                  this.ordenes.find(function(orden){
-                    if(this.frontera.orden_id == orden.id){
-                      orden.status = data.orden.status;
-                      orden.deposito_warehouse = data.orden.deposito_warehouse;
-                      orden.fecha_real_embarque = data.orden.fecha_real_embarque;
-                      return true;
-                    }
-                  }, this);
+                            this.embarcar = {
+                                orden_id: 0,
+                                factura: '',
+                                packing: '',
+                                bl: '',
+                                certificado: ''
+                            };
+                            $("#factura").fileinput('clear');
+                            $("#packing").fileinput('clear');
+                            $("#bl").fileinput('clear');
+                            $("#certificado").fileinput('clear');
+                            this.openEmbarcar = false;
+                            this.cargando = false;
+                            swal({
+                                title: "Orden Embarcada",
+                                text: 'La orden ha pasado al status "Embarcado de fabrica"',
+                                type: "success"
+                            });
+                        })
+                        .catch(({
+                            response
+                        }) => {
+                            console.error(response);
+                            this.cargando = false;
+                            swal({
+                                title: "Error",
+                                text: response.data.message ||
+                                    "Ocurrio un error inesperado, intente mas tarde",
+                                type: "error"
+                            });
+                        });
+                }, //fin embarcarOrden
+                fronteraOrden() {
+                    var formData = objectToFormData(this.frontera, {
+                        indices: true
+                    });
 
-                  this.frontera = {
-                    orden_id: 0,
-                    deposito_warehouse: '',
-                  };
-                  $("#warehouse").fileinput('clear');
-                  this.openFrontera = false;
-                  this.cargando = false;
-                  swal({
-                    title: "Orden en frontera",
-                    text: 'La orden ha pasado al status "En frontera"',
-                    type: "success"
-                  });
-                })
-                .catch(({response}) => {
-                  console.error(response);
-                  this.cargando = false;
-                  swal({
-                    title: "Error",
-                    text: response.data.message || "Ocurrio un error inesperado, intente mas tarde",
-                    type: "error"
-                  });
-                });
-              },//fin fronteraOrden
-              aduanaOrden(){
-                var formData = objectToFormData(this.aduana, {indices:true});
+                    this.cargando = true;
+                    axios.post('/ordenes-proceso/' + this.frontera.orden_id + '/frontera', formData, {
+                            headers: {
+                                'Content-Type': 'multipart/form-data'
+                            }
+                        })
+                        .then(({
+                            data
+                        }) => {
+                            this.ordenes.find(function(orden) {
+                                if (this.frontera.orden_id == orden.id) {
+                                    orden.status = data.orden.status;
+                                    orden.deposito_warehouse = data.orden.deposito_warehouse;
+                                    orden.fecha_real_embarque = data.orden.fecha_real_embarque;
+                                    return true;
+                                }
+                            }, this);
 
-                this.cargando = true;
-                axios.post('/ordenes-proceso/'+this.aduana.orden_id+'/aduana', formData, {
-                  headers: { 'Content-Type': 'multipart/form-data'}
-                })
-                .then(({data}) => {
-                  this.ordenes.find(function(orden){
-                    if(this.aduana.orden_id == orden.id){
-                      orden.status = data.orden.status;
-                      orden.gastos = data.orden.gastos;
-                      orden.pago = data.orden.pago;
-                      orden.fecha_real_frontera = data.orden.fecha_real_frontera;
-                      return true;
-                    }
-                  }, this);
+                            this.frontera = {
+                                orden_id: 0,
+                                deposito_warehouse: '',
+                            };
+                            $("#warehouse").fileinput('clear');
+                            this.openFrontera = false;
+                            this.cargando = false;
+                            swal({
+                                title: "Orden en frontera",
+                                text: 'La orden ha pasado al status "En frontera"',
+                                type: "success"
+                            });
+                        })
+                        .catch(({
+                            response
+                        }) => {
+                            console.error(response);
+                            this.cargando = false;
+                            swal({
+                                title: "Error",
+                                text: response.data.message ||
+                                    "Ocurrio un error inesperado, intente mas tarde",
+                                type: "error"
+                            });
+                        });
+                }, //fin fronteraOrden
+                aduanaOrden() {
+                    var formData = objectToFormData(this.aduana, {
+                        indices: true
+                    });
 
-                  this.aduana = {
-                    orden_id: 0,
-                    gastos: '',
-                    pago: '',
-                  };
-                  $("#gastos").fileinput('clear');
-                  $("#pago").fileinput('clear');
-                  this.openAduana = false;
-                  this.cargando = false;
-                  swal({
-                    title: "Orden a Aduana",
-                    text: 'La orden ha pasado al status "Aduana"',
-                    type: "success"
-                  });
-                })
-                .catch(({response}) => {
-                  console.error(response);
-                  this.cargando = false;
-                  swal({
-                    title: "Error",
-                    text: response.data.message || "Ocurrio un error inesperado, intente mas tarde",
-                    type: "error"
-                  });
-                });
-              },//fin aduanaOrden
-              entregaOrden(){
-                var formData = objectToFormData(this.entrega, {indices:true});
+                    this.cargando = true;
+                    axios.post('/ordenes-proceso/' + this.aduana.orden_id + '/aduana', formData, {
+                            headers: {
+                                'Content-Type': 'multipart/form-data'
+                            }
+                        })
+                        .then(({
+                            data
+                        }) => {
+                            this.ordenes.find(function(orden) {
+                                if (this.aduana.orden_id == orden.id) {
+                                    orden.status = data.orden.status;
+                                    orden.gastos = data.orden.gastos;
+                                    orden.pago = data.orden.pago;
+                                    orden.fecha_real_frontera = data.orden.fecha_real_frontera;
+                                    return true;
+                                }
+                            }, this);
 
-                this.cargando = true;
-                axios.post('/ordenes-proceso/'+this.entrega.orden_id+'/entrega', formData, {
-                  headers: { 'Content-Type': 'multipart/form-data'}
-                })
-                .then(({data}) => {
-                  this.ordenes.find(function(orden){
-                    if(this.entrega.orden_id == orden.id){
-                      orden.status = data.orden.status;
-                      orden.carta_entrega = data.orden.carta_entrega;
-                      orden.fecha_real_descarga = data.orden.fecha_real_descarga;
-                      return true;
-                    }
-                  }, this);
+                            this.aduana = {
+                                orden_id: 0,
+                                gastos: '',
+                                pago: '',
+                            };
+                            $("#gastos").fileinput('clear');
+                            $("#pago").fileinput('clear');
+                            this.openAduana = false;
+                            this.cargando = false;
+                            swal({
+                                title: "Orden a Aduana",
+                                text: 'La orden ha pasado al status "Aduana"',
+                                type: "success"
+                            });
+                        })
+                        .catch(({
+                            response
+                        }) => {
+                            console.error(response);
+                            this.cargando = false;
+                            swal({
+                                title: "Error",
+                                text: response.data.message ||
+                                    "Ocurrio un error inesperado, intente mas tarde",
+                                type: "error"
+                            });
+                        });
+                }, //fin aduanaOrden
+                entregaOrden() {
+                    var formData = objectToFormData(this.entrega, {
+                        indices: true
+                    });
 
-                  this.entrega = {
-                    orden_id: 0,
-                    carta_entrega: '',
-                  };
-                  $("#carta").fileinput('clear');
-                  this.openEntrega = false;
-                  this.cargando = false;
-                  swal({
-                    title: "Orden Entregada",
-                    text: 'La orden ha pasado al status "Entregado"',
-                    type: "success"
-                  });
-                })
-                .catch(({response}) => {
-                  console.error(response);
-                  this.cargando = false;
-                  swal({
-                    title: "Error",
-                    text: response.data.message || "Ocurrio un error inesperado, intente mas tarde",
-                    type: "error"
-                  });
-                });
-              },//fin entregaOrden
+                    this.cargando = true;
+                    axios.post('/ordenes-proceso/' + this.entrega.orden_id + '/entrega', formData, {
+                            headers: {
+                                'Content-Type': 'multipart/form-data'
+                            }
+                        })
+                        .then(({
+                            data
+                        }) => {
+                            this.ordenes.find(function(orden) {
+                                if (this.entrega.orden_id == orden.id) {
+                                    orden.status = data.orden.status;
+                                    orden.carta_entrega = data.orden.carta_entrega;
+                                    orden.fecha_real_descarga = data.orden.fecha_real_descarga;
+                                    return true;
+                                }
+                            }, this);
 
-                confirmarOrden(){
+                            this.entrega = {
+                                orden_id: 0,
+                                carta_entrega: '',
+                            };
+                            $("#carta").fileinput('clear');
+                            this.openEntrega = false;
+                            this.cargando = false;
+                            swal({
+                                title: "Orden Entregada",
+                                text: 'La orden ha pasado al status "Entregado"',
+                                type: "success"
+                            });
+                        })
+                        .catch(({
+                            response
+                        }) => {
+                            console.error(response);
+                            this.cargando = false;
+                            swal({
+                                title: "Error",
+                                text: response.data.message ||
+                                    "Ocurrio un error inesperado, intente mas tarde",
+                                type: "error"
+                            });
+                        });
+                }, //fin entregaOrden
 
-                var data = {};
-                data.confirmacion_fabrica = this.ordenModal.confirmacion_fabrica;
-                data.monto_total_producto = this.ordenModal.monto_total_producto;
-                data.monto_total_pagar = this.ordenModal.monto_total_pagar;
-                data.monto_total_flete = this.ordenModal.monto_total_flete;
-                data.tax = this.ordenModal.tax;
-                data.posibles_aumentos = this.ordenModal.posibles_aumentos;
-                console.log(data);
+                confirmarOrden() {
 
-
-                var formData = objectToFormData(data, {indices:true});
-
-                this.cargando = true;
-                axios.post('/proyectos-aprobados/'+this.ordenModal.proyecto_id+'/ordenes-compra/'+this.ordenModal.id+'/confirmar', 
-                formData, { headers: { 'Content-Type': 'multipart/form-data'}
-              })
-                .then(({data}) => {
-                  this.ordenModal.status = 'Confirmada';
-                  this.ordenModal.confirmacion_fabrica = data.confirmacion;
-                  
-                  $("#confirmacion").fileinput('clear');
-
-                  this.ordenModal.monto_total_producto = 0.0;
-                  this.ordenModal.monto_total_pagar= 0.0;
-                  this.ordenModal.monto_total_flete= 0.0;
-                  this.ordenModal.tax= 0.0;
-                  this.ordenModal.posibles_aumentos= 0.0;
-
-                  this.openConfirmar = false;
-                  this.cargando = false;
-                  swal({
-                    title: "Exito",
-                    text: "La orden ha sido confirmada",
-                    type: "success"
-                  });
-
-                })
-                .catch(({response}) => {
-                  console.error(response);
-                  this.cargando = false;
-                  swal({
-                    title: "Error",
-                    text: response.data.message || "Ocurrio un error inesperado, intente mas tarde",
-                    type: "error"
-                  });
-                });
+                    var data = {};
+                    data.confirmacion_fabrica = this.ordenModal.confirmacion_fabrica;
+                    data.monto_total_producto = this.ordenModal.monto_total_producto;
+                    data.monto_total_pagar = this.ordenModal.monto_total_pagar;
+                    data.monto_total_flete = this.ordenModal.monto_total_flete;
+                    data.tax = this.ordenModal.tax;
+                    data.posibles_aumentos = this.ordenModal.posibles_aumentos;
+                    console.log(data);
 
 
-              },//fin confirmarOrden
-                fijarConfirmacion(){
+                    var formData = objectToFormData(data, {
+                        indices: true
+                    });
+
+                    this.cargando = true;
+                    axios.post('/proyectos-aprobados/' + this.ordenModal.proyecto_id + '/ordenes-compra/' + this
+                            .ordenModal.id + '/confirmar',
+                            formData, {
+                                headers: {
+                                    'Content-Type': 'multipart/form-data'
+                                }
+                            })
+                        .then(({
+                            data
+                        }) => {
+                            this.ordenModal.status = 'Confirmada';
+                            this.ordenModal.confirmacion_fabrica = data.confirmacion;
+
+                            $("#confirmacion").fileinput('clear');
+
+                            this.ordenModal.monto_total_producto = 0.0;
+                            this.ordenModal.monto_total_pagar = 0.0;
+                            this.ordenModal.monto_total_flete = 0.0;
+                            this.ordenModal.tax = 0.0;
+                            this.ordenModal.posibles_aumentos = 0.0;
+
+                            this.openConfirmar = false;
+                            this.cargando = false;
+                            swal({
+                                title: "Exito",
+                                text: "La orden ha sido confirmada",
+                                type: "success"
+                            });
+
+                        })
+                        .catch(({
+                            response
+                        }) => {
+                            console.error(response);
+                            this.cargando = false;
+                            swal({
+                                title: "Error",
+                                text: response.data.message ||
+                                    "Ocurrio un error inesperado, intente mas tarde",
+                                type: "error"
+                            });
+                        });
+
+
+                }, //fin confirmarOrden
+                fijarConfirmacion() {
                     this.ordenModal.confirmacion_fabrica = this.$refs['confirmacion'].files[0];
-                  },
-                sumartot(){
-                    this.ordenModal.monto_total_pagar = parseFloat(this.ordenModal.monto_total_flete) + parseFloat(this.ordenModal.monto_total_producto);
-                  },
-                sumartotal(valor){
-       
+                },
+                sumartot() {
+                    this.ordenModal.monto_total_pagar = parseFloat(this.ordenModal.monto_total_flete) + parseFloat(
+                        this.ordenModal.monto_total_producto);
+                },
+                sumartotal(valor) {
+
                     if (valor == 'monto_producto') {
-                      if (this.ordenModal.monto_total_producto != null || this.ordenModal.monto_total_producto != "" ) {
-                          this.ordenModal.monto_total_pagar = parseFloat(this.ordenModal.monto_total_pagar) + parseFloat(this.ordenModal.monto_total_producto); 
-                      }  
+                        if (this.ordenModal.monto_total_producto != null || this.ordenModal.monto_total_producto !=
+                            "") {
+                            this.ordenModal.monto_total_pagar = parseFloat(this.ordenModal.monto_total_pagar) +
+                                parseFloat(this.ordenModal.monto_total_producto);
+                        }
                     }
                     if (valor == 'monto_flete') {
-                        if (this.ordenModal.monto_total_flete != null || this.ordenModal.monto_total_flete != "" ) {
-                            this.ordenModal.monto_total_pagar =parseFloat(this.ordenModal.monto_total_pagar) +  parseFloat(this.ordenModal.monto_total_flete);  
+                        if (this.ordenModal.monto_total_flete != null || this.ordenModal.monto_total_flete != "") {
+                            this.ordenModal.monto_total_pagar = parseFloat(this.ordenModal.monto_total_pagar) +
+                                parseFloat(this.ordenModal.monto_total_flete);
                         }
                     }
 
                     if (valor == 'tax') {
-                        if (this.ordenModal.tax != null || this.ordenModal.tax != "" ) {
-                          this.ordenModal.monto_total_pagar = parseFloat(this.ordenModal.monto_total_pagar) +  parseFloat(this.ordenModal.tax);  
-                      }
+                        if (this.ordenModal.tax != null || this.ordenModal.tax != "") {
+                            this.ordenModal.monto_total_pagar = parseFloat(this.ordenModal.monto_total_pagar) +
+                                parseFloat(this.ordenModal.tax);
+                        }
                     }
 
                     if (valor == 'posibles') {
-                        if (this.ordenModal.posibles_aumentos != null || this.ordenModal.posibles_aumentos != "" ) {
-                          this.ordenModal.monto_total_pagar = parseFloat(this.ordenModal.monto_total_pagar) +  parseFloat(this.ordenModal.posibles_aumentos);  
-                      }
+                        if (this.ordenModal.posibles_aumentos != null || this.ordenModal.posibles_aumentos != "") {
+                            this.ordenModal.monto_total_pagar = parseFloat(this.ordenModal.monto_total_pagar) +
+                                parseFloat(this.ordenModal.posibles_aumentos);
+                        }
 
                     }
-                    
-                    
-                    
-                    
-                    
-                  },
-                cancelarOrden(orden){
+
+
+
+
+
+                },
+                cancelarOrden(orden) {
                     swal({
-                      title: 'Cuidado',
-                      text: "Cancelar la orden "+orden.id+"?",
-                      type: 'warning',
-                      showCancelButton: true,
-                      confirmButtonColor: '#3085d6',
-                      cancelButtonColor: '#d33',
-                      confirmButtonText: 'Si, Cancelar',
-                      cancelButtonText: 'No, dejar sin cancelar',
+                        title: 'Cuidado',
+                        text: "Cancelar la orden " + orden.id + "?",
+                        type: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Si, Cancelar',
+                        cancelButtonText: 'No, dejar sin cancelar',
                     }).then((result) => {
-                      if (result.value) {
-                        axios.delete('/proyectos-aprobados/'+orden.proyecto_id+'/ordenes-compra/'+orden.id, {})
-                        .then(({data}) => {
-                          orden.status = 'Cancelada';
-                          swal({
-                            title: "Exito",
-                            text: "La orden se ha cancelado",
-                            type: "success"
-                          });
-                        })
-                        .catch(({response}) => {
-                          console.error(response);
-                          swal({
-                            title: "Error",
-                            text: response.data.message || "Ocurrio un error inesperado, intente mas tarde",
-                            type: "error"
-                          });
-                        });
-                      } //if confirmacion
+                        if (result.value) {
+                            axios.delete('/proyectos-aprobados/' + orden.proyecto_id + '/ordenes-compra/' +
+                                    orden.id, {})
+                                .then(({
+                                    data
+                                }) => {
+                                    orden.status = 'Cancelada';
+                                    swal({
+                                        title: "Exito",
+                                        text: "La orden se ha cancelado",
+                                        type: "success"
+                                    });
+                                })
+                                .catch(({
+                                    response
+                                }) => {
+                                    console.error(response);
+                                    swal({
+                                        title: "Error",
+                                        text: response.data.message ||
+                                            "Ocurrio un error inesperado, intente mas tarde",
+                                        type: "error"
+                                    });
+                                });
+                        } //if confirmacion
                     });
-                  },//cancelar
+                }, //cancelar
                 borrar(index, cotizacion) {
                     swal({
                         title: 'Cuidado',
@@ -1801,8 +1907,11 @@
                         cancelButtonText: 'No, Cancelar',
                     }).then((result) => {
                         if (result.value) {
-                            axios.delete('/prospectos/{{$prospecto->id}}/cotizacion/' + cotizacion.id, {})
-                                .then(({data}) => {
+                            axios.delete('/prospectos/{{ $prospecto->id }}/cotizacion/' + cotizacion
+                                    .id, {})
+                                .then(({
+                                    data
+                                }) => {
                                     this.prospecto.cotizaciones.splice(index, 1);
                                     swal({
                                         title: "Exito",
@@ -1810,11 +1919,14 @@
                                         type: "success"
                                     });
                                 })
-                                .catch(({response}) => {
+                                .catch(({
+                                    response
+                                }) => {
                                     console.error(response);
                                     swal({
                                         title: "Error",
-                                        text: response.data.message || "Ocurrio un error inesperado, intente mas tarde",
+                                        text: response.data.message ||
+                                            "Ocurrio un error inesperado, intente mas tarde",
                                         type: "error"
                                     });
                                 });
@@ -1823,9 +1935,11 @@
                 },
                 copiarCotizacion() {
                     this.cargando = true;
-                    
-                    axios.post('/prospectos/{{$prospecto->id}}/copiarCotizacion', this.copiar_cotizacion)
-                        .then(({data}) => {
+
+                    axios.post('/prospectos/{{ $prospecto->id }}/copiarCotizacion', this.copiar_cotizacion)
+                        .then(({
+                            data
+                        }) => {
                             this.openCopiar = false;
                             this.cargando = false;
                             swal({
@@ -1833,20 +1947,24 @@
                                 text: "La cotizaciones de ha copiado correctamente",
                                 type: "success"
                             });
-                            
-                            window.location.href = "/prospectos/"+this.copiar_cotizacion.proyecto_id+"/cotizar";
+
+                            window.location.href = "/prospectos/" + this.copiar_cotizacion.proyecto_id +
+                                "/cotizar";
                         })
-                        .catch(({response}) => {
+                        .catch(({
+                            response
+                        }) => {
                             console.error(response);
                             this.cargando = false;
                             swal({
                                 title: "Error",
-                                text: response.data.message || "Ocurrio un error inesperado, intente mas tarde",
+                                text: response.data.message ||
+                                    "Ocurrio un error inesperado, intente mas tarde",
                                 type: "error"
                             });
                         });
-                },//fin CopiarCotizacion
-                copiar2(index,cotizacion){
+                }, //fin CopiarCotizacion
+                copiar2(index, cotizacion) {
                     this.copiar_cotizacion.cotizacion_id = cotizacion.id;
                 },
                 fijarComprobante() {
@@ -1857,9 +1975,11 @@
                 },
                 notasCotizacion() {
                     this.cargando = true;
-                    axios.post('/prospectos/{{$prospecto->id}}/notasCotizacion', this.notas)
-                        .then(({data}) => {
-                            this.prospecto.cotizaciones.find(function (cotizacion) {
+                    axios.post('/prospectos/{{ $prospecto->id }}/notasCotizacion', this.notas)
+                        .then(({
+                            data
+                        }) => {
+                            this.prospecto.cotizaciones.find(function(cotizacion) {
                                 if (this.notas.cotizacion_id == cotizacion.id) {
                                     cotizacion.notas2 = this.notas.mensaje;
                                     return true;
@@ -1879,34 +1999,40 @@
                                 type: "success"
                             });
                         })
-                        .catch(({response}) => {
+                        .catch(({
+                            response
+                        }) => {
                             console.error(response);
                             this.cargando = false;
                             swal({
                                 title: "Error",
-                                text: response.data.message || "Ocurrio un error inesperado, intente mas tarde",
+                                text: response.data.message ||
+                                    "Ocurrio un error inesperado, intente mas tarde",
                                 type: "error"
                             });
                         });
-                },//fin notasCotizacion
+                }, //fin notasCotizacion
                 enviarCotizacion() {
                     this.cargando = true;
-                    axios.post('/prospectos/{{$prospecto->id}}/enviarCotizacion', this.enviar)
-                        .then(({data}) => {
+                    axios.post('/prospectos/{{ $prospecto->id }}/enviarCotizacion', this.enviar)
+                        .then(({
+                            data
+                        }) => {
                             this.enviar = {
                                 cotizacion_id: 0,
                                 numero: 0,
                                 email: [],
                                 emailOpciones: [
-                                        @foreach($prospecto->cliente->contactos as $contacto)
-                                        @foreach($contacto->emails as $email)
-                                    {
-                                        id: "{{$email->email}}", text: "{{$email->email}}"
-                                    },
-                                    @endforeach
+                                    @foreach ($prospecto->cliente->contactos as $contacto)
+                                        @foreach ($contacto->emails as $email)
+                                            {
+                                                id: "{{ $email->email }}",
+                                                text: "{{ $email->email }}"
+                                            },
+                                        @endforeach
                                     @endforeach
                                 ],
-                                mensaje: "Buen día.\n\nLe envió cotización para su consideración.\n\n{{auth()->user()->name}}.\nAtención del Cliente\nRobinson Contract Resources"
+                                mensaje: "Buen día.\n\nLe envió cotización para su consideración.\n\n{{ auth()->user()->name }}.\nAtención del Cliente\nRobinson Contract Resources"
                             };
                             this.openEnviar = false;
                             this.cargando = false;
@@ -1916,25 +2042,34 @@
                                 type: "success"
                             });
                         })
-                        .catch(({response}) => {
+                        .catch(({
+                            response
+                        }) => {
                             console.error(response);
                             this.cargando = false;
                             swal({
                                 title: "Error",
-                                text: response.data.message || "Ocurrio un error inesperado, intente mas tarde",
+                                text: response.data.message ||
+                                    "Ocurrio un error inesperado, intente mas tarde",
                                 type: "error"
                             });
                         });
-                },//fin enviarCotizacion
+                }, //fin enviarCotizacion
                 aceptarCotizacion() {
-                    var formData = objectToFormData(this.aceptar, {indices: true});
+                    var formData = objectToFormData(this.aceptar, {
+                        indices: true
+                    });
 
                     this.cargando = true;
-                    axios.post('/prospectos/{{$prospecto->id}}/aceptarCotizacion', formData, {
-                        headers: {'Content-Type': 'multipart/form-data'}
-                    })
-                        .then(({data}) => {
-                            this.prospecto.cotizaciones.find(function (cotizacion) {
+                    axios.post('/prospectos/{{ $prospecto->id }}/aceptarCotizacion', formData, {
+                            headers: {
+                                'Content-Type': 'multipart/form-data'
+                            }
+                        })
+                        .then(({
+                            data
+                        }) => {
+                            this.prospecto.cotizaciones.find(function(cotizacion) {
                                 if (this.aceptar.cotizacion_id == cotizacion.id) {
                                     cotizacion.proyecto_aprobado = data.proyecto_aprobado;
                                     cotizacion.aceptada = true;
@@ -1956,19 +2091,20 @@
                                 type: "success"
                             });
                         })
-                        .catch(({response}) => {
+                        .catch(({
+                            response
+                        }) => {
                             console.error(response);
                             this.cargando = false;
                             swal({
                                 title: "Error",
-                                text: response.data.message || "Ocurrio un error inesperado, intente mas tarde",
+                                text: response.data.message ||
+                                    "Ocurrio un error inesperado, intente mas tarde",
                                 type: "error"
                             });
                         });
-                },//fin aceptarCotizacion
+                }, //fin aceptarCotizacion
             }
         });
-
-
-</script>
+    </script>
 @stop

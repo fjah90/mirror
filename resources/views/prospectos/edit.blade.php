@@ -281,20 +281,20 @@
                                         </div>
                                     </div>
                                     <!--
-                                                                              <div class="col-md-4">
-                                                                                <div class="form-group">
-                                                                                  <label class="control-label">Fecha<strong style="color: grey"> *</strong></label>
-                                                                                  <span class="form-control">@{{ prospecto.proxima_actividad.fecha_formated }}</span>
-                                                                                </div>
-                                                                              </div>
-                                                                              
-                                                                              <div class="col-md-4">
-                                                                                <div class="form-group">
-                                                                                  <label class="control-label">Tipo <strong style="color: grey"> *</strong></label>
-                                                                                  <span class="form-control">@{{ prospecto.proxima_actividad.tipo.nombre }}</span>
-                                                                                </div>
-                                                                              </div>
-                                                                            -->
+                                                                                  <div class="col-md-4">
+                                                                                    <div class="form-group">
+                                                                                      <label class="control-label">Fecha<strong style="color: grey"> *</strong></label>
+                                                                                      <span class="form-control">@{{ prospecto.proxima_actividad.fecha_formated }}</span>
+                                                                                    </div>
+                                                                                  </div>
+                                                                                  
+                                                                                  <div class="col-md-4">
+                                                                                    <div class="form-group">
+                                                                                      <label class="control-label">Tipo <strong style="color: grey"> *</strong></label>
+                                                                                      <span class="form-control">@{{ prospecto.proxima_actividad.tipo.nombre }}</span>
+                                                                                    </div>
+                                                                                  </div>
+                                                                                -->
                                 </div>
 
                                 <div class="row">
@@ -319,12 +319,12 @@
                                         </button>
                                     </div>
                                     <!--
-                                                                              <div class="col-sm-2" style="padding-top: 25px;">
-                                                                                <button type="button" class="btn btn-primary" @click="modalProducto=true">
-                                                                                  Registrar producto
-                                                                                </button>
-                                                                              </div>
-                                                                               -->
+                                                                                  <div class="col-sm-2" style="padding-top: 25px;">
+                                                                                    <button type="button" class="btn btn-primary" @click="modalProducto=true">
+                                                                                      Registrar producto
+                                                                                    </button>
+                                                                                  </div>
+                                                                                   -->
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-12">
@@ -547,10 +547,17 @@
                 $("#tablaProductos").DataTable({
                     dom: 'ftp'
                 });
-                if(this.prospecto.horario != null){
-                    var horarios  = this.prospecto.horario.split('-');
-                    this.time_in = horarios[0];
-                    this.time_out = horarios[1];
+                
+                for (const actividad of this.prospecto.actividades) {
+                    if (actividad.horario != null) {
+                        console.log(actividad)
+                        var horarios = actividad.horario.split('-');
+                        this.time_in = horarios[0];
+                        this.time_out = horarios[1];
+                        this.ntime_in = horarios[0];
+                        this.ntime_out = horarios[1];
+                        console.log(this.time_in)
+                    }
                 }
                 this.prospecto.fecha_cierre = this.prospecto.fecha_cierre_formated;
                 this.prospecto.proxima_actividad.fecha = this.prospecto.proxima_actividad.fecha_formated;
@@ -586,13 +593,13 @@
                 }, false);
             },
             methods: {
-                actualizarHorarioProximaActividad(nueva= false) {
+                actualizarHorarioProximaActividad(nueva = false) {
                     let setTime;
                     if (nueva) {
                         if (this.ntime_in < this.ntime_out) {
                             if (this.ntime_in && this.ntime_out) {
                                 this.prospecto.nueva_proxima_actividad.horario = this.ntime_in + "-" + this
-                                .ntime_out;
+                                    .ntime_out;
                             }
                         } else {
                             swal({
@@ -601,11 +608,11 @@
                                 type: "error"
                             });
                         }
-                    }else{
+                    } else {
                         if (this.time_in < this.time_out) {
                             if (this.time_in && this.time_out) {
                                 this.prospecto.proxima_actividad.horario = this.time_in + "-" + this
-                                .time_out;;
+                                    .time_out;;
                             }
                         } else {
                             swal({
