@@ -547,6 +547,11 @@
                 $("#tablaProductos").DataTable({
                     dom: 'ftp'
                 });
+                if(this.prospecto.horario != null){
+                    var horarios  = this.prospecto.horario.split('-');
+                    this.time_in = horarios[0];
+                    this.time_out = horarios[1];
+                }
                 this.prospecto.fecha_cierre = this.prospecto.fecha_cierre_formated;
                 this.prospecto.proxima_actividad.fecha = this.prospecto.proxima_actividad.fecha_formated;
                 this.prospecto.nueva_proxima_actividad.fecha = this.prospecto.proxima_actividad.fecha_formated;
