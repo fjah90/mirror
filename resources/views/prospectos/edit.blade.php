@@ -549,13 +549,11 @@
                 });
                 
                 if (prospecto.proxima_actividad.horario != null) {
-                    console.log(actividad)
-                    var horarios = actividad.horario.split('-');
+                    var horarios = prospecto.proxima_actividad.horario.split('-');
                     this.time_in = horarios[0];
                     this.time_out = horarios[1];
                     this.ntime_in = horarios[0];
                     this.ntime_out = horarios[1];
-                    console.log(this.time_in)
                 }
                 this.prospecto.fecha_cierre = this.prospecto.fecha_cierre_formated;
                 this.prospecto.proxima_actividad.fecha = this.prospecto.proxima_actividad.fecha_formated;
