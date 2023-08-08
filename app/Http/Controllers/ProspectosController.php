@@ -33,6 +33,7 @@ use PDF;
 use PDFMerger;
 use Storage;
 use Svg\Tag\Rect;
+use Symfony\Component\HttpKernel\Client;
 use Validator;
 
 class ProspectosController extends Controller
@@ -683,6 +684,86 @@ class ProspectosController extends Controller
 
         return view('prospectos.cotizaciones', compact('prospectos', 'usuarios', 'vendedores'));
     }
+
+
+    public function cotizacionesdirectas()
+    {
+        $user = auth()->user();
+        $inicio = Carbon::parse('2023-01-01'); //se ajusto por el año en curso
+        $anio = Carbon::parse('2023-12-31'); // se ajusto por el año
+
+
+
+        $vendedores = Vendedor::where('email', auth()->user()->email)->first(); //filtro por email
+
+        if (auth()->user()->tipo == 'Administrador' || auth()->user()->tipo == 'Dirección') {
+            $cotizaciones = ProspectoCotizacion::with('entradas','entradas.producto','entradas.producto.proveedor')->where('prospecto_id','')->get();
+        }
+        else {
+            $cotizaciones = ProspectoCotizacion::with('entradas','entradas.producto','entradas.producto.proveedor')->where('user_id',$user->id)->where('prospecto_id','')->get();
+        }
+
+
+        return view('cotizacionesdirectas.index', compact('cotizaciones'));
+    }
+
+    public function cotizacionesdirectas_create()
+    {
+        $proyectos = Prospecto::all();
+        $notasPreCargadas = Nota::all();
+        
+        $productos = Producto::with('categoria', 'proveedor', 'descripciones.descripcionNombre', 'proveedor.contactos')
+            ->has('categoria')->get();
+        foreach ($productos as $producto) {
+            if ($producto->ficha_tecnica) {
+                $producto->ficha_tecnica = asset('storage/' . $producto->ficha_tecnica);
+            }
+        }
+        $condiciones = CondicionCotizacion::all();
+        $observaciones = ObservacionCotizacion::all();
+        $unidades_medida = UnidadMedida::orderBy('simbolo')->get();
+        
+       
+        $numero_siguiente = ProspectoCotizacion::select('id')->orderBy('id', 'desc')->first()->id + 1;
+        
+        $rfcs = [];
+
+        
+
+        $direcciones = [];
+
+        foreach ($productos as $producto) {
+            if ($producto->foto) {
+                $producto->foto = asset('storage/' . $producto->foto);
+            }
+        }
+       
+        $vendedores = Vendedor::all();
+        $clientes = Cliente::with('contactos')->get();
+
+        return view(
+            'cotizacionesdirectas.create',
+            compact(
+                'clientes',
+                'proyectos',
+                'productos',
+                'condiciones',
+                'observaciones',
+                'unidades_medida',
+                'rfcs',
+                'numero_siguiente',
+                'direcciones',
+                'vendedores',
+                'notasPreCargadas'
+            )
+        );
+        
+
+        return view('cotizacionesdirectas.create', compact('cotizaciones'));
+    }
+
+
+
 
     public function listado(Request $request)
     {
@@ -1773,6 +1854,322 @@ class ProspectosController extends Controller
             )
         );
     }
+    /**
+     * Guardar cotizacion directa.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Prospecto  $prospecto
+     * @return \Illuminate\Http\Response
+     */
+    public function cotizacionesdirectas_store(Request $request)
+    {
+
+        $validator = Validator::make($request->all(), [
+            'cliente_contacto_id' => 'required',
+            'entrega'             => 'required',
+            'moneda'              => 'required',
+            'factibilidad'        => 'required',
+            'condicion'           => 'required',
+            'iva'                 => 'required',
+            'entradas'            => 'required|min:1',
+            'entradas.fotos'      => 'array',
+            'entradas.fotos.*'    => 'image|mimes:jpg,jpeg,png',
+            'subtotal'            => 'required',
+            'total'               => 'required',
+            'descuentos'          => 'required',
+            'tipo_descuento'      => 'required',
+        ]);
+
+
+        if ($validator->fails()) {
+            $errors = $validator->errors()->all();
+            return response()->json([
+                "success" => false,
+                "error"   => true,
+                "message" => $errors[0],
+            ], 422);
+        }
+
+        $user = auth()->user();
+
+        $datos_facturacion = DatoFacturacion::where('rfc', $request->facturar)->first();
+
+        if (!empty($datos_facturacion)) {
+
+            $datos_facturacion->update([
+                'rfc'          => $request->rfc,
+                'razon_social' => $request->razon_social,
+                'calle'        => $request->calle,
+                'nexterior'    => $request->nexterior,
+                'ninterior'    => $request->ninterior,
+                'colonia'      => $request->colonia,
+                'cp'           => $request->cp,
+                'ciudad'       => $request->ciudad,
+                'estado'       => $request->estado,
+            ]);
+        }
+
+        $create = $request->except('entradas', 'condicion', 'observaciones');
+        $create['prospecto_id'] = null;
+        if ($create['facturar'] != "0") {
+            $create['facturar'] = "1";
+        }
+
+        if ($create['direccion'] != "0") {
+            $create['direccion'] = "1";
+        }
+
+        $create['user_id'] = $user->id;
+        $create['fecha'] = date('Y-m-d');
+        if ($request->condicion['id'] == 0) { //nueva condicion, dar de alta
+            $condicion = CondicionCotizacion::create(['nombre' => $request->condicion['nombre']]);
+            $create['condicion_id'] = $condicion->id;
+        }
+        else {
+            $create['condicion_id'] = $request->condicion['id'];
+        }
+        
+        if (!empty($cotizacion->flete_menor)) {
+            $create['subtotal'] = bcadd($create['subtotal'], $create['flete_menor'], 2);
+
+        }
+
+        if (!empty($cotizacion->costo_sobreproduccion)) {
+            $create['subtotal'] = bcadd($create['subtotal'], $create['costo_sobreproduccion'], 2);
+
+        }
+
+        if ($request->descuentos != "0") {
+            if ($request->tipo_descuento == "0") {
+                $create['subtotal'] = bcsub($create['subtotal'], $create['descuentos'], 2);
+            }
+            else {
+                $create['descuentos'] = bcmul($create['subtotal'], $create['descuentos'], 2);
+                $create['descuentos'] = bcdiv($create['descuentos'], '100', 2);
+                $create['subtotal'] = bcsub($create['subtotal'], $create['descuentos'], 2);
+            }
+        }
+
+        if ($request->iva == "1") {
+
+            $create['iva'] = bcmul($create['subtotal'], 0.16, 2);
+            $create['total'] = bcadd($create['subtotal'], $create['iva'], 2);
+        }
+        else {
+            $create['total'] = $create['subtotal'];
+        }
+
+        $observaciones = "<ul>";
+        foreach ($request->observaciones as $obs) {
+            $observaciones .= "<li>$obs</li>";
+        }
+        $observaciones .= "</ul>";
+        $create['observaciones'] = $observaciones;
+
+
+
+        $cotizacion = ProspectoCotizacion::create($create);
+
+        if (!$cotizacion->numero) {
+            $cotizacion->numero = $cotizacion->id;
+        }
+
+        //guardar entradas
+        $fichas = [];
+        foreach ($request->entradas as $index => $entrada) {
+            $producto = Producto::find($entrada['producto_id']);
+            if ($producto->ficha_tecnica) {
+                $fichas[] = storage_path('app/public/' . $producto->ficha_tecnica);
+            }
+
+            if ($entrada['fotos']) { //hay fotos
+                $fotos = "";
+                $separador = "";
+                foreach ($entrada['fotos'] as $foto_index => $foto) {
+                    if (!is_string($foto)) {
+                        $ruta = Storage::putFileAs(
+                            'public/cotizaciones/' . $cotizacion->id,
+                            $foto,
+                            'entrada_' . ($index + 1) . '_foto_' . ($foto_index + 1) . '.' . $foto->guessExtension()
+                        );
+                        $ruta = str_replace('public/', '', $ruta);
+                        $fotos .= $separador . $ruta;
+                        $separador = "|";
+                    }
+                    else {
+                        $fotos .= $separador . strstr($foto, "cotizaciones/");
+                    }
+                }
+                $entrada['fotos'] = $fotos;
+            }
+            else if ($producto->foto) {
+                $extencion = pathinfo(asset($producto->foto), PATHINFO_EXTENSION);
+                $ruta = "cotizaciones/" . $cotizacion->id . "/entrada_" . ($index + 1) . "_foto_1." . $extencion;
+                Storage::copy("public/" . $producto->foto, "public/$ruta");
+                $entrada['fotos'] = $ruta;
+            }
+            else {
+                $entrada['fotos'] = "";
+            }
+
+            if ($cotizacion->planos) {
+                $cotizacion->planos = asset('storage/' . $cotizacion->planos);
+            }
+
+            $entrada['cotizacion_id'] = $cotizacion->id;
+            $observaciones = "<ul>";
+            foreach ($entrada['observaciones'] as $obs) {
+                $observaciones .= "<li>$obs</li>";
+            }
+            $observaciones .= "</ul>";
+            $entrada['observaciones'] = ($observaciones == "<ul><li></li></ul>") ? "" : $observaciones;
+            $entrada['orden'] = $index + 1;
+            $modelo_entrada = ProspectoCotizacionEntrada::create($entrada);
+
+            foreach ($entrada['descripciones'] as $descripcion) {
+                $descripcion['entrada_id'] = $modelo_entrada->id;
+                if (is_null($descripcion['nombre'])) {
+                    $descripcion['nombre'] = $descripcion['name'];
+                }
+
+                if (is_null($descripcion['name'])) {
+                    $descripcion['name'] = $descripcion['nombre'];
+                }
+
+                ProspectoCotizacionEntradaDescripcion::create($descripcion);
+            }
+        }
+
+        $cotizacion->load(
+            'condiciones',
+            'entradas.producto.categoria',
+            'entradas.producto.proveedor',
+            'entradas.descripciones',
+            'user'
+        );
+        if ($cotizacion->user->firma) {
+            $cotizacion->user->firma = storage_path('app/public/' . $cotizacion->user->firma);
+        }
+        else {
+            $cotizacion->user->firma = public_path('images/firma_vacia.png');
+        }
+
+
+
+        //crear pdf de cotizacion
+        
+        $url = 'cotizaciones/' . $cotizacion->id . '/C ' . $cotizacion->numero . ' Intercorp.pdf';
+        $meses = [
+            'ENERO',
+            'FEBRERO',
+            'MARZO',
+            'ABRIL',
+            'MAYO',
+            'JUNIO',
+            'JULIO',
+            'AGOSTO',
+            'SEPTIEMBRE',
+            'OCTUBRE',
+            'NOVIEMBRE',
+            'DICIEMBRE',
+        ];
+        list($ano, $mes, $dia) = explode('-', $cotizacion->fecha);
+        $mes = $meses[+$mes - 1];
+        $cotizacion->fechaPDF = "$mes $dia, $ano";
+        if ($cotizacion->idioma == 'español') {
+            $nombre = "nombre";
+            $view = 'prospectos.cotizacionPDF';
+        }
+        else {
+            $nombre = "name";
+            $view = 'prospectos.cotizacionPDFIngles';
+        }
+        $cliente = Cliente::findOrFail($cotizacion->cliente_id);
+
+        $cotizacionPDF = PDF::loadView($view, compact('cotizacion','cliente', 'nombre'));
+        Storage::disk('public')->put($url, $cotizacionPDF->output());
+
+        // $pdf = new PDFMerger();
+        // $pdf->addPDF(storage_path("app/public/$url"), 'all');
+        // $fichas = array_unique($fichas, SORT_STRING);
+        // foreach ($fichas as $ficha) {
+        //     $pdf->addPDF($ficha, 'all');
+        // }
+
+        // $pdf->merge('file', storage_path("app/public/$url"));
+
+        unset($cotizacion->fechaPDF);
+        $cotizacion->update(['archivo' => $url]);
+        $cotizacion->archivo = asset('storage/' . $cotizacion->archivo);
+       
+
+        return response()->json(['success' => true, 'error' => false, 'cotizacion' => $cotizacion], 200);
+    }
+
+    /**
+     * Editar cotizaciones directas.
+     *
+     * @param  \App\Models\Cotizacion  $cotizacion
+     * @return \Illuminate\Http\Response
+     */
+    public function cotizacionesdirectas_edit(ProspectoCotizacion $cotizacion)
+    {
+        $cotizacion->load('entradas','entradas.producto');
+        $proyectos = Prospecto::all();
+        $notasPreCargadas = Nota::all();
+        
+        $productos = Producto::with('categoria', 'proveedor', 'descripciones.descripcionNombre', 'proveedor.contactos')
+            ->has('categoria')->get();
+        foreach ($productos as $producto) {
+            if ($producto->ficha_tecnica) {
+                $producto->ficha_tecnica = asset('storage/' . $producto->ficha_tecnica);
+            }
+        }
+        $condiciones = CondicionCotizacion::all();
+        $observaciones = ObservacionCotizacion::all();
+        $unidades_medida = UnidadMedida::orderBy('simbolo')->get();
+        
+       
+        $numero_siguiente = ProspectoCotizacion::select('id')->orderBy('id', 'desc')->first()->id + 1;
+        
+        $rfcs = [];
+
+        
+
+        $direcciones = [];
+
+        foreach ($productos as $producto) {
+            if ($producto->foto) {
+                $producto->foto = asset('storage/' . $producto->foto);
+            }
+        }
+       
+        $vendedores = Vendedor::all();
+        $clientes = Cliente::with('contactos')->get();
+        
+        $cliente = Cliente::with('contactos')->where('id',$cotizacion->cliente_id)->first();
+        $contactos = $cliente->contactos;
+
+        return view(
+            'cotizacionesdirectas.edit',
+            compact(
+                'contactos',
+                'cotizacion',
+                'clientes',
+                'proyectos',
+                'productos',
+                'condiciones',
+                'observaciones',
+                'unidades_medida',
+                'rfcs',
+                'numero_siguiente',
+                'direcciones',
+                'vendedores',
+                'notasPreCargadas'
+            )
+        );
+        
+    }
 
     /**
      * Guardar cotizacion.
@@ -2002,8 +2399,9 @@ class ProspectosController extends Controller
             $nombre = "name";
             $view = 'prospectos.cotizacionPDFIngles';
         }
+        $cliente = $cotizacion->prospecto->cliente;
 
-        $cotizacionPDF = PDF::loadView($view, compact('cotizacion', 'nombre'));
+        $cotizacionPDF = PDF::loadView($view, compact('cliente','cotizacion', 'nombre'));
         Storage::disk('public')->put($url, $cotizacionPDF->output());
 
         // $pdf = new PDFMerger();
@@ -2314,6 +2712,8 @@ class ProspectosController extends Controller
             $view = 'prospectos.cotizacionPDFIngles';
         }
 
+        $cliente = $cotizacion->prospecto->cliente;
+
         $cotizacionPDF = PDF::loadView($view, compact('cotizacion', 'nombre'));
         Storage::disk('public')->put($url, $cotizacionPDF->output());
 
@@ -2331,6 +2731,317 @@ class ProspectosController extends Controller
         }
 
         $pdf->merge('file', storage_path("app/public/$url"));
+
+        unset($cotizacion->fechaPDF);
+        $cotizacion->update(['archivo' => $url]);
+        $cotizacion->archivo = asset('storage/' . $cotizacion->archivo);
+
+        return response()->json(['success' => true, 'error' => false, 'cotizacion' => $cotizacion], 200);
+    }
+
+
+    /**
+     * Editar cotizacion.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Prospecto  $prospecto
+     * @param  \App\Models\ProspectoCotizacion  $cotizacion
+     * @return \Illuminate\Http\Response
+     */
+    public function cotizacionesdirectas_update(Request $request, ProspectoCotizacion $cotizacion)
+    {
+        $validator = Validator::make($request->all(), [
+            'cliente_contacto_id' => 'required',
+            'cotizacion_id'       => 'required',
+            'entrega'             => 'required',
+            'moneda'              => 'required',
+            'condicion'           => 'required',
+            'iva'                 => 'required',
+            'entradas'            => 'required|min:1',
+            'entradas.fotos'      => 'array',
+            'entradas.fotos.*'    => 'image|mimes:jpg,jpeg,png',
+            'subtotal'            => 'required',
+            'total'               => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            $errors = $validator->errors()->all();
+            return response()->json([
+                "success" => false,
+                "error"   => true,
+                "message" => $errors[0],
+            ], 422);
+        }
+
+        $user = auth()->user();
+
+        $datos_facturacion = DatoFacturacion::where('rfc', $request->facturar)->first();
+
+        if (!empty($datos_facturacion)) {
+            $datos_facturacion->update([
+                'rfc'          => $request->rfc,
+                'razon_social' => $request->razon_social,
+                'calle'        => $request->calle,
+                'nexterior'    => $request->nexterior,
+                'ninterior'    => $request->ninterior,
+                'colonia'      => $request->colonia,
+                'cp'           => $request->cp,
+                'ciudad'       => $request->ciudad,
+                'estado'       => $request->estado,
+            ]);
+        }
+
+        $update = $request->except('entradas', 'condicion', 'observaciones', 'prospecto_id', 'cotizacion_id');
+        if ($update['facturar'] != "0") {
+            $update['facturar'] = "1";
+        }
+
+        if ($update['direccion'] != "0") {
+            $update['direccion'] = "1";
+        }
+
+        $update['user_id'] = $user->id;
+        $update['fecha'] = date('Y-m-d');
+        if ($request->condicion['id'] == 0) { //nueva condicion, dar de alta
+            $condicion = CondicionCotizacion::create(['nombre' => $request->condicion['nombre']]);
+            $update['condicion_id'] = $condicion->id;
+        }
+        else {
+            $update['condicion_id'] = $request->condicion['id'];
+        }
+
+        if ($request->iva == "1") {
+            $update['iva'] = bcmul($update['subtotal'], 0.16, 2);
+            $update['total'] = bcmul($update['subtotal'], 1.16, 2);
+        }
+        else {
+            $update['total'] = $update['subtotal'];
+        }
+
+        $observaciones = "<ul>";
+        foreach ($request->observaciones as $obs) {
+            $observaciones .= "<li>$obs</li>";
+        }
+        $observaciones .= "</ul>";
+        $update['observaciones'] = $observaciones;
+
+        if (!$update['numero']) {
+            $update['numero'] = $cotizacion->id;
+        }
+
+        $cotizacion->update($update);
+
+        //guardar entradas
+        foreach ($request->entradas as $index => $entrada) {
+            if (isset($entrada['borrar'])) {
+                ProspectoCotizacionEntrada::destroy($entrada['id']);
+                continue;
+            }
+            else if (isset($entrada['id']) && isset($entrada['actualizar'])) {
+                //recuperar entrada para actualizar
+                $entradaGuardada = ProspectoCotizacionEntrada::find($entrada['id']);
+                unset($entrada['id']);
+            }
+            else if (isset($entrada['id']) && !isset($entrada['actualizar'])) {
+                continue;
+            }
+            else if (!isset($entrada['id'])) {
+                $entradaGuardada = false;
+            }
+
+            $producto = Producto::find($entrada['producto_id']);
+            if ($entrada['fotos'] && !is_string($entrada['fotos'][0])) { //hay fotos
+                $fotos = "";
+                $separador = "";
+                foreach ($entrada['fotos'] as $foto_index => $foto) {
+                    //borrar archivo actual, si existe
+                    Storage::disk('public')->delete('cotizaciones/' . $cotizacion->id . '/entrada_' . ($index + 1) . '_foto_' . ($foto_index + 1) . '.' . $foto->guessExtension());
+                    $ruta = Storage::putFileAs(
+                        'public/cotizaciones/' . $cotizacion->id,
+                        $foto,
+                        'entrada_' . ($index + 1) . '_foto_' . ($foto_index + 1) . '.' . $foto->guessExtension()
+                    );
+                    $ruta = str_replace('public/', '', $ruta);
+                    $fotos .= $separador . $ruta;
+                    $separador = "|";
+                }
+                $entrada['fotos'] = $fotos;
+            }
+            else if ($entradaGuardada && $entradaGuardada->producto_id == $producto->id) {
+                if ($entrada['fotos']) {
+                }
+                else {
+                    $entrada['fotos'] = '';
+                    $entradaGuardada->fotos = '';
+                }
+                unset($entrada['fotos']); //no se actualzan fotos
+            }
+            else if ($producto->foto) {
+                $extencion = pathinfo(asset($producto->foto), PATHINFO_EXTENSION);
+                $ruta = "cotizaciones/" . $cotizacion->id . "/entrada_" . ($index + 1) . "_foto_1." . $extencion;
+                Storage::disk('public')->delete($ruta); //borrar archivo actual, si existe
+                Storage::copy("public/" . $producto->foto, "public/$ruta");
+                $entrada['fotos'] = $ruta;
+            }
+            else {
+                $entrada['fotos'] = "";
+            }
+
+            if ($cotizacion->planos) {
+                $cotizacion->planos = asset('storage/' . $cotizacion->planos);
+            }
+
+            $entrada['cotizacion_id'] = $cotizacion->id;
+            $observaciones = "<ul>";
+            foreach ($entrada['observaciones'] as $obs) {
+                $observaciones .= "<li>$obs</li>";
+            }
+            $observaciones .= "</ul>";
+            $entrada['observaciones'] = ($observaciones == "<ul></ul>") ? "" : $observaciones;
+
+            if ($entradaGuardada) {
+                if ($entradaGuardada->producto_id == $producto->id) {
+                    //mismo producto, solo actualizar descripciones
+                    if (isset($entrada['descripciones'])) {
+                        foreach ($entrada['descripciones'] as $descripcion) {
+                            $entradaDescripcion = null;
+                            if (isset($descripcion['id'])) {
+                                $entradaDescripcion = ProspectoCotizacionEntradaDescripcion::find($descripcion['id']);
+                            }
+
+                            if ($entradaDescripcion != null) {
+                                $entradaDescripcion->update(['valor' => $descripcion['valor']]);
+                            }
+                            else {
+                                $descripcion['entrada_id'] = $entrada->id;
+                                if (is_null($descripcion['nombre'])) {
+                                    $descripcion['nombre'] = $descripcion['name'];
+                                }
+
+                                if (is_null($descripcion['name'])) {
+                                    $descripcion['name'] = $descripcion['nombre'];
+                                }
+
+                                ProspectoCotizacionEntradaDescripcion::create($descripcion);
+                            }
+                        }
+                    }
+                }
+                else {
+                    $entradaGuardada->load('descripciones');
+                    foreach ($entradaGuardada->descripciones as $desc) {
+                        $desc->delete();
+                    }
+                    unset($entradaGuardada->descripciones);
+
+                    foreach ($entrada['descripciones'] as $descripcion) {
+                        $descripcion['entrada_id'] = $entradaGuardada->id;
+                        if (is_null($descripcion['nombre'])) {
+                            $descripcion['nombre'] = $descripcion['name'];
+                        }
+
+                        if (is_null($descripcion['name'])) {
+                            $descripcion['name'] = $descripcion['nombre'];
+                        }
+
+                        ProspectoCotizacionEntradaDescripcion::create($descripcion);
+                    }
+                }
+                $entradaGuardada->update($entrada);
+            }
+            else {
+                $modelo_entrada = ProspectoCotizacionEntrada::create($entrada);
+                foreach ($entrada['descripciones'] as $descripcion) {
+                    $descripcion['entrada_id'] = $modelo_entrada->id;
+                    if (is_null($descripcion['nombre'])) {
+                        $descripcion['nombre'] = $descripcion['name'];
+                    }
+
+                    if (is_null($descripcion['name'])) {
+                        $descripcion['name'] = $descripcion['nombre'];
+                    }
+
+                    ProspectoCotizacionEntradaDescripcion::create($descripcion);
+                }
+            }
+        } //foreach $request->entradas
+
+
+        //recalculate subtotal
+        $update['subtotal'] = round($cotizacion->entradas()->sum('importe'), 2);
+        if ($request->iva == "1") {
+            $update['iva'] = bcmul($update['subtotal'], 0.16, 2);
+            $update['total'] = bcmul($update['subtotal'], 1.16, 2);
+        }
+        else {
+            $update['total'] = $update['subtotal'];
+        }
+        $cotizacion->update($update);
+
+        $cotizacion->load(
+            'prospecto.cliente',
+            'condiciones',
+            'entradas.producto.categoria',
+            'entradas.producto.proveedor',
+            'entradas.descripciones',
+            'user'
+        );
+        if ($cotizacion->user->firma) {
+            $cotizacion->user->firma = storage_path('app/public/' . $cotizacion->user->firma);
+        }
+        else {
+            $cotizacion->user->firma = public_path('images/firma_vacia.png');
+        }
+
+        //crear pdf de cotizacion
+        $url = 'cotizaciones/' . $cotizacion->id . '/C ' . $cotizacion->numero . ' Intercorp.pdf';
+        $meses = [
+            'ENERO',
+            'FEBRERO',
+            'MARZO',
+            'ABRIL',
+            'MAYO',
+            'JUNIO',
+            'JULIO',
+            'AGOSTO',
+            'SEPTIEMBRE',
+            'OCTUBRE',
+            'NOVIEMBRE',
+            'DICIEMBRE',
+        ];
+        list($ano, $mes, $dia) = explode('-', $cotizacion->fecha);
+        $mes = $meses[+$mes - 1];
+        $cotizacion->fechaPDF = "$mes $dia, $ano";
+        if ($cotizacion->idioma == 'español') {
+            $nombre = "nombre";
+            $view = 'prospectos.cotizacionPDF';
+        }
+        else {
+            $nombre = "name";
+            $view = 'prospectos.cotizacionPDFIngles';
+        }
+
+        $cliente = Cliente::findOrFail($cotizacion->cliente_id);
+
+        $cotizacionPDF = PDF::loadView($view, compact('cliente','cotizacion', 'nombre'));
+        Storage::disk('public')->put($url, $cotizacionPDF->output());
+
+        /*
+        $fichas = [];
+        foreach ($cotizacion->entradas as $entrada) {
+            if ($entrada->producto->ficha_tecnica) {
+                $fichas[] = storage_path('app/public/' . $entrada->producto->ficha_tecnica);
+            }
+        }
+        $pdf = new PDFMerger();
+        $pdf->addPDF(storage_path("app/public/$url"), 'all');
+        $fichas = array_unique($fichas, SORT_STRING);
+        foreach ($fichas as $ficha) {
+            $pdf->addPDF($ficha, 'all');
+        }
+
+        $pdf->merge('file', storage_path("app/public/$url"));
+        */
 
         unset($cotizacion->fechaPDF);
         $cotizacion->update(['archivo' => $url]);
@@ -2693,8 +3404,9 @@ class ProspectosController extends Controller
             $view = 'prospectos.cotizacionPDFIngles';
         }
 
+        $cliente = $cotizacion->prospecto->cliente;
         // return view('prospectos.cotizacionPDF', compact('cotizacion', 'nombre'));
-        $cotizacionPDF = PDF::loadView($view, compact('cotizacion', 'nombre'));
+        $cotizacionPDF = PDF::loadView($view, compact('cliente','cotizacion', 'nombre'));
         Storage::disk('public')->put($url, $cotizacionPDF->output());
 
         $fichas = [];

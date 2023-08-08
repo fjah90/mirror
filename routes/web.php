@@ -230,6 +230,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/gethistorialtarea/{tarea}', 'TareasController@gethistorial')->name('tareas.gethistorial');
     //Prospectos
     Route::get('/prospectos/cotizaciones', 'ProspectosController@cotizaciones');
+    Route::get('cotizacionesdirectas', 'ProspectosController@cotizacionesdirectas');
+    Route::get('cotizacionesdirectas/create', 'ProspectosController@cotizacionesdirectas_create')->name('cotizacionesdirectas.create');
+
+    Route::get('cotizacionesdirectas/{cotizacion}/edit', 'ProspectosController@cotizacionesdirectas_edit')->name('cotizacionesdirectas.edit');
+    Route::post('/cotizacionesdirectas/store', 'ProspectosController@cotizacionesdirectas_store')->name('cotizacionesdirectas.store');
+    Route::post('/cotizacionesdirectas/{cotizacion}/update', 'ProspectosController@cotizacionesdirectas_update')->name('cotizacionesdirectas.update');
     Route::get('/prospectos/prospectos', 'ProspectosController@prospectos')->name('prospectos.indexprospectos');
     //prospectos ver nuevo
     Route::get('/prospectos/{prospecto}/disenador/{disenador}/anio/{anio}', 'ProspectosController@prospectosver')->name('prospectos.prospectosver');
