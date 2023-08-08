@@ -774,41 +774,4 @@
             }
         });
     </script>
-    {{-- <script src="{{ asset('js/jquery.min.js') }}"></script>
-    <script src="{{ asset('js/clockpicker.js') }}"></script>
-    <script>
-        $(document).ready(function() {
-            $('#hora').clockpicker({
-                donetext: 'Done',
-                placement: "bottom",
-                init: function() {
-                    console.log("colorpicker initiated");
-                },
-                beforeShow: function() {
-                    console.log("before show");
-                },
-                afterShow: function() {
-                    console.log("after show");
-                },
-                beforeHide: function() {
-                    console.log("before hide");
-                },
-                afterHide: function() {
-                    console.log("after hide");
-                },
-                beforeHourSelect: function() {
-                    console.log("before hour selected");
-                },
-                afterHourSelect: function() {
-                    console.log("after hour selected");
-                },
-                beforeDone: function() {
-                    console.log("before done");
-                },
-                afterDone: function() {
-                    console.log("after done");
-                }
-            });
-        });
-    </script> --}}
 @stop

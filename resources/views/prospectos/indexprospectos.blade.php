@@ -530,14 +530,12 @@
                 <p class="modal-title fU" id="titulo_evento">Modal title</h4>
             </div>
             <div class="modal-body">
-                <p id="descripcion_evento" class="fU">Modal body text goes here.</p>
+                <p id="descripcion_evento" class="fU">Modal body text goes here.</p><p id="horario_texto"></p>
                 <p id="descripcion_texto" class="fU">Modal body text goes here.</p>
             </div>
             <a class="btn btn-xs btn-warning" title="Editar" href="" id="liga_evento">
                 <i class="fas fa-pencil-alt"></i>
             </a>
-            <p id="horario_texto"></p>
-
             <div class="form-group text-right">
                 <button type="button" class="btn btn-default" @click="modalEventos=false;">
                     Cancelar
