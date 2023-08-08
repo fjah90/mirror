@@ -168,13 +168,6 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-md-4" v-if="ultima_actividad.tipo_id==0">
-                                        <div class="form-group">
-                                            <label class="control-label">Especifique</label>
-                                            <input class="form-control" type="text" name="tipo"
-                                                v-model="ultima_actividad.tipo" />
-                                        </div>
-                                    </div>
                                     <div class="col-md-4"
                                         v-if="ultima_actividad.tipo_id==1 || ultima_actividad.tipo_id==12 || ultima_actividad.tipo_id==2 || ultima_actividad.tipo_id==13">
                                         <div class="form-group">
@@ -623,7 +616,7 @@
                     if (nueva) {
                         if (this.ntime_in < this.ntime_out) {
                             if (this.ntime_in && this.ntime_out) {
-                                this.ultima_actividad.horario = this.ntime_in + "-" + this
+                                this.proxima_actividad.horario = this.ntime_in + "-" + this
                                     .ntime_out;
                             }
                         } else {
@@ -636,7 +629,7 @@
                     } else {
                         if (this.time_in < this.time_out) {
                             if (this.time_in && this.time_out) {
-                                this.proxima_actividad.horario = this.time_in + "-" + this
+                                this.ultima_actividad.horario = this.time_in + "-" + this
                                     .time_out;;
                             }
                         } else {

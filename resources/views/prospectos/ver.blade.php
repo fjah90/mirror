@@ -172,7 +172,7 @@
             @if ($prospecto->proxima_actividad->horario)
                 <div class="col-md-4">
                     <div class="form-group">
-                        <label class="control-label">Horario</label>
+                        <label class="control-label col-md-12">Horario</label>
                         <div style="display: inline-flex;">
                             <input type="time" v-model="time_in" class="form-control w-128" disabled>
                             <input type="time" v-model="time_out" class="form-control w-128 ml-1" disabled>
