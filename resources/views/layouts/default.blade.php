@@ -165,6 +165,14 @@
                                 <span class="mm-text" style="color:#9F9F9F;">Cotizaciones</span>
                             </a>
                         </li>
+
+                        <hr class="divider-menu">
+                        <li {!! Request::is('prospectos*') ? 'class="active"' : '' !!}>
+                            <a href="{{ URL::to('cotizacionesdirectas') }}">
+                                <i class="menu-icon fas fa-shopping-bag" style="color:#B68911; font-size: 20px;"></i>
+                                <span class="mm-text" style="color:#9F9F9F;">Cotizaciones Directas</span>
+                            </a>
+                        </li>
                         <!--
 
             <hr class="divider-menu">

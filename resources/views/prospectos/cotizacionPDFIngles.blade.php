@@ -529,9 +529,9 @@
           <tbody>
             <tr>
               <td class="bordered">
-                <p class="text-uppercase">{{$cotizacion->prospecto->cliente->razon_social}}</p>
-                <p class="text-uppercase">{{$cotizacion->prospecto->cliente->direccion}}</p>
-                {{--@if($cotizacion->prospecto->cliente->telefono)--}}
+                <p class="text-uppercase">{{$cliente->razon_social}}</p>
+                <p class="text-uppercase">{{$cliente->direccion}}</p>
+                {{--@if($liente->telefono)--}}
                 <p class="text-uppercase">TO: {{$cotizacion->contacto->nombre}}</p>
                 <p class="text-uppercase">P. {{$cotizacion->contacto->telefono}}</p>
                 <p> Email:
@@ -560,7 +560,11 @@
                   <tr>
                     <td style="vertical-align:top">Project:</td>
                     <td class="text-uppercase">
+                      @if($cotizacion->prospecto_id == null)
+                      <strong>{{$cotizacion->nombre_proyecto}}</strong>
+                      @else
                       <strong>{{$cotizacion->prospecto->nombre}}</strong>
+                      @endif
                     </td>
                   </tr>
                   <tr>
