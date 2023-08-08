@@ -1295,15 +1295,14 @@
                 }
             },
             mounted() {
-                for (const actividad of this.prospecto.actividades) {
-                    if (actividad.horario != null) {
-                        console.log(actividad)
-                        var horarios = actividad.horario.split('-');
+              
+                    if (prospecto.proxima_actividad.horario != null) {
+                        var horarios = prospecto.proxima_actividad.horario.split('-');
                         this.time_in = horarios[0];
                         this.time_out = horarios[1];
-                        console.log(this.time_in)
+                     
                     }
-                }
+            
 
                 $("#factura").fileinput({
                     language: 'es',
