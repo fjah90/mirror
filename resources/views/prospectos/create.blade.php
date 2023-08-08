@@ -176,7 +176,7 @@
                                         </div>
                                     </div>
                                     <div class="col-md-4"
-                                        v-if="ultima_actividad.tipo_id==1 || ultima_actividad.tipo_id==12 || ultima_actividad.tipo_id==2 || ultima_actividad.tipo_id==13">
+                                        v-if="ultima_actividad.tipo_id==1 || ultima_actividad.tipo_id==12 || ultima_actividad.tipo_id==2 || ultima_actividad.tipo_id==14">
                                         <div class="form-group">
                                             <label for="ultima_actividad.horario"
                                                 class="control-label">Horario<strong style="color: grey">
@@ -303,7 +303,7 @@
                                         </div>
                                     </div>
                                     <div class="col-md-4"
-                                        v-if="proxima_actividad.tipo_id==1 || proxima_actividad.tipo_id==12 || proxima_actividad.tipo_id==2 || proxima_actividad.tipo_id==13">
+                                        v-if="proxima_actividad.tipo_id==1 || proxima_actividad.tipo_id==12 || proxima_actividad.tipo_id==2 || proxima_actividad.tipo_id==14">
                                         <div class="form-group">
                                             <label for="proxima_actividad.horario"
                                                 class="control-label">Horario<strong style="color: grey">
