@@ -225,9 +225,9 @@
                                                 <option value="1">Llamada</option>
                                                 <option value="12">Videollamada</option>
                                                 <option value="2">Cita Presencial</option>
-                                                <option value="13">Cita Showroom</option>
+                                                <option value="14">Cita Showroom</option>
                                                 <option value="3">Email</option>
-                                                <option value="14">Propuesta</option>
+                                                <option value="15">Propuesta</option>
                                                 <option value="5">Enviar Cotizacion</option>
                                             </select>
                                         </div>
@@ -240,7 +240,7 @@
                                         </div>
                                     </div>
                                     <div class="col-md-4"
-                                        v-if="ultima_actividad.tipo_id==1 || ultima_actividad.tipo_id==12 || ultima_actividad.tipo_id==2 || ultima_actividad.tipo_id==13">
+                                        v-if="ultima_actividad.tipo_id==1 || ultima_actividad.tipo_id==12 || ultima_actividad.tipo_id==2 || ultima_actividad.tipo_id==14">
                                         <div class="form-group">
                                             <label for="ultima_actividad.horario"
                                                 class="control-label">Horario<strong style="color: grey">
@@ -354,22 +354,15 @@
                                                 <option value="1">Llamada</option>
                                                 <option value="12">Videollamada</option>
                                                 <option value="2">Cita Presencial</option>
-                                                <option value="13">Cita Showroom</option>
+                                                <option value="14">Cita Showroom</option>
                                                 <option value="3">Email</option>
-                                                <option value="14">Propuesta</option>
+                                                <option value="15">Propuesta</option>
                                                 <option value="5">Enviar Cotizacion</option>
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-md-4" v-if="proxima_actividad.tipo_id==0">
-                                        <div class="form-group">
-                                            <label class="control-label">Especifique</label>
-                                            <input class="form-control" type="text" name="tipo"
-                                                v-model="proxima_actividad.tipo" />
-                                        </div>
-                                    </div>
                                     <div class="col-md-4"
-                                        v-if="proxima_actividad.tipo_id==1 || proxima_actividad.tipo_id==12 || proxima_actividad.tipo_id==2 || proxima_actividad.tipo_id==13">
+                                        v-if="proxima_actividad.tipo_id==1 || proxima_actividad.tipo_id==12 || proxima_actividad.tipo_id==2 || proxima_actividad.tipo_id==14">
                                         <div class="form-group">
                                             <label for="proxima_actividad.horario"
                                                 class="control-label">Horario<strong style="color: grey">
@@ -654,9 +647,8 @@
                     this.ultima_actividad.ofrecidos.splice(index, 1);
                 },
                 guardar() {
-                    console.log('algo');
-                  this.actualizarHorarioProximaActividad(true) ;
-                  this.actualizarHorarioProximaActividad() ;
+                  this.actualizarHorarioProximaActividad(true); 
+                  this.actualizarHorarioProximaActividad(); 
                     var prospecto = $.extend(true, {}, this.prospecto);
                     if (this.ultima_actividad.fecha != "" ||
                         this.ultima_actividad.descripcion != "" ||
@@ -706,7 +698,7 @@
                     if (nueva) {
                         if (this.ntime_in < this.ntime_out) {
                             if (this.ntime_in && this.ntime_out) {
-                                this.ultima_actividad.horario = this.ntime_in + "-" + this
+                                this.proxima_actividad.horario = this.ntime_in + "-" + this
                                     .ntime_out;
                             }
                         } else {
@@ -719,7 +711,7 @@
                     } else {
                         if (this.time_in < this.time_out) {
                             if (this.time_in && this.time_out) {
-                                this.proxima_actividad.horario = this.time_in + "-" + this
+                                this.ultima_actividad.horario = this.time_in + "-" + this
                                     .time_out;;
                             }
                         } else {

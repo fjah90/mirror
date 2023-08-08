@@ -2,7 +2,7 @@
 
 {{-- Page title --}}
 @section('title')
-    Cotizar Proyecto | @parent
+    Cotizar Directo | @parent
 @stop
 
 @section('header_styles')
@@ -21,204 +21,16 @@
 @section('content')
     <!-- Content Header (Page header) -->
     <section class="content-header" style="background-color:#12160F; color:#B68911;">
-        <h1 style="font-weight: bolder;">Proyecto {{ $prospecto->nombre }}</h1>
+        <h1 style="font-weight: bolder;"></h1>
     </section>
     <!-- Main content -->
     <section class="content" id="content">
+        
         <div class="row">
             <div class="col-lg-12">
                 <div class="panel">
                     <div class="panel-heading" style="background-color:#12160F; color:#B68911;">
-                        <h3 class="panel-title">Cotizar Proyecto</h3>
-                    </div>
-                    <div class="panel-body">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label class="control-label">Cliente</label>
-                                    <span class="form-control">{{ $prospecto->cliente->nombre }}</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label class="control-label">Nombre de Proyecto</label>
-                                    <span class="form-control text-uppercase">{{ $prospecto->nombre }}</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label class="control-label">Descripción</label>
-                                    <span class="form-control" style="min-height:68px;">{{ $prospecto->descripcion }}</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="panel">
-                    <div class="panel-heading" style="background-color:#12160F; color:#B68911;">
-                        <h4 class="panel-title">Cotizaciones Realizadas</h4>
-                    </div>
-                    <div class="panel-body">
-                        <div class="row">
-                            <div class="col-sm-12">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="table-responsive">
-                                    <table class="table table-bordred">
-                                        <thead>
-                                            <tr>
-                                                <th class="color_text">Numero</th>
-                                                <th class="color_text">Fecha</th>
-                                                <th class="color_text">Productos Ofrecidos</th>
-                                                <th class="color_text">Total</th>
-                                                <th class="color_text">Status</th>
-                                                <th></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr v-for="(cotizacion, index) in prospecto.cotizaciones">
-                                                <td>@{{ cotizacion.numero }}</td>
-                                                <td>@{{ cotizacion.fecha_formated }}</td>
-                                                <td>
-                                                    <template v-for="(entrada, index) in cotizacion.entradas">
-                                                        <span>@{{ index + 1 }}.- @{{ entrada.producto.nombre }} -
-                                                            @{{ entrada.producto.proveedor.empresa }} -
-                                                            Area:@{{ entrada.area }}</span><br />
-                                                    </template>
-                                                </td>
-                                                <td>
-                                                    {{ $prospecto->en }}
-                                                    <table>
-                                                        <template
-                                                            v-for="(total, proveedor) in cotizacion.entradas_proveedor_totales">
-                                                            <tr>
-                                                                <td class="text-right">@{{ proveedor }} |</td>
-                                                                <td class="text-right">@{{ total * (cotizacion.iva == 0 ? 1 : 1.16) | formatoMoneda }}</td>
-                                                            </tr>
-                                                        </template>
-                                                        <tr>
-                                                            <th class="text-right">Total @{{ cotizacion.moneda }}|</th>
-                                                            <th class="text-right">@{{ cotizacion.total | formatoMoneda }} </th>
-                                                        </tr>
-                                                    </table>
-                                                </td>
-
-                                                <td>
-                                                    <label class="label label-warning" v-if="cotizacion.aceptada == 0">
-                                                        Pendiente
-                                                    </label>
-
-                                                    <label class="label label-success" v-if="cotizacion.aceptada == 1">
-                                                        Aceptada
-                                                    </label>
-
-
-                                                </td>
-                                                <td class="text-right">
-                                                    <!--
-                                                                                                                                                                        <button class="btn btn-xs btn-default" title="Notas"
-                                                                                                                                                                                @click="notas.cotizacion_id=cotizacion.id;notas.mensaje=cotizacion.notas2;openNotas=true;">
-                                                                                                                                                                            <i class="far fa-sticky-note"></i>
-                                                                                                                                                                        </button>
-                                                                                                                                                                        -->
-                                                    <a class="btn btn-xs btn-success" title="PDF"
-                                                        :href="cotizacion.archivo"
-                                                        :download="'C ' + cotizacion.numero + ' Robinson' + prospecto.cliente
-                                                            .nombre + ' ' + prospecto.nombre + '.pdf'">
-                                                        <i class="far fa-file-pdf"></i>
-                                                    </a>
-                                                    <!--
-                                                                                                                                                                        <button class="btn btn-xs btn-info" title="Enviar"
-                                                                                                                                                                                @click="enviar.cotizacion_id=cotizacion.id; enviar.numero=cotizacion.numero; openEnviar=true;">
-                                                                                                                                                                            <i class="far fa-envelope"></i>
-                                                                                                                                                                        </button>
-                                                                                                                                                                        <a v-if="cotizacion.aceptada" class="btn btn-xs text-primary"
-                                                                                                                                                                           title="Comprobante Confirmación"
-                                                                                                                                                                           :href="cotizacion
-                                                                                                                                                                               .comprobante_confirmacion"
-                                                                                                                                                                           target="_blank">
-                                                                                                                                                                            <i class="fas fa-user-check"></i>
-                                                                                                                                                                        </a>
-
-                                                                                                                                                                        <a v-if="cotizacion.aceptada" class="btn btn-xs text-warning"
-                                                                                                                                                                       title="Orden Compra"
-                                                                                                                                                                       :href="'/proyectos-aprobados/' +
-                                                                                                                                                                       cotizacion
-                                                                                                                                                                           .proyecto_aprobado
-                                                                                                                                                                           .id +
-                                                                                                                                                                           '/ordenes-compra'"
-                                                                                                                                                                       target="_blank">
-                                                                                                                                                                        <i class="fas fa-arrow-up"></i>
-                                                                                                                                                                        </a>
-                                                                                                                                                                        -->
-
-                                                    <template v-else>
-                                                        <button class="btn btn-xs btn-warning" title="Editar"
-                                                            @click="editar(index, cotizacion)">
-                                                            <i class="fas fa-pencil-alt"></i>
-                                                        </button>
-                                                        <!--
-                                                                                                                                                                            <button class="btn btn-xs btn-primary" title="Aceptar"
-                                                                                                                                                                                    @click="aceptar.cotizacion_id=cotizacion.id; openAceptar=true;">
-                                                                                                                                                                                <i class="fas fa-user-check"></i>
-                                                                                                                                                                            </button>
-                                                                                                                                                                            -->
-                                                        @role('Administrador')
-                                                            <button class="btn btn-xs btn-danger" title="Eliminar"
-                                                                @click="borrar(index, cotizacion)">
-                                                                <i class="fas fa-times"></i>
-                                                            </button>
-                                                        @endrole
-                                                    </template>
-                                                    <!--
-                                                                                                                                                                        <button class="btn btn-xs btn-white" title="Copiar"
-                                                                                                                                                                                @click="copiar(index, cotizacion)">
-                                                                                                                                                                            <i class="far fa-copy"></i>
-                                                                                                                                                                        </button>
-                                                                                                                                                                        <button class="btn btn-xs btn-green" title="Copiar a otro proyecto"
-                                                                                                                                                                                @click="copiar2(index, cotizacion); openCopiar=true ">
-                                                                                                                                                                            <i class="far fa-copy"></i>
-                                                                                                                                                                        </button>
-                                                                                                                                                                        -->
-
-                                                </td>
-                                            </tr>
-                                        <tfoot>
-                                            <tr>
-                                                <td colspan="2"></td>
-                                                <td class="text-right">Total Pesos <br /> Total Dolares</td>
-                                                <td>@{{ totales_cotizaciones.pesos | formatoMoneda }} <br />
-                                                    @{{ totales_cotizaciones.dolares | formatoMoneda }}
-                                                </td>
-                                            </tr>
-                                        </tfoot>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="panel">
-                    <div class="panel-heading" style="background-color:#12160F; color:#B68911;">
-                        <h4 class="panel-title">Nueva Cotización</h4>
+                        <h4 class="panel-title">Editar Cotización</h4>
                     </div>
                     <div class="panel-body">
                         <form class="" @submit.prevent="agregarEntrada()">
@@ -233,12 +45,28 @@
                                     </div>
                                 @endcan
                                 <div class="col-md-4">
+                                    <label class="control-label">Proyecto Nombre *</label>
+                                    <input class="form-control" type="text" name="prospecto_nombre"
+                                       v-model="cotizacion.nombre_proyecto" required />
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="control-label">Cliente</label>
+                                    <select name="cliente_id" v-model="cotizacion.cliente_id"
+                                        class="form-control" required @change="contactosCliente()">
+                                        @foreach ($clientes as $cliente)
+                                          <option value="{{ $cliente->id }}" >
+                                            {{ $cliente->nombre }}</option>
+                                       @endforeach
+                                        
+                                    </select>
+                                </div>
+                                <div class="col-md-4">
                                     <label class="control-label">Cliente Contacto *</label>
                                     <select name="cliente_contacto_id" v-model="cotizacion.cliente_contacto_id"
                                         class="form-control" required>
-                                        @foreach ($prospecto->cliente->contactos as $contacto)
-                                            <option value="{{ $contacto->id }}">{{ $contacto->nombre }}</option>
-                                        @endforeach
+                                        <option v-for="(contacto, index) in contactos" :value="contacto.id">
+                                                @{{ contacto.nombre }}</option>
+                                        
                                     </select>
                                 </div>
                                 <div class="col-md-4">
@@ -301,11 +129,7 @@
                                 <div class="col-sm-4">
 
                                     <label class="control-label">Colonia</label>
-                                    <!--
-                                                                                <select class="form-control" name="colonia" v-model="cotizacion.colonia" text-uppercase required>
-                                                                                    <option v-for="(colonia,index) in colonias" v-bind:value="colonia">@{{ colonia }}</option>
-                                                                                </select>
-                                                                                -->
+                                  
                                     <input type="text" name="colonia" class="form-control text-uppercase"
                                         v-model="cotizacion.colonia" />
 
@@ -369,11 +193,7 @@
                                 <div class="col-sm-4">
 
                                     <label class="control-label">Colonia</label>
-                                    <!--
-                                                                                    <select class="form-control" name="colonia" v-model="cotizacion.dircolonia" text-uppercase required>
-                                                                                        <option v-for="(colonia,index) in colonias2" v-bind:value="colonia">@{{ colonia }}</option>
-                                                                                    </select>
-                                                                                    -->
+                                    
                                     <input type="text" name="colonia" class="form-control text-uppercase"
                                         v-model="cotizacion.dircolonia" />
 
@@ -1165,9 +985,10 @@
                 fechaActual: new Date().toLocaleDateString(),
                 colonias: [],
                 colonias2: [],
+                clientes : {!! json_encode($clientes) !!},
+                contactos:{!! json_encode($contactos) !!},
                 edicionEntradaActiva: false,
                 locale: localeES,
-                prospecto: {!! json_encode($prospecto) !!},
                 productos: {!! json_encode($productos) !!},
                 condiciones: {!! json_encode($condiciones) !!},
                 rfcs: {!! json_encode($rfcs) !!},
@@ -1184,7 +1005,9 @@
                     cotizacion_id: '',
                 },
                 cotizacion: {
-                    prospecto_id: {{ $prospecto->id }},
+                    prospecto_id: '',
+                    proyecto_nombre:'',
+                    cliente_id:'',
                     cliente_contacto_id: '',
                     vendedor_id: '',
                     numero: {{ $numero_siguiente }},
@@ -1225,13 +1048,12 @@
                     tipo_descuento: 0,
                     planos: '',
                     factibilidad: '',
-                    // moneda: '{{ $prospecto->cliente->nacional ? 'Pesos' : 'Dolares' }}',
                     moneda: 'Dolares',
                     entradas: [],
                     subtotal: 0,
-                    iva: '{{ $prospecto->cliente->nacional ? '1' : '0' }}',
+                    iva: '',
                     total: 0,
-                    idioma: '{{ $prospecto->cliente->nacional ? 'español' : 'ingles' }}',
+                    idioma: '',
                     notas: "",
                     observaciones: []
                 },
@@ -1261,16 +1083,9 @@
                     numero: 0,
                     email: [],
                     emailOpciones: [
-                        @foreach ($prospecto->cliente->contactos as $contacto)
-                            @foreach ($contacto->emails as $email)
-                                {
-                                    id: "{{ $email->email }}",
-                                    text: "{{ $email->email }}"
-                                },
-                            @endforeach
-                        @endforeach
+                        
                     ],
-                    mensaje: "Buenas tardes  .\n\nAnexo a la presente encontrarán la cotización solicitada de {{ $prospecto->descripcion }}  para {{ $prospecto->nombre }} .\n\nEsperamos esta información les sea de utilidad y quedamos a sus órdenes para cualquier duda o comentario.\n\nSaludos,\n\n{{ auth()->user()->name }}.\n{{ auth()->user()->email }}\nRobinson Contract Resources"
+                    mensaje: "Buenas tardes  .\n\nAnexo a la presente encontrarán la cotización solicitada de  para  .\n\nEsperamos esta información les sea de utilidad y quedamos a sus órdenes para cualquier duda o comentario.\n\nSaludos,\n\n{{ auth()->user()->name }}.\n{{ auth()->user()->email }}\nRobinson Contract Resources"
                 },
                 aceptar: {
                     cotizacion_id: 0,
@@ -1290,18 +1105,7 @@
                 cargando: false,
             },
             computed: {
-                totales_cotizaciones() {
-                    var dolares = 0,
-                        pesos = 0;
-                    this.prospecto.cotizaciones.forEach(function(cotizacion) {
-                        if (cotizacion.moneda == "Pesos") pesos += cotizacion.total;
-                        else dolares += cotizacion.total;
-                    });
-                    return {
-                        "dolares": dolares,
-                        "pesos": pesos
-                    }
-                }
+                
             },
             filters: {
                 formatoMoneda(numero) {
@@ -1309,7 +1113,6 @@
                 },
             },
             mounted() {
-                console.log(this.notasPreCargadas);
                 this.$refs.fechaActual = document.querySelector('#fechaActual');
                 this.actualizarFechaActual();
                 let self = this; // ámbito de vue
@@ -1443,6 +1246,8 @@
 
                     }
                 }, false);
+
+                this.editar({!! json_encode($cotizacion) !!});
             },
             methods: {
                 cp() {
@@ -1542,6 +1347,11 @@
                         this.cotizacion.ciudad = this.rfcs[this.cotizacion.facturar].ciudad;
                         this.cotizacion.estado = this.rfcs[this.cotizacion.facturar].estado;
                     }
+                },
+                contactosCliente(){
+                  const id_cliente = Number(this.cotizacion.cliente_id);
+                  const cliente = this.clientes.find(({ id }) => id === id_cliente);
+                  this.contactos = cliente.contactos;
                 },
                 seleccionarTipoDescuento() {
                     console.log(this.cotizacion.tipo_descuento)
@@ -1920,20 +1730,21 @@
                 },
                 copiar(index, cotizacion) {
                     //reiniciar observaciones
+                
                     this.observaciones.forEach(function(observacion) {
                         observacion.activa = false;
                     });
                     var numero = this.cotizacion.numero;
                     //vaciar datos de cotizacion
                     this.cotizacion = {
-                        prospecto_id: {{ $prospecto->id }},
+                        prospecto_id: 0,
                         cliente_contacto_id: cotizacion.cliente_contacto_id,
                         numero: numero,
                         condicion: {
                             id: cotizacion.condicion_id,
                             nombre: ''
                         },
-                        facturar: (cotizacion.facturar) ? 1 : 0,
+                        facturar: (cotizacion.facturar == 0) ? 0 : 1,
                         rfc: cotizacion.rfc,
                         razon_social: cotizacion.razon_social,
                         calle: cotizacion.calle,
@@ -1943,7 +1754,7 @@
                         cp: cotizacion.cp,
                         ciudad: cotizacion.ciudad,
                         estado: cotizacion.estado,
-                        direccion: (cotizacion.direccion) ? 1 : 0,
+                        direccion: (cotizacion.direccion == 0) ? 0 : 1,
                         dircalle: cotizacion.dircalle,
                         instrucciones: cotizacion.instrucciones,
                         enviar_a: cotizacion.enviar_a,
@@ -2014,106 +1825,112 @@
                     }, this);
                     this.resetDataTables();
                 },
-                editar(index, cotizacion) {
+                editar(cotizacion) {
+                  //reiniciar observaciones
+                  this.observaciones.forEach(function(observacion) {
+                     observacion.activa = false;
+                  });
 
-                    this.prospecto.cotizaciones.splice(index, 1);
+                  //vaciar datos de cotizacion
+                  this.cotizacion = {
+                     prospecto_id: '',
+                     cliente_id: cotizacion.cliente_id,
+                     nombre_proyecto: cotizacion.nombre_proyecto,
+                     cliente_contacto_id: cotizacion.cliente_contacto_id,
+                     flete:cotizacion.flete,
+                     descuentos:cotizacion.descuentos,
+                     tipo_descuento:cotizacion.tipo_descuento,
+                     ubicacion: cotizacion.ubicacion,
+                     flete_menor: cotizacion.flete_menor,
+                     costo_sobreproduccion: cotizacion.costo_sobreproduccion,
+                     cotizacion_id: cotizacion.id,
+                     vendedor_id:cotizacion.vendedor_id,
+                     numero: cotizacion.numero,
+                     condicion: {
+                        id: cotizacion.condicion_id,
+                        nombre: ''
+                     },
+                     facturar: (cotizacion.facturar == 0) ? 0 : 1,
+                     rfc: cotizacion.rfc,
+                     razon_social: cotizacion.razon_social,
+                     calle: cotizacion.calle,
+                     nexterior: cotizacion.nexterior,
+                     ninterior: cotizacion.ninterior,
+                     colonia: cotizacion.colonia,
+                     cp: cotizacion.cp,
+                     ciudad: cotizacion.ciudad,
+                     estado: cotizacion.estado,
+                     direccion: (cotizacion.direccion == 0 ) ? 0 : 1,
+                     dircalle: cotizacion.dircalle,
+                     instrucciones: cotizacion.instrucciones,
+                     enviar_a: cotizacion.enviar_a,
+                     dirnexterior: cotizacion.dirnexterior,
+                     dirninterior: cotizacion.dirninterior,
+                     dircolonia: cotizacion.dircolonia,
+                     dircp: cotizacion.dircp,
+                     contacto_nombre: cotizacion.contacto_nombre,
+                     contacto_telefono: cotizacion.contacto_telefono,
+                     contacto_email: cotizacion.contacto_email,
+                     dirciudad: cotizacion.dirciudad,
+                     direstado: cotizacion.direstado,
+                     entrega: cotizacion.entrega,
+                     lugar: cotizacion.lugar,
+                     // fletes: cotizacion.fletes,
+                     planos: cotizacion.planos, //
+                     factibilidad: cotizacion.factibilidad, //
+                     moneda: cotizacion.moneda,
+                     entradas: cotizacion.entradas,
+                     subtotal: cotizacion.subtotal,
+                     iva: (cotizacion.iva == 0) ? 0 : 1,
+                     total: cotizacion.total,
+                     idioma: cotizacion.idioma,
+                     notas: cotizacion.notas,
+                     observaciones: []
+                  };
+                  this.condicionCambiada();
 
-                    //reiniciar observaciones
-                    this.observaciones.forEach(function(observacion) {
-                        observacion.activa = false;
-                    });
+                  //re-seleccionar observaciones
+                  var observaciones = cotizacion.observaciones.match(/<li>([^<]+)+<\/li>+/g);
+                  if (observaciones == null) observaciones = [];
+                  var encontrada;
+                  observaciones.forEach(function(observacion) {
+                     observacion = observacion.replace(/(<li>|<\/li>)/g, '');
+                     encontrada = this.observaciones.findIndex(function(obs) {
+                        return observacion == obs.texto;
+                     });
 
-                    //vaciar datos de cotizacion
-                    this.cotizacion = {
-                        prospecto_id: {{ $prospecto->id }},
-                        cliente_contacto_id: cotizacion.cliente_contacto_id,
-                        cotizacion_id: cotizacion.id,
-                        numero: cotizacion.numero,
-                        condicion: {
-                            id: cotizacion.condicion_id,
-                            nombre: ''
-                        },
-                        facturar: (cotizacion.facturar) ? 1 : 0,
-                        rfc: cotizacion.rfc,
-                        razon_social: cotizacion.razon_social,
-                        calle: cotizacion.calle,
-                        nexterior: cotizacion.nexterior,
-                        ninterior: cotizacion.ninterior,
-                        colonia: cotizacion.colonia,
-                        cp: cotizacion.cp,
-                        ciudad: cotizacion.ciudad,
-                        estado: cotizacion.estado,
-                        direccion: (cotizacion.direccion) ? 1 : 0,
-                        dircalle: cotizacion.dircalle,
-                        instrucciones: cotizacion.instrucciones,
-                        enviar_a: cotizacion.enviar_a,
-                        dirnexterior: cotizacion.dirnexterior,
-                        dirninterior: cotizacion.dirninterior,
-                        dircolonia: cotizacion.dircolonia,
-                        dircp: cotizacion.dircp,
-                        contacto_nombre: cotizacion.contacto_nombre,
-                        contacto_telefono: cotizacion.contacto_telefono,
-                        contacto_email: cotizacion.contacto_email,
-                        dirciudad: cotizacion.dirciudad,
-                        direstado: cotizacion.direstado,
-                        entrega: cotizacion.entrega,
-                        lugar: cotizacion.lugar,
-                        // fletes: cotizacion.fletes,
-                        planos: cotizacion.planos, //
-                        factibilidad: cotizacion.factibilidad, //
-                        moneda: cotizacion.moneda,
-                        entradas: cotizacion.entradas,
-                        subtotal: cotizacion.subtotal,
-                        iva: (cotizacion.iva == 0) ? 0 : 1,
-                        total: cotizacion.total,
-                        idioma: cotizacion.idioma,
-                        notas: cotizacion.notas,
-                        observaciones: []
-                    };
-                    this.condicionCambiada();
-
-                    //re-seleccionar observaciones
-                    var observaciones = cotizacion.observaciones.match(/<li>([^<]+)+<\/li>+/g);
-                    if (observaciones == null) observaciones = [];
-                    var encontrada;
-                    observaciones.forEach(function(observacion) {
-                        observacion = observacion.replace(/(<li>|<\/li>)/g, '');
-                        encontrada = this.observaciones.findIndex(function(obs) {
-                            return observacion == obs.texto;
+                     if (encontrada != -1) {
+                        this.observaciones[encontrada].activa = true;
+                     } else { //observacion diferente de las predefinidas
+                        this.observaciones.push({
+                              activa: true,
+                              texto: observacion
                         });
+                     }
+                     this.cotizacion.observaciones.push(observacion);
+                  }, this);
 
-                        if (encontrada != -1) {
-                            this.observaciones[encontrada].activa = true;
-                        } else { //observacion diferente de las predefinidas
-                            this.observaciones.push({
-                                activa: true,
-                                texto: observacion
-                            });
-                        }
-                        this.cotizacion.observaciones.push(observacion);
-                    }, this);
+                  // agregar observaciones de entradas de productos
+                  cotizacion.entradas.forEach(function(entrada) {
+                     observaciones = entrada.observaciones.match(/<li>([^<]+)+<\/li>+/g);
+                     entrada.observaciones = [];
+                     if (observaciones == null) return false;
+                     encontrada;
+                     observaciones.forEach(function(observacion) {
+                        observacion = observacion.replace(/(<li>|<\/li>)/g, '');
+                        entrada.observaciones.push(observacion);
 
-                    // agregar observaciones de entradas de productos
-                    cotizacion.entradas.forEach(function(entrada) {
-                        observaciones = entrada.observaciones.match(/<li>([^<]+)+<\/li>+/g);
-                        entrada.observaciones = [];
-                        if (observaciones == null) return false;
-                        encontrada;
-                        observaciones.forEach(function(observacion) {
-                            observacion = observacion.replace(/(<li>|<\/li>)/g, '');
-                            entrada.observaciones.push(observacion);
-
-                            encontrada = this.observaciones_productos.findIndex(function(obs) {
-                                return observacion == obs.texto;
-                            });
-                            if (encontrada == -1) this.observaciones_productos.push({
-                                activa: false,
-                                texto: observacion
-                            });
-                        }, this);
-                    }, this);
-                    this.resetDataTables();
-                },
+                        encontrada = this.observaciones_productos.findIndex(function(obs) {
+                              return observacion == obs.texto;
+                        });
+                        if (encontrada == -1) this.observaciones_productos.push({
+                              activa: false,
+                              texto: observacion
+                        });
+                     }, this);
+                  }, this);
+                  this.resetDataTables();
+                  },
                 guardar() {
 
                     if (this.entrada.producto.id == undefined) {
@@ -2153,10 +1970,7 @@
                         var url = "",
                             numero_siguiente = false;
 
-                        if (this.cotizacion.cotizacion_id) {
-                            url = '/prospectos/{{ $prospecto->id }}/cotizacion/' + this.cotizacion.cotizacion_id;
-                            numero_siguiente = {{ $numero_siguiente }};
-                        } else url = '/prospectos/{{ $prospecto->id }}/cotizacion';
+                            url = '/cotizacionesdirectas/'+cotizacion.cotizacion_id+'/update';
 
                         this.cargando = true;
                         axios.post(url, formData, {
@@ -2167,75 +1981,12 @@
                             .then(({
                                 data
                             }) => {
-                                this.prospecto.cotizaciones.push(data.cotizacion);
-                                this.cotizacion = {
-                                    prospecto_id: {{ $prospecto->id }},
-                                    cliente_contacto_id: '',
-                                    @can('editar numero cotizacion')
-                                        numero: (numero_siguiente) ? numero_siguiente : data.cotizacion.id +
-                                            1,
-                                    @else
-                                        numero: 0,
-                                    @endcan
-                                    condicion: {
-                                        id: 0,
-                                        nombre: ''
-                                    },
-                                    facturar: 0,
-                                    rfc: '',
-                                    razon_social: '',
-                                    calle: '',
-                                    nexterior: '',
-                                    ninterior: '',
-                                    colonia: '',
-                                    cp: '',
-                                    ciudad: '',
-                                    estado: '',
-                                    direccion: 0,
-                                    dircalle: '',
-                                    instrucciones: '',
-                                    enviar_a: '',
-                                    dirnexterior: '',
-                                    dirninterior: '',
-                                    dircolonia: '',
-                                    dircp: '',
-                                    contacto_nombre: '',
-                                    contacto_telefono: '',
-                                    contacto_email: '',
-                                    dirciudad: '',
-                                    direstado: '',
-                                    entrega: '',
-                                    lugar: '',
-                                    flete: '',
-                                    isfleteMenor: false,
-                                    flete_menor: '',
-                                    costo_sobreproduccion: '',
-                                    descuentos: 0,
-                                    tipo_descuento: 0,
-                                    planos: '',
-                                    factibilidad: '',
-                                    moneda: '{{ $prospecto->cliente->nacional ? 'Pesos' : 'Dolares' }}',
-                                    entradas: [],
-                                    subtotal: 0,
-                                    iva: '{{ $prospecto->cliente->nacional ? '1' : '0' }}',
-                                    total: 0,
-                                    notas: "",
-                                    idioma: '{{ $prospecto->cliente->nacional ? 'español' : 'ingles' }}',
-                                    observaciones: []
-                                };
-                                this.observaciones.forEach(function(observacion) {
-                                    observacion.activa = false;
-                                });
-                                this.resetDataTables();
-                                this.cargando = false;
                                 swal({
                                     title: "Cotizacion Guardada",
                                     text: "",
                                     type: "success"
                                 }).then(() => {
-                                    $('a[download="C ' + data.cotizacion.numero + ' Robinson ' + this
-                                        .prospecto.nombre + '.pdf"]')[0].click();
-                                    window.location.reload(true);
+                                 window.location.href = "/cotizacionesdirectas";
                                 });
                             })
                             .catch(({
@@ -2255,7 +2006,7 @@
                 }, //fin guardar
                 enviarCotizacion() {
                     this.cargando = true;
-                    axios.post('/prospectos/{{ $prospecto->id }}/enviarCotizacion', this.enviar)
+                    axios.post('/prospectos/0/enviarCotizacion', this.enviar)
                         .then(({
                             data
                         }) => {
@@ -2264,14 +2015,7 @@
                                 numero: 0,
                                 email: [],
                                 emailOpciones: [
-                                    @foreach ($prospecto->cliente->contactos as $contacto)
-                                        @foreach ($contacto->emails as $email)
-                                            {
-                                                id: "{{ $email->email }}",
-                                                text: "{{ $email->email }}"
-                                            },
-                                        @endforeach
-                                    @endforeach
+                                    
                                 ],
                                 mensaje: "Buen día.\n\nLe envió cotización para su consideración.\n\n{{ auth()->user()->name }}.\nAtención del Cliente\nRobinson Contract Resources"
                             };
@@ -2302,7 +2046,7 @@
                     });
 
                     this.cargando = true;
-                    axios.post('/prospectos/{{ $prospecto->id }}/aceptarCotizacion', formData, {
+                    axios.post('/prospectos/0/aceptarCotizacion', formData, {
                             headers: {
                                 'Content-Type': 'multipart/form-data'
                             }
@@ -2366,7 +2110,7 @@
                 }, //fin aceptarCotizacion
                 notasCotizacion() {
                     this.cargando = true;
-                    axios.post('/prospectos/{{ $prospecto->id }}/notasCotizacion', this.notas)
+                    axios.post('/prospectos/0/notasCotizacion', this.notas)
                         .then(({
                             data
                         }) => {
@@ -2406,7 +2150,7 @@
                 copiarCotizacion() {
                     this.cargando = true;
 
-                    axios.post('/prospectos/{{ $prospecto->id }}/copiarCotizacion', this.copiar_cotizacion)
+                    axios.post('/prospectos/0/copiarCotizacion', this.copiar_cotizacion)
                         .then(({
                             data
                         }) => {
@@ -2446,12 +2190,12 @@
                         cancelButtonText: 'No, Cancelar',
                     }).then((result) => {
                         if (result.value) {
-                            axios.delete('/prospectos/{{ $prospecto->id }}/cotizacion/' + cotizacion
+                            axios.delete('/prospectos/0/cotizacion/' + cotizacion
                                     .id, {})
                                 .then(({
                                     data
                                 }) => {
-                                    this.prospecto.cotizaciones.splice(index, 1);
+                                    
                                     swal({
                                         title: "Exito",
                                         text: "La cotizacion ha sido borrado",

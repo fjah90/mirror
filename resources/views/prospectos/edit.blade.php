@@ -249,15 +249,15 @@
                                                 <option value="1">Llamada</option>
                                                 <option value="12">Videollamada</option>
                                                 <option value="2">Cita Presencial</option>
-                                                <option value="13">Cita Showroom</option>
+                                                <option value="14">Cita Showroom</option>
                                                 <option value="3">Email</option>
-                                                <option value="14">Propuesta</option>
+                                                <option value="15">Propuesta</option>
                                                 <option value="5">Enviar Cotizacion</option>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="col-md-4"
-                                        v-if="prospecto.proxima_actividad.tipo_id==1 || prospecto.proxima_actividad.tipo_id==12 || prospecto.proxima_actividad.tipo_id==2 || prospecto.proxima_actividad.tipo_id==13">
+                                        v-if="prospecto.proxima_actividad.tipo_id==1 || prospecto.proxima_actividad.tipo_id==12 || prospecto.proxima_actividad.tipo_id==2 || prospecto.proxima_actividad.tipo_id==14">
                                         <div class="form-group">
                                             <label for="prospecto.proxima_actividad.horario"
                                                 class="control-label">Horario<strong style="color: grey">
@@ -281,20 +281,20 @@
                                         </div>
                                     </div>
                                     <!--
-                                                                              <div class="col-md-4">
-                                                                                <div class="form-group">
-                                                                                  <label class="control-label">Fecha<strong style="color: grey"> *</strong></label>
-                                                                                  <span class="form-control">@{{ prospecto.proxima_actividad.fecha_formated }}</span>
-                                                                                </div>
-                                                                              </div>
-                                                                              
-                                                                              <div class="col-md-4">
-                                                                                <div class="form-group">
-                                                                                  <label class="control-label">Tipo <strong style="color: grey"> *</strong></label>
-                                                                                  <span class="form-control">@{{ prospecto.proxima_actividad.tipo.nombre }}</span>
-                                                                                </div>
-                                                                              </div>
-                                                                            -->
+                                                                                  <div class="col-md-4">
+                                                                                    <div class="form-group">
+                                                                                      <label class="control-label">Fecha<strong style="color: grey"> *</strong></label>
+                                                                                      <span class="form-control">@{{ prospecto.proxima_actividad.fecha_formated }}</span>
+                                                                                    </div>
+                                                                                  </div>
+                                                                                  
+                                                                                  <div class="col-md-4">
+                                                                                    <div class="form-group">
+                                                                                      <label class="control-label">Tipo <strong style="color: grey"> *</strong></label>
+                                                                                      <span class="form-control">@{{ prospecto.proxima_actividad.tipo.nombre }}</span>
+                                                                                    </div>
+                                                                                  </div>
+                                                                                -->
                                 </div>
 
                                 <div class="row">
@@ -319,12 +319,12 @@
                                         </button>
                                     </div>
                                     <!--
-                                                                              <div class="col-sm-2" style="padding-top: 25px;">
-                                                                                <button type="button" class="btn btn-primary" @click="modalProducto=true">
-                                                                                  Registrar producto
-                                                                                </button>
-                                                                              </div>
-                                                                               -->
+                                                                                  <div class="col-sm-2" style="padding-top: 25px;">
+                                                                                    <button type="button" class="btn btn-primary" @click="modalProducto=true">
+                                                                                      Registrar producto
+                                                                                    </button>
+                                                                                  </div>
+                                                                                   -->
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-12">
@@ -403,9 +403,9 @@
                                             <option value="1">Llamada</option>
                                             <option value="12">Videollamada</option>
                                             <option value="2">Cita Presencial</option>
-                                            <option value="13">Cita Showroom</option>
+                                            <option value="14">Cita Showroom</option>
                                             <option value="3">Email</option>
-                                            <option value="14">Propuesta</option>
+                                            <option value="15">Propuesta</option>
                                             <option value="5">Enviar Cotizacion</option>
                                         </select>
                                     </div>
@@ -418,7 +418,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-4"
-                                    v-if="prospecto.nueva_proxima_actividad.tipo_id==1 || prospecto.nueva_proxima_actividad.tipo_id==12 || prospecto.nueva_proxima_actividad.tipo_id==2 || prospecto.nueva_proxima_actividad.tipo_id==13">
+                                    v-if="prospecto.nueva_proxima_actividad.tipo_id==1 || prospecto.nueva_proxima_actividad.tipo_id==12 || prospecto.nueva_proxima_actividad.tipo_id==2 || prospecto.nueva_proxima_actividad.tipo_id==14">
                                     <div class="form-group">
                                         <label for="prospecto.nueva_proxima_actividad.horario"
                                             class="control-label">Horario<strong style="color: grey"> *</strong></label>
@@ -547,9 +547,18 @@
                 $("#tablaProductos").DataTable({
                     dom: 'ftp'
                 });
+                
+                if (this.prospecto.proxima_actividad.horario != null) {
+                    var horarios = this.prospecto.proxima_actividad.horario.split('-');
+                    this.time_in = horarios[0];
+                    this.time_out = horarios[1];
+                    this.ntime_in = horarios[0];
+                    this.ntime_out = horarios[1];
+                }
                 this.prospecto.fecha_cierre = this.prospecto.fecha_cierre_formated;
                 this.prospecto.proxima_actividad.fecha = this.prospecto.proxima_actividad.fecha_formated;
                 this.prospecto.nueva_proxima_actividad.fecha = this.prospecto.proxima_actividad.fecha_formated;
+                this.prospecto.nueva_proxima_actividad.tipo_id = this.prospecto.proxima_actividad.tipo_id;
                 //escuchar Iframe
                 window.addEventListener('message', function(e) {
                     if (e.data.tipo == "cliente") {
@@ -581,13 +590,13 @@
                 }, false);
             },
             methods: {
-                actualizarHorarioProximaActividad(nueva= false) {
+                actualizarHorarioProximaActividad(nueva = false) {
                     let setTime;
                     if (nueva) {
                         if (this.ntime_in < this.ntime_out) {
                             if (this.ntime_in && this.ntime_out) {
                                 this.prospecto.nueva_proxima_actividad.horario = this.ntime_in + "-" + this
-                                .ntime_out;
+                                    .ntime_out;
                             }
                         } else {
                             swal({
@@ -596,11 +605,11 @@
                                 type: "error"
                             });
                         }
-                    }else{
+                    } else {
                         if (this.time_in < this.time_out) {
                             if (this.time_in && this.time_out) {
                                 this.prospecto.proxima_actividad.horario = this.time_in + "-" + this
-                                .time_out;;
+                                    .time_out;;
                             }
                         } else {
                             swal({
@@ -739,7 +748,7 @@
                                 .fecha_formated;
                             this.prospecto.nueva_proxima_actividad = {
                                 fecha: data.nueva.fecha_formated,
-                                tipo_id: 1,
+                                tipo_id: data.nueva.tipo_id,
                                 tipo: ''
                             };
                             this.cargando = false;
@@ -765,41 +774,4 @@
             }
         });
     </script>
-    {{-- <script src="{{ asset('js/jquery.min.js') }}"></script>
-    <script src="{{ asset('js/clockpicker.js') }}"></script>
-    <script>
-        $(document).ready(function() {
-            $('#hora').clockpicker({
-                donetext: 'Done',
-                placement: "bottom",
-                init: function() {
-                    console.log("colorpicker initiated");
-                },
-                beforeShow: function() {
-                    console.log("before show");
-                },
-                afterShow: function() {
-                    console.log("after show");
-                },
-                beforeHide: function() {
-                    console.log("before hide");
-                },
-                afterHide: function() {
-                    console.log("after hide");
-                },
-                beforeHourSelect: function() {
-                    console.log("before hour selected");
-                },
-                afterHourSelect: function() {
-                    console.log("after hour selected");
-                },
-                beforeDone: function() {
-                    console.log("before done");
-                },
-                afterDone: function() {
-                    console.log("after done");
-                }
-            });
-        });
-    </script> --}}
 @stop
