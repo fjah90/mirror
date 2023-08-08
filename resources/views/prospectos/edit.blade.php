@@ -748,6 +748,7 @@
                                 .fecha_formated;
                             this.prospecto.nueva_proxima_actividad = {
                                 fecha: data.nueva.fecha_formated,
+                                tipo_id: data.nueva.tipo_id,
                                 tipo: ''
                             };
                             this.cargando = false;
