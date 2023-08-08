@@ -1296,8 +1296,8 @@
             },
             mounted() {
               
-                    if (prospecto.proxima_actividad.horario != null) {
-                        var horarios = prospecto.proxima_actividad.horario.split('-');
+                    if (this.prospecto.proxima_actividad.horario != null) {
+                        var horarios = this.prospecto.proxima_actividad.horario.split('-');
                         this.time_in = horarios[0];
                         this.time_out = horarios[1];
                      
