@@ -225,9 +225,9 @@
                                                 <option value="1">Llamada</option>
                                                 <option value="12">Videollamada</option>
                                                 <option value="2">Cita Presencial</option>
-                                                <option value="13">Cita Showroom</option>
+                                                <option value="14">Cita Showroom</option>
                                                 <option value="3">Email</option>
-                                                <option value="14">Propuesta</option>
+                                                <option value="15">Propuesta</option>
                                                 <option value="5">Enviar Cotizacion</option>
                                             </select>
                                         </div>
