@@ -529,8 +529,8 @@
                     <tbody>
                         <tr>
                             <td class="bordered">
-                                <p class="text-uppercase">{{ $cotizacion->prospecto->cliente->nombre }}</p>
-                                <p class="text-uppercase">{{ $cotizacion->prospecto->cliente->direccion }}</p>
+                                <p class="text-uppercase">{{ $cliente->nombre }}</p>
+                                <p class="text-uppercase">{{ $cliente->direccion }}</p>
                                 <p class="text-uppercase">ATN: {{ $cotizacion->contacto->nombre }}</p>
                                 <p class="text-uppercase">T. {{ $cotizacion->contacto->telefono }}</p>
                                 <p>
@@ -560,7 +560,11 @@
                                     <tr>
                                         <td style="vertical-align:top">Proyecto:</td>
                                         <td class="text-uppercase">
-                                            <strong>{{ $cotizacion->prospecto->nombre }}</strong>
+                                        @if($cotizacion->prospecto_id == null)
+                                        <strong>{{$cotizacion->nombre_proyecto}}</strong>
+                                        @else
+                                        <strong>{{$cotizacion->prospecto->nombre}}</strong>
+                                        @endif
                                         </td>
                                     </tr>
                                     <tr>
