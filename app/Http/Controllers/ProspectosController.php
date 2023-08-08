@@ -1377,7 +1377,7 @@ class ProspectosController extends Controller
 
 
 
-        return view('prospectos.show', compact('prospecto'));
+        // return view('prospectos.show', compact('prospecto'));
     }
 
     /**
@@ -1388,12 +1388,13 @@ class ProspectosController extends Controller
      */
     public function edit(Prospecto $prospecto)
     {
+        // dd($prospecto->proxima_actividad);
         $prospecto->load([
             'cliente',
             'actividades.tipo',
             'actividades.productos_ofrecidos',
             'proxima_actividad.tipo',
-            'proxima_actividad.productos_ofrecidos'
+            'proxima_actividad.productos_ofrecidos',
         ]);
 
         //dd($prospecto);
