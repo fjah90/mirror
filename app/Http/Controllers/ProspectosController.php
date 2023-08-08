@@ -697,10 +697,10 @@ class ProspectosController extends Controller
         $vendedores = Vendedor::where('email', auth()->user()->email)->first(); //filtro por email
 
         if (auth()->user()->tipo == 'Administrador' || auth()->user()->tipo == 'Dirección') {
-            $cotizaciones = ProspectoCotizacion::with('entradas','entradas.producto','entradas.producto.proveedor')->get();
+            $cotizaciones = ProspectoCotizacion::with('entradas','entradas.producto','entradas.producto.proveedor')->where('prospecto_id','')->get();
         }
         else {
-            $cotizaciones = ProspectoCotizacion::with('entradas','entradas.producto','entradas.producto.proveedor')->where('user_id',$user->id)->get();
+            $cotizaciones = ProspectoCotizacion::with('entradas','entradas.producto','entradas.producto.proveedor')->where('user_id',$user->id)->where('prospecto_id','')->get();
         }
 
 
