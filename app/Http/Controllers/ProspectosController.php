@@ -1265,7 +1265,7 @@ class ProspectosController extends Controller
                 'fecha'        => $request->ultima_actividad['fecha'],
                 'descripcion'  => $request->ultima_actividad['descripcion'],
                 'realizada'    => 1,
-                'horario' => $request->ultima_actividad['horario']
+                // 'horario' => $request->ultima_actividad['horario']
             ];
             if ($request->ultima_actividad['tipo_id'] == 0) { //dar de alta nuevo tipo
                 $tipo = ProspectoTipoActividad::create(['nombre' => $request->ultima_actividad['tipo']]);
@@ -1288,7 +1288,7 @@ class ProspectosController extends Controller
             $create = [
                 'prospecto_id' => $prospecto->id,
                 'fecha'        => $request->proxima_actividad['fecha'],
-                'horario' => $request->proxima_actividad['horario']
+                // 'horario' => $request->proxima_actividad['horario']
             ];
             if ($request->proxima_actividad['tipo_id'] == 0) { //dar de alta nuevo tipo
                 $tipo = ProspectoTipoActividad::create(['nombre' => $request->proxima_actividad['tipo']]);

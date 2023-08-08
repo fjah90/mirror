@@ -161,10 +161,16 @@
                                         <div class="form-group">
                                             <label class="control-label">Tipo<strong style="color: grey"> *</strong></label>
                                             <select class="form-control" name="tipo" v-model='ultima_actividad.tipo_id'>
-                                                @foreach ($tipos as $tipo)
+                                                {{-- @foreach ($tipos as $tipo)
                                                     <option value="{{ $tipo->id }}">{{ $tipo->nombre }}</option>
-                                                @endforeach
-                                                <option value="0">Otro</option>
+                                                @endforeach --}}
+                                                <option value="1">Llamada</option>
+                                                <option value="12">Videollamada</option>
+                                                <option value="2">Cita Presencial</option>
+                                                <option value="14">Cita Showroom</option>
+                                                <option value="3">Email</option>
+                                                <option value="15">Propuesta</option>
+                                                <option value="5">Enviar Cotizacion</option>
                                             </select>
                                         </div>
                                     </div>
@@ -281,10 +287,16 @@
                                                     *</strong></label>
                                             <select class="form-control" name="tipo"
                                                 v-model='proxima_actividad.tipo_id'>
-                                                @foreach ($tipos as $tipo)
+                                                {{-- @foreach ($tipos as $tipo)
                                                     <option value="{{ $tipo->id }}">{{ $tipo->nombre }}</option>
-                                                @endforeach
-                                                <option value="0">Otro</option>
+                                                @endforeach --}}
+                                                <option value="1">Llamada</option>
+                                                <option value="12">Videollamada</option>
+                                                <option value="2">Cita Presencial</option>
+                                                <option value="14">Cita Showroom</option>
+                                                <option value="3">Email</option>
+                                                <option value="15">Propuesta</option>
+                                                <option value="5">Enviar Cotizacion</option>
                                             </select>
                                         </div>
                                     </div>
