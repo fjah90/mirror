@@ -403,9 +403,9 @@
                                             <option value="1">Llamada</option>
                                             <option value="12">Videollamada</option>
                                             <option value="2">Cita Presencial</option>
-                                            <option value="13">Cita Showroom</option>
+                                            <option value="14">Cita Showroom</option>
                                             <option value="3">Email</option>
-                                            <option value="14">Propuesta</option>
+                                            <option value="15">Propuesta</option>
                                             <option value="5">Enviar Cotizacion</option>
                                         </select>
                                     </div>
@@ -548,16 +548,12 @@
                     dom: 'ftp'
                 });
                 
-                for (const actividad of this.prospecto.actividades) {
-                    if (actividad.horario != null) {
-                        console.log(actividad)
-                        var horarios = actividad.horario.split('-');
-                        this.time_in = horarios[0];
-                        this.time_out = horarios[1];
-                        this.ntime_in = horarios[0];
-                        this.ntime_out = horarios[1];
-                        console.log(this.time_in)
-                    }
+                if (prospecto.proxima_actividad.horario != null) {
+                    var horarios = prospecto.proxima_actividad.horario.split('-');
+                    this.time_in = horarios[0];
+                    this.time_out = horarios[1];
+                    this.ntime_in = horarios[0];
+                    this.ntime_out = horarios[1];
                 }
                 this.prospecto.fecha_cierre = this.prospecto.fecha_cierre_formated;
                 this.prospecto.proxima_actividad.fecha = this.prospecto.proxima_actividad.fecha_formated;
