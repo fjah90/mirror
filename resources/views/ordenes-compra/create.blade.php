@@ -6,668 +6,700 @@
 @stop
 
 @section('header_styles')
-<style>
-  .color_text{
-    color:#B3B3B3;
-  }
-</style><!-- <style>
-</style> -->
+    <style>
+        .color_text {
+            color: #B3B3B3;
+        }
+    </style><!-- <style>
+    </style> -->
 @stop
 
 {{-- Page content --}}
 @section('content')
-  <!-- Content Header (Page header) -->
-  <section class="content-header" style="background-color:#12160F; color:#B68911;">
-    <h1 style="font-weight: bolder;">Ordenes de Compra</h1>
-  </section>
-  <!-- Main content -->
-  <section class="content" id="content">
-    <div class="row">
-      <div class="col-lg-12">
-        <div class="panel">
-          <div class="panel-heading" style="background-color:#12160F; color:#B68911;">
-            <h3 class="panel-title">Nueva Orden Proyecto {{$proyecto->proyecto}} // {{$cotizacion->numero}}</h3>
-          </div>
-          <div class="panel-body">
-            <form class="" @submit.prevent="agregarEntrada()">
-              <div class="row form-group">
-                <div class="col-md-4">
-                  <label class="control-label">Número Orden / Order<strong style="color: grey"> *</strong></label>
-                  <input type="number" step="1" min="1" class="form-control" name="numero"
-                    v-model="orden.numero" required />
-                </div>
-                <div class="col-md-4">
-                  <label class="control-label">Número Proyecto / Project Number</label>
-                  <input type="text" step="1" min="1" class="form-control" name="numero_proyecto"
-                    v-model="orden.numero_proyecto" />
-                </div>
-                <div class="col-md-4">
-                  <label class="control-label">Proveedor / To<strong style="color: grey"> *</strong></label>
-                  <select class="form-control" name="proveedor_id" v-model='orden.proveedor_id'
-                    required :disabled="orden.entradas.length>0" @change="fijarProveedor()">
-                    @foreach($proveedores as $proveedor)
-                    <option value="{{$proveedor->id}}">{{$proveedor->empresa}}</option>
-                    @endforeach
-                  </select>
-                </div>
-              </div>
-              <div class="row form-group">
-                <div class="col-md-4">
-                  <label class="control-label">Agente Aduanal / Ship To</label>
-                  <select class="form-control" name="aduana_id" v-model='orden.aduana_id' @change="fijarAduana()">
-                    @foreach($aduanas as $aduana)
-                    <option value="{{$aduana->id}}">{{$aduana->compañia}}</option>
-                    @endforeach
-                  </select>
-                </div>
-                <div class="col-md-4">
-                  <label class="control-label">Tiempo de Entrega / Delivery</label>
-                  <select class="form-control" name="tiempo.id" v-model='orden.tiempo.id'>
-                    @foreach($tiempos_entrega as $tiempo)
-                    <option value="{{$tiempo->id}}">{{$tiempo->valor}}</option>
-                    @endforeach
-                    <option value="0">Otro</option>
-                  </select>
-                </div>
-                <div class="col-md-4">
-                  <label class="control-label">Especifique Tiempo</label>
-                  <input type="text" class="form-control" name="tiempo.valor"
-                    v-model="orden.tiempo.valor" :disabled="orden.tiempo.id!='0'" />
-                </div>
-              </div>
-              <div class="row form-group">
-                <div class="col-md-4">
-                  <label class="control-label">Punto Entrega / D. Point</label>
-                  <input type="text" class="form-control" name="punto_entrega"
-                         v-model="orden.punto_entrega" />
-                </div>
-                <div class="col-md-4">
-                  <label class="control-label">Carga Flete / Freight</label>
-                  <input type="text" class="form-control" name="carga"
-                         v-model="orden.carga" />
-                </div>
-                <div class="col-md-4">
-                  <label class="control-label">Costo Flete</label>
-                  <input type="number" class="form-control" name="carga"
-                         v-model="orden.flete" @change="agregarFlete()"/>
-                </div>
-                <div class="col-md-4">
-                  <label class="control-label">Fecha de Orden de Compra</label>
-                  <br />
-                  <dropdown style="width:100%;">
-                    <div class="input-group" >
-                      <div class="input-group-btn">
-                        <btn class="dropdown-toggle" style="background-color:#fff;">
-                          <i class="fas fa-calendar"></i>
-                        </btn>
-                      </div>
-                      <input class="form-control" type="text" name="fecha_compra"
-                             v-model="orden.fecha_compra" placeholder="DD/MM/YYYY"
-                             readonly
-                      />
+    <!-- Content Header (Page header) -->
+    <section class="content-header" style="background-color:#12160F; color:#B68911;">
+        <h1 style="font-weight: bolder;">Ordenes de Compra</h1>
+    </section>
+    <!-- Main content -->
+    <section class="content" id="content">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel">
+                    <div class="panel-heading" style="background-color:#12160F; color:#B68911;">
+                        <h3 class="panel-title">Nueva Orden Proyecto {{ $proyecto->proyecto }} // {{ $cotizacion->numero }}
+                        </h3>
                     </div>
-                    <template slot="dropdown">
-                      <li>
-                        <date-picker :locale="locale" :today-btn="false" :clear-btn="false"
-                                     format="dd/MM/yyyy" :date-parser="dateParser" v-model="orden.fecha_compra"/>
-                      </li>
-                    </template>
-                  </dropdown>
-                </div>
-              </div>
-              <div class="row form-group">
-                <div class="col-md-4">
-                  <label class="control-label">Moneda<strong style="color: grey"> *</strong></label>
-                  <input type="text" class="form-control" name="moneda"
-                    v-model="orden.moneda" required disabled />
-                </div>
-                <div class="col-md-4">
-                  <label class="control-label">IVA<strong style="color: grey"> *</strong></label>
-                  <select class="form-control" name="iva" v-model="orden.iva" required disabled>
-                    <option value="0">No</option>
-                    <option value="1">Si</option>
-                  </select>
-                </div>
-                <div class="col-md-4">
-                  <label class="control-label">Contacto Proveedor / ATTN<strong style="color: grey"> *</strong></label>
-                  <select class="form-control" name="proveedor_contacto_id" v-model='orden.proveedor_contacto_id'
-                    required>
-                    @foreach($contactos as $contacto)
-                    <option v-if="orden.proveedor_id=={{$contacto->proveedor_id}}" value="{{$contacto->id}}">
-                      {{$contacto->nombre}}
-                    </option>
-                    @endforeach
-                  </select>
-                </div>
-              </div>
-              <div class="col-md-12"><hr></div>
-              <div class="row form-group">
-                <div class="col-md-4">
-                  <label class="control-label">Producto<strong style="color: grey"> *</strong></label>
-                  <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Producto"
-                    v-model="entrada.producto.nombre" @click="abrirCatalogo()"
-                    readonly required
-                    />
-                    <span class="input-group-btn">
-                      <button class="btn btn-default" type="button" @click="abrirCatalogo()">
-                        <i class="far fa-edit"></i>
-                      </button>
-                    </span>
-                  </div>
-                </div>
-                <div class="col-md-2">
-                  <label class="control-label">Cantidad<strong style="color: grey"> *</strong></label>
-                  <input type="number" step="0.01" min="0.01" name="cantidad" class="form-control"
-                    v-model="entrada.cantidad" required />
-                </div>
-                <div class="col-md-2">
-                  <label class="control-label">Unidad Medida <span v-if="orden.moneda=='Dolares'"> / Unidad Medida dolares</span><span v-else></span></label>
-                  <select class="form-control" name="medida" v-model="entrada.medida" required>
-                    @foreach($unidades_medida as $unidad)
-                        <option v-if="orden.moneda=='Dolares'" value="{{ !empty($unidad->simbolo_ingles) ? $unidad->simbolo_ingles : $unidad->simbolo }}">{{ $unidad->simbolo }}
-                          / {{ $unidad->simbolo_ingles }}</option>
-                        <option v-else value="{{ $unidad->simbolo }}">{{ $unidad->simbolo }}</option>
-                    @endforeach
-                  </select>
-                </div>
-                <div class="col-md-4">
-                  <label class="control-label">Precio Unitario<strong style="color: grey"> *</strong></label>
-                  <input type="number" step="0.01" min="0.01" name="precio" class="form-control"
-                    v-model="entrada.precio" required />
-                </div>
-              </div>
-              <div class="row">
-                  <div class="col-md-2">
-                      <button type="button" class="btn btn-primary" @click="modalProducto=true" style="background-color:#12160F; color:#B68911;">
-                          Registrar producto
-                      </button>
-                  </div>
-              </div>
-              <div class="row form-group">
-                <div class="col-md-6">
-                  <label class="control-label">Comentarios</label>
-                  <textarea rows="2" class="form-control" v-model="entrada.comentarios"></textarea>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-12">
-                  <div class="table-responsive">
-                    <table class="table table-bordred">
-                      <thead>
-                      <tr>
-                        <th colspan="3">Descripciones</th>
-                      </tr>
-                      <tr>
-                        <th>Nombre</th>
-                        <th>Name</th>
-                        <th>Valor</th>
-                        <th>Valor Inglés</th>
-                      </tr>
-                      </thead>
-                      <tbody>
-                      <tr v-for="(descripcion, index) in entrada.descripciones">
-                        <td>@{{descripcion.nombre}}</td>
-                        <td>@{{descripcion.name}}</td>
-                        <td>
-                          <input type="text" class="form-control"
-                                 v-model="descripcion.valor"/>
-                        </td>
-                        <td>
-                          <input v-if="entrada.producto.descripciones[index].descripcion_nombre.valor_ingles"
-                                 type="text" class="form-control"
-                                 v-model="descripcion.valor_ingles"/>
-                        </td>
-                      </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-12">
-                    <div class="form-group">
-                        <label class="control-label" style="display:block;">Foto</label>
-                        <div class="btn btn-sm btn-danger" v-if="entrada.fotos.length" v-on:click="borrarfotos" title="BORRAR FOTOS">
-                            <i class="fas fa-trash"></i>
+                    <div class="panel-body">
+                        <form class="" @submit.prevent="agregarEntrada()">
+                            <div class="row form-group">
+                                <div class="col-md-4">
+                                    <label class="control-label">Número Orden / Order<strong style="color: grey">
+                                            *</strong></label>
+                                    <input type="number" step="1" min="1" class="form-control" name="numero"
+                                        v-model="orden.numero" required />
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="control-label">Número Proyecto / Project Number</label>
+                                    <input type="text" step="1" min="1" class="form-control"
+                                        name="numero_proyecto" v-model="orden.numero_proyecto" />
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="control-label">Proveedor / To<strong style="color: grey">
+                                            *</strong></label>
+                                    <select class="form-control" name="proveedor_id" v-model='orden.proveedor_id' required
+                                        :disabled="orden.entradas.length > 0" @change="fijarProveedor()">
+                                        @foreach ($proveedores as $proveedor)
+                                            <option value="{{ $proveedor->id }}">{{ $proveedor->empresa }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-4">
+                                    <label class="control-label">Agente Aduanal / Ship To</label>
+                                    <select class="form-control" name="aduana_id" v-model='orden.aduana_id'
+                                        @change="fijarAduana()">
+                                        @foreach ($aduanas as $aduana)
+                                            <option value="{{ $aduana->id }}">{{ $aduana->compañia }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="control-label">Tiempo de Entrega / Delivery</label>
+                                    <select class="form-control" name="tiempo.id" v-model='orden.tiempo.id'>
+                                        @foreach ($tiempos_entrega as $tiempo)
+                                            <option value="{{ $tiempo->id }}">{{ $tiempo->valor }}</option>
+                                        @endforeach
+                                        <option value="0">Otro</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="control-label">Especifique Tiempo</label>
+                                    <input type="text" class="form-control" name="tiempo.valor"
+                                        v-model="orden.tiempo.valor" :disabled="orden.tiempo.id != '0'" />
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-4">
+                                    <label class="control-label">Punto Entrega / D. Point</label>
+                                    <input type="text" class="form-control" name="punto_entrega"
+                                        v-model="orden.punto_entrega" />
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="control-label">Carga Flete / Freight</label>
+                                    <input type="text" class="form-control" name="carga" v-model="orden.carga" />
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="control-label">Costo Flete</label>
+                                    <input type="number" class="form-control" name="carga" v-model="orden.flete"
+                                        @change="agregarFlete()" />
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="control-label">Fecha de Orden de Compra</label>
+                                    <br />
+                                    <dropdown style="width:100%;">
+                                        <div class="input-group">
+                                            <div class="input-group-btn">
+                                                <btn class="dropdown-toggle" style="background-color:#fff;">
+                                                    <i class="fas fa-calendar"></i>
+                                                </btn>
+                                            </div>
+                                            <input class="form-control" type="text" name="fecha_compra"
+                                                v-model="orden.fecha_compra" placeholder="DD/MM/YYYY" readonly />
+                                        </div>
+                                        <template slot="dropdown">
+                                            <li>
+                                                <date-picker :locale="locale" :today-btn="false"
+                                                    :clear-btn="false" format="dd/MM/yyyy" :date-parser="dateParser"
+                                                    v-model="orden.fecha_compra" />
+                                            </li>
+                                        </template>
+                                    </dropdown>
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-4">
+                                    <label class="control-label">Moneda<strong style="color: grey"> *</strong></label>
+                                    <input type="text" class="form-control" name="moneda" v-model="orden.moneda"
+                                        required disabled />
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="control-label">IVA<strong style="color: grey"> *</strong></label>
+                                    <select class="form-control" name="iva" v-model="orden.iva" required disabled>
+                                        <option value="0">No</option>
+                                        <option value="1">Si</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="control-label">Contacto Proveedor / ATTN<strong style="color: grey">
+                                            *</strong></label>
+                                    <select class="form-control" name="proveedor_contacto_id"
+                                        v-model='orden.proveedor_contacto_id' required>
+                                        @foreach ($contactos as $contacto)
+                                            <option v-if="orden.proveedor_id=={{ $contacto->proveedor_id }}"
+                                                value="{{ $contacto->id }}">
+                                                {{ $contacto->nombre }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <hr>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-4">
+                                    <label class="control-label">Producto<strong style="color: grey"> *</strong></label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" placeholder="Producto"
+                                            v-model="entrada.producto.nombre" @click="abrirCatalogo()" readonly
+                                            required />
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-default" type="button" @click="abrirCatalogo()">
+                                                <i class="far fa-edit"></i>
+                                            </button>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <label class="control-label">Cantidad<strong style="color: grey"> *</strong></label>
+                                    <input type="number" step="0.01" min="0.01" name="cantidad"
+                                        class="form-control" v-model="entrada.cantidad" required />
+                                </div>
+                                <div class="col-md-2">
+                                    <label class="control-label">Unidad Medida <span v-if="orden.moneda=='Dolares'"> /
+                                            Unidad Medida dolares</span><span v-else></span></label>
+                                    <select class="form-control" name="medida" v-model="entrada.medida" required>
+                                        @foreach ($unidades_medida as $unidad)
+                                            <option v-if="orden.moneda=='Dolares'"
+                                                value="{{ !empty($unidad->simbolo_ingles) ? $unidad->simbolo_ingles : $unidad->simbolo }}">
+                                                {{ $unidad->simbolo }}
+                                                / {{ $unidad->simbolo_ingles }}</option>
+                                            <option v-else value="{{ $unidad->simbolo }}">{{ $unidad->simbolo }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="control-label">Precio Unitario<strong style="color: grey">
+                                            *</strong></label>
+                                    <input type="number" step="0.01" min="0.01" name="precio"
+                                        class="form-control" v-model="entrada.precio" required />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <button type="button" class="btn btn-primary" @click="modalProducto=true"
+                                        style="background-color:#12160F; color:#B68911;">
+                                        Registrar producto
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-6">
+                                    <label class="control-label">Comentarios</label>
+                                    <textarea rows="2" class="form-control" v-model="entrada.comentarios"></textarea>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordred">
+                                            <thead>
+                                                <tr>
+                                                    <th colspan="3">Descripciones</th>
+                                                </tr>
+                                                <tr>
+                                                    <th>Nombre</th>
+                                                    <th>Name</th>
+                                                    <th>Valor</th>
+                                                    <th>Valor Inglés</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr v-for="(descripcion, index) in entrada.descripciones">
+                                                    <td>@{{ descripcion.nombre }}</td>
+                                                    <td>@{{ descripcion.name }}</td>
+                                                    <td>
+                                                        <input type="text" class="form-control"
+                                                            v-model="descripcion.valor" />
+                                                    </td>
+                                                    <td>
+                                                        <input
+                                                            v-if="entrada.producto.descripciones[index].descripcion_nombre.valor_ingles"
+                                                            type="text" class="form-control"
+                                                            v-model="descripcion.valor_ingles" />
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label class="control-label" style="display:block;">Foto</label>
+                                        <div class="btn btn-sm btn-danger" v-if="entrada.fotos.length"
+                                            v-on:click="borrarfotos" title="BORRAR FOTOS">
+                                            <i class="fas fa-trash"></i>
+                                        </div>
+                                        <div class="file-loading">
+                                            <input id="fotos" name="fotos[]" type="file" ref="fotos"
+                                                multiple />
+                                        </div>
+                                        <div id="fotos-file-errors"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-12 text-right">
+                                    <button type="submit" class="btn btn-info"
+                                        style="background-color:#12160F; color:#B68911;">
+                                        <i class="fas fa-plus"></i>
+                                        Agregar Producto
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="table-responsive">
+                                    <table class="table table-bordred">
+                                        <thead>
+                                            <tr style="background-color:#12160F; color:#B68911;">
+                                                <th class="color_text">Producto</th>
+                                                <th class="color_text">Comentarios</th>
+                                                <th class="color_text">Cantidad</th>
+                                                <th class="color_text">Precio</th>
+                                                <th class="color_text">Importe</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr v-for="(entrada, index) in orden.entradas">
+                                                <td>@{{ entrada.producto.nombre }}</td>
+                                                <td>@{{ entrada.comentarios }}</td>
+                                                <td>@{{ entrada.cantidad }} @{{ entrada.medida }}</td>
+                                                <td>@{{ entrada.precio | formatoMoneda }}</td>
+                                                <td>@{{ entrada.importe | formatoMoneda }}</td>
+                                                <td class="text-right">
+                                                    <button class="btn btn-success" title="Editar"
+                                                        @click="editarEntrada(entrada, index)">
+                                                        <i class="fas fa-edit"></i>
+                                                    </button>
+                                                    <button class="btn btn-danger" title="Remover"
+                                                        @click="removerEntrada(entrada, index)">
+                                                        <i class="fas fa-times"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <td colspan="2"></td>
+                                                <td class="text-right"><strong>Subtotal</strong></td>
+                                                <td>@{{ orden.subtotal | formatoMoneda }}</td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2"></td>
+                                                <td class="text-right"><strong>Flete</strong></td>
+                                                <td>@{{ orden.flete | formatoMoneda }}</td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2"></td>
+                                                <td class="text-right"><strong>IVA</strong></td>
+                                                <td v-if="orden.iva=='0'">$0.00</td>
+                                                <td v-else>@{{ orden.subtotal * 0.16 | formatoMoneda }}</td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2"></td>
+                                                <td class="text-right">
+                                                    <strong>Total
+                                                        <span v-if="orden.moneda=='Dolares'"> Dolares</span>
+                                                        <span v-else> Pesos</span>
+                                                    </strong>
+                                                </td>
+                                                <td v-if="orden.iva=='0'">@{{ orden.subtotal | formatoMoneda }}</td>
+                                                <td v-else>@{{ orden.subtotal * 1.16 | formatoMoneda }}</td>
+                                                <td></td>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
-                        <div class="file-loading">
-                            <input id="fotos" name="fotos[]" type="file" ref="fotos" multiple/>
+                        <div class="row">
+                            <div class="col-md-12 text-right">
+                                <div class="form-group">
+                                    <a class="btn btn-default"
+                                        href="{{ route('proyectos-aprobados.ordenes-compra.index', $proyecto->id) }}"
+                                        style="color:#000; background-color:#B3B3B3;">
+                                        Regresar
+                                    </a>
+                                    <button type="button" class="btn btn-primary" @click="guardar()"
+                                        :disabled="cargando" style="background-color:#12160F; color:#B68911;">
+                                        <i class="fas fa-save"></i>
+                                        Guardar Orden
+                                    </button>
+                                </div>
+                            </div>
                         </div>
-                        <div id="fotos-file-errors"></div>
                     </div>
                 </div>
             </div>
-              <div class="row form-group">
-                <div class="col-md-12 text-right">
-                  <button type="submit" class="btn btn-info" style="background-color:#12160F; color:#B68911;">
-                    <i class="fas fa-plus"></i>
-                    Agregar Producto
-                  </button>
-                </div>
-              </div>
-            </form>
-            <div class="row">
-              <div class="col-md-12">
-                <div class="table-responsive">
-                  <table class="table table-bordred">
+        </div>
+
+        <!-- Catalogo Productos Modal -->
+        <modal v-model="openCatalogo" title="Productos" :footer="false">
+            <div class="table-responsive">
+                <table id="tablaProductos" class="table table-bordred">
                     <thead>
-                      <tr style="background-color:#12160F; color:#B68911;">
-                        <th class="color_text">Producto</th>
-                        <th class="color_text">Comentarios</th>
-                        <th class="color_text">Cantidad</th>
-                        <th class="color_text">Precio</th>
-                        <th class="color_text">Importe</th>
-                        <th></th>
-                      </tr>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Proveedor</th>
+                            <th>Tipo</th>
+                            <th>Ficha Técnica</th>
+                            <th>Nombre Material</th>
+                            <th></th>
+                        </tr>
                     </thead>
                     <tbody>
-                      <tr v-for="(entrada, index) in orden.entradas">
-                        <td>@{{entrada.producto.nombre}}</td>
-                        <td>@{{entrada.comentarios}}</td>
-                        <td>@{{entrada.cantidad}} @{{entrada.medida}}</td>
-                        <td>@{{entrada.precio | formatoMoneda}}</td>
-                        <td>@{{entrada.importe | formatoMoneda}}</td>
-                        <td class="text-right">
-                          <button class="btn btn-success" title="Editar"
-                            @click="editarEntrada(entrada, index)">
-                            <i class="fas fa-edit"></i>
-                          </button>
-                          <button class="btn btn-danger" title="Remover"
-                            @click="removerEntrada(entrada, index)">
-                            <i class="fas fa-times"></i>
-                          </button>
-                        </td>
-                      </tr>
+                        <tr v-for="(prod, index) in productos">
+                            <td>@{{ prod.nombre }}</td>
+                            <td>@{{ prod.proveedor.empresa }}</td>
+                            <td>@{{ prod.categoria.nombre }}</td>
+                            <td>@{{ prod.nombre_material }}</td>
+                            <td>
+                                <a v-if="prod.ficha_tecnica" :href="prod.ficha_tecnica" target="_blank"
+                                    class="btn btn-success" style="cursor:pointer;">
+                                    <i class="far fa-file-pdf"></i>
+                                </a>
+                            </td>
+                            <td class="text-right">
+                                <button class="btn btn-primary" title="Seleccionar"
+                                    @click="seleccionarProduco(prod, index)">
+                                    <i class="fas fa-check"></i>
+                                </button>
+                            </td>
+                        </tr>
                     </tbody>
-                    <tfoot>
-                      <tr>
-                        <td colspan="2"></td>
-                        <td class="text-right"><strong>Subtotal</strong></td>
-                        <td>@{{orden.subtotal | formatoMoneda}}</td>
-                        <td></td>
-                      </tr>
-                      <tr>
-                        <td colspan="2"></td>
-                        <td class="text-right"><strong>Flete</strong></td>
-                        <td>@{{orden.flete | formatoMoneda}}</td>
-                        <td></td>
-                      </tr>
-                      <tr>
-                        <td colspan="2"></td>
-                        <td class="text-right"><strong>IVA</strong></td>
-                        <td v-if="orden.iva=='0'">$0.00</td>
-                        <td v-else>@{{orden.subtotal * 0.16 | formatoMoneda}}</td>
-                        <td></td>
-                      </tr>
-                      <tr>
-                        <td colspan="2"></td>
-                        <td class="text-right">
-                          <strong>Total
-                            <span v-if="orden.moneda=='Dolares'"> Dolares</span>
-                            <span v-else> Pesos</span>
-                          </strong>
-                        </td>
-                        <td v-if="orden.iva=='0'">@{{orden.subtotal | formatoMoneda}}</td>
-                        <td v-else>@{{orden.subtotal * 1.16 | formatoMoneda}}</td>
-                        <td></td>
-                      </tr>
-                    </tfoot>
-                  </table>
-                </div>
-              </div>
+                </table>
             </div>
-            <div class="row">
-              <div class="col-md-12 text-right">
-                <div class="form-group">
-                  <a class="btn btn-default"
-                    href="{{route('proyectos-aprobados.ordenes-compra.index', $proyecto->id)}}" style="color:#000; background-color:#B3B3B3;">
-                    Regresar
-                  </a>
-                  <button type="button" class="btn btn-primary"
-                    @click="guardar()" :disabled="cargando" style="background-color:#12160F; color:#B68911;">
-                    <i class="fas fa-save"></i>
-                    Guardar Orden
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+        </modal>
+        <!-- /.Catalogo Productos Modal -->
 
-    <!-- Catalogo Productos Modal -->
-    <modal v-model="openCatalogo" title="Productos" :footer="false">
-      <div class="table-responsive">
-        <table id="tablaProductos" class="table table-bordred">
-          <thead>
-            <tr>
-              <th>Nombre</th>
-              <th>Proveedor</th>
-              <th>Tipo</th>
-              <th>Ficha Técnica</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="(prod, index) in productos">
-              <td>@{{prod.nombre}}</td>
-              <td>@{{prod.proveedor.empresa}}</td>
-              <td>@{{prod.categoria.nombre}}</td>
-              <td>
-                <a v-if="prod.ficha_tecnica" :href="prod.ficha_tecnica" target="_blank"
-                  class="btn btn-success" style="cursor:pointer;">
-                  <i class="far fa-file-pdf"></i>
-                </a>
-              </td>
-              <td class="text-right">
-                <button class="btn btn-primary" title="Seleccionar"
-                @click="seleccionarProduco(prod, index)">
-                  <i class="fas fa-check"></i>
-                </button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </modal>
-    <!-- /.Catalogo Productos Modal -->
+        <!-- Nuevo Producto Modal-->
+        <modal v-model="modalProducto" title="Registrar Producto" :footer="false">
+            <iframe id="theFrame" src="{{ url('/') }}/productos/crear?layout=iframe"
+                style="width:100%; height:700px;" frameborder="0">
+            </iframe>
+        </modal>
+        <!-- /.Nuevo Producto Modal -->
 
-    <!-- Nuevo Producto Modal-->
-    <modal v-model="modalProducto" title="Registrar Producto" :footer="false">
-        <iframe id="theFrame" src="{{url("/")}}/productos/crear?layout=iframe" style="width:100%; height:700px;"
-                frameborder="0">
-        </iframe>
-    </modal>
-    <!-- /.Nuevo Producto Modal -->
-
-  </section>
-  <!-- /.content -->
+    </section>
+    <!-- /.content -->
 
 @stop
 
 {{-- footer_scripts --}}
 @section('footer_scripts')
-<script type="text/javascript">
-
-  // Used for creating a new FileList in a round-about way
-    function FileListItem(a) {
-        a = [].slice.call(Array.isArray(a) ? a : arguments)
-        for (var c, b = c = a.length, d = !0; b-- && d;) d = a[b] instanceof File
-        if (!d) throw new TypeError("expected argument to FileList is File or array of File objects")
-        for (b = (new ClipboardEvent("")).clipboardData || new DataTransfer; c--;) b.items.add(a[c])
-        return b.files
-    }
-
-const app = new Vue({
-  el: '#content',
-  data: {
-    proveedores: {!! json_encode($proveedores) !!},
-    aduanas: {!! json_encode($aduanas) !!},
-    productos: {!! json_encode($productos) !!},
-    locale: localeES,
-    modalProducto: false,
-    flete2:0,
-    orden: {
-      proyecto_id: {{$proyecto->id}},
-      proveedor_id: '',
-      proveedor_contacto_id: '',
-      proveedor_empresa: '',
-      aduana_id: 0,
-      aduana_compañia: '',
-      numero: '',
-      numero_proyecto: '',
-      punto_entrega: '',
-      fecha_compra: moment().format('DD/MM/YYYY'),
-      carga: '',
-      flete:'',
-      tiempo: {
-        id: '',
-        valor: ''
-      },
-      moneda: '',
-      entradas: [],
-      subtotal: 0,
-      iva: 0,
-      total: 0,
-    },
-    entrada: {
-      producto: {},
-      cantidad: 0,
-      medida: "",
-      precio: 0,
-      importe: 0,
-      comentarios: '',
-      descripciones:[],
-      fotos: []
-    },
-    openCatalogo: false,
-    cargando: false
-  },
-  filters:{
-    formatoMoneda(numero){
-      return accounting.formatMoney(numero, "$", 2);
-    },
-  },
-  mounted(){
-    var vue = this;
-    $.fn.dataTableExt.afnFiltering.push(
-      function( settings, data, dataIndex ) {
-        var prov = data[1] || ""; // Our date column in the table
-        return (vue.orden.proveedor_empresa == prov);
-      }
-    );
-
-    $("#fotos").fileinput({
-        language: 'es',
-        overwriteInitial: true,
-        maxFileSize: 5000,
-        showCaption: false,
-        showBrowse: false,
-        showRemove: false,
-        showUpload: false,
-        browseOnZoneClick: true,
-        defaultPreviewContent: '<img src="{{asset('images/camara.png')}}" style="width:200px; height:auto;" alt="foto"><h6>Click para seleccionar</h6>',
-        allowedFileExtensions: ["jpg", "jpeg", "png"],
-        elErrorContainer: '#fotos-file-errors'
-    });
-
-    this.tablaProductos = $("#tablaProductos").DataTable({dom: 'ftp'});
-    var vueInstance = this;
-
-
-
-
-
-    //escuchar Iframe
-    window.addEventListener('message', function (e) {
-      if (e.data.tipo == "producto") {
-        vueInstance.tablaProductos.destroy();
-        vueInstance.productos.push(e.data.object);
-        vueInstance.seleccionarProduco(e.data.object);
-        vueInstance.modalProducto = false;
-        Vue.nextTick(function () {
-          vueInstance.tablaProductos = $("#tablaProductos").DataTable({dom: 'ftp'});
-        });
-      }
-    }, false);
-
-
-  },
-  methods: {
-    dateParser(value){
-      return moment(value, 'DD/MM/YYYY').toDate().getTime();
-    },
-    fijarProveedor(){
-      this.proveedores.find(function(proveedor){
-        if(proveedor.id == this.orden.proveedor_id){
-          this.orden.proveedor_empresa = proveedor.empresa;
-          this.orden.proveedor_contacto_id = '';
-          this.orden.moneda = proveedor.moneda;
-          this.entrada.descripciones = [];
-          if(proveedor.moneda=='Dolares') this.orden.iva = 0;
-          else this.orden.iva = 1;
-          return true;
+    <script type="text/javascript">
+        // Used for creating a new FileList in a round-about way
+        function FileListItem(a) {
+            a = [].slice.call(Array.isArray(a) ? a : arguments)
+            for (var c, b = c = a.length, d = !0; b-- && d;) d = a[b] instanceof File
+            if (!d) throw new TypeError("expected argument to FileList is File or array of File objects")
+            for (b = (new ClipboardEvent("")).clipboardData || new DataTransfer; c--;) b.items.add(a[c])
+            return b.files
         }
-      }, this);
 
-      this.entrada.producto = {};//por si ya estaba seleccionado uno
-      this.tablaProductos.draw();
-    },
-    fijarAduana(){
-      this.aduanas.find(function(aduana){
-        if(aduana.id == this.orden.aduana_id){
-          this.orden.aduana_compañia = aduana.compañia;
-          return true;
-        }
-      }, this);
-    },
-    abrirCatalogo(){
-      if(this.orden.proveedor_id==0){
-        swal({
-          title: "Error",
-          text: "Debe seleccionar proveedor primero",
-          type: "error"
+        const app = new Vue({
+            el: '#content',
+            data: {
+                proveedores: {!! json_encode($proveedores) !!},
+                aduanas: {!! json_encode($aduanas) !!},
+                productos: {!! json_encode($productos) !!},
+                locale: localeES,
+                modalProducto: false,
+                flete2: 0,
+                orden: {
+                    proyecto_id: {{ $proyecto->id }},
+                    proveedor_id: '',
+                    proveedor_contacto_id: '',
+                    proveedor_empresa: '',
+                    aduana_id: 0,
+                    aduana_compañia: '',
+                    numero: '',
+                    numero_proyecto: '',
+                    punto_entrega: '',
+                    fecha_compra: moment().format('DD/MM/YYYY'),
+                    carga: '',
+                    flete: '',
+                    tiempo: {
+                        id: '',
+                        valor: ''
+                    },
+                    moneda: '',
+                    entradas: [],
+                    subtotal: 0,
+                    iva: 0,
+                    total: 0,
+                },
+                entrada: {
+                    producto: {},
+                    cantidad: 0,
+                    medida: "",
+                    precio: 0,
+                    importe: 0,
+                    comentarios: '',
+                    descripciones: [],
+                    fotos: []
+                },
+                openCatalogo: false,
+                cargando: false
+            },
+            filters: {
+                formatoMoneda(numero) {
+                    return accounting.formatMoney(numero, "$", 2);
+                },
+            },
+            mounted() {
+                var vue = this;
+                $.fn.dataTableExt.afnFiltering.push(
+                    function(settings, data, dataIndex) {
+                        var prov = data[1] || ""; // Our date column in the table
+                        return (vue.orden.proveedor_empresa == prov);
+                    }
+                );
+
+                $("#fotos").fileinput({
+                    language: 'es',
+                    overwriteInitial: true,
+                    maxFileSize: 5000,
+                    showCaption: false,
+                    showBrowse: false,
+                    showRemove: false,
+                    showUpload: false,
+                    browseOnZoneClick: true,
+                    defaultPreviewContent: '<img src="{{ asset('images/camara.png') }}" style="width:200px; height:auto;" alt="foto"><h6>Click para seleccionar</h6>',
+                    allowedFileExtensions: ["jpg", "jpeg", "png"],
+                    elErrorContainer: '#fotos-file-errors'
+                });
+
+                this.tablaProductos = $("#tablaProductos").DataTable({
+                    dom: 'ftp'
+                });
+                var vueInstance = this;
+
+
+
+
+
+                //escuchar Iframe
+                window.addEventListener('message', function(e) {
+                    if (e.data.tipo == "producto") {
+                        vueInstance.tablaProductos.destroy();
+                        vueInstance.productos.push(e.data.object);
+                        vueInstance.seleccionarProduco(e.data.object);
+                        vueInstance.modalProducto = false;
+                        Vue.nextTick(function() {
+                            vueInstance.tablaProductos = $("#tablaProductos").DataTable({
+                                dom: 'ftp'
+                            });
+                        });
+                    }
+                }, false);
+
+
+            },
+            methods: {
+                dateParser(value) {
+                    return moment(value, 'DD/MM/YYYY').toDate().getTime();
+                },
+                fijarProveedor() {
+                    this.proveedores.find(function(proveedor) {
+                        if (proveedor.id == this.orden.proveedor_id) {
+                            this.orden.proveedor_empresa = proveedor.empresa;
+                            this.orden.proveedor_contacto_id = '';
+                            this.orden.moneda = proveedor.moneda;
+                            this.entrada.descripciones = [];
+                            if (proveedor.moneda == 'Dolares') this.orden.iva = 0;
+                            else this.orden.iva = 1;
+                            return true;
+                        }
+                    }, this);
+
+                    this.entrada.producto = {}; //por si ya estaba seleccionado uno
+                    this.tablaProductos.draw();
+                },
+                fijarAduana() {
+                    this.aduanas.find(function(aduana) {
+                        if (aduana.id == this.orden.aduana_id) {
+                            this.orden.aduana_compañia = aduana.compañia;
+                            return true;
+                        }
+                    }, this);
+                },
+                abrirCatalogo() {
+                    if (this.orden.proveedor_id == 0) {
+                        swal({
+                            title: "Error",
+                            text: "Debe seleccionar proveedor primero",
+                            type: "error"
+                        });
+                    } else this.openCatalogo = true;
+                },
+                seleccionarProduco(prod) {
+                    this.entrada.producto = prod;
+                    this.entrada.descripciones = [];
+                    prod.descripciones.forEach(function(desc) {
+                        this.entrada.descripciones.push({
+                            nombre: desc.descripcion_nombre.nombre,
+                            name: desc.descripcion_nombre.name,
+                            valor: desc.valor,
+                            valor_ingles: desc.valor_ingles
+                        });
+                    }, this);
+
+                    if (prod.foto) {
+                        $("button.fileinput-remove").click();
+                        $("div.file-default-preview img")[0].src = prod.foto;
+                    }
+                    this.openCatalogo = false;
+                },
+                borrarfotos() {
+                    $("button.fileinput-remove").click();
+                    this.entrada.fotos = [];
+                },
+                agregarEntrada() {
+                    if (this.entrada.producto.id == undefined) {
+                        swal({
+                            title: "Error",
+                            text: "Debe seleccionar un producto",
+                            type: "error"
+                        });
+                        return false;
+                    }
+
+                    if (this.$refs['fotos'].files.length) { //hay fotos
+                        this.entrada.fotos = [];
+                        for (var i = 0; i < this.$refs['fotos'].files.length; i++)
+                            this.entrada.fotos.push(this.$refs['fotos'].files[i]);
+                    }
+
+                    this.entrada.importe = this.entrada.cantidad * this.entrada.precio;
+                    this.orden.subtotal += this.entrada.importe;
+                    this.orden.entradas.push(this.entrada);
+                    this.entrada = {
+                        producto: {},
+                        cantidad: 0,
+                        medida: "",
+                        precio: 0,
+                        importe: 0,
+                        comentarios: '',
+                        fotos: [],
+                    };
+                    $("button.fileinput-remove").click();
+                },
+                agregarFlete() {
+                    var f = parseFloat(this.orden.flete);
+                    if (typeof(f) != 'number' || isNaN(f)) {
+                        this.orden.flete = 0;
+                        if (isNaN(f)) {
+                            var f = parseFloat(this.orden.flete);
+                            var f2 = parseFloat(this.flete2);
+                            var o = parseFloat(this.orden.subtotal);
+                            o -= f2;
+                            o += f;
+                            this.flete2 = this.orden.flete;
+                            this.orden.subtotal = o;
+                        }
+                    } else {
+
+                        var f = parseFloat(this.orden.flete);
+                        var f2 = parseFloat(this.flete2);
+                        var o = parseFloat(this.orden.subtotal);
+                        o -= f2;
+                        o += f;
+                        this.flete2 = this.orden.flete;
+                        this.orden.subtotal = o;
+                    }
+                },
+                editarEntrada(entrada, index) {
+
+                    $("button.fileinput-remove").click();
+                    if (entrada.fotos.length) { //hay fotos
+                        if (typeof entrada.fotos[0] == "object") {
+                            this.$refs['fotos'].files = FileListItem(entrada.fotos);
+                            this.$refs['fotos'].dispatchEvent(new Event('change', {
+                                'bubbles': true
+                            }));
+                        } else if (typeof entrada.fotos[0] == "string") {
+                            $("div.file-default-preview").empty();
+                            entrada.fotos.forEach(function(foto) {
+                                $("div.file-default-preview")
+                                    .append('<img src="' + foto +
+                                        '" style="width:200px; height:auto;" alt="foto">');
+                            });
+                            $("div.file-default-preview").append('<h6>Click para seleccionar</h6>');
+                        }
+                    }
+
+                    this.orden.subtotal -= entrada.importe;
+                    this.orden.entradas.splice(index, 1);
+                    this.entrada = entrada;
+                },
+                removerEntrada(entrada, index) {
+                    this.orden.subtotal -= entrada.importe;
+                    this.orden.entradas.splice(index, 1);
+                },
+                guardar() {
+                    var orden = $.extend(true, {}, this.orden);
+                    orden.entradas.forEach(function(entrada) {
+                        entrada.producto_id = entrada.producto.id;
+                        delete entrada.producto;
+                    });
+                    console.log(orden);
+
+                    var formData = objectToFormData(orden, {
+                        indices: true
+                    });
+                    console.log(formData);
+                    this.cargando = true;
+                    axios.post('/proyectos-aprobados/{{ $proyecto->id }}/ordenes-compra', formData, {
+                            headers: {
+                                'Content-Type': 'multipart/form-data'
+                            }
+                        })
+                        .then(({
+                            data
+                        }) => {
+                            swal({
+                                title: "Orden Guardada",
+                                text: "",
+                                type: "success"
+                            }).then(() => {
+                                window.location =
+                                    "/proyectos-aprobados/{{ $proyecto->id }}/ordenes-compra";
+                            });
+                        })
+                        .catch(({
+                            response
+                        }) => {
+                            console.error(response);
+                            this.cargando = false;
+                            swal({
+                                title: "Error",
+                                text: response.data.message ||
+                                    "Ocurrio un error inesperado, intente mas tarde",
+                                type: "error"
+                            });
+                        });
+                }, //fin guardar
+            }
         });
-      }
-      else this.openCatalogo = true;
-    },
-    seleccionarProduco(prod){
-      this.entrada.producto = prod;
-      this.entrada.descripciones = [];
-      prod.descripciones.forEach(function (desc) {
-        this.entrada.descripciones.push({
-          nombre: desc.descripcion_nombre.nombre,
-          name: desc.descripcion_nombre.name,
-          valor: desc.valor,
-          valor_ingles: desc.valor_ingles
-        });
-      }, this);
-
-      if (prod.foto) {
-        $("button.fileinput-remove").click();
-        $("div.file-default-preview img")[0].src = prod.foto;
-      }
-      this.openCatalogo = false;
-    },
-    borrarfotos(){
-        $("button.fileinput-remove").click();
-        this.entrada.fotos = [];
-    },
-    agregarEntrada(){
-      if(this.entrada.producto.id==undefined){
-        swal({
-          title: "Error",
-          text: "Debe seleccionar un producto",
-          type: "error"
-        });
-        return false;
-      }
-
-      if (this.$refs['fotos'].files.length) {//hay fotos
-          this.entrada.fotos = [];
-          for (var i = 0; i < this.$refs['fotos'].files.length; i++)
-              this.entrada.fotos.push(this.$refs['fotos'].files[i]);
-      }
-
-      this.entrada.importe = this.entrada.cantidad * this.entrada.precio;
-      this.orden.subtotal+= this.entrada.importe;
-      this.orden.entradas.push(this.entrada);
-      this.entrada = {
-        producto: {},
-        cantidad: 0,
-        medida: "",
-        precio: 0,
-        importe: 0,
-        comentarios: '',
-        fotos : [],
-      };
-      $("button.fileinput-remove").click();
-    },
-    agregarFlete(){
-      var f = parseFloat(this.orden.flete);   
-      if (typeof (f) != 'number' || isNaN(f)) {
-        this.orden.flete = 0;
-        if (isNaN(f)) {
-          var f = parseFloat(this.orden.flete);   
-          var f2 = parseFloat(this.flete2);   
-          var o = parseFloat(this.orden.subtotal);   
-          o-=f2;
-          o+=f;
-          this.flete2 = this.orden.flete;
-          this.orden.subtotal = o;  
-        }
-      }
-      else{
-        
-        var f = parseFloat(this.orden.flete);   
-        var f2 = parseFloat(this.flete2);   
-        var o = parseFloat(this.orden.subtotal);   
-        o-=f2;
-        o+=f;
-        this.flete2 = this.orden.flete;
-        this.orden.subtotal = o;  
-      }
-    },
-    editarEntrada(entrada, index){
-      
-      $("button.fileinput-remove").click();
-      if (entrada.fotos.length) {//hay fotos
-          if (typeof entrada.fotos[0] == "object") {
-              this.$refs['fotos'].files = FileListItem(entrada.fotos);
-              this.$refs['fotos'].dispatchEvent(new Event('change', {'bubbles': true}));
-          } else if (typeof entrada.fotos[0] == "string") {
-              $("div.file-default-preview").empty();
-              entrada.fotos.forEach(function (foto) {
-                  $("div.file-default-preview")
-                      .append('<img src="' + foto + '" style="width:200px; height:auto;" alt="foto">');
-              });
-              $("div.file-default-preview").append('<h6>Click para seleccionar</h6>');
-          }
-      }
-
-      this.orden.subtotal-= entrada.importe;
-      this.orden.entradas.splice(index, 1);
-      this.entrada = entrada;
-    },
-    removerEntrada(entrada, index){
-      this.orden.subtotal-= entrada.importe;
-      this.orden.entradas.splice(index, 1);
-    },
-    guardar(){
-      var orden = $.extend(true, {}, this.orden);
-      orden.entradas.forEach(function(entrada){
-        entrada.producto_id = entrada.producto.id;
-        delete entrada.producto;
-      });
-      console.log(orden);
-
-      var formData = objectToFormData(orden, {indices: true});
-      console.log(formData);
-      this.cargando = true;
-      axios.post('/proyectos-aprobados/{{$proyecto->id}}/ordenes-compra', formData,{headers: {'Content-Type': 'multipart/form-data'}
-      })
-      .then(({data}) => {
-        swal({
-          title: "Orden Guardada",
-          text: "",
-          type: "success"
-        }).then(()=>{
-          window.location = "/proyectos-aprobados/{{$proyecto->id}}/ordenes-compra";
-        });
-      })
-      .catch(({response}) => {
-        console.error(response);
-        this.cargando = false;
-        swal({
-          title: "Error",
-          text: response.data.message || "Ocurrio un error inesperado, intente mas tarde",
-          type: "error"
-        });
-      });
-    },//fin guardar
-  }
-});
-</script>
+    </script>
 @stop

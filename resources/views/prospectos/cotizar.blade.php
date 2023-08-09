@@ -996,6 +996,7 @@
                             <th>Proveedor</th>
                             <th>Tipo</th>
                             <th>Ficha Técnica</th>
+                            <th>Nombre Material</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -1004,6 +1005,7 @@
                             <td>@{{ prod.nombre }}</td>
                             <td>@{{ prod.proveedor.empresa }}</td>
                             <td>@{{ prod.categoria.nombre }}</td>
+                            <td>@{{ prod.nombre_material }}</td>
                             <td>
                                 <a v-if="prod.ficha_tecnica" :href="prod.ficha_tecnica" target="_blank"
                                     class="btn btn-success" style="cursor:pointer;">
