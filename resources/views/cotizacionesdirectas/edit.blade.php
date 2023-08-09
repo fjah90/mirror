@@ -319,7 +319,11 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-                                   {{-- Vacio --}}
+                                    <div class="form-group">
+                                        <label class="control-label">Costó de Corte</label>
+                                        <input class="form-control" type="text" name="costo_corte"
+                                            v-model="cotizacion.costo_corte" />
+                                    </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
