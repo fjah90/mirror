@@ -726,6 +726,12 @@
                             <td class="text-right" style="width:10%;">@format_money($cotizacion->flete_menor)</td>
                         </tr>
                     @endif
+                    @if (!empty($cotizacion->costo_corte))
+                        <tr>
+                            <td class="text-right" style="width:90%;"><strong>Cargo por Corte:</strong></td>
+                            <td class="text-right" style="width:10%;">@format_money($cotizacion->costo_corte)</td>
+                        </tr>
+                    @endif
                     @if (!empty($cotizacion->costo_sobreproduccion))
                         <tr>
                             <td class="text-right" style="width:90%;"><strong>Cargo por sobreproducción:</strong></td>

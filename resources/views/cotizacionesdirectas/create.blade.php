@@ -1050,6 +1050,7 @@
                     flete: '',
                     isfleteMenor: false,
                     flete_menor: '',
+                    costo_corte: '',
                     costo_sobreproduccion: '',
                     descuentos: 0,
                     tipo_descuento: 0,
