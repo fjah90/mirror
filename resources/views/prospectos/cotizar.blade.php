@@ -1032,6 +1032,7 @@
                 colonias2: [],
                 edicionEntradaActiva: false,
                 locale: localeES,
+                factor_porcentual: {!! json_encode($prospecto->cliente->tipo->factor_porcentual) !!},
                 prospecto: {!! json_encode($prospecto) !!},
                 productos: {!! json_encode($productos) !!},
                 condiciones: {!! json_encode($condiciones) !!},
@@ -1176,6 +1177,8 @@
                 },
             },
             mounted() {
+                console.log(this.factor_porcentual)
+
                 console.log(this.prospecto)
                 this.$refs.fechaActual = document.querySelector('#fechaActual');
                 this.actualizarFechaActual();
@@ -1671,7 +1674,7 @@
                     this.calIva();
                     this.cotizacion.total = this.cotizacion.montoDescuento != '0' ?
                         (Number(this.cotizacion.subtotal) - Number(this.cotizacion.montoDescuento)) +
-                         Number(this.cotizacion.calIva) :
+                        Number(this.cotizacion.calIva) :
                         Number(this.cotizacion.subtotal) + Number(this.cotizacion.calIva);
                     console.log(this.cotizacion.total)
                 },
@@ -1714,10 +1717,14 @@
                         for (var i = 0; i < this.$refs['fotos'].files.length; i++)
                             this.entrada.fotos.push(this.$refs['fotos'].files[i]);
                     }
+                    console.log(this.cliente)
+                    console.log(this.factor_porcentual)
 
-                    let factorProcentual = (this.entrada.precio * this.prospecto.cliente.tipo.factor_porcentual) / 100;
+                    let factorPorcentual = this.factor_porcentual > 0 ? (this.entrada.precio * this
+                            .factor_porcentual) / 100 :
+                        0;
                     // this.entrada.importe = this.entrada.cantidad * this.entrada.precio;
-                    this.entrada.importe = this.entrada.cantidad * (this.entrada.precio - factorProcentual);
+                    this.entrada.importe = this.entrada.cantidad * (this.entrada.precio - factorPorcentual);
                     console.log(this.entrada.importe)
                     this.cotizacion.subtotal += this.entrada.importe;
                     this.sumaTotal()
