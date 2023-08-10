@@ -631,7 +631,8 @@
                             <th class="text-center" style="width:13%; padding:3px 0 1px;">Imagen</th>
                             <th class="text-center" style="width:16%; padding:3px 0 1px;">Descripciones</th>
                             <th class="text-center" style="width:16%; padding:3px 0 1px;">Precio Unitario (USD)</th>
-                            <th class="text-center" style="width:16%; padding:3px 0 1px;">Precio Unitario Especial (USD)</th>
+                            <th class="text-center" style="width:16%; padding:3px 0 1px;">Precio Unitario Especial (USD)
+                            </th>
                             <th class="text-center" style="width:13%; padding:3px 0 1px;">Total</th>
                         </tr>
                     </thead>
@@ -669,24 +670,29 @@
                                         </p>
                                     @endif
                                 @endforeach
-                                {{-- @if ($entrada->observaciones && $entrada->observaciones != '<ul></ul>')
-                                                <p>
-                                                    <span>
-                                                        @if ($nombre == 'nombre')
-                                                            Observaciones:
-                                                        @else
-                                                            Remarks:
-                                                        @endif
-                                                    </span>
-                                                    {!! $entrada->observaciones !!}
-                                                </p>
-                                            @endif --}}
+                                @if ($entrada->observaciones && $entrada->observaciones != '<ul></ul>')
+                                    <p>
+                                        <span>
+                                            @if ($nombre == 'nombre')
+                                                Observaciones:
+                                            @else
+                                                Remarks:
+                                            @endif
+                                        </span>
+                                        {!! $entrada->observaciones !!}
+                                    </p>
+                                @endif
                             </td>
-                            <td class="text-right" style="width:16%;border-bottom: none; border-top: none">@format_money($entrada->precio)</td>
-                            <td class="text-right" style="width:16%;border-bottom: none; border-top: none">
+                            <td class="text-right"
+                                style="width:16%;vertical-align: top;border-bottom: none !important; border-top: none !important">
+                                @format_money($entrada->precio)</td>
+                            <td class="text-right"
+                                style="width:16%;vertical-align: top;border-bottom: none !important; border-top: none !important">
                                 {{-- @format_money($entrada->precio) --}}
                             </td>
-                            <td class="text-right" style="width:13%;border-bottom: none; border-top: none">@format_money($entrada->importe)
+                            <td class="text-right"
+                                style="width:13%;vertical-align: top;border-bottom: none !important; border-top: none !important">
+                                @format_money($entrada->importe)
                             </td>
                             </tr>
                         @endforeach
