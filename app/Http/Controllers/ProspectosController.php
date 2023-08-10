@@ -2248,34 +2248,31 @@ class ProspectosController extends Controller
         else {
             $create['condicion_id'] = $request->condicion['id'];
         }
-        
+
+        if (!empty($cotizacion->flete)) {
+            $create['subtotal'] = bcadd($create['subtotal'], $create['flete'], 2);
+        }
         if (!empty($cotizacion->flete_menor)) {
             $create['subtotal'] = bcadd($create['subtotal'], $create['flete_menor'], 2);
-
         }
-
         if (!empty($cotizacion->costo_corte)) {
             $create['subtotal'] = bcadd($create['subtotal'], $create['costo_corte'], 2);
         }
-        
         if (!empty($cotizacion->costo_sobreproduccion)) {
             $create['subtotal'] = bcadd($create['subtotal'], $create['costo_sobreproduccion'], 2);
-
         }
-
         if ($request->descuentos != "0") {
             if ($request->tipo_descuento == "0") {
-                $create['subtotal'] = bcsub($create['subtotal'], $create['descuento'], 2);
+                $create['subtotal'] = bcsub($create['subtotal'], $create['descuentos'], 2);
             }
             else {
-                $create['descuento'] = bcmul($create['subtotal'], $create['descuento'], 2);
-                $create['descuento'] = bcdiv($create['descuento'], '100', 2);
-                $create['subtotal'] = bcsub($create['subtotal'], $create['descuento'], 2);
+                $create['descuento'] = bcmul($create['subtotal'], $create['descuentos'], 2);
+                $create['descuento'] = bcdiv($create['descuentos'], '100', 2);
+                $create['subtotal'] = bcsub($create['subtotal'], $create['descuentos'], 2);
             }
         }
 
         if ($request->iva == "1") {
-
             $create['iva'] = bcmul($create['subtotal'], 0.16, 2);
             $create['total'] = bcadd($create['subtotal'], $create['iva'], 2);
         }
