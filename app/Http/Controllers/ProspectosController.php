@@ -697,10 +697,10 @@ class ProspectosController extends Controller
         $vendedores = Vendedor::where('email', auth()->user()->email)->first(); //filtro por email
 
         if (auth()->user()->tipo == 'Administrador' || auth()->user()->tipo == 'Dirección') {
-            $cotizaciones = ProspectoCotizacion::with('entradas','entradas.producto','entradas.producto.proveedor')->where('prospecto_id',null)->get();
+            $cotizaciones = ProspectoCotizacion::with('entradas', 'entradas.producto', 'entradas.producto.proveedor')->where('prospecto_id', null)->get();
         }
         else {
-            $cotizaciones = ProspectoCotizacion::with('entradas','entradas.producto','entradas.producto.proveedor')->where('user_id',$user->id)->where('prospecto_id',null)->get();
+            $cotizaciones = ProspectoCotizacion::with('entradas', 'entradas.producto', 'entradas.producto.proveedor')->where('user_id', $user->id)->where('prospecto_id', null)->get();
         }
 
 
@@ -711,7 +711,7 @@ class ProspectosController extends Controller
     {
         $proyectos = Prospecto::all();
         $notasPreCargadas = Nota::all();
-        
+
         $productos = Producto::with('categoria', 'proveedor', 'descripciones.descripcionNombre', 'proveedor.contactos')
             ->has('categoria')->get();
         foreach ($productos as $producto) {
@@ -722,13 +722,13 @@ class ProspectosController extends Controller
         $condiciones = CondicionCotizacion::all();
         $observaciones = ObservacionCotizacion::all();
         $unidades_medida = UnidadMedida::orderBy('simbolo')->get();
-        
-       
+
+
         $numero_siguiente = ProspectoCotizacion::select('id')->orderBy('id', 'desc')->first()->id + 1;
-        
+
         $rfcs = [];
 
-        
+
 
         $direcciones = [];
 
@@ -737,7 +737,7 @@ class ProspectosController extends Controller
                 $producto->foto = asset('storage/' . $producto->foto);
             }
         }
-       
+
         $vendedores = Vendedor::all();
         $clientes = Cliente::with('contactos')->get();
 
@@ -757,7 +757,7 @@ class ProspectosController extends Controller
                 'notasPreCargadas'
             )
         );
-        
+
 
         return view('cotizacionesdirectas.create', compact('cotizaciones'));
     }
@@ -1300,7 +1300,7 @@ class ProspectosController extends Controller
 
             $actividad2 = ProspectoActividad::create($create);
         }
-        
+
 
         return response()->json(['success' => true, "error" => false, "prospecto" => $prospecto], 200);
     }
@@ -1527,7 +1527,7 @@ class ProspectosController extends Controller
                 'fecha'        => $request->proxima['fecha'],
                 'realizada'    => 1,
                 'descripcion'  => $request->proxima['descripcion'],
-                'horario' => $request->proxima['horario']
+                'horario'      => $request->proxima['horario']
             ];
             if ($request->proxima['tipo_id'] == 0) { //dar de alta nuevo tipo
                 $tipo = ProspectoTipoActividad::create(['nombre' => $request->proxima['tipo']]);
@@ -1553,7 +1553,7 @@ class ProspectosController extends Controller
                 'tipo_id'     => $request->nueva['tipo_id'],
                 'fecha'       => $request->nueva['fecha'],
                 'descripcion' => $request->nueva['descripcion'],
-                'horario' => $request->nueva['horario']
+                'horario'     => $request->nueva['horario']
             ]);
             /*
             //ingresar productos ofrecidos
@@ -1871,6 +1871,7 @@ class ProspectosController extends Controller
             'factibilidad'        => 'required',
             'condicion'           => 'required',
             'iva'                 => 'required',
+            'calIva'              => 'required',
             'entradas'            => 'required|min:1',
             'entradas.fotos'      => 'array',
             'entradas.fotos.*'    => 'image|mimes:jpg,jpeg,png',
@@ -1928,19 +1929,18 @@ class ProspectosController extends Controller
         else {
             $create['condicion_id'] = $request->condicion['id'];
         }
-        
-        if (!empty($cotizacion->flete_menor)) {
-            $create['subtotal'] = bcadd($create['subtotal'], $create['flete_menor'], 2);
 
-        }
-        
-        if (!empty($cotizacion->costo_corto)) {
-            $create['subtotal'] = bcadd($create['subtotal'], $create['costo_corte'], 2);
-        }
+        // if (!empty($cotizacion->flete_menor)) {
+        //     $create['subtotal'] = bcadd($create['subtotal'], $create['flete_menor'], 2);
+        // }
 
-        if (!empty($cotizacion->costo_sobreproduccion)) {
-            $create['subtotal'] = bcadd($create['subtotal'], $create['costo_sobreproduccion'], 2);
-        }
+        // if (!empty($cotizacion->costo_corto)) {
+        //     $create['subtotal'] = bcadd($create['subtotal'], $create['costo_corte'], 2);
+        // }
+
+        // if (!empty($cotizacion->costo_sobreproduccion)) {
+        //     $create['subtotal'] = bcadd($create['subtotal'], $create['costo_sobreproduccion'], 2);
+        // }
 
         if ($request->descuentos != "0") {
             if ($request->tipo_descuento == "0") {
@@ -1954,12 +1954,18 @@ class ProspectosController extends Controller
         }
 
         if ($request->iva == "1") {
-
-            $create['iva'] = bcmul($create['subtotal'], 0.16, 2);
-            $create['total'] = bcadd($create['subtotal'], $create['iva'], 2);
-        }
-        else {
-            $create['total'] = $create['subtotal'];
+            $iva = bcmul($create['subtotal'], 0.16, 2);
+            if (!empty($request->calIva)) {
+                $create['iva'] = $iva == $request->calIva ? $request->calIva : $iva;
+            } else {
+                $create['iva'] = $iva;
+            }
+            if (!empty($request->total)) {
+                $ltotal = bcadd($create['subtotal'], $create['iva'], 2);
+                $create['total'] = $ltotal == $request->total ? $request->total : $ltotal;
+            }
+        } else {
+            $create['total'] = $request->total;
         }
 
         $observaciones = "<ul>";
@@ -2060,7 +2066,7 @@ class ProspectosController extends Controller
 
 
         //crear pdf de cotizacion
-        
+
         $url = 'cotizaciones/' . $cotizacion->id . '/C ' . $cotizacion->numero . ' Intercorp.pdf';
         $meses = [
             'ENERO',
@@ -2089,7 +2095,7 @@ class ProspectosController extends Controller
         }
         $cliente = Cliente::findOrFail($cotizacion->cliente_id);
 
-        $cotizacionPDF = PDF::loadView($view, compact('cotizacion','cliente', 'nombre'));
+        $cotizacionPDF = PDF::loadView($view, compact('cotizacion', 'cliente', 'nombre'));
         Storage::disk('public')->put($url, $cotizacionPDF->output());
 
         // $pdf = new PDFMerger();
@@ -2104,7 +2110,7 @@ class ProspectosController extends Controller
         unset($cotizacion->fechaPDF);
         $cotizacion->update(['archivo' => $url]);
         $cotizacion->archivo = asset('storage/' . $cotizacion->archivo);
-       
+
 
         return response()->json(['success' => true, 'error' => false, 'cotizacion' => $cotizacion], 200);
     }
@@ -2117,10 +2123,10 @@ class ProspectosController extends Controller
      */
     public function cotizacionesdirectas_edit(ProspectoCotizacion $cotizacion)
     {
-        $cotizacion->load('entradas','entradas.producto');
+        $cotizacion->load('entradas', 'entradas.producto');
         $proyectos = Prospecto::all();
         $notasPreCargadas = Nota::all();
-        
+
         $productos = Producto::with('categoria', 'proveedor', 'descripciones.descripcionNombre', 'proveedor.contactos')
             ->has('categoria')->get();
         foreach ($productos as $producto) {
@@ -2131,13 +2137,13 @@ class ProspectosController extends Controller
         $condiciones = CondicionCotizacion::all();
         $observaciones = ObservacionCotizacion::all();
         $unidades_medida = UnidadMedida::orderBy('simbolo')->get();
-        
-       
+
+
         $numero_siguiente = ProspectoCotizacion::select('id')->orderBy('id', 'desc')->first()->id + 1;
-        
+
         $rfcs = [];
 
-        
+
 
         $direcciones = [];
 
@@ -2146,11 +2152,11 @@ class ProspectosController extends Controller
                 $producto->foto = asset('storage/' . $producto->foto);
             }
         }
-       
+
         $vendedores = Vendedor::all();
         $clientes = Cliente::with('contactos')->get();
-        
-        $cliente = Cliente::with('contactos')->where('id',$cotizacion->cliente_id)->first();
+
+        $cliente = Cliente::with('contactos')->where('id', $cotizacion->cliente_id)->first();
         $contactos = $cliente->contactos;
 
         return view(
@@ -2171,7 +2177,7 @@ class ProspectosController extends Controller
                 'notasPreCargadas'
             )
         );
-        
+
     }
 
     /**
@@ -2192,6 +2198,7 @@ class ProspectosController extends Controller
             'factibilidad'        => 'required',
             'condicion'           => 'required',
             'iva'                 => 'required',
+            'calIva'              => 'required',
             'entradas'            => 'required|min:1',
             'entradas.fotos'      => 'array',
             'entradas.fotos.*'    => 'image|mimes:jpg,jpeg,png',
@@ -2273,11 +2280,18 @@ class ProspectosController extends Controller
         // }
 
         if ($request->iva == "1") {
-            $create['iva'] = bcmul($create['subtotal'], 0.16, 2);
-            $create['total'] = bcadd($create['subtotal'], $create['iva'], 2);
-        }
-        else {
-            $create['total'] = $create['subtotal'];
+            $iva = bcmul($create['subtotal'], 0.16, 2);
+            if (!empty($request->calIva)) {
+                $create['iva'] = $iva == $request->calIva ? $request->calIva : $iva;
+            } else {
+                $create['iva'] = $iva;
+            }
+            if (!empty($request->total)) {
+                $ltotal = bcadd($create['subtotal'], $create['iva'], 2);
+                $create['total'] = $ltotal == $request->total ? $request->total : $ltotal;
+            }
+        } else {
+            $create['total'] = $request->total;
         }
 
         $observaciones = "<ul>";
@@ -2405,7 +2419,7 @@ class ProspectosController extends Controller
         }
         $cliente = $cotizacion->prospecto->cliente;
 
-        $cotizacionPDF = PDF::loadView($view, compact('cliente','cotizacion', 'nombre'));
+        $cotizacionPDF = PDF::loadView($view, compact('cliente', 'cotizacion', 'nombre'));
         Storage::disk('public')->put($url, $cotizacionPDF->output());
 
         // $pdf = new PDFMerger();
@@ -2452,6 +2466,7 @@ class ProspectosController extends Controller
             'moneda'              => 'required',
             'condicion'           => 'required',
             'iva'                 => 'required',
+            'calIva'              => 'required',
             'entradas'            => 'required|min:1',
             'entradas.fotos'      => 'array',
             'entradas.fotos.*'    => 'image|mimes:jpg,jpeg,png',
@@ -2500,17 +2515,23 @@ class ProspectosController extends Controller
         if ($request->condicion['id'] == 0) { //nueva condicion, dar de alta
             $condicion = CondicionCotizacion::create(['nombre' => $request->condicion['nombre']]);
             $update['condicion_id'] = $condicion->id;
-        }
-        else {
+        } else {
             $update['condicion_id'] = $request->condicion['id'];
         }
 
         if ($request->iva == "1") {
-            $update['iva'] = bcmul($update['subtotal'], 0.16, 2);
-            $update['total'] = bcmul($update['subtotal'], 1.16, 2);
-        }
-        else {
-            $update['total'] = $update['subtotal'];
+            $iva = bcmul($update['subtotal'], 0.16, 2);
+            if (!empty($request->calIva)) {
+                $update['iva'] = $iva == $request->calIva ? $request->calIva : $iva;
+            } else {
+                $update['iva'] = $iva;
+            }
+            if (!empty($request->total)) {
+                $ltotal = bcadd($update['subtotal'], $update['iva'], 2);
+                $update['total'] = $ltotal == $request->total ? $request->total : $ltotal;
+            }
+        } else {
+            $update['total'] = $request->total;
         }
 
         $observaciones = "<ul>";
@@ -2665,12 +2686,21 @@ class ProspectosController extends Controller
         //recalculate subtotal
         $update['subtotal'] = round($cotizacion->entradas()->sum('importe'), 2);
         if ($request->iva == "1") {
-            $update['iva'] = bcmul($update['subtotal'], 0.16, 2);
-            $update['total'] = bcmul($update['subtotal'], 1.16, 2);
+            $iva = bcmul($update['subtotal'], 0.16, 2);
+            if (!empty($request->calIva)) {
+                $update['iva'] = $iva == $request->calIva ? $request->calIva : $iva;
+            }
+            else {
+                $update['iva'] = $iva;
+            }
+            if (!empty($request->total)) {
+                $ltotal = bcadd($update['subtotal'], $update['iva'], 2);
+                $update['total'] = $ltotal == $request->total ? $request->total : $ltotal;
+            }
+        } else {
+            $update['total'] = $request->total;
         }
-        else {
-            $update['total'] = $update['subtotal'];
-        }
+
         $cotizacion->update($update);
 
         $cotizacion->load(
@@ -2761,6 +2791,7 @@ class ProspectosController extends Controller
             'moneda'              => 'required',
             'condicion'           => 'required',
             'iva'                 => 'required',
+            'calIva'                 => 'required',
             'entradas'            => 'required|min:1',
             'entradas.fotos'      => 'array',
             'entradas.fotos.*'    => 'image|mimes:jpg,jpeg,png',
@@ -2815,11 +2846,18 @@ class ProspectosController extends Controller
         }
 
         if ($request->iva == "1") {
-            $update['iva'] = bcmul($update['subtotal'], 0.16, 2);
-            $update['total'] = bcmul($update['subtotal'], 1.16, 2);
-        }
-        else {
-            $update['total'] = $update['subtotal'];
+            $iva = bcmul($update['subtotal'], 0.16, 2);
+            if (!empty($request->calIva)) {
+                $update['iva'] = $iva == $request->calIva ? $request->calIva : $iva;
+            } else {
+                $update['iva'] = $iva;
+            }
+            if (!empty($request->total)) {
+                $ltotal = bcadd($update['subtotal'], $update['iva'], 2);
+                $update['total'] = $ltotal == $request->total ? $request->total : $ltotal;
+            }
+        } else {
+            $update['total'] = $request->total;
         }
 
         $observaciones = "<ul>";
@@ -2974,12 +3012,20 @@ class ProspectosController extends Controller
         //recalculate subtotal
         $update['subtotal'] = round($cotizacion->entradas()->sum('importe'), 2);
         if ($request->iva == "1") {
-            $update['iva'] = bcmul($update['subtotal'], 0.16, 2);
-            $update['total'] = bcmul($update['subtotal'], 1.16, 2);
+            $iva = bcmul($update['subtotal'], 0.16, 2);
+            if (!empty($request->calIva)) {
+                $update['iva'] = $iva == $request->calIva ? $request->calIva : $iva;
+            } else {
+                $update['iva'] = $iva;
+            }
+            if (!empty($request->total)) {
+                $ltotal = bcadd($update['subtotal'], $update['iva'], 2);
+                $update['total'] = $ltotal == $request->total ? $request->total : $ltotal;
+            }
+        } else {
+            $update['total'] = $request->total;
         }
-        else {
-            $update['total'] = $update['subtotal'];
-        }
+
         $cotizacion->update($update);
 
         $cotizacion->load(
@@ -3027,7 +3073,7 @@ class ProspectosController extends Controller
 
         $cliente = Cliente::findOrFail($cotizacion->cliente_id);
 
-        $cotizacionPDF = PDF::loadView($view, compact('cliente','cotizacion', 'nombre'));
+        $cotizacionPDF = PDF::loadView($view, compact('cliente', 'cotizacion', 'nombre'));
         Storage::disk('public')->put($url, $cotizacionPDF->output());
 
         /*
@@ -3286,6 +3332,7 @@ class ProspectosController extends Controller
             'fecha'         => $cotizacion->fecha,
             'subtotal'      => $cotizacion->subtotal,
             'iva'           => $cotizacion->iva,
+            'calIva'           => $cotizacion->calIva,
             'total'         => $cotizacion->total,
             'observaciones' => $cotizacion->observaciones,
             'entrega'       => $cotizacion->entrega,
@@ -3410,7 +3457,7 @@ class ProspectosController extends Controller
 
         $cliente = $cotizacion->prospecto->cliente;
         // return view('prospectos.cotizacionPDF', compact('cotizacion', 'nombre'));
-        $cotizacionPDF = PDF::loadView($view, compact('cliente','cotizacion', 'nombre'));
+        $cotizacionPDF = PDF::loadView($view, compact('cliente', 'cotizacion', 'nombre'));
         Storage::disk('public')->put($url, $cotizacionPDF->output());
 
         $fichas = [];

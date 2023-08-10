@@ -551,21 +551,22 @@
                                             <tbody>
                                             </tbody>
                                             <tfoot>
-                                                <tr v-if="cotizacion.flete !='0'">
+                                                <tr v-if="cotizacion.flete !='0' || cotizacion.flete !=''">
                                                     <td colspan="3"></td>
                                                     <td class="text-right"><strong>Costó de Flete</strong></td>
                                                     <td v-if="cotizacion.flete =='0'">$0.00</td>
                                                     <td v-if="cotizacion.flete !='0'">@{{ (cotizacion.flete) | formatoMoneda }}</td>
                                                     <td></td>
                                                 </tr>
-                                                <tr v-if="cotizacion.flete_menor !='0'">
+                                                <tr v-if="cotizacion.flete_menor !='0' || cotizacion.flete_menor !=''">
                                                     <td colspan="3"></td>
                                                     <td class="text-right"><strong>Costó de Flete menor</strong></td>
                                                     <td v-if="cotizacion.flete_menor =='0'">$0.00</td>
                                                     <td v-if="cotizacion.flete_menor !='0'">@{{ (cotizacion.flete_menor) | formatoMoneda }}</td>
                                                     <td></td>
                                                 </tr>
-                                                <tr v-if="cotizacion.costo_sobreproduccion !='0'">
+                                                <tr
+                                                    v-if="cotizacion.costo_sobreproduccion !='0' || cotizacion.costo_sobreproduccion !=''">
                                                     <td colspan="3"></td>
                                                     <td class="text-right"><strong>Costó Sobreproducción</strong></td>
                                                     <td v-if="cotizacion.costo_sobreproduccion =='0'">$0.00</td>
@@ -573,7 +574,7 @@
                                                         @{{ (cotizacion.costo_sobreproduccion) | formatoMoneda }}</td>
                                                     <td></td>
                                                 </tr>
-                                                <tr v-if="cotizacion.costo_corte !='0'">
+                                                <tr v-if="cotizacion.costo_corte !='0'  || cotizacion.costo_corte !=''">
                                                     <td colspan="3"></td>
                                                     <td class="text-right"><strong>Costó de Corte</strong></td>
                                                     <td v-if="cotizacion.costo_corte =='0'">$0.00</td>
@@ -586,25 +587,18 @@
                                                     <td>@{{ cotizacion.subtotal | formatoMoneda }}</td>
                                                     <td></td>
                                                 </tr>
-                                                <tr v-if="cotizacion.descuentos !='0'">
+                                                <tr v-if="cotizacion.descuentos !='0' || cotizacion.descuentos !=''">
                                                     <td colspan="3"></td>
                                                     <td class="text-right"><strong>Descuentos</strong></td>
-                                                    <td
-                                                        v-if="cotizacion.descuentos =='0' && cotizacion.tipo_descuento =='0'">
-                                                        $0.00</td>
-                                                    <td
-                                                        v-if="cotizacion.descuentos !='0' && cotizacion.tipo_descuento =='1'">
-                                                        @{{ (cotizacion.subtotal * cotizacion.descuentos) / 100 | formatoMoneda }}</td>
-                                                    <td v-else>@{{ cotizacion.descuentos | formatoMoneda }}</td>
+                                                    <td v-if="cotizacion.montoDescuento =='0'">$0.00</td>
+                                                    <td v-else>- @{{ cotizacion.montoDescuento | formatoMoneda }}</td>
                                                     <td></td>
                                                 </tr>
                                                 <tr>
                                                     <td colspan="3"></td>
                                                     <td class="text-right"><strong>IVA</strong></td>
-                                                    <td v-if="cotizacion.iva=='0'">$0.00</td>
-                                                    <td v-else-if="cotizacion.descuentos =='0' && cotizacion.tipo_descuento =='0'">@{{ (cotizacion.subtotal - cotizacion.descuentos) * 0.16 | formatoMoneda }}</td>
-                                                    <td v-else-if="cotizacion.descuentos =='0' && cotizacion.tipo_descuento =='1'">@{{ ((cotizacion.subtotal * cotizacion.descuentos) / 100) * 0.16 | formatoMoneda }}</td>
-                                                    <td v-else>@{{ cotizacion.subtotal * 0.16 | formatoMoneda }}</td>
+                                                    <td v-if="cotizacion.iva=='0' || cotizacion.calIva == '0'">$0.00</td>
+                                                    <td v-else>@{{ cotizacion.calIva | formatoMoneda }}</td>
                                                     <td></td>
                                                 </tr>
                                                 <tr>
@@ -1095,12 +1089,14 @@
                     costo_corte: 0,
                     costo_sobreproduccion: 0,
                     descuentos: 0,
+                    montoDescuento: 0,
                     tipo_descuento: 0,
                     planos: '',
                     factibilidad: '',
                     moneda: 'Dolares',
                     entradas: [],
                     subtotal: 0,
+                    calIva: 0,
                     iva: '{{ $prospecto->cliente->nacional ? '1' : '0' }}',
                     total: 0,
                     idioma: '{{ $prospecto->cliente->nacional ? 'español' : 'ingles' }}',
@@ -1671,16 +1667,26 @@
                     console.log(this.cotizacion.subtotal)
                 },
                 sumaTotal() {
-                    this.cotizacion.iva = this.cotizacion.descuentos != '0' ?
-                        (Number(this.cotizacion.subtotal) - Number(this.cotizacion.descuentos)) * 0.16 :
-                        Number(this.cotizacion.subtotal) * 0.16;
-                    this.cotizacion.total = Number(this.cotizacion.subtotal) + Number(this.cotizacion.iva);
+                    this.calDescuento();
+                    this.calIva();
+                    this.cotizacion.total = this.cotizacion.montoDescuento != '0' ?
+                        (Number(this.cotizacion.subtotal) - Number(this.cotizacion.montoDescuento)) + Number(this .cotizacion.calIva) :
+                        Number(this.cotizacion.subtotal) + Number(this.cotizacion.calIva);
                     console.log(this.cotizacion.total)
                 },
+                calIva() {
+                    this.cotizacion.calIva = this.cotizacion.montoDescuento != '0' ?
+                        (Number(this.cotizacion.subtotal) - Number(this.cotizacion.montoDescuento)) * 0.16 :
+                        Number(this.cotizacion.subtotal) * 0.16;
+                },
+                calDescuento() {
+                    this.cotizacion.montoDescuento = this.cotizacion.tipo_descuento != '0' ?
+                        (Number(this.cotizacion.subtotal) * Number(this.cotizacion.descuentos)) / 100 :
+                        this.cotizacion.descuentos;
+                },
                 setDescuentosFinal() {
-
                     this.cotizacion.descuentos = this.cotizacion.tipo_descuento != '0' ?
-                        (Number(this.cotizacion.descuentos) * Number(this.cotizacion.descuentos)) / 100 :
+                        (Number(this.cotizacion.subtotal) * Number(this.cotizacion.descuentos)) / 100 :
                         this.cotizacion.descuentos;
                 },
                 agregarEntrada() {
@@ -1856,6 +1862,7 @@
                         moneda: cotizacion.moneda,
                         entradas: cotizacion.entradas,
                         subtotal: cotizacion.subtotal,
+                        calIva: cotizacion.calIva,
                         iva: (cotizacion.iva == 0) ? 0 : 1,
                         total: cotizacion.total,
                         idioma: cotizacion.idioma,
@@ -1956,6 +1963,7 @@
                         moneda: cotizacion.moneda,
                         entradas: cotizacion.entradas,
                         subtotal: cotizacion.subtotal,
+                        calIva: cotizacion.calIva,
                         iva: (cotizacion.iva == 0) ? 0 : 1,
                         total: cotizacion.total,
                         idioma: cotizacion.idioma,
@@ -2022,7 +2030,7 @@
                     totalf += Number(this.cotizacion.flete) +
                         Number(this.cotizacion.flete_menor) +
                         Number(this.cotizacion.costo_corte) +
-                        Number(this.cotizacion.costo_sobreproduccion); 
+                        Number(this.cotizacion.costo_sobreproduccion);
 
                     totalcotizacion = cotizacion.subtotal.toFixed(2);
 
@@ -2112,6 +2120,7 @@
                                     moneda: '{{ $prospecto->cliente->nacional ? 'Pesos' : 'Dolares' }}',
                                     entradas: [],
                                     subtotal: 0,
+                                    calIva: 0,
                                     iva: '{{ $prospecto->cliente->nacional ? '1' : '0' }}',
                                     total: 0,
                                     notas: "",
