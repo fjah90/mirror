@@ -147,7 +147,7 @@
             padding: 5px;
         }
 
-        .table-bordered {
+        .table-borderbordered {
             border: 1px solid #000;
         }
 
@@ -643,57 +643,57 @@
                                 @else
                                 <tr>
                             @endif
-                            <td class="text-center" style="width:13%;border-bottom: none; border-top: none">
-                                @format_number($entrada->cantidad)
-                                <br /> {{ $entrada->medida }}
-                            </td>
-                            <td
-                                style="width:13%;vertical-align: top;border-bottom: none !important; border-top: none !important">
-                                @foreach ($entrada->descripciones as $descripcion)
-                                    {{-- <span>@text_capitalize($descripcion->{$nombre_material}) </span> --}}
-                                    <span>@text_capitalize($descripcion->{$nombre}) </span>
-                                @endforeach
-                            </td>
-                            <td
-                                style="width:13%; vertical-align: top;border-bottom: none !important; border-top: none !important">
-                                @foreach ($entrada->fotos as $foto)
-                                    <img src="{{ $foto }}" alt="foto" style="width:100px; height:100px;" />
-                                    <br />
-                                @endforeach
-                            </td>
-                            <td
-                                style="width:16%;vertical-align: top;border-bottom: none !important; border-top: none !important">
-                                @foreach ($entrada->descripciones as $descripcion)
-                                    @if ($descripcion->valor)
+                                <td class="text-center border" style="width:13%; border-bottom: none; border-top: none;">
+                                    @format_number($entrada->cantidad)
+                                    <br /> {{ $entrada->medida }}
+                                </td>
+                                <td class="text-center border"
+                                    style="width:13%; border-bottom: none; border-top: none;">
+                                    @foreach ($entrada->descripciones as $descripcion)
+                                        {{-- <span>@text_capitalize($descripcion->{$nombre_material}) </span> --}}
+                                        <span>@text_capitalize($descripcion->{$nombre}) </span>
+                                    @endforeach
+                                </td>
+                                <td class="text-center border"
+                                    style="width:13%; border-bottom: none; border-top: none;">
+                                    @foreach ($entrada->fotos as $foto)
+                                        <img src="{{ $foto }}" alt="foto" style="width:100px; height:100px;" />
+                                        <br />
+                                    @endforeach
+                                </td>
+                                <td class="text-center border"
+                                    style="width:16%; border-bottom: none; border-top: none;">
+                                    @foreach ($entrada->descripciones as $descripcion)
+                                        @if ($descripcion->valor)
+                                            <p>
+                                                <span class="text-uppercase">{{ $descripcion->valor }}</span>
+                                            </p>
+                                        @endif
+                                    @endforeach
+                                    @if ($entrada->observaciones && $entrada->observaciones != '<ul></ul>')
                                         <p>
-                                            <span class="text-uppercase">{{ $descripcion->valor }}</span>
+                                            <span>
+                                                @if ($nombre == 'nombre')
+                                                    Observaciones:
+                                                @else
+                                                    Remarks:
+                                                @endif
+                                            </span>
+                                            {!! $entrada->observaciones !!}
                                         </p>
                                     @endif
-                                @endforeach
-                                @if ($entrada->observaciones && $entrada->observaciones != '<ul></ul>')
-                                    <p>
-                                        <span>
-                                            @if ($nombre == 'nombre')
-                                                Observaciones:
-                                            @else
-                                                Remarks:
-                                            @endif
-                                        </span>
-                                        {!! $entrada->observaciones !!}
-                                    </p>
-                                @endif
-                            </td>
-                            <td class="text-right"
-                                style="width:16%;vertical-align: top;border-bottom: none !important; border-top: none !important">
-                                @format_money($entrada->precio)</td>
-                            <td class="text-right"
-                                style="width:16%;vertical-align: top;border-bottom: none !important; border-top: none !important">
-                                {{-- @format_money($entrada->precio) --}}
-                            </td>
-                            <td class="text-right"
-                                style="width:13%;vertical-align: top;border-bottom: none !important; border-top: none !important">
-                                @format_money($entrada->importe)
-                            </td>
+                                </td>
+                                <td class="text-right border"
+                                    style="width:16%; border-bottom: none; border-top: none;">
+                                    @format_money($entrada->precio)</td>
+                                <td class="text-right border"
+                                    style="width:16%; border-bottom: none; border-top: none;">
+                                    {{-- @format_money($entrada->precio) --}}
+                                </td>
+                                <td class="text-right border"
+                                    style="width:13%; border-bottom: none; border-top: none;">
+                                    @format_money($entrada->importe)
+                                </td>
                             </tr>
                         @endforeach
                         <tr>
