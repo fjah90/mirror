@@ -648,17 +648,12 @@
                                 <br /> {{ $entrada->medida }}
                             </td>
                             <td class="text-center border" style="width:13%; border-bottom: none; border-top: none;">
-                                <span>@text_capitalize($entrada->nombre_material) </span>
-                                <span>@text_capitalize($entrada->nombre) </span>
-                                {{-- @foreach ($entrada->descripciones as $descripcion)
-                                    <span>@text_capitalize($descripcion->{$nombre}) </span>
-                                @endforeach --}}
+                                <span>@text_capitalize($entrada->producto->nombre) </span>
+                                <span>@text_capitalize($entrada->producto->nombre_material) </span>
                             </td>
                             <td class="text-center border" style="width:13%; border-bottom: none; border-top: none;">
-                                @foreach ($entrada->fotos as $foto)
-                                    <img src="{{ $foto }}" alt="foto" style="width:100px; height:100px;" />
-                                    <br />
-                                @endforeach
+                                <img src="{{ $entrada->producto->foto }}" alt="foto" style="width:100px; height:100px;" />
+                                <br />
                             </td>
                             <td class="text-center border" style="width:16%; border-bottom: none; border-top: none;">
                                 @foreach ($entrada->descripciones as $descripcion)
