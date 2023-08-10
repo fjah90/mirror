@@ -1933,10 +1933,13 @@ class ProspectosController extends Controller
             $create['subtotal'] = bcadd($create['subtotal'], $create['flete_menor'], 2);
 
         }
+        
+        if (!empty($cotizacion->costo_corto)) {
+            $create['subtotal'] = bcadd($create['subtotal'], $create['costo_corte'], 2);
+        }
 
         if (!empty($cotizacion->costo_sobreproduccion)) {
             $create['subtotal'] = bcadd($create['subtotal'], $create['costo_sobreproduccion'], 2);
-
         }
 
         if ($request->descuentos != "0") {
@@ -2251,6 +2254,10 @@ class ProspectosController extends Controller
 
         }
 
+        if (!empty($cotizacion->costo_corte)) {
+            $create['subtotal'] = bcadd($create['subtotal'], $create['costo_corte'], 2);
+        }
+        
         if (!empty($cotizacion->costo_sobreproduccion)) {
             $create['subtotal'] = bcadd($create['subtotal'], $create['costo_sobreproduccion'], 2);
 

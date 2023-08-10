@@ -499,7 +499,11 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-                                   {{-- Vacio --}}
+                                   <div class="form-group">
+                                        <label class="control-label">Costó de Corte</label>
+                                        <input class="form-control" type="text" name="costo_corte"
+                                            v-model="cotizacion.costo_corte" />
+                                    </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
@@ -996,6 +1000,7 @@
                             <th>Proveedor</th>
                             <th>Tipo</th>
                             <th>Ficha Técnica</th>
+                            <th>Nombre Material</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -1004,6 +1009,7 @@
                             <td>@{{ prod.nombre }}</td>
                             <td>@{{ prod.proveedor.empresa }}</td>
                             <td>@{{ prod.categoria.nombre }}</td>
+                            <td>@{{ prod.nombre_material }}</td>
                             <td>
                                 <a v-if="prod.ficha_tecnica" :href="prod.ficha_tecnica" target="_blank"
                                     class="btn btn-success" style="cursor:pointer;">
@@ -1220,6 +1226,7 @@
                     flete: '',
                     isfleteMenor: false,
                     flete_menor: '',
+                    costo_corte: '',
                     costo_sobreproduccion: '',
                     descuentos: 0,
                     tipo_descuento: 0,
@@ -2209,6 +2216,7 @@
                                     flete: '',
                                     isfleteMenor: false,
                                     flete_menor: '',
+                                    costo_corte: '',
                                     costo_sobreproduccion: '',
                                     descuentos: 0,
                                     tipo_descuento: 0,
