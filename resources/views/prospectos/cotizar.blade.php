@@ -663,8 +663,8 @@
                                                         </strong>
                                                     </td>
                                                     <td v-if="cotizacion.iva=='0'">@{{ cotizacion.subtotal | formatoMoneda }} </td>
-                                                    <td v-else-if="cotizacion.descuentos!='0' && cotizacion.subtotal!='0'">@{{ (cotizacion.subtotal - cotizacion.descuentos)* 1.16   | formatoMoneda }}</td>
-                                                    <td v-else>@{{ cotizacion.subtotal * 1.16 | formatoMoneda }}</td>
+                                                    <td v-else-if="cotizacion.descuentos!='0' && cotizacion.subtotal!='0'">@{{ ((cotizacion.subtotal + cotizacion.flete + cotizacion.flete_menor + cotizacion.costo_sobreproduccion + cotizacion.costo_corte) - cotizacion.descuentos)* 1.16   | formatoMoneda }}</td>
+                                                    <td v-else>@{{ (cotizacion.subtotal + cotizacion.flete + cotizacion.flete_menor + cotizacion.costo_sobreproduccion + cotizacion.costo_corte)  * 1.16 | formatoMoneda }}</td>
                                                     <td></td>
                                                 </tr>
                                             </tfoot>
