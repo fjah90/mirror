@@ -649,7 +649,7 @@
                                         <td
                                             style="vertical-align: top;border-bottom: none !important; border-top: none !important">
                                             @foreach ($entrada->descripciones as $descripcion)
-                                                <span>@text_capitalize($descripcion->{$nombre_material}) </span>
+                                                {{-- <span>@text_capitalize($descripcion->{$nombre_material}) </span> --}}
                                                 <span>@text_capitalize($descripcion->{$nombre}) </span>
                                             @endforeach
 
