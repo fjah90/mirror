@@ -649,10 +649,11 @@
                             </td>
                             <td class="text-center border" style="width:13%; border-bottom: none; border-top: none;">
                                 <span>@text_capitalize($entrada->producto->nombre) </span>
+                                <br/>
                                 <span>@text_capitalize($entrada->producto->nombre_material) </span>
                             </td>
                             <td class="text-center border" style="width:13%; border-bottom: none; border-top: none;">
-                                <img src="{{ $entrada->producto->foto }}" alt="foto" style="width:100px; height:100px;" />
+                                <img src="{{ public_path() . 'storage/' . $entrada->producto->foto }}" alt="foto" style="width:100px; height:100px;" />
                                 <br />
                             </td>
                             <td class="text-center border" style="width:16%; border-bottom: none; border-top: none;">
