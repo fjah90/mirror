@@ -636,7 +636,7 @@
                                                 <tr>
                                                     <td colspan="3"></td>
                                                     <td class="text-right"><strong>Subtotal</strong></td>
-                                                    <td>@{{ cotizacion.subtotal - cotizacion.flete - cotizacion.flete_menor - cotizacion.costo_sobreproduccion - cotizacion.costo_corte| formatoMoneda }}</td>
+                                                    <td>@{{ cotizacion.subtotal + cotizacion.flete + cotizacion.flete_menor + cotizacion.costo_sobreproduccion + cotizacion.costo_corte| formatoMoneda }}</td>
                                                     <td></td>
                                                 </tr>
                                                 <tr v-if="cotizacion.descuentos !='0'">
