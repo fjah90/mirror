@@ -472,7 +472,6 @@
         .table-cotizacion>tfoot {
             border: 0.5px solid #000;
         }
-
         .cuadro_magico {
             border-left: 0.5px solid #000;
             border-right: 0.5px solid #000;
@@ -483,23 +482,19 @@
         }
     </style>
 </head>
-
 <body>
     <div class="container">
-
         <div class="row">
             <div class="col-lg-12 text-center">
                 <img style="width:200px; height:auto;" src="{{ public_path() . '/images/logo.jpg' }}" alt="ROBINSON" />
             </div>
         </div>
-
         <div class="row margTop10">
             <div class="col-lg-1"></div>
             <div class="col-lg-10">
                 <hr style="border: 2.5px solid #000;">
             </div>
         </div>
-
         <div class="row margTop10">
             <div class="col-lg-5">
                 <p>Cotizacion # {{ $cotizacion->numero }}</p>
@@ -630,7 +625,9 @@
                     <thead>
                         <tr>
                             <th class="text-center" style="width:10%; padding:3px 0 1px;">Cantidad</th>
-                            <th class="text-center" style="width:74%; padding:3px 0 1px;">Descripciones</th>
+                            <th class="text-center" style="width:15%; padding:3px 0 1px;">Modelo</th>
+                            <th class="text-center" style="width:15%; padding:3px 0 1px;">Imagen</th>
+                            <th class="text-center" style="width:44%; padding:3px 0 1px;">Descripciones</th>
                             <th class="text-center" style="width:13%; padding:3px 0 1px;">Precio Unitario</th>
                             <th class="text-center" style="width:13%; padding:3px 0 1px;">Total</th>
                         </tr>
@@ -649,11 +646,25 @@
                                 <table style="width:100%; margin:0; border-top:none; border-bottom:none">
                                     <tr style="height: 120px;border-top:none; border-bottom:none">
                                         <td
-                                            style="vertical-align: top;border-bottom: none !important;  border-top: none !important">
+                                            style="vertical-align: top;border-bottom: none !important; border-top: none !important">
+                                            @foreach ($entrada->descripciones as $descripcion)
+                                                <span>@text_capitalize($descripcion->{$nombre_material}) </span>
+                                                <span>@text_capitalize($descripcion->{$nombre}) </span>
+                                            @endforeach
+
+                                        </td>
+                                        <td style="width:100px;border-bottom: none; border-top: none">
+                                            @foreach ($entrada->fotos as $foto)
+                                                <img src="{{ $foto }}" alt="foto"
+                                                    style="width:100px; height:100px;" />
+                                                <br />
+                                            @endforeach
+                                        </td>
+                                        <td
+                                            style="vertical-align: top;border-bottom: none !important; border-top: none !important">
                                             @foreach ($entrada->descripciones as $descripcion)
                                                 @if ($descripcion->valor)
                                                     <p>
-                                                        <span>@text_capitalize($descripcion->{$nombre}) </span>
                                                         <span class="text-uppercase">{{ $descripcion->valor }}</span>
                                                     </p>
                                                 @endif
@@ -671,13 +682,7 @@
                                                 </p>
                                             @endif
                                         </td>
-                                        <td style="width:100px;border-bottom: none; border-top: none">
-                                            @foreach ($entrada->fotos as $foto)
-                                                <img src="{{ $foto }}" alt="foto"
-                                                    style="width:100px; height:100px;" />
-                                                <br />
-                                            @endforeach
-                                        </td>
+
                                     </tr>
                                 </table>
                             </td>
@@ -712,10 +717,10 @@
         <div class="row" style="page-break-inside: avoid;">
             <div class="bordered" style="margin:5px 15px; 0">
                 <table class="" style="margin-bottom:0; width:100%;">
-                    @if (!empty($cotizacion->flete))
+                    @if (!empty($cotizacion->fletes))
                         <tr>
                             <td class="text-right" style="width:90%;"><strong>Cargo por Flete:</strong></td>
-                            <td class="text-right" style="width:10%;">@format_money($cotizacion->flete)</td>
+                            <td class="text-right" style="width:10%;">@format_money($cotizacion->fletes)</td>
                         </tr>
                     @endif
                     @if (!empty($cotizacion->flete_menor))
@@ -764,7 +769,7 @@
                         <tr>
                             <td colspan="2" class="bordered">
                                 <p class="text-danger"><strong>Notas</strong></p>
-                                <p class="text-uppercase">{{ $cotizacion->notas }}</p>
+                                <p class="text-left">{{ $cotizacion->notas }}</p>
                             </td>
                         </tr>
                     @endif

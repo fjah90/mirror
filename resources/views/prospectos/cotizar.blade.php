@@ -1669,7 +1669,8 @@
                     this.calDescuento();
                     this.calIva();
                     this.cotizacion.total = this.cotizacion.montoDescuento != '0' ?
-                        (Number(this.cotizacion.subtotal) - Number(this.cotizacion.montoDescuento)) + Number(this .cotizacion.calIva) :
+                        (Number(this.cotizacion.subtotal) - Number(this.cotizacion.montoDescuento)) +
+                         Number(this.cotizacion.calIva) :
                         Number(this.cotizacion.subtotal) + Number(this.cotizacion.calIva);
                     console.log(this.cotizacion.total)
                 },
@@ -1855,7 +1856,11 @@
                         direstado: cotizacion.direstado,
                         entrega: cotizacion.entrega,
                         lugar: cotizacion.lugar,
-                        // fletes: cotizacion.fletes,
+                        fletes: cotizacion.fletes,
+                        flete_menor: cotizacion.flete_menor,
+                        costo_corte: cotizacion.costo_corte,
+                        costo_sobreproduccion: cotizacion.costo_corte,
+                        descuentos: cotizacion.calDescuento,
                         planos: cotizacion.planos, //
                         factibilidad: cotizacion.factibilidad, //
                         moneda: cotizacion.moneda,
@@ -1956,7 +1961,11 @@
                         direstado: cotizacion.direstado,
                         entrega: cotizacion.entrega,
                         lugar: cotizacion.lugar,
-                        // fletes: cotizacion.fletes,
+                        fletes: cotizacion.fletes,
+                        flete_menor: cotizacion.flete_menor,
+                        costo_corte: cotizacion.costo_corte,
+                        costo_sobreproduccion: cotizacion.costo_corte,
+                        descuentos: cotizacion.calDescuento,
                         planos: cotizacion.planos, //
                         factibilidad: cotizacion.factibilidad, //
                         moneda: cotizacion.moneda,
@@ -2014,7 +2023,6 @@
                     this.resetDataTables();
                 },
                 guardar() {
-                    this.setDescuentosFinal()
                     if (this.entrada.producto.id == undefined) {
                         console.log("no se encontro entrada de producto")
                     } else {
@@ -2043,7 +2051,7 @@
                     if (dif > 0.05) {
                         alert('OCURRIO UN ERROR INESPERADO EL SUBTOTAL NO COINCIDE FAVOR DE RECARGAR LA PAGINA');
                     } else {
-
+                        this.setDescuentosFinal()
                         cotizacion.entradas.forEach(function(entrada) {
                             entrada.producto_id = entrada.producto.id;
                             delete entrada.producto;
@@ -2053,7 +2061,7 @@
                         });
                         var url = "",
                             numero_siguiente = false;
-
+                        cosole.log(formData)
                         if (this.cotizacion.cotizacion_id) {
                             url = '/prospectos/{{ $prospecto->id }}/cotizacion/' + this.cotizacion.cotizacion_id;
                             numero_siguiente = {{ $numero_siguiente }};
