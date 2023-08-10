@@ -1176,6 +1176,7 @@
                 },
             },
             mounted() {
+                console.log(this.prospecto)
                 this.$refs.fechaActual = document.querySelector('#fechaActual');
                 this.actualizarFechaActual();
                 let self = this; // ámbito de vue
@@ -1714,9 +1715,10 @@
                             this.entrada.fotos.push(this.$refs['fotos'].files[i]);
                     }
 
-
-                    this.entrada.importe = this.entrada.cantidad * this.entrada.precio;
-
+                    let factorProcentual = (this.entrada.precio * this.prospecto.cliente.tipo.factor_porcentual) / 100;
+                    // this.entrada.importe = this.entrada.cantidad * this.entrada.precio;
+                    this.entrada.importe = this.entrada.cantidad * (this.entrada.precio - factorProcentual);
+                    console.log(this.entrada.importe)
                     this.cotizacion.subtotal += this.entrada.importe;
                     this.sumaTotal()
                     if (this.entrada.orden == 0)
@@ -2061,7 +2063,7 @@
                         });
                         var url = "",
                             numero_siguiente = false;
-                        cosole.log(formData)
+                        console.log(formData)
                         if (this.cotizacion.cotizacion_id) {
                             url = '/prospectos/{{ $prospecto->id }}/cotizacion/' + this.cotizacion.cotizacion_id;
                             numero_siguiente = {{ $numero_siguiente }};

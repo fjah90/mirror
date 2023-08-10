@@ -625,11 +625,12 @@
                     <thead>
                         <tr>
                             <th class="text-center" style="width:10%; padding:3px 0 1px;">Cantidad</th>
-                            <th class="text-center" style="width:15%; padding:3px 0 1px;">Modelo</th>
-                            <th class="text-center" style="width:15%; padding:3px 0 1px;">Imagen</th>
-                            <th class="text-center" style="width:44%; padding:3px 0 1px;">Descripciones</th>
-                            <th class="text-center" style="width:13%; padding:3px 0 1px;">Precio Unitario</th>
-                            <th class="text-center" style="width:13%; padding:3px 0 1px;">Total</th>
+                            <th class="text-center" style="width:14%; padding:3px 0 1px;">Modelo</th>
+                            <th class="text-center" style="width:14%; padding:3px 0 1px;">Imagen</th>
+                            <th class="text-center" style="width:20%; padding:3px 0 1px;">Descripciones</th>
+                            <th class="text-center" style="width:14%; padding:3px 0 1px;">Precio Unitario (USD)</th>
+                            <th class="text-center" style="width:14%; padding:3px 0 1px;">Precio Unitario Especial (USD)</th>
+                            <th class="text-center" style="width:14%; padding:3px 0 1px;">Total</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -686,6 +687,7 @@
                                     </tr>
                                 </table>
                             </td>
+                            <td class="text-right" style="border-bottom: none; border-top: none">@format_money($entrada->precio)</td>
                             <td class="text-right" style="border-bottom: none; border-top: none">@format_money($entrada->precio)</td>
                             <td class="text-right" style="border-bottom: none; border-top: none">@format_money($entrada->importe)</td>
                             </tr>

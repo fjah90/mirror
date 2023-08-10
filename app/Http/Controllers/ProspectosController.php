@@ -1729,7 +1729,8 @@ class ProspectosController extends Controller
             'cliente.contactos.emails',
             'cliente.datos_facturacion',
             'cotizaciones.cuentaCobrar',
-            'cliente'
+            'cliente',
+            'cliente.tipo'
         );
         $productos = Producto::with('categoria', 'proveedor', 'descripciones.descripcionNombre', 'proveedor.contactos')
             ->has('categoria')->get();
@@ -1942,31 +1943,33 @@ class ProspectosController extends Controller
         //     $create['subtotal'] = bcadd($create['subtotal'], $create['costo_sobreproduccion'], 2);
         // }
 
-        if ($request->descuentos != "0") {
-            if ($request->tipo_descuento == "0") {
-                $create['subtotal'] = bcsub($create['subtotal'], $create['descuentos'], 2);
-            }
-            else {
-                $create['descuentos'] = bcmul($create['subtotal'], $create['descuentos'], 2);
-                $create['descuentos'] = bcdiv($create['descuentos'], '100', 2);
-                $create['subtotal'] = bcsub($create['subtotal'], $create['descuentos'], 2);
-            }
-        }
+        // if ($request->descuentos != "0") {
+        //     if ($request->tipo_descuento == "0") {
+        //         $create['subtotal'] = bcsub($create['subtotal'], $create['descuentos'], 2);
+        //     }
+        //     else {
+        //         $create['descuentos'] = bcmul($create['subtotal'], $create['descuentos'], 2);
+        //         $create['descuentos'] = bcdiv($create['descuentos'], '100', 2);
+        //         $create['subtotal'] = bcsub($create['subtotal'], $create['descuentos'], 2);
+        //     }
+        // }
 
         if ($request->iva == "1") {
-            $iva = bcmul($create['subtotal'], 0.16, 2);
             if (!empty($request->calIva)) {
-                $create['iva'] = $iva == $request->calIva ? $request->calIva : $iva;
-            } else {
-                $create['iva'] = $iva;
+                $create['iva'] = $request->calIva;
             }
-            if (!empty($request->total)) {
-                $ltotal = bcadd($create['subtotal'], $create['iva'], 2);
-                $create['total'] = $ltotal == $request->total ? $request->total : $ltotal;
+            else {
+                $create['iva'] = bcmul($create['subtotal'], 0.16, 2);
             }
-        } else {
+        }
+        if (!empty($request->total)) {
             $create['total'] = $request->total;
         }
+        else {
+            $create['total'] = bcadd($create['subtotal'], $create['iva'], 2);
+        }
+
+        echo($create);
 
         $observaciones = "<ul>";
         foreach ($request->observaciones as $obs) {
@@ -2280,18 +2283,16 @@ class ProspectosController extends Controller
         // }
 
         if ($request->iva == "1") {
-            $iva = bcmul($create['subtotal'], 0.16, 2);
             if (!empty($request->calIva)) {
-                $create['iva'] = $iva == $request->calIva ? $request->calIva : $iva;
+                $create['iva'] = $request->calIva;
             } else {
-                $create['iva'] = $iva;
+                $create['iva'] = bcmul($create['subtotal'], 0.16, 2);
             }
-            if (!empty($request->total)) {
-                $ltotal = bcadd($create['subtotal'], $create['iva'], 2);
-                $create['total'] = $ltotal == $request->total ? $request->total : $ltotal;
-            }
-        } else {
+        }
+        if (!empty($request->total)) {
             $create['total'] = $request->total;
+        }else{
+            $create['total'] = bcadd($create['subtotal'], $create['iva'], 2);
         }
 
         $observaciones = "<ul>";
@@ -2300,8 +2301,6 @@ class ProspectosController extends Controller
         }
         $observaciones .= "</ul>";
         $create['observaciones'] = $observaciones;
-
-
 
         $cotizacion = ProspectoCotizacion::create($create);
 
@@ -2520,18 +2519,16 @@ class ProspectosController extends Controller
         }
 
         if ($request->iva == "1") {
-            $iva = bcmul($update['subtotal'], 0.16, 2);
             if (!empty($request->calIva)) {
-                $update['iva'] = $iva == $request->calIva ? $request->calIva : $iva;
+                $update['iva'] = $request->calIva;
             } else {
-                $update['iva'] = $iva;
+                $update['iva'] = bcmul($update['subtotal'], 0.16, 2);
             }
-            if (!empty($request->total)) {
-                $ltotal = bcadd($update['subtotal'], $update['iva'], 2);
-                $update['total'] = $ltotal == $request->total ? $request->total : $ltotal;
-            }
-        } else {
+        }
+        if (!empty($request->total)) {
             $update['total'] = $request->total;
+        }else{
+            $update['total'] = bcadd($update['subtotal'], $update['iva'], 2);
         }
 
         $observaciones = "<ul>";
@@ -2686,19 +2683,18 @@ class ProspectosController extends Controller
         //recalculate subtotal
         $update['subtotal'] = round($cotizacion->entradas()->sum('importe'), 2);
         if ($request->iva == "1") {
-            $iva = bcmul($update['subtotal'], 0.16, 2);
             if (!empty($request->calIva)) {
-                $update['iva'] = $iva == $request->calIva ? $request->calIva : $iva;
+                $update['iva'] = $request->calIva;
             }
             else {
-                $update['iva'] = $iva;
+                $update['iva'] = bcmul($update['subtotal'], 0.16, 2);
             }
-            if (!empty($request->total)) {
-                $ltotal = bcadd($update['subtotal'], $update['iva'], 2);
-                $update['total'] = $ltotal == $request->total ? $request->total : $ltotal;
-            }
-        } else {
+        }
+        if (!empty($request->total)) {
             $update['total'] = $request->total;
+        }
+        else {
+            $update['total'] = bcadd($update['subtotal'], $update['iva'], 2);
         }
 
         $cotizacion->update($update);
@@ -2846,18 +2842,16 @@ class ProspectosController extends Controller
         }
 
         if ($request->iva == "1") {
-            $iva = bcmul($update['subtotal'], 0.16, 2);
             if (!empty($request->calIva)) {
-                $update['iva'] = $iva == $request->calIva ? $request->calIva : $iva;
+                $update['iva'] = $request->calIva;
             } else {
-                $update['iva'] = $iva;
+                $update['iva'] = bcmul($update['subtotal'], 0.16, 2);
             }
-            if (!empty($request->total)) {
-                $ltotal = bcadd($update['subtotal'], $update['iva'], 2);
-                $update['total'] = $ltotal == $request->total ? $request->total : $ltotal;
-            }
-        } else {
+        }
+        if (!empty($request->total)) {
             $update['total'] = $request->total;
+        }else{
+            $update['total'] = bcadd($update['subtotal'], $update['iva'], 2);
         }
 
         $observaciones = "<ul>";
@@ -3012,18 +3006,16 @@ class ProspectosController extends Controller
         //recalculate subtotal
         $update['subtotal'] = round($cotizacion->entradas()->sum('importe'), 2);
         if ($request->iva == "1") {
-            $iva = bcmul($update['subtotal'], 0.16, 2);
             if (!empty($request->calIva)) {
-                $update['iva'] = $iva == $request->calIva ? $request->calIva : $iva;
+                $update['iva'] = $request->calIva;
             } else {
-                $update['iva'] = $iva;
+                $update['iva'] = bcmul($update['subtotal'], 0.16, 2);
             }
-            if (!empty($request->total)) {
-                $ltotal = bcadd($update['subtotal'], $update['iva'], 2);
-                $update['total'] = $ltotal == $request->total ? $request->total : $ltotal;
-            }
-        } else {
+        }
+        if (!empty($request->total)) {
             $update['total'] = $request->total;
+        }else{
+            $update['total'] = bcadd($update['subtotal'], $update['iva'], 2);
         }
 
         $cotizacion->update($update);
