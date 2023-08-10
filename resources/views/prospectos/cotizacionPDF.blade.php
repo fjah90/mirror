@@ -507,9 +507,9 @@
             </div>
             <div class="col-lg-7">
                 <p class="text-uppercase text-right">Robinson Contract Resources, s.a. de c.v.</p>
-                <p class=" text-right font-small">Av. Juan Salvador Agraz 50, Oficina 702, Lomas de Santa Fe.</p>
-                <p class=" text-right font-small">Ciudad de Mexico, 05348 Mexico</p>
-                <p class="text-right font-small">T. +52 (55) 5557-5214 Robinson.com.mx</p>
+                <p class="text-right font-small">Edgar Allan Poe 54, Polanco, CDMX. C.P. 11560</p>
+                <p class="text-right font-small">T. +52 (55) 5282 0711 / (55) 5282 0378</p>
+                <p class="text-right font-small">robinsonhd.com</p>
             </div>
         </div>
 
@@ -560,11 +560,11 @@
                                     <tr>
                                         <td style="vertical-align:top">Proyecto:</td>
                                         <td class="text-uppercase">
-                                        @if($cotizacion->prospecto_id == null)
-                                        <strong>{{$cotizacion->nombre_proyecto}}</strong>
-                                        @else
-                                        <strong>{{$cotizacion->prospecto->nombre}}</strong>
-                                        @endif
+                                            @if ($cotizacion->prospecto_id == null)
+                                                <strong>{{ $cotizacion->nombre_proyecto }}</strong>
+                                            @else
+                                                <strong>{{ $cotizacion->prospecto->nombre }}</strong>
+                                            @endif
                                         </td>
                                     </tr>
                                     <tr>
@@ -572,8 +572,8 @@
                                         <td class="text-uppercase">{{ $cotizacion->entrega }}</td>
                                     </tr>
                                     <tr>
-                                        <td style="vertical-align:top">Fletes:</td>
-                                        <td class="text-uppercase">{{ $cotizacion->fletes }}</td>
+                                        <td style="vertical-align:top">Ubicación:</td>
+                                        <td class="text-uppercase">{{ $cotizacion->ubicacion }}</td>
                                     </tr>
                                     <tr>
                                         <td>Precios:</td>
@@ -618,14 +618,6 @@
 
                             </td>
                         </tr>
-                        @if ($cotizacion->notas)
-                            <tr>
-                                <td colspan="2" class="bordered">
-                                    <p class="text-danger"><strong>Notas</strong></p>
-                                    <p class="text-uppercase">{{ $cotizacion->notas }}</p>
-                                </td>
-                            </tr>
-                        @endif
                     </tbody>
                 </table>
             </div>
@@ -720,6 +712,12 @@
         <div class="row" style="page-break-inside: avoid;">
             <div class="bordered" style="margin:5px 15px; 0">
                 <table class="" style="margin-bottom:0; width:100%;">
+                    @if (!empty($cotizacion->flete))
+                        <tr>
+                            <td class="text-right" style="width:90%;"><strong>Cargo por Flete:</strong></td>
+                            <td class="text-right" style="width:10%;">@format_money($cotizacion->flete)</td>
+                        </tr>
+                    @endif
                     @if (!empty($cotizacion->flete_menor))
                         <tr>
                             <td class="text-right" style="width:90%;"><strong>Cargo por Flete Menor:</strong></td>
@@ -762,6 +760,14 @@
 
             <div class="bordered" style="margin:5px 15px 0;">
                 <table style="margin: 0px; width:100%;">
+                    @if ($cotizacion->notas)
+                        <tr>
+                            <td colspan="2" class="bordered">
+                                <p class="text-danger"><strong>Notas</strong></p>
+                                <p class="text-uppercase">{{ $cotizacion->notas }}</p>
+                            </td>
+                        </tr>
+                    @endif
                     <tr class="font-small">
                         <td style="width:70%; text-transform: none; vertical-align: top;">
                             <p class="margTop10" style="margin-left:10px;">
@@ -778,7 +784,7 @@
                             {!! $cotizacion->observaciones !!}
                         </td>
                         <td class="text-center" style="width:30%; text-transform: none;">
-                            @if ($cotizacion->user->id == 2)
+                            {{-- @if ($cotizacion->user->id == 2)
                                 <!-- "Abraham Shveid" -->
                                 <img style="margin-top:10px; width:170px; height:auto;"
                                     src="{{ $cotizacion->user->firma }}" alt=" " />
@@ -792,7 +798,7 @@
                                 <img style="margin-top:10px; width:170px; height:auto;"
                                     src="{{ $cotizacion->user->firma }}" alt=" " />
                                 <hr style="border:0.5px solid #000; width:70%; margin-top:-15px; margin-bottom:0px;" />
-                            @endif
+                            @endif --}}
                             <p style="">{{ $cotizacion->user->name }}</p>
                             <p style="">Robinson Contract Resources</p>
                             <hr style="border:0.5px solid #000; width:70%; margin-top:60px; margin-bottom:0px;" />

@@ -416,10 +416,9 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-
                                         <label class="control-label">Flete</label>
-                                        <input class="form-control" type="text" name="flete"
-                                            v-model="cotizacion.flete" />
+                                        <input class="form-control" type="text" name="fletes"
+                                            v-model="cotizacion.fletes" />
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -440,7 +439,7 @@
                                                 @click="isfleteMenor()"></i>
                                             <label class="control-label" for="cotizacion.flete_menor">Flete menor</label>
                                         </div>
-                                        <input class="form-control" type="text" name="flete"
+                                        <input class="form-control" type="text" name="flete_menor"
                                             v-model="cotizacion.flete_menor" :disabled="!cotizacion.isfleteMenor" />
                                     </div>
                                 </div>
@@ -551,11 +550,11 @@
                                             <tbody>
                                             </tbody>
                                             <tfoot>
-                                                <tr v-if="cotizacion.flete !='0' || cotizacion.flete !=''">
+                                                <tr v-if="cotizacion.fletes !='0' || cotizacion.fletes !=''">
                                                     <td colspan="3"></td>
                                                     <td class="text-right"><strong>Costó de Flete</strong></td>
-                                                    <td v-if="cotizacion.flete =='0'">$0.00</td>
-                                                    <td v-if="cotizacion.flete !='0'">@{{ (cotizacion.flete) | formatoMoneda }}</td>
+                                                    <td v-if="cotizacion.fletes =='0'">$0.00</td>
+                                                    <td v-if="cotizacion.fletes !='0'">@{{ (cotizacion.fletes) | formatoMoneda }}</td>
                                                     <td></td>
                                                 </tr>
                                                 <tr v-if="cotizacion.flete_menor !='0' || cotizacion.flete_menor !=''">
@@ -1083,7 +1082,7 @@
                     contacto_email: '',
                     entrega: '',
                     lugar: '',
-                    flete: 0,
+                    fletes: 0,
                     isfleteMenor: false,
                     flete_menor: 0,
                     costo_corte: 0,
@@ -1660,7 +1659,7 @@
                 },
                 sumaSubTotal() {
                     this.cotizacion.subtotal = Number(this.cotizacion.subtotal) +
-                        Number(this.cotizacion.flete) +
+                        Number(this.cotizacion.fletes) +
                         Number(this.cotizacion.flete_menor) +
                         Number(this.cotizacion.costo_corte) +
                         Number(this.cotizacion.costo_sobreproduccion);
@@ -2027,7 +2026,7 @@
                     cotizacion.entradas.forEach(function(entrada) {
                         totalf += entrada.importe;
                     });
-                    totalf += Number(this.cotizacion.flete) +
+                    totalf += Number(this.cotizacion.fletes) +
                         Number(this.cotizacion.flete_menor) +
                         Number(this.cotizacion.costo_corte) +
                         Number(this.cotizacion.costo_sobreproduccion);
@@ -2108,7 +2107,7 @@
                                     direstado: '',
                                     entrega: '',
                                     lugar: '',
-                                    flete: 0,
+                                    fletes: 0,
                                     isfleteMenor: false,
                                     flete_menor: 0,
                                     costo_corte: 0,
