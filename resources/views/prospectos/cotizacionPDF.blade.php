@@ -625,12 +625,12 @@
                     <thead>
                         <tr>
                             <th class="text-center" style="width:10%; padding:3px 0 1px;">Cantidad</th>
-                            <th class="text-center" style="width:14%; padding:3px 0 1px;">Modelo</th>
-                            <th class="text-center" style="width:14%; padding:3px 0 1px;">Imagen</th>
-                            <th class="text-center" style="width:20%; padding:3px 0 1px;">Descripciones</th>
-                            <th class="text-center" style="width:14%; padding:3px 0 1px;">Precio Unitario (USD)</th>
-                            <th class="text-center" style="width:14%; padding:3px 0 1px;">Precio Unitario Especial (USD)</th>
-                            <th class="text-center" style="width:14%; padding:3px 0 1px;">Total</th>
+                            <th class="text-center" style="width:10%; padding:3px 0 1px;">Modelo</th>
+                            <th class="text-center" style="width:10%; padding:3px 0 1px;">Imagen</th>
+                            <th class="text-center" style="width:10%; padding:3px 0 1px;">Descripciones</th>
+                            <th class="text-center" style="width:10%; padding:3px 0 1px;">Precio Unitario (USD)</th>
+                            <th class="text-center" style="width:10%; padding:3px 0 1px;">Precio Unitario Especial (USD)</th>
+                            <th class="text-center" style="width:10%; padding:3px 0 1px;">Total</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -652,7 +652,6 @@
                                                 {{-- <span>@text_capitalize($descripcion->{$nombre_material}) </span> --}}
                                                 <span>@text_capitalize($descripcion->{$nombre}) </span>
                                             @endforeach
-
                                         </td>
                                         <td style="width:100px;border-bottom: none; border-top: none">
                                             @foreach ($entrada->fotos as $foto)
@@ -661,8 +660,7 @@
                                                 <br />
                                             @endforeach
                                         </td>
-                                        <td
-                                            style="vertical-align: top;border-bottom: none !important; border-top: none !important">
+                                        <td style="vertical-align: top;border-bottom: none !important; border-top: none !important">
                                             @foreach ($entrada->descripciones as $descripcion)
                                                 @if ($descripcion->valor)
                                                     <p>
@@ -670,7 +668,7 @@
                                                     </p>
                                                 @endif
                                             @endforeach
-                                            @if ($entrada->observaciones && $entrada->observaciones != '<ul></ul>')
+                                            {{-- @if ($entrada->observaciones && $entrada->observaciones != '<ul></ul>')
                                                 <p>
                                                     <span>
                                                         @if ($nombre == 'nombre')
@@ -681,14 +679,15 @@
                                                     </span>
                                                     {!! $entrada->observaciones !!}
                                                 </p>
-                                            @endif
+                                            @endif --}}
                                         </td>
-
                                     </tr>
                                 </table>
                             </td>
                             <td class="text-right" style="border-bottom: none; border-top: none">@format_money($entrada->precio)</td>
-                            <td class="text-right" style="border-bottom: none; border-top: none">@format_money($entrada->precio)</td>
+                            <td class="text-right" style="border-bottom: none; border-top: none">
+                                {{-- @format_money($entrada->precio) --}}
+                            </td>
                             <td class="text-right" style="border-bottom: none; border-top: none">@format_money($entrada->importe)</td>
                             </tr>
                         @endforeach
