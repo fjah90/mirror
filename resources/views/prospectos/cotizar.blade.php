@@ -123,58 +123,20 @@
                                                     <label class="label label-success" v-if="cotizacion.aceptada == 1">
                                                         Aceptada
                                                     </label>
-
-
                                                 </td>
                                                 <td class="text-right">
-                                                    <!--
-                                                                                                                                                                        <button class="btn btn-xs btn-default" title="Notas"
-                                                                                                                                                                                @click="notas.cotizacion_id=cotizacion.id;notas.mensaje=cotizacion.notas2;openNotas=true;">
-                                                                                                                                                                            <i class="far fa-sticky-note"></i>
-                                                                                                                                                                        </button>
-                                                                                                                                                                        -->
                                                     <a class="btn btn-xs btn-success" title="PDF"
                                                         :href="cotizacion.archivo"
                                                         :download="'C ' + cotizacion.numero + ' Robinson' + prospecto.cliente
                                                             .nombre + ' ' + prospecto.nombre + '.pdf'">
                                                         <i class="far fa-file-pdf"></i>
                                                     </a>
-                                                    <!--
-                                                                                                                                                                        <button class="btn btn-xs btn-info" title="Enviar"
-                                                                                                                                                                                @click="enviar.cotizacion_id=cotizacion.id; enviar.numero=cotizacion.numero; openEnviar=true;">
-                                                                                                                                                                            <i class="far fa-envelope"></i>
-                                                                                                                                                                        </button>
-                                                                                                                                                                        <a v-if="cotizacion.aceptada" class="btn btn-xs text-primary"
-                                                                                                                                                                           title="Comprobante Confirmación"
-                                                                                                                                                                           :href="cotizacion
-                                                                                                                                                                               .comprobante_confirmacion"
-                                                                                                                                                                           target="_blank">
-                                                                                                                                                                            <i class="fas fa-user-check"></i>
-                                                                                                                                                                        </a>
-
-                                                                                                                                                                        <a v-if="cotizacion.aceptada" class="btn btn-xs text-warning"
-                                                                                                                                                                       title="Orden Compra"
-                                                                                                                                                                       :href="'/proyectos-aprobados/' +
-                                                                                                                                                                       cotizacion
-                                                                                                                                                                           .proyecto_aprobado
-                                                                                                                                                                           .id +
-                                                                                                                                                                           '/ordenes-compra'"
-                                                                                                                                                                       target="_blank">
-                                                                                                                                                                        <i class="fas fa-arrow-up"></i>
-                                                                                                                                                                        </a>
-                                                                                                                                                                        -->
-
                                                     <template v-else>
                                                         <button class="btn btn-xs btn-warning" title="Editar"
                                                             @click="editar(index, cotizacion)">
                                                             <i class="fas fa-pencil-alt"></i>
                                                         </button>
-                                                        <!--
-                                                                                                                                                                            <button class="btn btn-xs btn-primary" title="Aceptar"
-                                                                                                                                                                                    @click="aceptar.cotizacion_id=cotizacion.id; openAceptar=true;">
-                                                                                                                                                                                <i class="fas fa-user-check"></i>
-                                                                                                                                                                            </button>
-                                                                                                                                                                            -->
+
                                                         @role('Administrador')
                                                             <button class="btn btn-xs btn-danger" title="Eliminar"
                                                                 @click="borrar(index, cotizacion)">
@@ -182,17 +144,6 @@
                                                             </button>
                                                         @endrole
                                                     </template>
-                                                    <!--
-                                                                                                                                                                        <button class="btn btn-xs btn-white" title="Copiar"
-                                                                                                                                                                                @click="copiar(index, cotizacion)">
-                                                                                                                                                                            <i class="far fa-copy"></i>
-                                                                                                                                                                        </button>
-                                                                                                                                                                        <button class="btn btn-xs btn-green" title="Copiar a otro proyecto"
-                                                                                                                                                                                @click="copiar2(index, cotizacion); openCopiar=true ">
-                                                                                                                                                                            <i class="far fa-copy"></i>
-                                                                                                                                                                        </button>
-                                                                                                                                                                        -->
-
                                                 </td>
                                             </tr>
                                         <tfoot>
@@ -301,11 +252,7 @@
                                 <div class="col-sm-4">
 
                                     <label class="control-label">Colonia</label>
-                                    <!--
-                                                                                <select class="form-control" name="colonia" v-model="cotizacion.colonia" text-uppercase required>
-                                                                                    <option v-for="(colonia,index) in colonias" v-bind:value="colonia">@{{ colonia }}</option>
-                                                                                </select>
-                                                                                -->
+
                                     <input type="text" name="colonia" class="form-control text-uppercase"
                                         v-model="cotizacion.colonia" />
 
@@ -369,11 +316,6 @@
                                 <div class="col-sm-4">
 
                                     <label class="control-label">Colonia</label>
-                                    <!--
-                                                                                    <select class="form-control" name="colonia" v-model="cotizacion.dircolonia" text-uppercase required>
-                                                                                        <option v-for="(colonia,index) in colonias2" v-bind:value="colonia">@{{ colonia }}</option>
-                                                                                    </select>
-                                                                                    -->
                                     <input type="text" name="colonia" class="form-control text-uppercase"
                                         v-model="cotizacion.dircolonia" />
 
@@ -490,16 +432,20 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <div class="form-check form-switch">
-                                             <i :class="{'glyphicon glyphicon-unchecked': !cotizacion.isfleteMenor, 'glyphicon glyphicon-check': cotizacion.isfleteMenor}"
-                                            @click="isfleteMenor()"></i>
+                                            <i :class="{
+                                                'glyphicon glyphicon-unchecked': !cotizacion
+                                                    .isfleteMenor,
+                                                'glyphicon glyphicon-check': cotizacion.isfleteMenor
+                                            }"
+                                                @click="isfleteMenor()"></i>
                                             <label class="control-label" for="cotizacion.flete_menor">Flete menor</label>
                                         </div>
                                         <input class="form-control" type="text" name="flete"
-                                            v-model="cotizacion.flete_menor" :disabled="!cotizacion.isfleteMenor"/>
+                                            v-model="cotizacion.flete_menor" :disabled="!cotizacion.isfleteMenor" />
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-                                   <div class="form-group">
+                                    <div class="form-group">
                                         <label class="control-label">Costó de Corte</label>
                                         <input class="form-control" type="text" name="costo_corte"
                                             v-model="cotizacion.costo_corte" />
@@ -619,31 +565,36 @@
                                                     <td v-if="cotizacion.flete_menor !='0'">@{{ (cotizacion.flete_menor) | formatoMoneda }}</td>
                                                     <td></td>
                                                 </tr>
-                                                 <tr v-if="cotizacion.costo_sobreproduccion !='0'">
+                                                <tr v-if="cotizacion.costo_sobreproduccion !='0'">
                                                     <td colspan="3"></td>
                                                     <td class="text-right"><strong>Costó Sobreproducción</strong></td>
                                                     <td v-if="cotizacion.costo_sobreproduccion =='0'">$0.00</td>
-                                                    <td v-if="cotizacion.costo_sobreproduccion !='0'">@{{ (cotizacion.costo_sobreproduccion) | formatoMoneda }}</td>
+                                                    <td v-if="cotizacion.costo_sobreproduccion !='0'">
+                                                        @{{ (cotizacion.costo_sobreproduccion) | formatoMoneda }}</td>
                                                     <td></td>
                                                 </tr>
-                                                 <tr v-if="cotizacion.costo_corte !='0'">
+                                                <tr v-if="cotizacion.costo_corte !='0'">
                                                     <td colspan="3"></td>
                                                     <td class="text-right"><strong>Costó de Corte</strong></td>
                                                     <td v-if="cotizacion.costo_corte =='0'">$0.00</td>
-                                                    <td v-if="cotizacion.costo_corte !='0'">@{{ ( cotizacion.costo_corte) | formatoMoneda }}</td>
+                                                    <td v-if="cotizacion.costo_corte !='0'">@{{ (cotizacion.costo_corte) | formatoMoneda }}</td>
                                                     <td></td>
                                                 </tr>
                                                 <tr>
                                                     <td colspan="3"></td>
                                                     <td class="text-right"><strong>Subtotal</strong></td>
-                                                    <td>@{{ cotizacion.subtotal + cotizacion.flete + cotizacion.flete_menor + cotizacion.costo_sobreproduccion + cotizacion.costo_corte| formatoMoneda }}</td>
+                                                    <td>@{{ cotizacion.subtotal | formatoMoneda }}</td>
                                                     <td></td>
                                                 </tr>
                                                 <tr v-if="cotizacion.descuentos !='0'">
                                                     <td colspan="3"></td>
                                                     <td class="text-right"><strong>Descuentos</strong></td>
-                                                    <td v-if="cotizacion.descuentos =='0' && cotizacion.tipo_descuento =='0'">$0.00</td>
-                                                    <td v-if="cotizacion.descuentos !='0' && cotizacion.tipo_descuento =='1'">@{{ (cotizacion.subtotal * cotizacion.descuentos) / 100 | formatoMoneda }}</td>
+                                                    <td
+                                                        v-if="cotizacion.descuentos =='0' && cotizacion.tipo_descuento =='0'">
+                                                        $0.00</td>
+                                                    <td
+                                                        v-if="cotizacion.descuentos !='0' && cotizacion.tipo_descuento =='1'">
+                                                        @{{ (cotizacion.subtotal * cotizacion.descuentos) / 100 | formatoMoneda }}</td>
                                                     <td v-else>@{{ cotizacion.descuentos | formatoMoneda }}</td>
                                                     <td></td>
                                                 </tr>
@@ -654,7 +605,7 @@
                                                     <td v-else>@{{ cotizacion.subtotal * 0.16 | formatoMoneda }}</td>
                                                     <td></td>
                                                 </tr>
-                                                <tr >
+                                                <tr>
                                                     <td colspan="3"></td>
                                                     <td class="text-right">
                                                         <strong>Total
@@ -662,9 +613,8 @@
                                                             <span v-else> Pesos</span>
                                                         </strong>
                                                     </td>
-                                                    <td v-if="cotizacion.iva=='0'">@{{ cotizacion.subtotal | formatoMoneda }} </td>
-                                                    <td v-else-if="cotizacion.descuentos!='0' && cotizacion.subtotal!='0'">@{{ ((cotizacion.subtotal + cotizacion.flete + cotizacion.flete_menor + cotizacion.costo_sobreproduccion + cotizacion.costo_corte) - cotizacion.descuentos)* 1.16   | formatoMoneda }}</td>
-                                                    <td v-else>@{{ (cotizacion.subtotal + cotizacion.flete + cotizacion.flete_menor + cotizacion.costo_sobreproduccion + cotizacion.costo_corte)  * 1.16 | formatoMoneda }}</td>
+                                                    <td v-if="cotizacion.total=='0'">$0.00</td>
+                                                    <td v-else>@{{ cotizacion.total | formatoMoneda }}</td>
                                                     <td></td>
                                                 </tr>
                                             </tfoot>
@@ -722,73 +672,6 @@
                                     </button>
                                 </div>
                             </div>
-                            {{-- <div class="row" style="padding-top: 10px;">
-                                <div class="col-md-2">
-                                    <div class="form-group">
-                                        <label class="control-label">Precio de Compra</label>
-                                        <input type="number" step="0.01" min="0.01" name="precio_compra"
-                                               class="form-control"
-                                               v-model="entrada.precio_compra"/>
-                                    </div>
-                                </div>
-                                <div class="col-md-2">
-                                    <div class="form-group">
-                                        <label class="control-label">Unidad Medida Compra</label>
-                                        <select class="form-control" name="medida" v-model="entrada.medida_compra">
-                                            @foreach ($unidades_medida as $unidad)
-                                                <option value="{{ $unidad->simbolo }}">{{ $unidad->simbolo }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-2">
-                                    <div class="form-group">
-                                        <label class="control-label">Fecha Precio</label>
-                                        <br/>
-                                        <dropdown>
-                                            <div class="input-group">
-                                                <div class="input-group-btn">
-                                                    <btn class="dropdown-toggle" style="background-color:#fff;">
-                                                        <i class="fas fa-calendar"></i>
-                                                    </btn>
-                                                </div>
-                                                <input class="form-control" type="text" name="fecha"
-                                                       v-model="entrada.fecha_precio_compra" placeholder="DD/MM/YYYY"
-                                                       readonly
-                                                />
-                                            </div>
-                                            <template slot="dropdown">
-                                                <li>
-                                                    <date-picker :locale="locale" :today-btn="false" :clear-btn="false"
-                                                                 format="dd/MM/yyyy" :date-parser="dateParser"
-                                                                 v-model="entrada.fecha_precio_compra"/>
-                                                </li>
-                                            </template>
-                                        </dropdown>
-                                    </div>
-                                </div>
-                                <div class="col-md-2">
-                                    <div class="form-group">
-                                        <label class="control-label">Moneda Referencia</label>
-                                        <select class="form-control" name="moneda" v-model="entrada.moneda_referencia">
-                                            <option value=""></option>
-                                            <option value="Dolares">Dolares USD</option>
-                                            <option value="Pesos">Pesos MXN</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label class="control-label">Contacto Proveedor</label>
-                                        <select class="form-control" name="medida"
-                                                v-model="entrada.proveedor_contacto_id">
-                                            <option v-for="contacto in entrada.producto.proveedor.contactos"
-                                                    :value="contacto.id">@{{ contacto.nombre }}
-                                            </option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div> --}}
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="table-responsive">
@@ -901,53 +784,6 @@
                                 </div>
                             </div>
                         </form>
-                        {{-- <div class="row">
-                          <div class="col-md-12">
-                            <div class="table-responsive">
-                              <table id="tablaEntradas" class="table table-bordred" style="width:100%;">
-                                <thead>
-                                  <tr>
-                                    <th>Orden</th>
-                                    <th>Producto</th>
-                                    <th>Cantidad</th>
-                                    <th>Precio</th>
-                                    <th>Importe</th>
-                                    <th></th>
-                                  </tr>
-                                </thead>
-                                <tbody>
-                                </tbody>
-                                <tfoot>
-                                  <tr>
-                                    <td colspan="3"></td>
-                                    <td class="text-right"><strong>Subtotal</strong></td>
-                                    <td>@{{ cotizacion.subtotal | formatoMoneda }}</td>
-                                    <td></td>
-                                  </tr>
-                                  <tr>
-                                    <td colspan="3"></td>
-                                    <td class="text-right"><strong>IVA</strong></td>
-                                    <td v-if="cotizacion.iva=='0'">$0.00</td>
-                                    <td v-else>@{{ cotizacion.subtotal * 0.16 | formatoMoneda }}</td>
-                                    <td></td>
-                                  </tr>
-                                  <tr>
-                                    <td colspan="3"></td>
-                                    <td class="text-right">
-                                      <strong>Total
-                                        <span v-if="cotizacion.moneda=='Dolares'"> Dolares</span>
-                                        <span v-else> Pesos</span>
-                                      </strong>
-                                    </td>
-                                    <td v-if="cotizacion.iva=='0'">@{{ cotizacion.subtotal | formatoMoneda }}</td>
-                                    <td v-else>@{{ cotizacion.subtotal * 1.16 | formatoMoneda }}</td>
-                                    <td></td>
-                                  </tr>
-                                </tfoot>
-                              </table>
-                            </div>
-                          </div>
-                        </div> --}}
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
@@ -1260,7 +1096,6 @@
                     tipo_descuento: 0,
                     planos: '',
                     factibilidad: '',
-                    // moneda: '{{ $prospecto->cliente->nacional ? 'Pesos' : 'Dolares' }}',
                     moneda: 'Dolares',
                     entradas: [],
                     subtotal: 0,
@@ -1344,8 +1179,6 @@
                 },
             },
             mounted() {
-                console.log(this.notasPreCargadas);
-                console.log(this.productos);
                 this.$refs.fechaActual = document.querySelector('#fechaActual');
                 this.actualizarFechaActual();
                 let self = this; // ámbito de vue
@@ -1366,9 +1199,6 @@
                         self.copiar_cotizacion.proyecto_id = value[0].id
 
                     });
-
-
-
 
                 $("#fotos").fileinput({
                     language: 'es',
@@ -1720,8 +1550,8 @@
                 fijarComprobante() {
                     this.aceptar.comprobante = this.$refs['comprobante'].files[0];
                 },
-                isfleteMenor(){
-                    this.cotizacion.isfleteMenor = this.cotizacion.isfleteMenor ? false: true;
+                isfleteMenor() {
+                    this.cotizacion.isfleteMenor = this.cotizacion.isfleteMenor ? false : true;
                 },
                 agregarObservacion(observacion) {
                     this.cotizacion.observaciones.push(observacion.texto);
@@ -1830,8 +1660,29 @@
 
                     this.openCatalogo = false;
                 },
-                agregarEntrada() {
+                sumaSubTotal() {
+                    this.cotizacion.subtotal = Number(this.cotizacion.subtotal) +
+                        Number(this.cotizacion.flete) +
+                        Number(this.cotizacion.flete_menor) +
+                        Number(this.cotizacion.costo_corte) +
+                        Number(this.cotizacion.costo_sobreproduccion);
+                    console.log(this.cotizacion.subtotal)
+                },
+                sumaTotal() {
+                    this.cotizacion.iva = this.cotizacion.descuentos != '0' ?
+                        (Number(this.cotizacion.subtotal) - Number(this.cotizacion.descuentos)) * 0.16 :
+                        Number(this.cotizacion.subtotal) * 0.16;
+                    this.cotizacion.total = Number(this.cotizacion.subtotal) + Number(this.cotizacion.iva);
+                    console.log(this.cotizacion.total)
+                },
+                setDescuentosFinal() {
 
+                    this.cotizacion.descuentos = this.cotizacion.tipo_descuento != '0' ?
+                        (Number(this.cotizacion.descuentos) * Number(this.cotizacion.descuentos)) / 100 :
+                        this.cotizacion.descuentos;
+                },
+                agregarEntrada() {
+                    this.sumaSubTotal();
                     var area = '';
                     this.entrada.descripciones.forEach(function(descripcion) {
                         if (descripcion.name == 'Area') {
@@ -1857,8 +1708,9 @@
 
 
                     this.entrada.importe = this.entrada.cantidad * this.entrada.precio;
-                    this.cotizacion.subtotal += this.entrada.importe;
 
+                    this.cotizacion.subtotal += this.entrada.importe;
+                    this.sumaTotal()
                     if (this.entrada.orden == 0)
                         this.entrada.orden = this.cuentaEntradasNoBorradas() + 1;
 
@@ -1899,8 +1751,9 @@
                     this.cotizacion.subtotal = this.cotizacion.subtotal - entradaEdit.importe;
                     console.log(entradaEdit);
                     console.log(this.entrada);
-                    this.cotizacion.entradas.splice(index, 1);
 
+                    this.cotizacion.entradas.splice(index, 1);
+                    this.sumaTotal()
                     this.edicionEntradaActiva = true;
                     this.resetDataTables();
 
@@ -1934,6 +1787,7 @@
                     return true;
                 },
                 removerEntrada(entrada, index, undefined) {
+                    this.cotizacion.total = 0;
                     this.cotizacion.subtotal -= entrada.importe;
                     if (entrada.id == undefined) this.cotizacion.entradas.splice(index, 1);
                     else entrada.borrar = true;
@@ -2151,20 +2005,22 @@
                     this.resetDataTables();
                 },
                 guardar() {
-
+                    this.setDescuentosFinal()
                     if (this.entrada.producto.id == undefined) {
-
+                        console.log("no se encontro entrada de producto")
                     } else {
                         this.agregarEntrada();
                     }
-
-
                     var cotizacion = $.extend(true, {}, this.cotizacion);
                     //console.log(cotizacion.subtotal);
                     var totalf = 0;
                     cotizacion.entradas.forEach(function(entrada) {
                         totalf += entrada.importe;
                     });
+                    totalf += Number(this.cotizacion.flete) +
+                        Number(this.cotizacion.flete_menor) +
+                        Number(this.cotizacion.costo_corte) +
+                        Number(this.cotizacion.costo_sobreproduccion); 
 
                     totalcotizacion = cotizacion.subtotal.toFixed(2);
 
@@ -2173,12 +2029,12 @@
                     console.log(totalcotizacion - totalf);
 
                     var dif = totalcotizacion - totalf;
-                    
+
 
                     if (dif > 0.05) {
                         alert('OCURRIO UN ERROR INESPERADO EL SUBTOTAL NO COINCIDE FAVOR DE RECARGAR LA PAGINA');
                     } else {
-                        
+
                         cotizacion.entradas.forEach(function(entrada) {
                             entrada.producto_id = entrada.producto.id;
                             delete entrada.producto;
