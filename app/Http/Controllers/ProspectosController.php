@@ -1732,6 +1732,7 @@ class ProspectosController extends Controller
             'cliente',
             'cliente.tipo'
         );
+
         $productos = Producto::with('categoria', 'proveedor', 'descripciones.descripcionNombre', 'proveedor.contactos')
             ->has('categoria')->get();
         foreach ($productos as $producto) {
@@ -1795,9 +1796,6 @@ class ProspectosController extends Controller
             $direcciones = array_merge($direcciones, $direccion);
         }
 
-
-
-
         foreach ($prospecto->cotizaciones as $cotizacion) {
             if ($cotizacion->archivo) {
                 $cotizacion->archivo = asset('storage/' . $cotizacion->archivo);
@@ -1817,6 +1815,7 @@ class ProspectosController extends Controller
                 return $entrada->sum('importe');
             });
         }
+        
         foreach ($productos as $producto) {
             if ($producto->foto) {
                 $producto->foto = asset('storage/' . $producto->foto);
@@ -2411,8 +2410,7 @@ class ProspectosController extends Controller
         if ($cotizacion->idioma == 'español') {
             $nombre = "nombre";
             $view = 'prospectos.cotizacionPDF';
-        }
-        else {
+        } else {
             $nombre = "name";
             $view = 'prospectos.cotizacionPDFIngles';
         }
