@@ -602,6 +602,8 @@
                                                     <td colspan="3"></td>
                                                     <td class="text-right"><strong>IVA</strong></td>
                                                     <td v-if="cotizacion.iva=='0'">$0.00</td>
+                                                    <td v-elseif="cotizacion.descuentos =='0' && cotizacion.tipo_descuento =='0'">>@{{ (cotizacion.subtotal - cotizacion.descuentos) * 0.16 | formatoMoneda }}</td>
+                                                    <td v-elseif="cotizacion.descuentos =='0' && cotizacion.tipo_descuento =='1'">>@{{ ((cotizacion.subtotal * cotizacion.descuentos) / 100) * 0.16 | formatoMoneda }}</td>
                                                     <td v-else>@{{ cotizacion.subtotal * 0.16 | formatoMoneda }}</td>
                                                     <td></td>
                                                 </tr>
