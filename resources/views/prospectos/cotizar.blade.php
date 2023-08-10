@@ -605,6 +605,20 @@
                                             <tbody>
                                             </tbody>
                                             <tfoot>
+                                                <tr v-if="cotizacion.flete !='0'">
+                                                    <td colspan="3"></td>
+                                                    <td class="text-right"><strong>Costó de Flete</strong></td>
+                                                    <td v-if="cotizacion.flete =='0'">$0.00</td>
+                                                    <td v-if="cotizacion.flete !='0'">@{{ (cotizacion.subtotal - cotizacion.flete) | formatoMoneda }}</td>
+                                                    <td></td>
+                                                </tr>
+                                                <tr v-if="cotizacion.flete_menor !='0'">
+                                                    <td colspan="3"></td>
+                                                    <td class="text-right"><strong>Costó de Flete menor</strong></td>
+                                                    <td v-if="cotizacion.flete_menor =='0'">$0.00</td>
+                                                    <td v-if="cotizacion.flete_menor !='0'">@{{ (cotizacion.subtotal - cotizacion.flete_menor) | formatoMoneda }}</td>
+                                                    <td></td>
+                                                </tr>
                                                  <tr v-if="cotizacion.costo_sobreproduccion !='0'">
                                                     <td colspan="3"></td>
                                                     <td class="text-right"><strong>Costó Sobreproducción</strong></td>
@@ -2228,11 +2242,11 @@
                                     direstado: '',
                                     entrega: '',
                                     lugar: '',
-                                    flete: '',
+                                    flete: 0,
                                     isfleteMenor: false,
-                                    flete_menor: '',
-                                    costo_corte: '',
-                                    costo_sobreproduccion: '',
+                                    flete_menor: 0,
+                                    costo_corte: 0,
+                                    costo_sobreproduccion: 0,
                                     descuentos: 0,
                                     tipo_descuento: 0,
                                     planos: '',
