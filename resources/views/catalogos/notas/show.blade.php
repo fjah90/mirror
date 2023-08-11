@@ -39,7 +39,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="contenido">Contenido:</label>
-                                <span class="form-control h-auto">{{ $nota->contenido }}</span>
+                                <span class="form-control h-auto">{!! nl2br(e($nota->contenido)) !!}</span>
                             </div>
 
                             <div class="row">

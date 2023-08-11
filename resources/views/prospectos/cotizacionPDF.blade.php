@@ -771,7 +771,7 @@
                         <tr>
                             <td colspan="2" class="bordered">
                                 <p class="text-danger"><strong>Notas</strong></p>
-                                <p class="text-left">{{ $cotizacion->notas }}</p>
+                                <p class="text-left">{!! nl2br(e($cotizacion->notas)) !!}</p>
                             </td>
                         </tr>
                     @endif
