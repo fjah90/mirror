@@ -1210,7 +1210,7 @@
                     showRemove: false,
                     showUpload: false,
                     browseOnZoneClick: true,
-                    defaultPreviewContent: '<img src="{{ asset('images/camara.png') }}" style="width:200px; height:auto;" alt="foto"><h6>Click para seleccionar</h6>',
+                    defaultPreviewContent: '<img id="foto-producto" src="{{ asset('images/camara.png') }}" style="width:200px; height:auto;" alt="foto"><h6>Click para seleccionar</h6>',
                     allowedFileExtensions: ["jpg", "jpeg", "png"],
                     elErrorContainer: '#fotos-file-errors'
                 });
@@ -1651,7 +1651,7 @@
                     ///
                     if (prod.foto) {
                         $("button.fileinput-remove").click();
-                        $("div.file-default-preview img")[0].src = prod.foto;
+                        $("#foto-producto")[0].src = prod.foto;
                     }
                     /////////////////////////////////
                     // if (prod.planos) {
