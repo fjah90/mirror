@@ -104,8 +104,7 @@
                                         </td>
                                         <td class="text-right">
                                             <a class="btn btn-xs btn-success" title="PDF" :href="cotizacion.archivo"
-                                                :download="'C ' + cotizacion.numero + ' Robinson' + prospecto.cliente
-                                                    .nombre + ' ' + prospecto.nombre + '.pdf'">
+                                                :download="'C ' + cotizacion.numero + ' Robinson'+'.pdf'">
                                                 <i class="far fa-file-pdf"></i>
                                             </a>
 
