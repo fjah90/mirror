@@ -1043,7 +1043,7 @@
             mounted() {
                 console.log(this.notasPreCargadas);
                 this.$refs.fechaActual = document.querySelector('#fechaActual');
-                // this.actualizarFechaActual();
+                this.actualizarFechaActual();
                 let self = this; // ámbito de vue
 
                 // inicializas select2
@@ -2096,11 +2096,11 @@
                         } //if confirmacion
                     });
                 },
-                // actualizarFechaActual() {
-                //     const fecha = new Date().toLocaleDateString();
-                //     this.$refs.fechaActual.innerHTML = fecha;
-                //     console.log(fecha)
-                // },
+                actualizarFechaActual() {
+                    const fecha = new Date().toLocaleDateString();
+                    this.$refs.fechaActual.innerHTML = fecha;
+                    console.log(fecha)
+                },
                 cargarNota() {
                     const notaId = this.notasPreCargadas.cId;
 
