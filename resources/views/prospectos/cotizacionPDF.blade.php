@@ -700,58 +700,59 @@
                         </tr> --}}
                     </tbody>
                 </table>
-                <div class="bordered col-lg-12 p-0" style="margin:5px 15px; 0">
-                    <table class="" style="margin-bottom:0; width:100%;">
-                        @if (!empty($cotizacion->fletes))
-                            <tr>
-                                <td class="text-right" style="width:90%;"><strong>Cargo por Flete:</strong></td>
-                                <td class="text-right" style="width:10%;">@format_money($cotizacion->fletes)</td>
-                            </tr>
-                        @endif
-                        @if (!empty($cotizacion->flete_menor))
-                            <tr>
-                                <td class="text-right" style="width:90%;"><strong>Cargo por Flete Menor:</strong></td>
-                                <td class="text-right" style="width:10%;">@format_money($cotizacion->flete_menor)</td>
-                            </tr>
-                        @endif
-                        @if (!empty($cotizacion->costo_corte))
-                            <tr>
-                                <td class="text-right" style="width:90%;"><strong>Cargo por Corte:</strong></td>
-                                <td class="text-right" style="width:10%;">@format_money($cotizacion->costo_corte)</td>
-                            </tr>
-                        @endif
-                        @if (!empty($cotizacion->costo_sobreproduccion))
-                            <tr>
-                                <td class="text-right" style="width:90%;"><strong>Cargo por sobreproducción:</strong>
-                                </td>
-                                <td class="text-right" style="width:10%;">@format_money($cotizacion->costo_sobreproduccion)</td>
-                            </tr>
-                        @endif
-                        <tr>
-                            <td class="text-right" style="width:90%;"><strong>Subtotal:</strong></td>
-                            <td class="text-right" style="width:10%;">@format_money($cotizacion->subtotal)</td>
-                        </tr>
-                        @if ($cotizacion->descuentos != '0')
-                            <tr>
-                                <td class="text-right" style="width:90%;"><strong>Descuentos:</strong></td>
-                                <td class="text-right" style="width:10%;">@format_money($cotizacion->descuentos)</td>
-                            </tr>
-                        @endif
-                        <tr>
-                            <td class="text-right" style="width:90%;"><strong>IVA 16%:</strong></td>
-                            <td class="text-right" style="width:10%;">@format_money($cotizacion->iva)</td>
-                        </tr>
-                        <tr>
-                            <td class="text-right" style="width:90%;"><strong>Total
-                                    {{ $cotizacion->moneda }}:</strong>
-                            </td>
-                            <td class="text-right" style="width:10%;">@format_money($cotizacion->total)</td>
-                        </tr>
-                    </table>
-                </div>
             </div>
         </div>
-
+        <div class="row" style="page-break-inside: avoid;">
+            <div class="bordered" style="margin:5px 15px; 0">
+                <table class="" style="margin-bottom:0; width:100%;">
+                    @if (!empty($cotizacion->fletes))
+                        <tr>
+                            <td class="text-right" style="width:90%;"><strong>Cargo por Flete:</strong></td>
+                            <td class="text-right" style="width:10%;">@format_money($cotizacion->fletes)</td>
+                        </tr>
+                    @endif
+                    @if (!empty($cotizacion->flete_menor))
+                        <tr>
+                            <td class="text-right" style="width:90%;"><strong>Cargo por Flete Menor:</strong></td>
+                            <td class="text-right" style="width:10%;">@format_money($cotizacion->flete_menor)</td>
+                        </tr>
+                    @endif
+                    @if (!empty($cotizacion->costo_corte))
+                        <tr>
+                            <td class="text-right" style="width:90%;"><strong>Cargo por Corte:</strong></td>
+                            <td class="text-right" style="width:10%;">@format_money($cotizacion->costo_corte)</td>
+                        </tr>
+                    @endif
+                    @if (!empty($cotizacion->costo_sobreproduccion))
+                        <tr>
+                            <td class="text-right" style="width:90%;"><strong>Cargo por sobreproducción:</strong>
+                            </td>
+                            <td class="text-right" style="width:10%;">@format_money($cotizacion->costo_sobreproduccion)</td>
+                        </tr>
+                    @endif
+                    <tr>
+                        <td class="text-right" style="width:90%;"><strong>Subtotal:</strong></td>
+                        <td class="text-right" style="width:10%;">@format_money($cotizacion->subtotal)</td>
+                    </tr>
+                    @if ($cotizacion->descuentos != '0')
+                        <tr>
+                            <td class="text-right" style="width:90%;"><strong>Descuentos:</strong></td>
+                            <td class="text-right" style="width:10%;">@format_money($cotizacion->descuentos)</td>
+                        </tr>
+                    @endif
+                    <tr>
+                        <td class="text-right" style="width:90%;"><strong>IVA 16%:</strong></td>
+                        <td class="text-right" style="width:10%;">@format_money($cotizacion->iva)</td>
+                    </tr>
+                    <tr>
+                        <td class="text-right" style="width:90%;"><strong>Total
+                                {{ $cotizacion->moneda }}:</strong>
+                        </td>
+                        <td class="text-right" style="width:10%;">@format_money($cotizacion->total)</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
         <!-- Espacio para que el footer no se sobreponga a la tabla -->
         {{-- <div class="row">
       <div class="col-lg-12" style="height:180px;">
