@@ -105,7 +105,7 @@
                                                             v-for="(total, proveedor) in cotizacion.entradas_proveedor_totales">
                                                             <tr>
                                                                 <td class="text-right">@{{ proveedor }} |</td>
-                                                                <td class="text-right">@{{ total * (cotizacion.iva == 0 ? 1 : 1.16) | formatoMoneda }}</td>
+                                                                <td class="text-right">@{{ cotizacion.total | formatoMoneda }}</td>
                                                             </tr>
                                                         </template>
                                                         <tr>
@@ -1654,10 +1654,10 @@
                         $("div.file-default-preview img")[0].src = prod.foto;
                     }
                     /////////////////////////////////
-                    if (prod.planos) {
-                        $("button.fileinput-remove").click();
-                        $("div.file-default-preview img")[0].src = prod.planos;
-                    }
+                    // if (prod.planos) {
+                    //     $("button.fileinput-remove").click();
+                    //     $("div.file-default-preview img")[0].src = prod.planos;
+                    // }
 
                     this.openCatalogo = false;
                 },

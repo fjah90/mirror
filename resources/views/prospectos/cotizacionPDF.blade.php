@@ -649,12 +649,14 @@
                             </td>
                             <td class="text-center border" style="width:13%; border-bottom: none; border-top: none;">
                                 <span>@text_capitalize($entrada->producto->nombre) </span>
-                                <br/>
+                                <br />
                                 <span>@text_capitalize($entrada->producto->nombre_material) </span>
                             </td>
                             <td class="text-center border" style="width:13%; border-bottom: none; border-top: none;">
-                                <img src="{{ public_path() . 'storage/' . $entrada->producto->foto }}" alt="foto" style="width:100px; height:100px;" />
-                                <br />
+                                @foreach ($entrada->fotos as $foto)
+                                    <img src="{{ $foto }}" alt="foto" style="width:100px; height:100px;" />
+                                    <br />
+                                @endforeach
                             </td>
                             <td class="text-center border" style="width:16%; border-bottom: none; border-top: none;">
                                 @foreach ($entrada->descripciones as $descripcion)
