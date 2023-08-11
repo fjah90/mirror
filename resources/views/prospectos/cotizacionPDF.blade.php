@@ -700,18 +700,7 @@
                         </tr> --}}
                     </tbody>
                 </table>
-            </div>
-        </div>
-
-        <!-- Espacio para que el footer no se sobreponga a la tabla -->
-        {{-- <div class="row">
-      <div class="col-lg-12" style="height:180px;">
-      </div>
-    </div> --}}
-
-        {{-- <div class="row footer" style="page-break-inside: avoid;"> --}}
-        <div class="row" style="page-break-inside: avoid;">
-            <div class="bordered" style="margin:5px 15px; 0">
+                <div class="bordered" style="margin:5px 15px; 0">
                 <table class="" style="margin-bottom:0; width:100%;">
                     @if (!empty($cotizacion->fletes))
                         <tr>
@@ -758,8 +747,18 @@
                     </tr>
                 </table>
             </div>
+            </div>
+        </div>
 
-            <div class="bordered" style="margin:5px 15px 0;">
+        <!-- Espacio para que el footer no se sobreponga a la tabla -->
+        {{-- <div class="row">
+      <div class="col-lg-12" style="height:180px;">
+      </div>
+    </div> --}}
+
+        {{-- <div class="row footer" style="page-break-inside: avoid;"> --}}
+        <div class="row" style="page-break-inside: avoid;">
+            <div class="bordered" style="margin:5px 15px 0; page-break-inside: avoid;">
                 <table style="margin: 0px; width:100%;">
                     @if ($cotizacion->notas)
                         <tr>
