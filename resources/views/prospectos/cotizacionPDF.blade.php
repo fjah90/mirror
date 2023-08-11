@@ -689,21 +689,15 @@
                             </td>
                             </tr>
                         @endforeach
-                        <tr>
-                            <td style="border-top :0px !important"></td>
-                            <td style="border-top :0px !important">
-                                {{-- @if ($cotizacion->entradas->count() == 1)
-                                    <div style="height: 200px; background-color:white;"></div>
-                                @elseif($cotizacion->entradas->count() == 2)
-                                    <div style="height: 0px; background-color:white;"></div>
-                                @endif --}}
-                            </td>
+                        {{-- <tr>
                             <td style="border-top :0px !important"></td>
                             <td style="border-top :0px !important"></td>
                             <td style="border-top :0px !important"></td>
                             <td style="border-top :0px !important"></td>
                             <td style="border-top :0px !important"></td>
-                        </tr>
+                            <td style="border-top :0px !important"></td>
+                            <td style="border-top :0px !important"></td>
+                        </tr> --}}
                     </tbody>
                 </table>
             </div>
