@@ -690,9 +690,9 @@ class ProspectosController extends Controller
         $vendedores = Vendedor::where('email', auth()->user()->email)->first(); //filtro por email
 
         if (auth()->user()->tipo == 'Administrador' || auth()->user()->tipo == 'Dirección') {
-            $cotizaciones = ProspectoCotizacion::with('entradas', 'entradas.producto', 'entradas.producto.proveedor')->where('prospecto_id', null)->get();
+            $cotizaciones = ProspectoCotizacion::with('entradas', 'entradas.producto', 'entradas.producto.proveedor', 'cliente')->where('prospecto_id', null)->get();
         } else {
-            $cotizaciones = ProspectoCotizacion::with('entradas', 'entradas.producto', 'entradas.producto.proveedor')->where('user_id', $user->id)->where('prospecto_id', null)->get();
+            $cotizaciones = ProspectoCotizacion::with('entradas', 'entradas.producto', 'entradas.producto.proveedor', 'cliente')->where('user_id', $user->id)->where('prospecto_id', null)->get();
         }
 
         return view('cotizacionesdirectas.index', compact('cotizaciones'));
@@ -1959,7 +1959,7 @@ class ProspectosController extends Controller
             $create['total'] = bcadd($create['subtotal'], $create['iva'], 2);
         }
 
-        echo($create);
+        // echo($create);
 
         $observaciones = "<ul>";
         foreach ($request->observaciones as $obs) {
@@ -2733,7 +2733,7 @@ class ProspectosController extends Controller
 
         $cliente = $cotizacion->prospecto->cliente;
 
-        $cotizacionPDF = PDF::loadView($view, compact('cotizacion', 'nombre'));
+        $cotizacionPDF = PDF::loadView($view, compact('cotizacion', 'cliente', 'nombre'));
         Storage::disk('public')->put($url, $cotizacionPDF->output());
 
         $fichas = [];

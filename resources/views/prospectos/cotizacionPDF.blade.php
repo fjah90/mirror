@@ -682,7 +682,7 @@
                             <td class="text-right border" style="width:16%; border-bottom: none; border-top: none;">
                                 @format_money($entrada->precio)</td>
                             <td class="text-right border" style="width:16%; border-bottom: none; border-top: none;">
-                                @format_money($cotizacion->prospecto->cliente->tipo->factor_porcentual > 0 ? $entrada->precio - ($entrada->precio * $cotizacion->prospecto->cliente->tipo->factor_porcentual) / 100 : $entrada->precio)
+                                @format_money($cliente->tipo->factor_porcentual > 0 ? $entrada->precio - ($entrada->precio * $cliente->tipo->factor_porcentual) / 100 : $entrada->precio)
                             </td>
                             <td class="text-right border" style="width:13%; border-bottom: none; border-top: none;">
                                 @format_money($entrada->importe)
