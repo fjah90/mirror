@@ -903,14 +903,16 @@
         const app = new Vue({
             el: '#content',
             data: {
+                descuento_anterior : 0,
+                clientes : {!! json_encode($clientes) !!},
+                contactos:[],
                 'notasPreCargadas': {!! json_encode($notasPreCargadas) !!},
                 fechaActual: new Date().toLocaleDateString(),
                 colonias: [],
                 colonias2: [],
                 edicionEntradaActiva: false,
                 locale: localeES,
-                factor_porcentual: {!! json_encode($prospecto->cliente->tipo->factor_porcentual) !!},
-                prospecto: {!! json_encode($prospecto) !!},
+                factor_porcentual: 0,
                 productos: {!! json_encode($productos) !!},
                 condiciones: {!! json_encode($condiciones) !!},
                 rfcs: {!! json_encode($rfcs) !!},
@@ -927,7 +929,10 @@
                     cotizacion_id: '',
                 },
                 cotizacion: {
-                    prospecto_id: {{ $prospecto->id }},
+                    prospecto_id: '',
+                    prospecto_id: 0,
+                    proyecto_nombre:'',
+                    cliente_id:'',
                     cliente_contacto_id: '',
                     vendedor_id: '',
                     numero: {{ $numero_siguiente }},
@@ -974,9 +979,9 @@
                     entradas: [],
                     subtotal: 0,
                     calIva: 0,
-                    iva: '{{ $prospecto->cliente->nacional ? '1' : '0' }}',
+                    iva: 1,
                     total: 0,
-                    idioma: '{{ $prospecto->cliente->nacional ? 'español' : 'ingles' }}',
+                    idioma: 'español',
                     notas: "",
                     observaciones: []
                 },
@@ -1006,16 +1011,9 @@
                     numero: 0,
                     email: [],
                     emailOpciones: [
-                        @foreach ($prospecto->cliente->contactos as $contacto)
-                            @foreach ($contacto->emails as $email)
-                                {
-                                    id: "{{ $email->email }}",
-                                    text: "{{ $email->email }}"
-                                },
-                            @endforeach
-                        @endforeach
+
                     ],
-                    mensaje: "Buenas tardes  .\n\nAnexo a la presente encontrarán la cotización solicitada de {{ $prospecto->descripcion }}  para {{ $prospecto->nombre }} .\n\nEsperamos esta información les sea de utilidad y quedamos a sus órdenes para cualquier duda o comentario.\n\nSaludos,\n\n{{ auth()->user()->name }}.\n{{ auth()->user()->email }}\nRobinson Contract Resources"
+                    mensaje: "Buenas tardes  .\n\nAnexo a la presente encontrarán la cotización solicitada de  para  .\n\nEsperamos esta información les sea de utilidad y quedamos a sus órdenes para cualquier duda o comentario.\n\nSaludos,\n\n{{ auth()->user()->name }}.\n{{ auth()->user()->email }}\nRobinson Contract Resources"
                 },
                 aceptar: {
                     cotizacion_id: 0,
@@ -1045,7 +1043,7 @@
             mounted() {
                 console.log(this.notasPreCargadas);
                 this.$refs.fechaActual = document.querySelector('#fechaActual');
-                this.actualizarFechaActual();
+                // this.actualizarFechaActual();
                 let self = this; // ámbito de vue
 
                 // inicializas select2
@@ -2098,11 +2096,11 @@
                         } //if confirmacion
                     });
                 },
-                actualizarFechaActual() {
-                    const fecha = new Date().toLocaleDateString();
-                    this.$refs.fechaActual.innerHTML = fecha;
-                    console.log(fecha)
-                },
+                // actualizarFechaActual() {
+                //     const fecha = new Date().toLocaleDateString();
+                //     this.$refs.fechaActual.innerHTML = fecha;
+                //     console.log(fecha)
+                // },
                 cargarNota() {
                     const notaId = this.notasPreCargadas.cId;
 
