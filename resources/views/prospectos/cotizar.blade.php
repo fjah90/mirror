@@ -131,19 +131,17 @@
                                                             .nombre + ' ' + prospecto.nombre + '.pdf'">
                                                         <i class="far fa-file-pdf"></i>
                                                     </a>
-                                                    <template v-else>
-                                                        <button class="btn btn-xs btn-warning" title="Editar"
-                                                            @click="editar(index, cotizacion)">
-                                                            <i class="fas fa-pencil-alt"></i>
-                                                        </button>
 
-                                                        @role('Administrador')
-                                                            <button class="btn btn-xs btn-danger" title="Eliminar"
-                                                                @click="borrar(index, cotizacion)">
-                                                                <i class="fas fa-times"></i>
-                                                            </button>
-                                                        @endrole
-                                                    </template>
+                                                    <button class="btn btn-xs btn-warning" title="Editar"
+                                                        @click="editar(index, cotizacion)">
+                                                        <i class="fas fa-pencil-alt"></i>
+                                                    </button>
+                                                    @role('Administrador')
+                                                        <button class="btn btn-xs btn-danger" title="Eliminar"
+                                                            @click="borrar(index, cotizacion)">
+                                                            <i class="fas fa-times"></i>
+                                                        </button>
+                                                    @endrole
                                                 </td>
                                             </tr>
                                         <tfoot>
