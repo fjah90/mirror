@@ -473,10 +473,8 @@ class ProspectosController extends Controller
             }
 
             $vendedores = Vendedor::all();
-        }
-        else {
-
-
+        } else {
+            
             if (Auth::user()->roles[0]->name == 'Administrador' || Auth::user()->roles[0]->name == 'Dirección') {
 
                 $proyectos = Prospecto::leftjoin('prospectos_actividades', 'prospectos.id', '=', 'prospectos_actividades.prospecto_id')
@@ -628,7 +626,6 @@ class ProspectosController extends Controller
                 ->get()->toArray();
         }
 
-
         //Sacamos la notificaciones del usuario logueado
         $notificaciones = Notificacion::with('usercreo', 'userdirigido')->where('user_dirigido', auth()->user()->id)->where('status', 'sin leer')->get();
 
@@ -646,8 +643,6 @@ class ProspectosController extends Controller
         $user = auth()->user();
         $inicio = Carbon::parse('2023-01-01'); //se ajusto por el año en curso
         $anio = Carbon::parse('2023-12-31'); // se ajusto por el año
-
-
 
         $vendedores = Vendedor::where('email', auth()->user()->email)->first(); //filtro por email
 
@@ -692,17 +687,13 @@ class ProspectosController extends Controller
         $inicio = Carbon::parse('2023-01-01'); //se ajusto por el año en curso
         $anio = Carbon::parse('2023-12-31'); // se ajusto por el año
 
-
-
         $vendedores = Vendedor::where('email', auth()->user()->email)->first(); //filtro por email
 
         if (auth()->user()->tipo == 'Administrador' || auth()->user()->tipo == 'Dirección') {
             $cotizaciones = ProspectoCotizacion::with('entradas', 'entradas.producto', 'entradas.producto.proveedor')->where('prospecto_id', null)->get();
-        }
-        else {
+        } else {
             $cotizaciones = ProspectoCotizacion::with('entradas', 'entradas.producto', 'entradas.producto.proveedor')->where('user_id', $user->id)->where('prospecto_id', null)->get();
         }
-
 
         return view('cotizacionesdirectas.index', compact('cotizaciones'));
     }

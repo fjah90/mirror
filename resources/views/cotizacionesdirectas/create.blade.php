@@ -25,7 +25,7 @@
     </section>
     <!-- Main content -->
     <section class="content" id="content">
-        
+
         <div class="row">
             <div class="col-lg-12">
                 <div class="panel">
@@ -47,17 +47,17 @@
                                 <div class="col-md-4">
                                     <label class="control-label">Proyecto Nombre *</label>
                                     <input class="form-control" type="text" name="prospecto_nombre"
-                                       v-model="cotizacion.nombre_proyecto" required />
+                                        v-model="cotizacion.nombre_proyecto" required />
                                 </div>
                                 <div class="col-md-4">
                                     <label class="control-label">Cliente</label>
-                                    <select name="cliente_id" v-model="cotizacion.cliente_id"
-                                        class="form-control" required @change="contactosCliente()">
+                                    <select name="cliente_id" v-model="cotizacion.cliente_id" class="form-control" required
+                                        @change="contactosCliente()">
                                         @foreach ($clientes as $cliente)
-                                          <option value="{{ $cliente->id }}" >
-                                            {{ $cliente->nombre }}</option>
-                                       @endforeach
-                                        
+                                            <option value="{{ $cliente->id }}">
+                                                {{ $cliente->nombre }}</option>
+                                        @endforeach
+
                                     </select>
                                 </div>
                                 <div class="col-md-4">
@@ -65,8 +65,8 @@
                                     <select name="cliente_contacto_id" v-model="cotizacion.cliente_contacto_id"
                                         class="form-control" required>
                                         <option v-for="(contacto, index) in contactos" :value="contacto.id">
-                                                @{{ contacto.nombre }}</option>
-                                        
+                                            @{{ contacto.nombre }}</option>
+
                                     </select>
                                 </div>
                                 <div class="col-md-4">
@@ -129,7 +129,7 @@
                                 <div class="col-sm-4">
 
                                     <label class="control-label">Colonia</label>
-                                  
+
                                     <input type="text" name="colonia" class="form-control text-uppercase"
                                         v-model="cotizacion.colonia" />
 
@@ -193,7 +193,6 @@
                                 <div class="col-sm-4">
 
                                     <label class="control-label">Colonia</label>
-                                    
                                     <input type="text" name="colonia" class="form-control text-uppercase"
                                         v-model="cotizacion.dircolonia" />
 
@@ -294,10 +293,9 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-
                                         <label class="control-label">Flete</label>
-                                        <input class="form-control" type="text" name="flete"
-                                            v-model="cotizacion.flete" />
+                                        <input class="form-control" type="text" name="fletes"
+                                            v-model="cotizacion.fletes" />
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -310,12 +308,16 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <div class="form-check form-switch">
-                                             <i :class="{'glyphicon glyphicon-unchecked': !cotizacion.isfleteMenor, 'glyphicon glyphicon-check': cotizacion.isfleteMenor}"
-                                            @click="isfleteMenor()"></i>
+                                            <i :class="{
+                                                'glyphicon glyphicon-unchecked': !cotizacion
+                                                    .isfleteMenor,
+                                                'glyphicon glyphicon-check': cotizacion.isfleteMenor
+                                            }"
+                                                @click="isfleteMenor()"></i>
                                             <label class="control-label" for="cotizacion.flete_menor">Flete menor</label>
                                         </div>
-                                        <input class="form-control" type="text" name="flete"
-                                            v-model="cotizacion.flete_menor" :disabled="!cotizacion.isfleteMenor"/>
+                                        <input class="form-control" type="text" name="flete_menor"
+                                            v-model="cotizacion.flete_menor" :disabled="!cotizacion.isfleteMenor" />
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -393,12 +395,12 @@
                                     <div class="col-md-4" style="">
                                         <label class="control-label">Descuentos</label>
                                         <input class="form-control" type="text" name="Descuentos"
-                                            v-model="cotizacion.descuentos"  @change="aplicarDescuento()"/>
+                                            v-model="cotizacion.descuentos" />
                                     </div>
                                     <div class="col-md-2">
                                         <label class="control-label">Tipo de descuento</label>
                                         <select class="form-control" name="tipo_descuento"
-                                            v-model="cotizacion.tipo_descuento" @change="seleccionarTipoDescuento();aplicarDescuento()">
+                                            v-model="cotizacion.tipo_descuento" @change="seleccionarTipoDescuento()">
                                             <option value="0">Monto</option>
                                             <option value="1">%</option>
                                         </select>
@@ -425,38 +427,66 @@
                                             <tbody>
                                             </tbody>
                                             <tfoot>
+                                                <tr v-if="cotizacion.fletes !='0' || cotizacion.fletes !=''">
+                                                    <td colspan="3"></td>
+                                                    <td class="text-right"><strong>Costó de Flete</strong></td>
+                                                    <td v-if="cotizacion.fletes =='0'">$0.00</td>
+                                                    <td v-if="cotizacion.fletes !='0'">@{{ (cotizacion.fletes) | formatoMoneda }}</td>
+                                                    <td></td>
+                                                </tr>
+                                                <tr v-if="cotizacion.flete_menor !='0' || cotizacion.flete_menor !=''">
+                                                    <td colspan="3"></td>
+                                                    <td class="text-right"><strong>Costó de Flete menor</strong></td>
+                                                    <td v-if="cotizacion.flete_menor =='0'">$0.00</td>
+                                                    <td v-if="cotizacion.flete_menor !='0'">@{{ (cotizacion.flete_menor) | formatoMoneda }}</td>
+                                                    <td></td>
+                                                </tr>
+                                                <tr
+                                                    v-if="cotizacion.costo_sobreproduccion !='0' || cotizacion.costo_sobreproduccion !=''">
+                                                    <td colspan="3"></td>
+                                                    <td class="text-right"><strong>Costó Sobreproducción</strong></td>
+                                                    <td v-if="cotizacion.costo_sobreproduccion =='0'">$0.00</td>
+                                                    <td v-if="cotizacion.costo_sobreproduccion !='0'">
+                                                        @{{ (cotizacion.costo_sobreproduccion) | formatoMoneda }}</td>
+                                                    <td></td>
+                                                </tr>
+                                                <tr v-if="cotizacion.costo_corte !='0'  || cotizacion.costo_corte !=''">
+                                                    <td colspan="3"></td>
+                                                    <td class="text-right"><strong>Costó de Corte</strong></td>
+                                                    <td v-if="cotizacion.costo_corte =='0'">$0.00</td>
+                                                    <td v-if="cotizacion.costo_corte !='0'">@{{ (cotizacion.costo_corte) | formatoMoneda }}</td>
+                                                    <td></td>
+                                                </tr>
                                                 <tr>
                                                     <td colspan="3"></td>
                                                     <td class="text-right"><strong>Subtotal</strong></td>
                                                     <td>@{{ cotizacion.subtotal | formatoMoneda }}</td>
                                                     <td></td>
                                                 </tr>
-                                                <tr v-if="cotizacion.descuentos !='0'">
+                                                <tr v-if="cotizacion.descuentos !='0' || cotizacion.descuentos !=''">
                                                     <td colspan="3"></td>
                                                     <td class="text-right"><strong>Descuentos</strong></td>
-                                                    <td v-if="cotizacion.descuentos =='0' && cotizacion.tipo_descuento =='0'">$0.00</td>
-                                                    <td v-if="cotizacion.descuentos !='0' && cotizacion.tipo_descuento =='1'">@{{ (cotizacion.subtotal * cotizacion.descuentos) / 100 | formatoMoneda }}</td>
-                                                    <td v-else>@{{ cotizacion.descuentos | formatoMoneda }}</td>
+                                                    <td v-if="cotizacion.montoDescuento =='0'">$0.00</td>
+                                                    <td v-else>- @{{ cotizacion.montoDescuento | formatoMoneda }}</td>
                                                     <td></td>
                                                 </tr>
                                                 <tr>
                                                     <td colspan="3"></td>
                                                     <td class="text-right"><strong>IVA</strong></td>
-                                                    <td v-if="cotizacion.iva=='0'">$0.00</td>
-                                                    <td v-else>@{{ cotizacion.subtotal * 0.16 | formatoMoneda }}</td>
+                                                    <td v-if="cotizacion.iva=='0' || cotizacion.calIva == '0'">$0.00</td>
+                                                    <td v-else>@{{ cotizacion.calIva | formatoMoneda }}</td>
                                                     <td></td>
                                                 </tr>
-                                                <tr >
+                                                <tr>
                                                     <td colspan="3"></td>
                                                     <td class="text-right">
-                                                        <strong>Totalaaaa
+                                                        <strong>Total
                                                             <span v-if="cotizacion.moneda=='Dolares'"> Dolares</span>
                                                             <span v-else> Pesos</span>
                                                         </strong>
                                                     </td>
-                                                    <td v-if="cotizacion.iva=='0'">@{{ cotizacion.subtotal | formatoMoneda }} </td>
-                                                    <td v-else-if="cotizacion.descuentos!='0' && cotizacion.subtotal!='0'">@{{ (cotizacion.subtotal ) * 1.16   | formatoMoneda }}</td>
-                                                    <td v-else>@{{ cotizacion.subtotal * 1.16 | formatoMoneda }}</td>
+                                                    <td v-if="cotizacion.total=='0'">$0.00</td>
+                                                    <td v-else>@{{ cotizacion.total | formatoMoneda }}</td>
                                                     <td></td>
                                                 </tr>
                                             </tfoot>
@@ -514,73 +544,6 @@
                                     </button>
                                 </div>
                             </div>
-                            {{-- <div class="row" style="padding-top: 10px;">
-                                <div class="col-md-2">
-                                    <div class="form-group">
-                                        <label class="control-label">Precio de Compra</label>
-                                        <input type="number" step="0.01" min="0.01" name="precio_compra"
-                                               class="form-control"
-                                               v-model="entrada.precio_compra"/>
-                                    </div>
-                                </div>
-                                <div class="col-md-2">
-                                    <div class="form-group">
-                                        <label class="control-label">Unidad Medida Compra</label>
-                                        <select class="form-control" name="medida" v-model="entrada.medida_compra">
-                                            @foreach ($unidades_medida as $unidad)
-                                                <option value="{{ $unidad->simbolo }}">{{ $unidad->simbolo }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-2">
-                                    <div class="form-group">
-                                        <label class="control-label">Fecha Precio</label>
-                                        <br/>
-                                        <dropdown>
-                                            <div class="input-group">
-                                                <div class="input-group-btn">
-                                                    <btn class="dropdown-toggle" style="background-color:#fff;">
-                                                        <i class="fas fa-calendar"></i>
-                                                    </btn>
-                                                </div>
-                                                <input class="form-control" type="text" name="fecha"
-                                                       v-model="entrada.fecha_precio_compra" placeholder="DD/MM/YYYY"
-                                                       readonly
-                                                />
-                                            </div>
-                                            <template slot="dropdown">
-                                                <li>
-                                                    <date-picker :locale="locale" :today-btn="false" :clear-btn="false"
-                                                                 format="dd/MM/yyyy" :date-parser="dateParser"
-                                                                 v-model="entrada.fecha_precio_compra"/>
-                                                </li>
-                                            </template>
-                                        </dropdown>
-                                    </div>
-                                </div>
-                                <div class="col-md-2">
-                                    <div class="form-group">
-                                        <label class="control-label">Moneda Referencia</label>
-                                        <select class="form-control" name="moneda" v-model="entrada.moneda_referencia">
-                                            <option value=""></option>
-                                            <option value="Dolares">Dolares USD</option>
-                                            <option value="Pesos">Pesos MXN</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label class="control-label">Contacto Proveedor</label>
-                                        <select class="form-control" name="medida"
-                                                v-model="entrada.proveedor_contacto_id">
-                                            <option v-for="contacto in entrada.producto.proveedor.contactos"
-                                                    :value="contacto.id">@{{ contacto.nombre }}
-                                            </option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div> --}}
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="table-responsive">
@@ -693,53 +656,6 @@
                                 </div>
                             </div>
                         </form>
-                        {{-- <div class="row">
-                          <div class="col-md-12">
-                            <div class="table-responsive">
-                              <table id="tablaEntradas" class="table table-bordred" style="width:100%;">
-                                <thead>
-                                  <tr>
-                                    <th>Orden</th>
-                                    <th>Producto</th>
-                                    <th>Cantidad</th>
-                                    <th>Precio</th>
-                                    <th>Importe</th>
-                                    <th></th>
-                                  </tr>
-                                </thead>
-                                <tbody>
-                                </tbody>
-                                <tfoot>
-                                  <tr>
-                                    <td colspan="3"></td>
-                                    <td class="text-right"><strong>Subtotal</strong></td>
-                                    <td>@{{ cotizacion.subtotal | formatoMoneda }}</td>
-                                    <td></td>
-                                  </tr>
-                                  <tr>
-                                    <td colspan="3"></td>
-                                    <td class="text-right"><strong>IVA</strong></td>
-                                    <td v-if="cotizacion.iva=='0'">$0.00</td>
-                                    <td v-else>@{{ cotizacion.subtotal * 0.16 | formatoMoneda }}</td>
-                                    <td></td>
-                                  </tr>
-                                  <tr>
-                                    <td colspan="3"></td>
-                                    <td class="text-right">
-                                      <strong>Total
-                                        <span v-if="cotizacion.moneda=='Dolares'"> Dolares</span>
-                                        <span v-else> Pesos</span>
-                                      </strong>
-                                    </td>
-                                    <td v-if="cotizacion.iva=='0'">@{{ cotizacion.subtotal | formatoMoneda }}</td>
-                                    <td v-else>@{{ cotizacion.subtotal * 1.16 | formatoMoneda }}</td>
-                                    <td></td>
-                                  </tr>
-                                </tfoot>
-                              </table>
-                            </div>
-                          </div>
-                        </div> --}}
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
@@ -990,12 +906,11 @@
                 'notasPreCargadas': {!! json_encode($notasPreCargadas) !!},
                 fechaActual: new Date().toLocaleDateString(),
                 colonias: [],
-                descuento_anterior : 0,
                 colonias2: [],
-                clientes : {!! json_encode($clientes) !!},
-                contactos:[],
                 edicionEntradaActiva: false,
                 locale: localeES,
+                factor_porcentual: {!! json_encode($prospecto->cliente->tipo->factor_porcentual) !!},
+                prospecto: {!! json_encode($prospecto) !!},
                 productos: {!! json_encode($productos) !!},
                 condiciones: {!! json_encode($condiciones) !!},
                 rfcs: {!! json_encode($rfcs) !!},
@@ -1012,9 +927,7 @@
                     cotizacion_id: '',
                 },
                 cotizacion: {
-                    prospecto_id: '',
-                    proyecto_nombre:'',
-                    cliente_id:'',
+                    prospecto_id: {{ $prospecto->id }},
                     cliente_contacto_id: '',
                     vendedor_id: '',
                     numero: {{ $numero_siguiente }},
@@ -1047,21 +960,23 @@
                     contacto_email: '',
                     entrega: '',
                     lugar: '',
-                    flete: '',
+                    fletes: 0,
                     isfleteMenor: false,
-                    flete_menor: '',
-                    costo_corte: '',
-                    costo_sobreproduccion: '',
+                    flete_menor: 0,
+                    costo_corte: 0,
+                    costo_sobreproduccion: 0,
                     descuentos: 0,
+                    montoDescuento: 0,
                     tipo_descuento: 0,
                     planos: '',
                     factibilidad: '',
                     moneda: 'Dolares',
                     entradas: [],
                     subtotal: 0,
-                    iva: '',
+                    calIva: 0,
+                    iva: '{{ $prospecto->cliente->nacional ? '1' : '0' }}',
                     total: 0,
-                    idioma: '',
+                    idioma: '{{ $prospecto->cliente->nacional ? 'español' : 'ingles' }}',
                     notas: "",
                     observaciones: []
                 },
@@ -1091,9 +1006,16 @@
                     numero: 0,
                     email: [],
                     emailOpciones: [
-                        
+                        @foreach ($prospecto->cliente->contactos as $contacto)
+                            @foreach ($contacto->emails as $email)
+                                {
+                                    id: "{{ $email->email }}",
+                                    text: "{{ $email->email }}"
+                                },
+                            @endforeach
+                        @endforeach
                     ],
-                    mensaje: "Buenas tardes  .\n\nAnexo a la presente encontrarán la cotización solicitada de  para  .\n\nEsperamos esta información les sea de utilidad y quedamos a sus órdenes para cualquier duda o comentario.\n\nSaludos,\n\n{{ auth()->user()->name }}.\n{{ auth()->user()->email }}\nRobinson Contract Resources"
+                    mensaje: "Buenas tardes  .\n\nAnexo a la presente encontrarán la cotización solicitada de {{ $prospecto->descripcion }}  para {{ $prospecto->nombre }} .\n\nEsperamos esta información les sea de utilidad y quedamos a sus órdenes para cualquier duda o comentario.\n\nSaludos,\n\n{{ auth()->user()->name }}.\n{{ auth()->user()->email }}\nRobinson Contract Resources"
                 },
                 aceptar: {
                     cotizacion_id: 0,
@@ -1113,7 +1035,7 @@
                 cargando: false,
             },
             computed: {
-                
+
             },
             filters: {
                 formatoMoneda(numero) {
@@ -1310,7 +1232,7 @@
                     $("button.fileinput-remove").click();
                     this.entrada.fotos = [];
                 },
-                aplicarDescuento(){
+                aplicarDescuento() {
                     //guardamos el descuento como desceunto anterior en caso de que lo editen tenemos el valor anterior
                     /*
                     if(this.cotizacion.tipo_descuento == 0){
@@ -1325,7 +1247,7 @@
                         this.descuento_anterior = this.cotizacion.descuentos/100;
                     }
                     */
-                    
+
                 },
                 cp1() {
                     this.cargando = true;
@@ -1372,10 +1294,12 @@
                         this.cotizacion.estado = this.rfcs[this.cotizacion.facturar].estado;
                     }
                 },
-                contactosCliente(){
-                  const id_cliente = Number(this.cotizacion.cliente_id);
-                  const cliente = this.clientes.find(({ id }) => id === id_cliente);
-                  this.contactos = cliente.contactos;
+                contactosCliente() {
+                    const id_cliente = Number(this.cotizacion.cliente_id);
+                    const cliente = this.clientes.find(({
+                        id
+                    }) => id === id_cliente);
+                    this.contactos = cliente.contactos;
                 },
                 seleccionarTipoDescuento() {
                     console.log(this.cotizacion.tipo_descuento)
@@ -1518,8 +1442,8 @@
                 fijarComprobante() {
                     this.aceptar.comprobante = this.$refs['comprobante'].files[0];
                 },
-                isfleteMenor(){
-                    this.cotizacion.isfleteMenor = this.cotizacion.isfleteMenor ? false: true;
+                isfleteMenor() {
+                    this.cotizacion.isfleteMenor = this.cotizacion.isfleteMenor ? false : true;
                 },
                 agregarObservacion(observacion) {
                     this.cotizacion.observaciones.push(observacion.texto);
@@ -1618,18 +1542,50 @@
                     ///
                     if (prod.foto) {
                         $("button.fileinput-remove").click();
-                        $("div.file-default-preview img")[0].src = prod.foto;
+                        $("#foto-producto")[0].src = prod.foto;
                     }
                     /////////////////////////////////
-                    if (prod.planos) {
-                        $("button.fileinput-remove").click();
-                        $("div.file-default-preview img")[0].src = prod.planos;
-                    }
+                    // if (prod.planos) {
+                    //     $("button.fileinput-remove").click();
+                    //     $("div.file-default-preview img")[0].src = prod.planos;
+                    // }
 
                     this.openCatalogo = false;
                 },
+                sumaSubTotal() {
+                    this.cotizacion.subtotal = Number(this.cotizacion.subtotal) +
+                        Number(this.cotizacion.fletes) +
+                        Number(this.cotizacion.flete_menor) +
+                        Number(this.cotizacion.costo_corte) +
+                        Number(this.cotizacion.costo_sobreproduccion);
+                    console.log(this.cotizacion.subtotal)
+                },
+                sumaTotal() {
+                    this.calDescuento();
+                    this.calIva();
+                    this.cotizacion.total = this.cotizacion.montoDescuento != '0' ?
+                        (Number(this.cotizacion.subtotal) - Number(this.cotizacion.montoDescuento)) +
+                        Number(this.cotizacion.calIva) :
+                        Number(this.cotizacion.subtotal) + Number(this.cotizacion.calIva);
+                    console.log(this.cotizacion.total)
+                },
+                calIva() {
+                    this.cotizacion.calIva = this.cotizacion.montoDescuento != '0' ?
+                        (Number(this.cotizacion.subtotal) - Number(this.cotizacion.montoDescuento)) * 0.16 :
+                        Number(this.cotizacion.subtotal) * 0.16;
+                },
+                calDescuento() {
+                    this.cotizacion.montoDescuento = this.cotizacion.tipo_descuento != '0' ?
+                        (Number(this.cotizacion.subtotal) * Number(this.cotizacion.descuentos)) / 100 :
+                        this.cotizacion.descuentos;
+                },
+                setDescuentosFinal() {
+                    this.cotizacion.descuentos = this.cotizacion.tipo_descuento != '0' ?
+                        (Number(this.cotizacion.subtotal) * Number(this.cotizacion.descuentos)) / 100 :
+                        this.cotizacion.descuentos;
+                },
                 agregarEntrada() {
-
+                    this.sumaSubTotal();
                     var area = '';
                     this.entrada.descripciones.forEach(function(descripcion) {
                         if (descripcion.name == 'Area') {
@@ -1652,11 +1608,17 @@
                         for (var i = 0; i < this.$refs['fotos'].files.length; i++)
                             this.entrada.fotos.push(this.$refs['fotos'].files[i]);
                     }
+                    console.log(this.cliente)
+                    console.log(this.factor_porcentual)
 
-
-                    this.entrada.importe = this.entrada.cantidad * this.entrada.precio;
+                    let factorPorcentual = this.factor_porcentual > 0 ? (this.entrada.precio * this
+                            .factor_porcentual) / 100 :
+                        0;
+                    // this.entrada.importe = this.entrada.cantidad * this.entrada.precio;
+                    this.entrada.importe = this.entrada.cantidad * (this.entrada.precio - factorPorcentual);
+                    console.log(this.entrada.importe)
                     this.cotizacion.subtotal += this.entrada.importe;
-
+                    this.sumaTotal()
                     if (this.entrada.orden == 0)
                         this.entrada.orden = this.cuentaEntradasNoBorradas() + 1;
 
@@ -1849,7 +1811,7 @@
                     this.resetDataTables();
                 },
                 guardar() {
-
+                    this.setDescuentosFinal()
                     if (this.entrada.producto.id == undefined) {
 
                     } else {
@@ -1865,18 +1827,21 @@
                     });
 
                     totalcotizacion = cotizacion.subtotal.toFixed(2);
-
+                    totalf += Number(this.cotizacion.fletes) +
+                        Number(this.cotizacion.flete_menor) +
+                        Number(this.cotizacion.costo_corte) +
+                        Number(this.cotizacion.costo_sobreproduccion);
                     console.log(totalcotizacion);
                     console.log(totalf);
                     console.log(totalcotizacion - totalf);
 
                     var dif = totalcotizacion - totalf;
-                    
+
 
                     if (dif > 0.05) {
                         alert('OCURRIO UN ERROR INESPERADO EL SUBTOTAL NO COINCIDE FAVOR DE RECARGAR LA PAGINA');
                     } else {
-                        
+
                         cotizacion.entradas.forEach(function(entrada) {
                             entrada.producto_id = entrada.producto.id;
                             delete entrada.producto;
@@ -1903,7 +1868,7 @@
                                     text: "",
                                     type: "success"
                                 }).then(() => {
-                                 window.location.href = "/cotizacionesdirectas";
+                                    window.location.href = "/cotizacionesdirectas";
                                 });
                             })
                             .catch(({
@@ -1932,7 +1897,7 @@
                                 numero: 0,
                                 email: [],
                                 emailOpciones: [
-                                    
+
                                 ],
                                 mensaje: "Buen día.\n\nLe envió cotización para su consideración.\n\n{{ auth()->user()->name }}.\nAtención del Cliente\nRobinson Contract Resources"
                             };
@@ -2112,7 +2077,7 @@
                                 .then(({
                                     data
                                 }) => {
-                                    
+
                                     swal({
                                         title: "Exito",
                                         text: "La cotizacion ha sido borrado",
