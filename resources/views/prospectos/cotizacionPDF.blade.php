@@ -700,7 +700,8 @@
                         </tr> --}}
                     </tbody>
                 </table>
-                <div class="bordered" style="margin:5px 15px; 0">
+            </div>
+            <div class="bordered col-lg-12" style="margin:5px 15px; 0">
                 <table class="" style="margin-bottom:0; width:100%;">
                     @if (!empty($cotizacion->fletes))
                         <tr>
@@ -722,7 +723,8 @@
                     @endif
                     @if (!empty($cotizacion->costo_sobreproduccion))
                         <tr>
-                            <td class="text-right" style="width:90%;"><strong>Cargo por sobreproducción:</strong></td>
+                            <td class="text-right" style="width:90%;"><strong>Cargo por sobreproducción:</strong>
+                            </td>
                             <td class="text-right" style="width:10%;">@format_money($cotizacion->costo_sobreproduccion)</td>
                         </tr>
                     @endif
@@ -741,12 +743,12 @@
                         <td class="text-right" style="width:10%;">@format_money($cotizacion->iva)</td>
                     </tr>
                     <tr>
-                        <td class="text-right" style="width:90%;"><strong>Total {{ $cotizacion->moneda }}:</strong>
+                        <td class="text-right" style="width:90%;"><strong>Total
+                                {{ $cotizacion->moneda }}:</strong>
                         </td>
                         <td class="text-right" style="width:10%;">@format_money($cotizacion->total)</td>
                     </tr>
                 </table>
-            </div>
             </div>
         </div>
 
