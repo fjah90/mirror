@@ -730,7 +730,7 @@ class ProspectosController extends Controller
         }
 
         $vendedores = Vendedor::all();
-        $clientes = Cliente::with('contactos')->get();
+        $clientes = Cliente::with('contactos', 'tipo')->get();
 
         return view(
             'cotizacionesdirectas.create',

@@ -481,7 +481,7 @@
                                                     <td colspan="3"></td>
                                                     <td class="text-right">
                                                         <strong>Total
-                                                            <span v-if="cotizacion.moneda=='Dolares'"> Dolares</span>
+                                                            <span v-if="cotizacion.moneda=='Dolares'">Dolares</span>
                                                             <span v-else> Pesos</span>
                                                         </strong>
                                                     </td>
@@ -1041,7 +1041,7 @@
                 },
             },
             mounted() {
-                console.log(this.notasPreCargadas);
+                console.log(this.cliente);
                 this.$refs.fechaActual = document.querySelector('#fechaActual');
                 this.actualizarFechaActual();
                 let self = this; // ámbito de vue
@@ -1298,6 +1298,8 @@
                         id
                     }) => id === id_cliente);
                     this.contactos = cliente.contactos;
+                    this.factor_porcentual = cliente.tipo.factor_porcentual;
+                    console.log(this.factor_porcentual)
                 },
                 seleccionarTipoDescuento() {
                     console.log(this.cotizacion.tipo_descuento)
