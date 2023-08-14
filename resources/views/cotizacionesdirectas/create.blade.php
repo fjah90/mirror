@@ -25,7 +25,6 @@
     </section>
     <!-- Main content -->
     <section class="content" id="content">
-
         <div class="row">
             <div class="col-lg-12">
                 <div class="panel">
@@ -725,7 +724,6 @@
                 </div>
             </div>
         </div>
-
         <!-- Catalogo Productos Modal -->
         <modal v-model="openCatalogo" title="Productos" :footer="false">
             <div class="table-responsive">
@@ -764,7 +762,6 @@
             </div>
         </modal>
         <!-- /.Catalogo Productos Modal -->
-
         <!-- Enviar Modal -->
         <modal v-model="openNotas" :title="'Notas Cotización ' + notas.cotizacion_id" :footer="false">
             <form class="" @submit.prevent="notasCotizacion()">
@@ -784,7 +781,6 @@
             </form>
         </modal>
         <!-- /.Enviar Modal -->
-
         <!-- Copiar Modal -->
         <modal v-model="openCopiar" :title="'Copiar Cotizacion'" :footer="false">
             <form class="" @submit.prevent="copiarCotizacion()">
@@ -808,7 +804,6 @@
             </form>
         </modal>
         <!-- /.Copiar Modal -->
-
         <!-- Enviar Modal -->
         <modal v-model="openEnviar" :title="'Enviar Cotizacion ' + enviar.numero" :footer="false">
             <form class="" @submit.prevent="enviarCotizacion()">
@@ -828,7 +823,6 @@
             </form>
         </modal>
         <!-- /.Enviar Modal -->
-
         <!-- Aceptar Modal -->
         <modal style="color:#B68911, background-color:#12160F;" v-model="openAceptar"
             :title="'Aceptar Cotizacion ' + aceptar.cotizacion_id" :footer="false">
@@ -872,7 +866,6 @@
             </form>
         </modal>
         <!-- /.Aceptar Modal -->
-
         <!-- Nuevo Producto Modal-->
         <modal style="color:#B68911; background-color:#12160F;" v-model="modalProducto" title="Registrar Producto"
             :footer="false">
@@ -881,10 +874,8 @@
             </iframe>
         </modal>
         <!-- /.Nuevo Producto Modal -->
-
     </section>
     <!-- /.content -->
-
 @stop
 
 {{-- footer_scripts --}}
@@ -903,9 +894,9 @@
         const app = new Vue({
             el: '#content',
             data: {
-                descuento_anterior : 0,
-                clientes : {!! json_encode($clientes) !!},
-                contactos:[],
+                descuento_anterior: 0,
+                clientes: {!! json_encode($clientes) !!},
+                contactos: [],
                 'notasPreCargadas': {!! json_encode($notasPreCargadas) !!},
                 fechaActual: new Date().toLocaleDateString(),
                 colonias: [],
@@ -931,8 +922,8 @@
                 cotizacion: {
                     prospecto_id: '',
                     prospecto_id: 0,
-                    proyecto_nombre:'',
-                    cliente_id:'',
+                    proyecto_nombre: '',
+                    cliente_id: '',
                     cliente_contacto_id: '',
                     vendedor_id: '',
                     numero: {{ $numero_siguiente }},
@@ -1063,9 +1054,6 @@
 
                     });
 
-
-
-
                 $("#fotos").fileinput({
                     language: 'es',
                     overwriteInitial: true,
@@ -1079,6 +1067,7 @@
                     allowedFileExtensions: ["jpg", "jpeg", "png"],
                     elErrorContainer: '#fotos-file-errors'
                 });
+
                 $("#comprobante").fileinput({
                     language: 'es',
                     showPreview: false,

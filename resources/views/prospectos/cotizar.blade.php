@@ -1925,7 +1925,6 @@
                     this.resetDataTables();
                 },
                 editar(index, cotizacion) {
-
                     this.prospecto.cotizaciones.splice(index, 1);
 
                     //reiniciar observaciones
@@ -1937,12 +1936,14 @@
                     this.cotizacion = {
                         prospecto_id: {{ $prospecto->id }},
                         cliente_contacto_id: cotizacion.cliente_contacto_id,
+                        vendedor_id: cotizacion.vendedor_id,
                         cotizacion_id: cotizacion.id,
                         numero: cotizacion.numero,
                         condicion: {
                             id: cotizacion.condicion_id,
                             nombre: ''
                         },
+                        ubicacion: cotizacion.ubicacion,
                         facturar: (cotizacion.facturar) ? 1 : 0,
                         rfc: cotizacion.rfc,
                         razon_social: cotizacion.razon_social,
@@ -1953,7 +1954,7 @@
                         cp: cotizacion.cp,
                         ciudad: cotizacion.ciudad,
                         estado: cotizacion.estado,
-                        direccion: (cotizacion.direccion) ? 1 : 0,
+                        direccion: (cotizacion.direccion) == 0 ? 0 : 1,
                         dircalle: cotizacion.dircalle,
                         instrucciones: cotizacion.instrucciones,
                         enviar_a: cotizacion.enviar_a,
@@ -1967,12 +1968,15 @@
                         dirciudad: cotizacion.dirciudad,
                         direstado: cotizacion.direstado,
                         entrega: cotizacion.entrega,
+                        montoDescuento: cotizacion.montoDescuento,
                         lugar: cotizacion.lugar,
                         fletes: cotizacion.fletes,
                         flete_menor: cotizacion.flete_menor,
+                        isfleteMenor: cotizacion.flete_menor ? 1:0,
                         costo_corte: cotizacion.costo_corte,
                         costo_sobreproduccion: cotizacion.costo_corte,
-                        descuentos: cotizacion.calDescuento,
+                        descuentos: cotizacion.descuentos,
+                        tipo_descuento: cotizacion.tipo_descuento,
                         planos: cotizacion.planos, //
                         factibilidad: cotizacion.factibilidad, //
                         moneda: cotizacion.moneda,
@@ -1985,6 +1989,10 @@
                         notas: cotizacion.notas,
                         observaciones: []
                     };
+                    this.calDescuento();
+                    this.calIva();
+                    console.log(this.cotizacion)
+
                     this.condicionCambiada();
 
                     //re-seleccionar observaciones
@@ -2030,6 +2038,8 @@
                     this.resetDataTables();
                 },
                 guardar() {
+                    this.fecha = this.fecha ?  new Date(this.fecha).toISOString().slice(0, 10): '';
+                    console.log(this.fecha)
                     if (this.entrada.producto.id == undefined) {
                         console.log("no se encontro entrada de producto")
                     } else {
