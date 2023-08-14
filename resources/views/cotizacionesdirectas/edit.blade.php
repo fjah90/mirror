@@ -1840,41 +1840,8 @@
                     }, this);
                     this.resetDataTables();
                 },
-                sumaSubTotal() {
-                    this.cotizacion.subtotal = Number(this.cotizacion.subtotal) +
-                        Number(this.cotizacion.fletes) +
-                        Number(this.cotizacion.flete_menor) +
-                        Number(this.cotizacion.costo_corte) +
-                        Number(this.cotizacion.costo_sobreproduccion);
-                    console.log(this.cotizacion.subtotal)
-                },
-                sumaTotal() {
-                    this.calDescuento();
-                    this.calIva();
-                    this.cotizacion.total = this.cotizacion.montoDescuento != '0' ?
-                        (Number(this.cotizacion.subtotal) - Number(this.cotizacion.montoDescuento)) +
-                        Number(this.cotizacion.calIva) :
-                        Number(this.cotizacion.subtotal) + Number(this.cotizacion.calIva);
-                    console.log(this.cotizacion.total)
-                },
-                calIva() {
-                    this.cotizacion.calIva = this.cotizacion.montoDescuento != '0' ?
-                        (Number(this.cotizacion.subtotal) - Number(this.cotizacion.montoDescuento)) * 0.16 :
-                        Number(this.cotizacion.subtotal) * 0.16;
-                },
-                calDescuento() {
-                    this.cotizacion.montoDescuento = this.cotizacion.tipo_descuento != '0' ?
-                        (Number(this.cotizacion.subtotal) * Number(this.cotizacion.descuentos)) / 100 :
-                        this.cotizacion.descuentos;
-                },
-                setDescuentosFinal() {
-                    this.cotizacion.descuentos = this.cotizacion.tipo_descuento != '0' ?
-                        (Number(this.cotizacion.subtotal) * Number(this.cotizacion.descuentos)) / 100 :
-                        this.cotizacion.descuentos;
-                },
+                
                 editar(index, cotizacion) {
-                    this.prospecto.cotizaciones.splice(index, 1);
-
                     //reiniciar observaciones
                     this.observaciones.forEach(function(observacion) {
                         observacion.activa = false;
@@ -1882,8 +1849,8 @@
 
                     //vaciar datos de cotizacion
                     this.cotizacion = {
-                        prospecto_id: {{ $prospecto->id }},
-                        cliente_contacto_id: cotizacion.cliente_contacto_id,
+                        cliente_id: cotizacion.cliente_id,
+                        nombre_proyecto: cotizacion.nombre_proyecto,
                         vendedor_id: cotizacion.vendedor_id,
                         cotizacion_id: cotizacion.id,
                         numero: cotizacion.numero,
