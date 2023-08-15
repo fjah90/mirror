@@ -1052,19 +1052,21 @@
                     contacto_email: '',
                     entrega: '',
                     lugar: '',
-                    flete: '',
+                    fletes: 0,
                     isfleteMenor: false,
-                    flete_menor: '',
-                    costo_corte: '',
-                    costo_sobreproduccion: '',
+                    flete_menor: 0,
+                    costo_corte: 0,
+                    costo_sobreproduccion: 0,
                     descuentos: 0,
+                    montoDescuento: 0,
                     tipo_descuento: 0,
                     planos: '',
                     factibilidad: '',
                     moneda: 'Dolares',
                     entradas: [],
                     subtotal: 0,
-                    iva: '',
+                    calIva: 0,
+                    iva: 1,
                     total: 0,
                     idioma: '',
                     notas: "",
@@ -1146,9 +1148,6 @@
                         self.copiar_cotizacion.proyecto_id = value[0].id
 
                     });
-
-
-
 
                 $("#fotos").fileinput({
                     language: 'es',
@@ -1840,8 +1839,17 @@
                     }, this);
                     this.resetDataTables();
                 },
-                
-                editar(index, cotizacion) {
+                calIva() {
+                    this.cotizacion.calIva = this.cotizacion.montoDescuento != '0' ?
+                        (Number(this.cotizacion.subtotal) - Number(this.cotizacion.montoDescuento)) * 0.16 :
+                        Number(this.cotizacion.subtotal) * 0.16;
+                },
+                calDescuento() {
+                    this.cotizacion.montoDescuento = this.cotizacion.tipo_descuento != '0' ?
+                        (Number(this.cotizacion.subtotal) * Number(this.cotizacion.descuentos)) / 100 :
+                        this.cotizacion.descuentos;
+                },
+                editar(cotizacion) {
                     //reiniciar observaciones
                     this.observaciones.forEach(function(observacion) {
                         observacion.activa = false;
@@ -1850,6 +1858,7 @@
                     //vaciar datos de cotizacion
                     this.cotizacion = {
                         cliente_id: cotizacion.cliente_id,
+                        cliente_contacto_id: cotizacion.cliente_contacto_id,
                         nombre_proyecto: cotizacion.nombre_proyecto,
                         vendedor_id: cotizacion.vendedor_id,
                         cotizacion_id: cotizacion.id,
