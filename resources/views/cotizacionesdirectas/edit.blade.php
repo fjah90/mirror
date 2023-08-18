@@ -321,14 +321,14 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label class="control-label">Costó de Corte</label>
+                                        <label class="control-label">Costo de Corte</label>
                                         <input class="form-control" type="text" name="costo_corte"
                                             v-model="cotizacion.costo_corte" />
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label class="control-label">Costó Sobreproducción</label>
+                                        <label class="control-label">Costo Sobreproducción</label>
                                         <input class="form-control" type="text" name="costo_sobreproduccion"
                                             v-model="cotizacion.costo_sobreproduccion" />
                                     </div>

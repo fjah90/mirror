@@ -321,14 +321,14 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label class="control-label">Costó de Corte</label>
+                                        <label class="control-label">Costo de Corte</label>
                                         <input class="form-control" type="text" name="costo_corte"
                                             v-model="cotizacion.costo_corte" />
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label class="control-label">Costó Sobreproducción</label>
+                                        <label class="control-label">Costo Sobreproducción</label>
                                         <input class="form-control" type="text" name="costo_sobreproduccion"
                                             v-model="cotizacion.costo_sobreproduccion" />
                                     </div>
@@ -428,14 +428,14 @@
                                             <tfoot>
                                                 <tr v-if="cotizacion.fletes !='0' || cotizacion.fletes !=''">
                                                     <td colspan="3"></td>
-                                                    <td class="text-right"><strong>Costó de Flete</strong></td>
+                                                    <td class="text-right"><strong>Costo de Flete</strong></td>
                                                     <td v-if="cotizacion.fletes =='0'">$0.00</td>
                                                     <td v-if="cotizacion.fletes !='0'">@{{ (cotizacion.fletes) | formatoMoneda }}</td>
                                                     <td></td>
                                                 </tr>
                                                 <tr v-if="cotizacion.flete_menor !='0' || cotizacion.flete_menor !=''">
                                                     <td colspan="3"></td>
-                                                    <td class="text-right"><strong>Costó de Flete menor</strong></td>
+                                                    <td class="text-right"><strong>Costo de Flete menor</strong></td>
                                                     <td v-if="cotizacion.flete_menor =='0'">$0.00</td>
                                                     <td v-if="cotizacion.flete_menor !='0'">@{{ (cotizacion.flete_menor) | formatoMoneda }}</td>
                                                     <td></td>
@@ -443,7 +443,7 @@
                                                 <tr
                                                     v-if="cotizacion.costo_sobreproduccion !='0' || cotizacion.costo_sobreproduccion !=''">
                                                     <td colspan="3"></td>
-                                                    <td class="text-right"><strong>Costó Sobreproducción</strong></td>
+                                                    <td class="text-right"><strong>Costo Sobreproducción</strong></td>
                                                     <td v-if="cotizacion.costo_sobreproduccion =='0'">$0.00</td>
                                                     <td v-if="cotizacion.costo_sobreproduccion !='0'">
                                                         @{{ (cotizacion.costo_sobreproduccion) | formatoMoneda }}</td>
@@ -451,7 +451,7 @@
                                                 </tr>
                                                 <tr v-if="cotizacion.costo_corte !='0'  || cotizacion.costo_corte !=''">
                                                     <td colspan="3"></td>
-                                                    <td class="text-right"><strong>Costó de Corte</strong></td>
+                                                    <td class="text-right"><strong>Costo de Corte</strong></td>
                                                     <td v-if="cotizacion.costo_corte =='0'">$0.00</td>
                                                     <td v-if="cotizacion.costo_corte !='0'">@{{ (cotizacion.costo_corte) | formatoMoneda }}</td>
                                                     <td></td>
