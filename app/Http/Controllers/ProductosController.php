@@ -91,13 +91,16 @@ class ProductosController extends Controller
     {
         //dd($request->all());
         $validator = Validator::make($request->all(), [
-            'proveedor_id'    => 'required',
-            'subcategoria_id' => 'required',
-            //
-            'categoria_id'    => 'required',
-            'nombre'          => 'required',
-            'precio'          => 'required',
-            'nombre_material' => 'required'
+            'proveedor_id'        => 'required',
+            'subcategoria_id'     => 'required',
+            'categoria_id'        => 'required',
+            'nombre'              => 'required',
+            'precio_unitario'     => 'required',
+            'precio_residencial'  => 'required',
+            'precio_comercial'    => 'required',
+            'precio_distribuidor' => 'required',
+            'nombre_material'     => 'required',
+            'color'               => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -121,13 +124,16 @@ class ProductosController extends Controller
         //$producto = Producto::create($create);
 
         $producto = Producto::create([
-            'proveedor_id'    => $request->proveedor_id,
-            'subcategoria_id' => $request->subcategoria_id,
-            //
-            'categoria_id'    => $request->categoria_id,
-            'nombre'          => $request->nombre,
-            'nombre_material' => $request->nombre_material,
-            'precio'          => $request->precio,
+            'proveedor_id'        => $request->proveedor_id,
+            'subcategoria_id'     => $request->subcategoria_id,
+            'categoria_id'        => $request->categoria_id,
+            'nombre'              => $request->nombre,
+            'nombre_material'     => $request->nombre_material,
+            'color'               => $request->color,
+            'precio_unitario'     => $request->precio_unitario,
+            'precio_residencial'  => $request->precio_residencial,
+            'precio_comercial'    => $request->precio_comercial,
+            'precio_distribuidor' => $request->precio_distribuidor,
         ]);
 
         if (isset($request->foto)) {
@@ -239,14 +245,14 @@ class ProductosController extends Controller
                     $subcategoria = null;
                 }
             }
-
+            // TODO:Arreglar esto pora importación masiva
             $producto = [
                 "proveedor_id"    => $proveedor->id,
                 "categoria_id"    => $categoria->id,
                 "nombre"          => $row[0],
                 "nombre_material" => $row[5],
                 "subcategoria_id" => $subcategoria,
-                "precio"          => $row[4]
+                "precio_unitario" => $row[4]
             ];
 
             $p = Producto::where('nombre', $row[0])->first();
@@ -403,12 +409,17 @@ class ProductosController extends Controller
      */
     public function update(Request $request, Producto $producto)
     {
-        //dd($request->all());
+        // dd($request->all());
         $validator = Validator::make($request->all(), [
-            'proveedor_id'    => 'required',
-            'categoria_id'    => 'required',
-            'nombre'          => 'required',
-            'nombre_material' => 'required'
+            'proveedor_id'        => 'required',
+            'categoria_id'        => 'required',
+            'nombre'              => 'required',
+            'precio_unitario'     => 'required',
+            'precio_residencial'  => 'required',
+            'precio_comercial'    => 'required',
+            'precio_distribuidor' => 'required',
+            'nombre_material'     => 'required',
+            'color'               => 'required'
         ]);
 
         if ($validator->fails()) {
@@ -420,7 +431,16 @@ class ProductosController extends Controller
             ], 422);
         }
 
-        $update = $request->only('categoria_id', 'nombre', 'nombre_material');
+        $update = $request->only(
+            'categoria_id',
+            'nombre',
+            'precio_unitario',
+            'precio_residencial',
+            'precio_comercial',
+            'precio_distribuidor',
+            'nombre_material',
+            'color'
+        );
         $update['proveedor_id'] = ($request->proveedor_id != 0) ? $request->proveedor_id : null;
         if (!is_null($request->foto)) {
             Storage::delete('public/' . $producto->foto);
@@ -447,10 +467,7 @@ class ProductosController extends Controller
             $update['subcategoria_id'] = $request->subcategoria_id;
         }
 
-        //$producto->update($update);
-
         $producto->update($update);
-        $producto->precio = $request->precio;
         $producto->save();
 
         //actualizar descripciones nuevas que ya existan en descripciones actuales

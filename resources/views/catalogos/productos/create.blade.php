@@ -86,8 +86,38 @@ Nuevo Producto | @parent
             <div class="row">
               <div class="col-md-12">
                 <div class="form-group">
-                  <label class="control-label">Precio</label>
-                  <input type="text" class="form-control" name="precio" v-model="producto.precio" required />
+                  <label class="control-label">Color<strong style="color: grey"> *</strong></label>
+                  <input type="text" class="form-control" name="nombre" v-model="producto.color" required />
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="control-label">Precio Compra <strong style="color: grey">
+                                                *</strong></label>
+                  <input type="text" class="form-control" name="precio_unitario" v-model="producto.precio_unitario" required />
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="control-label">Precio Residencial <strong style="color: grey">
+                                                *</strong></label>
+                  <input type="text" class="form-control" name="precio_residencial" v-model="producto.precio_residencial" required />
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="control-label">Precio Comercial <strong style="color: grey">
+                                                *</strong></label>
+                  <input type="text" class="form-control" name="precio_comercial" v-model="producto.precio_comercial" required />
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="control-label">Precio Distribuidor <strong style="color: grey">
+                                                *</strong></label>
+                  <input type="text" class="form-control" name="precio_distribuidor" v-model="producto.precio_distribuidor" required />
                 </div>
               </div>
             </div>
@@ -181,7 +211,11 @@ const app = new Vue({
         subcategoria_id: '',
         nombre: '',
         nombre_material:'',
-        precio: '',
+        color:'',
+        precio_unitario: '',
+        precio_residencial: '',
+        precio_comercial: '',
+        precio_distribuidor: '',
         foto: '',
         ficha_tecnica: '',
         descripciones: []

@@ -82,17 +82,54 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                    <label class="control-label">Nombre del material<strong style="color: grey"> *</strong></label>
-                                    <input type="text" class="form-control" name="nombre" v-model="producto.nombre_material" required />
+                                        <label class="control-label">Nombre del material<strong style="color: grey">
+                                                *</strong></label>
+                                        <input type="text" class="form-control" name="nombre"
+                                            v-model="producto.nombre_material" required />
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label class="control-label">Precio</label>
-                                        <input type="text" class="form-control" name="precio" v-model="producto.precio"
-                                            required />
+                                        <label class="control-label">Color<strong style="color: grey">
+                                                *</strong></label>
+                                        <input type="text" class="form-control" name="color"
+                                            v-model="producto.color" required />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="control-label">Precio Compra <strong style="color: grey">
+                                                *</strong></label>
+                                        <input type="text" class="form-control" name="precio_unitario"
+                                            v-model="producto.precio_unitario" required />
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="control-label">Precio Residencial <strong style="color: grey">
+                                                *</strong></label>
+                                        <input type="text" class="form-control" name="precio_residencial"
+                                            v-model="producto.precio_residencial" required />
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="control-label">Precio Comercial <strong style="color: grey">
+                                                *</strong></label>
+                                        <input type="text" class="form-control" name="precio_comercial"
+                                            v-model="producto.precio_comercial" required />
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="control-label">Precio Distribuidor <strong style="color: grey">
+                                                *</strong></label>
+                                        <input type="text" class="form-control" name="precio_distribuidor"
+                                            v-model="producto.precio_distribuidor" required />
                                     </div>
                                 </div>
                             </div>
@@ -127,8 +164,8 @@
                                                     </td>
                                                     <td>
                                                         <div v-if="descripcion.descripcion_nombre.nombre=='Flamabilidad'">
-                                                            <img src="{{ asset('images/icon-fire.png') }}" id="Flamabilidad"
-                                                                style="width:50px; height:50px;">
+                                                            <img src="{{ asset('images/icon-fire.png') }}"
+                                                                id="Flamabilidad" style="width:50px; height:50px;">
                                                         </div>
                                                         <div v-else-if="descripcion.descripcion_nombre.nombre=='Abrasión'">
                                                             <img src="{{ asset('images/icon-abrasion.jpg') }}"
@@ -221,8 +258,12 @@
                     categoria_id: '{{ $producto->categoria_id }}',
                     subcategoria_id: '{{ $producto->subcategoria->id }}',
                     nombre: '{{ $producto->nombre }}',
-                    nombre_material: '{{$producto->nombre_material}}',
-                    precio: '{{ $producto->precio }}',
+                    nombre_material: '{{ $producto->nombre_material }}',
+                    color: '{{ $producto->color }}',
+                    precio_unitario: '{{ $producto->precio_unitario }}',
+                    precio_residencial: '{{ $producto->precio_residencial }}',
+                    precio_comercial: '{{ $producto->precio_comercial }}',
+                    precio_distribuidor: '{{ $producto->precio_distribuidor }}',
                     descripciones: {!! $producto->descripciones !!},
                     foto_ori: '{{ $producto->foto }}',
                     ficha_ori: '{{ $producto->ficha_tecnica }}',
