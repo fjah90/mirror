@@ -418,7 +418,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-4"
-                                    v-if="prospecto.nueva_proxima_actividad.tipo_id==1 || prospecto.nueva_proxima_actividad.tipo_id==12 || prospecto.nueva_proxima_actividad.tipo_id==2 || prospecto.nueva_proxima_actividad.tipo_id==14">
+                                    v-if="prospecto.nueva_proxima_actividad.tipo_id==12 || prospecto.nueva_proxima_actividad.tipo_id==2 || prospecto.nueva_proxima_actividad.tipo_id==14">
                                     <div class="form-group">
                                         <label for="prospecto.nueva_proxima_actividad.horario"
                                             class="control-label">Horario<strong style="color: grey"> *</strong></label>
