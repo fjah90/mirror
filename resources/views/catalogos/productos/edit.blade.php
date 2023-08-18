@@ -32,7 +32,7 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label class="control-label">Proveedor</label>
+                                        <label class="control-label">Proveedor<strong style="color: grey"> *</strong></label>
                                         <select class="form-control" name="proveedor_id" v-model='producto.proveedor_id'
                                             required>
                                             <option value="0">Por Definir</option>
@@ -60,7 +60,7 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label class="control-label">Tipo de Producto o Servicio</label>
+                                        <label class="control-label">Tipo de Producto o Servicio<strong style="color: grey"> *</strong></label>
                                         <select class="form-control" name="categoria_id" v-model='producto.categoria_id'
                                             @change="cambiarDescripciones()" required>
                                             @foreach ($categorias as $categoria)
@@ -73,7 +73,7 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label class="control-label">Código de Producto o Servicio</label>
+                                        <label class="control-label">Código de Producto o Servicio<strong style="color: grey"> *</strong></label>
                                         <input type="text" class="form-control" name="nombre" v-model="producto.nombre"
                                             required />
                                     </div>
@@ -82,8 +82,7 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label class="control-label">Nombre del material<strong style="color: grey">
-                                                *</strong></label>
+                                        <label class="control-label">Nombre del material<strong style="color: grey"> *</strong></label>
                                         <input type="text" class="form-control" name="nombre"
                                             v-model="producto.nombre_material" required />
                                     </div>
