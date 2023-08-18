@@ -14,9 +14,7 @@ class AddTaxToProspectosCotizacionesTable extends Migration
     public function up()
     {
         Schema::table('prospectos_cotizaciones', function (Blueprint $table) {
-            $table->after('iva', function ($table) {
-                $table->decimal('tax', 8, 2)->default(0.00);
-            });
+            $table->decimal('tax', 8, 2)->default(0.00)->after('iva');
         });
     }
     /**
