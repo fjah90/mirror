@@ -336,7 +336,7 @@
                             </div>
                             <!--Agregando campos nuevos-->
                             <div class="row">
-                                <div class="col-md-6">
+                                {{-- <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="control-label" style="display:block;">Documentación adjuntar
                                             (planos,etc)</label>
@@ -348,7 +348,7 @@
                                         </div>
                                         <div id="planos-file-errors"></div>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="col-md-6">
                                     <label class="control-label">Factibilidad de proyecto *</label>
                                     <select class="form-control" name="factibilidad" v-model="cotizacion.factibilidad"
@@ -1077,19 +1077,19 @@
                     elErrorContainer: '#comprobante-file-errors',
                 });
 
-                $("#planos").fileinput({
-                    language: 'es',
-                    overwriteInitial: true,
-                    maxFileSize: 5000,
-                    //showClose: false,
-                    showCaption: false,
-                    showBrowse: false,
-                    browseOnZoneClick: true,
-                    removeLabel: '',
-                    defaultPreviewContent: '<img src="{{ asset('images/planos_intercorp_01.png') }}" alt="planos" style="width:200px;" height:auto; ><h6 class="text-muted">Click para seleccionar</h6>',
-                    allowedFileExtensions: ["dwg", "ifc", "rvt", "pln"],
-                    elErrorContainer: '#planos-file-errors'
-                });
+                // $("#planos").fileinput({
+                //     language: 'es',
+                //     overwriteInitial: true,
+                //     maxFileSize: 5000,
+                //     //showClose: false,
+                //     showCaption: false,
+                //     showBrowse: false,
+                //     browseOnZoneClick: true,
+                //     removeLabel: '',
+                //     defaultPreviewContent: '<img src="{{ asset('images/planos_intercorp_01.png') }}" alt="planos" style="width:200px;" height:auto; ><h6 class="text-muted">Click para seleccionar</h6>',
+                //     allowedFileExtensions: ["dwg", "ifc", "rvt", "pln"],
+                //     elErrorContainer: '#planos-file-errors'
+                // });
 
                 this.tablaProductos = $("#tablaProductos").DataTable({
                     dom: 'ftp'
@@ -1744,8 +1744,8 @@
                         entrega: cotizacion.entrega,
                         lugar: cotizacion.lugar,
                         // fletes: cotizacion.fletes,
-                        planos: cotizacion.planos, //
-                        factibilidad: cotizacion.factibilidad, //
+                        // planos: cotizacion.planos,
+                        factibilidad: cotizacion.factibilidad,
                         moneda: cotizacion.moneda,
                         entradas: cotizacion.entradas,
                         subtotal: cotizacion.subtotal,
