@@ -245,7 +245,6 @@ class ProductosController extends Controller
                     $subcategoria = null;
                 }
             }
-            // TODO:Arreglar esto pora importación masiva
             $producto = [
                 "proveedor_id"        => $proveedor->id,
                 "categoria_id"        => $categoria->id,
@@ -296,21 +295,21 @@ class ProductosController extends Controller
                 "Backing",
             ];
 
-            if (count($row) == 22) {
-                $columnas = 22;
+            if (count($row) == 25) {
+                $columnas = 25;
                 $descripciones = $descripciones_telas;
             }
             else {
-                $columnas = 13;
+                $columnas = 16;
                 $descripciones = $descripciones_tapices;
             }
-            for ($i = 6; $i < $columnas; $i++) {
+            for ($i = 10; $i < $columnas; $i++) {
 
                 $update = array(
                     "valor" => $row[$i]
                 );
 
-                $descripcion = CategoriaDescripcion::where('categoria_id', $categoria->id)->where('nombre', $descripciones[$i - 6])->first();
+                $descripcion = CategoriaDescripcion::where('categoria_id', $categoria->id)->where('nombre', $descripciones[$i - 10])->first();
                 if ($descripcion) {
                     $productodescripcion = ProductoDescripcion::where('producto_id', $p->id)->where('categoria_descripcion_id', $descripcion['id'])->first();
                     if ($productodescripcion) {
