@@ -247,12 +247,16 @@ class ProductosController extends Controller
             }
             // TODO:Arreglar esto pora importación masiva
             $producto = [
-                "proveedor_id"    => $proveedor->id,
-                "categoria_id"    => $categoria->id,
-                "nombre"          => $row[0],
-                "nombre_material" => $row[5],
-                "subcategoria_id" => $subcategoria,
-                "precio_unitario" => $row[4]
+                "proveedor_id"        => $proveedor->id,
+                "categoria_id"        => $categoria->id,
+                "nombre"              => $row[0],
+                "nombre_material"     => $row[8],
+                "color"               => $row[9],
+                "subcategoria_id"     => $subcategoria,
+                "precio_unitario"     => $row[4],
+                "precio_residencial"  => $row[5],
+                "precio_comercial"    => $row[6],
+                "precio_distribuidor" => $row[7],
             ];
 
             $p = Producto::where('nombre', $row[0])->first();
@@ -267,7 +271,6 @@ class ProductosController extends Controller
 
             //descripciones en el orden del archvo
             $descripciones_tapices = [
-                "Color",
                 "Ancho",
                 "Composición",
                 "Flamabilidad",
@@ -276,7 +279,6 @@ class ProductosController extends Controller
                 "Tamaño de rollo"
             ];
             $descripciones_telas = [
-                "Color",
                 "Ancho",
                 "Composición",
                 "Flamabilidad",
