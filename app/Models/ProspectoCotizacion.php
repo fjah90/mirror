@@ -11,7 +11,7 @@ class ProspectoCotizacion extends Model
 {
     protected $table = 'prospectos_cotizaciones';
 
-    protected $fillable = ['prospecto_id', 'condicion_id', 'fecha', 'subtotal', 'iva', 'tax',
+    protected $fillable = ['prospecto_id', 'condicion_id', 'folio', 'fecha', 'subtotal', 'iva', 'tax',
         'total', 'observaciones', 'notas', 'archivo', 'entrega', 'lugar', 'moneda', 'facturar',
         'user_id', 'idioma', 'aceptada', 'notas2', 'numero', 'rfc', 'razon_social', 'calle',
         'nexterior', 'ninterior', 'colonia', 'cp', 'ciudad', 'estado', 'fletes','flete','flete_menor','costo_corte','costo_sobreproduccion','ubicacion', 'cliente_contacto_id',
