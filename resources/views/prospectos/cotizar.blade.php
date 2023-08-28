@@ -175,7 +175,7 @@
                                 @can('editar numero cotizacion')
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label class="control-label">Numero Cotización</label>
+                                            <label class="control-label">Número Cotización</label>
                                             <input type="number" step="1" min="0" name="numero"
                                                 class="form-control" v-model="cotizacion.numero" />
                                         </div>
@@ -203,6 +203,11 @@
                                     <label class="control-label">Fecha</label>
                                     <br />
                                     <label id="fechaActual" class="control-label"></label>
+                                </div>
+                                <div class="col-md-2">
+                                    <label class="control-label">Folio</label>
+                                    <br />
+                                    <label id="folio" class="control-label"></label>
                                 </div>
                             </div>
                             <div class="row">
@@ -414,16 +419,16 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label class="control-label">Flete</label>
-                                        <input class="form-control" type="text" name="fletes"
-                                            v-model="cotizacion.fletes" />
+                                        <label class="control-label">Ubicación</label>
+                                        <input class="form-control" type="text" name="ubicacion"
+                                            v-model="cotizacion.ubicacion" />
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label class="control-label">Ubicación</label>
-                                        <input class="form-control" type="text" name="ubicacion"
-                                            v-model="cotizacion.ubicacion" />
+                                        <label class="control-label">Flete</label>
+                                        <input class="form-control" type="text" name="fletes"
+                                            v-model="cotizacion.fletes" />
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -483,7 +488,7 @@
                             </div><br>
                             <!--Agregando campos nuevos-->
                             <div class="row">
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <div class="form-group">
                                         <label class="control-label">Moneda *</label>
                                         <select class="form-control" name="moneda" v-model="cotizacion.moneda" required>
@@ -492,7 +497,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <div class="form-group">
                                         <label class="control-label">IVA *</label>
                                         <select class="form-control" name="iva" v-model="cotizacion.iva" required>
@@ -501,7 +506,21 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <div class="form-check form-switch">
+                                            <i :class="{
+                                                'glyphicon glyphicon-unchecked': !cotizacion.isTax,
+                                                'glyphicon glyphicon-check': cotizacion.isTax
+                                            }"
+                                                @click="isTax()"></i>
+                                            <label class="control-label" for="cotizacion.tax">TAX</label>
+                                        </div>
+                                        <input class="form-control" type="text" name="tax"
+                                            v-model="cotizacion.tax" :disabled="!cotizacion.isTax" />
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
                                     <div class="form-group">
                                         <label class="control-label">Idioma *</label>
                                         <select class="form-control" name="idioma" v-model="cotizacion.idioma" required>
@@ -591,11 +610,18 @@
                                                     <td v-else>- @{{ cotizacion.montoDescuento | formatoMoneda }}</td>
                                                     <td></td>
                                                 </tr>
-                                                <tr>
+                                                <tr v-if="cotizacion.calIva !='0' || cotizacion.calIva !=''">
                                                     <td colspan="3"></td>
                                                     <td class="text-right"><strong>IVA</strong></td>
                                                     <td v-if="cotizacion.iva=='0' || cotizacion.calIva == '0'">$0.00</td>
                                                     <td v-else>@{{ cotizacion.calIva | formatoMoneda }}</td>
+                                                    <td></td>
+                                                </tr>
+                                                <tr v-if="cotizacion.calTax !='0' || cotizacion.calTax !=''">
+                                                    <td colspan="3"></td>
+                                                    <td class="text-right"><strong>TAX</strong></td>
+                                                    <td v-if="cotizacion.tax=='0' || cotizacion.calTax == '0'">$0.00</td>
+                                                    <td v-else>@{{ cotizacion.calTax | formatoMoneda }}</td>
                                                     <td></td>
                                                 </tr>
                                                 <tr>
@@ -1026,11 +1052,12 @@
             data: {
                 'notasPreCargadas': {!! json_encode($notasPreCargadas) !!},
                 fechaActual: new Date().toLocaleDateString(),
+                folio: '',
                 colonias: [],
                 colonias2: [],
                 edicionEntradaActiva: false,
                 locale: localeES,
-                factor_porcentual: {!! json_encode($prospecto->cliente->tipo->factor_porcentual) !!},
+                tipo_cliente: {!! json_encode($prospecto->cliente->tipo) !!},
                 prospecto: {!! json_encode($prospecto) !!},
                 productos: {!! json_encode($productos) !!},
                 condiciones: {!! json_encode($condiciones) !!},
@@ -1096,6 +1123,9 @@
                     subtotal: 0,
                     calIva: 0,
                     iva: '{{ $prospecto->cliente->nacional ? '1' : '0' }}',
+                    tax: 0,
+                    calTax: 0,
+                    isTax: false,
                     total: 0,
                     idioma: '{{ $prospecto->cliente->nacional ? 'español' : 'ingles' }}',
                     notas: "",
@@ -1175,7 +1205,8 @@
                 },
             },
             mounted() {
-                console.log(this.factor_porcentual)
+                console.log("Tipo Cliente")
+                console.log(this.tipo_cliente)
 
                 console.log(this.prospecto)
                 this.$refs.fechaActual = document.querySelector('#fechaActual');
@@ -1552,6 +1583,9 @@
                 isfleteMenor() {
                     this.cotizacion.isfleteMenor = this.cotizacion.isfleteMenor ? false : true;
                 },
+                isTax() {
+                    this.cotizacion.isTax = this.cotizacion.isTax ? false : true;
+                },
                 agregarObservacion(observacion) {
                     this.cotizacion.observaciones.push(observacion.texto);
                     observacion.activa = true;
@@ -1635,6 +1669,7 @@
                     this.nuevaObservacionProducto = "";
                 },
                 seleccionarProduco(prod) {
+                    console.log(this.entrada.producto)
                     this.entrada.producto = prod;
                     this.entrada.precio = this.entrada.producto.precio;
                     this.entrada.descripciones = [];
@@ -1646,16 +1681,10 @@
                             valor_ingles: desc.valor_ingles
                         });
                     }, this);
-                    ///
                     if (prod.foto) {
                         $("button.fileinput-remove").click();
                         $("#foto-producto")[0].src = prod.foto;
                     }
-                    /////////////////////////////////
-                    // if (prod.planos) {
-                    //     $("button.fileinput-remove").click();
-                    //     $("div.file-default-preview img")[0].src = prod.planos;
-                    // }
 
                     this.openCatalogo = false;
                 },
@@ -1668,8 +1697,10 @@
                     console.log(this.cotizacion.subtotal)
                 },
                 sumaTotal() {
+                    this.sumaSubTotal();
                     this.calDescuento();
                     this.calIva();
+                    this.calTax();
                     this.cotizacion.total = this.cotizacion.montoDescuento != '0' ?
                         (Number(this.cotizacion.subtotal) - Number(this.cotizacion.montoDescuento)) +
                         Number(this.cotizacion.calIva) :
@@ -1680,6 +1711,12 @@
                     this.cotizacion.calIva = this.cotizacion.montoDescuento != '0' ?
                         (Number(this.cotizacion.subtotal) - Number(this.cotizacion.montoDescuento)) * 0.16 :
                         Number(this.cotizacion.subtotal) * 0.16;
+                },
+                calTax() {
+                    this.cotizacion.calTax = this.cotizacion.montoDescuento != '0' ?
+                        ((Number(this.cotizacion.subtotal) - Number(this.cotizacion.montoDescuento)) * this
+                            .cotizacion.tax) / 100 :
+                        (Number(this.cotizacion.subtotal) * this.cotizacion.tax) / 100;
                 },
                 calDescuento() {
                     this.cotizacion.montoDescuento = this.cotizacion.tipo_descuento != '0' ?
@@ -1692,7 +1729,6 @@
                         this.cotizacion.descuentos;
                 },
                 agregarEntrada() {
-                    this.sumaSubTotal();
                     var area = '';
                     this.entrada.descripciones.forEach(function(descripcion) {
                         if (descripcion.name == 'Area') {
@@ -1716,10 +1752,11 @@
                             this.entrada.fotos.push(this.$refs['fotos'].files[i]);
                     }
                     console.log(this.cliente)
-                    console.log(this.factor_porcentual)
+                    console.log(this.tipo_cliente)
+                    console.log(this.entrada)
 
-                    let factorPorcentual = this.factor_porcentual > 0 ? (this.entrada.precio * this
-                            .factor_porcentual) / 100 :
+                    let factorPorcentual = this.tipo_cliente > 0 ? (this.entrada.precio * this
+                            .tipo_cliente) / 100 :
                         0;
                     // this.entrada.importe = this.entrada.cantidad * this.entrada.precio;
                     this.entrada.importe = this.entrada.cantidad * (this.entrada.precio - factorPorcentual);
@@ -1875,6 +1912,8 @@
                         subtotal: cotizacion.subtotal,
                         calIva: cotizacion.calIva,
                         iva: (cotizacion.iva == 0) ? 0 : 1,
+                        tax: cotizacion.tax,
+                        calTax: cotizacion.calTax,
                         total: cotizacion.total,
                         idioma: cotizacion.idioma,
                         notas: cotizacion.notas,
@@ -1972,7 +2011,7 @@
                         lugar: cotizacion.lugar,
                         fletes: cotizacion.fletes,
                         flete_menor: cotizacion.flete_menor,
-                        isfleteMenor: cotizacion.flete_menor ? 1:0,
+                        isfleteMenor: cotizacion.flete_menor ? 1 : 0,
                         costo_corte: cotizacion.costo_corte,
                         costo_sobreproduccion: cotizacion.costo_corte,
                         descuentos: cotizacion.descuentos,
@@ -1984,6 +2023,8 @@
                         subtotal: cotizacion.subtotal,
                         calIva: cotizacion.calIva,
                         iva: (cotizacion.iva == 0) ? 0 : 1,
+                        tax: cotizacion.tax,
+                        isTax: cotizacion.tax ? 1 : 0,
                         total: cotizacion.total,
                         idioma: cotizacion.idioma,
                         notas: cotizacion.notas,
@@ -1991,6 +2032,7 @@
                     };
                     this.calDescuento();
                     this.calIva();
+                    this.calTax();
                     console.log(this.cotizacion)
 
                     this.condicionCambiada();
@@ -2038,7 +2080,7 @@
                     this.resetDataTables();
                 },
                 guardar() {
-                    this.fecha = this.fecha ?  new Date(this.fecha).toISOString().slice(0, 10): '';
+                    this.fecha = this.fecha ? new Date(this.fecha).toISOString().slice(0, 10) : '';
                     console.log(this.fecha)
                     if (this.entrada.producto.id == undefined) {
                         console.log("no se encontro entrada de producto")
@@ -2145,6 +2187,9 @@
                                     subtotal: 0,
                                     calIva: 0,
                                     iva: '{{ $prospecto->cliente->nacional ? '1' : '0' }}',
+                                    tax: 0,
+                                    calTax: 0,
+                                    isTax: false,
                                     total: 0,
                                     notas: "",
                                     idioma: '{{ $prospecto->cliente->nacional ? 'español' : 'ingles' }}',
@@ -2155,15 +2200,41 @@
                                 });
                                 this.resetDataTables();
                                 this.cargando = false;
+                                // swal({
+                                //     title: "Cotizacion Guardada",
+                                //     text: "",
+                                //     type: "success"
+
+                                // }).then(() => {
+                                //     $('a[download="C ' + data.cotizacion.numero + ' Robinson ' + this
+                                //         .prospecto.nombre + '.pdf"]')[0].click();
+                                //     window.location.reload(true);
+                                // });
+
                                 swal({
                                     title: "Cotizacion Guardada",
                                     text: "",
-                                    type: "success"
-                                }).then(() => {
-                                    $('a[download="C ' + data.cotizacion.numero + ' Robinson ' + this
-                                        .prospecto.nombre + '.pdf"]')[0].click();
-                                    window.location.reload(true);
-                                });
+                                    type: "success",
+                                    buttons: {
+                                        Ok: {
+                                            text: "Aceptar",
+                                            onClick: () => {
+                                                $('a[download="C ' + data.cotizacion.numero +
+                                                    ' Robinson ' + this
+                                                    .prospecto.nombre + '.pdf"]')[0].click();
+                                                window.location.reload(true);
+                                            }
+                                        },
+                                        enviar: {
+                                            text: "Enviar Cotización",
+                                            onClick: () => {
+                                                this.enviarCotizacion()
+                                            }
+                                        }
+                                    }
+                                }).then(() => {});
+
+
                             })
                             .catch(({
                                 response
@@ -2403,6 +2474,11 @@
                     const fecha = new Date().toLocaleDateString();
                     this.$refs.fechaActual.innerHTML = fecha;
                     console.log(fecha)
+                },
+                actualizarFolio() {
+                    const folio = 0;
+                    this.$refs.folio.innerHTML = folio;
+                    console.log(folio)
                 },
                 cargarNota() {
                     const notaId = this.notasPreCargadas.cId;
