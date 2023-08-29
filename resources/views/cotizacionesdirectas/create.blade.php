@@ -14,6 +14,13 @@
         .color_text {
             color: #B3B3B3;
         }
+
+        @media (min-width: 768px) {
+            .modal-dialog {
+                width: 680px;
+                margin: 30px auto
+            }
+        }
     </style>
 @stop
 
@@ -732,6 +739,7 @@
                         <tr>
                             <th>Código</th>
                             <th>Nombre Material</th>
+                            <th>Color</th>
                             <th>Proveedor</th>
                             <th>Tipo</th>
                             <th>Ficha Técnica</th>
@@ -742,6 +750,7 @@
                         <tr v-for="(prod, index) in productos">
                             <td>@{{ prod.nombre }}</td>
                             <td>@{{ prod.nombre_material }}</td>
+                            <td>@{{ prod.color }}</td>
                             <td>@{{ prod.proveedor.empresa }}</td>
                             <td>@{{ prod.categoria.nombre }}</td>
                             <td>

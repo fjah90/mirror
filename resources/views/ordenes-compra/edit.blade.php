@@ -10,6 +10,13 @@
         .color_text {
             color: #B3B3B3;
         }
+
+        @media (min-width: 768px) {
+            .modal-dialog {
+                width: 680px;
+                margin: 30px auto
+            }
+        }
     </style>
 @stop
 
@@ -472,6 +479,7 @@
                             <th>Tipo</th>
                             <th>Ficha Técnica</th>
                             <th>Nombre Material</th>
+                            <th>Color</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -481,6 +489,7 @@
                             <td>@{{ prod.proveedor.empresa }}</td>
                             <td>@{{ prod.categoria.nombre }}</td>
                             <td>@{{ prod.nombre_material }}</td>
+                            <td>@{{ prod.color }}</td>
                             <td>
                                 <a v-if="prod.ficha_tecnica" :href="prod.ficha_tecnica" target="_blank"
                                     class="btn btn-success" style="cursor:pointer;">
@@ -756,7 +765,8 @@
                     if (this.entrada.conversion != "") {
                         this.entrada.cantidad_convertida =
                             (this.entrada.cantidad * this.conversiones[this.entrada.medida][this.entrada
-                                .conversion])
+                                .conversion
+                            ])
                             .toFixed(2);
                     }
                 },
@@ -778,7 +788,8 @@
                     } else {
                         this.entrada.cantidad_convertida =
                             (this.entrada.cantidad * this.conversiones[this.entrada.medida][this.entrada
-                                .conversion])
+                                .conversion
+                            ])
                             .toFixed(2);
                     }
                 },
@@ -880,7 +891,8 @@
 
                             if (this.conversiones[this.entrada.medida]['{{ $entrada->medida_compra }}'] !=
                                 undefined || this.conversiones[this.entrada.medida][
-                                    '{{ $entrada->medida_compra }}'] != null) {
+                                    '{{ $entrada->medida_compra }}'
+                                ] != null) {
                                 console.log('entre');
                                 this.entrada.conversion = '{{ $entrada->medida_compra }}';
                                 this.convertirCantidad();

@@ -10,8 +10,15 @@
         .color_text {
             color: #B3B3B3;
         }
+
+        @media (min-width: 768px) {
+            .modal-dialog {
+                width: 680px;
+                margin: 30px auto
+            }
+        }
     </style><!-- <style>
-    </style> -->
+        </style> -->
 @stop
 
 {{-- Page content --}}
@@ -363,6 +370,7 @@
                             <th>Tipo</th>
                             <th>Ficha Técnica</th>
                             <th>Nombre Material</th>
+                            <th>Color</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -372,6 +380,7 @@
                             <td>@{{ prod.proveedor.empresa }}</td>
                             <td>@{{ prod.categoria.nombre }}</td>
                             <td>@{{ prod.nombre_material }}</td>
+                            <td>@{{ prod.color }}</td>
                             <td>
                                 <a v-if="prod.ficha_tecnica" :href="prod.ficha_tecnica" target="_blank"
                                     class="btn btn-success" style="cursor:pointer;">

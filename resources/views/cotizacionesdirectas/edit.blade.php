@@ -14,6 +14,13 @@
         .color_text {
             color: #B3B3B3;
         }
+
+        @media (min-width: 768px) {
+            .modal-dialog {
+                width: 680px;
+                margin: 30px auto
+            }
+        }
     </style>
 @stop
 
@@ -310,8 +317,11 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <div class="form-check form-switch">
-                                            <i :class="{ 'glyphicon glyphicon-unchecked': !cotizacion
-                                                .isfleteMenor, 'glyphicon glyphicon-check': cotizacion.isfleteMenor }"
+                                            <i :class="{
+                                                'glyphicon glyphicon-unchecked': !cotizacion
+                                                    .isfleteMenor,
+                                                'glyphicon glyphicon-check': cotizacion.isfleteMenor
+                                            }"
                                                 @click="isfleteMenor()"></i>
                                             <label class="control-label" for="cotizacion.flete_menor">Flete menor</label>
                                         </div>
@@ -824,6 +834,7 @@
                         <tr>
                             <th>Código</th>
                             <th>Nombre Material</th>
+                            <th>Color</th>
                             <th>Proveedor</th>
                             <th>Tipo</th>
                             <th>Ficha Técnica</th>
@@ -833,7 +844,7 @@
                     <tbody>
                         <tr v-for="(prod, index) in productos">
                             <td>@{{ prod.nombre }}</td>
-                            <td>@{{ prod.nombre_material }}</td>
+                            <td>@{{ prod.color }}</td>
                             <td>@{{ prod.proveedor.empresa }}</td>
                             <td>@{{ prod.categoria.nombre }}</td>
                             <td>
@@ -1896,7 +1907,7 @@
                         lugar: cotizacion.lugar,
                         fletes: cotizacion.fletes,
                         flete_menor: cotizacion.flete_menor,
-                        isfleteMenor: cotizacion.flete_menor ? 1:0,
+                        isfleteMenor: cotizacion.flete_menor ? 1 : 0,
                         costo_corte: cotizacion.costo_corte,
                         costo_sobreproduccion: cotizacion.costo_corte,
                         descuentos: cotizacion.descuentos,
