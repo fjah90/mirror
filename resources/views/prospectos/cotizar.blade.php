@@ -2257,10 +2257,10 @@
                                 }).then((result) => {
                                     if (result.dismiss === "cancel") {
                                         // Cierra la modal
-                                        // $('a[download="C ' + data.cotizacion.numero +
-                                        //         ' Robinson ' + this
-                                        //         .prospecto.nombre + '.pdf"]')[0].click();
-                                        //     window.location.reload(true);
+                                        $('a[download="C ' + data.cotizacion.numero +
+                                            ' Robinson ' + this
+                                            .prospecto.nombre + '.pdf"]')[0].click();
+                                        window.location.reload(true);
                                         swal.close();
                                     } else if (result.value) {
                                         // Ejecuta el código
@@ -2311,6 +2311,11 @@
                                 title: "Cotizacion Enviada",
                                 text: "",
                                 type: "success"
+
+                            }).then(() => {
+                                $('a[download="C ' + data.cotizacion.numero + ' Robinson ' + this
+                                    .prospecto.nombre + '.pdf"]')[0].click();
+                                window.location.reload(true);
                             });
                         })
                         .catch(({
