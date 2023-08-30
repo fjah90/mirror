@@ -499,6 +499,7 @@
         </div>
         <div class="row margTop10">
             <div class="col-lg-5">
+                //TODO: va el folio de la cotizacion no el numero
                 <p>Cotizacion # {{ $cotizacion->numero }}</p>
                 <p>Fecha: {{ $cotizacion->fechaPDF }}</p>
             </div>
@@ -630,9 +631,20 @@
                             <th class="text-center" style="width:13%; padding:3px 0 1px;">Modelo</th>
                             <th class="text-center" style="width:13%; padding:3px 0 1px;">Imagen</th>
                             <th class="text-center" style="width:16%; padding:3px 0 1px;">Descripciones</th>
-                            <th class="text-center" style="width:16%; padding:3px 0 1px;">Precio Unitario (USD)</th>
-                            <th class="text-center" style="width:16%; padding:3px 0 1px;">Precio Unitario Especial (USD)
-                            </th>
+                            @if ($cliente->tipo->id >= 1)
+                                //mostrar si es Residencial
+                                <th class="text-center" style="width:16%; padding:3px 0 1px;">Precio Unitario (USD)</th>
+                            @endif
+                            @if ($cliente->tipo->id >= 2)
+                                //mostrar si es Comercial
+                                <th class="text-center" style="width:16%; padding:3px 0 1px;">Precio Unitario Especial
+                                    (USD) </th>
+                            @endif
+                            @if ($cliente->tipo->id >= 3)
+                                //mostrar si es Distribuidor
+                                <th class="text-center" style="width:16%; padding:3px 0 1px;">Precio Unitario
+                                    Distribuidor (USD) </th>
+                            @endif
                             <th class="text-center" style="width:13%; padding:3px 0 1px;">Total</th>
                         </tr>
                     </thead>
@@ -643,50 +655,51 @@
                                 @else
                                 <tr>
                             @endif
-                            <td class="text-center border" style="width:13%; border-bottom: none; border-top: none;">
-                                @format_number($entrada->cantidad)
-                                <br /> {{ $entrada->medida }}
-                            </td>
-                            <td class="text-center border" style="width:13%; border-bottom: none; border-top: none;">
-                                <span>@text_capitalize($entrada->producto->nombre) </span>
-                                <br />
-                                <span>@text_capitalize($entrada->producto->nombre_material) </span>
-                            </td>
-                            <td class="text-center border" style="width:13%; border-bottom: none; border-top: none;">
-                                @foreach ($entrada->fotos as $foto)
-                                    <img src="{{ $foto }}" alt="foto" style="width:100px; height:100px;" />
+                                <td class="text-center border" style="width:13%; border-bottom: none; border-top: none;">
+                                    @format_number($entrada->cantidad)
+                                    <br /> {{ $entrada->medida }}
+                                </td>
+                                <td class="text-center border" style="width:13%; border-bottom: none; border-top: none;">
+                                    <span>@text_capitalize($entrada->producto->nombre) </span>
                                     <br />
-                                @endforeach
-                            </td>
-                            <td class="text-center border" style="width:16%; border-bottom: none; border-top: none;">
-                                @foreach ($entrada->descripciones as $descripcion)
-                                    @if ($descripcion->valor)
+                                    <span>@text_capitalize($entrada->producto->nombre_material) </span>
+                                </td>
+                                <td class="text-center border" style="width:13%; border-bottom: none; border-top: none;">
+                                    @foreach ($entrada->fotos as $foto)
+                                        <img src="{{ $foto }}" alt="foto" style="width:100px; height:100px;" />
+                                        <br />
+                                    @endforeach
+                                </td>
+                                <td class="text-center border" style="width:16%; border-bottom: none; border-top: none;">
+                                    @foreach ($entrada->descripciones as $descripcion)
+                                        @if ($descripcion->valor)
+                                            <p>
+                                                <span class="text-uppercase">{{ $descripcion->valor }}</span>
+                                            </p>
+                                        @endif
+                                    @endforeach
+                                    @if ($entrada->observaciones && $entrada->observaciones != '<ul></ul>')
                                         <p>
-                                            <span class="text-uppercase">{{ $descripcion->valor }}</span>
+                                            <span>
+                                                @if ($nombre == 'nombre')
+                                                    Observaciones:
+                                                @else
+                                                    Remarks:
+                                                @endif
+                                            </span>
+                                            {!! $entrada->observaciones !!}
                                         </p>
                                     @endif
-                                @endforeach
-                                @if ($entrada->observaciones && $entrada->observaciones != '<ul></ul>')
-                                    <p>
-                                        <span>
-                                            @if ($nombre == 'nombre')
-                                                Observaciones:
-                                            @else
-                                                Remarks:
-                                            @endif
-                                        </span>
-                                        {!! $entrada->observaciones !!}
-                                    </p>
-                                @endif
-                            </td>
-                            <td class="text-right border" style="width:16%; border-bottom: none; border-top: none;">
-                                @format_money($entrada->precio)</td>
-                            <td class="text-right border" style="width:16%; border-bottom: none; border-top: none;">
-                                @format_money($cliente->tipo->factor_porcentual > 0 ? $entrada->precio - ($entrada->precio * $cliente->tipo->factor_porcentual) / 100 : $entrada->precio)
-                            </td>
-                            <td class="text-right border" style="width:13%; border-bottom: none; border-top: none;">
-                                @format_money($entrada->importe)
-                            </td>
+                                </td>
+                                <td class="text-right border" style="width:16%; border-bottom: none; border-top: none;">
+                                    @format_money($entrada->producto->precio_resindencial)</td> //TODO: probar como colocar el precio aqui que corresponde opr el tipo de cliente
+                                <td class="text-right border" style="width:16%; border-bottom: none; border-top: none;">
+                                    @format_money($entrada->producto->precio_comercial)</td>
+                                <td class="text-right border" style="width:16%; border-bottom: none; border-top: none;">
+                                    @format_money($entrada->producto->precio_distribuidor)</td>
+                                <td class="text-right border" style="width:13%; border-bottom: none; border-top: none;">
+                                    @format_money($entrada->importe)
+                                </td>
                             </tr>
                         @endforeach
                         {{-- <tr>

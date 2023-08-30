@@ -508,7 +508,7 @@
                                                 'glyphicon glyphicon-check': cotizacion.isTax
                                             }"
                                                 @click="isTax()"></i>
-                                            <label class="control-label" for="cotizacion.tax">TAX</label>
+                                            <label class="control-label" for="cotizacion.tax">TAX %</label>
                                         </div>
                                         <input class="form-control" type="text" name="tax"
                                             v-model="cotizacion.tax" :disabled="!cotizacion.isTax" />

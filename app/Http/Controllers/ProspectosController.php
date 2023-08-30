@@ -2012,6 +2012,7 @@ class ProspectosController extends Controller
 
         $cotizacion->load(
             'condiciones',
+            'entradas.producto',
             'entradas.producto.categoria',
             'entradas.producto.proveedor',
             'entradas.descripciones',
@@ -2336,6 +2337,7 @@ class ProspectosController extends Controller
         $cotizacion->load(
             'prospecto.cliente',
             'condiciones',
+            'entradas.producto',
             'entradas.producto.categoria',
             'entradas.producto.proveedor',
             'entradas.descripciones',
@@ -2661,6 +2663,7 @@ class ProspectosController extends Controller
         $cotizacion->load(
             'prospecto.cliente',
             'condiciones',
+            'entradas.producto',
             'entradas.producto.categoria',
             'entradas.producto.proveedor',
             'entradas.descripciones',
@@ -2983,6 +2986,7 @@ class ProspectosController extends Controller
         $cotizacion->load(
             'prospecto.cliente',
             'condiciones',
+            'entradas.producto',
             'entradas.producto.categoria',
             'entradas.producto.proveedor',
             'entradas.descripciones',
