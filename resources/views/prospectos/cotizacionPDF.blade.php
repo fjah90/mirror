@@ -770,7 +770,7 @@
                     @endif
                     @if ($cotizacion->calTax > '0')
                         <tr>
-                            <td class="text-right" style="width:90%;"><strong>Tax {{$cotizacion->tax+}}%:</strong></td>
+                            <td class="text-right" style="width:90%;"><strong>Tax {{intval($cotizacion->tax)}}%:</strong></td>
                             <td class="text-right" style="width:10%;">@format_money($cotizacion->calTax)</td>
                         </tr>
                     @endif
