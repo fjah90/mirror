@@ -11,25 +11,80 @@ class ProspectoCotizacion extends Model
 {
     protected $table = 'prospectos_cotizaciones';
 
-    protected $fillable = ['prospecto_id', 'condicion_id', 'folio', 'fecha', 'subtotal', 'iva', 'tax',
-        'total', 'observaciones', 'notas', 'archivo', 'entrega', 'lugar', 'moneda', 'facturar',
-        'user_id', 'idioma', 'aceptada', 'notas2', 'numero', 'rfc', 'razon_social', 'calle',
-        'nexterior', 'ninterior', 'colonia', 'cp', 'ciudad', 'estado', 'fletes','flete','flete_menor','costo_corte','costo_sobreproduccion','ubicacion', 'cliente_contacto_id',
-        'direccion', 'dircalle', 'dirnexterior', 'dirninterior', 'dircolonia', 'dircp', 'dirciudad', 'direstado','descuentos','tipo_descuento',
-        'contacto_email', 'contacto_telefono', 'contacto_nombre','instrucciones','enviar_a','documentacion','factibilidad','vendedor_id','cliente_id','nombre_proyecto'
+    protected $fillable = [
+        'prospecto_id',
+        'condicion_id',
+        'folio',
+        'fecha',
+        'subtotal',
+        'iva',
+        'tax',
+        'calTax',
+        'total',
+        'observaciones',
+        'notas',
+        'archivo',
+        'entrega',
+        'lugar',
+        'moneda',
+        'facturar',
+        'user_id',
+        'idioma',
+        'aceptada',
+        'notas2',
+        'numero',
+        'rfc',
+        'razon_social',
+        'calle',
+        'nexterior',
+        'ninterior',
+        'colonia',
+        'cp',
+        'ciudad',
+        'estado',
+        'fletes',
+        'flete',
+        'flete_menor',
+        'costo_corte',
+        'costo_sobreproduccion',
+        'ubicacion',
+        'cliente_contacto_id',
+        'direccion',
+        'dircalle',
+        'dirnexterior',
+        'dirninterior',
+        'dircolonia',
+        'dircp',
+        'dirciudad',
+        'direstado',
+        'descuentos',
+        'tipo_descuento',
+        'contacto_email',
+        'contacto_telefono',
+        'contacto_nombre',
+        'instrucciones',
+        'enviar_a',
+        'documentacion',
+        'factibilidad',
+        'vendedor_id',
+        'cliente_id',
+        'nombre_proyecto'
     ];
 
     protected $casts = [
         'subtotal' => 'float',
         'iva'      => 'float',
-        'tax'      => 'float',
+        'calTax'   => 'float',
         'total'    => 'float',
         'aceptada' => 'boolean',
         'facturar' => 'boolean',
     ];
 
     protected $appends = [
-        'fecha_formated', 'direccion_facturacion', 'direccion_entrega', 'contacto_direccion_entrega'
+        'fecha_formated',
+        'direccion_facturacion',
+        'direccion_entrega',
+        'contacto_direccion_entrega'
     ];
 
     public function getFechaFormatedAttribute()
@@ -40,13 +95,13 @@ class ProspectoCotizacion extends Model
     public function getDireccionFacturacionAttribute()
     {
         return $this->calle . " " . $this->nexterior . (($this->ninterior) ? " Int. " . $this->ninterior : "") . " "
-        . $this->colonia . " " . $this->cp . " " . $this->ciudad . " " . $this->estado . " " . $this->pais;
+            . $this->colonia . " " . $this->cp . " " . $this->ciudad . " " . $this->estado . " " . $this->pais;
     }
 
     public function getDireccionEntregaAttribute()
     {
         return $this->dircalle . " " . $this->dirnexterior . (($this->dirninterior) ? " Int. " . $this->dirninterior : "") . " "
-        . $this->dircolonia . " " . $this->dircp . " " . $this->dirciudad . " " . $this->direstado . " " . $this->dirpais;
+            . $this->dircolonia . " " . $this->dircp . " " . $this->dirciudad . " " . $this->direstado . " " . $this->dirpais;
     }
 
     public function getContactoDireccionEntregaAttribute()
@@ -91,10 +146,10 @@ class ProspectoCotizacion extends Model
 
     public function entradas2()
     {
-        $entradas = ProspectoCotizacionEntrada::leftjoin('productos','producto_id','=','productos.id')
-        ->leftjoin('proveedores','productos.proveedor_id','=','proveedores.id')
-        ->select('proveedores.empresa', DB::raw('sum(prospectos_cotizaciones_entradas.importe) as total_importe') )->groupBy('proveedores.empresa')
-        ->where('prospectos_cotizaciones_entradas.cotizacion_id',$this->id)->get();  
+        $entradas = ProspectoCotizacionEntrada::leftjoin('productos', 'producto_id', '=', 'productos.id')
+            ->leftjoin('proveedores', 'productos.proveedor_id', '=', 'proveedores.id')
+            ->select('proveedores.empresa', DB::raw('sum(prospectos_cotizaciones_entradas.importe) as total_importe'))->groupBy('proveedores.empresa')
+            ->where('prospectos_cotizaciones_entradas.cotizacion_id', $this->id)->get();
 
         return $entradas;
 
@@ -123,7 +178,7 @@ class ProspectoCotizacion extends Model
 
     public function cliente()
     {
-        return $this->hasOne('App\Models\Cliente','id', 'cliente_id');
+        return $this->hasOne('App\Models\Cliente', 'id', 'cliente_id');
     }
 
 }

@@ -2154,6 +2154,7 @@
                         });
                         var url = "",
                             numero_siguiente = false;
+                        
                         //console.log(formData)
                         if (this.cotizacion.cotizacion_id) {
                             url = '/prospectos/{{ $prospecto->id }}/cotizacion/' + this.cotizacion.cotizacion_id;
