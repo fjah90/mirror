@@ -2378,6 +2378,9 @@ class ProspectosController extends Controller
         }
         $cliente = $cotizacion->prospecto->cliente;
 
+        // descomentar si quieres ver el pdf en local
+        // return view($view, compact('cliente', 'cotizacion', 'nombre'));
+        
         $cotizacionPDF = PDF::loadView($view, compact('cliente', 'cotizacion', 'nombre'));
         Storage::disk('public')->put($url, $cotizacionPDF->output());
 
@@ -2705,6 +2708,9 @@ class ProspectosController extends Controller
         }
 
         $cliente = $cotizacion->prospecto->cliente;
+
+        // descomentar si quieres ver el pdf en local
+        // return view($view, compact('cliente', 'cotizacion', 'nombre'));
 
         $cotizacionPDF = PDF::loadView($view, compact('cotizacion', 'cliente', 'nombre'));
         Storage::disk('public')->put($url, $cotizacionPDF->output());
