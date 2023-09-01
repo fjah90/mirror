@@ -499,7 +499,7 @@
         </div>
         <div class="row margTop10">
             <div class="col-lg-5">
-                //TODO: va el folio de la cotizacion no el numero
+                {{-- //TODO: va el folio de la cotizacion no el numero --}}
                 <p>Cotizacion # {{ $cotizacion->numero }}</p>
                 <p>Fecha: {{ $cotizacion->fechaPDF }}</p>
             </div>
