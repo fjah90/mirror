@@ -663,6 +663,9 @@
                                 <span>@text_capitalize($entrada->producto->nombre) </span>
                                 <br />
                                 <span>@text_capitalize($entrada->producto->nombre_material) </span>
+                                <br />
+                                <span>@text_capitalize($entrada->producto->color) </span>
+                                <br />
                             </td>
                             <td class="text-center border" style="width:13%; border-bottom: none; border-top: none;">
                                 @foreach ($entrada->fotos as $foto)
