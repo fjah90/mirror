@@ -375,8 +375,6 @@ class ProspectosController extends Controller
      */
     public function prospectos(Request $request)
     {
-
-
         $inicio = Carbon::parse('2023-01-01');
         $anio = Carbon::parse('2023-12-31');
         $anio2 = '2023-12-31';
@@ -604,9 +602,6 @@ class ProspectosController extends Controller
 
         //Sacamos la notificaciones del usuario logueado
         $notificaciones = Notificacion::with('usercreo', 'userdirigido')->where('user_dirigido', auth()->user()->id)->where('status', 'sin leer')->get();
-
-
-
 
 
         $clientes = Cliente::all();
@@ -967,28 +962,29 @@ class ProspectosController extends Controller
 
     public function listadoprospectos(Request $request)
     {
-        $anio = Carbon::parse($request->anio);
-        $inicio = $anio->startOfYear();
+
+        $anio = $request->anio != "Todos" ? Carbon::parse($request->anio): $request->anio;
+        $inicio = $request->anio != "Todos" ? $anio->startOfYear(): "";
 
         // die($inicio);
-        // if ($request->anio == '2019-12-31') {
-        //     $inicio = Carbon::parse('2019-01-01');
-        // }
-        // elseif ($request->anio == '2020-12-31') {
-        //     $inicio = Carbon::parse('2020-01-01');
-        // }
-        // elseif ($request->anio == '2022-12-31') {
-        //     $inicio = Carbon::parse('2022-01-01');
-        // }
-        // elseif ($request->anio == '2023-12-31') {
-        //     $inicio = Carbon::parse('2023-01-01');
-        // }
-        // elseif ($request->anio == '2024-12-31') {
-        //     $inicio = Carbon::parse('2024-01-01');
-        // }
-        // else {
-        //     $inicio = Carbon::parse('2021-01-01');
-        // }
+        if ($request->anio == '2019-12-31') {
+            $inicio = Carbon::parse('2019-01-01');
+        }
+        elseif ($request->anio == '2020-12-31') {
+            $inicio = Carbon::parse('2020-01-01');
+        }
+        elseif ($request->anio == '2022-12-31') {
+            $inicio = Carbon::parse('2022-01-01');
+        }
+        elseif ($request->anio == '2023-12-31') {
+            $inicio = Carbon::parse('2023-01-01');
+        }
+        elseif ($request->anio == '2024-12-31') {
+            $inicio = Carbon::parse('2024-01-01');
+        }
+        else {
+            $inicio = Carbon::parse('2021-01-01');
+        }
 
         if ($request->id == 'Todos') {
             $tareas = Tarea::with('vendedor')->get();
