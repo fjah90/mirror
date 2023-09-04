@@ -56,10 +56,10 @@
               Año  
                 <select class="form-control" @change="cargar()" v-model="anio" style="width:auto;display:inline-block;">
                   <option value="Todos">Todos</option>
-                  <option value="2019-12-31">2019</option>
+                  {{-- <option value="2019-12-31">2019</option>
                   <option value="2020-12-31">2020</option>
                   <option value="2021-12-31">2021</option>
-                  <option value="2022-12-31">2022</option>
+                  <option value="2022-12-31">2022</option> --}}
                   <option value="2023-12-31">2023</option>
                 </select>
             </div>          
