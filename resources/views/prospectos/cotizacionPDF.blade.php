@@ -2,18 +2,18 @@
 <html lang="en">
 
 <head>
-    <link rel="stylesheet" href="{{ asset('css/latofonts.css') }}" rel="stylesheet">
+    {{-- <link rel="stylesheet" href="{{ asset('css/latofonts.css') }}" rel="stylesheet"> --}}
     <meta charset="UTF-8">
     <style>
         html {
-            font-family: "LatoWeb";
+            /* font-family: "LatoWeb"; */
             -webkit-text-size-adjust: 100%;
             -ms-text-size-adjust: 100%;
         }
 
         body {
             margin: 25px;
-            font-family: "LatoWeb";
+            /* font-family: "LatoWeb"; */
             font-size: 10px;
             line-height: 1.1;
             color: #333;
@@ -32,7 +32,7 @@
         .h4,
         .h5,
         .h6 {
-            font-family: "LatoWeb";
+            /* font-family: "LatoWeb"; */
             font-weight: 500;
             color: inherit;
         }
