@@ -2,18 +2,18 @@
 <html lang="en">
 
 <head>
-   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap">
     <meta charset="UTF-8">
     <style>
         html {
-            font-family: Lato;
+            font-family: 'Lato';
             -webkit-text-size-adjust: 100%;
             -ms-text-size-adjust: 100%;
         }
 
         body {
             margin: 25px;
-            font-family: Lato;
+            font-family: 'Lato';
             font-size: 10px;
             line-height: 1.1;
             color: #333;
@@ -32,7 +32,7 @@
         .h4,
         .h5,
         .h6 {
-            font-family: Lato;
+            font-family: 'Lato';
             font-weight: 500;
             color: inherit;
         }
@@ -704,7 +704,8 @@
                                     @format_money($entrada->producto->precio_comercial)</td>
                             @endif
                             @if ($cliente->tipo->id >= 3)
-                                <td class="text-right border" style="width:16%; border-bottom: none; border-top: none;">
+                                <td class="text-right border"
+                                    style="width:16%; border-bottom: none; border-top: none;">
                                     @format_money($entrada->producto->precio_distribuidor)</td>
                             @endif
                             <td class="text-right border" style="width:13%; border-bottom: none; border-top: none;">
@@ -771,7 +772,8 @@
                     @endif
                     @if ($cotizacion->calTax > '0')
                         <tr>
-                            <td class="text-right" style="width:90%;"><strong>Tax {{intval($cotizacion->tax)}}%:</strong></td>
+                            <td class="text-right" style="width:90%;"><strong>Tax
+                                    {{ intval($cotizacion->tax) }}%:</strong></td>
                             <td class="text-right" style="width:10%;">@format_money($cotizacion->calTax)</td>
                         </tr>
                     @endif
