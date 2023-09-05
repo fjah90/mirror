@@ -2,9 +2,20 @@
 <html lang="en">
 
 <head>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap">
+    {{-- <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap"> --}}
     <meta charset="UTF-8">
     <style>
+        @font-face {
+            font-family: 'Lato';
+            src: url({{ public_path('fonts/vendor/lato/Lato-Italic.eot') }}); /* IE9 Compat Modes */
+            src: url({{ public_path('fonts/vendor/lato/Lato-Italic.eot?#iefix') }}) format('embedded-opentype'), /* IE6-IE8 */
+                url({{ public_path('fonts/vendor/lato/Lato-Italic.woff2') }}) format('woff2'), /* Modern Browsers */
+                url({{ public_path('fonts/vendor/lato/Lato-Italic.woff') }}) format('woff'), /* Modern Browsers */
+                url({{ public_path('fonts/vendor/lato/Lato-Italic.ttf') }}) format('truetype');
+            font-style: italic;
+            font-weight: normal;
+            text-rendering: optimizeLegibility;
+        }
         html {
             font-family: 'Lato';
             -webkit-text-size-adjust: 100%;
