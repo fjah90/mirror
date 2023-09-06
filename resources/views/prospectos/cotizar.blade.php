@@ -1159,7 +1159,7 @@
                     proveedor_contacto_id: ""
                 },
                 enviar: {
-                    cotizacion_id: this.cotizacionEnviar,
+                    cotizacion_id: 0,
                     numero: 0,
                     email: [],
                     emailOpciones: [
@@ -2267,7 +2267,7 @@
                                     } else if (result.value) {
                                         // Ejecuta el código
                                         this.openEnviar = true;
-                                        this.cotizacionEnviar = data.cotizacion.id;
+                                        this.enviar.cotizacion_id = data.cotizacion.id;
                                     }
                                 });
                             })
