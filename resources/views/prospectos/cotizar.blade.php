@@ -1054,6 +1054,7 @@
         const app = new Vue({
             el: '#content',
             data: {
+                cotizacionEnviar: 0,
                 'notasPreCargadas': {!! json_encode($notasPreCargadas) !!},
                 fechaActual: new Date().toLocaleDateString(),
                 folio: '',
@@ -1158,7 +1159,7 @@
                     proveedor_contacto_id: ""
                 },
                 enviar: {
-                    cotizacion_id: 0,
+                    cotizacion_id: this.cotizacionEnviar,
                     numero: 0,
                     email: [],
                     emailOpciones: [
@@ -2266,6 +2267,7 @@
                                     } else if (result.value) {
                                         // Ejecuta el código
                                         this.openEnviar = true;
+                                        this.cotizacionEnviar = data.cotizacion.id;
                                     }
                                 });
                             })
@@ -2291,7 +2293,7 @@
                             data
                         }) => {
                             this.enviar = {
-                                cotizacion_id: 0,
+                                cotizacion_id: this.cotizacion.cotizacion_id,
                                 numero: 0,
                                 email: [],
                                 emailOpciones: [
