@@ -3066,8 +3066,6 @@ class ProspectosController extends Controller
      */
     public function enviarCotizacion(Request $request)
     {
-
-
         $validator = Validator::make($request->all(), [
             'cotizacion_id' => 'required',
             'email'         => 'required|array',
@@ -3085,9 +3083,11 @@ class ProspectosController extends Controller
         }
 
         $cotizacion = ProspectoCotizacion::with('entradas', 'prospecto')->findOrFail($request->cotizacion_id);
-        dd($cotizacion);
+        
         $email = $request->email;
         // $pdf_name = basename($cotizacion->archivo);
+
+        dd($cotizacion->numero);
         $pdf_name = 'C ' . $cotizacion->numero . ' Robinson ' . $cotizacion->prospecto->nombre . '.pdf';
         $pdf = Storage::disk('public')->get($cotizacion->archivo);
         $user = auth()->user();
