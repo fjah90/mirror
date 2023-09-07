@@ -1442,6 +1442,9 @@
                 isfleteMenor() {
                     this.cotizacion.isfleteMenor = this.cotizacion.isfleteMenor ? false : true;
                 },
+                isTax() {
+                    this.cotizacion.isTax = this.cotizacion.isTax ? false : true;
+                },
                 agregarObservacion(observacion) {
                     this.cotizacion.observaciones.push(observacion.texto);
                     observacion.activa = true;
