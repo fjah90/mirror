@@ -3106,8 +3106,10 @@ class ProspectosController extends Controller
         });
 
         //generar actividad de envio de cotizacion
-        $this->registrarActividadDeCotizacionEnviada($cotizacion);
-
+        if(isset($cotizacion->prospecto)){
+            $this->registrarActividadDeCotizacionEnviada($cotizacion);
+        }
+        
         return response()->json(['success' => true, 'error' => false], 200);
     }
 
