@@ -1592,16 +1592,11 @@
                             valor_ingles: desc.valor_ingles
                         });
                     }, this);
-                    ///
+
                     if (prod.foto) {
                         $("button.fileinput-remove").click();
                         $("#foto-producto")[0].src = prod.foto;
                     }
-                    /////////////////////////////////
-                    // if (prod.planos) {
-                    //     $("button.fileinput-remove").click();
-                    //     $("div.file-default-preview img")[0].src = prod.planos;
-                    // }
 
                     this.openCatalogo = false;
                 },
@@ -1843,7 +1838,6 @@
                             .then(({
                                 data
                             }) => {
-                                console.log
                                 swal({
                                     title: "Cotizacion Guardada",
                                     text: "",
@@ -1861,6 +1855,7 @@
                                     } else if (result.value) {
                                         // Ejecuta el código
                                         this.openEnviar = true;
+                                        this.cargando = false;
                                         console.log(data)
                                         this.enviar.cotizacion_id = data.cotizacion.id;
                                     }

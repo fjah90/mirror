@@ -841,7 +841,7 @@
         <!-- /.Copiar Modal -->
 
         <!-- Enviar Modal -->
-        <modal v-model="openEnviar" :title="'Enviar Cotizacion ' + enviar.numero" :footer="false">
+        <modal v-model="openEnviar" :title="'Enviar Cotizacion ' + enviar.cotizacion_id" :footer="false">
             <form class="" @submit.prevent="enviarCotizacion()">
                 <div class="form-group">
                     <label class="control-label">Email(s) *</label>
@@ -1886,7 +1886,6 @@
                     this.resetDataTables();
                 },
                 guardar() {
-
                     if (this.entrada.producto.id == undefined) {
 
                     } else {
@@ -1902,7 +1901,10 @@
                     });
 
                     totalcotizacion = cotizacion.subtotal.toFixed(2);
-
+                    totalf += Number(this.cotizacion.fletes) +
+                        Number(this.cotizacion.flete_menor) +
+                        Number(this.cotizacion.costo_corte) +
+                        Number(this.cotizacion.costo_sobreproduccion);
                     console.log(totalcotizacion);
                     console.log(totalf);
                     console.log(totalcotizacion - totalf);
@@ -1913,7 +1915,7 @@
                     if (dif > 0.05) {
                         alert('OCURRIO UN ERROR INESPERADO EL SUBTOTAL NO COINCIDE FAVOR DE RECARGAR LA PAGINA');
                     } else {
-
+                        this.setDescuentosFinal()
                         cotizacion.entradas.forEach(function(entrada) {
                             entrada.producto_id = entrada.producto.id;
                             delete entrada.producto;
@@ -1938,9 +1940,24 @@
                                 swal({
                                     title: "Cotizacion Guardada",
                                     text: "",
-                                    type: "success"
-                                }).then(() => {
-                                    window.location.href = "/cotizacionesdirectas";
+                                    type: "success",
+                                    confirmButtonText: "Enviar Cotización",
+                                    showCancelButton: true,
+                                    cancelButtonText: "Ok",
+                                }).then((result) => {
+                                    console.log(result)
+
+                                    if (result.dismiss === "cancel") {
+                                        // Cierra la modal
+                                        window.location.href = "/cotizacionesdirectas";
+                                        swal.close();
+                                    } else if (result.value) {
+                                        // Ejecuta el código
+                                        this.openEnviar = true;
+                                        this.cargando = false;
+                                        console.log(data)
+                                        this.enviar.cotizacion_id = data.cotizacion.id;
+                                    }
                                 });
                             })
                             .catch(({
@@ -1960,42 +1977,43 @@
                 }, //fin guardar
                 enviarCotizacion() {
                     this.cargando = true;
-                    axios.post('/prospectos/0/enviarCotizacion', this.enviar)
-                        .then(({
-                            data
-                        }) => {
-                            this.enviar = {
-                                cotizacion_id: 0,
-                                numero: 0,
-                                email: [],
-                                emailOpciones: [
+                    console.log(this.contactos)
+                    // axios.post('/prospectos/0/enviarCotizacion', this.enviar)
+                    //     .then(({
+                    //         data
+                    //     }) => {
+                    //         this.enviar = {
+                    //             cotizacion_id: 0,
+                    //             numero: 0,
+                    //             email: [],
+                    //             emailOpciones: [
 
-                                ],
-                                mensaje: "Buen día.\n\nLe envió cotización para su consideración.\n\n{{ auth()->user()->name }}.\nAtención del Cliente\nRobinson Contract Resources"
-                            };
-                            this.openEnviar = false;
-                            this.cargando = false;
-                            swal({
-                                title: "Cotizacion Enviada",
-                                text: "",
-                                type: "success"
-                            }).then((result) => {
-                                window.location.href = "/cotizacionesdirectas";
-                            });
+                    //             ],
+                    //             mensaje: "Buen día.\n\nLe envió cotización para su consideración.\n\n{{ auth()->user()->name }}.\nAtención del Cliente\nRobinson Contract Resources"
+                    //         };
+                    //         this.openEnviar = false;
+                    //         this.cargando = false;
+                    //         swal({
+                    //             title: "Cotizacion Enviada",
+                    //             text: "",
+                    //             type: "success"
+                    //         }).then((result) => {
+                    //             window.location.href = "/cotizacionesdirectas";
+                    //         });
 
-                        })
-                        .catch(({
-                            response
-                        }) => {
-                            console.error(response);
-                            this.cargando = false;
-                            swal({
-                                title: "Error",
-                                text: response.data.message ||
-                                    "Ocurrio un error inesperado, intente mas tarde",
-                                type: "error"
-                            });
-                        });
+                    //     })
+                    //     .catch(({
+                    //         response
+                    //     }) => {
+                    //         console.error(response);
+                    //         this.cargando = false;
+                    //         swal({
+                    //             title: "Error",
+                    //             text: response.data.message ||
+                    //                 "Ocurrio un error inesperado, intente mas tarde",
+                    //             type: "error"
+                    //         });
+                    //     });
                 }, //fin enviarCotizacion
                 notasCotizacion() {
                     this.cargando = true;

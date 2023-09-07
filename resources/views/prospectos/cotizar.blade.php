@@ -962,7 +962,7 @@
         <!-- /.Copiar Modal -->
 
         <!-- Enviar Modal -->
-        <modal v-model="openEnviar" :title="'Enviar Cotizacion ' + enviar.numero" :footer="false">
+        <modal v-model="openEnviar" :title="'Enviar Cotizacion ' + enviar.cotizacion_id" :footer="false">
             <form class="" @submit.prevent="enviarCotizacion()">
                 <div class="form-group">
                     <label class="control-label">Email(s) *</label>
@@ -2268,6 +2268,7 @@
                                     } else if (result.value) {
                                         // Ejecuta el código
                                         this.openEnviar = true;
+                                        this.cargando = false;
                                         this.enviar.cotizacion_id = data.cotizacion.id;
                                     }
                                 });
