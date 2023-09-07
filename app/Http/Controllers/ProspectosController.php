@@ -3086,7 +3086,7 @@ class ProspectosController extends Controller
         
         $email = $request->email;
         // $pdf_name = basename($cotizacion->archivo);
-        if(isset($cotizacion->prospecto->nombre)){
+        if(isset($cotizacion->prospecto)){
             $pdf_name = 'C ' . $cotizacion->numero . ' Robinson ' . $cotizacion->prospecto->nombre . '.pdf';
         }else{
             $pdf_name = 'C ' . $cotizacion->numero . ' Intercorp.pdf';
