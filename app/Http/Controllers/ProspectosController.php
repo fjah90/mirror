@@ -3087,11 +3087,11 @@ class ProspectosController extends Controller
         $email = $request->email;
         // $pdf_name = basename($cotizacion->archivo);
 
-        dd($cotizacion->numero);
         $pdf_name = 'C ' . $cotizacion->numero . ' Robinson ' . $cotizacion->prospecto->nombre . '.pdf';
         $pdf = Storage::disk('public')->get($cotizacion->archivo);
         $user = auth()->user();
-
+        
+        dd($email);
         Mail::send('email', ['mensaje' => $request->mensaje], function ($message) use ($email, $pdf, $pdf_name, $user) {
             $message->to($email)
             // TODO: colocar el correo para el de notificaciones
