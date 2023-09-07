@@ -3091,7 +3091,7 @@ class ProspectosController extends Controller
         }else{
             $pdf_name = 'C ' . $cotizacion->numero . ' Intercorp.pdf';
         }
-        dd($pdf_name);
+        // dd($pdf_name);
 
         $pdf = Storage::disk('public')->get($cotizacion->archivo);
         $user = auth()->user();
