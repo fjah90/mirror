@@ -378,6 +378,7 @@
                                         v-model="cotizacion.contacto_email" />
                                 </div>
                             </div>
+                            {{-- Condiciones de Pago     --}}
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
@@ -2155,7 +2156,7 @@
                         });
                         var url = "",
                             numero_siguiente = false;
-                        
+
                         //console.log(formData)
                         if (this.cotizacion.cotizacion_id) {
                             url = '/prospectos/{{ $prospecto->id }}/cotizacion/' + this.cotizacion.cotizacion_id;

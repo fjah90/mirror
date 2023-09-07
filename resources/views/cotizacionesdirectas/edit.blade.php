@@ -58,8 +58,8 @@
                                 </div>
                                 <div class="col-md-4">
                                     <label class="control-label">Cliente</label>
-                                    <select name="cliente_id" v-model="cotizacion.cliente_id" class="form-control" required
-                                        @change="contactosCliente()">
+                                    <select name="cliente_id" id="cliente_id" v-model="cotizacion.cliente_id"
+                                        class="form-control" required @change="contactosCliente()">
                                         @foreach ($clientes as $cliente)
                                             <option value="{{ $cliente->id }}">
                                                 {{ $cliente->nombre }}</option>
@@ -89,6 +89,11 @@
                                     <label class="control-label">Fecha</label>
                                     <br />
                                     <label id="fechaActual" class="control-label"></label>
+                                </div>
+                                <div class="col-md-2">
+                                    <label class="control-label">Folio</label>
+                                    <br />
+                                    <label id="folio" class="control-label"></label>
                                 </div>
                             </div>
                             <div class="row">
@@ -301,17 +306,16 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-
-                                        <label class="control-label">Flete</label>
-                                        <input class="form-control" type="text" name="flete"
-                                            v-model="cotizacion.flete" />
+                                        <label class="control-label">Ubicación</label>
+                                        <input class="form-control" type="text" name="ubicacion"
+                                            v-model="cotizacion.ubicacion" />
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label class="control-label">Ubicación</label>
-                                        <input class="form-control" type="text" name="ubicacion"
-                                            v-model="cotizacion.ubicacion" />
+                                        <label class="control-label">Flete</label>
+                                        <input class="form-control" type="text" name="flete"
+                                            v-model="cotizacion.flete" />
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -346,19 +350,6 @@
                             </div>
                             <!--Agregando campos nuevos-->
                             <div class="row">
-                                {{-- <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label class="control-label" style="display:block;">Documentación adjuntar
-                                            (planos,etc)</label>
-                                        <div>
-                                            <div>
-                                                <input id="planos" name="planos" type="file" ref="planos"
-                                                    @change="fijarArchivo('planos')" />
-                                            </div>
-                                        </div>
-                                        <div id="planos-file-errors"></div>
-                                    </div>
-                                </div> --}}
                                 <div class="col-md-6">
                                     <label class="control-label">Factibilidad de proyecto *</label>
                                     <select class="form-control" name="factibilidad" v-model="cotizacion.factibilidad"
@@ -371,7 +362,7 @@
                             </div><br>
                             <!--Agregando campos nuevos-->
                             <div class="row">
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <div class="form-group">
                                         <label class="control-label">Moneda *</label>
                                         <select class="form-control" name="moneda" v-model="cotizacion.moneda" required>
@@ -380,7 +371,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <div class="form-group">
                                         <label class="control-label">IVA *</label>
                                         <select class="form-control" name="iva" v-model="cotizacion.iva" required>
@@ -389,7 +380,21 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <div class="form-check form-switch">
+                                            <i :class="{
+                                                'glyphicon glyphicon-unchecked': !cotizacion.isTax,
+                                                'glyphicon glyphicon-check': cotizacion.isTax
+                                            }"
+                                                @click="isTax()"></i>
+                                            <label class="control-label" for="cotizacion.tax">TAX %</label>
+                                        </div>
+                                        <input class="form-control" type="text" name="tax"
+                                            v-model="cotizacion.tax" :disabled="!cotizacion.isTax" />
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
                                     <div class="form-group">
                                         <label class="control-label">Idioma *</label>
                                         <select class="form-control" name="idioma" v-model="cotizacion.idioma" required>
@@ -414,7 +419,15 @@
                                             <option value="1">%</option>
                                         </select>
                                     </div>
-
+                                    <div class="col-md-6"
+                                        style="display: flex; justify-content: flex-end; align-items: flex-end; padding-top: 40px;">
+                                        <button type="button" class="btn btn-dark" @click="sumaTotal()"
+                                            style="background-color:#12160F; color:#B68911;">
+                                            <i v-if="!cargando" class="fas fa-calculator"></i>
+                                            <i v-else class="fas fa-refresh animation-rotate"></i>
+                                            Recalcular
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                             <hr />
@@ -436,29 +449,61 @@
                                             <tbody>
                                             </tbody>
                                             <tfoot>
+                                                <tr v-if="cotizacion.fletes !='0' || cotizacion.fletes !=''">
+                                                    <td colspan="3"></td>
+                                                    <td class="text-right"><strong>Costo de Flete</strong></td>
+                                                    <td v-if="cotizacion.fletes =='0'">$0.00</td>
+                                                    <td v-if="cotizacion.fletes !='0'">@{{ (cotizacion.fletes) | formatoMoneda }}</td>
+                                                    <td></td>
+                                                </tr>
+                                                <tr v-if="cotizacion.flete_menor !='0' || cotizacion.flete_menor !=''">
+                                                    <td colspan="3"></td>
+                                                    <td class="text-right"><strong>Costo de Flete menor</strong></td>
+                                                    <td v-if="cotizacion.flete_menor =='0'">$0.00</td>
+                                                    <td v-if="cotizacion.flete_menor !='0'">@{{ (cotizacion.flete_menor) | formatoMoneda }}</td>
+                                                    <td></td>
+                                                </tr>
+                                                <tr
+                                                    v-if="cotizacion.costo_sobreproduccion !='0' || cotizacion.costo_sobreproduccion !=''">
+                                                    <td colspan="3"></td>
+                                                    <td class="text-right"><strong>Costo Sobreproducción</strong></td>
+                                                    <td v-if="cotizacion.costo_sobreproduccion =='0'">$0.00</td>
+                                                    <td v-if="cotizacion.costo_sobreproduccion !='0'">
+                                                        @{{ (cotizacion.costo_sobreproduccion) | formatoMoneda }}</td>
+                                                    <td></td>
+                                                </tr>
+                                                <tr v-if="cotizacion.costo_corte !='0'  || cotizacion.costo_corte !=''">
+                                                    <td colspan="3"></td>
+                                                    <td class="text-right"><strong>Costo de Corte</strong></td>
+                                                    <td v-if="cotizacion.costo_corte =='0'">$0.00</td>
+                                                    <td v-if="cotizacion.costo_corte !='0'">@{{ (cotizacion.costo_corte) | formatoMoneda }}</td>
+                                                    <td></td>
+                                                </tr>
                                                 <tr>
                                                     <td colspan="3"></td>
                                                     <td class="text-right"><strong>Subtotal</strong></td>
                                                     <td>@{{ cotizacion.subtotal | formatoMoneda }}</td>
                                                     <td></td>
                                                 </tr>
-                                                <tr v-if="cotizacion.descuentos !='0'">
+                                                <tr v-if="cotizacion.descuentos !='0' || cotizacion.descuentos !=''">
                                                     <td colspan="3"></td>
                                                     <td class="text-right"><strong>Descuentos</strong></td>
-                                                    <td
-                                                        v-if="cotizacion.descuentos =='0' && cotizacion.tipo_descuento =='0'">
-                                                        $0.00</td>
-                                                    <td
-                                                        v-if="cotizacion.descuentos !='0' && cotizacion.tipo_descuento =='1'">
-                                                        @{{ (cotizacion.subtotal * cotizacion.descuentos) / 100 | formatoMoneda }}</td>
-                                                    <td v-else>@{{ cotizacion.descuentos | formatoMoneda }}</td>
+                                                    <td v-if="cotizacion.montoDescuento == 0">$0.00</td>
+                                                    <td v-else>- @{{ cotizacion.montoDescuento | formatoMoneda }}</td>
                                                     <td></td>
                                                 </tr>
-                                                <tr>
+                                                <tr v-if="cotizacion.calIva !='0' || cotizacion.calIva !=''">
                                                     <td colspan="3"></td>
                                                     <td class="text-right"><strong>IVA</strong></td>
-                                                    <td v-if="cotizacion.iva=='0'">$0.00</td>
-                                                    <td v-else>@{{ cotizacion.subtotal * 0.16 | formatoMoneda }}</td>
+                                                    <td v-if="cotizacion.calIva == 0">$0.00</td>
+                                                    <td v-else>@{{ cotizacion.calIva | formatoMoneda }}</td>
+                                                    <td></td>
+                                                </tr>
+                                                <tr v-if="cotizacion.calTax !='0' || cotizacion.calTax !=''">
+                                                    <td colspan="3"></td>
+                                                    <td class="text-right"><strong>TAX</strong></td>
+                                                    <td v-if="cotizacion.calTax == 0">$0.00</td>
+                                                    <td v-else>@{{ cotizacion.calTax | formatoMoneda }}</td>
                                                     <td></td>
                                                 </tr>
                                                 <tr>
@@ -469,10 +514,8 @@
                                                             <span v-else> Pesos</span>
                                                         </strong>
                                                     </td>
-                                                    <td v-if="cotizacion.iva=='0'">@{{ cotizacion.subtotal | formatoMoneda }} </td>
-                                                    <td v-else-if="cotizacion.descuentos!='0' && cotizacion.subtotal!='0'">
-                                                        @{{ (cotizacion.subtotal - cotizacion.descuentos) * 1.16 | formatoMoneda }}</td>
-                                                    <td v-else>@{{ cotizacion.subtotal * 1.16 | formatoMoneda }}</td>
+                                                    <td v-if="cotizacion.total == 0">$0.00</td>
+                                                    <td v-else>@{{ cotizacion.total | formatoMoneda }}</td>
                                                     <td></td>
                                                 </tr>
                                             </tfoot>
@@ -530,73 +573,6 @@
                                     </button>
                                 </div>
                             </div>
-                            {{-- <div class="row" style="padding-top: 10px;">
-                                <div class="col-md-2">
-                                    <div class="form-group">
-                                        <label class="control-label">Precio de Compra</label>
-                                        <input type="number" step="0.01" min="0.01" name="precio_compra"
-                                               class="form-control"
-                                               v-model="entrada.precio_compra"/>
-                                    </div>
-                                </div>
-                                <div class="col-md-2">
-                                    <div class="form-group">
-                                        <label class="control-label">Unidad Medida Compra</label>
-                                        <select class="form-control" name="medida" v-model="entrada.medida_compra">
-                                            @foreach ($unidades_medida as $unidad)
-                                                <option value="{{ $unidad->simbolo }}">{{ $unidad->simbolo }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-2">
-                                    <div class="form-group">
-                                        <label class="control-label">Fecha Precio</label>
-                                        <br/>
-                                        <dropdown>
-                                            <div class="input-group">
-                                                <div class="input-group-btn">
-                                                    <btn class="dropdown-toggle" style="background-color:#fff;">
-                                                        <i class="fas fa-calendar"></i>
-                                                    </btn>
-                                                </div>
-                                                <input class="form-control" type="text" name="fecha"
-                                                       v-model="entrada.fecha_precio_compra" placeholder="DD/MM/YYYY"
-                                                       readonly
-                                                />
-                                            </div>
-                                            <template slot="dropdown">
-                                                <li>
-                                                    <date-picker :locale="locale" :today-btn="false" :clear-btn="false"
-                                                                 format="dd/MM/yyyy" :date-parser="dateParser"
-                                                                 v-model="entrada.fecha_precio_compra"/>
-                                                </li>
-                                            </template>
-                                        </dropdown>
-                                    </div>
-                                </div>
-                                <div class="col-md-2">
-                                    <div class="form-group">
-                                        <label class="control-label">Moneda Referencia</label>
-                                        <select class="form-control" name="moneda" v-model="entrada.moneda_referencia">
-                                            <option value=""></option>
-                                            <option value="Dolares">Dolares USD</option>
-                                            <option value="Pesos">Pesos MXN</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label class="control-label">Contacto Proveedor</label>
-                                        <select class="form-control" name="medida"
-                                                v-model="entrada.proveedor_contacto_id">
-                                            <option v-for="contacto in entrada.producto.proveedor.contactos"
-                                                    :value="contacto.id">@{{ contacto.nombre }}
-                                            </option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div> --}}
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="table-responsive">
@@ -709,53 +685,6 @@
                                 </div>
                             </div>
                         </form>
-                        {{-- <div class="row">
-                          <div class="col-md-12">
-                            <div class="table-responsive">
-                              <table id="tablaEntradas" class="table table-bordred" style="width:100%;">
-                                <thead>
-                                  <tr>
-                                    <th>Orden</th>
-                                    <th>Producto</th>
-                                    <th>Cantidad</th>
-                                    <th>Precio</th>
-                                    <th>Importe</th>
-                                    <th></th>
-                                  </tr>
-                                </thead>
-                                <tbody>
-                                </tbody>
-                                <tfoot>
-                                  <tr>
-                                    <td colspan="3"></td>
-                                    <td class="text-right"><strong>Subtotal</strong></td>
-                                    <td>@{{ cotizacion.subtotal | formatoMoneda }}</td>
-                                    <td></td>
-                                  </tr>
-                                  <tr>
-                                    <td colspan="3"></td>
-                                    <td class="text-right"><strong>IVA</strong></td>
-                                    <td v-if="cotizacion.iva=='0'">$0.00</td>
-                                    <td v-else>@{{ cotizacion.subtotal * 0.16 | formatoMoneda }}</td>
-                                    <td></td>
-                                  </tr>
-                                  <tr>
-                                    <td colspan="3"></td>
-                                    <td class="text-right">
-                                      <strong>Total
-                                        <span v-if="cotizacion.moneda=='Dolares'"> Dolares</span>
-                                        <span v-else> Pesos</span>
-                                      </strong>
-                                    </td>
-                                    <td v-if="cotizacion.iva=='0'">@{{ cotizacion.subtotal | formatoMoneda }}</td>
-                                    <td v-else>@{{ cotizacion.subtotal * 1.16 | formatoMoneda }}</td>
-                                    <td></td>
-                                  </tr>
-                                </tfoot>
-                              </table>
-                            </div>
-                          </div>
-                        </div> --}}
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
@@ -844,6 +773,7 @@
                     <tbody>
                         <tr v-for="(prod, index) in productos">
                             <td>@{{ prod.nombre }}</td>
+                            <td>@{{ prod.nombre_material }}</td>
                             <td>@{{ prod.color }}</td>
                             <td>@{{ prod.proveedor.empresa }}</td>
                             <td>@{{ prod.categoria.nombre }}</td>
@@ -1004,8 +934,12 @@
         const app = new Vue({
             el: '#content',
             data: {
+                cotizacionEnviar: 0,
+                tipo_cliente: 0,
+                contactos: [],
                 'notasPreCargadas': {!! json_encode($notasPreCargadas) !!},
                 fechaActual: new Date().toLocaleDateString(),
+                folio: '',
                 colonias: [],
                 colonias2: [],
                 clientes: {!! json_encode($clientes) !!},
@@ -1181,20 +1115,6 @@
                     allowedFileExtensions: ["jpg", "jpeg", "png", "pdf"],
                     elErrorContainer: '#comprobante-file-errors',
                 });
-
-                // $("#planos").fileinput({
-                //     language: 'es',
-                //     overwriteInitial: true,
-                //     maxFileSize: 5000,
-                //     //showClose: false,
-                //     showCaption: false,
-                //     showBrowse: false,
-                //     browseOnZoneClick: true,
-                //     removeLabel: '',
-                //     defaultPreviewContent: '<img src="{{ asset('images/planos_intercorp_01.png') }}" alt="planos" style="width:200px;" height:auto; ><h6 class="text-muted">Click para seleccionar</h6>',
-                //     allowedFileExtensions: ["dwg", "ifc", "rvt", "pln"],
-                //     elErrorContainer: '#planos-file-errors'
-                // });
 
                 this.tablaProductos = $("#tablaProductos").DataTable({
                     dom: 'ftp'
@@ -1604,9 +1524,44 @@
                         .length - 1]);
                     this.nuevaObservacionProducto = "";
                 },
+                validarCliente() {
+                    // Obtener el elemento select
+                    const select = document.querySelector("#cliente_id");
+
+                    // Comprobar si el select tiene una opción seleccionada
+                    if (select.value === "") {
+
+                        // Mostrar un mensaje de error
+                        swal({
+                            title: "Error",
+                            text: "Por favor, seleccione un cliente",
+                            type: "error"
+                        });
+                        select.focus();
+
+                        return false;
+                    } else {
+                        // El select tiene una opción seleccionada
+
+                        // Limpiar el mensaje de error
+                        select.setCustomValidity("");
+                    }
+                },
                 seleccionarProduco(prod) {
+                    this.validarCliente();
                     this.entrada.producto = prod;
-                    this.entrada.precio = this.entrada.producto.precio;
+                    console.log(this.tipo_cliente)
+                    switch (this.tipo_cliente) {
+                        case 1:
+                            this.entrada.precio = this.entrada.producto.precio_residencial;
+                            break;
+                        case 2:
+                            this.entrada.precio = this.entrada.producto.precio_comercial;
+                            break;
+                        case 3:
+                            this.entrada.precio = this.entrada.producto.precio_distribuidor;
+                            break;
+                    }
                     this.entrada.descripciones = [];
                     prod.descripciones.forEach(function(desc) {
                         this.entrada.descripciones.push({
@@ -1619,18 +1574,74 @@
 
                     if (prod.foto) {
                         $("button.fileinput-remove").click();
-                        $("div.file-default-preview img")[0].src = prod.foto;
+                        $("#foto-producto")[0].src = prod.foto;
                     }
-
-                    // if (prod.planos) {
-                    //     $("button.fileinput-remove").click();
-                    //     $("div.file-default-preview img")[0].src = prod.planos;
-                    // }
 
                     this.openCatalogo = false;
                 },
-                agregarEntrada() {
+                sumaImporte() {
+                    let sumaImporte = 0;
+                    for (const entrada of this.cotizacion.entradas) {
+                        if (!entrada.borrar)
+                            sumaImporte += entrada.importe;
+                    };
 
+                    return sumaImporte;
+
+                },
+                setDescuentosFinal() {
+                    this.cotizacion.descuentos = this.cotizacion.tipo_descuento != '0' ?
+                        (Number(this.cotizacion.subtotal) * Number(this.cotizacion.descuentos)) / 100 :
+                        this.cotizacion.descuentos;
+                },
+                sumaTotal() {
+                    let subTotal = Number(this.cotizacion.subtotal);
+
+                    let suma = Number(this.cotizacion.fletes) +
+                        Number(this.cotizacion.flete_menor) +
+                        Number(this.cotizacion.costo_corte) +
+                        Number(this.cotizacion.costo_sobreproduccion);
+
+                    this.cotizacion.subtotal = this.sumaImporte() + suma;
+                    this.cotizacion.extras = suma;
+
+                    //Calcula Los descuentos
+                    this.cotizacion.montoDescuento = this.cotizacion.tipo_descuento != '0' ?
+                        (Number(this.cotizacion.subtotal) * Number(this.cotizacion.descuentos)) / 100 :
+                        this.cotizacion.descuentos;
+
+                    //Calcula el IVA
+                    if (this.cotizacion.iva == "1") {
+                        this.cotizacion.calIva = this.cotizacion.montoDescuento != '0' ?
+                            (Number(this.cotizacion.subtotal) - Number(this.cotizacion.montoDescuento)) * 0.16 :
+                            Number(this.cotizacion.subtotal) * 0.16;
+                    } else {
+                        this.cotizacion.calIva = 0;
+                    }
+
+                    //Calcula el TAX
+                    this.cotizacion.calTax = this.cotizacion.montoDescuento != '0' ?
+                        ((Number(this.cotizacion.subtotal) - Number(this.cotizacion.montoDescuento)) * this
+                            .cotizacion.tax) / 100 :
+                        (Number(this.cotizacion.subtotal) * this.cotizacion.tax) / 100;
+
+                    //Suma total
+                    this.cotizacion.total = this.cotizacion.montoDescuento != '0' ?
+                        (Number(this.cotizacion.subtotal) - Number(this.cotizacion.montoDescuento)) +
+                        Number(this.cotizacion.calIva) + Number(this.cotizacion.calTax) :
+                        Number(this.cotizacion.subtotal) + Number(this.cotizacion.calIva) + Number(this.cotizacion
+                            .calTax);
+
+                    // console.log("suma total ", this.cotizacion.total)
+                },
+                resetValores() {
+                    this.cotizacion.montoDescuento = 0;
+                    this.cotizacion.calTax = 0;
+                    this.cotizacion.calIva = 0;
+                    this.cotizacion.subtotal = 0;
+                    this.cotizacion.total = 0;
+                },
+                agregarEntrada() {
                     var area = '';
                     this.entrada.descripciones.forEach(function(descripcion) {
                         if (descripcion.name == 'Area') {
@@ -1653,15 +1664,21 @@
                         for (var i = 0; i < this.$refs['fotos'].files.length; i++)
                             this.entrada.fotos.push(this.$refs['fotos'].files[i]);
                     }
+                    console.log(this.cliente)
+                    console.log(this.factor_porcentual)
 
-
+                    // let factorPorcentual = this.factor_porcentual > 0 ? (this.entrada.precio * this
+                    //         .factor_porcentual) / 100 :
+                    //     0;
                     this.entrada.importe = this.entrada.cantidad * this.entrada.precio;
-                    this.cotizacion.subtotal += this.entrada.importe;
-
+                    // this.entrada.importe = this.entrada.cantidad * (this.entrada.precio - factorPorcentual);
+                    console.log(this.entrada.importe)
+                    // this.cotizacion.subtotal += this.entrada.importe;
                     if (this.entrada.orden == 0)
                         this.entrada.orden = this.cuentaEntradasNoBorradas() + 1;
 
                     this.cotizacion.entradas.push(this.entrada);
+                    this.sumaTotal()
                     this.resetDataTables();
                     this.entrada = {
                         producto: {
@@ -1695,13 +1712,11 @@
                     entradaEdit.actualizar = true;
                     this.entrada = entradaEdit;
                     // this.entrada.fecha_precio_compra = entradaEdit.fecha_precio_compra_formated;
-                    this.cotizacion.subtotal = this.cotizacion.subtotal - entradaEdit.importe;
-                    console.log(entradaEdit);
-                    console.log(this.entrada);
-                    this.cotizacion.entradas.splice(index, 1);
 
+                    this.cotizacion.subtotal -= entradaEdit.importe;
+                    this.cotizacion.subtotal = this.cotizacion.subtotal < 0 ? 0 : this.cotizacion.subtotal;
+                    this.cotizacion.entradas.splice(index, 1);
                     this.edicionEntradaActiva = true;
-                    this.resetDataTables();
 
                     $("button.fileinput-remove").click();
                     if (this.entrada.fotos.length) { //hay fotos
@@ -1730,10 +1745,10 @@
                         if (index == -1) observacion.activa = false;
                         else observacion.activa = true;
                     }, this);
+                    this.resetDataTables();
                     return true;
                 },
                 removerEntrada(entrada, index, undefined) {
-                    this.cotizacion.subtotal -= entrada.importe;
                     if (entrada.id == undefined) this.cotizacion.entradas.splice(index, 1);
                     else entrada.borrar = true;
                     $("button.fileinput-remove").click();
@@ -1750,122 +1765,18 @@
 
                     this.resetDataTables();
                 },
-                copiar2(index, cotizacion) {
-                    this.copiar_cotizacion.cotizacion_id = cotizacion.id;
-                },
-                copiar(index, cotizacion) {
-                    //reiniciar observaciones
-
-                    this.observaciones.forEach(function(observacion) {
-                        observacion.activa = false;
-                    });
-                    var numero = this.cotizacion.numero;
-                    //vaciar datos de cotizacion
-                    this.cotizacion = {
-                        prospecto_id: 0,
-                        cliente_contacto_id: cotizacion.cliente_contacto_id,
-                        numero: numero,
-                        condicion: {
-                            id: cotizacion.condicion_id,
-                            nombre: ''
-                        },
-                        facturar: (cotizacion.facturar == 0) ? 0 : 1,
-                        rfc: cotizacion.rfc,
-                        razon_social: cotizacion.razon_social,
-                        calle: cotizacion.calle,
-                        nexterior: cotizacion.nexterior,
-                        ninterior: cotizacion.ninterior,
-                        colonia: cotizacion.colonia,
-                        cp: cotizacion.cp,
-                        ciudad: cotizacion.ciudad,
-                        estado: cotizacion.estado,
-                        direccion: (cotizacion.direccion == 0) ? 0 : 1,
-                        dircalle: cotizacion.dircalle,
-                        instrucciones: cotizacion.instrucciones,
-                        enviar_a: cotizacion.enviar_a,
-                        dirnexterior: cotizacion.dirnexterior,
-                        dirninterior: cotizacion.dirninterior,
-                        dircolonia: cotizacion.dircolonia,
-                        dircp: cotizacion.dircp,
-                        contacto_nombre: cotizacion.contacto_nombre,
-                        contacto_telefono: cotizacion.contacto_telefono,
-                        contacto_email: cotizacion.contacto_email,
-                        dirciudad: cotizacion.dirciudad,
-                        direstado: cotizacion.direstado,
-                        entrega: cotizacion.entrega,
-                        lugar: cotizacion.lugar,
-                        // fletes: cotizacion.fletes,
-                        // planos: cotizacion.planos,
-                        factibilidad: cotizacion.factibilidad,
-                        moneda: cotizacion.moneda,
-                        entradas: cotizacion.entradas,
-                        subtotal: cotizacion.subtotal,
-                        iva: (cotizacion.iva == 0) ? 0 : 1,
-                        total: cotizacion.total,
-                        idioma: cotizacion.idioma,
-                        notas: cotizacion.notas,
-                        observaciones: []
-                    };
-                    this.condicionCambiada();
-
-                    //re-seleccionar observaciones
-                    var observaciones = cotizacion.observaciones.match(/<li>([^<]+)+<\/li>+/g);
-                    if (observaciones == null) observaciones = [];
-                    var encontrada;
-                    observaciones.forEach(function(observacion) {
-                        observacion = observacion.replace(/(<li>|<\/li>)/g, '');
-                        encontrada = this.observaciones.findIndex(function(obs) {
-                            return observacion == obs.texto;
-                        });
-
-                        if (encontrada != -1) {
-                            this.observaciones[encontrada].activa = true;
-                        } else { //observacion diferente de las predefinidas
-                            this.observaciones.push({
-                                activa: true,
-                                texto: observacion
-                            });
-                        }
-                        this.cotizacion.observaciones.push(observacion);
-                    }, this);
-
-                    // agregar observaciones de entradas de productos
-                    cotizacion.entradas.forEach(function(entrada) {
-                        observaciones = entrada.observaciones.match(/<li>([^<]+)+<\/li>+/g);
-                        entrada.observaciones = [];
-                        if (observaciones == null) return false;
-                        encontrada;
-                        observaciones.forEach(function(observacion) {
-                            observacion = observacion.replace(/(<li>|<\/li>)/g, '');
-                            entrada.observaciones.push(observacion);
-
-                            encontrada = this.observaciones_productos.findIndex(function(obs) {
-                                return observacion == obs.texto;
-                            });
-                            if (encontrada == -1) this.observaciones_productos.push({
-                                activa: false,
-                                texto: observacion
-                            });
-                        }, this);
-                    }, this);
-                    this.resetDataTables();
-                },
-                calIva() {
-                    this.cotizacion.calIva = this.cotizacion.montoDescuento != '0' ?
-                        (Number(this.cotizacion.subtotal) - Number(this.cotizacion.montoDescuento)) * 0.16 :
-                        Number(this.cotizacion.subtotal) * 0.16;
-                },
-                calDescuento() {
-                    this.cotizacion.montoDescuento = this.cotizacion.tipo_descuento != '0' ?
-                        (Number(this.cotizacion.subtotal) * Number(this.cotizacion.descuentos)) / 100 :
-                        this.cotizacion.descuentos;
-                },
                 editar(cotizacion) {
                     //reiniciar observaciones
                     this.observaciones.forEach(function(observacion) {
                         observacion.activa = false;
                     });
-
+                    const id_cliente = Number(cotizacion.cliente_id);
+                    const cliente = this.clientes.find(({
+                        id
+                    }) => id === id_cliente);
+                    console.log(cliente)
+                    this.tipo_cliente = cliente.tipo_id;
+                    console.log(cotizacion.entradas)
                     //vaciar datos de cotizacion
                     this.cotizacion = {
                         cliente_id: cotizacion.cliente_id,
@@ -1907,9 +1818,11 @@
                         lugar: cotizacion.lugar,
                         fletes: cotizacion.fletes,
                         flete_menor: cotizacion.flete_menor,
-                        isfleteMenor: cotizacion.flete_menor ? 1 : 0,
+                        isfleteMenor: cotizacion.flete_menor && cotizacion.flete_menor > 0 ? true : false,
                         costo_corte: cotizacion.costo_corte,
                         costo_sobreproduccion: cotizacion.costo_corte,
+                        extras: Number(cotizacion.fletes) + Number(cotizacion.flete_menor) + Number(cotizacion
+                            .costo_corte) + Number(cotizacion.costo_sobreproduccion),
                         descuentos: cotizacion.descuentos,
                         tipo_descuento: cotizacion.tipo_descuento,
                         // planos: cotizacion.planos,
@@ -1919,15 +1832,15 @@
                         subtotal: cotizacion.subtotal,
                         calIva: cotizacion.calIva,
                         iva: (cotizacion.iva == 0) ? 0 : 1,
+                        tax: cotizacion.tax,
+                        isTax: cotizacion.tax ? 1 : 0,
                         total: cotizacion.total,
                         idioma: cotizacion.idioma,
                         notas: cotizacion.notas,
                         observaciones: []
                     };
-                    this.calDescuento();
-                    this.calIva();
-                    console.log(this.cotizacion)
 
+                    this.sumaTotal();
                     this.condicionCambiada();
 
                     //re-seleccionar observaciones
@@ -2066,7 +1979,10 @@
                                 title: "Cotizacion Enviada",
                                 text: "",
                                 type: "success"
+                            }).then((result) => {
+                                window.location.href = "/cotizacionesdirectas";
                             });
+
                         })
                         .catch(({
                             response
@@ -2081,74 +1997,6 @@
                             });
                         });
                 }, //fin enviarCotizacion
-                aceptarCotizacion() {
-                    var formData = objectToFormData(this.aceptar, {
-                        indices: true
-                    });
-
-                    this.cargando = true;
-                    axios.post('/prospectos/0/aceptarCotizacion', formData, {
-                            headers: {
-                                'Content-Type': 'multipart/form-data'
-                            }
-                        })
-                        .then(({
-                            data
-                        }) => {
-                            this.prospecto.cotizaciones.find(function(cotizacion) {
-                                if (this.aceptar.cotizacion_id == cotizacion.id) {
-                                    cotizacion.proyecto_aprobado = data.proyecto_aprobado;
-                                    cotizacion.aceptada = true;
-                                    return true;
-                                }
-                            }, this);
-
-                            this.aceptar = {
-                                cotizacion_id: 0,
-                                comprobante: "",
-                                fecha_comprobante: ""
-                            };
-                            $("#comprobante").fileinput('clear');
-                            this.openAceptar = false;
-                            this.cargando = false;
-                            swal({
-                                title: "Cotizacion Aceptada",
-                                text: "La cotización ha sido aceptada y se ha generado una orden de compra, ¿desea realizar en estos momentos la orden de compra?",
-                                icon: "warning",
-                                showCancelButton: true,
-                                confirmButtonText: "Si",
-                                cancelButtonText: "No",
-                                dangerMode: true,
-                            }).then(function(isConfirm) {
-                                if (isConfirm.value) {
-                                    window.location.href = "/proyectos-aprobados/" + data
-                                        .proyecto_aprobado.id + "/ordenes-compra";
-                                } else {
-                                    swal("Permanecer");
-                                }
-                            })
-                            /*
-                            swal({
-                                title: "Cotizacion Aceptada",
-                                text: "La cotización ha sido aceptada y se ha generado una cuenta por cobrar",
-                                type: "success"
-                            });
-                            window.location.href = "/proyectos-aprobados/"+data.proyecto_aprobado.id+"/ordenes-compra";
-                            */
-                        })
-                        .catch(({
-                            response
-                        }) => {
-                            console.error(response);
-                            this.cargando = false;
-                            swal({
-                                title: "Error",
-                                text: response.data.message ||
-                                    "Ocurrio un error inesperado, intente mas tarde",
-                                type: "error"
-                            });
-                        });
-                }, //fin aceptarCotizacion
                 notasCotizacion() {
                     this.cargando = true;
                     axios.post('/prospectos/0/notasCotizacion', this.notas)

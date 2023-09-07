@@ -57,8 +57,8 @@
                                 </div>
                                 <div class="col-md-4">
                                     <label class="control-label">Cliente</label>
-                                    <select name="cliente_id" v-model="cotizacion.cliente_id" class="form-control" required
-                                        @change="contactosCliente()">
+                                    <select name="cliente_id" id="cliente_id" v-model="cotizacion.cliente_id"
+                                        class="form-control" required @change="contactosCliente()">
                                         @foreach ($clientes as $cliente)
                                             <option value="{{ $cliente->id }}">
                                                 {{ $cliente->nombre }}</option>
@@ -1173,16 +1173,16 @@
                 });
 
                 //handler para botones de editar y borrar
-                // $("#tablaEntradas")
-                //     .on('click', 'tr button.btn-success', function() {
-                //         var index = $(this).data('index');
-                //         console.log(index);
-                //         vueInstance.editarEntrada(vueInstance.cotizacion.entradas[index], index);
-                //     })
-                //     .on('click', 'button.btn-danger', function() {
-                //         var index = $(this).data('index');
-                //         vueInstance.removerEntrada(vueInstance.cotizacion.entradas[index], index);
-                //     });
+                $("#tablaEntradas")
+                    .on('click', 'tr button.btn-success', function() {
+                        var index = $(this).data('index');
+                        console.log(index);
+                        vueInstance.editarEntrada(vueInstance.cotizacion.entradas[index], index);
+                    })
+                    .on('click', 'button.btn-danger', function() {
+                        var index = $(this).data('index');
+                        vueInstance.removerEntrada(vueInstance.cotizacion.entradas[index], index);
+                    });
 
                 this.resetDataTables();
 
@@ -1256,23 +1256,6 @@
                     $("button.fileinput-remove").click();
                     this.entrada.fotos = [];
                 },
-                // aplicarDescuento() {
-                //     //guardamos el descuento como desceunto anterior en caso de que lo editen tenemos el valor anterior
-                //     /*
-                //     if(this.cotizacion.tipo_descuento == 0){
-                //         this.cotizacion.subtotal +=  Number(this.descuento_anterior);
-                //         this.cotizacion.subtotal -=  Number(this.cotizacion.descuentos);
-                //         this.descuento_anterior = this.cotizacion.descuentos;
-                //     }
-                //     else{
-                //         this.cotizacion.subtotal +=  Number(this.descuento_anterior);
-                //         //sacamos el porcentaje del descuento
-                //         this.cotizacion.subtotal -=  Number(this.cotizacion.descuentos/100);
-                //         this.descuento_anterior = this.cotizacion.descuentos/100;
-                //     }
-                //     */
-
-                // },
                 cp1() {
                     this.cargando = true;
                     if (this.cotizacion.dircp && this.cotizacion.dircp.length > 4) {
@@ -1562,9 +1545,33 @@
                         .length - 1]);
                     this.nuevaObservacionProducto = "";
                 },
+                validarCliente() {
+                    // Obtener el elemento select
+                    const select = document.querySelector("#cliente_id");
+
+                    // Comprobar si el select tiene una opción seleccionada
+                    if (select.value === "") {
+
+                        // Mostrar un mensaje de error
+                        swal({
+                            title: "Error",
+                            text: "Por favor, seleccione un cliente",
+                            type: "error"
+                        });
+                        select.focus();
+
+                        return false;
+                    } else {
+                        // El select tiene una opción seleccionada
+
+                        // Limpiar el mensaje de error
+                        select.setCustomValidity("");
+                    }
+                },
                 seleccionarProduco(prod) {
+                    this.validarCliente();
                     this.entrada.producto = prod;
-                    // this.entrada.precio = this.entrada.producto.precio;
+
                     switch (this.tipo_cliente) {
                         case 1:
                             this.entrada.precio = this.entrada.producto.precio_residencial;
@@ -1726,165 +1733,64 @@
                         observacion.activa = false;
                     });
                 },
-                // editarEntrada(entradaEdit, index) {
-                //     if (this.edicionEntradaActiva) return false;
-                //     entradaEdit.actualizar = true;
-                //     this.entrada = entradaEdit;
-                //     // this.entrada.fecha_precio_compra = entradaEdit.fecha_precio_compra_formated;
-                //     this.cotizacion.subtotal = this.cotizacion.subtotal - entradaEdit.importe;
-                //     console.log(entradaEdit);
-                //     console.log(this.entrada);
-                //     this.cotizacion.entradas.splice(index, 1);
+                editarEntrada(entradaEdit, index) {
+                    if (this.edicionEntradaActiva) return false;
+                    entradaEdit.actualizar = true;
+                    this.entrada = entradaEdit;
+                    // this.entrada.fecha_precio_compra = entradaEdit.fecha_precio_compra_formated;
 
-                //     this.edicionEntradaActiva = true;
-                //     this.resetDataTables();
+                    this.cotizacion.subtotal -= entradaEdit.importe;
+                    this.cotizacion.subtotal = this.cotizacion.subtotal < 0 ? 0 : this.cotizacion.subtotal;
+                    this.cotizacion.entradas.splice(index, 1);
+                    this.edicionEntradaActiva = true;
 
-                //     $("button.fileinput-remove").click();
-                //     if (this.entrada.fotos.length) { //hay fotos
-                //         if (typeof this.entrada.fotos[0] == "object") {
-                //             this.$refs['fotos'].files = FileListItem(this.entrada.fotos);
-                //             this.$refs['fotos'].dispatchEvent(new Event('change', {
-                //                 'bubbles': true
-                //             }));
-                //         } else if (typeof this.entrada.fotos[0] == "string") {
-                //             $("div.file-default-preview").empty();
-                //             this.entrada.fotos.forEach(function(foto) {
-                //                 $("div.file-default-preview")
-                //                     .append('<img src="' + foto +
-                //                         '" style="width:200px; height:auto;" alt="foto">');
-                //             });
-                //             $("div.file-default-preview").append('<h6>Click para seleccionar</h6>');
-                //         }
-                //     } else if (this.entrada.producto.foto) {
-                //         $("div.file-default-preview img")[0].src = this.entrada.producto.foto;
-                //     }
+                    $("button.fileinput-remove").click();
+                    if (this.entrada.fotos.length) { //hay fotos
+                        if (typeof this.entrada.fotos[0] == "object") {
+                            this.$refs['fotos'].files = FileListItem(this.entrada.fotos);
+                            this.$refs['fotos'].dispatchEvent(new Event('change', {
+                                'bubbles': true
+                            }));
+                        } else if (typeof this.entrada.fotos[0] == "string") {
+                            $("div.file-default-preview").empty();
+                            this.entrada.fotos.forEach(function(foto) {
+                                $("div.file-default-preview")
+                                    .append('<img src="' + foto +
+                                        '" style="width:200px; height:auto;" alt="foto">');
+                            });
+                            $("div.file-default-preview").append('<h6>Click para seleccionar</h6>');
+                        }
+                    } else if (this.entrada.producto.foto) {
+                        $("div.file-default-preview img")[0].src = this.entrada.producto.foto;
+                    }
 
-                //     this.observaciones_productos.forEach(function(observacion) {
-                //         var index = this.entrada.observaciones.findIndex(function(obs) {
-                //             return observacion.texto == obs;
-                //         });
-                //         if (index == -1) observacion.activa = false;
-                //         else observacion.activa = true;
-                //     }, this);
-                //     return true;
-                // },
-                // removerEntrada(entrada, index, undefined) {
-                //     this.cotizacion.subtotal -= entrada.importe;
-                //     if (entrada.id == undefined) this.cotizacion.entradas.splice(index, 1);
-                //     else entrada.borrar = true;
-                //     $("button.fileinput-remove").click();
+                    this.observaciones_productos.forEach(function(observacion) {
+                        var index = this.entrada.observaciones.findIndex(function(obs) {
+                            return observacion.texto == obs;
+                        });
+                        if (index == -1) observacion.activa = false;
+                        else observacion.activa = true;
+                    }, this);
+                    this.resetDataTables();
+                    return true;
+                },
+                removerEntrada(entrada, index, undefined) {
+                    if (entrada.id == undefined) this.cotizacion.entradas.splice(index, 1);
+                    else entrada.borrar = true;
+                    $("button.fileinput-remove").click();
 
-                //     //restar 1 al orden de todas las entradas con orden mayor
-                //     //al de la entrada borrada
-                //     var orden = entrada.orden;
-                //     this.cotizacion.entradas.forEach(function(entrada) {
-                //         if (entrada.orden > orden && entrada.borrar == undefined) {
-                //             entrada.actualizar = true;
-                //             entrada.orden--;
-                //         }
-                //     });
+                    //restar 1 al orden de todas las entradas con orden mayor
+                    //al de la entrada borrada
+                    var orden = entrada.orden;
+                    this.cotizacion.entradas.forEach(function(entrada) {
+                        if (entrada.orden > orden && entrada.borrar == undefined) {
+                            entrada.actualizar = true;
+                            entrada.orden--;
+                        }
+                    });
 
-                //     this.resetDataTables();
-                // },
-                // copiar2(index, cotizacion) {
-                //     this.copiar_cotizacion.cotizacion_id = cotizacion.id;
-                // },
-                // copiar(index, cotizacion) {
-                //     //reiniciar observaciones
-                //     this.observaciones.forEach(function(observacion) {
-                //         observacion.activa = false;
-                //     });
-                //     var numero = this.cotizacion.numero;
-                //     //vaciar datos de cotizacion
-                //     this.cotizacion = {
-                //         prospecto_id: 0,
-                //         cliente_contacto_id: cotizacion.cliente_contacto_id,
-                //         numero: numero,
-                //         condicion: {
-                //             id: cotizacion.condicion_id,
-                //             nombre: ''
-                //         },
-                //         facturar: (cotizacion.facturar) ? 1 : 0,
-                //         rfc: cotizacion.rfc,
-                //         razon_social: cotizacion.razon_social,
-                //         calle: cotizacion.calle,
-                //         nexterior: cotizacion.nexterior,
-                //         ninterior: cotizacion.ninterior,
-                //         colonia: cotizacion.colonia,
-                //         cp: cotizacion.cp,
-                //         ciudad: cotizacion.ciudad,
-                //         estado: cotizacion.estado,
-                //         direccion: (cotizacion.direccion) ? 1 : 0,
-                //         dircalle: cotizacion.dircalle,
-                //         instrucciones: cotizacion.instrucciones,
-                //         enviar_a: cotizacion.enviar_a,
-                //         dirnexterior: cotizacion.dirnexterior,
-                //         dirninterior: cotizacion.dirninterior,
-                //         dircolonia: cotizacion.dircolonia,
-                //         dircp: cotizacion.dircp,
-                //         contacto_nombre: cotizacion.contacto_nombre,
-                //         contacto_telefono: cotizacion.contacto_telefono,
-                //         contacto_email: cotizacion.contacto_email,
-                //         dirciudad: cotizacion.dirciudad,
-                //         direstado: cotizacion.direstado,
-                //         entrega: cotizacion.entrega,
-                //         lugar: cotizacion.lugar,
-                //         // fletes: cotizacion.fletes,
-                //         // planos: cotizacion.planos,
-                //         factibilidad: cotizacion.factibilidad,
-                //         moneda: cotizacion.moneda,
-                //         entradas: cotizacion.entradas,
-                //         subtotal: cotizacion.subtotal,
-                //         iva: (cotizacion.iva == 0) ? 0 : 1,
-                //         total: cotizacion.total,
-                //         idioma: cotizacion.idioma,
-                //         notas: cotizacion.notas,
-                //         observaciones: []
-                //     };
-                //     this.condicionCambiada();
-
-                //     //re-seleccionar observaciones
-                //     var observaciones = cotizacion.observaciones.match(/<li>([^<]+)+<\/li>+/g);
-                //     if (observaciones == null) observaciones = [];
-                //     var encontrada;
-                //     observaciones.forEach(function(observacion) {
-                //         observacion = observacion.replace(/(<li>|<\/li>)/g, '');
-                //         encontrada = this.observaciones.findIndex(function(obs) {
-                //             return observacion == obs.texto;
-                //         });
-
-                //         if (encontrada != -1) {
-                //             this.observaciones[encontrada].activa = true;
-                //         } else { //observacion diferente de las predefinidas
-                //             this.observaciones.push({
-                //                 activa: true,
-                //                 texto: observacion
-                //             });
-                //         }
-                //         this.cotizacion.observaciones.push(observacion);
-                //     }, this);
-
-                //     // agregar observaciones de entradas de productos
-                //     cotizacion.entradas.forEach(function(entrada) {
-                //         observaciones = entrada.observaciones.match(/<li>([^<]+)+<\/li>+/g);
-                //         entrada.observaciones = [];
-                //         if (observaciones == null) return false;
-                //         encontrada;
-                //         observaciones.forEach(function(observacion) {
-                //             observacion = observacion.replace(/(<li>|<\/li>)/g, '');
-                //             entrada.observaciones.push(observacion);
-
-                //             encontrada = this.observaciones_productos.findIndex(function(obs) {
-                //                 return observacion == obs.texto;
-                //             });
-                //             if (encontrada == -1) this.observaciones_productos.push({
-                //                 activa: false,
-                //                 texto: observacion
-                //             });
-                //         }, this);
-                //     }, this);
-                //     this.resetDataTables();
-                // },
+                    this.resetDataTables();
+                },
                 guardar() {
                     if (this.entrada.producto.id == undefined) {
 
@@ -1946,7 +1852,7 @@
                                     showCancelButton: true,
                                     cancelButtonText: "Ok",
                                 }).then((result) => {
-                                        console.log(result)
+                                    console.log(result)
 
                                     if (result.dismiss === "cancel") {
                                         // Cierra la modal
@@ -2128,75 +2034,6 @@
                             });
                         });
                 }, //fin notasCotizacion
-                copiarCotizacion() {
-                    this.cargando = true;
-
-                    axios.post('/prospectos/0/copiarCotizacion', this.copiar_cotizacion)
-                        .then(({
-                            data
-                        }) => {
-                            this.openCopiar = false;
-                            this.cargando = false;
-                            swal({
-                                title: "Copia Guardada",
-                                text: "La cotizaciones de ha copiado correctamente",
-                                type: "success"
-                            });
-
-                            window.location.href = "/prospectos/" + this.copiar_cotizacion.proyecto_id +
-                                "/cotizar";
-                        })
-                        .catch(({
-                            response
-                        }) => {
-                            console.error(response);
-                            this.cargando = false;
-                            swal({
-                                title: "Error",
-                                text: response.data.message ||
-                                    "Ocurrio un error inesperado, intente mas tarde",
-                                type: "error"
-                            });
-                        });
-                }, //fin CopiarCotizacion
-                borrar(index, cotizacion) {
-                    swal({
-                        title: 'Cuidado',
-                        text: "Borrar Cotizacion " + cotizacion.numero + "?",
-                        type: 'warning',
-                        showCancelButton: true,
-                        confirmButtonColor: '#3085d6',
-                        cancelButtonColor: '#d33',
-                        confirmButtonText: 'Si, Borrar',
-                        cancelButtonText: 'No, Cancelar',
-                    }).then((result) => {
-                        if (result.value) {
-                            axios.delete('/prospectos/0/cotizacion/' + cotizacion
-                                    .id, {})
-                                .then(({
-                                    data
-                                }) => {
-
-                                    swal({
-                                        title: "Exito",
-                                        text: "La cotizacion ha sido borrado",
-                                        type: "success"
-                                    });
-                                })
-                                .catch(({
-                                    response
-                                }) => {
-                                    console.error(response);
-                                    swal({
-                                        title: "Error",
-                                        text: response.data.message ||
-                                            "Ocurrio un error inesperado, intente mas tarde",
-                                        type: "error"
-                                    });
-                                });
-                        } //if confirmacion
-                    });
-                },
                 actualizarFechaActual() {
                     const fecha = new Date().toLocaleDateString();
                     this.$refs.fechaActual.innerHTML = fecha;
