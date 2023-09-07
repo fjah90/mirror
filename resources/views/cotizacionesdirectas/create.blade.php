@@ -1462,6 +1462,7 @@
                 },
                 isTax() {
                     this.cotizacion.isTax = this.cotizacion.isTax ? false : true;
+                    this.cotizacion.tax = this.cotizacion.isTax ? 0 : this.cotizacion.tax;
                 },
                 agregarObservacion(observacion) {
                     this.cotizacion.observaciones.push(observacion.texto);
@@ -1616,7 +1617,7 @@
                         this.cotizacion.descuentos;
                 },
                 sumaTotal() {
-                    let subTotal = Number(this.cotizacion.subtotal);
+                    // let subTotal = Number(this.cotizacion.subtotal);
 
                     let suma = Number(this.cotizacion.fletes) +
                         Number(this.cotizacion.flete_menor) +
@@ -1627,9 +1628,13 @@
                     this.cotizacion.extras = suma;
 
                     //Calcula Los descuentos
-                    this.cotizacion.montoDescuento = this.cotizacion.tipo_descuento != '0' ?
-                        (Number(this.cotizacion.subtotal) * Number(this.cotizacion.descuentos)) / 100 :
+                    if (this.cotizacion.descuentos != '0') {
+                        this.cotizacion.montoDescuento = this.cotizacion.tipo_descuento ?
+                            (Number(this.cotizacion.subtotal) * Number(this.cotizacion.descuentos)) / 100 :
+                            this.cotizacion.descuentos;
+                    } else {
                         this.cotizacion.descuentos;
+                    }
 
                     //Calcula el IVA
                     if (this.cotizacion.iva == "1") {
@@ -1641,10 +1646,15 @@
                     }
 
                     //Calcula el TAX
-                    this.cotizacion.calTax = this.cotizacion.montoDescuento != '0' ?
-                        ((Number(this.cotizacion.subtotal) - Number(this.cotizacion.montoDescuento)) * this
-                            .cotizacion.tax) / 100 :
-                        (Number(this.cotizacion.subtotal) * this.cotizacion.tax) / 100;
+                    if (this.cotizacion.isTax) {
+                        this.cotizacion.calTax = this.cotizacion.montoDescuento != '0' ?
+                            ((Number(this.cotizacion.subtotal) - Number(this.cotizacion.montoDescuento)) * this
+                                .cotizacion.tax) / 100 :
+                            (Number(this.cotizacion.subtotal) * this.cotizacion.tax) / 100;
+                    } else {
+                        this.cotizacion.tax = 0;
+                        this.cotizacion.calTax = 0;
+                    }
 
                     //Suma total
                     this.cotizacion.total = this.cotizacion.montoDescuento != '0' ?
