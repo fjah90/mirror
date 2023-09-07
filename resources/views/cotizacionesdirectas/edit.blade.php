@@ -1978,42 +1978,42 @@
                 enviarCotizacion() {
                     this.cargando = true;
                     console.log(this.contactos)
-                    // axios.post('/prospectos/0/enviarCotizacion', this.enviar)
-                    //     .then(({
-                    //         data
-                    //     }) => {
-                    //         this.enviar = {
-                    //             cotizacion_id: 0,
-                    //             numero: 0,
-                    //             email: [],
-                    //             emailOpciones: [
+                    axios.post('/prospectos/0/enviarCotizacion', this.enviar)
+                        .then(({
+                            data
+                        }) => {
+                            this.enviar = {
+                                cotizacion_id: 0,
+                                numero: 0,
+                                email: [],
+                                emailOpciones: [
 
-                    //             ],
-                    //             mensaje: "Buen día.\n\nLe envió cotización para su consideración.\n\n{{ auth()->user()->name }}.\nAtención del Cliente\nRobinson Contract Resources"
-                    //         };
-                    //         this.openEnviar = false;
-                    //         this.cargando = false;
-                    //         swal({
-                    //             title: "Cotizacion Enviada",
-                    //             text: "",
-                    //             type: "success"
-                    //         }).then((result) => {
-                    //             window.location.href = "/cotizacionesdirectas";
-                    //         });
+                                ],
+                                mensaje: "Buen día.\n\nLe envió cotización para su consideración.\n\n{{ auth()->user()->name }}.\nAtención del Cliente\nRobinson Contract Resources"
+                            };
+                            this.openEnviar = false;
+                            this.cargando = false;
+                            swal({
+                                title: "Cotizacion Enviada",
+                                text: "",
+                                type: "success"
+                            }).then((result) => {
+                                window.location.href = "/cotizacionesdirectas";
+                            });
 
-                    //     })
-                    //     .catch(({
-                    //         response
-                    //     }) => {
-                    //         console.error(response);
-                    //         this.cargando = false;
-                    //         swal({
-                    //             title: "Error",
-                    //             text: response.data.message ||
-                    //                 "Ocurrio un error inesperado, intente mas tarde",
-                    //             type: "error"
-                    //         });
-                    //     });
+                        })
+                        .catch(({
+                            response
+                        }) => {
+                            console.error(response);
+                            this.cargando = false;
+                            swal({
+                                title: "Error",
+                                text: response.data.message ||
+                                    "Ocurrio un error inesperado, intente mas tarde",
+                                type: "error"
+                            });
+                        });
                 }, //fin enviarCotizacion
                 notasCotizacion() {
                     this.cargando = true;
