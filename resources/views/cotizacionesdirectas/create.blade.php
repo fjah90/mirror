@@ -89,6 +89,11 @@
                                     <br />
                                     <label id="fechaActual" class="control-label"></label>
                                 </div>
+                                <div class="col-md-2">
+                                    <label class="control-label">Folio</label>
+                                    <br />
+                                    <label id="folio" class="control-label"></label>
+                                </div>
                             </div>
                             <div class="row">
                                 <div class="col-sm-6">
@@ -251,6 +256,7 @@
                                         v-model="cotizacion.contacto_email" />
                                 </div>
                             </div>
+                            {{-- Condiciones de Pago     --}}
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
@@ -299,16 +305,16 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label class="control-label">Flete</label>
-                                        <input class="form-control" type="text" name="fletes"
-                                            v-model="cotizacion.fletes" />
+                                        <label class="control-label">Ubicación</label>
+                                        <input class="form-control" type="text" name="ubicacion"
+                                            v-model="cotizacion.ubicacion" />
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label class="control-label">Ubicación</label>
-                                        <input class="form-control" type="text" name="ubicacion"
-                                            v-model="cotizacion.ubicacion" />
+                                        <label class="control-label">Flete</label>
+                                        <input class="form-control" type="text" name="fletes"
+                                            v-model="cotizacion.fletes" />
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -343,19 +349,6 @@
                             </div>
                             <!--Agregando campos nuevos-->
                             <div class="row">
-                                {{-- <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label class="control-label" style="display:block;">Documentación adjuntar
-                                            (planos,etc)</label>
-                                        <div>
-                                            <div>
-                                                <input id="planos" name="planos" type="file" ref="planos"
-                                                    @change="fijarArchivo('planos')" />
-                                            </div>
-                                        </div>
-                                        <div id="planos-file-errors"></div>
-                                    </div>
-                                </div> --}}
                                 <div class="col-md-6">
                                     <label class="control-label">Factibilidad de proyecto *</label>
                                     <select class="form-control" name="factibilidad" v-model="cotizacion.factibilidad"
@@ -368,7 +361,7 @@
                             </div><br>
                             <!--Agregando campos nuevos-->
                             <div class="row">
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <div class="form-group">
                                         <label class="control-label">Moneda *</label>
                                         <select class="form-control" name="moneda" v-model="cotizacion.moneda" required>
@@ -377,7 +370,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <div class="form-group">
                                         <label class="control-label">IVA *</label>
                                         <select class="form-control" name="iva" v-model="cotizacion.iva" required>
@@ -386,7 +379,21 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <div class="form-check form-switch">
+                                            <i :class="{
+                                                'glyphicon glyphicon-unchecked': !cotizacion.isTax,
+                                                'glyphicon glyphicon-check': cotizacion.isTax
+                                            }"
+                                                @click="isTax()"></i>
+                                            <label class="control-label" for="cotizacion.tax">TAX %</label>
+                                        </div>
+                                        <input class="form-control" type="text" name="tax"
+                                            v-model="cotizacion.tax" :disabled="!cotizacion.isTax" />
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
                                     <div class="form-group">
                                         <label class="control-label">Idioma *</label>
                                         <select class="form-control" name="idioma" v-model="cotizacion.idioma" required>
@@ -406,12 +413,20 @@
                                     <div class="col-md-2">
                                         <label class="control-label">Tipo de descuento</label>
                                         <select class="form-control" name="tipo_descuento"
-                                            v-model="cotizacion.tipo_descuento" @change="seleccionarTipoDescuento()">
+                                            v-model="cotizacion.tipo_descuento">
                                             <option value="0">Monto</option>
                                             <option value="1">%</option>
                                         </select>
                                     </div>
-
+                                    <div class="col-md-6"
+                                        style="display: flex; justify-content: flex-end; align-items: flex-end; padding-top: 40px;">
+                                        <button type="button" class="btn btn-dark" @click="sumaTotal()"
+                                            style="background-color:#12160F; color:#B68911;">
+                                            <i v-if="!cargando" class="fas fa-calculator"></i>
+                                            <i v-else class="fas fa-refresh animation-rotate"></i>
+                                            Recalcular
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                             <hr />
@@ -472,26 +487,33 @@
                                                 <tr v-if="cotizacion.descuentos !='0' || cotizacion.descuentos !=''">
                                                     <td colspan="3"></td>
                                                     <td class="text-right"><strong>Descuentos</strong></td>
-                                                    <td v-if="cotizacion.montoDescuento =='0'">$0.00</td>
+                                                    <td v-if="cotizacion.montoDescuento == 0">$0.00</td>
                                                     <td v-else>- @{{ cotizacion.montoDescuento | formatoMoneda }}</td>
                                                     <td></td>
                                                 </tr>
-                                                <tr>
+                                                <tr v-if="cotizacion.calIva !='0' || cotizacion.calIva !=''">
                                                     <td colspan="3"></td>
                                                     <td class="text-right"><strong>IVA</strong></td>
-                                                    <td v-if="cotizacion.iva=='0' || cotizacion.calIva == '0'">$0.00</td>
+                                                    <td v-if="cotizacion.calIva == 0">$0.00</td>
                                                     <td v-else>@{{ cotizacion.calIva | formatoMoneda }}</td>
+                                                    <td></td>
+                                                </tr>
+                                                <tr v-if="cotizacion.calTax !='0' || cotizacion.calTax !=''">
+                                                    <td colspan="3"></td>
+                                                    <td class="text-right"><strong>TAX</strong></td>
+                                                    <td v-if="cotizacion.calTax == 0">$0.00</td>
+                                                    <td v-else>@{{ cotizacion.calTax | formatoMoneda }}</td>
                                                     <td></td>
                                                 </tr>
                                                 <tr>
                                                     <td colspan="3"></td>
                                                     <td class="text-right">
                                                         <strong>Total
-                                                            <span v-if="cotizacion.moneda=='Dolares'">Dolares</span>
+                                                            <span v-if="cotizacion.moneda=='Dolares'"> Dolares</span>
                                                             <span v-else> Pesos</span>
                                                         </strong>
                                                     </td>
-                                                    <td v-if="cotizacion.total=='0'">$0.00</td>
+                                                    <td v-if="cotizacion.total == 0">$0.00</td>
                                                     <td v-else>@{{ cotizacion.total | formatoMoneda }}</td>
                                                     <td></td>
                                                 </tr>
@@ -903,16 +925,18 @@
         const app = new Vue({
             el: '#content',
             data: {
+                cotizacionEnviar: 0,
                 descuento_anterior: 0,
                 clientes: {!! json_encode($clientes) !!},
+                tipo_cliente: 0,
                 contactos: [],
                 'notasPreCargadas': {!! json_encode($notasPreCargadas) !!},
                 fechaActual: new Date().toLocaleDateString(),
+                folio: '',
                 colonias: [],
                 colonias2: [],
                 edicionEntradaActiva: false,
                 locale: localeES,
-                factor_porcentual: 0,
                 productos: {!! json_encode($productos) !!},
                 condiciones: {!! json_encode($condiciones) !!},
                 rfcs: {!! json_encode($rfcs) !!},
@@ -967,6 +991,7 @@
                     lugar: '',
                     fletes: 0,
                     isfleteMenor: false,
+                    extras: 0,
                     flete_menor: 0,
                     costo_corte: 0,
                     costo_sobreproduccion: 0,
@@ -980,6 +1005,9 @@
                     subtotal: 0,
                     calIva: 0,
                     iva: 1,
+                    tax: 0,
+                    calTax: 0,
+                    isTax: false,
                     total: 0,
                     idioma: 'español',
                     notas: "",
@@ -1145,16 +1173,16 @@
                 });
 
                 //handler para botones de editar y borrar
-                $("#tablaEntradas")
-                    .on('click', 'tr button.btn-success', function() {
-                        var index = $(this).data('index');
-                        console.log(index);
-                        vueInstance.editarEntrada(vueInstance.cotizacion.entradas[index], index);
-                    })
-                    .on('click', 'button.btn-danger', function() {
-                        var index = $(this).data('index');
-                        vueInstance.removerEntrada(vueInstance.cotizacion.entradas[index], index);
-                    });
+                // $("#tablaEntradas")
+                //     .on('click', 'tr button.btn-success', function() {
+                //         var index = $(this).data('index');
+                //         console.log(index);
+                //         vueInstance.editarEntrada(vueInstance.cotizacion.entradas[index], index);
+                //     })
+                //     .on('click', 'button.btn-danger', function() {
+                //         var index = $(this).data('index');
+                //         vueInstance.removerEntrada(vueInstance.cotizacion.entradas[index], index);
+                //     });
 
                 this.resetDataTables();
 
@@ -1228,23 +1256,23 @@
                     $("button.fileinput-remove").click();
                     this.entrada.fotos = [];
                 },
-                aplicarDescuento() {
-                    //guardamos el descuento como desceunto anterior en caso de que lo editen tenemos el valor anterior
-                    /*
-                    if(this.cotizacion.tipo_descuento == 0){
-                        this.cotizacion.subtotal +=  Number(this.descuento_anterior);
-                        this.cotizacion.subtotal -=  Number(this.cotizacion.descuentos);
-                        this.descuento_anterior = this.cotizacion.descuentos;
-                    }
-                    else{
-                        this.cotizacion.subtotal +=  Number(this.descuento_anterior);
-                        //sacamos el porcentaje del descuento
-                        this.cotizacion.subtotal -=  Number(this.cotizacion.descuentos/100);
-                        this.descuento_anterior = this.cotizacion.descuentos/100;
-                    }
-                    */
+                // aplicarDescuento() {
+                //     //guardamos el descuento como desceunto anterior en caso de que lo editen tenemos el valor anterior
+                //     /*
+                //     if(this.cotizacion.tipo_descuento == 0){
+                //         this.cotizacion.subtotal +=  Number(this.descuento_anterior);
+                //         this.cotizacion.subtotal -=  Number(this.cotizacion.descuentos);
+                //         this.descuento_anterior = this.cotizacion.descuentos;
+                //     }
+                //     else{
+                //         this.cotizacion.subtotal +=  Number(this.descuento_anterior);
+                //         //sacamos el porcentaje del descuento
+                //         this.cotizacion.subtotal -=  Number(this.cotizacion.descuentos/100);
+                //         this.descuento_anterior = this.cotizacion.descuentos/100;
+                //     }
+                //     */
 
-                },
+                // },
                 cp1() {
                     this.cargando = true;
                     if (this.cotizacion.dircp && this.cotizacion.dircp.length > 4) {
@@ -1297,7 +1325,9 @@
                     }) => id === id_cliente);
                     this.contactos = cliente.contactos;
                     this.factor_porcentual = cliente.tipo.factor_porcentual;
-                    console.log(this.factor_porcentual)
+                    this.tipo_cliente = cliente.tipo.id;
+                    console.log(cliente)
+                    console.log(this.tipo_cliente)
                 },
                 seleccionarTipoDescuento() {
                     console.log(this.cotizacion.tipo_descuento)
@@ -1429,6 +1459,10 @@
                     this.dataTableEntradas.clear();
                     this.dataTableEntradas.rows.add(rows);
                     this.dataTableEntradas.draw();
+                    // console.log(rows.length)
+                    if (rows.length == 0) {
+                        this.resetValores()
+                    }
                 },
                 cuentaEntradasNoBorradas() {
                     var i = 0;
@@ -1442,6 +1476,9 @@
                 },
                 isfleteMenor() {
                     this.cotizacion.isfleteMenor = this.cotizacion.isfleteMenor ? false : true;
+                },
+                isTax() {
+                    this.cotizacion.isTax = this.cotizacion.isTax ? false : true;
                 },
                 agregarObservacion(observacion) {
                     this.cotizacion.observaciones.push(observacion.texto);
@@ -1527,7 +1564,18 @@
                 },
                 seleccionarProduco(prod) {
                     this.entrada.producto = prod;
-                    this.entrada.precio = this.entrada.producto.precio;
+                    // this.entrada.precio = this.entrada.producto.precio;
+                    switch (this.tipo_cliente) {
+                        case 1:
+                            this.entrada.precio = this.entrada.producto.precio_residencial;
+                            break;
+                        case 2:
+                            this.entrada.precio = this.entrada.producto.precio_comercial;
+                            break;
+                        case 3:
+                            this.entrada.precio = this.entrada.producto.precio_distribuidor;
+                            break;
+                    }
                     this.entrada.descripciones = [];
                     prod.descripciones.forEach(function(desc) {
                         this.entrada.descripciones.push({
@@ -1550,40 +1598,69 @@
 
                     this.openCatalogo = false;
                 },
-                sumaSubTotal() {
-                    this.cotizacion.subtotal = Number(this.cotizacion.subtotal) +
-                        Number(this.cotizacion.fletes) +
-                        Number(this.cotizacion.flete_menor) +
-                        Number(this.cotizacion.costo_corte) +
-                        Number(this.cotizacion.costo_sobreproduccion);
-                    console.log(this.cotizacion.subtotal)
-                },
-                sumaTotal() {
-                    this.calDescuento();
-                    this.calIva();
-                    this.cotizacion.total = this.cotizacion.montoDescuento != '0' ?
-                        (Number(this.cotizacion.subtotal) - Number(this.cotizacion.montoDescuento)) +
-                        Number(this.cotizacion.calIva) :
-                        Number(this.cotizacion.subtotal) + Number(this.cotizacion.calIva);
-                    console.log(this.cotizacion.total)
-                },
-                calIva() {
-                    this.cotizacion.calIva = this.cotizacion.montoDescuento != '0' ?
-                        (Number(this.cotizacion.subtotal) - Number(this.cotizacion.montoDescuento)) * 0.16 :
-                        Number(this.cotizacion.subtotal) * 0.16;
-                },
-                calDescuento() {
-                    this.cotizacion.montoDescuento = this.cotizacion.tipo_descuento != '0' ?
-                        (Number(this.cotizacion.subtotal) * Number(this.cotizacion.descuentos)) / 100 :
-                        this.cotizacion.descuentos;
+                sumaImporte() {
+                    let sumaImporte = 0;
+                    for (const entrada of this.cotizacion.entradas) {
+                        if (!entrada.borrar)
+                            sumaImporte += entrada.importe;
+                    };
+
+                    return sumaImporte;
+
                 },
                 setDescuentosFinal() {
                     this.cotizacion.descuentos = this.cotizacion.tipo_descuento != '0' ?
                         (Number(this.cotizacion.subtotal) * Number(this.cotizacion.descuentos)) / 100 :
                         this.cotizacion.descuentos;
                 },
+                sumaTotal() {
+                    let subTotal = Number(this.cotizacion.subtotal);
+
+                    let suma = Number(this.cotizacion.fletes) +
+                        Number(this.cotizacion.flete_menor) +
+                        Number(this.cotizacion.costo_corte) +
+                        Number(this.cotizacion.costo_sobreproduccion);
+
+                    this.cotizacion.subtotal = this.sumaImporte() + suma;
+                    this.cotizacion.extras = suma;
+
+                    //Calcula Los descuentos
+                    this.cotizacion.montoDescuento = this.cotizacion.tipo_descuento != '0' ?
+                        (Number(this.cotizacion.subtotal) * Number(this.cotizacion.descuentos)) / 100 :
+                        this.cotizacion.descuentos;
+
+                    //Calcula el IVA
+                    if (this.cotizacion.iva == "1") {
+                        this.cotizacion.calIva = this.cotizacion.montoDescuento != '0' ?
+                            (Number(this.cotizacion.subtotal) - Number(this.cotizacion.montoDescuento)) * 0.16 :
+                            Number(this.cotizacion.subtotal) * 0.16;
+                    } else {
+                        this.cotizacion.calIva = 0;
+                    }
+
+                    //Calcula el TAX
+                    this.cotizacion.calTax = this.cotizacion.montoDescuento != '0' ?
+                        ((Number(this.cotizacion.subtotal) - Number(this.cotizacion.montoDescuento)) * this
+                            .cotizacion.tax) / 100 :
+                        (Number(this.cotizacion.subtotal) * this.cotizacion.tax) / 100;
+
+                    //Suma total
+                    this.cotizacion.total = this.cotizacion.montoDescuento != '0' ?
+                        (Number(this.cotizacion.subtotal) - Number(this.cotizacion.montoDescuento)) +
+                        Number(this.cotizacion.calIva) + Number(this.cotizacion.calTax) :
+                        Number(this.cotizacion.subtotal) + Number(this.cotizacion.calIva) + Number(this.cotizacion
+                            .calTax);
+
+                    // console.log("suma total ", this.cotizacion.total)
+                },
+                resetValores() {
+                    this.cotizacion.montoDescuento = 0;
+                    this.cotizacion.calTax = 0;
+                    this.cotizacion.calIva = 0;
+                    this.cotizacion.subtotal = 0;
+                    this.cotizacion.total = 0;
+                },
                 agregarEntrada() {
-                    this.sumaSubTotal();
                     var area = '';
                     this.entrada.descripciones.forEach(function(descripcion) {
                         if (descripcion.name == 'Area') {
@@ -1609,18 +1686,18 @@
                     console.log(this.cliente)
                     console.log(this.factor_porcentual)
 
-                    let factorPorcentual = this.factor_porcentual > 0 ? (this.entrada.precio * this
-                            .factor_porcentual) / 100 :
-                        0;
-                    // this.entrada.importe = this.entrada.cantidad * this.entrada.precio;
-                    this.entrada.importe = this.entrada.cantidad * (this.entrada.precio - factorPorcentual);
+                    // let factorPorcentual = this.factor_porcentual > 0 ? (this.entrada.precio * this
+                    //         .factor_porcentual) / 100 :
+                    //     0;
+                    this.entrada.importe = this.entrada.cantidad * this.entrada.precio;
+                    // this.entrada.importe = this.entrada.cantidad * (this.entrada.precio - factorPorcentual);
                     console.log(this.entrada.importe)
-                    this.cotizacion.subtotal += this.entrada.importe;
-                    this.sumaTotal()
+                    // this.cotizacion.subtotal += this.entrada.importe;
                     if (this.entrada.orden == 0)
                         this.entrada.orden = this.cuentaEntradasNoBorradas() + 1;
 
                     this.cotizacion.entradas.push(this.entrada);
+                    this.sumaTotal()
                     this.resetDataTables();
                     this.entrada = {
                         producto: {
@@ -1649,167 +1726,166 @@
                         observacion.activa = false;
                     });
                 },
-                editarEntrada(entradaEdit, index) {
-                    if (this.edicionEntradaActiva) return false;
-                    entradaEdit.actualizar = true;
-                    this.entrada = entradaEdit;
-                    // this.entrada.fecha_precio_compra = entradaEdit.fecha_precio_compra_formated;
-                    this.cotizacion.subtotal = this.cotizacion.subtotal - entradaEdit.importe;
-                    console.log(entradaEdit);
-                    console.log(this.entrada);
-                    this.cotizacion.entradas.splice(index, 1);
+                // editarEntrada(entradaEdit, index) {
+                //     if (this.edicionEntradaActiva) return false;
+                //     entradaEdit.actualizar = true;
+                //     this.entrada = entradaEdit;
+                //     // this.entrada.fecha_precio_compra = entradaEdit.fecha_precio_compra_formated;
+                //     this.cotizacion.subtotal = this.cotizacion.subtotal - entradaEdit.importe;
+                //     console.log(entradaEdit);
+                //     console.log(this.entrada);
+                //     this.cotizacion.entradas.splice(index, 1);
 
-                    this.edicionEntradaActiva = true;
-                    this.resetDataTables();
+                //     this.edicionEntradaActiva = true;
+                //     this.resetDataTables();
 
-                    $("button.fileinput-remove").click();
-                    if (this.entrada.fotos.length) { //hay fotos
-                        if (typeof this.entrada.fotos[0] == "object") {
-                            this.$refs['fotos'].files = FileListItem(this.entrada.fotos);
-                            this.$refs['fotos'].dispatchEvent(new Event('change', {
-                                'bubbles': true
-                            }));
-                        } else if (typeof this.entrada.fotos[0] == "string") {
-                            $("div.file-default-preview").empty();
-                            this.entrada.fotos.forEach(function(foto) {
-                                $("div.file-default-preview")
-                                    .append('<img src="' + foto +
-                                        '" style="width:200px; height:auto;" alt="foto">');
-                            });
-                            $("div.file-default-preview").append('<h6>Click para seleccionar</h6>');
-                        }
-                    } else if (this.entrada.producto.foto) {
-                        $("div.file-default-preview img")[0].src = this.entrada.producto.foto;
-                    }
+                //     $("button.fileinput-remove").click();
+                //     if (this.entrada.fotos.length) { //hay fotos
+                //         if (typeof this.entrada.fotos[0] == "object") {
+                //             this.$refs['fotos'].files = FileListItem(this.entrada.fotos);
+                //             this.$refs['fotos'].dispatchEvent(new Event('change', {
+                //                 'bubbles': true
+                //             }));
+                //         } else if (typeof this.entrada.fotos[0] == "string") {
+                //             $("div.file-default-preview").empty();
+                //             this.entrada.fotos.forEach(function(foto) {
+                //                 $("div.file-default-preview")
+                //                     .append('<img src="' + foto +
+                //                         '" style="width:200px; height:auto;" alt="foto">');
+                //             });
+                //             $("div.file-default-preview").append('<h6>Click para seleccionar</h6>');
+                //         }
+                //     } else if (this.entrada.producto.foto) {
+                //         $("div.file-default-preview img")[0].src = this.entrada.producto.foto;
+                //     }
 
-                    this.observaciones_productos.forEach(function(observacion) {
-                        var index = this.entrada.observaciones.findIndex(function(obs) {
-                            return observacion.texto == obs;
-                        });
-                        if (index == -1) observacion.activa = false;
-                        else observacion.activa = true;
-                    }, this);
-                    return true;
-                },
-                removerEntrada(entrada, index, undefined) {
-                    this.cotizacion.subtotal -= entrada.importe;
-                    if (entrada.id == undefined) this.cotizacion.entradas.splice(index, 1);
-                    else entrada.borrar = true;
-                    $("button.fileinput-remove").click();
+                //     this.observaciones_productos.forEach(function(observacion) {
+                //         var index = this.entrada.observaciones.findIndex(function(obs) {
+                //             return observacion.texto == obs;
+                //         });
+                //         if (index == -1) observacion.activa = false;
+                //         else observacion.activa = true;
+                //     }, this);
+                //     return true;
+                // },
+                // removerEntrada(entrada, index, undefined) {
+                //     this.cotizacion.subtotal -= entrada.importe;
+                //     if (entrada.id == undefined) this.cotizacion.entradas.splice(index, 1);
+                //     else entrada.borrar = true;
+                //     $("button.fileinput-remove").click();
 
-                    //restar 1 al orden de todas las entradas con orden mayor
-                    //al de la entrada borrada
-                    var orden = entrada.orden;
-                    this.cotizacion.entradas.forEach(function(entrada) {
-                        if (entrada.orden > orden && entrada.borrar == undefined) {
-                            entrada.actualizar = true;
-                            entrada.orden--;
-                        }
-                    });
+                //     //restar 1 al orden de todas las entradas con orden mayor
+                //     //al de la entrada borrada
+                //     var orden = entrada.orden;
+                //     this.cotizacion.entradas.forEach(function(entrada) {
+                //         if (entrada.orden > orden && entrada.borrar == undefined) {
+                //             entrada.actualizar = true;
+                //             entrada.orden--;
+                //         }
+                //     });
 
-                    this.resetDataTables();
-                },
-                copiar2(index, cotizacion) {
-                    this.copiar_cotizacion.cotizacion_id = cotizacion.id;
-                },
-                copiar(index, cotizacion) {
-                    //reiniciar observaciones
-                    this.observaciones.forEach(function(observacion) {
-                        observacion.activa = false;
-                    });
-                    var numero = this.cotizacion.numero;
-                    //vaciar datos de cotizacion
-                    this.cotizacion = {
-                        prospecto_id: 0,
-                        cliente_contacto_id: cotizacion.cliente_contacto_id,
-                        numero: numero,
-                        condicion: {
-                            id: cotizacion.condicion_id,
-                            nombre: ''
-                        },
-                        facturar: (cotizacion.facturar) ? 1 : 0,
-                        rfc: cotizacion.rfc,
-                        razon_social: cotizacion.razon_social,
-                        calle: cotizacion.calle,
-                        nexterior: cotizacion.nexterior,
-                        ninterior: cotizacion.ninterior,
-                        colonia: cotizacion.colonia,
-                        cp: cotizacion.cp,
-                        ciudad: cotizacion.ciudad,
-                        estado: cotizacion.estado,
-                        direccion: (cotizacion.direccion) ? 1 : 0,
-                        dircalle: cotizacion.dircalle,
-                        instrucciones: cotizacion.instrucciones,
-                        enviar_a: cotizacion.enviar_a,
-                        dirnexterior: cotizacion.dirnexterior,
-                        dirninterior: cotizacion.dirninterior,
-                        dircolonia: cotizacion.dircolonia,
-                        dircp: cotizacion.dircp,
-                        contacto_nombre: cotizacion.contacto_nombre,
-                        contacto_telefono: cotizacion.contacto_telefono,
-                        contacto_email: cotizacion.contacto_email,
-                        dirciudad: cotizacion.dirciudad,
-                        direstado: cotizacion.direstado,
-                        entrega: cotizacion.entrega,
-                        lugar: cotizacion.lugar,
-                        // fletes: cotizacion.fletes,
-                        // planos: cotizacion.planos,
-                        factibilidad: cotizacion.factibilidad,
-                        moneda: cotizacion.moneda,
-                        entradas: cotizacion.entradas,
-                        subtotal: cotizacion.subtotal,
-                        iva: (cotizacion.iva == 0) ? 0 : 1,
-                        total: cotizacion.total,
-                        idioma: cotizacion.idioma,
-                        notas: cotizacion.notas,
-                        observaciones: []
-                    };
-                    this.condicionCambiada();
+                //     this.resetDataTables();
+                // },
+                // copiar2(index, cotizacion) {
+                //     this.copiar_cotizacion.cotizacion_id = cotizacion.id;
+                // },
+                // copiar(index, cotizacion) {
+                //     //reiniciar observaciones
+                //     this.observaciones.forEach(function(observacion) {
+                //         observacion.activa = false;
+                //     });
+                //     var numero = this.cotizacion.numero;
+                //     //vaciar datos de cotizacion
+                //     this.cotizacion = {
+                //         prospecto_id: 0,
+                //         cliente_contacto_id: cotizacion.cliente_contacto_id,
+                //         numero: numero,
+                //         condicion: {
+                //             id: cotizacion.condicion_id,
+                //             nombre: ''
+                //         },
+                //         facturar: (cotizacion.facturar) ? 1 : 0,
+                //         rfc: cotizacion.rfc,
+                //         razon_social: cotizacion.razon_social,
+                //         calle: cotizacion.calle,
+                //         nexterior: cotizacion.nexterior,
+                //         ninterior: cotizacion.ninterior,
+                //         colonia: cotizacion.colonia,
+                //         cp: cotizacion.cp,
+                //         ciudad: cotizacion.ciudad,
+                //         estado: cotizacion.estado,
+                //         direccion: (cotizacion.direccion) ? 1 : 0,
+                //         dircalle: cotizacion.dircalle,
+                //         instrucciones: cotizacion.instrucciones,
+                //         enviar_a: cotizacion.enviar_a,
+                //         dirnexterior: cotizacion.dirnexterior,
+                //         dirninterior: cotizacion.dirninterior,
+                //         dircolonia: cotizacion.dircolonia,
+                //         dircp: cotizacion.dircp,
+                //         contacto_nombre: cotizacion.contacto_nombre,
+                //         contacto_telefono: cotizacion.contacto_telefono,
+                //         contacto_email: cotizacion.contacto_email,
+                //         dirciudad: cotizacion.dirciudad,
+                //         direstado: cotizacion.direstado,
+                //         entrega: cotizacion.entrega,
+                //         lugar: cotizacion.lugar,
+                //         // fletes: cotizacion.fletes,
+                //         // planos: cotizacion.planos,
+                //         factibilidad: cotizacion.factibilidad,
+                //         moneda: cotizacion.moneda,
+                //         entradas: cotizacion.entradas,
+                //         subtotal: cotizacion.subtotal,
+                //         iva: (cotizacion.iva == 0) ? 0 : 1,
+                //         total: cotizacion.total,
+                //         idioma: cotizacion.idioma,
+                //         notas: cotizacion.notas,
+                //         observaciones: []
+                //     };
+                //     this.condicionCambiada();
 
-                    //re-seleccionar observaciones
-                    var observaciones = cotizacion.observaciones.match(/<li>([^<]+)+<\/li>+/g);
-                    if (observaciones == null) observaciones = [];
-                    var encontrada;
-                    observaciones.forEach(function(observacion) {
-                        observacion = observacion.replace(/(<li>|<\/li>)/g, '');
-                        encontrada = this.observaciones.findIndex(function(obs) {
-                            return observacion == obs.texto;
-                        });
+                //     //re-seleccionar observaciones
+                //     var observaciones = cotizacion.observaciones.match(/<li>([^<]+)+<\/li>+/g);
+                //     if (observaciones == null) observaciones = [];
+                //     var encontrada;
+                //     observaciones.forEach(function(observacion) {
+                //         observacion = observacion.replace(/(<li>|<\/li>)/g, '');
+                //         encontrada = this.observaciones.findIndex(function(obs) {
+                //             return observacion == obs.texto;
+                //         });
 
-                        if (encontrada != -1) {
-                            this.observaciones[encontrada].activa = true;
-                        } else { //observacion diferente de las predefinidas
-                            this.observaciones.push({
-                                activa: true,
-                                texto: observacion
-                            });
-                        }
-                        this.cotizacion.observaciones.push(observacion);
-                    }, this);
+                //         if (encontrada != -1) {
+                //             this.observaciones[encontrada].activa = true;
+                //         } else { //observacion diferente de las predefinidas
+                //             this.observaciones.push({
+                //                 activa: true,
+                //                 texto: observacion
+                //             });
+                //         }
+                //         this.cotizacion.observaciones.push(observacion);
+                //     }, this);
 
-                    // agregar observaciones de entradas de productos
-                    cotizacion.entradas.forEach(function(entrada) {
-                        observaciones = entrada.observaciones.match(/<li>([^<]+)+<\/li>+/g);
-                        entrada.observaciones = [];
-                        if (observaciones == null) return false;
-                        encontrada;
-                        observaciones.forEach(function(observacion) {
-                            observacion = observacion.replace(/(<li>|<\/li>)/g, '');
-                            entrada.observaciones.push(observacion);
+                //     // agregar observaciones de entradas de productos
+                //     cotizacion.entradas.forEach(function(entrada) {
+                //         observaciones = entrada.observaciones.match(/<li>([^<]+)+<\/li>+/g);
+                //         entrada.observaciones = [];
+                //         if (observaciones == null) return false;
+                //         encontrada;
+                //         observaciones.forEach(function(observacion) {
+                //             observacion = observacion.replace(/(<li>|<\/li>)/g, '');
+                //             entrada.observaciones.push(observacion);
 
-                            encontrada = this.observaciones_productos.findIndex(function(obs) {
-                                return observacion == obs.texto;
-                            });
-                            if (encontrada == -1) this.observaciones_productos.push({
-                                activa: false,
-                                texto: observacion
-                            });
-                        }, this);
-                    }, this);
-                    this.resetDataTables();
-                },
+                //             encontrada = this.observaciones_productos.findIndex(function(obs) {
+                //                 return observacion == obs.texto;
+                //             });
+                //             if (encontrada == -1) this.observaciones_productos.push({
+                //                 activa: false,
+                //                 texto: observacion
+                //             });
+                //         }, this);
+                //     }, this);
+                //     this.resetDataTables();
+                // },
                 guardar() {
-                    this.setDescuentosFinal()
                     if (this.entrada.producto.id == undefined) {
 
                     } else {
@@ -1839,7 +1915,7 @@
                     if (dif > 0.05) {
                         alert('OCURRIO UN ERROR INESPERADO EL SUBTOTAL NO COINCIDE FAVOR DE RECARGAR LA PAGINA');
                     } else {
-
+                        this.setDescuentosFinal()
                         cotizacion.entradas.forEach(function(entrada) {
                             entrada.producto_id = entrada.producto.id;
                             delete entrada.producto;
@@ -1861,13 +1937,35 @@
                             .then(({
                                 data
                             }) => {
+                                console.log
                                 swal({
                                     title: "Cotizacion Guardada",
                                     text: "",
-                                    type: "success"
-                                }).then(() => {
-                                    window.location.href = "/cotizacionesdirectas";
+                                    type: "success",
+                                    confirmButtonText: "Enviar Cotización",
+                                    showCancelButton: true,
+                                    cancelButtonText: "Ok",
+                                }).then((result) => {
+                                        console.log(result)
+
+                                    if (result.dismiss === "cancel") {
+                                        // Cierra la modal
+                                        window.location.href = "/cotizacionesdirectas";
+                                        swal.close();
+                                    } else if (result.value) {
+                                        // Ejecuta el código
+                                        this.openEnviar = true;
+                                        console.log(data)
+                                        this.enviar.cotizacion_id = data.cotizacion.id;
+                                    }
                                 });
+                                // swal({
+                                //     title: "Cotizacion Guardada",
+                                //     text: "",
+                                //     type: "success"
+                                // }).then(() => {
+                                //     window.location.href = "/cotizacionesdirectas";
+                                // });
                             })
                             .catch(({
                                 response
@@ -1905,7 +2003,10 @@
                                 title: "Cotizacion Enviada",
                                 text: "",
                                 type: "success"
+                            }).then((result) => {
+                                window.location.href = "/cotizacionesdirectas";
                             });
+
                         })
                         .catch(({
                             response
