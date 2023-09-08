@@ -756,7 +756,7 @@
                     @endif
                     <tr>
                         <td class="text-right" style="width:90%;"><strong>Subtotal:</strong></td>
-                        <td class="text-right" style="width:10%;">@format_money($cotizacion->subtotal)</td>
+                        <td class="text-right" style="width:10%;">@format_money(($cotizacion->subtotal + $cotizacion->costo_sobreproduccion + $cotizacion->costo_corte + $cotizacion->flete_menor + $cotizacion->fletes))</td>
                     </tr>
                     @if ($cotizacion->descuentos > '0')
                         <tr>
