@@ -1797,6 +1797,8 @@
                     this.resetDataTables();
                 },
                 guardar() {
+                    this.sumaTotal();
+
                     if (this.entrada.producto.id == undefined) {
 
                     } else {

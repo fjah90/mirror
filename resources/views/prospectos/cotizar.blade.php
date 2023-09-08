@@ -2126,6 +2126,7 @@
                     this.resetDataTables();
                 },
                 guardar() {
+                    this.sumaTotal();
                     this.fecha = this.fecha ? new Date(this.fecha).toISOString().slice(0, 10) : '';
                     // console.log(this.fecha)
                     if (this.entrada.producto.id == undefined) {
