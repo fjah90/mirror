@@ -2064,7 +2064,7 @@
                         flete_menor: cotizacion.flete_menor,
                         isfleteMenor: cotizacion.flete_menor && cotizacion.flete_menor > 0 ? true : false,
                         costo_corte: cotizacion.costo_corte,
-                        costo_sobreproduccion: cotizacion.costo_corte,
+                        costo_sobreproduccion: cotizacion.costo_sobreproduccion,
                         extras: Number(cotizacion.fletes) + Number(cotizacion.flete_menor) + Number(cotizacion
                             .costo_corte) + Number(cotizacion.costo_sobreproduccion),
                         descuentos: cotizacion.descuentos,
@@ -2255,17 +2255,6 @@
                                 });
                                 this.resetDataTables();
                                 this.cargando = false;
-                                // swal({
-                                //     title: "Cotizacion Guardada",
-                                //     text: "",
-                                //     type: "success"
-
-                                // }).then(() => {
-                                //     $('a[download="C ' + data.cotizacion.numero + ' Robinson ' + this
-                                //         .prospecto.nombre + '.pdf"]')[0].click();
-                                //     window.location.reload(true);
-                                // });
-
                                 swal({
                                     title: "Cotizacion Guardada",
                                     text: "",
@@ -2276,9 +2265,9 @@
                                 }).then((result) => {
                                     if (result.dismiss === "cancel") {
                                         // Cierra la modal
-                                        $('a[download="C ' + data.cotizacion.numero +
-                                            ' Robinson ' + this
-                                            .prospecto.nombre + '.pdf"]')[0].click();
+                                        // $('a[download="C ' + data.cotizacion.numero +
+                                        //     ' Robinson ' + this
+                                        //     .prospecto.nombre + '.pdf"]')[0].click();
                                         window.location.reload(true);
                                         swal.close();
                                     } else if (result.value) {
@@ -2334,8 +2323,8 @@
                                 type: "success"
 
                             }).then(() => {
-                                $('a[download="C ' + data.cotizacion.numero + ' Robinson ' + this
-                                    .prospecto.nombre + '.pdf"]')[0].click();
+                                // $('a[download="C ' + data.cotizacion.numero + ' Robinson ' + this
+                                //     .prospecto.nombre + '.pdf"]')[0].click();
                                 window.location.reload(true);
                             });
                         })
