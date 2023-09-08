@@ -1848,7 +1848,7 @@
                         entradas: cotizacion.entradas,
                         subtotal: cotizacion.subtotal,
                         calIva: cotizacion.calIva,
-                        iva: (cotizacion.iva > 0 ? 1: 0,
+                        iva: cotizacion.iva > 0 ? 1: 0,
                         tax: cotizacion.tax,
                         isTax: cotizacion.tax > 0 ? 1 : 0,
                         total: cotizacion.total,
