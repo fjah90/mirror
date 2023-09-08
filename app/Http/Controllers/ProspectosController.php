@@ -2168,7 +2168,7 @@ class ProspectosController extends Controller
             'tipo_descuento'      => 'required',
         ]);
 
-
+        // dd($request);
         if ($validator->fails()) {
             $errors = $validator->errors()->all();
             return response()->json([
@@ -2380,7 +2380,7 @@ class ProspectosController extends Controller
         $cliente = $cotizacion->prospecto->cliente;
 
         // descomentar si quieres ver el pdf en local
-        // return view($view, compact('cliente', 'cotizacion', 'nombre'));
+        return view($view, compact('cliente', 'cotizacion', 'nombre'));
         
         $cotizacionPDF = PDF::loadView($view, compact('cliente', 'cotizacion', 'nombre'));
         Storage::disk('public')->put($url, $cotizacionPDF->output());
@@ -2436,7 +2436,8 @@ class ProspectosController extends Controller
             'subtotal'            => 'required',
             'total'               => 'required',
         ]);
-
+        // echo "update";
+        // dd($request);
         if ($validator->fails()) {
             $errors = $validator->errors()->all();
             return response()->json([
@@ -2494,8 +2495,7 @@ class ProspectosController extends Controller
         }
         if (!empty($request->total)) {
             $update['total'] = $request->total;
-        }
-        else {
+        } else {
             $update['total'] = bcadd($update['subtotal'], $update['iva'], 2);
         }
 
@@ -2509,7 +2509,7 @@ class ProspectosController extends Controller
         if (!$update['numero']) {
             $update['numero'] = $cotizacion->id;
         }
-
+        // dd($update);
         $cotizacion->update($update);
 
         //guardar entradas
@@ -2647,9 +2647,8 @@ class ProspectosController extends Controller
             }
         } //foreach $request->entradas
 
-
         //recalculate subtotal
-        $update['subtotal'] = round($cotizacion->entradas()->sum('importe'), 2);
+        // $update['subtotal'] = round($cotizacion->entradas()->sum('importe'), 2);
         if ($request->iva == "1") {
             if (!empty($request->calIva)) {
                 $update['iva'] = $request->calIva;
@@ -2714,7 +2713,7 @@ class ProspectosController extends Controller
         $cliente = $cotizacion->prospecto->cliente;
 
         // descomentar si quieres ver el pdf en local
-        // return view($view, compact('cliente', 'cotizacion', 'nombre'));
+        return view($view, compact('cliente', 'cotizacion', 'nombre'));
 
         $cotizacionPDF = PDF::loadView($view, compact('cotizacion', 'cliente', 'nombre'));
         Storage::disk('public')->put($url, $cotizacionPDF->output());
@@ -2979,7 +2978,7 @@ class ProspectosController extends Controller
 
 
         //recalculate subtotal
-        $update['subtotal'] = round($cotizacion->entradas()->sum('importe'), 2);
+        // $update['subtotal'] = round($cotizacion->entradas()->sum('importe'), 2);
         if ($request->iva == "1") {
             if (!empty($request->calIva)) {
                 $update['iva'] = $request->calIva;

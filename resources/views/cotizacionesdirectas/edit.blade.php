@@ -1837,7 +1837,7 @@
                         flete_menor: cotizacion.flete_menor,
                         isfleteMenor: cotizacion.flete_menor && cotizacion.flete_menor > 0 ? true : false,
                         costo_corte: cotizacion.costo_corte,
-                        costo_sobreproduccion: cotizacion.costo_corte,
+                        costo_sobreproduccion: cotizacion.costo_sobreproduccion,
                         extras: Number(cotizacion.fletes) + Number(cotizacion.flete_menor) + Number(cotizacion
                             .costo_corte) + Number(cotizacion.costo_sobreproduccion),
                         descuentos: cotizacion.descuentos,
