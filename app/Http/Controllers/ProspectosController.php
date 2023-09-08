@@ -152,8 +152,7 @@ class ProspectosController extends Controller
                     ->select('prospectos_cotizaciones.*', 'users.name as user_name', 'prospectos.nombre as prospecto_nombre', 'prospectos.id as prospecto_id', 'clientes.nombre as cliente_nombre')
                     ->where('prospectos.es_prospecto', 'si')
                     ->where('prospectos_cotizaciones.user_id', '=', $user->id)->whereBetween('prospectos_cotizaciones.created_at', [$inicio, $anio])->orderBy('fecha', 'desc')->get();
-            }
-            else {
+            } else {
 
                 $proyectos = Prospecto::leftjoin('prospectos_actividades', 'prospectos.id', '=', 'prospectos_actividades.prospecto_id')
                     ->leftjoin('prospectos_tipos_actividades', 'prospectos_actividades.tipo_id', '=', 'prospectos_tipos_actividades.id')
@@ -177,8 +176,7 @@ class ProspectosController extends Controller
             }
 
             $vendedores = Vendedor::all();
-        }
-        else {
+        } else {
 
 
             if (Auth::user()->roles[0]->name == 'Administrador' || Auth::user()->roles[0]->name == 'Dirección') {
@@ -217,8 +215,7 @@ class ProspectosController extends Controller
                             ->where('prospectos.es_prospecto', 'si')
                             ->get();
 
-                    }
-                    else {
+                    } else {
                         $anio = Carbon::parse($anio2);
 
                         $proyectos = Prospecto::leftjoin('prospectos_actividades', 'prospectos.id', '=', 'prospectos_actividades.prospecto_id')
@@ -232,8 +229,7 @@ class ProspectosController extends Controller
                             ->whereBetween('prospectos.created_at', [$inicio, $anio])
                             ->get();
                     }
-                }
-                else {
+                } else {
 
                     if ($anio2 == 'Todos') {
 
@@ -248,8 +244,7 @@ class ProspectosController extends Controller
                             ->where('prospectos.vendedor_id', $disenador_id)
                             ->get();
 
-                    }
-                    else {
+                    } else {
                         $anio = Carbon::parse($anio2);
                         $proyectos = Prospecto::leftjoin('prospectos_actividades', 'prospectos.id', '=', 'prospectos_actividades.prospecto_id')
                             ->leftjoin('prospectos_tipos_actividades', 'prospectos_actividades.tipo_id', '=', 'prospectos_tipos_actividades.id')
@@ -278,8 +273,7 @@ class ProspectosController extends Controller
                     ->where('prospectos_cotizaciones.user_id', '=', $user->id)->whereBetween('prospectos_cotizaciones.created_at', [$inicio, $anio])->orderBy('fecha', 'desc')
                     ->get();
                 $vendedores = Vendedor::all();
-            }
-            else if (Auth::user()->roles[0]->name == 'Diseñadores') {
+            } else if (Auth::user()->roles[0]->name == 'Diseñadores') {
 
                 $proyectos = Prospecto::leftjoin('prospectos_actividades', 'prospectos.id', '=', 'prospectos_actividades.prospecto_id')
                     ->leftjoin('prospectos_tipos_actividades', 'prospectos_actividades.tipo_id', '=', 'prospectos_tipos_actividades.id')
@@ -305,8 +299,7 @@ class ProspectosController extends Controller
                     ->get();
                 $vendedores = Vendedor::all();
 
-            }
-            else {
+            } else {
 
                 $proyectos = Prospecto::leftjoin('prospectos_actividades', 'prospectos.id', '=', 'prospectos_actividades.prospecto_id')
                     ->leftjoin('prospectos_tipos_actividades', 'prospectos_actividades.tipo_id', '=', 'prospectos_tipos_actividades.id')
@@ -338,15 +331,13 @@ class ProspectosController extends Controller
         if ($disenador_id == 'Todos') {
             //es un director y quiere ver todas las tareas de todos
             $tareas = Tarea::with('vendedor', 'director')->get();
-        }
-        else {
+        } else {
             if (Auth::user()->roles[0]->name == 'Diseñadores') {
                 //obtenemos el usuario del vendedor
                 $usuario_vendedor = User::where('email', $vendedor->email)->first();
                 //
                 $tareas = Tarea::with('vendedor', 'director')->where('vendedor_id', $vendedor->id)->orwhere('user_id', $usuario_vendedor->id)->get();
-            }
-            else {
+            } else {
                 //obetenemos el usuario del vendedor
                 $vend = Vendedor::where('id', $disenador_id)->first();
                 $us = USer::where('email', $vend->email)->first();
@@ -357,8 +348,7 @@ class ProspectosController extends Controller
         //revisamos si tiene tareas pendientes
         if (Auth::user()->roles[0]->name == 'Diseñadores') {
             $tareas = Tarea::where('vendedor_id', $vendedo_id)->where('status', 'Pendiente')->get();
-        }
-        else {
+        } else {
             $tareas_pendientes = Tarea::where('director_id', auth()->user()->id)->where('status', 'Pendiente')->get();
         }
 
@@ -385,8 +375,6 @@ class ProspectosController extends Controller
      */
     public function prospectos(Request $request)
     {
-
-
         $inicio = Carbon::parse('2023-01-01');
         $anio = Carbon::parse('2023-12-31');
         $anio2 = '2023-12-31';
@@ -404,8 +392,7 @@ class ProspectosController extends Controller
         if (auth()->user()->tipo == 'Administrador' || auth()->user()->tipo == 'Dirección') {
             $disenador_id = 'Todos';
             $usuarios = Vendedor::all();
-        }
-        else {
+        } else {
             $disenador_id = $vendedor->id;
             $usuarios = [];
         }
@@ -438,8 +425,7 @@ class ProspectosController extends Controller
                     ->where('prospectos_cotizaciones.user_id', '=', $user->id)->whereBetween('prospectos_cotizaciones.created_at', [$inicio, $anio])->orderBy('fecha', 'desc')->get();
 
 
-            }
-            else {
+            } else {
 
                 $proyectos = Prospecto::leftjoin('prospectos_actividades', 'prospectos.id', '=', 'prospectos_actividades.prospecto_id')
                     ->leftjoin('prospectos_tipos_actividades', 'prospectos_actividades.tipo_id', '=', 'prospectos_tipos_actividades.id')
@@ -489,8 +475,7 @@ class ProspectosController extends Controller
                     ->where('prospectos_cotizaciones.user_id', '=', $user->id)->whereBetween('prospectos_cotizaciones.created_at', [$inicio, $anio])->orderBy('fecha', 'desc')
                     ->get();
                 $vendedores = Vendedor::all();
-            }
-            else if (Auth::user()->roles[0]->name == 'Diseñadores') {
+            } else if (Auth::user()->roles[0]->name == 'Diseñadores') {
 
                 $proyectos = Prospecto::leftjoin('prospectos_actividades', 'prospectos.id', '=', 'prospectos_actividades.prospecto_id')
                     ->leftjoin('prospectos_tipos_actividades', 'prospectos_actividades.tipo_id', '=', 'prospectos_tipos_actividades.id')
@@ -516,8 +501,7 @@ class ProspectosController extends Controller
                     ->get();
                 $vendedores = Vendedor::all();
 
-            }
-            else {
+            } else {
 
                 $proyectos = Prospecto::leftjoin('prospectos_actividades', 'prospectos.id', '=', 'prospectos_actividades.prospecto_id')
                     ->leftjoin('prospectos_tipos_actividades', 'prospectos_actividades.tipo_id', '=', 'prospectos_tipos_actividades.id')
@@ -619,9 +603,6 @@ class ProspectosController extends Controller
 
         //Sacamos la notificaciones del usuario logueado
         $notificaciones = Notificacion::with('usercreo', 'userdirigido')->where('user_dirigido', auth()->user()->id)->where('status', 'sin leer')->get();
-
-
-
 
 
         $clientes = Cliente::all();
@@ -983,28 +964,29 @@ class ProspectosController extends Controller
 
     public function listadoprospectos(Request $request)
     {
-        $anio = Carbon::parse($request->anio);
-        $inicio = $anio->startOfYear();
+
+        $anio = $request->anio != "Todos" ? Carbon::parse($request->anio): $request->anio;
+        $inicio = $request->anio != "Todos" ? $anio->startOfYear(): "";
 
         // die($inicio);
-        // if ($request->anio == '2019-12-31') {
-        //     $inicio = Carbon::parse('2019-01-01');
-        // }
-        // elseif ($request->anio == '2020-12-31') {
-        //     $inicio = Carbon::parse('2020-01-01');
-        // }
-        // elseif ($request->anio == '2022-12-31') {
-        //     $inicio = Carbon::parse('2022-01-01');
-        // }
-        // elseif ($request->anio == '2023-12-31') {
-        //     $inicio = Carbon::parse('2023-01-01');
-        // }
-        // elseif ($request->anio == '2024-12-31') {
-        //     $inicio = Carbon::parse('2024-01-01');
-        // }
-        // else {
-        //     $inicio = Carbon::parse('2021-01-01');
-        // }
+        if ($request->anio == '2019-12-31') {
+            $inicio = Carbon::parse('2019-01-01');
+        }
+        elseif ($request->anio == '2020-12-31') {
+            $inicio = Carbon::parse('2020-01-01');
+        }
+        elseif ($request->anio == '2022-12-31') {
+            $inicio = Carbon::parse('2022-01-01');
+        }
+        elseif ($request->anio == '2023-12-31') {
+            $inicio = Carbon::parse('2023-01-01');
+        }
+        elseif ($request->anio == '2024-12-31') {
+            $inicio = Carbon::parse('2024-01-01');
+        }
+        else {
+            $inicio = Carbon::parse('2021-01-01');
+        }
 
         if ($request->id == 'Todos') {
             $tareas = Tarea::with('vendedor')->get();
@@ -2397,6 +2379,9 @@ class ProspectosController extends Controller
         }
         $cliente = $cotizacion->prospecto->cliente;
 
+        // descomentar si quieres ver el pdf en local
+        // return view($view, compact('cliente', 'cotizacion', 'nombre'));
+        
         $cotizacionPDF = PDF::loadView($view, compact('cliente', 'cotizacion', 'nombre'));
         Storage::disk('public')->put($url, $cotizacionPDF->output());
 
@@ -2727,6 +2712,9 @@ class ProspectosController extends Controller
         }
 
         $cliente = $cotizacion->prospecto->cliente;
+
+        // descomentar si quieres ver el pdf en local
+        // return view($view, compact('cliente', 'cotizacion', 'nombre'));
 
         $cotizacionPDF = PDF::loadView($view, compact('cotizacion', 'cliente', 'nombre'));
         Storage::disk('public')->put($url, $cotizacionPDF->output());
@@ -3107,23 +3095,33 @@ class ProspectosController extends Controller
         }
 
         $cotizacion = ProspectoCotizacion::with('entradas', 'prospecto')->findOrFail($request->cotizacion_id);
+        
         $email = $request->email;
         // $pdf_name = basename($cotizacion->archivo);
-        $pdf_name = 'C ' . $cotizacion->numero . ' Robinson ' . $cotizacion->prospecto->nombre . '.pdf';
+        if(isset($cotizacion->prospecto)){
+            $pdf_name = 'C ' . $cotizacion->numero . ' Robinson ' . $cotizacion->prospecto->nombre . '.pdf';
+        }else{
+            $pdf_name = 'C ' . $cotizacion->numero . ' Intercorp.pdf';
+        }
+        // dd($pdf_name);
+
         $pdf = Storage::disk('public')->get($cotizacion->archivo);
         $user = auth()->user();
-
+        
         Mail::send('email', ['mensaje' => $request->mensaje], function ($message) use ($email, $pdf, $pdf_name, $user) {
             $message->to($email)
-                ->cc('abraham@intercorp.mx')
-                ->replyTo($user->email, $user->name)
+            // TODO: colocar el correo para el de notificaciones
+                // ->cc('abraham@intercorp.mx')
+                // ->replyTo($user->email, $user->name)
                 ->subject('Cotización Robinson');
             $message->attachData($pdf, $pdf_name);
         });
 
         //generar actividad de envio de cotizacion
-        $this->registrarActividadDeCotizacionEnviada($cotizacion);
-
+        if(isset($cotizacion->prospecto)){
+            $this->registrarActividadDeCotizacionEnviada($cotizacion);
+        }
+        
         return response()->json(['success' => true, 'error' => false], 200);
     }
 

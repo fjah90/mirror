@@ -2,17 +2,18 @@
 <html lang="en">
 
 <head>
+    {{-- <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap"> --}}
     <meta charset="UTF-8">
     <style>
         html {
-            font-family: sans-serif;
+            /* font-family: 'Lato'; */
             -webkit-text-size-adjust: 100%;
             -ms-text-size-adjust: 100%;
         }
 
         body {
             margin: 25px;
-            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            /* font-family: 'Lato'; */
             font-size: 10px;
             line-height: 1.1;
             color: #333;
@@ -31,7 +32,7 @@
         .h4,
         .h5,
         .h6 {
-            font-family: inherit;
+            /* font-family: 'Lato'; */
             font-weight: 500;
             color: inherit;
         }
@@ -499,6 +500,7 @@
         </div>
         <div class="row margTop10">
             <div class="col-lg-5">
+                {{-- //TODO: va el folio de la cotizacion no el numero --}}
                 <p>Cotizacion # {{ $cotizacion->numero }}</p>
                 <p>Fecha: {{ $cotizacion->fechaPDF }}</p>
             </div>
@@ -630,9 +632,20 @@
                             <th class="text-center" style="width:13%; padding:3px 0 1px;">Modelo</th>
                             <th class="text-center" style="width:13%; padding:3px 0 1px;">Imagen</th>
                             <th class="text-center" style="width:16%; padding:3px 0 1px;">Descripciones</th>
-                            <th class="text-center" style="width:16%; padding:3px 0 1px;">Precio Unitario (USD)</th>
-                            <th class="text-center" style="width:16%; padding:3px 0 1px;">Precio Unitario Especial (USD)
-                            </th>
+                            @if ($cliente->tipo->id >= 1)
+                                //mostrar si es Residencial
+                                <th class="text-center" style="width:16%; padding:3px 0 1px;">Precio Unitario (USD)</th>
+                            @endif
+                            @if ($cliente->tipo->id >= 2)
+                                //mostrar si es Comercial
+                                <th class="text-center" style="width:16%; padding:3px 0 1px;">Precio Unitario Especial
+                                    (USD) </th>
+                            @endif
+                            @if ($cliente->tipo->id >= 3)
+                                //mostrar si es Distribuidor
+                                <th class="text-center" style="width:16%; padding:3px 0 1px;">Precio Unitario
+                                    Distribuidor (USD) </th>
+                            @endif
                             <th class="text-center" style="width:13%; padding:3px 0 1px;">Total</th>
                         </tr>
                     </thead>
@@ -651,6 +664,9 @@
                                 <span>@text_capitalize($entrada->producto->nombre) </span>
                                 <br />
                                 <span>@text_capitalize($entrada->producto->nombre_material) </span>
+                                <br />
+                                <span>@text_capitalize($entrada->producto->color) </span>
+                                <br />
                             </td>
                             <td class="text-center border" style="width:13%; border-bottom: none; border-top: none;">
                                 @foreach ($entrada->fotos as $foto)
@@ -679,11 +695,19 @@
                                     </p>
                                 @endif
                             </td>
-                            <td class="text-right border" style="width:16%; border-bottom: none; border-top: none;">
-                                @format_money($entrada->precio)</td>
-                            <td class="text-right border" style="width:16%; border-bottom: none; border-top: none;">
-                                @format_money($cliente->tipo->factor_porcentual > 0 ? $entrada->precio - ($entrada->precio * $cliente->tipo->factor_porcentual) / 100 : $entrada->precio)
-                            </td>
+                            @if ($cliente->tipo->id >= 1)
+                                <td class="text-right border" style="width:16%; border-bottom: none; border-top: none;">
+                                    @format_money($entrada->producto->precio_residencial)</td>
+                            @endif
+                            @if ($cliente->tipo->id >= 2)
+                                <td class="text-right border" style="width:16%; border-bottom: none; border-top: none;">
+                                    @format_money($entrada->producto->precio_comercial)</td>
+                            @endif
+                            @if ($cliente->tipo->id >= 3)
+                                <td class="text-right border"
+                                    style="width:16%; border-bottom: none; border-top: none;">
+                                    @format_money($entrada->producto->precio_distribuidor)</td>
+                            @endif
                             <td class="text-right border" style="width:13%; border-bottom: none; border-top: none;">
                                 @format_money($entrada->importe)
                             </td>
@@ -705,25 +729,25 @@
         <div class="row" style="page-break-inside: avoid;">
             <div class="bordered" style="margin:5px 15px; 0">
                 <table class="" style="margin-bottom:0; width:100%;">
-                    @if (!empty($cotizacion->fletes))
+                    @if (!empty($cotizacion->fletes) && $cotizacion->fletes > '0')
                         <tr>
                             <td class="text-right" style="width:90%;"><strong>Cargo por Flete:</strong></td>
                             <td class="text-right" style="width:10%;">@format_money($cotizacion->fletes)</td>
                         </tr>
                     @endif
-                    @if (!empty($cotizacion->flete_menor))
+                    @if (!empty($cotizacion->flete_menor) && $cotizacion->flete_menor > '0')
                         <tr>
                             <td class="text-right" style="width:90%;"><strong>Cargo por Flete Menor:</strong></td>
                             <td class="text-right" style="width:10%;">@format_money($cotizacion->flete_menor)</td>
                         </tr>
                     @endif
-                    @if (!empty($cotizacion->costo_corte))
+                    @if (!empty($cotizacion->costo_corte) && $cotizacion->costo_corte > '0')
                         <tr>
                             <td class="text-right" style="width:90%;"><strong>Cargo por Corte:</strong></td>
                             <td class="text-right" style="width:10%;">@format_money($cotizacion->costo_corte)</td>
                         </tr>
                     @endif
-                    @if (!empty($cotizacion->costo_sobreproduccion))
+                    @if (!empty($cotizacion->costo_sobreproduccion) && $cotizacion->costo_sobreproduccion > '0')
                         <tr>
                             <td class="text-right" style="width:90%;"><strong>Cargo por sobreproducción:</strong>
                             </td>
@@ -732,18 +756,27 @@
                     @endif
                     <tr>
                         <td class="text-right" style="width:90%;"><strong>Subtotal:</strong></td>
-                        <td class="text-right" style="width:10%;">@format_money($cotizacion->subtotal)</td>
+                        <td class="text-right" style="width:10%;">@format_money(($cotizacion->subtotal + $cotizacion->costo_sobreproduccion + $cotizacion->costo_corte + $cotizacion->flete_menor + $cotizacion->fletes))</td>
                     </tr>
-                    @if ($cotizacion->descuentos != '0')
+                    @if ($cotizacion->descuentos > '0')
                         <tr>
                             <td class="text-right" style="width:90%;"><strong>Descuentos:</strong></td>
                             <td class="text-right" style="width:10%;">@format_money($cotizacion->descuentos)</td>
                         </tr>
                     @endif
-                    <tr>
-                        <td class="text-right" style="width:90%;"><strong>IVA 16%:</strong></td>
-                        <td class="text-right" style="width:10%;">@format_money($cotizacion->iva)</td>
-                    </tr>
+                    @if ($cotizacion->iva > '0')
+                        <tr>
+                            <td class="text-right" style="width:90%;"><strong>IVA 16%:</strong></td>
+                            <td class="text-right" style="width:10%;">@format_money($cotizacion->iva)</td>
+                        </tr>
+                    @endif
+                    @if ($cotizacion->calTax > '0')
+                        <tr>
+                            <td class="text-right" style="width:90%;"><strong>Tax
+                                    {{ intval($cotizacion->tax) }}%:</strong></td>
+                            <td class="text-right" style="width:10%;">@format_money($cotizacion->calTax)</td>
+                        </tr>
+                    @endif
                     <tr>
                         <td class="text-right" style="width:90%;"><strong>Total
                                 {{ $cotizacion->moneda }}:</strong>
