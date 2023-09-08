@@ -1611,7 +1611,7 @@
 
                     //Calcula Los descuentos
                     if (this.cotizacion.descuentos != '0') {
-                        this.cotizacion.montoDescuento = this.cotizacion.tipo_descuento ?
+                        this.cotizacion.montoDescuento = this.cotizacion.tipo_descuento > 0 ?
                             (Number(this.cotizacion.subtotal) * Number(this.cotizacion.descuentos)) / 100 :
                             this.cotizacion.descuentos;
                     } else {
