@@ -2149,13 +2149,15 @@
                         Number(this.cotizacion.costo_corte) +
                         Number(this.cotizacion.costo_sobreproduccion);
 
-                    totalcotizacion = cotizacion.subtotal.toFixed(2);
+                    subtotalcotizacion = cotizacion.subtotal.toFixed(2);
 
                     // console.log(totalcotizacion);
                     // console.log(totalf);
                     // console.log(totalcotizacion - totalf);
+                    console.log("subtotal", this.cotizacion.subtotal)
+                    console.log("extra", this.cotizacion.extras)
 
-                    var dif = totalcotizacion - totalf;
+                    var dif = subtotalcotizacion - totalf;
 
                     if (dif > 0.05) {
                         alert('OCURRIO UN ERROR INESPERADO EL SUBTOTAL NO COINCIDE FAVOR DE RECARGAR LA PAGINA');
