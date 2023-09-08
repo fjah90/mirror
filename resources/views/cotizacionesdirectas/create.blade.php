@@ -1633,7 +1633,11 @@
                             (Number(this.cotizacion.subtotal) * Number(this.cotizacion.descuentos)) / 100 :
                             this.cotizacion.descuentos;
                     } else {
-                        this.cotizacion.descuentos;
+                        if (this.cotizacion.descuentos == '0') {
+                            this.cotizacion.montoDescuent = 0;
+                        }else{
+                            this.cotizacion.montoDescuent = this.cotizacion.descuentos;
+                        }
                     }
 
                     //Calcula el IVA
