@@ -449,8 +449,9 @@ class ProspectosController extends Controller
             }
 
             $vendedores = Vendedor::all();
-        } else {
-            
+        }
+        else {
+
             if (Auth::user()->roles[0]->name == 'Administrador' || Auth::user()->roles[0]->name == 'Dirección') {
 
                 $proyectos = Prospecto::leftjoin('prospectos_actividades', 'prospectos.id', '=', 'prospectos_actividades.prospecto_id')
@@ -660,7 +661,8 @@ class ProspectosController extends Controller
 
         if (auth()->user()->tipo == 'Administrador' || auth()->user()->tipo == 'Dirección') {
             $cotizaciones = ProspectoCotizacion::with('entradas', 'entradas.producto', 'entradas.producto.proveedor', 'cliente')->where('prospecto_id', null)->get();
-        } else {
+        }
+        else {
             $cotizaciones = ProspectoCotizacion::with('entradas', 'entradas.producto', 'entradas.producto.proveedor', 'cliente')->where('user_id', $user->id)->where('prospecto_id', null)->get();
         }
 
@@ -1769,7 +1771,7 @@ class ProspectosController extends Controller
                 return $entrada->sum('importe');
             });
         }
-        
+
         foreach ($productos as $producto) {
             if ($producto->foto) {
                 $producto->foto = asset('storage/' . $producto->foto);
@@ -1876,7 +1878,7 @@ class ProspectosController extends Controller
 
         $create['user_id'] = $user->id;
         $create['fecha'] = date('Y-m-d');
-        
+
         if ($request->condicion['id'] == 0) { //nueva condicion, dar de alta
             $condicion = CondicionCotizacion::create(['nombre' => $request->condicion['nombre']]);
             $create['condicion_id'] = $condicion->id;
@@ -2241,13 +2243,15 @@ class ProspectosController extends Controller
         if ($request->iva == "1") {
             if (!empty($request->calIva)) {
                 $create['iva'] = $request->calIva;
-            } else {
+            }
+            else {
                 $create['iva'] = bcmul($create['subtotal'], 0.16, 2);
             }
         }
         if (!empty($request->total)) {
             $create['total'] = $request->total;
-        }else{
+        }
+        else {
             $create['total'] = bcadd($create['subtotal'], $create['iva'], 2);
         }
 
@@ -2368,7 +2372,8 @@ class ProspectosController extends Controller
         if ($cotizacion->idioma == 'español') {
             $nombre = "nombre";
             $view = 'prospectos.cotizacionPDF';
-        } else {
+        }
+        else {
             $nombre = "name";
             $view = 'prospectos.cotizacionPDFIngles';
         }
@@ -2474,20 +2479,23 @@ class ProspectosController extends Controller
         if ($request->condicion['id'] == 0) { //nueva condicion, dar de alta
             $condicion = CondicionCotizacion::create(['nombre' => $request->condicion['nombre']]);
             $update['condicion_id'] = $condicion->id;
-        } else {
+        }
+        else {
             $update['condicion_id'] = $request->condicion['id'];
         }
 
         if ($request->iva == "1") {
             if (!empty($request->calIva)) {
                 $update['iva'] = $request->calIva;
-            } else {
+            }
+            else {
                 $update['iva'] = bcmul($update['subtotal'], 0.16, 2);
             }
         }
         if (!empty($request->total)) {
             $update['total'] = $request->total;
-        }else{
+        }
+        else {
             $update['total'] = bcadd($update['subtotal'], $update['iva'], 2);
         }
 
@@ -2751,7 +2759,7 @@ class ProspectosController extends Controller
             'moneda'              => 'required',
             'condicion'           => 'required',
             'iva'                 => 'required',
-            'calIva'                 => 'required',
+            'calIva'              => 'required',
             'entradas'            => 'required|min:1',
             'entradas.fotos'      => 'array',
             'entradas.fotos.*'    => 'image|mimes:jpg,jpeg,png',
@@ -2809,13 +2817,15 @@ class ProspectosController extends Controller
         if ($request->iva == "1") {
             if (!empty($request->calIva)) {
                 $update['iva'] = $request->calIva;
-            } else {
+            }
+            else {
                 $update['iva'] = bcmul($update['subtotal'], 0.16, 2);
             }
         }
         if (!empty($request->total)) {
             $update['total'] = $request->total;
-        }else{
+        }
+        else {
             $update['total'] = bcadd($update['subtotal'], $update['iva'], 2);
         }
 
@@ -2973,13 +2983,15 @@ class ProspectosController extends Controller
         if ($request->iva == "1") {
             if (!empty($request->calIva)) {
                 $update['iva'] = $request->calIva;
-            } else {
+            }
+            else {
                 $update['iva'] = bcmul($update['subtotal'], 0.16, 2);
             }
         }
         if (!empty($request->total)) {
             $update['total'] = $request->total;
-        }else{
+        }
+        else {
             $update['total'] = bcadd($update['subtotal'], $update['iva'], 2);
         }
 
@@ -3300,7 +3312,7 @@ class ProspectosController extends Controller
             'fecha'         => $cotizacion->fecha,
             'subtotal'      => $cotizacion->subtotal,
             'iva'           => $cotizacion->iva,
-            'calIva'           => $cotizacion->calIva,
+            'calIva'        => $cotizacion->calIva,
             'total'         => $cotizacion->total,
             'observaciones' => $cotizacion->observaciones,
             'entrega'       => $cotizacion->entrega,
