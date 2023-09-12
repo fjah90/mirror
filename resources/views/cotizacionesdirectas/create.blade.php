@@ -1573,7 +1573,7 @@
                     this.validarCliente();
                     this.entrada.producto = prod;
 
-                    switch (this.tipo_cliente) {
+                    switch(Number(this.tipo_cliente)) {
                         case 1:
                             this.entrada.precio = this.entrada.producto.precio_residencial;
                             break;

@@ -1297,6 +1297,11 @@
                         id
                     }) => id === id_cliente);
                     this.contactos = cliente.contactos;
+                    //reiniciar observaciones
+                    console.log(cliente)
+                    this.tipo_cliente = cliente.tipo_id;
+                    console.log(cotizacion.entradas)
+                    console.log(this.tipo_cliente)
                 },
                 seleccionarTipoDescuento() {
                     console.log(this.cotizacion.tipo_descuento)
@@ -1555,7 +1560,7 @@
                     this.validarCliente();
                     this.entrada.producto = prod;
                     console.log(this.tipo_cliente)
-                    switch (this.tipo_cliente) {
+                    switch(Number(this.tipo_cliente)) {
                         case 1:
                             this.entrada.precio = this.entrada.producto.precio_residencial;
                             break;
@@ -1566,6 +1571,8 @@
                             this.entrada.precio = this.entrada.producto.precio_distribuidor;
                             break;
                     }
+                    console.log(this.entrada.producto)
+                    console.log(this.entrada.precio)
                     this.entrada.descripciones = [];
                     prod.descripciones.forEach(function(desc) {
                         this.entrada.descripciones.push({
@@ -1617,7 +1624,7 @@
                     } else {
                         if (this.cotizacion.descuentos == '0') {
                             this.cotizacion.montoDescuent = 0;
-                        }else{
+                        } else {
                             this.cotizacion.montoDescuent = this.cotizacion.descuentos;
                         }
                     }
@@ -1794,6 +1801,7 @@
                     console.log(cliente)
                     this.tipo_cliente = cliente.tipo_id;
                     console.log(cotizacion.entradas)
+                    console.log(this.tipo_cliente)
                     //vaciar datos de cotizacion
                     this.cotizacion = {
                         cliente_id: cotizacion.cliente_id,
@@ -1848,7 +1856,7 @@
                         entradas: cotizacion.entradas,
                         subtotal: cotizacion.subtotal,
                         calIva: cotizacion.calIva,
-                        iva: cotizacion.iva > 0 ? 1: 0,
+                        iva: cotizacion.iva > 0 ? 1 : 0,
                         tax: cotizacion.tax,
                         isTax: cotizacion.tax > 0 ? 1 : 0,
                         total: cotizacion.total,
