@@ -696,18 +696,37 @@
                                 @endif
                             </td>
                             @if ($cliente->tipo->id >= 1)
-                               <td class="text-right border"
+                                @if ($cliente->tipo->id == 1 && $entrada->producto->precio_residencial != $entrada->precio)
+                                    <td class="text-right border"
+                                        style="width:16%; border-bottom: none; border-top: none;">
+                                        @format_money($entrada->precio)</td>
+                                @else
+                                    <td class="text-right border"
                                         style="width:16%; border-bottom: none; border-top: none;">
                                         @format_money($entrada->producto->precio_residencial)</td>
+                                @endif
                             @endif
                             @if ($cliente->tipo->id >= 2)
-                                <td class="text-right border" style="width:16%; border-bottom: none; border-top: none;">
-                                    @format_money($entrada->producto->precio_comercial)</td>
+                                @if ($cliente->tipo->id == 2 && $entrada->producto->precio_residencial != $entrada->precio)
+                                    <td class="text-right border"
+                                        style="width:16%; border-bottom: none; border-top: none;">
+                                        @format_money($entrada->precio)</td>
+                                @else
+                                    <td class="text-right border"
+                                        style="width:16%; border-bottom: none; border-top: none;">
+                                        @format_money($entrada->producto->precio_comercial)</td>
+                                @endif
                             @endif
                             @if ($cliente->tipo->id >= 3)
-                                <td class="text-right border"
-                                    style="width:16%; border-bottom: none; border-top: none;">
-                                    @format_money($entrada->producto->precio_distribuidor)</td>
+                                @if ($cliente->tipo->id == 3 && $entrada->producto->precio_residencial != $entrada->precio)
+                                    <td class="text-right border"
+                                        style="width:16%; border-bottom: none; border-top: none;">
+                                        @format_money($entrada->precio)</td>
+                                @else
+                                    <td class="text-right border"
+                                        style="width:16%; border-bottom: none; border-top: none;">
+                                        @format_money($entrada->producto->precio_distribuidor)</td>
+                                @endif
                             @endif
                             <td class="text-right border" style="width:13%; border-bottom: none; border-top: none;">
                                 @format_money($entrada->importe)
