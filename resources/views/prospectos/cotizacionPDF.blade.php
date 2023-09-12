@@ -505,7 +505,8 @@
                 <p>Fecha: {{ $cotizacion->fechaPDF }}</p>
             </div>
             <div class="col-lg-7">
-                <p class="text-uppercase text-right">Robinson Contract Resources, s.a. de c.v.</p>
+                {{-- <p class="text-uppercase text-right">Robinson Contract Resources, s.a. de c.v.</p> --}}
+                <p class="text-uppercase text-right">ROMBINSON HD</p>
                 <p class="text-right font-small">Edgar Allan Poe 54, Polanco, CDMX. C.P. 11560</p>
                 <p class="text-right font-small">T. +52 (55) 5282 0711 / (55) 5282 0378</p>
                 <p class="text-right font-small">robinsonhd.com</p>
@@ -657,8 +658,7 @@
                                 <tr>
                             @endif
                             <td class="text-center border" style="width:13%; border-bottom: none; border-top: none;">
-                                @format_number($entrada->cantidad)
-                                <br /> {{ $entrada->medida }}
+                                {{ $entrada->cantidad }} &nbsp; {{ $entrada->medida }}
                             </td>
                             <td class="text-center border" style="width:13%; border-bottom: none; border-top: none;">
                                 <span>@text_capitalize($entrada->producto->nombre) </span>
@@ -700,7 +700,8 @@
                                     @format_money($entrada->producto->precio_residencial)</td>
                             @endif
                             @if ($cliente->tipo->id >= 2)
-                                <td class="text-right border" style="width:16%; border-bottom: none; border-top: none;">
+                                <td class="text-right border"
+                                    style="width:16%; border-bottom: none; border-top: none;">
                                     @format_money($entrada->producto->precio_comercial)</td>
                             @endif
                             @if ($cliente->tipo->id >= 3)
@@ -756,7 +757,7 @@
                     @endif
                     <tr>
                         <td class="text-right" style="width:90%;"><strong>Subtotal:</strong></td>
-                        <td class="text-right" style="width:10%;">@format_money(($cotizacion->subtotal))</td>
+                        <td class="text-right" style="width:10%;">@format_money($cotizacion->subtotal)</td>
                     </tr>
                     @if ($cotizacion->descuentos > '0')
                         <tr>
@@ -836,7 +837,7 @@
                                 <hr style="border:0.5px solid #000; width:70%; margin-top:-15px; margin-bottom:0px;" />
                             @endif --}}
                             <p style="">{{ $cotizacion->user->name }}</p>
-                            <p style="">Robinson Contract Resources</p>
+                            <p style="">ROMBINSON HD</p>
                             <hr style="border:0.5px solid #000; width:70%; margin-top:60px; margin-bottom:0px;" />
                             <p style="margin: 5px 0 10px;">Aprobacíon Del Cliente</p>
                         </td>
