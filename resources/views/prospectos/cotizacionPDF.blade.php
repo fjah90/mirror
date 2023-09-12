@@ -670,7 +670,7 @@
                             </td>
                             <td class="text-center border" style="width:13%; border-bottom: none; border-top: none;">
                                 @foreach ($entrada->fotos as $foto)
-                                    <img src="{{ $foto }}" alt="foto" style="width:100px; height:100px;" />
+                                    <img src="{{ $foto }}" alt="foto" style="position:relative; margin:0 auto; width:100px; height:100px;" />
                                     <br />
                                 @endforeach
                             </td>
