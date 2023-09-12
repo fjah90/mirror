@@ -506,7 +506,7 @@
             </div>
             <div class="col-lg-7">
                 {{-- <p class="text-uppercase text-right">Robinson Contract Resources, s.a. de c.v.</p> --}}
-                <p class="text-uppercase text-right">ROMBINSON HD</p>
+                <p class="text-uppercase text-right">ROBINSON HD</p>
                 <p class="text-right font-small">Edgar Allan Poe 54, Polanco, CDMX. C.P. 11560</p>
                 <p class="text-right font-small">T. +52 (55) 5282 0711 / (55) 5282 0378</p>
                 <p class="text-right font-small">robinsonhd.com</p>
@@ -696,12 +696,12 @@
                                 @endif
                             </td>
                             @if ($cliente->tipo->id >= 1)
-                                <td class="text-right border" style="width:16%; border-bottom: none; border-top: none;">
-                                    @format_money($entrada->producto->precio_residencial)</td>
+                               <td class="text-right border"
+                                        style="width:16%; border-bottom: none; border-top: none;">
+                                        @format_money($entrada->producto->precio_residencial)</td>
                             @endif
                             @if ($cliente->tipo->id >= 2)
-                                <td class="text-right border"
-                                    style="width:16%; border-bottom: none; border-top: none;">
+                                <td class="text-right border" style="width:16%; border-bottom: none; border-top: none;">
                                     @format_money($entrada->producto->precio_comercial)</td>
                             @endif
                             @if ($cliente->tipo->id >= 3)
@@ -837,7 +837,7 @@
                                 <hr style="border:0.5px solid #000; width:70%; margin-top:-15px; margin-bottom:0px;" />
                             @endif --}}
                             <p style="">{{ $cotizacion->user->name }}</p>
-                            <p style="">ROMBINSON HD</p>
+                            <p style="">ROBINSON HD</p>
                             <hr style="border:0.5px solid #000; width:70%; margin-top:60px; margin-bottom:0px;" />
                             <p style="margin: 5px 0 10px;">Aprobacíon Del Cliente</p>
                         </td>
