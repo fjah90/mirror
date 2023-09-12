@@ -1560,17 +1560,14 @@
                     this.validarCliente();
                     this.entrada.producto = prod;
                     console.log(this.tipo_cliente)
-                    switch(this.tipo_cliente) {
-                        case "1":
-                            console.log("caso 1")
+                    switch(Number(this.tipo_cliente)) {
+                        case 1:
                             this.entrada.precio = this.entrada.producto.precio_residencial;
                             break;
-                        case "2":
-                            console.log("caso 2")
+                        case 2:
                             this.entrada.precio = this.entrada.producto.precio_comercial;
                             break;
-                        case "3":
-                            console.log("caso 3")
+                        case 3:
                             this.entrada.precio = this.entrada.producto.precio_distribuidor;
                             break;
                     }
