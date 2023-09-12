@@ -659,6 +659,7 @@
                             @endif
                             <td class="text-center border" style="width:13%; border-bottom: none; border-top: none;">
                                 {{ $entrada->cantidad }} &nbsp; {{ $entrada->medida }}
+                                <br />
                             </td>
                             <td class="text-center border" style="width:13%; border-bottom: none; border-top: none;">
                                 <span>@text_capitalize($entrada->producto->nombre) </span>
@@ -668,9 +669,10 @@
                                 <span>@text_capitalize($entrada->producto->color) </span>
                                 <br />
                             </td>
-                            <td class="text-center border" style="width:13%; border-bottom: none; border-top: none;">
+                            <td class="text-center border" style="width:13%; height:100px; border-bottom: none; border-top: none;">
                                 @foreach ($entrada->fotos as $foto)
-                                    <img src="{{ $foto }}" alt="foto" style="position:relative; margin:0 auto; width:100px; height:100px;" />
+                                    <img src="{{ $foto }}" alt="foto"
+                                        style="position:relative; margin:0 auto; width:100px; height:100px;" />
                                     <br />
                                 @endforeach
                             </td>
