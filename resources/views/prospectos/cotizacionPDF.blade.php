@@ -506,7 +506,7 @@
             </div>
             <div class="col-lg-7">
                 {{-- <p class="text-uppercase text-right">Robinson Contract Resources, s.a. de c.v.</p> --}}
-                <p class="text-uppercase text-right">ROBINSON HD</p>
+                <p class="text-uppercase text-right">Robinson Fabrics S.A. De C.V.</p>
                 <p class="text-right font-small">Edgar Allan Poe 54, Polanco, CDMX. C.P. 11560</p>
                 <p class="text-right font-small">T. +52 (55) 5282 0711 / (55) 5282 0378</p>
                 <p class="text-right font-small">robinsonhd.com</p>
