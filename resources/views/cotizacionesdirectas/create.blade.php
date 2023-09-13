@@ -365,8 +365,8 @@
                                     <div class="form-group">
                                         <label class="control-label">Moneda *</label>
                                         <select class="form-control" name="moneda" v-model="cotizacion.moneda" required>
-                                            <option value="Dolares">Dolares USD</option>
-                                            <option value="Pesos">Pesos MXN</option>
+                                            <option value="Dolares">Dolar Estados Unidos (USD)</option>
+                                            <option value="Pesos">Peso Mexicano (MXN)</option>
                                         </select>
                                     </div>
                                 </div>
@@ -509,8 +509,8 @@
                                                     <td colspan="3"></td>
                                                     <td class="text-right">
                                                         <strong>Total
-                                                            <span v-if="cotizacion.moneda=='Dolares'"> Dolares</span>
-                                                            <span v-else> Pesos</span>
+                                                            <span v-if="cotizacion.moneda=='Dolares'"> Dolar (USD)</span>
+                                                            <span v-else> Peso (MXN)</span>
                                                         </strong>
                                                     </td>
                                                     <td v-if="cotizacion.total == 0">$0.00</td>
