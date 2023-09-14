@@ -633,7 +633,7 @@
                 <table class="table table-cotizacion">
                     <thead>
                         <tr>
-                            <th class="text-center" style="width:13%; padding:3px 0 1px;">Cantidad</th>
+                            <th class="text-center" style="width:13%; padding:3px 0 1px;">Cantidad ({{$cotizacion->entradas[0]->medida}})</th>
                             <th class="text-center" style="width:13%; padding:3px 0 1px;">Modelo</th>
                             <th class="text-center" style="width:13%; padding:3px 0 1px;">Imagen</th>
                             <th class="text-center" style="width:16%; padding:3px 0 1px;">Descripciones</th>
@@ -662,7 +662,8 @@
                                 <tr>
                             @endif
                             <td class="text-center border" style="width:13%; border-bottom: none; border-top: none;">
-                                {{ $entrada->cantidad }} &nbsp; {{ $entrada->medida }}
+                                {{-- {{ $entrada->cantidad }} &nbsp; {{ $entrada->medida }} --}}
+                                {{ $entrada->cantidad }}
                                 <br />
                             </td>
                             <td class="text-center border" style="width:13%; border-bottom: none; border-top: none;">
