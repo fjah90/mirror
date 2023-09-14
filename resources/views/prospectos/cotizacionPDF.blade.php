@@ -688,19 +688,19 @@
                                         <p>
                                             {{$descripcion->nombre}}
                                             <span class="text-uppercase">{{ $descripcion->valor }}</span>
-                                            @if ($descripcion->nombre == 'Famabilidad')
+                                            @if ($descripcion->nombre == 'Flamabilidad')
                                                 <img src="{{ asset('images/icon-fire.png') }}"
                                                     style="position:relative; margin:0 auto; width:24px; height:24px;">';
                                             @endif
-                                            @if ($descripcion->nombre == 'Abrasion')
+                                            @if ($descripcion->nombre == 'Abrasión')
                                                 <img src="{{ asset('images/icon-abrasion.png') }}"
                                                     style="position:relative; margin:0 auto; width:24px; height:24px;">';
                                             @endif
-                                            @if ($descripcion->nombre == 'Decoloracion')
+                                            @if ($descripcion->nombre == 'Decoloración a la luz')
                                                 <img src="{{ asset('images/icon-lightfastness.png') }}"
                                                     style="position:relative; margin:0 auto; width:24px; height:24px;">';
                                             @endif
-                                            @if ($descripcion->nombre == 'Traspaso')
+                                            @if ($descripcion->nombre == 'Traspaso de color')
                                                 <img src="{{ asset('images/icon-crocking.png') }}"
                                                     style="position:relative; margin:0 auto; width:24px; height:24px;">';
                                             @endif
