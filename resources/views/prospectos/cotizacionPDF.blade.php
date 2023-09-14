@@ -685,11 +685,13 @@
                             </td>
                             <td class="text-center border" style="width:16%; border-bottom: none; border-top: none;">
                                 @foreach ($entrada->descripciones as $descripcion)
-                                    @if ($descripcion->valor && $descripcion->nombre != 'Flamabilidad' &&
-                                     $descripcion->nombre != 'Abrasión' &&  
-                                     $descripcion->nombre != 'Decoloración a la luz' && 
-                                     $descripcion->nombre != 'Traspaso de color' && 
-                                     $descripcion->nombre != 'Peeling')
+                                    @if (
+                                        $descripcion->valor &&
+                                            $descripcion->nombre != 'Flamabilidad' &&
+                                            $descripcion->nombre != 'Abrasión' &&
+                                            $descripcion->nombre != 'Decoloración a la luz' &&
+                                            $descripcion->nombre != 'Traspaso de color' &&
+                                            $descripcion->nombre != 'Peeling')
                                         <p>
                                             <span class="text-uppercase">{{ $descripcion->valor }}</span>
                                             <br />
@@ -708,17 +710,20 @@
                                         {!! $entrada->observaciones !!}
                                     </p>
                                 @endif
-                                 @foreach ($entrada->descripciones as $descripcion)
-                                    @if ($descripcion->valor && $descripcion->nombre != 'Flamabilidad' &&
-                                     $descripcion->nombre != 'Abrasión' &&  
-                                     $descripcion->nombre != 'Decoloración a la luz' && 
-                                     $descripcion->nombre != 'Traspaso de color' && 
-                                     $descripcion->nombre != 'Peeling')
+                                @foreach ($entrada->descripciones as $descripcion)
+                                    @if (
+                                        $descripcion->valor &&
+                                            $descripcion->nombre != 'Flamabilidad' &&
+                                            $descripcion->nombre != 'Abrasión' &&
+                                            $descripcion->nombre != 'Decoloración a la luz' &&
+                                            $descripcion->nombre != 'Traspaso de color' &&
+                                            $descripcion->nombre != 'Peeling')
                                         <p>
                                             <span class="text-uppercase">{{ $descripcion->valor }}</span>
                                             <br />
                                         </p>
                                     @endif
+                                @endforeach
                                 @foreach ($entrada->descripciones as $descripcion)
                                     @if ($descripcion->nombre == 'Flamabilidad')
                                         <img src="{{ asset('images/icon-fire.png') }}"
