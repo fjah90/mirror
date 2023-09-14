@@ -633,21 +633,21 @@
                 <table class="table table-cotizacion">
                     <thead>
                         <tr>
-                            <th class="text-center" style="width:13%; padding:3px 0 1px;">Cantidad ({{$cotizacion->entradas[0]->medida}})</th>
+                            <th class="text-center" style="width:13%; padding:3px 0 1px;">Cantidad - ({{ $cotizacion->entradas[0]->medida }})</th>
                             <th class="text-center" style="width:13%; padding:3px 0 1px;">Modelo</th>
                             <th class="text-center" style="width:13%; padding:3px 0 1px;">Imagen</th>
                             <th class="text-center" style="width:16%; padding:3px 0 1px;">Descripciones</th>
                             @if ($cliente->tipo->id >= 1)
-                                //mostrar si es Residencial
+                                {{-- //mostrar si es Residencial --}}
                                 <th class="text-center" style="width:16%; padding:3px 0 1px;">Precio Unitario (USD)</th>
                             @endif
                             @if ($cliente->tipo->id >= 2)
-                                //mostrar si es Comercial
+                                {{-- //mostrar si es Comercial --}}
                                 <th class="text-center" style="width:16%; padding:3px 0 1px;">Precio Unitario Especial
                                     (USD) </th>
                             @endif
                             @if ($cliente->tipo->id >= 3)
-                                //mostrar si es Distribuidor
+                                {{-- //mostrar si es Distribuidor --}}
                                 <th class="text-center" style="width:16%; padding:3px 0 1px;">Precio Unitario
                                     Distribuidor (USD) </th>
                             @endif
@@ -686,7 +686,29 @@
                                 @foreach ($entrada->descripciones as $descripcion)
                                     @if ($descripcion->valor)
                                         <p>
+                                            {{$descripcion->nombre}}
                                             <span class="text-uppercase">{{ $descripcion->valor }}</span>
+                                            @if ($descripcion->nombre == 'Famabilidad')
+                                                <img src="{{ asset('images/icon-fire.png') }}"
+                                                    style="position:relative; margin:0 auto; width:24px; height:24px;">';
+                                            @endif
+                                            @if ($descripcion->nombre == 'Abrasion')
+                                                <img src="{{ asset('images/icon-abrasion.png') }}"
+                                                    style="position:relative; margin:0 auto; width:24px; height:24px;">';
+                                            @endif
+                                            @if ($descripcion->nombre == 'Decoloracion')
+                                                <img src="{{ asset('images/icon-lightfastness.png') }}"
+                                                    style="position:relative; margin:0 auto; width:24px; height:24px;">';
+                                            @endif
+                                            @if ($descripcion->nombre == 'Traspaso')
+                                                <img src="{{ asset('images/icon-crocking.png') }}"
+                                                    style="position:relative; margin:0 auto; width:24px; height:24px;">';
+                                            @endif
+                                            @if ($descripcion->nombre == 'Peeling')
+                                                <img src="{{ asset('images/icon-physical.png') }}"
+                                                    style="position:relative; margin:0 auto; width:24px; height:24px;">';
+                                            @endif
+                                            <br />
                                         </p>
                                     @endif
                                 @endforeach
