@@ -710,80 +710,68 @@
                                         {!! $entrada->observaciones !!}
                                     </p>
                                 @endif
-                                @foreach ($entrada->descripciones as $descripcion)
-                                    @if (
-                                        $descripcion->valor &&
-                                            $descripcion->nombre != 'Flamabilidad' &&
-                                            $descripcion->nombre != 'Abrasión' &&
-                                            $descripcion->nombre != 'Decoloración a la luz' &&
-                                            $descripcion->nombre != 'Traspaso de color' &&
-                                            $descripcion->nombre != 'Peeling')
-                                        <p>
-                                            <span class="text-uppercase">{{ $descripcion->valor }}</span>
-                                            <br />
-                                        </p>
-                                    @endif
-                                @endforeach
-                                @foreach ($entrada->descripciones as $descripcion)
-                                    @if ($descripcion->nombre == 'Flamabilidad')
-                                        <img src="{{ asset('images/icon-fire.png') }}"
-                                            style="position:relative; margin:0 auto; width:24px; height:24px;">';
-                                    @endif
-                                    @if ($descripcion->nombre == 'Abrasión')
-                                        <img src="{{ asset('images/icon-abrasion.png') }}"
-                                            style="position:relative; margin:0 auto; width:24px; height:24px;">';
-                                    @endif
-                                    @if ($descripcion->nombre == 'Decoloración a la luz')
-                                        <img src="{{ asset('images/icon-lightfastness.png') }}"
-                                            style="position:relative; margin:0 auto; width:24px; height:24px;">';
-                                    @endif
-                                    @if ($descripcion->nombre == 'Traspaso de color')
-                                        <img src="{{ asset('images/icon-crocking.png') }}"
-                                            style="position:relative; margin:0 auto; width:24px; height:24px;">';
-                                    @endif
-                                    @if ($descripcion->nombre == 'Peeling')
-                                        <img src="{{ asset('images/icon-physical.png') }}"
-                                            style="position:relative; margin:0 auto; width:24px; height:24px;">';
-                                    @endif
-                                @endforeach
-                            </td>
-                            @if ($cliente->tipo->id >= 1)
-                                @if ($cliente->tipo->id == 1 && $entrada->producto->precio_residencial != $entrada->precio)
-                                    <td class="text-right border"
-                                        style="width:16%; border-bottom: none; border-top: none;">
-                                        @format_money($entrada->precio)</td>
-                                @else
-                                    <td class="text-right border"
-                                        style="width:16%; border-bottom: none; border-top: none;">
-                                        @format_money($entrada->producto->precio_residencial)</td>
-                                @endif
+
+                        @endforeach
+                        @foreach ($entrada->descripciones as $descripcion)
+                            @if ($descripcion->nombre == 'Flamabilidad')
+                                <img src="{{ asset('images/icon-fire.png') }}"
+                                    style="position:relative; margin:0 auto; width:24px; height:24px;">';
                             @endif
-                            @if ($cliente->tipo->id >= 2)
-                                @if ($cliente->tipo->id == 2 && $entrada->producto->precio_residencial != $entrada->precio)
-                                    <td class="text-right border"
-                                        style="width:16%; border-bottom: none; border-top: none;">
-                                        @format_money($entrada->precio)</td>
-                                @else
-                                    <td class="text-right border"
-                                        style="width:16%; border-bottom: none; border-top: none;">
-                                        @format_money($entrada->producto->precio_comercial)</td>
-                                @endif
+                            @if ($descripcion->nombre == 'Abrasión')
+                                <img src="{{ asset('images/icon-abrasion.png') }}"
+                                    style="position:relative; margin:0 auto; width:24px; height:24px;">';
                             @endif
-                            @if ($cliente->tipo->id >= 3)
-                                @if ($cliente->tipo->id == 3 && $entrada->producto->precio_residencial != $entrada->precio)
-                                    <td class="text-right border"
-                                        style="width:16%; border-bottom: none; border-top: none;">
-                                        @format_money($entrada->precio)</td>
-                                @else
-                                    <td class="text-right border"
-                                        style="width:16%; border-bottom: none; border-top: none;">
-                                        @format_money($entrada->producto->precio_distribuidor)</td>
-                                @endif
+                            @if ($descripcion->nombre == 'Decoloración a la luz')
+                                <img src="{{ asset('images/icon-lightfastness.png') }}"
+                                    style="position:relative; margin:0 auto; width:24px; height:24px;">';
                             @endif
-                            <td class="text-right border" style="width:13%; border-bottom: none; border-top: none;">
-                                @format_money($entrada->importe)
-                            </td>
-                            </tr>
+                            @if ($descripcion->nombre == 'Traspaso de color')
+                                <img src="{{ asset('images/icon-crocking.png') }}"
+                                    style="position:relative; margin:0 auto; width:24px; height:24px;">';
+                            @endif
+                            @if ($descripcion->nombre == 'Peeling')
+                                <img src="{{ asset('images/icon-physical.png') }}"
+                                    style="position:relative; margin:0 auto; width:24px; height:24px;">';
+                            @endif
+                        @endforeach
+                        </td>
+                        @if ($cliente->tipo->id >= 1)
+                            @if ($cliente->tipo->id == 1 && $entrada->producto->precio_residencial != $entrada->precio)
+                                <td class="text-right border"
+                                    style="width:16%; border-bottom: none; border-top: none;">
+                                    @format_money($entrada->precio)</td>
+                            @else
+                                <td class="text-right border"
+                                    style="width:16%; border-bottom: none; border-top: none;">
+                                    @format_money($entrada->producto->precio_residencial)</td>
+                            @endif
+                        @endif
+                        @if ($cliente->tipo->id >= 2)
+                            @if ($cliente->tipo->id == 2 && $entrada->producto->precio_residencial != $entrada->precio)
+                                <td class="text-right border"
+                                    style="width:16%; border-bottom: none; border-top: none;">
+                                    @format_money($entrada->precio)</td>
+                            @else
+                                <td class="text-right border"
+                                    style="width:16%; border-bottom: none; border-top: none;">
+                                    @format_money($entrada->producto->precio_comercial)</td>
+                            @endif
+                        @endif
+                        @if ($cliente->tipo->id >= 3)
+                            @if ($cliente->tipo->id == 3 && $entrada->producto->precio_residencial != $entrada->precio)
+                                <td class="text-right border"
+                                    style="width:16%; border-bottom: none; border-top: none;">
+                                    @format_money($entrada->precio)</td>
+                            @else
+                                <td class="text-right border"
+                                    style="width:16%; border-bottom: none; border-top: none;">
+                                    @format_money($entrada->producto->precio_distribuidor)</td>
+                            @endif
+                        @endif
+                        <td class="text-right border" style="width:13%; border-bottom: none; border-top: none;">
+                            @format_money($entrada->importe)
+                        </td>
+                        </tr>
                         @endforeach
                         {{-- <tr>
                             <td style="border-top :0px !important"></td>
