@@ -340,6 +340,7 @@
         .text-right {
             text-align: right;
         }
+
         .text-left {
             text-align: left !important;
         }
@@ -695,13 +696,10 @@
                             </td>
                             <td class="text-left border" style="width:16%; border-bottom: none; border-top: none;">
                                 @foreach ($entrada->descripciones as $descripcion)
-                                    @if (strtolower($descripcion->nombre) != 'flamabilidad' ||
-                                            strtolower($descripcion->nombre) != 'abrasión' ||
-                                            strtolower($descripcion->nombre) != 'decoloración a la luz' ||
-                                            strtolower($descripcion->nombre) != 'decoloración' ||
-                                            strtolower($descripcion->nombre) != 'traspaso de color' ||
-                                            strtolower($descripcion->nombre) != 'traspaso' ||
-                                            strtolower($descripcion->nombre) != 'peeling')
+                                    @php
+                                        $valores_prohibidos = ['Flamabilidad', 'Abrasión', 'Decoloración', 'Decoloración a la luz', 'Traspaso', 'Traspaso de color', 'Peeling'];
+                                    @endphp
+                                    @if (!in_array($descripcion->nombre, $valores_prohibidos))
                                         @if (!empty($descripcion->valor))
                                             <p>
                                                 <span class="text-uppercase text-left"
