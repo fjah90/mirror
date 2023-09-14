@@ -340,6 +340,9 @@
         .text-right {
             text-align: right;
         }
+        .text-left {
+            text-align: left !important;
+        }
 
         .text-danger {
             color: #FF7A7A;
@@ -481,6 +484,13 @@
             width: 100%;
             height: 400px;
             float: left;
+        }
+
+        .mini-icon {
+            position: relative;
+            margin: 0 auto;
+            width: 18px;
+            height: 18px;
         }
     </style>
 </head>
@@ -683,19 +693,22 @@
                                     <br />
                                 @endforeach
                             </td>
-                            <td class="text-center border" style="width:16%; border-bottom: none; border-top: none;">
+                            <td class="text-left border" style="width:16%; border-bottom: none; border-top: none;">
                                 @foreach ($entrada->descripciones as $descripcion)
-                                    @if (
-                                        $descripcion->valor &&
-                                            $descripcion->nombre != 'Flamabilidad' &&
-                                            $descripcion->nombre != 'Abrasión' &&
-                                            $descripcion->nombre != 'Decoloración a la luz' &&
-                                            $descripcion->nombre != 'Traspaso de color' &&
-                                            $descripcion->nombre != 'Peeling')
-                                        <p>
-                                            <span class="text-uppercase" style="font-size: 0.8rem;">{{ $descripcion->valor }}</span>
-                                            <br />
-                                        </p>
+                                    @if (strtolower($descripcion->nombre) != 'flamabilidad' ||
+                                            strtolower($descripcion->nombre) != 'abrasión' ||
+                                            strtolower($descripcion->nombre) != 'decoloración a la luz' ||
+                                            strtolower($descripcion->nombre) != 'decoloración' ||
+                                            strtolower($descripcion->nombre) != 'traspaso de color' ||
+                                            strtolower($descripcion->nombre) != 'traspaso' ||
+                                            strtolower($descripcion->nombre) != 'peeling')
+                                        @if (!empty($descripcion->valor))
+                                            <p>
+                                                <span class="text-uppercase text-left"
+                                                    style="font-size: 10px;">{{ $descripcion->valor }}</span>
+                                                <hr align="left" noshade="noshade" size="1" width="100%" />
+                                            </p>
+                                        @endif
                                     @endif
                                     @if ($entrada->observaciones && $entrada->observaciones != '<ul></ul>')
                                         <p>
@@ -710,28 +723,26 @@
                                         </p>
                                     @endif
                                 @endforeach
-                                @foreach ($entrada->descripciones as $descripcion)
-                                    @if ($descripcion->nombre == 'Flamabilidad')
-                                        <img src="{{ asset('images/icon-fire.png') }}"
-                                            style="position:relative; margin:0 auto; width: 12px; height: 12px;">';
-                                    @endif
-                                    @if ($descripcion->nombre == 'Abrasión')
-                                        <img src="{{ asset('images/icon-abrasion.png') }}"
-                                            style="position:relative; margin:0 auto; width: 12px; height: 12px;">';
-                                    @endif
-                                    @if ($descripcion->nombre == 'Decoloración a la luz')
-                                        <img src="{{ asset('images/icon-lightfastness.png') }}"
-                                            style="position:relative; margin:0 auto; width: 12px; height: 12px;">';
-                                    @endif
-                                    @if ($descripcion->nombre == 'Traspaso de color')
-                                        <img src="{{ asset('images/icon-crocking.png') }}"
-                                            style="position:relative; margin:0 auto; width: 12px; height: 12px;">';
-                                    @endif
-                                    @if ($descripcion->nombre == 'Peeling')
-                                        <img src="{{ asset('images/icon-physical.png') }}"
-                                            style="position:relative; margin:0 auto; width: 12px; height: 12px;">';
-                                    @endif
-                                @endforeach
+                                <div style="display: flex;width: 100px;">
+                                    @foreach ($entrada->descripciones as $descripcion)
+                                        @if ($descripcion->nombre == 'Flamabilidad')
+                                            <img src="{{ asset('images/icon-fire.png') }}" class="mini-icon">
+                                        @endif
+                                        @if ($descripcion->nombre == 'Abrasión')
+                                            <img src="{{ asset('images/icon-abrasion.jpg') }}" class="mini-icon">
+                                        @endif
+                                        @if ($descripcion->nombre == 'Decoloración a la luz' || $descripcion->nombre == 'Decoloración')
+                                            <img src="{{ asset('images/icon-lightfastness.png') }}"
+                                                class="mini-icon">
+                                        @endif
+                                        @if ($descripcion->nombre == 'Traspaso de color' || $descripcion->nombre == 'Traspaso')
+                                            <img src="{{ asset('images/icon-crocking.png') }}" class="mini-icon">
+                                        @endif
+                                        @if ($descripcion->nombre == 'Peeling')
+                                            <img src="{{ asset('images/icon-physical.png') }}" class="mini-icon">
+                                        @endif
+                                    @endforeach
+                                </div>
                             </td>
                             @if ($cliente->tipo->id >= 1)
                                 @if ($cliente->tipo->id == 1 && $entrada->producto->precio_residencial != $entrada->precio)
