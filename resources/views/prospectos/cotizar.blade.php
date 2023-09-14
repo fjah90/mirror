@@ -703,7 +703,7 @@
                                                     <th colspan="3">Descripciones</th>
                                                 </tr>
                                                 <tr>
-                                                    <th>Código</th>
+                                                    <th>Nombre</th>
                                                     <th>Name</th>
                                                     <th>Valor</th>
                                                     <th>Valor Inglés</th>
@@ -2268,7 +2268,7 @@
                                         // $('a[download="C ' + data.cotizacion.numero +
                                         //     ' Robinson ' + this
                                         //     .prospecto.nombre + '.pdf"]')[0].click();
-                                        window.location.reload(true);
+                                        // window.location.reload(true);
                                         swal.close();
                                     } else if (result.value) {
                                         // Ejecuta el código

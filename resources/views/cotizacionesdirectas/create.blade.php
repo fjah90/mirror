@@ -581,7 +581,7 @@
                                                     <th colspan="3">Descripciones</th>
                                                 </tr>
                                                 <tr>
-                                                    <th>Código</th>
+                                                    <th>Nombre</th>
                                                     <th>Name</th>
                                                     <th>Valor</th>
                                                     <th>Valor Inglés</th>
