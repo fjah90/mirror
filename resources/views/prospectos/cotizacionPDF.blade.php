@@ -695,6 +695,31 @@
                                             <br />
                                         </p>
                                     @endif
+                                @endforeach
+                                @if ($entrada->observaciones && $entrada->observaciones != '<ul></ul>')
+                                    <p>
+                                        <span>
+                                            @if ($nombre == 'nombre')
+                                                Observaciones:
+                                            @else
+                                                Remarks:
+                                            @endif
+                                        </span>
+                                        {!! $entrada->observaciones !!}
+                                    </p>
+                                @endif
+                                 @foreach ($entrada->descripciones as $descripcion)
+                                    @if ($descripcion->valor && $descripcion->nombre != 'Flamabilidad' &&
+                                     $descripcion->nombre != 'Abrasión' &&  
+                                     $descripcion->nombre != 'Decoloración a la luz' && 
+                                     $descripcion->nombre != 'Traspaso de color' && 
+                                     $descripcion->nombre != 'Peeling')
+                                        <p>
+                                            <span class="text-uppercase">{{ $descripcion->valor }}</span>
+                                            <br />
+                                        </p>
+                                    @endif
+                                @foreach ($entrada->descripciones as $descripcion)
                                     @if ($descripcion->nombre == 'Flamabilidad')
                                         <img src="{{ asset('images/icon-fire.png') }}"
                                             style="position:relative; margin:0 auto; width:24px; height:24px;">';
@@ -716,18 +741,6 @@
                                             style="position:relative; margin:0 auto; width:24px; height:24px;">';
                                     @endif
                                 @endforeach
-                                @if ($entrada->observaciones && $entrada->observaciones != '<ul></ul>')
-                                    <p>
-                                        <span>
-                                            @if ($nombre == 'nombre')
-                                                Observaciones:
-                                            @else
-                                                Remarks:
-                                            @endif
-                                        </span>
-                                        {!! $entrada->observaciones !!}
-                                    </p>
-                                @endif
                             </td>
                             @if ($cliente->tipo->id >= 1)
                                 @if ($cliente->tipo->id == 1 && $entrada->producto->precio_residencial != $entrada->precio)
