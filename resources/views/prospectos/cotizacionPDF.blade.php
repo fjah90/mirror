@@ -633,7 +633,8 @@
                 <table class="table table-cotizacion">
                     <thead>
                         <tr>
-                            <th class="text-center" style="width:13%; padding:3px 0 1px;">Cantidad - ({{ $cotizacion->entradas[0]->medida }})</th>
+                            <th class="text-center" style="width:13%; padding:3px 0 1px;">Cantidad -
+                                ({{ $cotizacion->entradas[0]->medida }})</th>
                             <th class="text-center" style="width:13%; padding:3px 0 1px;">Modelo</th>
                             <th class="text-center" style="width:13%; padding:3px 0 1px;">Imagen</th>
                             <th class="text-center" style="width:16%; padding:3px 0 1px;">Descripciones</th>
@@ -684,32 +685,35 @@
                             </td>
                             <td class="text-center border" style="width:16%; border-bottom: none; border-top: none;">
                                 @foreach ($entrada->descripciones as $descripcion)
-                                    @if ($descripcion->valor)
+                                    @if ($descripcion->valor && $descripcion->nombre != 'Flamabilidad' &&
+                                     $descripcion->nombre != 'Abrasión' &&  
+                                     $descripcion->nombre != 'Decoloración a la luz' && 
+                                     $descripcion->nombre != 'Traspaso de color' && 
+                                     $descripcion->nombre != 'Peeling')
                                         <p>
-                                            {{$descripcion->nombre}}
                                             <span class="text-uppercase">{{ $descripcion->valor }}</span>
-                                            @if ($descripcion->nombre == 'Flamabilidad')
-                                                <img src="{{ asset('images/icon-fire.png') }}"
-                                                    style="position:relative; margin:0 auto; width:24px; height:24px;">';
-                                            @endif
-                                            @if ($descripcion->nombre == 'Abrasión')
-                                                <img src="{{ asset('images/icon-abrasion.png') }}"
-                                                    style="position:relative; margin:0 auto; width:24px; height:24px;">';
-                                            @endif
-                                            @if ($descripcion->nombre == 'Decoloración a la luz')
-                                                <img src="{{ asset('images/icon-lightfastness.png') }}"
-                                                    style="position:relative; margin:0 auto; width:24px; height:24px;">';
-                                            @endif
-                                            @if ($descripcion->nombre == 'Traspaso de color')
-                                                <img src="{{ asset('images/icon-crocking.png') }}"
-                                                    style="position:relative; margin:0 auto; width:24px; height:24px;">';
-                                            @endif
-                                            @if ($descripcion->nombre == 'Peeling')
-                                                <img src="{{ asset('images/icon-physical.png') }}"
-                                                    style="position:relative; margin:0 auto; width:24px; height:24px;">';
-                                            @endif
                                             <br />
                                         </p>
+                                    @endif
+                                    @if ($descripcion->nombre == 'Flamabilidad')
+                                        <img src="{{ asset('images/icon-fire.png') }}"
+                                            style="position:relative; margin:0 auto; width:24px; height:24px;">';
+                                    @endif
+                                    @if ($descripcion->nombre == 'Abrasión')
+                                        <img src="{{ asset('images/icon-abrasion.png') }}"
+                                            style="position:relative; margin:0 auto; width:24px; height:24px;">';
+                                    @endif
+                                    @if ($descripcion->nombre == 'Decoloración a la luz')
+                                        <img src="{{ asset('images/icon-lightfastness.png') }}"
+                                            style="position:relative; margin:0 auto; width:24px; height:24px;">';
+                                    @endif
+                                    @if ($descripcion->nombre == 'Traspaso de color')
+                                        <img src="{{ asset('images/icon-crocking.png') }}"
+                                            style="position:relative; margin:0 auto; width:24px; height:24px;">';
+                                    @endif
+                                    @if ($descripcion->nombre == 'Peeling')
+                                        <img src="{{ asset('images/icon-physical.png') }}"
+                                            style="position:relative; margin:0 auto; width:24px; height:24px;">';
                                     @endif
                                 @endforeach
                                 @if ($entrada->observaciones && $entrada->observaciones != '<ul></ul>')
