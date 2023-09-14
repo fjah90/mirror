@@ -510,8 +510,8 @@
                                                     <td colspan="3"></td>
                                                     <td class="text-right">
                                                         <strong>Total
-                                                            <span v-if="cotizacion.moneda=='Dolares'"> Dolar (USD)</span>
-                                                            <span v-else> Peso (MXN)</span>
+                                                            <span v-if="cotizacion.moneda=='Dolares'"> Dolar Estados Unidos (USD)</span>
+                                                            <span v-else> Peso Mexicano (MXN)</span>
                                                         </strong>
                                                     </td>
                                                     <td v-if="cotizacion.total == 0">$0.00</td>

@@ -577,7 +577,11 @@
                                     </tr>
                                     <tr>
                                         <td>Precios:</td>
-                                        <td class="text-uppercase">{{ $cotizacion->moneda }}</td>
+                                        @if ($cotizacion->moneda == 'DOLARES')
+                                            <td class="text-uppercase">Dolar Estados Unidos (USD)</td>
+                                        @else
+                                            <td class="text-uppercase">Peso Mexicano (MXN)</td>
+                                        @endif
                                     </tr>
                                     <tr>
                                         <td style="vertical-align:top;">Condiciones:</td>
@@ -669,7 +673,8 @@
                                 <span>@text_capitalize($entrada->producto->color) </span>
                                 <br />
                             </td>
-                            <td class="text-center border" style="width:13%; height:100px; border-bottom: none; border-top: none;">
+                            <td class="text-center border"
+                                style="width:13%; height:100px; border-bottom: none; border-top: none;">
                                 @foreach ($entrada->fotos as $foto)
                                     <img src="{{ $foto }}" alt="foto"
                                         style="position:relative; margin:0 auto; width:100px; height:100px;" />
