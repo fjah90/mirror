@@ -693,7 +693,7 @@
                                             $descripcion->nombre != 'Traspaso de color' &&
                                             $descripcion->nombre != 'Peeling')
                                         <p>
-                                            <span class="text-uppercase">{{ $descripcion->valor }}</span>
+                                            <span class="text-uppercase" style="font-size: 0.8rem;">{{ $descripcion->valor }}</span>
                                             <br />
                                         </p>
                                     @endif
@@ -713,23 +713,23 @@
                                 @foreach ($entrada->descripciones as $descripcion)
                                     @if ($descripcion->nombre == 'Flamabilidad')
                                         <img src="{{ asset('images/icon-fire.png') }}"
-                                            style="position:relative; margin:0 auto; width:24px; height:24px;">';
+                                            style="position:relative; margin:0 auto; width: 12px; height: 12px;">';
                                     @endif
                                     @if ($descripcion->nombre == 'Abrasión')
                                         <img src="{{ asset('images/icon-abrasion.png') }}"
-                                            style="position:relative; margin:0 auto; width:24px; height:24px;">';
+                                            style="position:relative; margin:0 auto; width: 12px; height: 12px;">';
                                     @endif
                                     @if ($descripcion->nombre == 'Decoloración a la luz')
                                         <img src="{{ asset('images/icon-lightfastness.png') }}"
-                                            style="position:relative; margin:0 auto; width:24px; height:24px;">';
+                                            style="position:relative; margin:0 auto; width: 12px; height: 12px;">';
                                     @endif
                                     @if ($descripcion->nombre == 'Traspaso de color')
                                         <img src="{{ asset('images/icon-crocking.png') }}"
-                                            style="position:relative; margin:0 auto; width:24px; height:24px;">';
+                                            style="position:relative; margin:0 auto; width: 12px; height: 12px;">';
                                     @endif
                                     @if ($descripcion->nombre == 'Peeling')
                                         <img src="{{ asset('images/icon-physical.png') }}"
-                                            style="position:relative; margin:0 auto; width:24px; height:24px;">';
+                                            style="position:relative; margin:0 auto; width: 12px; height: 12px;">';
                                     @endif
                                 @endforeach
                             </td>
