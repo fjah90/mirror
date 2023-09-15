@@ -743,35 +743,40 @@
                                             @endif
                                         </li>
                                     @endforeach
-                                    <li class="flex" style="width: 100px;">
-                                        @foreach ($entrada->descripciones as $descripcion)
-                                            @if (in_array($descripcion->nombre, $valores))
-                                                @if ($descripcion->nombre == 'Flamabilidad')
-                                                    <img src="{{ asset('images/icon-fire.png') }}" class="mini-icon"
-                                                        style="position: relative; margin: 0 auto; width: 18px; height: 18px;">
-                                                @endif
-                                                @if ($descripcion->nombre == 'Abrasión')
-                                                    <img src="{{ asset('images/icon-abrasion.jpg') }}"
-                                                        class="mini-icon"
-                                                        style="position: relative; margin: 0 auto; width: 18px; height: 18px;">
-                                                @endif
-                                                @if ($descripcion->nombre == 'Decoloración a la luz' || $descripcion->nombre == 'Decoloración')
-                                                    <img src="{{ asset('images/icon-lightfastness.png') }}"
-                                                        class="mini-icon"
-                                                        style="position: relative; margin: 0 auto; width: 18px; height: 18px;">
-                                                @endif
-                                                @if ($descripcion->nombre == 'Traspaso de color' || $descripcion->nombre == 'Traspaso')
-                                                    <img src="{{ asset('images/icon-crocking.png') }}"
-                                                        class="mini-icon"
-                                                        style="position: relative; margin: 0 auto; width: 18px; height: 18px;">
-                                                @endif
-                                                @if ($descripcion->nombre == 'Peeling')
-                                                    <img src="{{ asset('images/icon-physical.png') }}"
-                                                        class="mini-icon"
-                                                        style="position: relative; margin: 0 auto; width: 18px; height: 18px;">
-                                                @endif
-                                            @endif
-                                        @endforeach
+                                    <li style="width: 100px;">
+                                        <ul>
+                                            @foreach ($entrada->descripciones as $descripcion)
+                                                <li>
+                                                    @if (in_array($descripcion->nombre, $valores))
+                                                        @if ($descripcion->nombre == 'Flamabilidad')
+                                                            <img src="{{ asset('images/icon-fire.png') }}"
+                                                                class="mini-icon"
+                                                                style="position: relative; margin: 0 auto; width: 18px; height: 18px;">
+                                                        @endif
+                                                        @if ($descripcion->nombre == 'Abrasión')
+                                                            <img src="{{ asset('images/icon-abrasion.jpg') }}"
+                                                                class="mini-icon"
+                                                                style="position: relative; margin: 0 auto; width: 18px; height: 18px;">
+                                                        @endif
+                                                        @if ($descripcion->nombre == 'Decoloración a la luz' || $descripcion->nombre == 'Decoloración')
+                                                            <img src="{{ asset('images/icon-lightfastness.png') }}"
+                                                                class="mini-icon"
+                                                                style="position: relative; margin: 0 auto; width: 18px; height: 18px;">
+                                                        @endif
+                                                        @if ($descripcion->nombre == 'Traspaso de color' || $descripcion->nombre == 'Traspaso')
+                                                            <img src="{{ asset('images/icon-crocking.png') }}"
+                                                                class="mini-icon"
+                                                                style="position: relative; margin: 0 auto; width: 18px; height: 18px;">
+                                                        @endif
+                                                        @if ($descripcion->nombre == 'Peeling')
+                                                            <img src="{{ asset('images/icon-physical.png') }}"
+                                                                class="mini-icon"
+                                                                style="position: relative; margin: 0 auto; width: 18px; height: 18px;">
+                                                        @endif
+                                                    @endif
+                                                </li>
+                                            @endforeach
+                                        </ul>
                                     </li>
                                 </ul>
                             </td>
