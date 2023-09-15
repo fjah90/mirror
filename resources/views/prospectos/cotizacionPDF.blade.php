@@ -732,19 +732,6 @@
                                                     </p>
                                                 @endif
                                             @endif
-                                            @if ($entrada->observaciones && $entrada->observaciones != '<ul></ul>')
-                                                <p>
-                                                    <span>
-                                                        @if ($nombre == 'nombre')
-                                                            Observaciones:
-                                                        @else
-                                                            Remarks:
-                                                        @endif
-                                                    </span>
-                                                    {!! $entrada->observaciones !!}
-                                                </p>
-                                            @endif
-                                        </li>
                                     @endforeach
                                     <li>
                                         @if ($entrada->observaciones && $entrada->observaciones != '<ul></ul>')
@@ -761,34 +748,30 @@
                                         @endif
                                     </li>
                                     <li style="width: 100px;">
-                                        <ul style="list-style-type: none display: block;">
-                                            @foreach ($entrada->descripciones as $descripcion)
-                                                <li style="display:inline-block; float: left; position: relative;">
-                                                    @if (in_array($descripcion->nombre, $valores))
-                                                        @if ($descripcion->nombre == 'Flamabilidad')
-                                                            <img src="{{ asset('images/icon-fire.png') }}"
-                                                                style="display:inline-block; float: left; position: relative; margin: 0 auto; width: 18px; height: 18px;">
-                                                        @endif
-                                                        @if ($descripcion->nombre == 'Abrasión')
-                                                            <img src="{{ asset('images/icon-abrasion.jpg') }}"
-                                                                style="display:inline-block; float: left; position: relative; margin: 0 auto; width: 18px; height: 18px;">
-                                                        @endif
-                                                        @if ($descripcion->nombre == 'Decoloración a la luz' || $descripcion->nombre == 'Decoloración')
-                                                            <img src="{{ asset('images/icon-lightfastness.png') }}"
-                                                                style="display:inline-block; float: left; position: relative; margin: 0 auto; width: 18px; height: 18px;">
-                                                        @endif
-                                                        @if ($descripcion->nombre == 'Traspaso de color' || $descripcion->nombre == 'Traspaso')
-                                                            <img src="{{ asset('images/icon-crocking.png') }}"
-                                                                style="display:inline-block; float: left; position: relative; margin: 0 auto; width: 18px; height: 18px;">
-                                                        @endif
-                                                        @if ($descripcion->nombre == 'Peeling')
-                                                            <img src="{{ asset('images/icon-physical.png') }}"
-                                                                style="display:inline-block; float: left; position: relative; margin: 0 auto; width: 18px; height: 18px; ">
-                                                        @endif
-                                                    @endif
-                                                </li>
-                                            @endforeach
-                                        </ul>
+                                        @foreach ($entrada->descripciones as $descripcion)
+                                            @if (in_array($descripcion->nombre, $valores))
+                                                @if ($descripcion->nombre == 'Flamabilidad')
+                                                    <img src="{{ asset('images/icon-fire.png') }}"
+                                                        style="display:inline-block; float: left; position: relative; margin: 0 auto; width: 18px; height: 18px;">
+                                                @endif
+                                                @if ($descripcion->nombre == 'Abrasión')
+                                                    <img src="{{ asset('images/icon-abrasion.jpg') }}"
+                                                        style="display:inline-block; float: left; position: relative; margin: 0 auto; width: 18px; height: 18px;">
+                                                @endif
+                                                @if ($descripcion->nombre == 'Decoloración a la luz' || $descripcion->nombre == 'Decoloración')
+                                                    <img src="{{ asset('images/icon-lightfastness.png') }}"
+                                                        style="display:inline-block; float: left; position: relative; margin: 0 auto; width: 18px; height: 18px;">
+                                                @endif
+                                                @if ($descripcion->nombre == 'Traspaso de color' || $descripcion->nombre == 'Traspaso')
+                                                    <img src="{{ asset('images/icon-crocking.png') }}"
+                                                        style="display:inline-block; float: left; position: relative; margin: 0 auto; width: 18px; height: 18px;">
+                                                @endif
+                                                @if ($descripcion->nombre == 'Peeling')
+                                                    <img src="{{ asset('images/icon-physical.png') }}"
+                                                        style="display:inline-block; float: left; position: relative; margin: 0 auto; width: 18px; height: 18px; ">
+                                                @endif
+                                            @endif
+                                        @endforeach
                                     </li>
                                 </ul>
                             </td>
