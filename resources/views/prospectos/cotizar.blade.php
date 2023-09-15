@@ -703,7 +703,7 @@
                                                     <th colspan="3">Descripciones</th>
                                                 </tr>
                                                 <tr>
-                                                    <th>Código</th>
+                                                    <th>Nombre</th>
                                                     <th>Name</th>
                                                     <th>Valor</th>
                                                     <th>Valor Inglés</th>
@@ -731,13 +731,13 @@
                                                             <img src="{{ asset('images/icon-abrasion.jpg') }}"
                                                                 id="Abrasion" style="width:48px; height:48px;">
                                                         </div>
-                                                        <div v-else-if="descripcion.nombre=='Decoloración'">
+                                                        <div v-else-if="descripcion.nombre=='Decoloración a la luz'">
                                                             <img src="{{ asset('images/icon-lightfastness.png') }}"
                                                                 id="Decoloracion_de_luz" style="width:50px; height:50px;">
                                                         </div>
-                                                        <div v-else-if="descripcion.nombre=='Traspaso'">
+                                                        <div v-else-if="descripcion.nombre=='Traspaso de color'">
                                                             <img src="{{ asset('images/icon-crocking.png') }}"
-                                                                id="Traspaso_color" style="width:50px; height:50px;">
+                                                                id="Traspaso de color_color" style="width:50px; height:50px;">
                                                         </div>
                                                         <div v-else-if="descripcion.nombre=='Peeling'">
                                                             <img src="{{ asset('images/icon-physical.png') }}"
@@ -2268,7 +2268,7 @@
                                         // $('a[download="C ' + data.cotizacion.numero +
                                         //     ' Robinson ' + this
                                         //     .prospecto.nombre + '.pdf"]')[0].click();
-                                        window.location.reload(true);
+                                        // window.location.reload(true);
                                         swal.close();
                                     } else if (result.value) {
                                         // Ejecuta el código

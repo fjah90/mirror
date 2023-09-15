@@ -283,7 +283,7 @@ class ProductosController extends Controller
                 "Flamabilidad",
                 "Abrasión",
                 "Decoloracion de la luz",
-                "Traspaso de color",
+                "Traspaso de color de color",
                 "Peeling",
                 "Aplicación",
                 "Acabado",

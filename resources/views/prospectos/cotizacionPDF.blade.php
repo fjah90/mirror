@@ -3,6 +3,7 @@
 
 <head>
     {{-- <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap"> --}}
+    <title>Cotizacion</title>
     <meta charset="UTF-8">
     <style>
         html {
@@ -162,6 +163,10 @@
             border-bottom-width: 2px;
         }
 
+        .table.table-condensed td {
+            border: none;
+        }
+
         .table-striped>tbody>tr:nth-of-type(odd) {
             background-color: #f9f9f9;
         }
@@ -193,9 +198,7 @@
         .table th.danger {
             background-color: #f2dede;
         }
-    </style>
-    <title>Cotizacion</title>
-    <style>
+
         /* Rows and columns */
         .row {
             width: 744px;
@@ -326,8 +329,7 @@
         .landscape .col-lg-12 {
             width: 1040px;
         }
-    </style>
-    <style>
+
         /* textos */
         .text-uppercase {
             text-transform: uppercase;
@@ -339,6 +341,10 @@
 
         .text-right {
             text-align: right;
+        }
+
+        .text-left {
+            text-align: left !important;
         }
 
         .text-danger {
@@ -353,8 +359,7 @@
         .font-big {
             font-size: 12px;
         }
-    </style>
-    <style>
+
         @page {
             margin: 0;
         }
@@ -430,8 +435,7 @@
             margin: 0px;
             padding-left: 20px;
         }
-    </style>
-    <style>
+
         /* custom */
         .table-cotizacion {
             margin: -5px 0px 0px;
@@ -481,6 +485,35 @@
             width: 100%;
             height: 400px;
             float: left;
+        }
+
+        .mini-icon {
+            position: relative;
+            margin: 0 auto;
+            width: 19px;
+            height: 19px;
+            float: left;
+        }
+
+        li {
+            display: list-item;
+            text-align: -webkit-match-parent;
+            padding: 0;
+            margin: 0;
+        }
+
+        .flex {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            justify-content: flex-start;
+            gap: 1px;
+        }
+
+        ul {
+            padding: 0;
+            margin: 0;
+            list-style: none;
         }
     </style>
 </head>
@@ -633,21 +666,22 @@
                 <table class="table table-cotizacion">
                     <thead>
                         <tr>
-                            <th class="text-center" style="width:13%; padding:3px 0 1px;">Cantidad</th>
+                            <th class="text-center" style="width:13%; padding:3px 0 1px;">Cantidad -
+                                ({{ $cotizacion->entradas[0]->medida }})</th>
                             <th class="text-center" style="width:13%; padding:3px 0 1px;">Modelo</th>
                             <th class="text-center" style="width:13%; padding:3px 0 1px;">Imagen</th>
                             <th class="text-center" style="width:16%; padding:3px 0 1px;">Descripciones</th>
                             @if ($cliente->tipo->id >= 1)
-                                //mostrar si es Residencial
+                                {{-- //mostrar si es Residencial --}}
                                 <th class="text-center" style="width:16%; padding:3px 0 1px;">Precio Unitario (USD)</th>
                             @endif
                             @if ($cliente->tipo->id >= 2)
-                                //mostrar si es Comercial
+                                {{-- //mostrar si es Comercial --}}
                                 <th class="text-center" style="width:16%; padding:3px 0 1px;">Precio Unitario Especial
                                     (USD) </th>
                             @endif
                             @if ($cliente->tipo->id >= 3)
-                                //mostrar si es Distribuidor
+                                {{-- //mostrar si es Distribuidor --}}
                                 <th class="text-center" style="width:16%; padding:3px 0 1px;">Precio Unitario
                                     Distribuidor (USD) </th>
                             @endif
@@ -661,11 +695,14 @@
                                 @else
                                 <tr>
                             @endif
-                            <td class="text-center border" style="width:13%; border-bottom: none; border-top: none;">
-                                {{ $entrada->cantidad }} &nbsp; {{ $entrada->medida }}
+                            <td class="text-center border"
+                                style="width:13%; border-bottom: none; border-top: none; height:auto;">
+                                {{-- {{ $entrada->cantidad }} &nbsp; {{ $entrada->medida }} --}}
+                                {{ $entrada->cantidad }}
                                 <br />
                             </td>
-                            <td class="text-center border" style="width:13%; border-bottom: none; border-top: none;">
+                            <td class="text-center border"
+                                style="width:13%; border-bottom: none; border-top: none; height:auto;">
                                 <span>@text_capitalize($entrada->producto->nombre) </span>
                                 <br />
                                 <span>@text_capitalize($entrada->producto->nombre_material) </span>
@@ -674,37 +711,88 @@
                                 <br />
                             </td>
                             <td class="text-center border"
-                                style="width:13%; height:100px; border-bottom: none; border-top: none;">
+                                style="width:13%; height:100px; border-bottom: none; border-top: none; height:auto;">
                                 @foreach ($entrada->fotos as $foto)
                                     <img src="{{ $foto }}" alt="foto"
                                         style="position:relative; margin:0 auto; width:100px; height:100px;" />
                                     <br />
                                 @endforeach
                             </td>
-                            <td class="text-center border" style="width:16%; border-bottom: none; border-top: none;">
-                                @foreach ($entrada->descripciones as $descripcion)
-                                    @if ($descripcion->valor)
-                                        <p>
-                                            <span class="text-uppercase">{{ $descripcion->valor }}</span>
-                                        </p>
-                                    @endif
-                                @endforeach
-                                @if ($entrada->observaciones && $entrada->observaciones != '<ul></ul>')
-                                    <p>
-                                        <span>
-                                            @if ($nombre == 'nombre')
-                                                Observaciones:
-                                            @else
-                                                Remarks:
+                            <td class="text-left border;"
+                                style="width:16%; min-with:100px; border-bottom: none; border-top: none; height:auto;">
+                                <table class="table table-condensed">
+                                    @foreach ($entrada->descripciones as $descripcion)
+                                        @php
+                                            $valores = ['Flamabilidad', 'Abrasión', 'Decoloración', 'Decoloración a la luz', 'Traspaso', 'Traspaso de color', 'Peeling'];
+                                        @endphp
+                                        {{-- @if (!in_array($descripcion->nombre, $valores))  --}}
+                                            @if (!empty($descripcion->valor))
+                                                <tr>
+                                                    <td colspan="5">
+                                                        <span class="text-uppercase text-left"
+                                                            style="font-size: 8px;">{{ $descripcion->valor }}</span>
+                                                    </td>
+                                                </tr>
                                             @endif
-                                        </span>
-                                        {!! $entrada->observaciones !!}
-                                    </p>
-                                @endif
+                                        {{-- @endif --}}
+                                    @endforeach
+                                    <tr>
+                                        <td colspan="5">
+                                            @if ($entrada->observaciones && $entrada->observaciones != '<ul></ul>')
+                                                <p>
+                                                    <span>
+                                                        @if ($nombre == 'nombre')
+                                                            Observaciones:
+                                                        @else
+                                                            Remarks:
+                                                        @endif
+                                                    </span>
+                                                    {!! $entrada->observaciones !!}
+                                                </p>
+                                            @endif
+                                        </td>
+                                    </tr>
+                                    <tr style="max-width: 100px; margin 0 auto; text-aling: left;">
+                                        @foreach ($entrada->descripciones as $descripcion)
+                                            @if (in_array($descripcion->nombre, $valores))
+                                                @if ($descripcion->nombre == 'Flamabilidad')
+                                                    <td style="width: 18px; height: 18px;">
+                                                        <img src="{{ asset('images/icon-fire.png') }}"
+                                                            style="width: 18px; height: 18px;">
+                                                    </td>
+                                                @endif
+                                                @if ($descripcion->nombre == 'Abrasión')
+                                                    <td style="width: 18px; height: 18px;">
+                                                        <img src="{{ asset('images/icon-abrasion.jpg') }}"
+                                                            style="width: 18px; height: 18px;">
+                                                    </td>
+                                                @endif
+                                                @if ($descripcion->nombre == 'Decoloración a la luz' || $descripcion->nombre == 'Decoloración')
+                                                    <td style="width: 18px; height: 18px;">
+                                                        <img src="{{ asset('images/icon-lightfastness.png') }}"
+                                                            style="width: 18px; height: 18px;">
+                                                    </td>
+                                                @endif
+                                                @if ($descripcion->nombre == 'Traspaso de color' || $descripcion->nombre == 'Traspaso')
+                                                    <td style="width: 18px; height: 18px;">
+                                                        <img src="{{ asset('images/icon-crocking.png') }}"
+                                                            style="width: 18px; height: 18px;">
+                                                    </td>
+                                                @endif
+                                                @if ($descripcion->nombre == 'Peeling')
+                                                    <td style="width: 18px; height: 18px;">
+                                                        <img src="{{ asset('images/icon-physical.png') }}"
+                                                            style="width: 18px; height: 18px;">
+                                                    </td>
+                                                @endif
+                                            @endif
+                                        @endforeach
+                                    </tr>
+                                </table>
                             </td>
                             @if ($cliente->tipo->id >= 1)
                                 @if ($cliente->tipo->id == 1 && $entrada->producto->precio_residencial != $entrada->precio)
-                                    <td class="text-right border"
+                                    <td class="text-right border height:auto;"
                                         style="width:16%; border-bottom: none; border-top: none;">
                                         @format_money($entrada->precio)</td>
                                 @else
@@ -715,27 +803,28 @@
                             @endif
                             @if ($cliente->tipo->id >= 2)
                                 @if ($cliente->tipo->id == 2 && $entrada->producto->precio_residencial != $entrada->precio)
-                                    <td class="text-right border"
+                                    <td class="text-right border height:auto;"
                                         style="width:16%; border-bottom: none; border-top: none;">
                                         @format_money($entrada->precio)</td>
                                 @else
-                                    <td class="text-right border"
+                                    <td class="text-right border height:auto;"
                                         style="width:16%; border-bottom: none; border-top: none;">
                                         @format_money($entrada->producto->precio_comercial)</td>
                                 @endif
                             @endif
                             @if ($cliente->tipo->id >= 3)
                                 @if ($cliente->tipo->id == 3 && $entrada->producto->precio_residencial != $entrada->precio)
-                                    <td class="text-right border"
+                                    <td class="text-right border height:auto;"
                                         style="width:16%; border-bottom: none; border-top: none;">
                                         @format_money($entrada->precio)</td>
                                 @else
-                                    <td class="text-right border"
+                                    <td class="text-right border height:auto;"
                                         style="width:16%; border-bottom: none; border-top: none;">
                                         @format_money($entrada->producto->precio_distribuidor)</td>
                                 @endif
                             @endif
-                            <td class="text-right border" style="width:13%; border-bottom: none; border-top: none;">
+                            <td class="text-right border"
+                                style="width:13%; border-bottom: none; border-top: none; height:auto;">
                                 @format_money($entrada->importe)
                             </td>
                             </tr>

@@ -141,7 +141,7 @@
                                                     <th colspan="3">Descripciones</th>
                                                 </tr>
                                                 <tr>
-                                                    <th>Código</th>
+                                                    <th>Nombre</th>
                                                     <th>Name</th>
                                                     <th>Valor</th>
                                                     <th>Valor Ingles</th>
@@ -171,13 +171,13 @@
                                                                 id="Abrasion" style="width:48px; height:48px;">
                                                         </div>
                                                         <div
-                                                            v-else-if="descripcion.descripcion_nombre.nombre=='Decoloración'">
+                                                            v-else-if="descripcion.descripcion_nombre.nombre=='Decoloración a la luz'">
                                                             <img src="{{ asset('images/icon-lightfastness.png') }}"
                                                                 id="Decoloracion_de_luz" style="width:50px; height:50px;">
                                                         </div>
-                                                        <div v-else-if="descripcion.descripcion_nombre.nombre=='Traspaso'">
+                                                        <div v-else-if="descripcion.descripcion_nombre.nombre=='Traspaso de color'">
                                                             <img src="{{ asset('images/icon-crocking.png') }}"
-                                                                id="Traspaso_color" style="width:50px; height:50px;">
+                                                                id="Traspaso de color_color" style="width:50px; height:50px;">
                                                         </div>
                                                         <div v-else-if="descripcion.descripcion_nombre.nombre=='Peeling'">
                                                             <img src="{{ asset('images/icon-physical.png') }}"

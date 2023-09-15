@@ -139,9 +139,9 @@
                                                                 <td><img src="{{ asset('images/icon-lightfastness.png') }}"
                                                                         id="Decoloracion_de_luz"
                                                                         style="width:50px; height:50px;"></td>
-                                                            @elseif($descripcion->descripcionNombre->nombre == 'Traspaso_color')
+                                                            @elseif($descripcion->descripcionNombre->nombre == 'Traspaso de color_color')
                                                                 <td><img src="{{ asset('images/icon-crocking.png') }}"
-                                                                        id="Traspaso_color"
+                                                                        id="Traspaso de color_color"
                                                                         style="width:50px; height:50px;"></td>
                                                             @elseif($descripcion->descripcionNombre->nombre == 'Peeling')
                                                                 <td><img src="{{ asset('images/icon-crocking.png') }}"
