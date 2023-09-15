@@ -488,6 +488,7 @@
             margin: 0 auto;
             width: 19px;
             height: 19px;
+            float: left;
         }
 
         li {
@@ -690,12 +691,12 @@
                                 @else
                                 <tr>
                             @endif
-                            <td class="text-center border" style="width:13%; border-bottom: none; border-top: none;">
+                            <td class="text-center border" style="width:13%; border-bottom: none; border-top: none; height:auto;">
                                 {{-- {{ $entrada->cantidad }} &nbsp; {{ $entrada->medida }} --}}
                                 {{ $entrada->cantidad }}
                                 <br />
                             </td>
-                            <td class="text-center border" style="width:13%; border-bottom: none; border-top: none;">
+                            <td class="text-center border" style="width:13%; border-bottom: none; border-top: none; height:auto;">
                                 <span>@text_capitalize($entrada->producto->nombre) </span>
                                 <br />
                                 <span>@text_capitalize($entrada->producto->nombre_material) </span>
@@ -704,15 +705,15 @@
                                 <br />
                             </td>
                             <td class="text-center border"
-                                style="width:13%; height:100px; border-bottom: none; border-top: none;">
+                                style="width:13%; height:100px; border-bottom: none; border-top: none; height:auto;">
                                 @foreach ($entrada->fotos as $foto)
                                     <img src="{{ $foto }}" alt="foto"
                                         style="position:relative; margin:0 auto; width:100px; height:100px;" />
                                     <br />
                                 @endforeach
                             </td>
-                            <td class="text-left border"
-                                style="width:16%; min-with:100px; border-bottom: none; border-top: none;">
+                            <td class="text-left border;"
+                                style="width:16%; min-with:100px; border-bottom: none; border-top: none; height:auto;">
                                 <ul>
                                     @foreach ($entrada->descripciones as $descripcion)
                                         @php
@@ -723,9 +724,8 @@
                                                 @if (!empty($descripcion->valor))
                                                     <p>
                                                         <span class="text-uppercase text-left"
-                                                            style="font-size: 10px;">{{ $descripcion->valor }}</span>
-                                                        <hr align="left" noshade="noshade" size="1"
-                                                            width="100%" />
+                                                            style="font-size: 8px;">{{ $descripcion->valor }}</span>
+                                                        <hr align="left" noshade="noshade" size="1" width="100%" />
                                                     </p>
                                                 @endif
                                             @endif
@@ -775,7 +775,7 @@
                                                         @if ($descripcion->nombre == 'Peeling')
                                                             <div class="mini-icon">
                                                                 <img src="{{ asset('images/icon-physical.png') }}"
-                                                                    style="position: relative; margin: 0 auto; width: 18px; height: 18px;">
+                                                                    style="position: relative; margin: 0 auto; width: 18px; height: 18px; ">
                                                             </div>
                                                         @endif
                                                     @endif
@@ -787,7 +787,7 @@
                             </td>
                             @if ($cliente->tipo->id >= 1)
                                 @if ($cliente->tipo->id == 1 && $entrada->producto->precio_residencial != $entrada->precio)
-                                    <td class="text-right border"
+                                    <td class="text-right border height:auto;"
                                         style="width:16%; border-bottom: none; border-top: none;">
                                         @format_money($entrada->precio)</td>
                                 @else
@@ -798,27 +798,27 @@
                             @endif
                             @if ($cliente->tipo->id >= 2)
                                 @if ($cliente->tipo->id == 2 && $entrada->producto->precio_residencial != $entrada->precio)
-                                    <td class="text-right border"
+                                    <td class="text-right border height:auto;"
                                         style="width:16%; border-bottom: none; border-top: none;">
                                         @format_money($entrada->precio)</td>
                                 @else
-                                    <td class="text-right border"
+                                    <td class="text-right border height:auto;"
                                         style="width:16%; border-bottom: none; border-top: none;">
                                         @format_money($entrada->producto->precio_comercial)</td>
                                 @endif
                             @endif
                             @if ($cliente->tipo->id >= 3)
                                 @if ($cliente->tipo->id == 3 && $entrada->producto->precio_residencial != $entrada->precio)
-                                    <td class="text-right border"
+                                    <td class="text-right border height:auto;"
                                         style="width:16%; border-bottom: none; border-top: none;">
                                         @format_money($entrada->precio)</td>
                                 @else
-                                    <td class="text-right border"
+                                    <td class="text-right border height:auto;"
                                         style="width:16%; border-bottom: none; border-top: none;">
                                         @format_money($entrada->producto->precio_distribuidor)</td>
                                 @endif
                             @endif
-                            <td class="text-right border" style="width:13%; border-bottom: none; border-top: none;">
+                            <td class="text-right border" style="width:13%; border-bottom: none; border-top: none; height:auto;">
                                 @format_money($entrada->importe)
                             </td>
                             </tr>
