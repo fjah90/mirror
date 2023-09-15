@@ -163,6 +163,10 @@
             border-bottom-width: 2px;
         }
 
+        .table.table-condensed td {
+            border: none;
+        }
+
         .table-striped>tbody>tr:nth-of-type(odd) {
             background-color: #f9f9f9;
         }
