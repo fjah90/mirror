@@ -716,7 +716,7 @@
                             </td>
                             <td class="text-left border;"
                                 style="width:16%; min-with:100px; border-bottom: none; border-top: none; height:auto;">
-                                <table style="width: 100%; he">
+                                <table style="width: 100%; min-width:100px;">
                                     <tbody>
                                         @foreach ($entrada->descripciones as $descripcion)
                                             @php
@@ -753,28 +753,33 @@
                                             @foreach ($entrada->descripciones as $descripcion)
                                                 @if (in_array($descripcion->nombre, $valores))
                                                     @if ($descripcion->nombre == 'Flamabilidad')
-                                                        <td> <img src="{{ asset('images/icon-fire.png') }}"
-                                                                style="display:inline-block; position: relative; margin: 0 auto; width: 18px; height: 18px;">
+                                                        <td>
+                                                            <img src="{{ asset('images/icon-fire.png') }}"
+                                                                style="width: 18px; height: 18px;">
                                                         </td>
                                                     @endif
                                                     @if ($descripcion->nombre == 'Abrasión')
-                                                        <td> <img src="{{ asset('images/icon-abrasion.jpg') }}"
-                                                                style="display:inline-block; position: relative; margin: 0 auto; width: 18px; height: 18px;">
+                                                        <td>
+                                                            <img src="{{ asset('images/icon-abrasion.jpg') }}"
+                                                                style="width: 18px; height: 18px;">
                                                         </td>
                                                     @endif
                                                     @if ($descripcion->nombre == 'Decoloración a la luz' || $descripcion->nombre == 'Decoloración')
-                                                        <td> <img src="{{ asset('images/icon-lightfastness.png') }}"
-                                                                style="display:inline-block; position: relative; margin: 0 auto; width: 18px; height: 18px;">
+                                                        <td>
+                                                            <img src="{{ asset('images/icon-lightfastness.png') }}"
+                                                                style="width: 18px; height: 18px;">
                                                         </td>
                                                     @endif
                                                     @if ($descripcion->nombre == 'Traspaso de color' || $descripcion->nombre == 'Traspaso')
-                                                        <td> <img src="{{ asset('images/icon-crocking.png') }}"
-                                                                style="display:inline-block; position: relative; margin: 0 auto; width: 18px; height: 18px;">
+                                                        <td>
+                                                            <img src="{{ asset('images/icon-crocking.png') }}"
+                                                                style="width: 18px; height: 18px;">
                                                         </td>
                                                     @endif
                                                     @if ($descripcion->nombre == 'Peeling')
-                                                        <td> <img src="{{ asset('images/icon-physical.png') }}"
-                                                                style="display:inline-block; position: relative; margin: 0 auto; width: 18px; height: 18px;">
+                                                        <td>
+                                                            <img src="{{ asset('images/icon-physical.png') }}"
+                                                                style="width: 18px; height: 18px;">
                                                         </td>
                                                     @endif
                                                 @endif
