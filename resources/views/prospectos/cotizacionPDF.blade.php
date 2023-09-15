@@ -718,21 +718,21 @@
                                 style="width:16%; min-with:100px; border-bottom: none; border-top: none; height:auto;">
                                 <table style="width: 100%; he">
                                     <tbody>
-                                        <tr>
-                                            @foreach ($entrada->descripciones as $descripcion)
-                                                @php
-                                                    $valores = ['Flamabilidad', 'Abrasión', 'Decoloración', 'Decoloración a la luz', 'Traspaso', 'Traspaso de color', 'Peeling'];
-                                                @endphp
-                                                @if (!in_array($descripcion->nombre, $valores))
-                                                    @if (!empty($descripcion->valor))
+                                        @foreach ($entrada->descripciones as $descripcion)
+                                            @php
+                                                $valores = ['Flamabilidad', 'Abrasión', 'Decoloración', 'Decoloración a la luz', 'Traspaso', 'Traspaso de color', 'Peeling'];
+                                            @endphp
+                                            @if (!in_array($descripcion->nombre, $valores))
+                                                @if (!empty($descripcion->valor))
+                                                    <tr>
                                                         <td>
                                                             <span class="text-uppercase text-left"
                                                                 style="font-size: 8px;">{{ $descripcion->valor }}</span>
                                                         </td>
-                                                    @endif
+                                                    </tr>
                                                 @endif
-                                            @endforeach
-                                        </tr>
+                                            @endif
+                                        @endforeach
                                         <tr>
                                             <td>
                                                 @if ($entrada->observaciones && $entrada->observaciones != '<ul></ul>')
