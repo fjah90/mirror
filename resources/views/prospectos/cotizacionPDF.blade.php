@@ -749,35 +749,35 @@
                                                 @endif
                                             </td>
                                         </tr>
-                                        <tr>
+                                        <tr style="max-width: 100px; margin 0 auto; text-aling: left;">
                                             @foreach ($entrada->descripciones as $descripcion)
                                                 @if (in_array($descripcion->nombre, $valores))
                                                     @if ($descripcion->nombre == 'Flamabilidad')
-                                                        <td>
+                                                        <td style="width: 18px; height: 18px;">
                                                             <img src="{{ asset('images/icon-fire.png') }}"
                                                                 style="width: 18px; height: 18px;">
                                                         </td>
                                                     @endif
                                                     @if ($descripcion->nombre == 'Abrasión')
-                                                        <td>
+                                                        <td style="width: 18px; height: 18px;">
                                                             <img src="{{ asset('images/icon-abrasion.jpg') }}"
                                                                 style="width: 18px; height: 18px;">
                                                         </td>
                                                     @endif
                                                     @if ($descripcion->nombre == 'Decoloración a la luz' || $descripcion->nombre == 'Decoloración')
-                                                        <td>
+                                                        <td style="width: 18px; height: 18px;">
                                                             <img src="{{ asset('images/icon-lightfastness.png') }}"
                                                                 style="width: 18px; height: 18px;">
                                                         </td>
                                                     @endif
                                                     @if ($descripcion->nombre == 'Traspaso de color' || $descripcion->nombre == 'Traspaso')
-                                                        <td>
+                                                        <td style="width: 18px; height: 18px;">
                                                             <img src="{{ asset('images/icon-crocking.png') }}"
                                                                 style="width: 18px; height: 18px;">
                                                         </td>
                                                     @endif
                                                     @if ($descripcion->nombre == 'Peeling')
-                                                        <td>
+                                                        <td style="width: 18px; height: 18px;">
                                                             <img src="{{ asset('images/icon-physical.png') }}"
                                                                 style="width: 18px; height: 18px;">
                                                         </td>
