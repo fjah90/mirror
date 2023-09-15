@@ -744,9 +744,9 @@
                                         </li>
                                     @endforeach
                                     <li style="width: 100px;">
-                                        <ul>
+                                        <ul style="list-style-type: none">
                                             @foreach ($entrada->descripciones as $descripcion)
-                                                <li>
+                                                <li style="float: left; margin-right: 1px; padding: 0 1px;">
                                                     @if (in_array($descripcion->nombre, $valores))
                                                         @if ($descripcion->nombre == 'Flamabilidad')
                                                             <img src="{{ asset('images/icon-fire.png') }}"
