@@ -691,12 +691,14 @@
                                 @else
                                 <tr>
                             @endif
-                            <td class="text-center border" style="width:13%; border-bottom: none; border-top: none; height:auto;">
+                            <td class="text-center border"
+                                style="width:13%; border-bottom: none; border-top: none; height:auto;">
                                 {{-- {{ $entrada->cantidad }} &nbsp; {{ $entrada->medida }} --}}
                                 {{ $entrada->cantidad }}
                                 <br />
                             </td>
-                            <td class="text-center border" style="width:13%; border-bottom: none; border-top: none; height:auto;">
+                            <td class="text-center border"
+                                style="width:13%; border-bottom: none; border-top: none; height:auto;">
                                 <span>@text_capitalize($entrada->producto->nombre) </span>
                                 <br />
                                 <span>@text_capitalize($entrada->producto->nombre_material) </span>
@@ -725,7 +727,8 @@
                                                     <p>
                                                         <span class="text-uppercase text-left"
                                                             style="font-size: 8px;">{{ $descripcion->valor }}</span>
-                                                        <hr align="left" noshade="noshade" size="1" width="100%" />
+                                                        <hr align="left" noshade="noshade" size="1"
+                                                            width="100%" />
                                                     </p>
                                                 @endif
                                             @endif
@@ -743,40 +746,44 @@
                                             @endif
                                         </li>
                                     @endforeach
+                                    <li>
+                                        @if ($entrada->observaciones && $entrada->observaciones != '<ul></ul>')
+                                            <p>
+                                                <span>
+                                                    @if ($nombre == 'nombre')
+                                                        Observaciones:
+                                                    @else
+                                                        Remarks:
+                                                    @endif
+                                                </span>
+                                                {!! $entrada->observaciones !!}
+                                            </p>
+                                        @endif
+                                    </li>
                                     <li style="width: 100px;">
                                         <ul style="list-style-type: none display: block;">
                                             @foreach ($entrada->descripciones as $descripcion)
-                                                <li style="float: left; margin-right: 1px; padding: 0 1px;">
+                                                <li style="display:inline-block; float: left; position: relative;">
                                                     @if (in_array($descripcion->nombre, $valores))
                                                         @if ($descripcion->nombre == 'Flamabilidad')
-                                                            <div class="mini-icon">
-                                                                <img src="{{ asset('images/icon-fire.png') }}"
-                                                                    style="position: relative; margin: 0 auto; width: 18px; height: 18px;">
-                                                            </div>
+                                                            <img src="{{ asset('images/icon-fire.png') }}"
+                                                                style="display:inline-block; float: left; position: relative; margin: 0 auto; width: 18px; height: 18px;">
                                                         @endif
                                                         @if ($descripcion->nombre == 'Abrasión')
-                                                            <div class="mini-icon">
-                                                                <img src="{{ asset('images/icon-abrasion.jpg') }}"
-                                                                    style="position: relative; margin: 0 auto; width: 18px; height: 18px;">
-                                                            </div>
+                                                            <img src="{{ asset('images/icon-abrasion.jpg') }}"
+                                                                style="display:inline-block; float: left; position: relative; margin: 0 auto; width: 18px; height: 18px;">
                                                         @endif
                                                         @if ($descripcion->nombre == 'Decoloración a la luz' || $descripcion->nombre == 'Decoloración')
-                                                            <div class="mini-icon">
-                                                                <img src="{{ asset('images/icon-lightfastness.png') }}"
-                                                                    style="position: relative; margin: 0 auto; width: 18px; height: 18px;">
-                                                            </div>
+                                                            <img src="{{ asset('images/icon-lightfastness.png') }}"
+                                                                style="display:inline-block; float: left; position: relative; margin: 0 auto; width: 18px; height: 18px;">
                                                         @endif
                                                         @if ($descripcion->nombre == 'Traspaso de color' || $descripcion->nombre == 'Traspaso')
-                                                            <div class="mini-icon">
-                                                                <img src="{{ asset('images/icon-crocking.png') }}"
-                                                                    style="position: relative; margin: 0 auto; width: 18px; height: 18px;">
-                                                            </div>
+                                                            <img src="{{ asset('images/icon-crocking.png') }}"
+                                                                style="display:inline-block; float: left; position: relative; margin: 0 auto; width: 18px; height: 18px;">
                                                         @endif
                                                         @if ($descripcion->nombre == 'Peeling')
-                                                            <div class="mini-icon">
-                                                                <img src="{{ asset('images/icon-physical.png') }}"
-                                                                    style="position: relative; margin: 0 auto; width: 18px; height: 18px; ">
-                                                            </div>
+                                                            <img src="{{ asset('images/icon-physical.png') }}"
+                                                                style="display:inline-block; float: left; position: relative; margin: 0 auto; width: 18px; height: 18px; ">
                                                         @endif
                                                     @endif
                                                 </li>
@@ -818,7 +825,8 @@
                                         @format_money($entrada->producto->precio_distribuidor)</td>
                                 @endif
                             @endif
-                            <td class="text-right border" style="width:13%; border-bottom: none; border-top: none; height:auto;">
+                            <td class="text-right border"
+                                style="width:13%; border-bottom: none; border-top: none; height:auto;">
                                 @format_money($entrada->importe)
                             </td>
                             </tr>
