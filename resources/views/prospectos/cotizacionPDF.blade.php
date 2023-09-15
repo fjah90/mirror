@@ -725,7 +725,7 @@
                                         @php
                                             $valores = ['Flamabilidad', 'Abrasión', 'Decoloración', 'Decoloración a la luz', 'Traspaso', 'Traspaso de color', 'Peeling'];
                                         @endphp
-                                        @if (!in_array($descripcion->nombre, $valores))
+                                        {{-- @if (!in_array($descripcion->nombre, $valores))  --}}
                                             @if (!empty($descripcion->valor))
                                                 <tr>
                                                     <td colspan="5">
@@ -734,7 +734,7 @@
                                                     </td>
                                                 </tr>
                                             @endif
-                                        @endif
+                                        {{-- @endif --}}
                                     @endforeach
                                     <tr>
                                         <td colspan="5">
