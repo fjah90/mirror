@@ -652,7 +652,6 @@
                                             href="mailto:{{ $cotizacion->contacto_email }}">{{ $cotizacion->contacto_email }}</a>
                                     </p>
                                 @endif
-
                             </td>
                         </tr>
                     </tbody>
@@ -907,7 +906,6 @@
       <div class="col-lg-12" style="height:180px;">
       </div>
     </div> --}}
-
         {{-- <div class="row footer" style="page-break-inside: avoid;"> --}}
         <div class="row" style="page-break-inside: avoid;">
             <div class="bordered" style="margin:5px 15px 0; page-break-inside: avoid;">
@@ -960,9 +958,7 @@
                 </table>
             </div>
         </div>
-
     </div><!-- Container -->
-
     <script type="text/php">
       if ( isset($pdf) ) {
           $font = $fontMetrics->getFont('helvetica');
