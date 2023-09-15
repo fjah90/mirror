@@ -486,8 +486,8 @@
         .mini-icon {
             position: relative;
             margin: 0 auto;
-            width: 18px;
-            height: 18px;
+            width: 19px;
+            height: 19px;
         }
 
         li {
@@ -744,34 +744,39 @@
                                         </li>
                                     @endforeach
                                     <li style="width: 100px;">
-                                        <ul style="list-style-type: none">
+                                        <ul style="list-style-type: none display: block;">
                                             @foreach ($entrada->descripciones as $descripcion)
                                                 <li style="float: left; margin-right: 1px; padding: 0 1px;">
                                                     @if (in_array($descripcion->nombre, $valores))
                                                         @if ($descripcion->nombre == 'Flamabilidad')
-                                                            <img src="{{ asset('images/icon-fire.png') }}"
-                                                                class="mini-icon"
-                                                                style="position: relative; margin: 0 auto; width: 18px; height: 18px;">
+                                                            <div class="mini-icon">
+                                                                <img src="{{ asset('images/icon-fire.png') }}"
+                                                                    style="position: relative; margin: 0 auto; width: 18px; height: 18px;">
+                                                            </div>
                                                         @endif
                                                         @if ($descripcion->nombre == 'Abrasión')
-                                                            <img src="{{ asset('images/icon-abrasion.jpg') }}"
-                                                                class="mini-icon"
-                                                                style="position: relative; margin: 0 auto; width: 18px; height: 18px;">
+                                                            <div class="mini-icon">
+                                                                <img src="{{ asset('images/icon-abrasion.jpg') }}"
+                                                                    style="position: relative; margin: 0 auto; width: 18px; height: 18px;">
+                                                            </div>
                                                         @endif
                                                         @if ($descripcion->nombre == 'Decoloración a la luz' || $descripcion->nombre == 'Decoloración')
-                                                            <img src="{{ asset('images/icon-lightfastness.png') }}"
-                                                                class="mini-icon"
-                                                                style="position: relative; margin: 0 auto; width: 18px; height: 18px;">
+                                                            <div class="mini-icon">
+                                                                <img src="{{ asset('images/icon-lightfastness.png') }}"
+                                                                    style="position: relative; margin: 0 auto; width: 18px; height: 18px;">
+                                                            </div>
                                                         @endif
                                                         @if ($descripcion->nombre == 'Traspaso de color' || $descripcion->nombre == 'Traspaso')
-                                                            <img src="{{ asset('images/icon-crocking.png') }}"
-                                                                class="mini-icon"
-                                                                style="position: relative; margin: 0 auto; width: 18px; height: 18px;">
+                                                            <div class="mini-icon">
+                                                                <img src="{{ asset('images/icon-crocking.png') }}"
+                                                                    style="position: relative; margin: 0 auto; width: 18px; height: 18px;">
+                                                            </div>
                                                         @endif
                                                         @if ($descripcion->nombre == 'Peeling')
-                                                            <img src="{{ asset('images/icon-physical.png') }}"
-                                                                class="mini-icon"
-                                                                style="position: relative; margin: 0 auto; width: 18px; height: 18px;">
+                                                            <div class="mini-icon">
+                                                                <img src="{{ asset('images/icon-physical.png') }}"
+                                                                    style="position: relative; margin: 0 auto; width: 18px; height: 18px;">
+                                                            </div>
                                                         @endif
                                                     @endif
                                                 </li>
