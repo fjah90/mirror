@@ -3,6 +3,7 @@
 
 <head>
     {{-- <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap"> --}}
+    <title>Cotizacion</title>
     <meta charset="UTF-8">
     <style>
         html {
@@ -193,9 +194,7 @@
         .table th.danger {
             background-color: #f2dede;
         }
-    </style>
-    <title>Cotizacion</title>
-    <style>
+
         /* Rows and columns */
         .row {
             width: 744px;
@@ -326,8 +325,7 @@
         .landscape .col-lg-12 {
             width: 1040px;
         }
-    </style>
-    <style>
+
         /* textos */
         .text-uppercase {
             text-transform: uppercase;
@@ -357,8 +355,7 @@
         .font-big {
             font-size: 12px;
         }
-    </style>
-    <style>
+
         @page {
             margin: 0;
         }
@@ -434,8 +431,7 @@
             margin: 0px;
             padding-left: 20px;
         }
-    </style>
-    <style>
+
         /* custom */
         .table-cotizacion {
             margin: -5px 0px 0px;
@@ -492,6 +488,27 @@
             margin: 0 auto;
             width: 18px;
             height: 18px;
+        }
+
+        li {
+            display: list-item;
+            text-align: -webkit-match-parent;
+            padding: 0;
+            margin: 0;
+        }
+
+        .flex {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            justify-content: flex-start;
+            gap: 1px;
+        }
+
+        ul {
+            padding: 0;
+            margin: 0;
+            list-style: none;
         }
     </style>
 </head>
@@ -694,53 +711,59 @@
                                     <br />
                                 @endforeach
                             </td>
-                            <td class="text-left border" style="width:16%; border-bottom: none; border-top: none;">
-                                @foreach ($entrada->descripciones as $descripcion)
-                                    @php
-                                        $valores_prohibidos = ['Flamabilidad', 'Abrasión', 'Decoloración', 'Decoloración a la luz', 'Traspaso', 'Traspaso de color', 'Peeling'];
-                                    @endphp
-                                    @if (!in_array($descripcion->nombre, $valores_prohibidos))
-                                        @if (!empty($descripcion->valor))
-                                            <p>
-                                                <span class="text-uppercase text-left"
-                                                    style="font-size: 10px;">{{ $descripcion->valor }}</span>
-                                                <hr align="left" noshade="noshade" size="1" width="100%" />
-                                            </p>
-                                        @endif
-                                    @endif
-                                    @if ($entrada->observaciones && $entrada->observaciones != '<ul></ul>')
-                                        <p>
-                                            <span>
-                                                @if ($nombre == 'nombre')
-                                                    Observaciones:
-                                                @else
-                                                    Remarks:
-                                                @endif
-                                            </span>
-                                            {!! $entrada->observaciones !!}
-                                        </p>
-                                    @endif
-                                @endforeach
-                                <div style="display: flex;width: 100px;">
+                            <td class="text-left border"
+                                style="width:16%; min-with:100px; border-bottom: none; border-top: none;">
+                                <ul>
                                     @foreach ($entrada->descripciones as $descripcion)
-                                        @if ($descripcion->nombre == 'Flamabilidad')
-                                            <img src="{{ asset('images/icon-fire.png') }}" class="mini-icon">
-                                        @endif
-                                        @if ($descripcion->nombre == 'Abrasión')
-                                            <img src="{{ asset('images/icon-abrasion.jpg') }}" class="mini-icon">
-                                        @endif
-                                        @if ($descripcion->nombre == 'Decoloración a la luz' || $descripcion->nombre == 'Decoloración')
-                                            <img src="{{ asset('images/icon-lightfastness.png') }}"
-                                                class="mini-icon">
-                                        @endif
-                                        @if ($descripcion->nombre == 'Traspaso de color' || $descripcion->nombre == 'Traspaso')
-                                            <img src="{{ asset('images/icon-crocking.png') }}" class="mini-icon">
-                                        @endif
-                                        @if ($descripcion->nombre == 'Peeling')
-                                            <img src="{{ asset('images/icon-physical.png') }}" class="mini-icon">
-                                        @endif
+                                        @php
+                                            $valores_prohibidos = ['Flamabilidad', 'Abrasión', 'Decoloración', 'Decoloración a la luz', 'Traspaso', 'Traspaso de color', 'Peeling'];
+                                        @endphp
+                                        <li style="">
+                                            @if (!in_array($descripcion->nombre, $valores_prohibidos))
+                                                @if (!empty($descripcion->valor))
+                                                    <p>
+                                                        <span class="text-uppercase text-left"
+                                                            style="font-size: 10px;">{{ $descripcion->valor }}</span>
+                                                        <hr align="left" noshade="noshade" size="1"
+                                                            width="100%" />
+                                                    </p>
+                                                @endif
+                                            @endif
+                                            @if ($entrada->observaciones && $entrada->observaciones != '<ul></ul>')
+                                                <p>
+                                                    <span>
+                                                        @if ($nombre == 'nombre')
+                                                            Observaciones:
+                                                        @else
+                                                            Remarks:
+                                                        @endif
+                                                    </span>
+                                                    {!! $entrada->observaciones !!}
+                                                </p>
+                                            @endif
+                                        </li>
                                     @endforeach
-                                </div>
+                                    <li class="flex" style="width: 100px;">
+                                        @foreach ($entrada->descripciones as $descripcion)
+                                            @if ($descripcion->nombre == 'Flamabilidad')
+                                                <img src="{{ asset('images/icon-fire.png') }}" class="mini-icon">
+                                            @endif
+                                            @if ($descripcion->nombre == 'Abrasión')
+                                                <img src="{{ asset('images/icon-abrasion.jpg') }}" class="mini-icon">
+                                            @endif
+                                            @if ($descripcion->nombre == 'Decoloración a la luz' || $descripcion->nombre == 'Decoloración')
+                                                <img src="{{ asset('images/icon-lightfastness.png') }}"
+                                                    class="mini-icon">
+                                            @endif
+                                            @if ($descripcion->nombre == 'Traspaso de color' || $descripcion->nombre == 'Traspaso')
+                                                <img src="{{ asset('images/icon-crocking.png') }}" class="mini-icon">
+                                            @endif
+                                            @if ($descripcion->nombre == 'Peeling')
+                                                <img src="{{ asset('images/icon-physical.png') }}" class="mini-icon">
+                                            @endif
+                                        @endforeach
+                                    </li>
+                                </ul>
                             </td>
                             @if ($cliente->tipo->id >= 1)
                                 @if ($cliente->tipo->id == 1 && $entrada->producto->precio_residencial != $entrada->precio)
