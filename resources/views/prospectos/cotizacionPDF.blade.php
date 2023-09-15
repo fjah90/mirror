@@ -748,30 +748,45 @@
                                         @endif
                                     </li>
                                     <li style="width: 100px;">
-                                        @foreach ($entrada->descripciones as $descripcion)
-                                            @if (in_array($descripcion->nombre, $valores))
-                                                @if ($descripcion->nombre == 'Flamabilidad')
-                                                    <img src="{{ asset('images/icon-fire.png') }}"
-                                                        style="display:inline-block; float: left; position: relative; margin: 0 auto; width: 18px; height: 18px;">
-                                                @endif
-                                                @if ($descripcion->nombre == 'Abrasión')
-                                                    <img src="{{ asset('images/icon-abrasion.jpg') }}"
-                                                        style="display:inline-block; float: left; position: relative; margin: 0 auto; width: 18px; height: 18px;">
-                                                @endif
-                                                @if ($descripcion->nombre == 'Decoloración a la luz' || $descripcion->nombre == 'Decoloración')
-                                                    <img src="{{ asset('images/icon-lightfastness.png') }}"
-                                                        style="display:inline-block; float: left; position: relative; margin: 0 auto; width: 18px; height: 18px;">
-                                                @endif
-                                                @if ($descripcion->nombre == 'Traspaso de color' || $descripcion->nombre == 'Traspaso')
-                                                    <img src="{{ asset('images/icon-crocking.png') }}"
-                                                        style="display:inline-block; float: left; position: relative; margin: 0 auto; width: 18px; height: 18px;">
-                                                @endif
-                                                @if ($descripcion->nombre == 'Peeling')
-                                                    <img src="{{ asset('images/icon-physical.png') }}"
-                                                        style="display:inline-block; float: left; position: relative; margin: 0 auto; width: 18px; height: 18px; ">
-                                                @endif
-                                            @endif
-                                        @endforeach
+                                        <table class="table table-cotizacion">
+                                            <tbody>
+                                                <tr>
+                                                    @foreach ($entrada->descripciones as $descripcion)
+                                                        @if (in_array($descripcion->nombre, $valores))
+                                                            @if ($descripcion->nombre == 'Flamabilidad')
+                                                                <td> <img src="{{ asset('images/icon-fire.png') }}"
+                                                                        style="display:inline-block; position: relative; margin: 0 auto; width: 18px; height: 18px;">
+                                                                </td>
+                                                            @endif
+                                                            @if ($descripcion->nombre == 'Abrasión')
+                                                                <td> <img
+                                                                        src="{{ asset('images/icon-abrasion.jpg') }}"
+                                                                        style="display:inline-block; position: relative; margin: 0 auto; width: 18px; height: 18px;">
+                                                                </td>
+                                                            @endif
+                                                            @if ($descripcion->nombre == 'Decoloración a la luz' || $descripcion->nombre == 'Decoloración')
+                                                                <td> <img
+                                                                        src="{{ asset('images/icon-lightfastness.png') }}"
+                                                                        style="display:inline-block; position: relative; margin: 0 auto; width: 18px; height: 18px;">
+                                                                </td>
+                                                            @endif
+                                                            @if ($descripcion->nombre == 'Traspaso de color' || $descripcion->nombre == 'Traspaso')
+                                                                <td> <img
+                                                                        src="{{ asset('images/icon-crocking.png') }}"
+                                                                        style="display:inline-block; position: relative; margin: 0 auto; width: 18px; height: 18px;">
+                                                                </td>
+                                                            @endif
+                                                            @if ($descripcion->nombre == 'Peeling')
+                                                                <td> <img
+                                                                        src="{{ asset('images/icon-physical.png') }}"
+                                                                        style="display:inline-block; position: relative; margin: 0 auto; width: 18px; height: 18px;">
+                                                                </td>
+                                                            @endif
+                                                        @endif
+                                                    @endforeach
+                                                </tr>
+                                            </tbody>
+                                        </table>
                                     </li>
                                 </ul>
                             </td>
