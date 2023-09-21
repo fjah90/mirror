@@ -604,10 +604,10 @@
                                         <td style="vertical-align:top">Entrega:</td>
                                         <td class="text-uppercase">{{ $cotizacion->entrega }}</td>
                                     </tr>
-                                    <tr>
+                                    {{-- <tr>
                                         <td style="vertical-align:top">Ubicación:</td>
                                         <td class="text-uppercase">{{ $cotizacion->ubicacion }}</td>
-                                    </tr>
+                                    </tr> --}}
                                     <tr>
                                         <td>Precios:</td>
                                         @if ($cotizacion->moneda == 'DOLARES')
@@ -652,7 +652,6 @@
                                             href="mailto:{{ $cotizacion->contacto_email }}">{{ $cotizacion->contacto_email }}</a>
                                     </p>
                                 @endif
-
                             </td>
                         </tr>
                     </tbody>
@@ -755,31 +754,31 @@
                                     <tr style="max-width: 100px; margin 0 auto; text-aling: left;">
                                         @foreach ($entrada->descripciones as $descripcion)
                                             @if (in_array($descripcion->nombre, $valores))
-                                                @if ($descripcion->nombre == 'Flamabilidad')
+                                                @if ($descripcion->nombre == 'Flamabilidad' && $descripcion->icono_visible == true)
                                                     <td style="width: 18px; height: 18px;">
                                                         <img src="{{ asset('images/icon-fire.png') }}"
                                                             style="width: 18px; height: 18px;">
                                                     </td>
                                                 @endif
-                                                @if ($descripcion->nombre == 'Abrasión')
+                                                @if ($descripcion->nombre == 'Abrasión' && $descripcion->icono_visible == true)
                                                     <td style="width: 18px; height: 18px;">
                                                         <img src="{{ asset('images/icon-abrasion.jpg') }}"
                                                             style="width: 18px; height: 18px;">
                                                     </td>
                                                 @endif
-                                                @if ($descripcion->nombre == 'Decoloración a la luz' || $descripcion->nombre == 'Decoloración')
+                                                @if ($descripcion->nombre == 'Decoloración a la luz' || $descripcion->nombre == 'Decoloración' && $descripcion->icono_visible == true)
                                                     <td style="width: 18px; height: 18px;">
                                                         <img src="{{ asset('images/icon-lightfastness.png') }}"
                                                             style="width: 18px; height: 18px;">
                                                     </td>
                                                 @endif
-                                                @if ($descripcion->nombre == 'Traspaso de color' || $descripcion->nombre == 'Traspaso')
+                                                @if ($descripcion->nombre == 'Traspaso de color' || $descripcion->nombre == 'Traspaso' && $descripcion->icono_visible == true)
                                                     <td style="width: 18px; height: 18px;">
                                                         <img src="{{ asset('images/icon-crocking.png') }}"
                                                             style="width: 18px; height: 18px;">
                                                     </td>
                                                 @endif
-                                                @if ($descripcion->nombre == 'Peeling')
+                                                @if ($descripcion->nombre == 'Peeling' && $descripcion->icono_visible == true)
                                                     <td style="width: 18px; height: 18px;">
                                                         <img src="{{ asset('images/icon-physical.png') }}"
                                                             style="width: 18px; height: 18px;">
@@ -907,7 +906,6 @@
       <div class="col-lg-12" style="height:180px;">
       </div>
     </div> --}}
-
         {{-- <div class="row footer" style="page-break-inside: avoid;"> --}}
         <div class="row" style="page-break-inside: avoid;">
             <div class="bordered" style="margin:5px 15px 0; page-break-inside: avoid;">
@@ -960,9 +958,7 @@
                 </table>
             </div>
         </div>
-
     </div><!-- Container -->
-
     <script type="text/php">
       if ( isset($pdf) ) {
           $font = $fontMetrics->getFont('helvetica');
