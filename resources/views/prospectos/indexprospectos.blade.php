@@ -213,7 +213,7 @@
                                                     <i class="fas fa-upload"></i>
                                                 </button>
                                             @endcan
-                                            <a class="btn btn-xs btn-success" title="Cotizar"
+                                            <a class="btn btn-xs btn-success orange" title="Cotizar"
                                                 :href="'/prospectos/' + prospecto.id + '/cotizar'">
                                                 <i class="far fa-file-alt"></i>
                                             </a>

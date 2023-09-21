@@ -303,13 +303,13 @@
                                             v-model="cotizacion.entrega" required />
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                {{-- <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="control-label">Ubicación</label>
                                         <input class="form-control" type="text" name="ubicacion"
                                             v-model="cotizacion.ubicacion" />
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="control-label">Flete</label>
@@ -560,7 +560,7 @@
                                     <div class="form-group">
                                         <label class="control-label">Precio *</label>
                                         <input type="number" step="0.01" min="0.01" name="precio"
-                                            class="form-control" v-model="entrada.precio" required />
+                                            class="form-control" v-model="entrada.precio" @can('Editar Precio Producto') @else disabled @endcan required />
                                     </div>
                                 </div>
                             </div>

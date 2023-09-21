@@ -47,7 +47,7 @@ class ProspectoCotizacion extends Model
         'flete_menor',
         'costo_corte',
         'costo_sobreproduccion',
-        'ubicacion',
+        // 'ubicacion',
         'cliente_contacto_id',
         'direccion',
         'dircalle',
