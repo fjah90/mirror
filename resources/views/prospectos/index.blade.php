@@ -15,6 +15,10 @@
   .color_text{
     color:#B3B3B3;
   }
+  .orange {
+            background-color: #FF9800;
+            border-color: #FF9800;
+        }
 </style>
 @stop
 
@@ -163,7 +167,7 @@
                     <a class="btn btn-xs btn-warning" title="Editar" :href="'/prospectos/'+prospecto.id+'/editar'">
                       <i class="fas fa-pencil-alt"></i>
                     </a>
-                    <a class="btn btn-xs btn-success" title="Cotizar" :href="'/prospectos/'+prospecto.id+'/cotizar'">
+                    <a class="btn btn-xs btn-success orange" title="Cotizar" :href="'/prospectos/'+prospecto.id+'/cotizar'">
                       <i class="far fa-file-alt"></i>
                     </a>
                     <button class="btn btn-xs btn-danger" title="Borrar" @click="borrar(prospecto, index)">

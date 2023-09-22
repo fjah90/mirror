@@ -22,9 +22,15 @@
         .btn-primary {
             color: #000;
         }
+
         h4.fU:first-letter,
         p.fU:first-letter {
             text-transform: uppercase;
+        }
+
+        .orange {
+            background-color: #FF9800;
+            border-color: #FF9800;
         }
     </style>
 @stop
@@ -72,15 +78,15 @@
                                     </select>
                                 @endrole
                                 <!--
-                  @role('Administrador|Dirección')
-                        <select class="form-control" @change="cargar()" v-model="usuarioCargado" style="width:auto;display:inline-block;">
-                          <option value="Todos">Todos</option>
-                          @foreach ($usuarios as $usuario)
+                      @role('Administrador|Dirección')
+                                <select class="form-control" @change="cargar()" v-model="usuarioCargado" style="width:auto;display:inline-block;">
+                                  <option value="Todos">Todos</option>
+                                  @foreach ($usuarios as $usuario)
         <option value="{{ $usuario->id }}">{{ $usuario->nombre }}</option>
         @endforeach
-                        </select>
-                  @endrole
-    -->
+                                </select>
+                      @endrole
+        -->
                             </div>
                             {{-- <div class="p-10 " style="display:inline-block;float: right;">
               @can('Prospectos nuevo')
@@ -189,9 +195,9 @@
                                         <td class="text-right">
                                             @can('Prospectos ver')
                                                 <!--
-                          <button class="btn btn-xs btn-info" title="Ver" @click="clickver(prospecto.id)"
-                          ><i class="far fa-eye"></i></button>
-                           -->
+                                  <button class="btn btn-xs btn-info" title="Ver" @click="clickver(prospecto.id)"
+                                  ><i class="far fa-eye"></i></button>
+                                   -->
                                                 <a class="btn btn-xs btn-info" title="Ver"
                                                     :href="'/prospectos/' + prospecto.id">
                                                     <i class="far fa-eye"></i>
@@ -199,9 +205,9 @@
                                             @endcan
                                             @can('Prospectos editar')
                                                 <!--
-                          <button class="btn btn-xs btn-warning" title="Editar" @click="clickeditar(prospecto.id)"
-                          ><i class="fas fa-pencil-alt"></i></button>
-                           -->
+                                  <button class="btn btn-xs btn-warning" title="Editar" @click="clickeditar(prospecto.id)"
+                                  ><i class="fas fa-pencil-alt"></i></button>
+                                   -->
                                                 <a class="btn btn-xs btn-warning" title="Editar"
                                                     :href="'/prospectos/' + prospecto.id + '/editar'">
                                                     <i class="fas fa-pencil-alt"></i>
@@ -299,10 +305,10 @@
                                         <i class="fas fa-list"></i>
                                     </button>
                                     <!--
-                    <button class="btn btn-xs btn-warning" title="Historial de tarea" @click="historialtarea(t, index)" :disabled="historialcargando">
-                      <i class="fas fa-list"></i>
-                    </button>
-                    -->
+                        <button class="btn btn-xs btn-warning" title="Historial de tarea" @click="historialtarea(t, index)" :disabled="historialcargando">
+                          <i class="fas fa-list"></i>
+                        </button>
+                        -->
                                 </td>
                             </tr>
                         </tbody>
@@ -344,10 +350,10 @@
                                         <i class="fas fa-list"></i>
                                     </button>
                                     <!--
-                    <button class="btn btn-xs btn-warning" title="Historial de tarea" @click="historialtarea(t, index)" :disabled="historialcargando">
-                      <i class="fas fa-list"></i>
-                    </button>
-                    -->
+                        <button class="btn btn-xs btn-warning" title="Historial de tarea" @click="historialtarea(t, index)" :disabled="historialcargando">
+                          <i class="fas fa-list"></i>
+                        </button>
+                        -->
                                 </td>
                             </tr>
                         </tbody>
@@ -385,10 +391,10 @@
                                         <i class="fas fa-list"></i>
                                     </button>
                                     <!--
-                    <button class="btn btn-xs btn-warning" title="Historial de tarea" @click="historialtarea(t, index)" :disabled="historialcargando">
-                      <i class="fas fa-list"></i>
-                    </button>
-                    -->
+                        <button class="btn btn-xs btn-warning" title="Historial de tarea" @click="historialtarea(t, index)" :disabled="historialcargando">
+                          <i class="fas fa-list"></i>
+                        </button>
+                        -->
                                 </td>
                             </tr>
                         </tbody>
@@ -492,37 +498,37 @@
         </modal>
 
         <!-- Historial Tareas Modal
-        <modal id='modal_historial' v-model="modalHistorial" :title="'Historial de Tareas'" :footer="false"  size="lg">
+            <modal id='modal_historial' v-model="modalHistorial" :title="'Historial de Tareas'" :footer="false"  size="lg">
 
-          <table id="tablahistorial" class="table table-bordred"
-                  data-page-length="15" style="width:100%;">
-                  <thead>
-                    <tr style="background-color:#12160F">
-                      <th class="hide">#</th>
-                      <th class="color_text">Usuario</th>
-                      <th class="color_text">Valor Anterior</th>
-                      <th class="color_text">Valor Nuevo</th>
-                      <th class="color_text">Fecha de edición</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr v-for="(h, index) in historial">
-                     <td class="hide">@{{ index + 1 }}</td>
-                     <td>@{{ h.usuario }}</td>
-                     <td>@{{ h.anterior }}</td>
-                     <td>@{{ h.nuevo }}</td>
-                     <td>@{{ h.fecha }}</td>
-                    </tr>
-                  </tbody>
-                </table>
-                <div class="form-group text-right">
-                    <button type="button" class="btn btn-default"
-                            @click="cancelarhistorial(); modalHistorial=false;">
-                        Cancelar
-                    </button>
-                </div>
-        </modal>
-         -->
+              <table id="tablahistorial" class="table table-bordred"
+                      data-page-length="15" style="width:100%;">
+                      <thead>
+                        <tr style="background-color:#12160F">
+                          <th class="hide">#</th>
+                          <th class="color_text">Usuario</th>
+                          <th class="color_text">Valor Anterior</th>
+                          <th class="color_text">Valor Nuevo</th>
+                          <th class="color_text">Fecha de edición</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr v-for="(h, index) in historial">
+                         <td class="hide">@{{ index + 1 }}</td>
+                         <td>@{{ h.usuario }}</td>
+                         <td>@{{ h.anterior }}</td>
+                         <td>@{{ h.nuevo }}</td>
+                         <td>@{{ h.fecha }}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <div class="form-group text-right">
+                        <button type="button" class="btn btn-default"
+                                @click="cancelarhistorial(); modalHistorial=false;">
+                            Cancelar
+                        </button>
+                    </div>
+            </modal>
+             -->
         <!-- Modal eventos -->
         <modal v-model="modalEventos" :title="'Actividad'" :footer="false" size="md">
             <div class="modal-header">
@@ -530,7 +536,8 @@
                 <p class="modal-title fU" id="titulo_evento">Modal title</h4>
             </div>
             <div class="modal-body">
-                <p id="descripcion_evento" class="fU">Modal body text goes here.</p><p id="horario_texto"></p>
+                <p id="descripcion_evento" class="fU">Modal body text goes here.</p>
+                <p id="horario_texto"></p>
                 <p id="descripcion_texto" class="fU">Modal body text goes here.</p>
             </div>
             <a class="btn btn-xs btn-warning" title="Editar" href="" id="liga_evento">
@@ -772,7 +779,7 @@
                         var startDate = moment(min, "DD/MM/YYYY");
                         var endDate = moment(max, "DD/MM/YYYY");
                         var diffDate = moment(fecha,
-                        "DD/MM/YYYY"); /***Ajustando la fecha en la vista de prospectos***/
+                            "DD/MM/YYYY"); /***Ajustando la fecha en la vista de prospectos***/
                         // console.log(min=="",max=="",diffDate.isSameOrAfter(startDate),diffDate.isSameOrBefore(endDate),diffDate.isBetween(startDate, endDate));
                         if (min == "" && max == "") return true;
                         if (max == "" && diffDate.isSameOrAfter(startDate)) return true;
