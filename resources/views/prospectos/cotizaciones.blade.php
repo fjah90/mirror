@@ -18,7 +18,17 @@
         .color_text {
             color: #B3B3B3;
         }
+
         .orange {
+            background-color: #eea232;
+            border-color: #eea232;
+        }
+
+        .btn-success.orange.active,
+        .btn-success.orange:active,
+        .btn-success.orange:hover,
+        .open>.btn-success.orange.dropdown-toggle {
+            color: #fff;
             background-color: #FF9800;
             border-color: #FF9800;
         }
@@ -83,47 +93,47 @@
                                 </select>
                             </div>
                             <!--div class="p-10" style="display:inline-block">
-                                                          <dropdown id="fecha_ini_control" class="marg025" style="padding-bottom: 10px;">
-                                                          <div class="input-group">
-                                                            <div class="input-group-btn">
-                                                              <btn class="dropdown-toggle" style="background-color:#000;">
-                                                                <i class="fas fa-calendar" style="color:#fff;"></i>
-                                                              </btn>
-                                                            </div>
-                                                            <input class="form-control" type="text" placeholder="DD/MM/YYYY"
-                                                              v-model="fecha_ini" readonly
-                                                              style="width:122px;"
-                                                            />
-                                                          </div>
-                                                          <template slot="dropdown">
-                                                            <li>
-                                                              <date-picker :locale="locale" :today-btn="false"
-                                                              format="dd/MM/yyyy" :date-parser="dateParser"
-                                                              v-model="fecha_ini"/>
-                                                            </li>
-                                                          </template>
-                                                        </dropdown>
-                                                        <dropdown id="fecha_fin_control" class="marg025" style="padding-bottom: 10px;">
-                                                          <div class="input-group">
-                                                            <div class="input-group-btn">
-                                                              <btn class="dropdown-toggle" style="background-color:#000;">
-                                                                <i class="fas fa-calendar" style="color:#fff;"></i>
-                                                              </btn>
-                                                            </div>
-                                                            <input class="form-control" type="text" placeholder="DD/MM/YYYY"
-                                                              v-model="fecha_fin" readonly
-                                                              style="width:120px;"
-                                                            />
-                                                          </div>
-                                                          <template slot="dropdown">
-                                                            <li>
-                                                              <date-picker :locale="locale" :today-btn="false"
-                                                              format="dd/MM/yyyy" :date-parser="dateParser"
-                                                              v-model="fecha_fin"/>
-                                                            </li>
-                                                          </template>
-                                                        </dropdown>
-                                                        </div-->
+                                                              <dropdown id="fecha_ini_control" class="marg025" style="padding-bottom: 10px;">
+                                                              <div class="input-group">
+                                                                <div class="input-group-btn">
+                                                                  <btn class="dropdown-toggle" style="background-color:#000;">
+                                                                    <i class="fas fa-calendar" style="color:#fff;"></i>
+                                                                  </btn>
+                                                                </div>
+                                                                <input class="form-control" type="text" placeholder="DD/MM/YYYY"
+                                                                  v-model="fecha_ini" readonly
+                                                                  style="width:122px;"
+                                                                />
+                                                              </div>
+                                                              <template slot="dropdown">
+                                                                <li>
+                                                                  <date-picker :locale="locale" :today-btn="false"
+                                                                  format="dd/MM/yyyy" :date-parser="dateParser"
+                                                                  v-model="fecha_ini"/>
+                                                                </li>
+                                                              </template>
+                                                            </dropdown>
+                                                            <dropdown id="fecha_fin_control" class="marg025" style="padding-bottom: 10px;">
+                                                              <div class="input-group">
+                                                                <div class="input-group-btn">
+                                                                  <btn class="dropdown-toggle" style="background-color:#000;">
+                                                                    <i class="fas fa-calendar" style="color:#fff;"></i>
+                                                                  </btn>
+                                                                </div>
+                                                                <input class="form-control" type="text" placeholder="DD/MM/YYYY"
+                                                                  v-model="fecha_fin" readonly
+                                                                  style="width:120px;"
+                                                                />
+                                                              </div>
+                                                              <template slot="dropdown">
+                                                                <li>
+                                                                  <date-picker :locale="locale" :today-btn="false"
+                                                                  format="dd/MM/yyyy" :date-parser="dateParser"
+                                                                  v-model="fecha_fin"/>
+                                                                </li>
+                                                              </template>
+                                                            </dropdown>
+                                                            </div-->
                         </h3>
                     </div>
                     <div class="panel-body">
