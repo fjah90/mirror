@@ -270,31 +270,34 @@
                                                         <i class="fas fa-clock"></i>
                                                     </btn>
                                                 </div>
-                                                <input type="time" v-model="time_in" value="12:00"
-                                                    class="form-control w-140">
-                                                <input type="time" v-model="time_out" value="12:00"
-                                                    class="form-control w-140 ml-1"
-                                                    @change="actualizarHorarioProximaActividad">
-                                                <input type="hidden" v-model="prospecto.proxima_actividad.horario"
-                                                    value="" class="form-control w-140">
+                                                <div>
+
+                                                    <input type="time" v-model="time_in" value="12:00"
+                                                        class="form-control w-140">
+                                                    <input type="time" v-model="time_out" value="12:00"
+                                                        class="form-control w-140 ml-1"
+                                                        @change="actualizarHorarioProximaActividad()">
+                                                    <input type="hidden" v-model="prospecto.proxima_actividad.horario"
+                                                        value="" class="form-control w-140">
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                     <!--
-                                                                                  <div class="col-md-4">
-                                                                                    <div class="form-group">
-                                                                                      <label class="control-label">Fecha<strong style="color: grey"> *</strong></label>
-                                                                                      <span class="form-control">@{{ prospecto.proxima_actividad.fecha_formated }}</span>
-                                                                                    </div>
-                                                                                  </div>
-                                                                                  
-                                                                                  <div class="col-md-4">
-                                                                                    <div class="form-group">
-                                                                                      <label class="control-label">Tipo <strong style="color: grey"> *</strong></label>
-                                                                                      <span class="form-control">@{{ prospecto.proxima_actividad.tipo.nombre }}</span>
-                                                                                    </div>
-                                                                                  </div>
-                                                                                -->
+                                                                                                                                      <div class="col-md-4">
+                                                                                                                                        <div class="form-group">
+                                                                                                                                          <label class="control-label">Fecha<strong style="color: grey"> *</strong></label>
+                                                                                                                                          <span class="form-control">@{{ prospecto.proxima_actividad.fecha_formated }}</span>
+                                                                                                                                        </div>
+                                                                                                                                      </div>
+                                                                                                                                      
+                                                                                                                                      <div class="col-md-4">
+                                                                                                                                        <div class="form-group">
+                                                                                                                                          <label class="control-label">Tipo <strong style="color: grey"> *</strong></label>
+                                                                                                                                          <span class="form-control">@{{ prospecto.proxima_actividad.tipo.nombre }}</span>
+                                                                                                                                        </div>
+                                                                                                                                      </div>
+                                                                                                                                    -->
                                 </div>
 
                                 <div class="row">
@@ -319,12 +322,12 @@
                                         </button>
                                     </div>
                                     <!--
-                                                                                  <div class="col-sm-2" style="padding-top: 25px;">
-                                                                                    <button type="button" class="btn btn-primary" @click="modalProducto=true">
-                                                                                      Registrar producto
-                                                                                    </button>
-                                                                                  </div>
-                                                                                   -->
+                                                                                                                                      <div class="col-sm-2" style="padding-top: 25px;">
+                                                                                                                                        <button type="button" class="btn btn-primary" @click="modalProducto=true">
+                                                                                                                                          Registrar producto
+                                                                                                                                        </button>
+                                                                                                                                      </div>
+                                                                                                                                       -->
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-12">
@@ -547,7 +550,7 @@
                 $("#tablaProductos").DataTable({
                     dom: 'ftp'
                 });
-                
+
                 if (this.prospecto.proxima_actividad.horario != null) {
                     var horarios = this.prospecto.proxima_actividad.horario.split('-');
                     this.time_in = horarios[0];
@@ -592,33 +595,53 @@
             methods: {
                 actualizarHorarioProximaActividad(nueva = false) {
                     let setTime;
+                    debugger;
                     if (nueva) {
-                        if (this.ntime_in < this.ntime_out) {
-                            if (this.ntime_in && this.ntime_out) {
-                                this.prospecto.nueva_proxima_actividad.horario = this.ntime_in + "-" + this
-                                    .ntime_out;
+                        if (this.prospecto.nueva_proxima_actividad.tipo_id == 12 || this.prospecto
+                            .nueva_proxima_actividad
+                            .tipo_id == 2 || this.prospecto.nueva_proxima_actividad.tipo_id == 14) {
+                            if (this.ntime_in < this.ntime_out) {
+                                if (this.ntime_in && this.ntime_out) {
+                                    this.prospecto.nueva_proxima_actividad.horario = this.ntime_in + "-" + this
+                                        .ntime_out;
+                                    return true;
+                                }
+                            } else {
+                                swal({
+                                    title: "Error",
+                                    text: "La por favor verificar el horario",
+                                    type: "error"
+                                });
+                                this.cargando = false;
+                                return false;
                             }
                         } else {
-                            swal({
-                                title: "Error",
-                                text: "La por favor verificar el horario",
-                                type: "error"
-                            });
+                            return true;
                         }
                     } else {
-                        if (this.time_in < this.time_out) {
-                            if (this.time_in && this.time_out) {
-                                this.prospecto.proxima_actividad.horario = this.time_in + "-" + this
-                                    .time_out;;
+                        // prospecto.nueva_proxima_actividad.tipo_id==12 || prospecto.nueva_proxima_actividad.tipo_id==2 || prospecto.nueva_proxima_actividad.tipo_id==14
+                        if (this.prospecto.proxima_actividad.tipo_id == 12 || this.prospecto.proxima_actividad
+                            .tipo_id == 2 || this.prospecto.proxima_actividad.tipo_id == 14) {
+                            if (this.time_in < this.time_out) {
+                                if (this.time_in && this.time_out) {
+                                    this.prospecto.proxima_actividad.horario = this.time_in + "-" + this
+                                        .time_out;
+                                    return true;
+                                }
+                            } else {
+                                swal({
+                                    title: "Error",
+                                    text: "La por favor verificar el horario",
+                                    type: "error"
+                                });
+                                this.cargando = false;
+                                return false;
                             }
                         } else {
-                            swal({
-                                title: "Error",
-                                text: "La por favor verificar el horario",
-                                type: "error"
-                            });
+                            return true;
                         }
                     }
+
                     // Aquí puedes realizar cualquier acción que desees con el valor de la hora
                 },
                 formatoMoneda(numero) {
@@ -685,10 +708,11 @@
                         });
                 }, //fin actualizar
                 guardar() {
-                    this.actualizarHorarioProximaActividad()
+                    debugger;
                     this.cargando = true;
-                    console.log(this.prospecto.proxima_actividad)
-                    axios.post('/prospectos/{{ $prospecto->id }}/guardarActividades', {
+                    if (this.actualizarHorarioProximaActividad())
+                        // console.log(this.prospecto.proxima_actividad)
+                        axios.post('/prospectos/{{ $prospecto->id }}/guardarActividades', {
                             proxima: this.prospecto.proxima_actividad,
                             //nueva: this.prospecto.nueva_proxima_actividad,
                         })
@@ -720,7 +744,7 @@
                         .catch(({
                             response
                         }) => {
-                            console.error(response);
+                            console.error(response, "error 1");
                             this.cargando = false;
                             swal({
                                 title: "Error",
@@ -732,8 +756,8 @@
                 },
                 guardar2() {
                     this.cargando = true;
-                    this.actualizarHorarioProximaActividad(true)
-                    axios.post('/prospectos/{{ $prospecto->id }}/guardarActividades', {
+                    if (this.actualizarHorarioProximaActividad(true))
+                        axios.post('/prospectos/{{ $prospecto->id }}/guardarActividades', {
 
                             nueva: this.prospecto.nueva_proxima_actividad,
                         })
@@ -761,7 +785,7 @@
                         .catch(({
                             response
                         }) => {
-                            console.error(response);
+                            console.error(response, "error 2");
                             this.cargando = false;
                             swal({
                                 title: "Error",
