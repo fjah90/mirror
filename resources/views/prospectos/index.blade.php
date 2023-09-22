@@ -20,8 +20,8 @@
         }
 
         .orange {
-            background-color: #eea232;
-            border-color: #eea232;
+            background-color: #ffba55;
+            border-color: #ffba55;
         }
 
         .btn-success.orange.active,
