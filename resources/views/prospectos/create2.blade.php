@@ -40,7 +40,7 @@
             background-color: #4CAF50;
         }
 
-         .w-140 {
+        .w-140 {
             width: 140px !important;
         }
     </style>
@@ -242,8 +242,8 @@
                                     <div class="col-md-4"
                                         v-if="ultima_actividad.tipo_id==12 || ultima_actividad.tipo_id==2 || ultima_actividad.tipo_id==14">
                                         <div class="form-group">
-                                            <label for="ultima_actividad.horario"
-                                                class="control-label">Horario<strong style="color: grey">
+                                            <label for="ultima_actividad.horario" class="control-label">Horario<strong
+                                                    style="color: grey">
                                                     *</strong></label>
                                             <br />
                                             <div class="input-group">
@@ -258,8 +258,8 @@
                                                 <input type="time" v-model="time_out" value="12:00"
                                                     class="form-control w-140 ml-1"
                                                     @change="actualizarHorarioProximaActividad()">
-                                                <input type="hidden" v-model="ultima_actividad.horario"
-                                                    value="" class="form-control w-140">
+                                                <input type="hidden" v-model="ultima_actividad.horario" value=""
+                                                    class="form-control w-140">
                                             </div>
                                         </div>
                                     </div>
@@ -364,8 +364,8 @@
                                     <div class="col-md-4"
                                         v-if="proxima_actividad.tipo_id==12 || proxima_actividad.tipo_id==2 || proxima_actividad.tipo_id==14">
                                         <div class="form-group">
-                                            <label for="proxima_actividad.horario"
-                                                class="control-label">Horario<strong style="color: grey">
+                                            <label for="proxima_actividad.horario" class="control-label">Horario<strong
+                                                    style="color: grey">
                                                     *</strong></label>
                                             <br />
                                             <div class="input-group">
@@ -380,8 +380,8 @@
                                                 <input type="time" v-model="ntime_out" value="12:00"
                                                     class="form-control w-140 ml-1"
                                                     @change="actualizarHorarioProximaActividad(true)">
-                                                <input type="hidden" v-model="proxima_actividad.horario"
-                                                    value="" class="form-control w-140">
+                                                <input type="hidden" v-model="proxima_actividad.horario" value=""
+                                                    class="form-control w-140">
                                             </div>
                                         </div>
                                     </div>
@@ -647,79 +647,101 @@
                     this.ultima_actividad.ofrecidos.splice(index, 1);
                 },
                 guardar() {
-                  this.actualizarHorarioProximaActividad(true); 
-                  this.actualizarHorarioProximaActividad(); 
-                    var prospecto = $.extend(true, {}, this.prospecto);
-                    if (this.ultima_actividad.fecha != "" ||
-                        this.ultima_actividad.descripcion != "" ||
-                        this.ultima_actividad.ofrecidos.length > 0) {
-                        ultima_actividad = this.ultima_actividad;
-
-                        if (this.proxima_actividad.fecha != "")
-                            prospecto.proxima_actividad = this.proxima_actividad;
-                    } else if (this.proxima_actividad.fecha != "") {
-                        ultima_actividad = this.proxima_actividad;
-                    }
-
                     this.cargando = true;
-                    axios.post('/prospectos', prospecto)
-                        .then(({
-                            data
-                        }) => {
-                            this.cargando = false;
-                            swal({
-                                title: "Proyecto Guardado",
-                                text: "",
-                                type: "success"
-                            }).then(() => {
-                                if (this.prospecto.es_prospecto == 'si') {
-                                    window.location = "/prospectos/prospectos";
-                                } else {
-                                    window.location = "/prospectos/" + data.prospecto.id + "/cotizar";
-                                }
+                    if (this.actualizarHorarioProximaActividad(true) && this.actualizarHorarioProximaActividad()) {
+                        var prospecto = $.extend(true, {}, this.prospecto);
+                        if (this.ultima_actividad.fecha != "" ||
+                            this.ultima_actividad.descripcion != "" ||
+                            this.ultima_actividad.ofrecidos.length > 0) {
+                            ultima_actividad = this.ultima_actividad;
 
+                            if (this.proxima_actividad.fecha != "")
+                                prospecto.proxima_actividad = this.proxima_actividad;
+                        } else if (this.proxima_actividad.fecha != "") {
+                            ultima_actividad = this.proxima_actividad;
+                        }
+
+                        axios.post('/prospectos', prospecto)
+                            .then(({
+                                data
+                            }) => {
+                                this.cargando = false;
+                                swal({
+                                    title: "Proyecto Guardado",
+                                    text: "",
+                                    type: "success"
+                                }).then(() => {
+                                    if (this.prospecto.es_prospecto == 'si') {
+                                        window.location = "/prospectos/prospectos";
+                                    } else {
+                                        window.location = "/prospectos/" + data.prospecto.id +
+                                            "/cotizar";
+                                    }
+
+                                });
+                            })
+                            .catch(({
+                                response
+                            }) => {
+                                console.error(response);
+                                this.cargando = false;
+                                swal({
+                                    title: "Error",
+                                    text: response.data.message ||
+                                        "Ocurrio un error inesperado, intente mas tarde",
+                                    type: "error"
+                                });
                             });
-                        })
-                        .catch(({
-                            response
-                        }) => {
-                            console.error(response);
-                            this.cargando = false;
-                            swal({
-                                title: "Error",
-                                text: response.data.message ||
-                                    "Ocurrio un error inesperado, intente mas tarde",
-                                type: "error"
-                            });
-                        });
+                    }
                 }, //fin cargarPresupuesto
                 actualizarHorarioProximaActividad(nueva = false) {
                     let setTime;
+                    // debugger;
                     if (nueva) {
-                        if (this.ntime_in < this.ntime_out) {
-                            if (this.ntime_in && this.ntime_out) {
-                                this.proxima_actividad.horario = this.ntime_in + "-" + this
-                                    .ntime_out;
+                        if (this.prospecto.nueva_proxima_actividad.tipo_id == 12 || this.prospecto
+                            .nueva_proxima_actividad
+                            .tipo_id == 2 || this.prospecto.nueva_proxima_actividad.tipo_id == 14) {
+                            if (this.ntime_in < this.ntime_out) {
+                                if (this.ntime_in && this.ntime_out) {
+                                    this.prospecto.nueva_proxima_actividad.horario = this.ntime_in + "-" +
+                                        this
+                                        .ntime_out;
+                                    return true;
+                                }
+                            } else {
+                                swal({
+                                    title: "Error",
+                                    text: "La por favor verificar el horario",
+                                    type: "error"
+                                });
+                                this.cargando = false;
+                                return false;
                             }
                         } else {
-                            swal({
-                                title: "Error",
-                                text: "La por favor verificar el horario",
-                                type: "error"
-                            });
+                            return true;
                         }
                     } else {
-                        if (this.time_in < this.time_out) {
-                            if (this.time_in && this.time_out) {
-                                this.ultima_actividad.horario = this.time_in + "-" + this
-                                    .time_out;;
+                        // prospecto.nueva_proxima_actividad.tipo_id==12 || prospecto.nueva_proxima_actividad.tipo_id==2 || prospecto.nueva_proxima_actividad.tipo_id==14
+                        if (this.prospecto.proxima_actividad.tipo_id == 12 || this.prospecto
+                            .proxima_actividad
+                            .tipo_id == 2 || this.prospecto.proxima_actividad.tipo_id == 14) {
+                            if (this.time_in < this.time_out) {
+                                if (this.time_in && this.time_out) {
+                                    this.prospecto.proxima_actividad.horario = this.time_in + "-" + this
+                                        .time_out;
+                                    return true;
+                                }
+                            } else {
+                                swal({
+                                    title: "Error",
+                                    text: "La por favor verificar el horario",
+                                    type: "error"
+                                });
+                                this.cargando = false;
+                                return false;
                             }
                         } else {
-                            swal({
-                                title: "Error",
-                                text: "La por favor verificar el horario",
-                                type: "error"
-                            });
+                            return true;
                         }
                     }
                     // Aquí puedes realizar cualquier acción que desees con el valor de la hora
