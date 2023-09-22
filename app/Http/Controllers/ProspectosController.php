@@ -1483,7 +1483,7 @@ class ProspectosController extends Controller
                 'fecha'        => $request->proxima['fecha'],
                 'realizada'    => 1,
                 'descripcion'  => $request->proxima['descripcion'],
-                'horario'      => $request->proxima['horario']
+                // 'horario'      => $request->proxima['horario']
             ];
             if ($request->proxima['tipo_id'] == 0) { //dar de alta nuevo tipo
                 $tipo = ProspectoTipoActividad::create(['nombre' => $request->proxima['tipo']]);
@@ -1509,7 +1509,7 @@ class ProspectosController extends Controller
                 'tipo_id'     => $request->nueva['tipo_id'],
                 'fecha'       => $request->nueva['fecha'],
                 'descripcion' => $request->nueva['descripcion'],
-                'horario'     => $request->nueva['horario']
+                // 'horario'     => $request->nueva['horario']
             ]);
             /*
             //ingresar productos ofrecidos
