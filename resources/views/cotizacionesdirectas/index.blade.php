@@ -103,11 +103,11 @@
 
                                         </td>
                                         <td class="text-right">
-                                            <a class="btn btn-xs btn-success" title="PDF" :href="'storage/'+cotizacion.archivo"
+                                            {{-- <a class="btn btn-xs btn-success" title="PDF" :href="'storage/'+cotizacion.archivo"
                                                 :download="'C ' + cotizacion.numero + ' Robinson' +' '+ cotizacion.cliente.nombre
                                                      + ' ' + cotizacion.nombre_proyecto + '.pdf'">
                                                 <i class="far fa-file-pdf"></i>
-                                            </a>
+                                            </a> --}}
 
                                             <a class="btn btn-xs btn-warning" title="Editar"
                                                 :href="'/cotizacionesdirectas/' + cotizacion.id + '/edit'">
