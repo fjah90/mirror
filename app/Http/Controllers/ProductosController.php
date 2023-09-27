@@ -475,6 +475,8 @@ class ProductosController extends Controller
         $producto->load('descripciones');
         $nuevas = collect($request->descripciones);
         $actuales = $producto->descripciones;
+        // echo($nuevas);
+        // dd($actuales);
         $n = $actuales->count();
         for ($i = 0; $i < $n; $i++) {
             $actual = $actuales->shift();
@@ -492,7 +494,7 @@ class ProductosController extends Controller
             }
             else {
                 $nueva = $nuevas->pull($index);
-                $actual->update(['valor' => $nueva['valor'], 'valor_ingles' => $nueva['valor_ingles']]);
+                $actual->update(['valor' => $nueva['valor'], 'valor_ingles' => $nueva['valor_ingles'], 'icono_visible' => $nueva['icono_visible']]);
             }
         }
 
@@ -501,9 +503,11 @@ class ProductosController extends Controller
             $create = array(
                 "producto_id"              => $producto->id,
                 "categoria_descripcion_id" => $nueva['id'],
+                "icono_visible"            => $nueva['icono_visible'],
             );
             if (isset($nueva['valor'])) {
                 $create['valor'] = $nueva['valor'];
+                $create['icono_visible'] = $nueva['icono_visible'];
             }
 
             ProductoDescripcion::create($create);

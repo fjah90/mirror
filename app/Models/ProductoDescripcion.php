@@ -8,7 +8,7 @@ class ProductoDescripcion extends Model
 {
     protected $table = 'productos_descripciones';
 
-    protected $fillable = ['producto_id', 'categoria_descripcion_id', 'valor', 'valor_ingles'];
+    protected $fillable = ['producto_id', 'categoria_descripcion_id', 'valor', 'valor_ingles', 'icono_visible'];
 
     /**
      * ---------------------------------------------------------------------------

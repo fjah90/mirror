@@ -132,17 +132,17 @@
                                                                 <td><img src="{{ asset('images/icon-fire.png') }}"
                                                                         id="Flamabilidad" style="width:50px; height:50px;">
                                                                 </td>
-                                                            @elseif($descripcion->descripcionNombre->nombre == 'Abrasion')
+                                                            @elseif($descripcion->descripcionNombre->nombre == 'Abrasión')
                                                                 <td><img src="{{ asset('images/icon-physical.png') }}"
                                                                         id="Abrasion" style="width:50px; height:50px;">
                                                                 </td>
-                                                            @elseif($descripcion->descripcionNombre->nombre == 'Decoloracion_de_luz')
+                                                            @elseif($descripcion->descripcionNombre->nombre == 'Decoloracion a la luz')
                                                                 <td><img src="{{ asset('images/icon-lightfastness.png') }}"
                                                                         id="Decoloracion_de_luz"
                                                                         style="width:50px; height:50px;"></td>
-                                                            @elseif($descripcion->descripcionNombre->nombre == 'Traspaso de color_color')
+                                                            @elseif($descripcion->descripcionNombre->nombre == 'Traspaso de color')
                                                                 <td><img src="{{ asset('images/icon-crocking.png') }}"
-                                                                        id="Traspaso de color_color"
+                                                                        id="Traspaso_de_color"
                                                                         style="width:50px; height:50px;"></td>
                                                             @elseif($descripcion->descripcionNombre->nombre == 'Peeling')
                                                                 <td><img src="{{ asset('images/icon-crocking.png') }}"
@@ -153,14 +153,14 @@
                                                     </td>
                                                     <td>
                                                         <table>
-                                                            @if ($descripcion->descripcionNombre->nombre == 'Flamabilidad')
+                                                            @if ($descripcion->descripcionNombre->nombre == 'Flamabilidad' ||
+                                                            $descripcion->descripcionNombre->nombre == 'Abrasión' ||
+                                                            $descripcion->descripcionNombre->nombre == 'Decoloración a la luz'||
+                                                            $descripcion->descripcionNombre->nombre == 'Traspaso de color'||
+                                                            $descripcion->descripcionNombre->nombre == 'Peeling'
+                                                            )
                                                                 <td>
                                                                     <div class="form-check form-switch">
-                                                                        <label class="control-label"
-                                                                            for="descripcion
-                                                                                .icono_visible">Visible
-                                                                            {{ $descripcion->producto_id }}
-                                                                            {{ $descripcion->icono_visible }}</label>
                                                                         @if ($descripcion->icono_visible)
                                                                             <i class="glyphicon glyphicon-check"
                                                                                 disabled></i>
@@ -169,22 +169,6 @@
                                                                                 disabled></i>
                                                                         @endif
                                                                     </div>
-                                                                </td>
-                                                            @elseif($descripcion->descripcionNombre->nombre == 'Abrasion')
-                                                                <td><img src="{{ asset('images/icon-physical.png') }}"
-                                                                        id="Abrasion" style="width:50px; height:50px;">
-                                                                </td>
-                                                            @elseif($descripcion->descripcionNombre->nombre == 'Decoloracion_de_luz')
-                                                                <td><img src="{{ asset('images/icon-lightfastness.png') }}"
-                                                                        id="Decoloracion_de_luz"
-                                                                        style="width:50px; height:50px;"></td>
-                                                            @elseif($descripcion->descripcionNombre->nombre == 'Traspaso de color_color')
-                                                                <td><img src="{{ asset('images/icon-crocking.png') }}"
-                                                                        id="Traspaso de color_color"
-                                                                        style="width:50px; height:50px;"></td>
-                                                            @elseif($descripcion->descripcionNombre->nombre == 'Peeling')
-                                                                <td><img src="{{ asset('images/icon-crocking.png') }}"
-                                                                        id="Peeling" style="width:50px; height:50px;">
                                                                 </td>
                                                             @endif
                                                         </table>

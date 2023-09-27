@@ -725,14 +725,14 @@
                                             $valores = ['Flamabilidad', 'Abrasión', 'Decoloración', 'Decoloración a la luz', 'Traspaso', 'Traspaso de color', 'Peeling'];
                                         @endphp
                                         {{-- @if (!in_array($descripcion->nombre, $valores))  --}}
-                                            @if (!empty($descripcion->valor))
-                                                <tr>
-                                                    <td colspan="5">
-                                                        <span class="text-uppercase text-left"
-                                                            style="font-size: 8px;">{{ $descripcion->valor }}</span>
-                                                    </td>
-                                                </tr>
-                                            @endif
+                                        @if (!empty($descripcion->valor))
+                                            <tr>
+                                                <td colspan="5">
+                                                    <span class="text-uppercase text-left"
+                                                        style="font-size: 8px;">{{ $descripcion->valor }}</span>
+                                                </td>
+                                            </tr>
+                                        @endif
                                         {{-- @endif --}}
                                     @endforeach
                                     <tr>
@@ -754,35 +754,61 @@
                                     <tr style="max-width: 100px; margin 0 auto; text-aling: left;">
                                         @foreach ($entrada->descripciones as $descripcion)
                                             @if (in_array($descripcion->nombre, $valores))
-                                                @if ($descripcion->nombre == 'Flamabilidad' && $descripcion->icono_visible == true)
-                                                    <td style="width: 18px; height: 18px;">
-                                                        <img src="{{ asset('images/icon-fire.png') }}"
-                                                            style="width: 18px; height: 18px;">
-                                                    </td>
+                                                @if ($descripcion->nombre == 'Flamabilidad')
+                                                    @foreach ($entrada->producto->descripciones as $descripcionProducto)
+                                                        @if ($descripcionProducto->descripcionNombre->nombre == 'Flamabilidad' && $descripcionProducto->icono_visible == 1)
+                                                            <td style="width: 18px; height: 18px;">
+                                                                <img src="{{ asset('images/icon-fire.png') }}"
+                                                                    style="width: 18px; height: 18px;">
+                                                            </td>
+                                                        @endif
+                                                    @endforeach
                                                 @endif
-                                                @if ($descripcion->nombre == 'Abrasión' && $descripcion->icono_visible == true)
-                                                    <td style="width: 18px; height: 18px;">
-                                                        <img src="{{ asset('images/icon-abrasion.jpg') }}"
-                                                            style="width: 18px; height: 18px;">
-                                                    </td>
+                                                @if ($descripcion->nombre == 'Abrasión')
+                                                    @foreach ($entrada->producto->descripciones as $descripcionProducto)
+                                                        @if ($descripcionProducto->descripcionNombre->nombre == 'Abrasión' && $descripcionProducto->icono_visible == 1)
+                                                            <td style="width: 18px; height: 18px;">
+                                                                <img src="{{ asset('images/icon-abrasion.jpg') }}"
+                                                                    style="width: 18px; height: 18px;">
+                                                            </td>
+                                                        @endif
+                                                    @endforeach
                                                 @endif
-                                                @if ($descripcion->nombre == 'Decoloración a la luz' || $descripcion->nombre == 'Decoloración' && $descripcion->icono_visible == true)
-                                                    <td style="width: 18px; height: 18px;">
-                                                        <img src="{{ asset('images/icon-lightfastness.png') }}"
-                                                            style="width: 18px; height: 18px;">
-                                                    </td>
+                                                @if ($descripcion->nombre == 'Decoloración a la luz' || $descripcion->nombre == 'Decoloración')
+                                                    @foreach ($entrada->producto->descripciones as $descripcionProducto)
+                                                        @if (
+                                                            ($descripcionProducto->descripcionNombre->nombre == 'Decoloración a la luz' ||
+                                                                $descripcionProducto->descripcionNombre->nombre == 'Decoloración') &&
+                                                                $descripcionProducto->icono_visible == 1)
+                                                            <td style="width: 18px; height: 18px;">
+                                                                <img src="{{ asset('images/icon-lightfastness.png') }}"
+                                                                    style="width: 18px; height: 18px;">
+                                                            </td>
+                                                        @endif
+                                                    @endforeach
                                                 @endif
-                                                @if ($descripcion->nombre == 'Traspaso de color' || $descripcion->nombre == 'Traspaso' && $descripcion->icono_visible == true)
-                                                    <td style="width: 18px; height: 18px;">
-                                                        <img src="{{ asset('images/icon-crocking.png') }}"
-                                                            style="width: 18px; height: 18px;">
-                                                    </td>
+                                                @if ($descripcion->nombre == 'Traspaso de color' || $descripcion->nombre == 'Traspaso')
+                                                    @foreach ($entrada->producto->descripciones as $descripcionProducto)
+                                                        @if (
+                                                            ($descripcionProducto->descripcionNombre->nombre == 'Traspaso de color' ||
+                                                                $descripcionProducto->descripcionNombre->nombre == 'Traspaso') &&
+                                                                $descripcionProducto->icono_visible == 1)
+                                                            <td style="width: 18px; height: 18px;">
+                                                                <img src="{{ asset('images/icon-crocking.png') }}"
+                                                                    style="width: 18px; height: 18px;">
+                                                            </td>
+                                                        @endif
+                                                    @endforeach
                                                 @endif
-                                                @if ($descripcion->nombre == 'Peeling' && $descripcion->icono_visible == true)
-                                                    <td style="width: 18px; height: 18px;">
-                                                        <img src="{{ asset('images/icon-physical.png') }}"
-                                                            style="width: 18px; height: 18px;">
-                                                    </td>
+                                                @if ($descripcion->nombre == 'Peeling')
+                                                    @foreach ($entrada->producto->descripciones as $descripcionProducto)
+                                                        @if ($descripcionProducto->descripcionNombre->nombre == 'Peeling' && $descripcionProducto->icono_visible == 1)
+                                                            <td style="width: 18px; height: 18px;">
+                                                                <img src="{{ asset('images/icon-physical.png') }}"
+                                                                    style="width: 18px; height: 18px;">
+                                                            </td>
+                                                        @endif
+                                                    @endforeach
                                                 @endif
                                             @endif
                                         @endforeach
