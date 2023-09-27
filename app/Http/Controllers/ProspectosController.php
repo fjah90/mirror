@@ -2078,7 +2078,7 @@ class ProspectosController extends Controller
     /**
      * Editar cotizaciones directas.
      *
-     * @param  \App\Models\Cotizacion  $cotizacion
+     * @param \App\Models\Prospecto  $cotizacion
      * @return \Illuminate\Http\Response
      */
     public function cotizacionesdirectas_edit(ProspectoCotizacion $cotizacion)
