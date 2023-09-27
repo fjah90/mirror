@@ -26,7 +26,7 @@ class RemoveUbicacionFromProspectoCotizacionTable2 extends Migration
     public function down()
     {
         Schema::table('prospectos_cotizaciones', function (Blueprint $table) {
-            $table->string('ubicacion')->after('contacto');
+            $table->string('ubicacion')->after('fletes');
         });
     }
 }
