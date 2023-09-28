@@ -338,11 +338,10 @@
             },
             methods: {
                 chageVisibility(visibility) {
-                    visibility.icono_visible = !visibility.icono_visible ? 1 : 0;
+                    visibility.icono_visible = !visibility.icono_visible == 1 ? 1 : 0;
                     visibility.isVisible = !visibility.icono_visible ? false : true;
                     console.log(visibility.icono_visible)
                     console.log(visibility.isVisible)
-
                 },
                 fijarArchivo(campo) {
                     this.producto[campo] = this.$refs[campo].files[0];

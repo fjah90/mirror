@@ -515,7 +515,26 @@ class ProductosController extends Controller
 
         return response()->json(['success' => true, "error" => false], 200);
     }
-
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Producto  $producto
+     * @return \Illuminate\Http\Response
+     */
+    public function updateVisibilidad(Request $request, Producto $producto )
+    {
+        // dd($producto);
+        $validator = Validator::make($request->all(), [
+            'icono_visible'        => 'required',
+            'id'        => 'required',
+        ]);
+        // dd($request->id);
+        $descripcion= ProductoDescripcion::findOrFail($request->id);
+        $descripcion->update(['icono_visible' => $request['icono_visible']]);
+        $descripcion->save();
+        return response()->json(['success' => true, "error" => false], 200);
+    }
     /**
      * Remove the specified resource from storage.
      *
