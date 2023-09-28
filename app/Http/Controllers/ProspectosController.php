@@ -664,7 +664,7 @@ class ProspectosController extends Controller
         else {
             $cotizaciones = ProspectoCotizacion::with('entradas', 'entradas.producto', 'entradas.producto.proveedor', 'cliente')->where('user_id', $user->id)->where('prospecto_id', null)->get();
         }
-        // dd($cotizaciones);
+        dd($cotizaciones);
 
         return view('cotizacionesdirectas.index', compact('cotizaciones'));
     }
