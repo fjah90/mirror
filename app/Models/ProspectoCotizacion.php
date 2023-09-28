@@ -178,7 +178,7 @@ class ProspectoCotizacion extends Model
 
     public function cliente()
     {
-        return $this->hasOne('App\Models\Cliente', 'cliente_id', 'id');
+        return $this->hasOne('App\Models\Cliente', 'id', 'cliente_id');
     }
 
 }
