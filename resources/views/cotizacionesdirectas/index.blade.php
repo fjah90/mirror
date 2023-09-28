@@ -70,7 +70,7 @@
                                         <td>@{{ cotizacion.fecha_formated }}</td>
                                         <td>
                                             <template v-for="(entrada, index) in cotizacion.entradas">
-                                                <span>@{{ index + 1 }}.- @{{ entrada.producto.nombre }} -
+                                                {{-- <span>@{{ index + 1 }}.- @{{ entrada.producto.nombre }} - --}}
                                                     @{{ entrada.producto.proveedor.empresa }}</span><br />
                                             </template>
                                         </td>
