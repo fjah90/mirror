@@ -2560,7 +2560,8 @@
                     this.cotizacion.notas = this.notasPreCargadas.contenido;
                 },
                 chageVisibility(descripcion) {
-
+                    console.log(descripcion);
+                    console.log(entrada);
                     descripcion.icono_visible = !descripcion.icono_visible == 1 ? 1 : 0;
                     descripcion.isVisible = !descripcion.isVisible;
 
@@ -2569,7 +2570,7 @@
                     });
 
                     this.cargando = true;
-                    axios.post('/productos/'+this.entrada.producto.id+'/updateVisibilidad', formData, {
+                    axios.post('/productos/'+descripcion.id+'/updateVisibilidad', formData, {
                             headers: {
                                 'Content-Type': 'multipart/form-data'
                             }
