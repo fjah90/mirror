@@ -2562,6 +2562,19 @@
                 chageVisibility(descripcion) {
                     console.log(descripcion);
                     console.log(this.entrada.producto.descripciones);
+
+                    //Al crear la descripciones que toma son las de productos_descripciones por eso todo funciona normal //
+                    //Al editar las entradas las descripciones que toma son de la table prospectos_cotizaciones_entradas_descriciones por eso nos regresa el id incorrecto el id que buscamos es el de la tabla productos_descripciones, lo que haremos es buscaremos en las descripciones del producto donde el nombre coincida con la descripcion que estamos recibiendo y ahi nos dara el id que queremos
+                    //
+
+                    this.entrada.producto.descripciones.forEach(function(desc) {
+                        if( desc.descripcion_nombre.nombre == descripcion.nombre ){
+                            var id_description = desc.id;
+                        }
+                        
+                    });
+
+
                     descripcion.icono_visible = !descripcion.icono_visible == 1 ? 1 : 0;
                     descripcion.isVisible = !descripcion.isVisible;
 
@@ -2570,7 +2583,7 @@
                     });
 
                     this.cargando = true;
-                    axios.post('/productos/'+descripcion.id+'/updateVisibilidad', formData, {
+                    axios.post('/productos/'+id_description+'/updateVisibilidad', formData, {
                             headers: {
                                 'Content-Type': 'multipart/form-data'
                             }
