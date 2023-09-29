@@ -2560,8 +2560,6 @@
                     this.cotizacion.notas = this.notasPreCargadas.contenido;
                 },
                 chageVisibility(descripcion) {
-                    console.log(descripcion);
-                    console.log(this.entrada.producto.descripciones);
 
                     //Al crear la descripciones que toma son las de productos_descripciones por eso todo funciona normal //
                     //Al editar las entradas las descripciones que toma son de la table prospectos_cotizaciones_entradas_descriciones por eso nos regresa el id incorrecto el id que buscamos es el de la tabla productos_descripciones, lo que haremos es buscaremos en las descripciones del producto donde el nombre coincida con la descripcion que estamos recibiendo y ahi nos dara el id que queremos
