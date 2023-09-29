@@ -521,16 +521,17 @@ class ProductosController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\ProductoDescripcion  $producto
+     * $producto_descripcion_id
      * @return \Illuminate\Http\Response
      */
-    public function updateVisibilidad(Request $request, ProductoDescripcion $producto )
+    public function updateVisibilidad(Request $request, $producto_descripcion_id )
     {
         $validator = Validator::make($request->all(), [
             'icono_visible'        => 'required',
             'id'        => 'required',
         ]);  
-        $descripcion = ProductoDescripcion::findOrFail($request->id);
+
+        $descripcion = ProductoDescripcion::findOrFail($producto_descripcion_id);
         $descripcion->update(['icono_visible' => $request['icono_visible']]);
         $descripcion->save();
         return response()->json(['success' => true, "error" => false], 200);
