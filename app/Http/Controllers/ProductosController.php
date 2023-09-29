@@ -501,6 +501,7 @@ class ProductosController extends Controller
         //validar que haya nuevas para que no regrese errores
 
         if(count($nuevas) > 0){ 
+            dd($nuevas);
             //ingresar nuevas
             foreach ($nuevas as $nueva) {
                 $create = array(
