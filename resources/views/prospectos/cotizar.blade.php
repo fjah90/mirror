@@ -2561,7 +2561,7 @@
                 },
                 chageVisibility(descripcion) {
                     console.log(descripcion);
-                    console.log(entrada);
+                    console.log(this.entrada);
                     descripcion.icono_visible = !descripcion.icono_visible == 1 ? 1 : 0;
                     descripcion.isVisible = !descripcion.isVisible;
 
