@@ -1874,11 +1874,9 @@
                     });
                 },
                 editarEntrada(entradaEdit, index) {
-                    console.log(entradaEdit);
                     if (this.edicionEntradaActiva) return false;
                     entradaEdit.actualizar = true;
                     this.entrada = entradaEdit;
-                    this.entrada.descripciones = entradaEdit.descripciones;
 
                     this.cotizacion.subtotal -= entradaEdit.importe;
                     this.cotizacion.subtotal = this.cotizacion.subtotal < 0 ? 0 : this.cotizacion.subtotal;
@@ -2562,6 +2560,7 @@
                     this.cotizacion.notas = this.notasPreCargadas.contenido;
                 },
                 chageVisibility(descripcion) {
+
                     descripcion.icono_visible = !descripcion.icono_visible == 1 ? 1 : 0;
                     descripcion.isVisible = !descripcion.isVisible;
 
