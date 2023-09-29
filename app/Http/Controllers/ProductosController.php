@@ -498,20 +498,23 @@ class ProductosController extends Controller
                 $actual->update(['valor' => $nueva['valor'], 'valor_ingles' => $nueva['valor_ingles']]);
             }
         }
+        //validar que haya nuevas para que no regrese errores
 
-        //ingresar nuevas
-        foreach ($nuevas as $nueva) {
-            $create = array(
-                "producto_id"              => $producto->id,
-                "categoria_descripcion_id" => $nueva['id'],
-                "icono_visible"            => $nueva['icono_visible'],
-            );
-            if (isset($nueva['valor'])) {
-                $create['valor'] = $nueva['valor'];
-                $create['icono_visible'] = $nueva['icono_visible'];
+        if(count($nuevas) > 0){ 
+            //ingresar nuevas
+            foreach ($nuevas as $nueva) {
+                $create = array(
+                    "producto_id"              => $producto->id,
+                    "categoria_descripcion_id" => $nueva['id'],
+                    "icono_visible"            => $nueva['icono_visible'],
+                );
+                if (isset($nueva['valor'])) {
+                    $create['valor'] = $nueva['valor'];
+                    $create['icono_visible'] = $nueva['icono_visible'];
+                }
+
+                ProductoDescripcion::create($create);
             }
-
-            ProductoDescripcion::create($create);
         }
 
         return response()->json(['success' => true, "error" => false], 200);
