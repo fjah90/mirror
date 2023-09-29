@@ -15,7 +15,6 @@ class CategoriaDescripcion extends Model
     'no_alta_productos' => 'boolean',
     'valor_ingles' => 'boolean',
     'aparece_orden_compra' => 'boolean',
-    'icono_visible' => 'boolean'
   ];
 
   /**
