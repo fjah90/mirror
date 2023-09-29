@@ -398,6 +398,8 @@ class ProductosController extends Controller
             $producto->ficha_tecnica = asset('storage/' . $producto->ficha_tecnica);
         }
 
+        dd($producto->descripciones);
+
         return view('catalogos.productos.edit', compact('producto', 'proveedores', 'categorias', 'subcategorias'));
     }
 
