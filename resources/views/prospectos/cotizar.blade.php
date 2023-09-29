@@ -2568,6 +2568,7 @@
                     //
 
                     this.entrada.producto.descripciones.forEach(function(desc) {
+                        console.log(desc.descripcion_nombre.nombre);
                         if( desc.descripcion_nombre.nombre == descripcion.nombre ){
                             var id_description = desc.id;
                         }
