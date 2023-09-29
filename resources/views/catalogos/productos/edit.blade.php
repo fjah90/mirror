@@ -279,7 +279,6 @@
         const app = new Vue({
             el: '#content',
             data: {
-                isIconoVisible: false,
                 producto: {
                     proveedor_id: '{{ $producto->proveedor_id ?? 0 }}',
                     categoria_id: '{{ $producto->categoria_id }}',
@@ -334,14 +333,38 @@
                     allowedFileExtensions: ["pdf"],
                     elErrorContainer: '#ficha_tecnica-file-errors'
                 });
-                console.log(this.producto.descripciones)
+                console.log(this.producto)
             },
             methods: {
-                chageVisibility(visibility) {
-                    visibility.icono_visible = !visibility.icono_visible == 1 ? 1 : 0;
-                    visibility.isVisible = !visibility.icono_visible ? false : true;
-                    console.log(visibility.icono_visible)
-                    console.log(visibility.isVisible)
+                chageVisibility(descripcion) {
+                    console.log(this.producto)
+                    descripcion.icono_visible = !descripcion.icono_visible == 1 ? 1 : 0;
+                    descripcion.isVisible = !descripcion.icono_visible ? false : true;
+                    
+                     var formData = objectToFormData(descripcion, {
+                        indices: true
+                    });
+
+                    this.cargando = true;
+                    axios.post('/productos/1/updateVisibilidad', formData, {
+                            headers: {
+                                'Content-Type': 'multipart/form-data'
+                            }
+                        })
+                        .then(({
+                            data
+                        }) => {
+                            console.log(data);
+
+                            this.cargando = false;
+
+                        })
+                        .catch(({
+                            response
+                        }) => {
+                            console.error(response);
+                            this.cargando = false;
+                        });
                 },
                 fijarArchivo(campo) {
                     this.producto[campo] = this.$refs[campo].files[0];
@@ -359,6 +382,7 @@
                     });
 
                     this.cargando = true;
+                    console.log(formData)
                     axios.post('/productos/{{ $producto->id }}', formData, {
                             headers: {
                                 'Content-Type': 'multipart/form-data'

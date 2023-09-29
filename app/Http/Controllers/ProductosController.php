@@ -494,7 +494,8 @@ class ProductosController extends Controller
             }
             else {
                 $nueva = $nuevas->pull($index);
-                $actual->update(['valor' => $nueva['valor'], 'valor_ingles' => $nueva['valor_ingles'], 'icono_visible' => $nueva['icono_visible']]);
+                // $actual->update(['valor' => $nueva['valor'], 'valor_ingles' => $nueva['valor_ingles'], 'icono_visible' => $nueva['icono_visible']]);
+                $actual->update(['valor' => $nueva['valor'], 'valor_ingles' => $nueva['valor_ingles']]);
             }
         }
 

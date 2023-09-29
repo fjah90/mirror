@@ -133,6 +133,7 @@ Route::middleware('auth')->group(function () {
 
 
     Route::get('productos/{id}/activar', 'ProductosController@activar')->name('productos.activar');
+    Route::get('productos/{producto}/editar', 'ProductosController@editar')->name('productos.editar');
 
     Route::get('productos/inactivos', 'ProductosController@productosinactivos')->name('productos.inactivo');
 
