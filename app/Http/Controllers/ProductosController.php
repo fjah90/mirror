@@ -362,10 +362,6 @@ class ProductosController extends Controller
     {
         $proveedores = Proveedor::orderBy('empresa')->get();
         $categorias = Categoria::with('descripciones')->orderBy('nombre')->get();
-        //agregamos el icono visble ya que ese campo no lo tienen las
-        foreach($categorias as $key => $categoria){
-            $categorias[$key]['icono_visble'] = 0;
-        }
         $subcategorias = Subcategoria::orderBy('nombre')->get();
         $producto->load('proveedor', 'categoria.descripciones', 'subcategoria', 'descripciones.descripcionNombre');
         //dd($producto);
@@ -401,7 +397,6 @@ class ProductosController extends Controller
         if ($producto->ficha_tecnica) {
             $producto->ficha_tecnica = asset('storage/' . $producto->ficha_tecnica);
         }
-        dd($categorias);
         return view('catalogos.productos.edit', compact('producto', 'proveedores', 'categorias', 'subcategorias'));
     }
 
