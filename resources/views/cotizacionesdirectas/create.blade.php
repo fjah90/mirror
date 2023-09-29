@@ -1606,7 +1606,7 @@
                             this.entrada.precio = this.entrada.producto.precio_distribuidor;
                             break;
                     }
-                    this.entrada.descripciones = [];
+                    
                     this.entrada.descripciones = [];
                     prod.descripciones.forEach(function(desc) {
                         this.entrada.descripciones.push({
