@@ -2569,7 +2569,9 @@
 
                     this.entrada.producto.descripciones.forEach(function(desc) {
                         console.log(desc.descripcion_nombre.nombre);
+                        console.log(descripcion.nombre);
                         if( desc.descripcion_nombre.nombre == descripcion.nombre ){
+                            console.log("entre");
                             var id_description = desc.id;
                         }
                         
