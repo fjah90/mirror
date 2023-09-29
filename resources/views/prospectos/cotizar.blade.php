@@ -1878,6 +1878,7 @@
                     if (this.edicionEntradaActiva) return false;
                     entradaEdit.actualizar = true;
                     this.entrada = entradaEdit;
+                    this.entrada.descrcipciones = entradaEdit.descrcipciones;
 
                     this.cotizacion.subtotal -= entradaEdit.importe;
                     this.cotizacion.subtotal = this.cotizacion.subtotal < 0 ? 0 : this.cotizacion.subtotal;
