@@ -397,6 +397,7 @@ class ProductosController extends Controller
         if ($producto->ficha_tecnica) {
             $producto->ficha_tecnica = asset('storage/' . $producto->ficha_tecnica);
         }
+
         return view('catalogos.productos.edit', compact('producto', 'proveedores', 'categorias', 'subcategorias'));
     }
 
@@ -499,25 +500,19 @@ class ProductosController extends Controller
         }
         //validar que haya nuevas para que no regrese errores
 
-        if(count($nuevas) > 0){ 
-            foreach($nuevas as $key => $nueva){
-                $nuevas[$key]['icono_visible'] = 0;
+        //ingresar nuevas
+        foreach ($nuevas as $nueva) {
+            $create = array(
+                "producto_id"              => $producto->id,
+                "categoria_descripcion_id" => $nueva['id'],
+                "icono_visible"            => $nueva['icono_visible'],
+            );
+            if (isset($nueva['valor'])) {
+                $create['valor'] = $nueva['valor'];
+                $create['icono_visible'] = $nueva['icono_visible'];
             }
-            dd($nuevas);
-            //ingresar nuevas
-            foreach ($nuevas as $nueva) {
-                $create = array(
-                    "producto_id"              => $producto->id,
-                    "categoria_descripcion_id" => $nueva['id'],
-                    "icono_visible"            => $nueva['icono_visible'],
-                );
-                if (isset($nueva['valor'])) {
-                    $create['valor'] = $nueva['valor'];
-                    $create['icono_visible'] = $nueva['icono_visible'];
-                }
 
-                ProductoDescripcion::create($create);
-            }
+            ProductoDescripcion::create($create);
         }
 
         return response()->json(['success' => true, "error" => false], 200);
