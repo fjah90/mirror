@@ -2198,12 +2198,23 @@
                     descripcion.icono_visible = !descripcion.icono_visible == 1 ? 1 : 0;
                     descripcion.isVisible = !descripcion.isVisible;
 
+                    var id_description = 0;
+                    this.entrada.producto.descripciones.forEach(function(desc) {
+                        
+                        if( desc.descripcion_nombre.nombre == descripcion.nombre ){
+                            id_description = desc.id;
+                        }
+                        
+                    });
+
+                    console.log(id_description);
+
                     var formData = objectToFormData(descripcion, {
                         indices: true
                     });
 
                     this.cargando = true;
-                    axios.post('/productos/' + descripcion.id + '/updateVisibilidad', formData, {
+                    axios.post('/productos/' + id_description + '/updateVisibilidad', formData, {
                             headers: {
                                 'Content-Type': 'multipart/form-data'
                             }
