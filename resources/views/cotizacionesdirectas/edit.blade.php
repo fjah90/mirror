@@ -2197,7 +2197,6 @@
 
                     descripcion.icono_visible = !descripcion.icono_visible == 1 ? 1 : 0;
                     descripcion.isVisible = !descripcion.isVisible;
-                    console.log(this.entrada);
 
                     var id_description = 0;
                     this.entrada.producto.descripciones.forEach(function(desc) {
