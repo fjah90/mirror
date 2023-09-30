@@ -2083,7 +2083,7 @@ class ProspectosController extends Controller
      */
     public function cotizacionesdirectas_edit(ProspectoCotizacion $cotizacion)
     {
-        $cotizacion->load('entradas', 'entradas.producto','entradas.producto.descripciones','entradas.producto.descripciones.descripcion_nombre');
+        $cotizacion->load('entradas', 'entradas.producto','entradas.producto.descripciones','entradas.producto.descripciones.descripcionNombre');
         $proyectos = Prospecto::all();
         $notasPreCargadas = Nota::all();
 
