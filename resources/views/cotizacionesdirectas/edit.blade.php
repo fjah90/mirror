@@ -2203,7 +2203,7 @@
                     });
 
                     this.cargando = true;
-                    axios.post('/productos/' + this.descripcion.id + '/updateVisibilidad', formData, {
+                    axios.post('/productos/' + descripcion.id + '/updateVisibilidad', formData, {
                             headers: {
                                 'Content-Type': 'multipart/form-data'
                             }
