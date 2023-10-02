@@ -32,7 +32,8 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label class="control-label">Proveedor<strong style="color: grey"> *</strong></label>
+                                        <label class="control-label">Proveedor<strong style="color: grey">
+                                                *</strong></label>
                                         <select class="form-control" name="proveedor_id" v-model='producto.proveedor_id'
                                             required>
                                             <option value="0">Por Definir</option>
@@ -60,7 +61,8 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label class="control-label">Tipo de Producto o Servicio<strong style="color: grey"> *</strong></label>
+                                        <label class="control-label">Tipo de Producto o Servicio<strong style="color: grey">
+                                                *</strong></label>
                                         <select class="form-control" name="categoria_id" v-model='producto.categoria_id'
                                             @change="cambiarDescripciones()" required>
                                             @foreach ($categorias as $categoria)
@@ -73,7 +75,8 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label class="control-label">Código de Producto o Servicio<strong style="color: grey"> *</strong></label>
+                                        <label class="control-label">Código de Producto o Servicio<strong
+                                                style="color: grey"> *</strong></label>
                                         <input type="text" class="form-control" name="nombre" v-model="producto.nombre"
                                             required />
                                     </div>
@@ -82,7 +85,8 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label class="control-label">Nombre del material<strong style="color: grey"> *</strong></label>
+                                        <label class="control-label">Nombre del material<strong style="color: grey">
+                                                *</strong></label>
                                         <input type="text" class="form-control" name="nombre"
                                             v-model="producto.nombre_material" required />
                                     </div>
@@ -93,8 +97,8 @@
                                     <div class="form-group">
                                         <label class="control-label">Color<strong style="color: grey">
                                                 *</strong></label>
-                                        <input type="text" class="form-control" name="color"
-                                            v-model="producto.color" required />
+                                        <input type="text" class="form-control" name="color" v-model="producto.color"
+                                            required />
                                     </div>
                                 </div>
                             </div>
@@ -146,6 +150,7 @@
                                                     <th>Valor</th>
                                                     <th>Valor Ingles</th>
                                                     <th>Iconos</th>
+                                                    <th>Icono Visible</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -175,13 +180,35 @@
                                                             <img src="{{ asset('images/icon-lightfastness.png') }}"
                                                                 id="Decoloracion_de_luz" style="width:50px; height:50px;">
                                                         </div>
-                                                        <div v-else-if="descripcion.descripcion_nombre.nombre=='Traspaso de color'">
+                                                        <div
+                                                            v-else-if="descripcion.descripcion_nombre.nombre=='Traspaso de color'">
                                                             <img src="{{ asset('images/icon-crocking.png') }}"
-                                                                id="Traspaso de color_color" style="width:50px; height:50px;">
+                                                                id="Traspaso de color_color"
+                                                                style="width:50px; height:50px;">
                                                         </div>
                                                         <div v-else-if="descripcion.descripcion_nombre.nombre=='Peeling'">
                                                             <img src="{{ asset('images/icon-physical.png') }}"
                                                                 id="Peeling" style="width:50px; height:50px;">
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div v-if="descripcion.descripcion_nombre.nombre == 'Flamabilidad' ||
+                                                                    descripcion.descripcion_nombre.nombre== 'Abrasión' ||
+                                                                    descripcion.descripcion_nombre.nombre== 'Decoloración a la luz' ||
+                                                                    descripcion.descripcion_nombre.nombre== 'Traspaso de color' ||
+                                                                    descripcion.descripcion_nombre.nombre== 'Peeling'"
+                                                            class="form-check form-switch">
+                                                            <i v-if="descripcion.icono_visible == 1"
+                                                                class="glyphicon glyphicon-check"
+                                                                @click="chageVisibility(descripcion)"></i>
+                                                            </i>
+                                                            <i v-else 
+                                                                class="glyphicon glyphicon-unchecked"
+                                                                @click="chageVisibility(descripcion)"></i>
+                                                            </i>
+                                                            <input class="form-control" type="hidden"
+                                                                name="icono_visible"
+                                                                v-model="descripcion.icono_visible" />
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -306,8 +333,39 @@
                     allowedFileExtensions: ["pdf"],
                     elErrorContainer: '#ficha_tecnica-file-errors'
                 });
+                console.log(this.producto)
             },
             methods: {
+                chageVisibility(descripcion) {
+                  
+                    descripcion.icono_visible = !descripcion.icono_visible == 1 ? 1 : 0;
+                    descripcion.isVisible = !descripcion.icono_visible ? false : true;
+                    
+                     var formData = objectToFormData(descripcion, {
+                        indices: true
+                    });
+
+                    this.cargando = true;
+                    axios.post('/productos/'+descripcion.id+'/updateVisibilidad', formData, {
+                            headers: {
+                                'Content-Type': 'multipart/form-data'
+                            }
+                        })
+                        .then(({
+                            data
+                        }) => {
+                            console.log(data);
+
+                            this.cargando = false;
+
+                        })
+                        .catch(({
+                            response
+                        }) => {
+                            console.error(response);
+                            this.cargando = false;
+                        });
+                },
                 fijarArchivo(campo) {
                     this.producto[campo] = this.$refs[campo].files[0];
                 },
@@ -324,6 +382,7 @@
                     });
 
                     this.cargando = true;
+                    console.log(formData)
                     axios.post('/productos/{{ $producto->id }}', formData, {
                             headers: {
                                 'Content-Type': 'multipart/form-data'

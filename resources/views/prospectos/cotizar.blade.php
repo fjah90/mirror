@@ -682,7 +682,8 @@
                                     <div class="form-group">
                                         <label class="control-label">Precio *</label>
                                         <input type="number" step="0.01" min="0.01" name="precio"
-                                            class="form-control" v-model="entrada.precio" @can('Editar Precio Producto') @else disabled @endcan required />
+                                            class="form-control" v-model="entrada.precio"
+                                            @can('Editar Precio Producto') @else disabled @endcan required />
                                     </div>
                                 </div>
                             </div>
@@ -708,6 +709,7 @@
                                                     <th>Valor</th>
                                                     <th>Valor Inglés</th>
                                                     <th>Iconos</th>
+                                                    <th>Icono Visible</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -737,11 +739,31 @@
                                                         </div>
                                                         <div v-else-if="descripcion.nombre=='Traspaso de color'">
                                                             <img src="{{ asset('images/icon-crocking.png') }}"
-                                                                id="Traspaso de color_color" style="width:50px; height:50px;">
+                                                                id="Traspaso de color_color"
+                                                                style="width:50px; height:50px;">
                                                         </div>
                                                         <div v-else-if="descripcion.nombre=='Peeling'">
                                                             <img src="{{ asset('images/icon-physical.png') }}"
                                                                 id="Peeling" style="width:50px; height:50px;">
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div v-if="descripcion.nombre == 'Flamabilidad' ||
+                                                                    descripcion.nombre == 'Abrasión' ||
+                                                                    descripcion.nombre == 'Decoloración a la luz' ||
+                                                                    descripcion.nombre == 'Traspaso de color' ||
+                                                                    descripcion.nombre == 'Peeling'"
+                                                            class="form-check form-switch">
+                                                            <i v-if="descripcion.icono_visible == 1"
+                                                                class="glyphicon glyphicon-check"
+                                                                @click="chageVisibility(descripcion)"></i>
+                                                            </i>
+                                                            <i v-else class="glyphicon glyphicon-unchecked"
+                                                                @click="chageVisibility(descripcion)"></i>
+                                                            </i>
+                                                            <input class="form-control" type="hidden"
+                                                                name="icono_visible"
+                                                                v-model="descripcion.icono_visible" />
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -1674,8 +1696,9 @@
                     this.nuevaObservacionProducto = "";
                 },
                 seleccionarProduco(prod) {
+                    console.log(prod)
                     this.entrada.producto = prod;
-
+                    
                     switch (this.tipo_cliente.id) {
                         case 1:
                             this.entrada.precio = this.entrada.producto.precio_residencial;
@@ -1692,10 +1715,13 @@
                     this.entrada.descripciones = [];
                     prod.descripciones.forEach(function(desc) {
                         this.entrada.descripciones.push({
+                            id: desc.id,
                             nombre: desc.descripcion_nombre.nombre,
                             name: desc.descripcion_nombre.name,
                             valor: desc.valor,
-                            valor_ingles: desc.valor_ingles
+                            valor_ingles: desc.valor_ingles,
+                            icono_visible: desc.icono_visible,
+                            isVisible: desc.icono_visible == 1 ? true : false
                         });
                     }, this);
                     if (prod.foto) {
@@ -1732,13 +1758,13 @@
                     console.log("subtotal", this.cotizacion.subtotal)
                     //Calcula Los descuentos
                     if (this.cotizacion.descuentos != '0') {
-                         this.cotizacion.montoDescuento = this.cotizacion.tipo_descuento > 0 ?
+                        this.cotizacion.montoDescuento = this.cotizacion.tipo_descuento > 0 ?
                             (Number(this.cotizacion.subtotal) * Number(this.cotizacion.descuentos)) / 100 :
                             this.cotizacion.descuentos;
                     } else {
                         if (this.cotizacion.descuentos == '0') {
                             this.cotizacion.montoDescuent = 0;
-                        }else{
+                        } else {
                             this.cotizacion.montoDescuent = this.cotizacion.descuentos;
                         }
                     }
@@ -2086,7 +2112,7 @@
 
                     this.sumaTotal();
                     this.condicionCambiada();
-
+                    
                     //re-seleccionar observaciones
                     var observaciones = cotizacion.observaciones.match(/<li>([^<]+)+<\/li>+/g);
                     if (observaciones == null) observaciones = [];
@@ -2248,7 +2274,8 @@
                                     total: 0,
                                     notas: "",
                                     idioma: '{{ $prospecto->cliente->nacional ? 'español' : 'ingles' }}',
-                                    observaciones: []
+                                    observaciones: [],
+                                    producto: []
                                 };
                                 this.observaciones.forEach(function(observacion) {
                                     observacion.activa = false;
@@ -2531,7 +2558,51 @@
                         }
                     }
                     this.cotizacion.notas = this.notasPreCargadas.contenido;
-                }
+                },
+                chageVisibility(descripcion) {
+
+                    //Al crear la descripciones que toma son las de productos_descripciones por eso todo funciona normal //
+                    //Al editar las entradas las descripciones que toma son de la table prospectos_cotizaciones_entradas_descriciones por eso nos regresa el id incorrecto el id que buscamos es el de la tabla productos_descripciones, lo que haremos es buscaremos en las descripciones del producto donde el nombre coincida con la descripcion que estamos recibiendo y ahi nos dara el id que queremos
+                    //
+                    var id_description = 0;
+                    this.entrada.producto.descripciones.forEach(function(desc) {
+                        
+                        if( desc.descripcion_nombre.nombre == descripcion.nombre ){
+                            id_description = desc.id;
+                        }
+                        
+                    });
+
+                    console.log(id_description);
+
+                    descripcion.icono_visible = !descripcion.icono_visible == 1 ? 1 : 0;
+                    descripcion.isVisible = !descripcion.isVisible;
+
+                    var formData = objectToFormData(descripcion, {
+                        indices: true
+                    });
+
+                    this.cargando = true;
+                    axios.post('/productos/'+id_description+'/updateVisibilidad', formData, {
+                            headers: {
+                                'Content-Type': 'multipart/form-data'
+                            }
+                        })
+                        .then(({
+                            data
+                        }) => {
+                            console.log(data);
+
+                            this.cargando = false;
+
+                        })
+                        .catch(({
+                            response
+                        }) => {
+                            console.error(response);
+                            this.cargando = false;
+                        });
+                },
             }
         });
     </script>

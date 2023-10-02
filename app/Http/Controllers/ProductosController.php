@@ -475,6 +475,8 @@ class ProductosController extends Controller
         $producto->load('descripciones');
         $nuevas = collect($request->descripciones);
         $actuales = $producto->descripciones;
+        // echo($nuevas);
+        // dd($actuales);
         $n = $actuales->count();
         for ($i = 0; $i < $n; $i++) {
             $actual = $actuales->shift();
@@ -492,18 +494,22 @@ class ProductosController extends Controller
             }
             else {
                 $nueva = $nuevas->pull($index);
+                // $actual->update(['valor' => $nueva['valor'], 'valor_ingles' => $nueva['valor_ingles'], 'icono_visible' => $nueva['icono_visible']]);
                 $actual->update(['valor' => $nueva['valor'], 'valor_ingles' => $nueva['valor_ingles']]);
             }
         }
+        //validar que haya nuevas para que no regrese errores
 
         //ingresar nuevas
         foreach ($nuevas as $nueva) {
             $create = array(
                 "producto_id"              => $producto->id,
                 "categoria_descripcion_id" => $nueva['id'],
+                "icono_visible"            => $nueva['icono_visible'],
             );
             if (isset($nueva['valor'])) {
                 $create['valor'] = $nueva['valor'];
+                $create['icono_visible'] = $nueva['icono_visible'];
             }
 
             ProductoDescripcion::create($create);
@@ -511,7 +517,25 @@ class ProductosController extends Controller
 
         return response()->json(['success' => true, "error" => false], 200);
     }
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * $producto_descripcion_id
+     * @return \Illuminate\Http\Response
+     */
+    public function updateVisibilidad(Request $request, $producto_descripcion_id )
+    {
+        $validator = Validator::make($request->all(), [
+            'icono_visible'        => 'required',
+            'id'        => 'required',
+        ]);  
 
+        $descripcion = ProductoDescripcion::findOrFail($producto_descripcion_id);
+        $descripcion->update(['icono_visible' => $request['icono_visible']]);
+        $descripcion->save();
+        return response()->json(['success' => true, "error" => false], 200);
+    }
     /**
      * Remove the specified resource from storage.
      *

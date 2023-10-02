@@ -674,13 +674,13 @@ class ProspectosController extends Controller
         $anio = Carbon::parse('2023-12-31'); // se ajusto por el año
 
         $vendedores = Vendedor::where('email', auth()->user()->email)->first(); //filtro por email
-
         if (auth()->user()->tipo == 'Administrador' || auth()->user()->tipo == 'Dirección') {
             $cotizaciones = ProspectoCotizacion::with('entradas', 'entradas.producto', 'entradas.producto.proveedor', 'cliente')->where('prospecto_id', null)->get();
         }
         else {
             $cotizaciones = ProspectoCotizacion::with('entradas', 'entradas.producto', 'entradas.producto.proveedor', 'cliente')->where('user_id', $user->id)->where('prospecto_id', null)->get();
         }
+        // dd($cotizaciones);
 
         return view('cotizacionesdirectas.index', compact('cotizaciones'));
     }
@@ -2094,12 +2094,12 @@ class ProspectosController extends Controller
     /**
      * Editar cotizaciones directas.
      *
-     * @param  \App\Models\Cotizacion  $cotizacion
+     * @param \App\Models\Prospecto  $cotizacion
      * @return \Illuminate\Http\Response
      */
     public function cotizacionesdirectas_edit(ProspectoCotizacion $cotizacion)
     {
-        $cotizacion->load('entradas', 'entradas.producto');
+        $cotizacion->load('entradas', 'entradas.producto','entradas.producto.descripciones','entradas.producto.descripciones.descripcionNombre');
         $proyectos = Prospecto::all();
         $notasPreCargadas = Nota::all();
 
@@ -2118,8 +2118,6 @@ class ProspectosController extends Controller
         $numero_siguiente = ProspectoCotizacion::select('id')->orderBy('id', 'desc')->first()->id + 1;
 
         $rfcs = [];
-
-
 
         $direcciones = [];
 

@@ -14,7 +14,7 @@ class AddIconoVisibleToProductosDescripcionesTable extends Migration
     public function up()
     {
         Schema::table('productos_descripciones', function (Blueprint $table) {
-            $table->boolean('icono_visible')->after('valor')->nullable()->default(false);
+            $table->boolean('icono_visible')->after('valor')->default(true);
         });
     }
 
