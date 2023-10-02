@@ -275,15 +275,15 @@ class ProductosController extends Controller
                 "Flamabilidad",
                 "Minimos de venta",
                 "Multiplos de venta",
-                "Tamaño de rollo"
+                "Tamaño de rollo",
             ];
             $descripciones_telas = [
                 "Ancho",
                 "Composición",
                 "Flamabilidad",
                 "Abrasión",
-                "Decoloracion de la luz",
-                "Traspaso de color de color",
+                "Decoloración a la luz",
+                "Traspaso de color",
                 "Peeling",
                 "Aplicación",
                 "Acabado",
