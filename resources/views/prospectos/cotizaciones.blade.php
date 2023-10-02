@@ -62,19 +62,19 @@
                                 @endrole
                             </div>
                             <div class="p-10 " style="display:inline-block;float: right;">
-                                <button class="btn btn-sm btn-warning">
+                                {{-- <button class="btn btn-sm btn-warning">
                                     <a href="{{ route('prospectos.create') }}" style="color:#000;">
                                         <i class="fas fa-address-book"></i> Nuevo Proyecto
                                     </a>
-                                </button>
+                                </button> --}}
                             </div>
                             <div class="p-10 " style="display:inline-block;float: right;">
-                                <button type="button" class="btn btn-sm btn-warning" data-toggle="modal"
+                                {{-- <button type="button" class="btn btn-sm btn-warning" data-toggle="modal"
                                     data-target="#myModalNew" @click="openModal">
                                     <a href="#myModalNew" style="color:#000;">
                                         <i class="far fa-file-alt"></i> Nueva Cotización
                                     </a>
-                                </button>
+                                </button> --}}
                             </div>
                             <div class="p-10">
 

@@ -698,12 +698,11 @@
                     let setTime;
                     // debugger;
                     if (nueva) {
-                        if (this.prospecto.nueva_proxima_actividad.tipo_id == 12 || this.prospecto
-                            .nueva_proxima_actividad
-                            .tipo_id == 2 || this.prospecto.nueva_proxima_actividad.tipo_id == 14) {
+                        if (this.proxima_actividad.tipo_id == 12 || this.proxima_actividad
+                            .tipo_id == 2 || this.proxima_actividad.tipo_id == 14) {
                             if (this.ntime_in < this.ntime_out) {
                                 if (this.ntime_in && this.ntime_out) {
-                                    this.prospecto.nueva_proxima_actividad.horario = this.ntime_in + "-" +
+                                    this.proxima_actividad.horario = this.ntime_in + "-" +
                                         this
                                         .ntime_out;
                                     return true;
@@ -722,12 +721,10 @@
                         }
                     } else {
                         // prospecto.nueva_proxima_actividad.tipo_id==12 || prospecto.nueva_proxima_actividad.tipo_id==2 || prospecto.nueva_proxima_actividad.tipo_id==14
-                        if (this.prospecto.proxima_actividad.tipo_id == 12 || this.prospecto
-                            .proxima_actividad
-                            .tipo_id == 2 || this.prospecto.proxima_actividad.tipo_id == 14) {
+                        if (this.ultima_actividad.tipo_id == 12 || this.ultima_actividad.tipo_id == 2 || this.ultima_actividad.tipo_id == 14) {
                             if (this.time_in < this.time_out) {
                                 if (this.time_in && this.time_out) {
-                                    this.prospecto.proxima_actividad.horario = this.time_in + "-" + this
+                                    this.ultima_actividad.horario = this.time_in + "-" + this
                                         .time_out;
                                     return true;
                                 }
