@@ -145,7 +145,7 @@
                                                                         id="Traspaso_de_color"
                                                                         style="width:50px; height:50px;"></td>
                                                             @elseif($descripcion->descripcionNombre->nombre == 'Peeling')
-                                                                <td><img src="{{ asset('images/icon-crocking.png') }}"
+                                                                <td><img src="{{ asset('images/icon-physical.png') }}"
                                                                         id="Peeling" style="width:50px; height:50px;">
                                                                 </td>
                                                             @endif
