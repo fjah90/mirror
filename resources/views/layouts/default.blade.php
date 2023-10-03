@@ -353,11 +353,12 @@
                                 {!! Request::is('categoriaClientes*') ? 'class="active"' : '' !!} {!! Request::is('proyectos*') ? 'class="active"' : '' !!} {!! Request::is('tiposProveedores*') ? 'class="active"' : '' !!}
                                 {!! Request::is('unidadesMedida*') ? 'class="active"' : '' !!} {!! Request::is('subcategorias*') ? 'class="active"' : '' !!} {!! Request::is('categorias*') ? 'class="active"' : '' !!}
                                 {!! Request::is('clientes*') ? 'class="active"' : '' !!} {!! Request::is('proveedores*') ? 'class="active"' : '' !!} {!! Request::is('agentesAduanales*') ? 'class="active"' : '' !!}
-                                {!! Request::is('productos*') ? 'class="active"' : '' !!}><a class="title" style="cursor:pointer;"><i class="fa fa-book"
+                                {!! Request::is('productos*') ? 'class="active"' : '' !!}>
+                                <a class="title" style="cursor:pointer;"><i class="fa fa-book"
                                         style="color:#B68911; font-size: 20px;"></i> <b
                                         style="color:#9F9F9F;">Catálogos</b><span class="fa fa-chevron-down"
                                         style="color:#9F9F9F;"></span></a>
-                                <ul class="nav child_menu">
+                                    <ul class="nav child_menu">
                                     @can('Clientes menu')
                                         <li {!! Request::is('clientes*') ? 'class="active"' : '' !!}>
                                             <a href="{{ URL::to('clientes') }}">
@@ -381,6 +382,24 @@
                                             </a>
                                         </li>
                                     @endcan
+                                    <hr class="divider-menu">
+                                    @can('Proveedores menu')
+                                        <li {!! Request::is('proveedores*') ? 'class="active"' : '' !!}>
+                                            <a href="{{ URL::to('proveedores') }}">
+                                                <i class="fas fa-truck-loading "></i> <span
+                                                    style="color:#000;">Proveedores</span>
+                                            </a>
+                                        </li>
+                                    @endcan
+                                    @can('Tipos de proveedores menu')
+                                        <li {!! Request::is('tiposProveedores*') ? 'class="active"' : '' !!}>
+                                            <a href="{{ URL::to('tiposProveedores') }}">
+                                                <i class="fas fa-address-book"></i> <span style="color:#000;">Tipos de
+                                                    Proveedores</span>
+                                            </a>
+                                        </li>
+                                    @endcan
+                                    <hr class="divider-menu">
                                     @can('Vendedores menu')
                                         <li {!! Request::is('vendedores*') ? 'class="active"' : '' !!}>
                                             <a href="{{ URL::to('vendedores') }}">
@@ -389,6 +408,7 @@
                                             </a>
                                         </li>
                                     @endcan
+                                    <hr class="divider-menu">
                                     @can('Productos menu')
                                         <li {!! Request::is('productos*') ? 'class="active"' : '' !!}>
                                             <a href="{{ URL::to('productos') }}">
@@ -413,22 +433,7 @@
                                             </a>
                                         </li>
                                     @endcan
-                                    @can('Proveedores menu')
-                                        <li {!! Request::is('proveedores*') ? 'class="active"' : '' !!}>
-                                            <a href="{{ URL::to('proveedores') }}">
-                                                <i class="fas fa-truck-loading "></i> <span
-                                                    style="color:#000;">Proveedores</span>
-                                            </a>
-                                        </li>
-                                    @endcan
-                                    @can('Tipos de proveedores menu')
-                                        <li {!! Request::is('tiposProveedores*') ? 'class="active"' : '' !!}>
-                                            <a href="{{ URL::to('tiposProveedores') }}">
-                                                <i class="fas fa-address-book"></i> <span style="color:#000;">Tipos de
-                                                    Proveedores</span>
-                                            </a>
-                                        </li>
-                                    @endcan
+                                    <hr class="divider-menu">
                                     @can('Categoria de proyectos menu')
                                         <li {!! Request::is('proyectos*') ? 'class="active"' : '' !!}>
                                             <a href="{{ URL::to('proyectos') }}">
@@ -437,6 +442,7 @@
                                             </a>
                                         </li>
                                     @endcan
+                                    <hr class="divider-menu">
                                     <!--li  {!! Request::is('subproyectos*') ? 'class="active"' : '' !!}>
                                                       <a href="{{ URL::to('subproyectos') }}">
                                                         <i class="far fa-folder-open "></i> Tipo de Proyecto
@@ -449,6 +455,7 @@
                                             </a>
                                         </li>
                                     @endcan
+                                    <hr class="divider-menu">
                                     @can('Unidades de medida menu')
                                         <li {!! Request::is('unidadesMedida*') ? 'class="active"' : '' !!}>
                                             <a href="{{ URL::to('unidadesMedida') }}">
