@@ -701,7 +701,7 @@ class ProspectosController extends Controller
         $unidades_medida = UnidadMedida::orderBy('simbolo')->get();
 
 
-        $numero_siguiente = ProspectoCotizacion::select('id')->orderBy('id', 'desc')->first()->id + 1;
+        $numero_siguiente = !is_null(ProspectoCotizacion::select('id')->orderBy('id', 'desc')->first()->id) ? ProspectoCotizacion::select('id')->orderBy('id', 'desc')->first()->id + 1: 1;
 
         $rfcs = [];
 
