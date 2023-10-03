@@ -720,7 +720,7 @@ class ProspectosController extends Controller
         );
 
 
-        return view('cotizacionesdirectas.create', compact('cotizaciones'));
+        // return view('cotizacionesdirectas.create', compact('cotizaciones'));
     }
     public function listado(Request $request)
     {
