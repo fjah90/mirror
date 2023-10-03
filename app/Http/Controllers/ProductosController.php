@@ -6,6 +6,7 @@ use App\Models\Categoria;
 use App\Models\CategoriaDescripcion;
 use App\Models\Producto;
 use App\Models\ProductoDescripcion;
+use App\Models\ProspectoCotizacionEntradaDescripcion;
 use App\Models\Proveedor;
 use App\Models\Subcategoria;
 use Illuminate\Http\Request;
@@ -266,8 +267,6 @@ class ProductosController extends Controller
                 $p = Producto::create($producto);
             }
 
-            //cargar las desripciones
-
             //descripciones en el orden del archvo
             $descripciones_tapices = [
                 "Ancho",
@@ -325,8 +324,6 @@ class ProductosController extends Controller
                     }
                 }
             }
-
-
 
         }
 
@@ -533,6 +530,14 @@ class ProductosController extends Controller
 
         $descripcion = ProductoDescripcion::findOrFail($producto_descripcion_id);
         $descripcion->update(['icono_visible' => $request['icono_visible']]);
+        if($producto_descripcion_id != $request->id){
+            // echo($request->id. " " . $producto_descripcion_id."<br>");
+            $entrada_descripcion = ProspectoCotizacionEntradaDescripcion::findOrFail($request->id);
+            // dd($entrada_descripcion);
+
+            $entrada_descripcion->update(['icono_visible' => $request['icono_visible']]);
+            $entrada_descripcion->save();
+        }
         $descripcion->save();
         return response()->json(['success' => true, "error" => false], 200);
     }

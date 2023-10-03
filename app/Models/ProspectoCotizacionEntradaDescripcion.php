@@ -8,7 +8,7 @@ class ProspectoCotizacionEntradaDescripcion extends Model
 {
     protected $table = 'prospectos_cotizaciones_entradas_descripciones';
 
-    protected $fillable = ['entrada_id', 'nombre', 'name', 'valor', 'valor_ingles'];
+    protected $fillable = ['entrada_id', 'nombre', 'name', 'valor', 'icono_visible', 'valor_ingles'];
 
     /**
      * ---------------------------------------------------------------------------
