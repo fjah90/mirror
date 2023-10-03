@@ -696,13 +696,14 @@ class ProspectosController extends Controller
                 $producto->ficha_tecnica = asset('storage/' . $producto->ficha_tecnica);
             }
         }
+
         $condiciones = CondicionCotizacion::all();
         $observaciones = ObservacionCotizacion::all();
         $unidades_medida = UnidadMedida::orderBy('simbolo')->get();
 
 
-        $numero_siguiente = !is_null(ProspectoCotizacion::select('id')->orderBy('id', 'desc')->first()->id) ? ProspectoCotizacion::select('id')->orderBy('id', 'desc')->first()->id + 1: 1;
-
+        $numero_siguiente = isset(ProspectoCotizacion::select('id')->orderBy('id', 'desc')->first()->id) && !is_null(ProspectoCotizacion::select('id')->orderBy('id', 'desc')->first()->id) ? ProspectoCotizacion::select('id')->orderBy('id', 'desc')->first()->id + 1: 1;
+        // dd($numero_siguiente);
         $rfcs = [];
 
 
@@ -736,7 +737,7 @@ class ProspectosController extends Controller
         );
 
 
-        return view('cotizacionesdirectas.create', compact('cotizaciones'));
+        // return view('cotizacionesdirectas.create', compact('cotizaciones'));
     }
     public function listado(Request $request)
     {
