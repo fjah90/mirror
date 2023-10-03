@@ -16,7 +16,7 @@
 {{-- Page content --}}
 @section('content')
     <!-- Content Header (Page header) -->
-    <section class="content-header" style="background-color:#12160F; color:#B68911;">
+    <section class="content-header" style="background-color:#12160F; color:#caa678;">
         <h1>Clientes</h1>
     </section>
     <!-- Main content -->
@@ -24,7 +24,7 @@
         <tabs>
             <tab title="Nacionales">
                 <div class="panel">
-                    <div class="panel-heading" style="background-color:#12160F; color:#B68911;">
+                    <div class="panel-heading" style="background-color:#12160F; color:#caa678;">
                         <h3 class="panel-title">
                             <div class="p-10">
                                 Clientes Nacionales
@@ -114,7 +114,7 @@
 
             <tab title="Extranjeros">
                 <div class="panel">
-                    <div class="panel-heading" style="background-color:#12160F; color:#B68911;">
+                    <div class="panel-heading" style="background-color:#12160F; color:#caa678;">
                         <h3 class="panel-title">
                             <div class="p-10">
                                 Clientes Extranjeros

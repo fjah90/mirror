@@ -17,7 +17,7 @@
 {{-- Page content --}}
 @section('content')
     <!-- Content Header (Page header) -->
-    <section class="content-header" style="background-color:#12160F; color:#B68911;">
+    <section class="content-header" style="background-color:#12160F; color:#caa678;">
         <h1 style="font-weight: bolder;">Usuarios</h1>
     </section>
     <!-- Main content -->
@@ -25,7 +25,7 @@
       <div class="row">
         <div class="col-lg-12">
           <div class="panel ">
-            <div class="panel-heading" style="background-color:#12160F; color:#B68911;">
+            <div class="panel-heading" style="background-color:#12160F; color:#caa678;">
               <h3 class="panel-title">Nuevo Usuario</h3>
             </div>
             <div class="panel-body">
@@ -90,7 +90,7 @@
                     <div class="row" style="margin-top:25px;">
                       <div class="col-sm-12 text-right">
                         <a href="{{route('usuarios.index')}}" class="btn btn-default" style="color:#000; background-color:#B3B3B3;">Regresar</a>
-                        <button type="submit" class="btn btn-dark" :disabled="cargando" style="background-color:#12160F; color:#B68911;">
+                        <button type="submit" class="btn btn-dark" :disabled="cargando" style="background-color:#12160F; color:#caa678;">
                           <i class="fa fa-save"></i>
                           Guardar Usuario
                         </button>

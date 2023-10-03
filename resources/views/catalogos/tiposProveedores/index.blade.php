@@ -16,7 +16,7 @@
 {{-- Page content --}}
 @section('content')
 <!-- Content Header (Page header) -->
-<section class="content-header" style="background-color:#12160F; color:#B68911;">
+<section class="content-header" style="background-color:#12160F; color:#caa678;">
     <h1>Tipos de Proveedores</h1>
 </section>
 <!-- Main content -->
@@ -24,7 +24,7 @@
   <div class="row">
     <div class="col-lg-12">
       <div class="panel">
-        <div class="panel-heading" style="background-color:#12160F; color:#B68911;">
+        <div class="panel-heading" style="background-color:#12160F; color:#caa678;">
           <h3 class="panel-title text-right">
             <span class="pull-left p-10">Lista de Tipos de Proveedores</span>
             <span style="visibility:hidden">.</span>

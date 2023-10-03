@@ -162,7 +162,7 @@ Dashboard | @parent
 {{-- Page content --}}
 @section('content')
 <!-- Content Header (Page header) -->
-<section class="content-header" style="background-color:#12160F; color:#B68911;">
+<section class="content-header" style="background-color:#12160F; color:#caa678;">
   <h1>Dashboard</h1>
 </section>
 <!-- Main content -->
@@ -260,7 +260,7 @@ Dashboard | @parent
   <div class="row">
     <div class="col-sm-12">
       <div class="panel product-details">
-        <div class="panel-heading" style="background-color:#12160F; color:#B68911;">
+        <div class="panel-heading" style="background-color:#12160F; color:#caa678;">
           <h3 class="panel-title">Próximas Actividades</h3>
         </div>
         <div class="panel-body">
@@ -371,7 +371,7 @@ Dashboard | @parent
   <div class="row">
     <div class="col-sm-12">
       <div class="panel product-details">
-        <div class="panel-heading" style="background-color:#12160F; color:#B68911;">
+        <div class="panel-heading" style="background-color:#12160F; color:#caa678;">
           <h3 class="panel-title">Ultimas Cotizaciones</h3>
         </div>
         <div class="panel-body">
@@ -482,7 +482,7 @@ Dashboard | @parent
   <div class="row">
     <div class="col-sm-12">
       <div class="panel product-details">
-        <div class="panel-heading" style="background-color:#12160F; color:#B68911;">
+        <div class="panel-heading" style="background-color:#12160F; color:#caa678;">
           <h3 class="panel-title">Ordenes de Compra Pendientes De Aprobar</h3>
         </div>
         <div class="panel-body">
@@ -642,7 +642,7 @@ Dashboard | @parent
   <div class="row">
     <div class="col-sm-12">
       <div class="panel product-details">
-        <div class="panel-heading" style="background-color:#12160F; color:#B68911;">
+        <div class="panel-heading" style="background-color:#12160F; color:#caa678;">
           <h3 class="panel-title">Ultimas Cotizaciones Aceptadas</h3>
         </div>
         <div class="panel-body">
@@ -749,7 +749,7 @@ Dashboard | @parent
   <div class="row">
       <div class="col-sm-12">
           <div class="panel product-details">
-            <div class="panel-heading" style="background-color:#12160F; color:#B68911;">
+            <div class="panel-heading" style="background-color:#12160F; color:#caa678;">
               <h3 class="panel-title">Total Facturado VS Cobrado</h3>
             </div>
             <div class="panel-body">

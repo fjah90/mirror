@@ -13,7 +13,7 @@
 @section('content')
     <!-- Content Header (Page header) -->
 
-    <section class="content-header" style="background-color:#12160F; color:#B68911;">
+    <section class="content-header" style="background-color:#12160F; color:#caa678;">
         <h1>Nuevo Cliente {{ ($nacional)?"Nacional":"Extranjero" }}</h1>
     </section>
     <!-- Main content -->
@@ -22,7 +22,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="panel">
-                        <div class="panel-heading" style="background-color:#12160F; color:#B68911;">
+                        <div class="panel-heading" style="background-color:#12160F; color:#caa678;">
                             <h3 class="panel-title">Datos Generales</h3>
                         </div>
                         <div class="panel-body">
@@ -109,7 +109,7 @@
                     </div>
 
                     <div class="panel ">
-                        <div class="panel-heading" style="background-color:#12160F; color:#B68911;">
+                        <div class="panel-heading" style="background-color:#12160F; color:#caa678;">
                             <h3 class="panel-title">Dirección</h3>
                         </div>
                         <div class="panel-body">
@@ -173,7 +173,7 @@
                     </div>
 
                     <div class="panel">
-                        <div class="panel-heading" style="background-color:#12160F; color:#B68911;">
+                        <div class="panel-heading" style="background-color:#12160F; color:#caa678;">
                             <h3 class="panel-title">Otros</h3>
                         </div>
                         <div class="panel-body">
@@ -200,7 +200,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="panel ">
-                        <div class="panel-heading" style="background-color:#12160F; color:#B68911;">
+                        <div class="panel-heading" style="background-color:#12160F; color:#caa678;">
                             <h3 class="panel-title">Contactos del Cliente</h3>
                         </div>
                         <div class="panel-body">
@@ -243,7 +243,7 @@
                             Regresar
                         </a>
                     @endif
-                    <button type="submit" class="btn btn-dark" :disabled="cargando" style="background-color:#12160F; color:#B68911;">
+                    <button type="submit" class="btn btn-dark" :disabled="cargando" style="background-color:#12160F; color:#caa678;">
                         <i class="fas fa-save"></i>
                         Guardar Cliente
                     </button>

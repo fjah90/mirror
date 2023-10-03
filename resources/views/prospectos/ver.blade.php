@@ -20,7 +20,7 @@
 {{-- Page content --}}
 @section('content')
 
-    <section class="content-header" style="background-color:#12160F; color:#B68911;">
+    <section class="content-header" style="background-color:#12160F; color:#caa678;">
         <h1 style="font-weight: bolder;">Proyecto {{ $prospecto->nombre }}</h1>
     </section>
     <!-- Main content -->
@@ -28,7 +28,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="panel">
-                    <div class="panel-heading" style="background-color:#12160F; color:#B68911;">
+                    <div class="panel-heading" style="background-color:#12160F; color:#caa678;">
                         <h3 class="panel-title">Datos del Proyecto</h3>
                     </div>
                     <div class="panel-body">
@@ -105,7 +105,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="panel">
-                    <div class="panel-heading" style="background-color:#12160F; color:#B68911;">
+                    <div class="panel-heading" style="background-color:#12160F; color:#caa678;">
                         <h3 class="panel-title">Actividades Realizadas</h3>
                     </div>
                 </div>
@@ -196,7 +196,7 @@
         {{--  <div class="row">
             <div class="col-lg-12">
                 <div class="panel">
-                    <div class="panel-heading" style="background-color:#12160F; color:#B68911;">
+                    <div class="panel-heading" style="background-color:#12160F; color:#caa678;">
                         <h4 class="panel-title">Cotizaciones Realizadas</h4>
                     </div>
                     <div class="panel-body">
@@ -314,7 +314,7 @@
         {{--  <div class="row">
             <div class="col-lg-12">
                 <div class="panel">
-                    <div class="panel-heading" style="background-color:#12160F; color:#B68911;">
+                    <div class="panel-heading" style="background-color:#12160F; color:#caa678;">
                         <h4 class="panel-title">Cotizaciones Aprobadas</h4>
                     </div>
                     <div class="panel-body">
@@ -432,7 +432,7 @@
         {{-- <div class="row">
             <div class="col-lg-12">
               <div class="panel">
-                <div class="panel-heading" style="background-color:#12160F; color:#B68911;">
+                <div class="panel-heading" style="background-color:#12160F; color:#caa678;">
                     <h4 class="panel-title">Lista de Ordenes de Compra</h4>
                 </div>
                 <div class="panel-body">
@@ -444,7 +444,7 @@
                       <div class="table-responsive">
                         <table id="tabla" class="table table-bordred">
                           <thead>
-                            <tr style="background-color:#12160F; color:#B68911;">
+                            <tr style="background-color:#12160F; color:#caa678;">
                               <th class="color_text">#</th>
                               <th class="color_text">Numero</th>
                               <th class="color_text">Proveedor</th>
@@ -535,7 +535,7 @@
         {{-- <div class="row">
             <div class="col-lg-12">
               <div class="panel">
-                <div class="panel-heading" style="background-color:#12160F; color:#B68911;">
+                <div class="panel-heading" style="background-color:#12160F; color:#caa678;">
                   <h3 class="panel-title">
                     <span class="p-10">Lista de Cuentas por Cobrar</span>
                   </h3>
@@ -544,7 +544,7 @@
                   <div class="table-responsive">
                     <table class="table table-bordred" id="tabla_cuentas">
                       <thead>
-                        <tr style="background-color:#12160F; color:#B68911;">
+                        <tr style="background-color:#12160F; color:#caa678;">
                           <th class="color_text">#</th>
                           <th class="color_text"># Cotizacion</th>
                           <th class="color_text">Ejecutivo</th>
@@ -604,7 +604,7 @@
         {{-- <div class="row">
             <div class="col-lg-12">
               <div class="panel">
-                <div class="panel-heading" style="background-color:#12160F; color:#B68911;">
+                <div class="panel-heading" style="background-color:#12160F; color:#caa678;">
                   <h3 class="panel-title">
                     <span class="p-10">Lista de Ordenes en Proceso</span>
                   </h3>
@@ -614,7 +614,7 @@
                     <table id="tabla_proceso" class="table table-bordred" style="width:100%;"
                       data-page-length="-1">
                       <thead>
-                        <tr style="background-color:#12160F; color:#B68911;">
+                        <tr style="background-color:#12160F; color:#caa678;">
                           <th class="color_text">Orden Numero</th>
                           <th class="color_text">#</th>
                           <th class="color_text">Cliente</th>
