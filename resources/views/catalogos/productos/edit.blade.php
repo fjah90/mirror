@@ -16,7 +16,7 @@
 {{-- Page content --}}
 @section('content')
     <!-- Content Header (Page header) -->
-    <section class="content-header" style="background-color:#12160F; color:#B68911;">
+    <section class="content-header" style="background-color:#12160F; color:#caa678;">
         <h1>Productos</h1>
     </section>
     <!-- Main content -->
@@ -24,7 +24,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="panel ">
-                    <div class="panel-heading" style="background-color:#12160F; color:#B68911;">
+                    <div class="panel-heading" style="background-color:#12160F; color:#caa678;">
                         <h3 class="panel-title">Editar Productos</h3>
                     </div>
                     <div class="panel-body">
@@ -235,7 +235,7 @@
                                             Ficha Técnica
                                             <a v-if="producto.ficha_ori" :href="producto.ficha_ori" target="_blank"
                                                 class="btn btn-md btn-dark"
-                                                style="cursor:pointer; background-color:#12160F; color:#B68911;">
+                                                style="cursor:pointer; background-color:#12160F; color:#caa678;">
                                                 <i class="fas fa-eye"></i>
                                             </a>
                                         </label>
@@ -254,7 +254,7 @@
                                         Regresar
                                     </a>
                                     <button type="submit" class="btn btn-dark" :disabled="cargando"
-                                        style="background-color:#12160F; color:#B68911;">
+                                        style="background-color:#12160F; color:#caa678;">
                                         <i class="fas fa-save"></i>
                                         Actualizar Producto
                                     </button>

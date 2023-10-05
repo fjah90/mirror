@@ -22,7 +22,7 @@
 {{-- Page content --}}
 @section('content')
     <!-- Content Header (Page header) -->
-    <section class="content-header" style="background-color:#12160F; color:#B68911;">
+    <section class="content-header" style="background-color:#12160F; color:#caa678;">
         <h1 style="font-weight: bolder;">Proyectos</h1>
     </section>
     <!-- Main content -->
@@ -30,7 +30,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="panel ">
-                    <div class="panel-heading" style="background-color:#12160F; color:#B68911;">
+                    <div class="panel-heading" style="background-color:#12160F; color:#caa678;">
                         <h3 class="panel-title">Editar Proyecto</h3>
                     </div>
                     <div class="panel-body">
@@ -149,7 +149,7 @@
                                         </a>
                                     @endif
                                     <button type="submit" class="btn btn-dark" :disabled="cargando"
-                                        style="background-color:#12160F; color:#B68911;">
+                                        style="background-color:#12160F; color:#caa678;">
                                         <i class="fas fa-save"></i>
                                         Actualizar Datos
                                     </button>
@@ -164,7 +164,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="panel ">
-                    <div class="panel-heading" style="background-color:#12160F; color:#B68911;">
+                    <div class="panel-heading" style="background-color:#12160F; color:#caa678;">
                         <h3 class="panel-title">Actividades Realizadas</h3>
                     </div>
                     <div class="panel-body">
@@ -317,7 +317,7 @@
 
                                     <div class="col-sm-2" style="padding-top: 25px;">
                                         <button type="button" class="btn btn-primary" @click="agregarProducto()"
-                                            style="color:#B68911; background-color:#12160F;">
+                                            style="color:#caa678; background-color:#12160F;">
                                             Agregar
                                         </button>
                                     </div>
@@ -355,7 +355,7 @@
                             <div class="row">
                                 <div class="col-md-12 text-right">
                                     <button type="submit" class="btn btn-DARK" :disabled="cargando"
-                                        style="background-color:#12160F; color:#B68911;">
+                                        style="background-color:#12160F; color:#caa678;">
                                         <i class="fas fa-save"></i>
                                         Guardar Actividad reciente
                                     </button>
@@ -467,7 +467,7 @@
                                         </a>
                                     @endif
                                     <button type="submit" class="btn btn-DARK" :disabled="cargando"
-                                        style="background-color:#12160F; color:#B68911;">
+                                        style="background-color:#12160F; color:#caa678;">
                                         <i class="fas fa-save"></i>
                                         Guardar Proxima Actividad
                                     </button>

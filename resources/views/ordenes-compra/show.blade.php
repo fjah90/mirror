@@ -16,7 +16,7 @@
 {{-- Page content --}}
 @section('content')
   <!-- Content Header (Page header) -->
-  <section class="content-header" style="background-color:#12160F; color:#B68911;">
+  <section class="content-header" style="background-color:#12160F; color:#caa678;">
     <h1 style="font-weight: bolder;">Ordenes de Compra</h1>
   </section>
   <!-- Main content -->
@@ -24,7 +24,7 @@
     <div class="row">
       <div class="col-lg-12">
         <div class="panel">
-          <div class="panel-heading" style="background-color:#12160F; color:#B68911;">
+          <div class="panel-heading" style="background-color:#12160F; color:#caa678;">
             <h3 class="panel-title">Orden Compra Proyecto {{$proyecto->proyecto}} // {{$cotizacion->numero}}</h3>
           </div>
           <div class="panel-body">
@@ -115,7 +115,7 @@
                 <div class="table-responsive">
                   <table class="table table-bordred">
                     <thead>
-                      <tr style="background-color:#12160F; color:#B68911;">
+                      <tr style="background-color:#12160F; color:#caa678;">
                         <th class="color_text">Producto</th>
                         <th class="color_text">Área</th>
                         <th class="color_text">Comentarios</th>

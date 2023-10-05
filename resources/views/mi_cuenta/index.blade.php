@@ -15,7 +15,7 @@
 {{-- Page content --}}
 @section('content')
     <!-- Content Header (Page header) -->
-    <section class="content-header" style="background-color:#12160F; color:#B68911;">
+    <section class="content-header" style="background-color:#12160F; color:#caa678;">
         <h1>Mi Cuenta</h1>
     </section>
     <!-- Main content -->
@@ -23,7 +23,7 @@
       <div class="row">
         <div class="col-lg-12">
           <div class="panel ">
-            <div class="panel-heading" style="background-color:#12160F; color:#B68911;">
+            <div class="panel-heading" style="background-color:#12160F; color:#caa678;">
               <h3 class="panel-title">{{$usuario->name}}</h3>
             </div>
             <div class="panel-body">
@@ -81,7 +81,7 @@
                   <div class="col-md-3">
                     <div class="row">
                       <div class="col-sm-12 text-right">
-                        <button style="margin-top:25px; color:#B68911; background-color:#12160F;" type="submit" class="btn btn-DARK" :disabled="cargando">
+                        <button style="margin-top:25px; color:#caa678; background-color:#12160F;" type="submit" class="btn btn-DARK" :disabled="cargando">
                           <i class="fas fa-save"></i>
                           Actualizar Datos
                         </button>

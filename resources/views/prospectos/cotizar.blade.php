@@ -27,7 +27,7 @@
 {{-- Page content --}}
 @section('content')
     <!-- Content Header (Page header) -->
-    <section class="content-header" style="background-color:#12160F; color:#B68911;">
+    <section class="content-header" style="background-color:#12160F; color:#caa678;">
         <h1 style="font-weight: bolder;">Proyecto {{ $prospecto->nombre }}</h1>
     </section>
     <!-- Main content -->
@@ -35,7 +35,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="panel">
-                    <div class="panel-heading" style="background-color:#12160F; color:#B68911;">
+                    <div class="panel-heading" style="background-color:#12160F; color:#caa678;">
                         <h3 class="panel-title">Cotizar Proyecto</h3>
                     </div>
                     <div class="panel-body">
@@ -72,7 +72,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="panel">
-                    <div class="panel-heading" style="background-color:#12160F; color:#B68911;">
+                    <div class="panel-heading" style="background-color:#12160F; color:#caa678;">
                         <h4 class="panel-title">Cotizaciones Realizadas</h4>
                     </div>
                     <div class="panel-body">
@@ -173,7 +173,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="panel">
-                    <div class="panel-heading" style="background-color:#12160F; color:#B68911;">
+                    <div class="panel-heading" style="background-color:#12160F; color:#caa678;">
                         <h4 class="panel-title">Nueva Cotización</h4>
                     </div>
                     <div class="panel-body">
@@ -543,7 +543,7 @@
                                     <div class="col-md-6"
                                         style="display: flex; justify-content: flex-end; align-items: flex-end; padding-top: 40px;">
                                         <button type="button" class="btn btn-dark" @click="sumaTotal()"
-                                            style="background-color:#12160F; color:#B68911;">
+                                            style="background-color:#12160F; color:#caa678;">
                                             <i v-if="!cargando" class="fas fa-calculator"></i>
                                             <i v-else class="fas fa-refresh animation-rotate"></i>
                                             Recalcular
@@ -690,7 +690,7 @@
                             <div class="row">
                                 <div class="col-md-2">
                                     <button type="button" class="btn btn-dark" @click="modalProducto=true"
-                                        style="color:#B68911; background-color:#12160F;">
+                                        style="color:#caa678; background-color:#12160F;">
                                         Registrar producto
                                     </button>
                                 </div>
@@ -820,7 +820,7 @@
                                 <div class="col-md-12 text-right">
                                     <div class="form-group" style="margin-top:25px;">
                                         <button type="submit" class="btn btn-dark"
-                                            style="background-color:#12160F; color:#B68911;">
+                                            style="background-color:#12160F; color:#caa678;">
                                             <i class="fas fa-plus"></i>
                                             Agregar Producto
                                         </button>
@@ -885,7 +885,7 @@
                                     </a>
                                     <button type="button" class="btn btn-dark" @click="guardar()"
                                         :disabled="cargando || edicionEntradaActiva"
-                                        style="background-color:#12160F; color:#B68911;">
+                                        style="background-color:#12160F; color:#caa678;">
                                         <i v-if="!cargando" class="fas fa-save"></i>
                                         <i v-else class="fas fa-refresh animation-rotate"></i>
                                         Guardar Cotización
@@ -1004,7 +1004,7 @@
         <!-- /.Enviar Modal -->
 
         <!-- Aceptar Modal -->
-        <modal style="color:#B68911, background-color:#12160F;" v-model="openAceptar"
+        <modal style="color:#caa678, background-color:#12160F;" v-model="openAceptar"
             :title="'Aceptar Cotizacion ' + aceptar.cotizacion_id" :footer="false">
             <form class="" @submit.prevent="aceptarCotizacion()">
                 <div class="form-group">
@@ -1048,7 +1048,7 @@
         <!-- /.Aceptar Modal -->
 
         <!-- Nuevo Producto Modal-->
-        <modal style="color:#B68911; background-color:#12160F;" v-model="modalProducto" title="Registrar Producto"
+        <modal style="color:#caa678; background-color:#12160F;" v-model="modalProducto" title="Registrar Producto"
             :footer="false">
             <iframe id="theFrame" src="{{ url('/') }}/productos/crear?layout=iframe"
                 style="width:100%; height:700px;" frameborder="0">

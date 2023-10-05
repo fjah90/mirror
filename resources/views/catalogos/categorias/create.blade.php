@@ -16,7 +16,7 @@ Nuevo Tipo | @parent
 {{-- Page content --}}
 @section('content')
 <!-- Content Header (Page header) -->
-<section class="content-header" style="background-color:#12160F; color:#B68911;">
+<section class="content-header" style="background-color:#12160F; color:#caa678;">
   <h1 style="font-weight: bolder;">Tipos Productos</h1>
 </section>
 <!-- Main content -->
@@ -24,7 +24,7 @@ Nuevo Tipo | @parent
   <div class="row">
     <div class="col-lg-12">
       <div class="panel ">
-        <div class="panel-heading" style="background-color:#12160F; color:#B68911;">
+        <div class="panel-heading" style="background-color:#12160F; color:#caa678;">
           <h3 class="panel-title">Nuevo Tipo</h3>
         </div>
         <div class="panel-body">
@@ -100,7 +100,7 @@ Nuevo Tipo | @parent
             </div>
             <div class="row">
               <div class="col-md-12 text-right">
-                <button style="margin-top:25px; background-color:#12160F; color:#B68911;" type="submit" class="btn btn-dark">
+                <button style="margin-top:25px; background-color:#12160F; color:#caa678;" type="submit" class="btn btn-dark">
                   <i class="fas fa-save"></i>
                   Agregar Descripcion
                 </button>

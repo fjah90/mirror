@@ -16,7 +16,7 @@
 {{-- Page content --}}
 @section('content')
   <!-- Content Header (Page header) -->
-  <section class="content-header" style="background-color:#12160F; color:#B68911;">
+  <section class="content-header" style="background-color:#12160F; color:#caa678;">
     <h1>Unidades de Medida</h1>
   </section>
   <!-- Main content -->
@@ -24,7 +24,7 @@
     <div class="row">
       <div class="col-lg-12">
         <div class="panel ">
-          <div class="panel-heading" style="background-color:#12160F; color:#B68911;">
+          <div class="panel-heading" style="background-color:#12160F; color:#caa678;">
             <h3 class="panel-title">Editar Unidad de Medida</h3>
           </div>
           <div class="panel-body">
@@ -60,7 +60,7 @@
                   <a class="btn btn-default" href="{{route('unidadesMedida.index')}}" style="margin-right:20px; color:#000; background-color:#B3B3B3">
                     Regresar
                   </a>
-                  <button type="submit" class="btn btn-dark" :disabled="cargando" style="background-color:#12160F; color:#B68911;">
+                  <button type="submit" class="btn btn-dark" :disabled="cargando" style="background-color:#12160F; color:#caa678;">
                     <i class="fas fa-save"></i>
                     Actualizar Tipo
                   </button>
@@ -75,7 +75,7 @@
     <div class="row">
       <div class="col-lg-12">
         <div class="panel ">
-          <div class="panel-heading" style="background-color:#12160F; color:#B68911;">
+          <div class="panel-heading" style="background-color:#12160F; color:#caa678;">
             <h3 class="panel-title">Conversiones de la Unidad</h3>
           </div>
           <div class="panel-body">
