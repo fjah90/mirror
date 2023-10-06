@@ -14,7 +14,7 @@ class AddPrecioArquitectoToProductosTable extends Migration
     public function up()
     {
         Schema::table('productos', function (Blueprint $table) {
-            $table->double('precio_arquitecto')->after('precio_comercial');
+            $table->decimal('precio_arquitecto', 12, 2)->default(0);
         });
     }
 
