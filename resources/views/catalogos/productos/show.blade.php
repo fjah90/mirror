@@ -142,7 +142,7 @@
                                                                 <td><img src="{{ asset('images/icon-abrasion.jpg') }}"
                                                                         id="Abrasion" style="width:50px; height:50px;">
                                                                 </td>
-                                                            @elseif($descripcion->descripcionNombre->nombre == 'Decoloracion a la luz')
+                                                            @elseif($descripcion->descripcionNombre->nombre == 'Decoloración a la luz')
                                                                 <td><img src="{{ asset('images/icon-lightfastness.png') }}"
                                                                         id="Decoloracion_de_luz"
                                                                         style="width:50px; height:50px;"></td>
