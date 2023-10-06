@@ -139,7 +139,7 @@
                                                                         id="Flamabilidad" style="width:50px; height:50px;">
                                                                 </td>
                                                             @elseif($descripcion->descripcionNombre->nombre == 'Abrasión')
-                                                                <td><img src="{{ asset('images/icon-abrasion.png') }}"
+                                                                <td><img src="{{ asset('images/icon-abrasion.jpg') }}"
                                                                         id="Abrasion" style="width:50px; height:50px;">
                                                                 </td>
                                                             @elseif($descripcion->descripcionNombre->nombre == 'Decoloracion a la luz')
