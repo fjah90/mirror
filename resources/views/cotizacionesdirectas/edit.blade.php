@@ -1593,7 +1593,7 @@
                         case 3:
                             this.entrada.precio = this.entrada.producto.precio_distribuidor;
                             break;
-                        case 4:
+                        case 5:
                             this.entrada.precio = this.entrada.producto.precio_arquitecto;
                             break;
                     }
@@ -1718,6 +1718,7 @@
                             this.entrada.fotos.push(this.$refs['fotos'].files[i]);
                     }
                     console.log(this.cliente)
+                    console.log(this.entrada.precio)
                     // console.log(this.factor_porcentual)
 
                     // let factorPorcentual = this.factor_porcentual > 0 ? (this.entrada.precio * this

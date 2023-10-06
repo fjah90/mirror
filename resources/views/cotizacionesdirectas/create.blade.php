@@ -1091,7 +1091,7 @@
                 },
             },
             mounted() {
-                console.log(this.cliente);
+                // console.log(this.cliente);
                 this.$refs.fechaActual = document.querySelector('#fechaActual');
                 this.actualizarFechaActual();
                 let self = this; // ámbito de vue
@@ -1605,12 +1605,12 @@
                         case 3:
                             this.entrada.precio = this.entrada.producto.precio_distribuidor;
                             break;
-                        case 4:
+                        case 5:
                             this.entrada.precio = this.entrada.producto.precio_arquitecto;
                             break;
                         
                     }
-                    
+                    console.log(this.entrada.precio)
                     this.entrada.descripciones = [];
                     prod.descripciones.forEach(function(desc) {
                         this.entrada.descripciones.push({
@@ -1730,7 +1730,7 @@
                             this.entrada.fotos.push(this.$refs['fotos'].files[i]);
                     }
                     console.log(this.cliente)
-                    console.log(this.factor_porcentual)
+                    console.log(this.entrada.precio)
 
                     // let factorPorcentual = this.factor_porcentual > 0 ? (this.entrada.precio * this
                     //         .factor_porcentual) / 100 :

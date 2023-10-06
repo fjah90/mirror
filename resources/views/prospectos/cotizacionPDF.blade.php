@@ -837,6 +837,17 @@
                                         @format_money($entrada->producto->precio_comercial)</td>
                                 @endif
                             @endif
+                            @if ($cliente->tipo->id >= 5)
+                                @if ($cliente->tipo->id == 5 && $entrada->producto->precio_residencial != $entrada->precio)
+                                    <td class="text-right border height:auto;"
+                                        style="width:16%; border-bottom: none; border-top: none;">
+                                        @format_money($entrada->precio)</td>
+                                @else
+                                    <td class="text-right border height:auto;"
+                                        style="width:16%; border-bottom: none; border-top: none;">
+                                        @format_money($entrada->producto->precio_arquitecto)</td>
+                                @endif
+                            @endif
                             @if ($cliente->tipo->id >= 3)
                                 @if ($cliente->tipo->id == 3 && $entrada->producto->precio_residencial != $entrada->precio)
                                     <td class="text-right border height:auto;"
