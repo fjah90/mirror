@@ -1709,6 +1709,9 @@
                         case 3:
                             this.entrada.precio = this.entrada.producto.precio_distribuidor;
                             break;
+                        case 4:
+                            this.entrada.precio = this.entrada.producto.precio_arquitecto;
+                            break;
                     }
                     // console.log(this.entrada.precio)
 

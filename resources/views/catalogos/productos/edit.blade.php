@@ -103,7 +103,7 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-md-3">
+                                <div class="col-md-2">
                                     <div class="form-group">
                                         <label class="control-label">Precio Compra <strong style="color: grey">
                                                 *</strong></label>
@@ -111,7 +111,7 @@
                                             v-model="producto.precio_unitario" required />
                                     </div>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-2">
                                     <div class="form-group">
                                         <label class="control-label">Precio Residencial <strong style="color: grey">
                                                 *</strong></label>
@@ -119,7 +119,7 @@
                                             v-model="producto.precio_residencial" required />
                                     </div>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-2">
                                     <div class="form-group">
                                         <label class="control-label">Precio Comercial <strong style="color: grey">
                                                 *</strong></label>
@@ -127,7 +127,15 @@
                                             v-model="producto.precio_comercial" required />
                                     </div>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label class="control-label">Precio Arquitecto <strong style="color: grey">
+                                                *</strong></label>
+                                        <input type="text" class="form-control" name="precio_arquitecto"
+                                            v-model="producto.precio_arquitecto" required />
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
                                     <div class="form-group">
                                         <label class="control-label">Precio Distribuidor <strong style="color: grey">
                                                 *</strong></label>
@@ -202,8 +210,7 @@
                                                                 class="glyphicon glyphicon-check"
                                                                 @click="chageVisibility(descripcion)"></i>
                                                             </i>
-                                                            <i v-else 
-                                                                class="glyphicon glyphicon-unchecked"
+                                                            <i v-else class="glyphicon glyphicon-unchecked"
                                                                 @click="chageVisibility(descripcion)"></i>
                                                             </i>
                                                             <input class="form-control" type="hidden"
@@ -337,16 +344,16 @@
             },
             methods: {
                 chageVisibility(descripcion) {
-                  
+
                     descripcion.icono_visible = !descripcion.icono_visible == 1 ? 1 : 0;
                     descripcion.isVisible = !descripcion.icono_visible ? false : true;
-                    
-                     var formData = objectToFormData(descripcion, {
+
+                    var formData = objectToFormData(descripcion, {
                         indices: true
                     });
 
                     this.cargando = true;
-                    axios.post('/productos/'+descripcion.id+'/updateVisibilidad', formData, {
+                    axios.post('/productos/' + descripcion.id + '/updateVisibilidad', formData, {
                             headers: {
                                 'Content-Type': 'multipart/form-data'
                             }

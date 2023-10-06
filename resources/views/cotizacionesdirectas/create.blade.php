@@ -1329,7 +1329,7 @@
                         id
                     }) => id === id_cliente);
                     this.contactos = cliente.contactos;
-                    this.factor_porcentual = cliente.tipo.factor_porcentual;
+                    // this.factor_porcentual = cliente.tipo.factor_porcentual;
                     this.tipo_cliente = cliente.tipo.id;
                     console.log(cliente)
                     console.log(this.tipo_cliente)
@@ -1605,6 +1605,10 @@
                         case 3:
                             this.entrada.precio = this.entrada.producto.precio_distribuidor;
                             break;
+                        case 4:
+                            this.entrada.precio = this.entrada.producto.precio_arquitecto;
+                            break;
+                        
                     }
                     
                     this.entrada.descripciones = [];
