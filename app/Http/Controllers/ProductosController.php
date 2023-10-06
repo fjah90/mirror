@@ -278,6 +278,7 @@ class ProductosController extends Controller
                 "Minimos de venta",
                 "Multiplos de venta",
                 "Tamaño de rollo",
+                "Rpeeat HV",
             ];
             $descripciones_telas = [
                 "Ancho",
