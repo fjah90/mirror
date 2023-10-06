@@ -99,6 +99,7 @@ class ProductosController extends Controller
             'precio_unitario'     => 'required',
             'precio_residencial'  => 'required',
             'precio_comercial'    => 'required',
+            'precio_arquitecto'   => 'required',
             'precio_distribuidor' => 'required',
             'nombre_material'     => 'required',
             'color'               => 'required',
@@ -133,6 +134,7 @@ class ProductosController extends Controller
             'color'               => $request->color,
             'precio_unitario'     => $request->precio_unitario,
             'precio_residencial'  => $request->precio_residencial,
+            'precio_arquitecto'   => $request->precio_arquitecto,
             'precio_comercial'    => $request->precio_comercial,
             'precio_distribuidor' => $request->precio_distribuidor,
         ]);
@@ -256,7 +258,8 @@ class ProductosController extends Controller
                 "precio_unitario"     => $row[4],
                 "precio_residencial"  => $row[5],
                 "precio_comercial"    => $row[6],
-                "precio_distribuidor" => $row[7],
+                "precio_arquitecto"   => $row[7],
+                "precio_distribuidor" => $row[8],
             ];
 
             $p = Producto::where('nombre', $row[0])->first();
@@ -415,6 +418,7 @@ class ProductosController extends Controller
             'precio_unitario'     => 'required',
             'precio_residencial'  => 'required',
             'precio_comercial'    => 'required',
+            'precio_arquitecto'   => 'required',
             'precio_distribuidor' => 'required',
             'nombre_material'     => 'required',
             'color'               => 'required'
@@ -435,6 +439,7 @@ class ProductosController extends Controller
             'precio_unitario',
             'precio_residencial',
             'precio_comercial',
+            'precio_arquitecto',
             'precio_distribuidor',
             'nombre_material',
             'color'
@@ -521,16 +526,16 @@ class ProductosController extends Controller
      * $producto_descripcion_id
      * @return \Illuminate\Http\Response
      */
-    public function updateVisibilidad(Request $request, $producto_descripcion_id )
+    public function updateVisibilidad(Request $request, $producto_descripcion_id)
     {
         $validator = Validator::make($request->all(), [
-            'icono_visible'        => 'required',
-            'id'        => 'required',
-        ]);  
+            'icono_visible' => 'required',
+            'id'            => 'required',
+        ]);
 
         $descripcion = ProductoDescripcion::findOrFail($producto_descripcion_id);
         $descripcion->update(['icono_visible' => $request['icono_visible']]);
-        if($producto_descripcion_id != $request->id){
+        if ($producto_descripcion_id != $request->id) {
             // echo($request->id. " " . $producto_descripcion_id."<br>");
             $entrada_descripcion = ProspectoCotizacionEntradaDescripcion::findOrFail($request->id);
             // dd($entrada_descripcion);
