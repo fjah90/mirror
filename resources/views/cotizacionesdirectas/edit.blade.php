@@ -1593,7 +1593,7 @@
                         case 3:
                             this.entrada.precio = this.entrada.producto.precio_distribuidor;
                             break;
-                        case 5:
+                        case 5: 
                             this.entrada.precio = this.entrada.producto.precio_arquitecto;
                             break;
                     }
