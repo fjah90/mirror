@@ -670,7 +670,7 @@
                             <th class="text-center" style="width:13%; padding:3px 0 1px;">Modelo</th>
                             <th class="text-center" style="width:13%; padding:3px 0 1px;">Imagen</th>
                             <th class="text-center" style="width:16%; padding:3px 0 1px;">Descripciones</th>
-                            <th class="text-center" style="width:16%; padding:3px 0 1px;">Precio Unitario (USD)</th>
+                            <th class="text-center" style="width:16%; padding:3px 0 1px;">Precio Unitario 1 (USD)</th>
                             @switch($cliente->tipo->id)
                                 @case(2)
                                     {{-- @if ($cliente->tipo->id >= 2) --}}
