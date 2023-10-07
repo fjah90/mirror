@@ -680,7 +680,6 @@
                                         (USD) </th>
                                     {{-- @endif --}}
                                 @break
-
                                 @case(5)
                                     {{-- @if ($cliente->tipo->id >= 3) --}}
                                     {{-- //mostrar si es Distribuidor --}}
@@ -688,7 +687,6 @@
                                         Arquitecto (USD) </th>
                                     {{-- @endif --}}
                                 @break
-
                                 @case(3)
                                     {{-- @if ($cliente->tipo->id >= 3) --}}
                                     {{-- //mostrar si es Distribuidor --}}
@@ -853,7 +851,6 @@
                                             @format_money($entrada->producto->precio_comercial)</td>
                                     @endif
                                 @break
-
                                 @case(5)
                                     @if ($cliente->tipo->id == 5 && $entrada->producto->precio_residencial != $entrada->precio)
                                         <td class="text-right border height:auto;"
@@ -865,7 +862,6 @@
                                             @format_money($entrada->producto->precio_arquitecto)</td>
                                     @endif
                                 @break
-
                                 @case(3)
                                     @if ($cliente->tipo->id == 3 && $entrada->producto->precio_residencial != $entrada->precio)
                                         <td class="text-right border height:auto;"
