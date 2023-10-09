@@ -19,7 +19,7 @@
 {{-- Page content --}}
 @section('content')
   <!-- Content Header (Page header) -->
-  <section class="content-header" style="background-color:#12160F; color:#caa678;">
+  <section class="content-header" style="background-color:#12160F; color:#B68911;">
     <h1 style="font-weight: bolder;">Tipos Productos</h1>
   </section>
   <!-- Main content -->
@@ -27,7 +27,7 @@
     <div class="row">
       <div class="col-lg-12">
         <div class="panel ">
-          <div class="panel-heading" style="background-color:#12160F; color:#caa678;">
+          <div class="panel-heading" style="background-color:#12160F; color:#B68911;">
             <h3 class="panel-title">Editar Tipo</h3>
           </div>
           <div class="panel-body">
@@ -53,7 +53,7 @@
                   <a class="btn btn-default" href="{{route('categorias.index')}}" style="margin-right: 20px; color:#000; background-color:#B3B3B3;">
                     Regresar
                   </a>
-                  <button type="submit" class="btn btn-dark" :disabled="cargando" style="background-color:#12160F; color:#caa678;">
+                  <button type="submit" class="btn btn-dark" :disabled="cargando" style="background-color:#12160F; color:#B68911;">
                     <i class="fas fa-save"></i>
                     Actualizar Tipo
                   </button>
@@ -110,7 +110,7 @@
               </div>
               <div class="row">
                 <div class="col-md-12 text-right">
-                  <button style="margin-top:25px; background-color:#12160F; color:#caa678;" type="submit" class="btn btn-dark">
+                  <button style="margin-top:25px; background-color:#12160F; color:#B68911;" type="submit" class="btn btn-dark">
                     <i class="fas fa-save"></i>
                     Agregar Descripcion
                   </button>
@@ -122,7 +122,7 @@
                 <div class="table-responsive">
                   <table id="tabla" class="table table-bordred">
                     <thead>
-                      <tr style="background-color:#12160F; color:#caa678;">
+                      <tr style="background-color:#12160F; color:#B68911;">
                         <th class="color_text">Orden</th>
                         <th class="color_text">Nombre</th>
                         <th class="color_text">Name</th>

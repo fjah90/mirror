@@ -47,7 +47,7 @@
 {{-- Page content --}}
 @section('content')
     <!-- Content Header (Page header) -->
-    <section class="content-header" style="background-color:#12160F; color:#caa678;">
+    <section class="content-header" style="background-color:#12160F; color:#B68911;">
         <h1 style="font-weight: bolder;">Prospectos</h1>
     </section>
     <!-- Main content -->
@@ -55,7 +55,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="panel">
-                    <div class="panel-heading" style="background-color:#12160F; color:#caa678;">
+                    <div class="panel-heading" style="background-color:#12160F; color:#B68911;">
 
                         <h3 class="panel-title">
                             <div class="p-10" style="display:inline-block">
@@ -121,11 +121,11 @@
                             </div>
 
                             <div class="p-10">
-                                <button style="background-color:#caa678; color:#12160F;" class="btn btn-sm btn-primary"
+                                <button style="background-color:#FFCE56; color:#12160F;" class="btn btn-sm btn-primary"
                                     @click="modalTareas=true">
                                     <i class="fas fa-star"></i> Tareas
                                 </button>
-                                <button style="background-color:#caa678; color:#12160F;" class="btn btn-sm btn-primary"
+                                <button style="background-color:#FFCE56; color:#12160F;" class="btn btn-sm btn-primary"
                                     @click="modalNotificaciones=true">
                                     <i class="fas fa-bell"></i>
                                     <div style="color: red; background-color:red;border-radius:50%;color:white;width:20px;height:20px;position: absolute ;margin-top: -34px;margin-left: 12px;"
@@ -136,20 +136,20 @@
                             <div class="row">
                                 <div class="col-md-12 text-right">
                                     <button type="submit" class="btn btn-dark"
-                                        style="background-color:#caa678; color:#12160F;">
+                                        style="background-color:#FFCE56; color:#12160F;">
                                         <a href="{{ route('prospectos.indexprospectos') }}" style="color:#000;"
                                             id="">
                                             <i class="fas fa-user-book"></i>TODOS
                                         </a>
                                     </button>
                                     <button type="submit" class="btn btn-dark"
-                                        style="background-color:#caa678; color:#12160F;">
+                                        style="background-color:#FFCE56; color:#12160F;">
                                         <a href="{{ url('/prospectos/Activo/indexprospectos') }}" style="color:#000;">
                                             <i class="fas fa-user-book"></i>ACTIVOS
                                         </a>
                                     </button>
                                     <button type="submit" class="btn btn-dark"
-                                        style="background-color:#caa678; color:#12160F;">
+                                        style="background-color:#FFCE56; color:#12160F;">
                                         <a href="{{ url('/prospectos/Cancelado/indexprospectos') }}" style="color:#000;">
                                             <i class="fas fa-user-book"></i>CANCELADOS
                                         </a>

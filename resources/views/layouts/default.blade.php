@@ -108,7 +108,7 @@
                                     alt="User Image">
                             </a>
                             <div class="content-profile">
-                                <h4 class="media-heading" style="color:#caa678">{{ auth()->user()->name }}</h4>
+                                <h4 class="media-heading" style="color:#FFCE56">{{ auth()->user()->name }}</h4>
                                 <p>{{ auth()->user()->email }}</p>
                                 <p></p>
                             </div>
@@ -118,7 +118,7 @@
                         <!-- Dashboard -->
                         <li {!! Request::is('dashboard') ? 'class="active"' : '' !!}>
                             <a href="{{ URL::to('dashboard') }}">
-                                <i class="menu-icon fas fa-home" style="color:#caa678; font-size: 20px;"></i>
+                                <i class="menu-icon fas fa-home" style="color:#FFCE56; font-size: 20px;"></i>
                                 <span class="mm-text" style="color:#9F9F9F;">INICIO</span>
                             </a>
                         </li>
@@ -128,7 +128,7 @@
                         @can('Prospectos menu')
                             <li {!! Request::is('prospectos/prospectos*') ? 'class="active"' : '' !!}>
                                 <a href="{{ URL::to('prospectos/prospectos') }}">
-                                    <i class="menu-icon fas fa-calendar-check" style="color:#caa678; font-size: 20px;"></i>
+                                    <i class="menu-icon fas fa-calendar-check" style="color:#FFCE56; font-size: 20px;"></i>
                                     <span class="mm-text" style="color:#9F9F9F;">Prospectos</span>
                                 </a>
                             </li>
@@ -137,7 +137,7 @@
                             <hr class="divider-menu">
                             <li {!! Request::is('prospectos/cotizaciones*') ? 'class="active"' : '' !!}>
                                 <a href="{{ URL::to('prospectos/cotizaciones') }}">
-                                    <i class="menu-icon fas fa-calendar-check" style="color:#caa678; font-size: 20px;"></i>
+                                    <i class="menu-icon fas fa-calendar-check" style="color:#FFCE56; font-size: 20px;"></i>
                                     <span class="mm-text " style="color:#9F9F9F;">Proyectos</span>
                                 </a>
                             </li>
@@ -158,7 +158,7 @@
                             <hr class="divider-menu">
                             <li {!! Request::is('prospectos*') ? 'class="active"' : '' !!}>
                                 <a href="{{ URL::to('prospectos') }}">
-                                    <i class="menu-icon fas fa-shopping-bag" style="color:#caa678; font-size: 20px;"></i>
+                                    <i class="menu-icon fas fa-shopping-bag" style="color:#FFCE56; font-size: 20px;"></i>
                                     <span class="mm-text" style="color:#9F9F9F;">Cotizaciones</span>
                                 </a>
                             </li>
@@ -166,7 +166,7 @@
                             <hr class="divider-menu">
                             <li {!! Request::is('prospectos*') ? 'class="active"' : '' !!}>
                                 <a href="{{ URL::to('cotizacionesdirectas') }}">
-                                    <i class="menu-icon fas fa-shopping-bag" style="color:#caa678; font-size: 20px;"></i>
+                                    <i class="menu-icon fas fa-shopping-bag" style="color:#FFCE56; font-size: 20px;"></i>
                                     <span class="mm-text" style="color:#9F9F9F;">Cotizaciones Directas</span>
                                 </a>
                             </li>
@@ -192,7 +192,7 @@
 
                         <!--
         @hasanyrole('Administrador|Usuario')
-    <li {!! Request::is('ordenes-proceso*') ? 'class="active"' : '' !!}  {!! Request::is('proyectos-aprobados*') ? 'class="active"' : '' !!}><a class="title"><i class="fa fa-cart-arrow-down" style="color:#caa678; font-size: 20px;"></i> <b style="color:#9F9F9F;">Ordenes Compra </b><span class="fa fa-chevron-down" style="color:#9F9F9F;"></span></a>
+    <li {!! Request::is('ordenes-proceso*') ? 'class="active"' : '' !!}  {!! Request::is('proyectos-aprobados*') ? 'class="active"' : '' !!}><a class="title"><i class="fa fa-cart-arrow-down" style="color:#FFCE56; font-size: 20px;"></i> <b style="color:#9F9F9F;">Ordenes Compra </b><span class="fa fa-chevron-down" style="color:#9F9F9F;"></span></a>
                                                    <ul class="nav child_menu">
                                                       <li  {!! Request::is('proyectos-aprobados*') ? 'class="active"' : '' !!} >
                                                         <a href="{{ URL::to('proyectos-aprobados') }}">
@@ -214,7 +214,7 @@
           -->
                         <!--
           @hasanyrole('Administrador|Usuario')
-    <li {!! Request::is('cuentas-cobrar*') ? 'class="active"' : '' !!} {!! Request::is('cuentas-pagar*') ? 'class="active"' : '' !!}><a class="title"><i class="fa fa-calculator" style="color:#caa678; font-size:20px;"></i>  <b style="color:#9F9F9F;">Contabilidad</b><span class="fa fa-chevron-down" style="color:#9F9F9F;"></span></a>
+    <li {!! Request::is('cuentas-cobrar*') ? 'class="active"' : '' !!} {!! Request::is('cuentas-pagar*') ? 'class="active"' : '' !!}><a class="title"><i class="fa fa-calculator" style="color:#FFCE56; font-size:20px;"></i>  <b style="color:#9F9F9F;">Contabilidad</b><span class="fa fa-chevron-down" style="color:#9F9F9F;"></span></a>
                                                    <ul class="nav child_menu">
                                                       <li {!! Request::is('cuentas-cobrar*') ? 'class="active"' : '' !!}>
                                                         <a href="{{ URL::to('cuentas-cobrar') }}">
@@ -236,7 +236,7 @@
                         @hasanyrole('Administrador|Usuario')
                             <!--Reportes
 
-                                                  <li {!! Request::is('reportes*') ? 'class="active"' : '' !!}><a class="title"><i class="fas fa-file" style="color:#caa678; font-size: 20px;"></i> <b style="color:#9F9F9F;">Reportes</b> <span class="fa fa-chevron-down" style="color:#9F9F9F;"></span></a>
+                                                  <li {!! Request::is('reportes*') ? 'class="active"' : '' !!}><a class="title"><i class="fas fa-file" style="color:#FFCE56; font-size: 20px;"></i> <b style="color:#9F9F9F;">Reportes</b> <span class="fa fa-chevron-down" style="color:#9F9F9F;"></span></a>
                                                    <ul class="nav child_menu">
                                                       <li  {!! Request::is('reportes/cotizaciones') ? 'active' : '' !!}">
                                                     <a href="{{ URL::to('reportes/cotizaciones') }}">
@@ -355,7 +355,7 @@
                                 {!! Request::is('clientes*') ? 'class="active"' : '' !!} {!! Request::is('proveedores*') ? 'class="active"' : '' !!} {!! Request::is('agentesAduanales*') ? 'class="active"' : '' !!}
                                 {!! Request::is('productos*') ? 'class="active"' : '' !!}>
                                 <a class="title" style="cursor:pointer;"><i class="fa fa-book"
-                                        style="color:#caa678; font-size: 20px;"></i> <b
+                                        style="color:#FFCE56; font-size: 20px;"></i> <b
                                         style="color:#9F9F9F;">Catálogos</b><span class="fa fa-chevron-down"
                                         style="color:#9F9F9F;"></span></a>
                                     <ul class="nav child_menu">
@@ -474,7 +474,7 @@
                         @hasanyrole('Administrador|Usuario')
                             <!-- Administracion  -->
                             <li {!! Request::is('Usuarios*') ? 'class="active"' : '' !!}><a class="title" style="cursor:pointer;"><i class="fa fa-user"
-                                        style="color:#caa678; font-size:20px;"></i> <b style="color:#9F9F9F;">Gestión de
+                                        style="color:#FFCE56; font-size:20px;"></i> <b style="color:#9F9F9F;">Gestión de
                                         Usuario</b><span class="fa fa-chevron-down" style="color:#9F9F9F;"></a>
                                 <ul class="nav child_menu">
                                     @can('Usuarios menu')

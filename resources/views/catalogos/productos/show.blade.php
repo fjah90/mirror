@@ -16,7 +16,7 @@
 {{-- Page content --}}
 @section('content')
     <!-- Content Header (Page header) -->
-    <section class="content-header" style="background-color:#12160F; color:#caa678;">
+    <section class="content-header" style="background-color:#12160F; color:#B68911;">
         <h1>Productos</h1>
     </section>
     <!-- Main content -->
@@ -24,7 +24,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="panel ">
-                    <div class="panel-heading" style="background-color:#12160F; color:#caa678;">
+                    <div class="panel-heading" style="background-color:#12160F; color:#B68911;">
                         <h3 class="panel-title">Ver Producto {{ $producto->nombre }}</h3>
                     </div>
                     <div class="panel-body">
@@ -202,7 +202,7 @@
                                         @if ($producto->ficha_tecnica)
                                             <a href="{{ $producto->ficha_tecnica }}" target="_blank"
                                                 class="btn btn-md btn-dark"
-                                                style="cursor:pointer; color:#caa678; background-color:#000">
+                                                style="cursor:pointer; color:#FFCE56; background-color:#000">
                                                 <i class="fas fa-eye"></i>
                                             </a>
                                         @endif

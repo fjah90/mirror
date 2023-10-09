@@ -23,7 +23,7 @@
 {{-- Page content --}}
 @section('content')
     <!-- Content Header (Page header) -->
-    <section class="content-header" style="background-color:#12160F; color:#caa678;">
+    <section class="content-header" style="background-color:#12160F; color:#B68911;">
         <h1 style="font-weight: bolder;">Ordenes de Compra</h1>
     </section>
     <!-- Main content -->
@@ -31,7 +31,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="panel">
-                    <div class="panel-heading" style="background-color:#12160F; color:#caa678;">
+                    <div class="panel-heading" style="background-color:#12160F; color:#B68911;">
                         <h3 class="panel-title">Editar Orden Proyecto {{ $proyecto->proyecto }} // {{ $cotizacion->numero }}
                         </h3>
                     </div>
@@ -261,7 +261,7 @@
                             <div class="row">
                                 <div class="col-md-2">
                                     <button type="button" class="btn btn-primary" @click="modalProducto=true"
-                                        style="background-color:#12160F; color:#caa678;">
+                                        style="background-color:#12160F; color:#B68911;">
                                         Registrar producto
                                     </button>
                                 </div>
@@ -281,7 +281,7 @@
                                                 <tr>
                                                     <th colspan="3">Descripciones</th>
                                                 </tr>
-                                                <tr style="background-color:#12160F; color:#caa678;">
+                                                <tr style="background-color:#12160F; color:#B68911;">
                                                     <th class="color_text">Nombre</th>
                                                     <th class="color_text">Name</th>
                                                     <th class="color_text">Valor</th>
@@ -328,7 +328,7 @@
                                 <div class="col-md-12 text-right">
                                     <div class="form-group" style="margin-top:25px;">
                                         <button type="submit" class="btn btn-dark"
-                                            style="background-color:#12160F; color:#caa678;">
+                                            style="background-color:#12160F; color:#B68911;">
                                             <i class="fas fa-plus"></i>
                                             Agregar Producto
                                         </button>
@@ -341,7 +341,7 @@
                                 <div class="table-responsive">
                                     <table class="table table-bordred" id="tablaEntradas">
                                         <thead>
-                                            <tr style="background-color:#12160F; color:#caa678;">
+                                            <tr style="background-color:#12160F; color:#B68911;">
                                                 <th class="color_text">Producto</th>
                                                 <th class="color_text">Área</th>
                                                 <th class="color_text">Comentarios</th>
@@ -422,7 +422,7 @@
                                         Regresar
                                     </a>
                                     <button type="button" class="btn btn-dark" @click="guardar()" :disabled="cargando"
-                                        style="background-color:#12160F; color:#caa678;">
+                                        style="background-color:#12160F; color:#B68911;">
                                         <i class="fas fa-save"></i>
                                         Actualizar Orden
                                     </button>
@@ -436,14 +436,14 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="panel">
-                    <div class="panel-heading" style="background-color:#12160F; color:#caa678;">
+                    <div class="panel-heading" style="background-color:#12160F; color:#B68911;">
                         <h3 class="panel-title">Precios Aprobados</h3>
                     </div>
                     <div class="panel-body">
                         <div class="table-responsive">
                             <table class="table table-bordred">
                                 <thead>
-                                    <tr style="background-color:#12160F; color:#caa678;">
+                                    <tr style="background-color:#12160F; color:#B68911;">
                                         <th class="color_text">Producto</th>
                                         <th class="color_text">Fecha de Precio</th>
                                         <th class="color_text">Precio de Compra</th>
