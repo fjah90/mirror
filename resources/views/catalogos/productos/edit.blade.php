@@ -296,6 +296,7 @@
                     precio_unitario: '{{ $producto->precio_unitario }}',
                     precio_residencial: '{{ $producto->precio_residencial }}',
                     precio_comercial: '{{ $producto->precio_comercial }}',
+                    precio_arquitecto: '{{ $producto->precio_arquitecto }}',
                     precio_distribuidor: '{{ $producto->precio_distribuidor }}',
                     descripciones: {!! $producto->descripciones !!},
                     foto_ori: '{{ $producto->foto }}',
