@@ -252,14 +252,14 @@ class ProductosController extends Controller
                 "proveedor_id"        => $proveedor->id,
                 "categoria_id"        => $categoria->id,
                 "nombre"              => $row[0],
-                "nombre_material"     => $row[9],
-                "color"               => $row[10],
                 "subcategoria_id"     => $subcategoria,
                 "precio_unitario"     => $row[4],
                 "precio_residencial"  => $row[5],
                 "precio_comercial"    => $row[6],
                 "precio_arquitecto"   => $row[7],
                 "precio_distribuidor" => $row[8],
+                "nombre_material"     => $row[9],
+                "color"               => $row[10],
             ];
 
             $p = Producto::where('nombre', $row[0])->first();
@@ -298,12 +298,12 @@ class ProductosController extends Controller
                 "Backing",
             ];
 
-            if (count($row) == 25) {
-                $columnas = 25;
+            if (count($row) == 26) {
+                $columnas = 26;
                 $descripciones = $descripciones_telas;
             }
             else {
-                $columnas = 16;
+                $columnas = 17;
                 $descripciones = $descripciones_tapices;
             }
             for ($i = 10; $i < $columnas; $i++) {
