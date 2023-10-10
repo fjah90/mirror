@@ -86,7 +86,7 @@
                                             <label class="control-label">Registrar cliente</label>
                                             <button type="button" id="show-modal" @click="modalCliente = true"
                                                 class="btn btn-effect-ripple form-control"
-                                                style="background-color:black; color:#FFCE56;">Nuevo Cliente</button>
+                                                style="background-color:black; color:#B08C62;">Nuevo Cliente</button>
                                             <!--use the modal component, pass in the prop -->
                                             <modal v-if="modalCliente" @close="modalCliente = false">
                                         </div>

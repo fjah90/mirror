@@ -57,7 +57,7 @@
                     </a>
                     @role('Administrador')
                     <a class="btn btn-xs btn-success" title="Editar"
-                      :href="'/tiposProveedores/'+tipo.id+'/editar'">
+                      :href="'/tiposProveedores/'+tipo.id+'/editar'" style="background: #fece58 !important;">
                       <i class="fas fa-pencil-alt"></i>
                     </a>
                     <button class="btn btn-xs btn-danger" title="Borrar"

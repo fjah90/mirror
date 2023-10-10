@@ -110,7 +110,7 @@
                                             </a>
 
                                             <a class="btn btn-xs btn-warning" title="Editar"
-                                                :href="'/cotizacionesdirectas/' + cotizacion.id + '/edit'">
+                                                :href="'/cotizacionesdirectas/' + cotizacion.id + '/edit'" style="background: #fece58 !important;">
                                                 <i class="fas fa-pencil-alt"></i>
                                             </a>
 

@@ -174,7 +174,7 @@
                                                 <i class="far fa-eye"></i>
                                             </a>
                                             <a class="btn btn-xs btn-warning" title="Editar"
-                                                :href="'/prospectos/' + prospecto.id + '/editar'">
+                                                :href="'/prospectos/' + prospecto.id + '/editar'" style="background: #fece58 !important;">
                                                 <i class="fas fa-pencil-alt"></i>
                                             </a>
                                             <a class="btn btn-xs btn-success orange" title="Cotizar"

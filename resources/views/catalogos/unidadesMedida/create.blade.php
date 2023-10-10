@@ -96,7 +96,7 @@
                         <td>@{{conversion.factor}}</td>
                         <td class="text-right">
                           <button class="btn btn-xs btn-success" data-toggle="tooltip" title="Editar"
-                            @click="editarConversion(conversion, index)">
+                            @click="editarConversion(conversion, index)" style="background: #fece58 !important;">
                             <i class="fas fa-pencil-alt"></i>
                           </button>
                           <button class="btn btn-xs btn-danger" data-toggle="tooltip" title="Borrar"

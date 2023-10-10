@@ -227,7 +227,7 @@ const app = new Vue({
           (descripcion.aparece_orden_compra?row.push(checked):row.push(unchecked));
           row.push([
             '<button class="btn btn-xs btn-success" title="Editar" data-index="'+index+'">',
-              '<i class="fas fa-pencil-alt"></i>',
+              '<i class="fas fa-pencil-alt" style="background: #fece58 !important;"></i>',
             '</button>',
             '<button class="btn btn-xs btn-danger" title="Borrar" data-index="'+index+'">',
               '<i class="fas fa-times"></i>',

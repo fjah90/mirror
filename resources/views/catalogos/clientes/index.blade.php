@@ -90,7 +90,7 @@
                                             <i class="far fa-eye"></i>
                                         </a>
                                         <a class="btn btn-xs btn-success" data-toggle="tooltip" title="Editar"
-                                           :href="'/clientes/'+cliente.id+'/editar'">
+                                           :href="'/clientes/'+cliente.id+'/editar'" style="background: #fece58 !important;">
                                             <i class="fas fa-pencil-alt"></i>
                                         </a>
                                         <a class="btn btn-xs btn-primary"  title="Historial de compra"
@@ -180,7 +180,7 @@
                                             <i class="far fa-eye"></i>
                                         </a>
                                         <a class="btn btn-xs btn-success" data-toggle="tooltip" title="Editar"
-                                           :href="'/clientes/'+cliente.id+'/editar'">
+                                           :href="'/clientes/'+cliente.id+'/editar'" style="background: #fece58 !important;">
                                             <i class="fas fa-pencil-alt"></i>
                                         </a>
                                         <a class="btn btn-xs btn-primary"  title="Historial de compra"

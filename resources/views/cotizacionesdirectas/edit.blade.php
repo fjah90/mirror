@@ -570,7 +570,7 @@
                             <div class="row">
                                 <div class="col-md-2">
                                     <button type="button" class="btn btn-dark" @click="modalProducto=true"
-                                        style="color:#FFCE56; background-color:#12160F;">
+                                        style="color:#B08C62; background-color:#12160F;">
                                         Registrar producto
                                     </button>
                                 </div>
@@ -884,7 +884,7 @@
         <!-- /.Enviar Modal -->
 
         <!-- Aceptar Modal -->
-        <modal style="color:#FFCE56, background-color:#12160F;" v-model="openAceptar"
+        <modal style="color:#B08C62, background-color:#12160F;" v-model="openAceptar"
             :title="'Aceptar Cotizacion ' + aceptar.cotizacion_id" :footer="false">
             <form class="" @submit.prevent="aceptarCotizacion()">
                 <div class="form-group">
@@ -928,7 +928,7 @@
         <!-- /.Aceptar Modal -->
 
         <!-- Nuevo Producto Modal-->
-        <modal style="color:#FFCE56; background-color:#12160F;" v-model="modalProducto" title="Registrar Producto"
+        <modal style="color:#B08C62; background-color:#12160F;" v-model="modalProducto" title="Registrar Producto"
             :footer="false">
             <iframe id="theFrame" src="{{ url('/') }}/productos/crear?layout=iframe"
                 style="width:100%; height:700px;" frameborder="0">
@@ -1441,7 +1441,7 @@
                             accounting.formatMoney(entrada.importe, "$", 2),
                         ];
                         row.push([
-                            '<button class="btn btn-xs btn-success" title="Editar" data-index="' +
+                            '<button class="btn btn-xs btn-success" title="Editar" style="background: #fece58 !important;" data-index="' +
                             index + '">',
                             '<i class="fas fa-pencil-alt"></i>',
                             '</button>',

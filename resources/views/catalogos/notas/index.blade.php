@@ -37,12 +37,12 @@
                         <h3 class="panel-title text-right">
                             <span class="pull-left p-10">Lista de Notas</span>
 
-                            {{-- <button type="submit" class="btn btn-dark" style="background-color:#FFCE56; color:#12160F;">
+                            {{-- <button type="submit" class="btn btn-dark" style="background-color:#B08C62; color:#12160F;">
                 <a href="{{route('notas.index')}}" style="color:#000;">
                   <i class="fas fa-user-book"></i>ACTIVOS
                 </a>
               </button> --}}
-                            {{-- <button type="submit" class="btn btn-dark" style="background-color:#FFCE56; color:#12160F;">
+                            {{-- <button type="submit" class="btn btn-dark" style="background-color:#B08C62; color:#12160F;">
                 <a href="{{route('notas.inactivo')}}" style="color:#000;">
                   <i class="fas fa-user-book"></i>INACTIVOS
                 </a>

@@ -347,7 +347,7 @@ Dashboard | @parent
                         <a title="Ver" :href="'/prospectos/'+actividad.prospecto_id" class="btn btn-xs btn-info">
                             Ver <i class="far fa-eye"></i>
                           </a>
-                          <a class="btn btn-xs btn-warning" title="Editar" :href="'/prospectos/'+actividad.prospecto_id+'/editar'">
+                          <a class="btn btn-xs btn-warning" style="background: #fece58 !important;" title="Editar" :href="'/prospectos/'+actividad.prospecto_id+'/editar'">
                             Editar<i class="fas fa-pencil-alt"></i>
                           </a>  
                       </td>

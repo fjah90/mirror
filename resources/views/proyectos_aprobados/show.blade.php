@@ -357,7 +357,7 @@
                                 <a v-if="orden.status=='Pendiente' || orden.status=='Rechazada'"
                                   class="btn btn-xs btn-success" title="Editar"
                                   :href="'/proyectos-aprobados/'+orden.proyecto_id+'/ordenes-compra/'+orden.id+'/editar'" target="
-                                  _blank">
+                                  _blank" style="background: #fece58 !important;">
                                   <i class="fas fa-pencil-alt"></i>
                                 </a>
                                 <a v-if="orden.status=='Pendiente'"

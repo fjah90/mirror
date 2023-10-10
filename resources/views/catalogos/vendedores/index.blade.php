@@ -61,7 +61,7 @@
                     </a>
                     @role('Administrador')
                     <a class="btn btn-xs btn-success" data-toggle="tooltip" title="Editar"
-                      :href="'/vendedores/'+vendedor.id+'/editar'">
+                      :href="'/vendedores/'+vendedor.id+'/editar'" style="background: #fece58 !important;">
                       <i class="fas fa-pencil-alt"></i>
                     </a>
                     <button class="btn btn-xs btn-danger" data-toggle="tooltip" title="Borrar"

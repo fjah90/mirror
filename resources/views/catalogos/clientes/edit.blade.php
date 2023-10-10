@@ -292,7 +292,7 @@
                                                     <td class="text-right">
                                                         <button class="btn btn-xs btn-success" data-toggle="tooltip"
                                                                 title="Editar"
-                                                                @click="editarContacto(contacto, index)">
+                                                                @click="editarContacto(contacto, index)" style="background: #fece58 !important;">
                                                             <i class="fas fa-pencil-alt"></i>
                                                         </button>
                                                         <button class="btn btn-xs btn-danger" data-toggle="tooltip"
@@ -429,7 +429,7 @@
                                                     <td class="text-right">
                                                         <button class="btn btn-xs btn-success" data-toggle="tooltip"
                                                                 title="Editar"
-                                                                @click="editarDatoFacturacion(datoFacturacion, index)">
+                                                                @click="editarDatoFacturacion(datoFacturacion, index)" style="background: #fece58 !important;">
                                                             <i class="fas fa-pencil-alt"></i>
                                                         </button>
                                                         <button class="btn btn-xs btn-danger" data-toggle="tooltip"

@@ -61,8 +61,8 @@
                           <i class="far fa-eye"></i>
                         </a>
                         <a class="btn btn-xs btn-success" title="Editar"
-                          :href="'/proveedores/'+proveedor.id+'/editar'">
-                          <i class="fas fa-pencil-alt"></i>
+                          :href="'/proveedores/'+proveedor.id+'/editar'" style="background: #fece58 !important;">
+                          <i class="fas fa-pencil-alt" ></i>
                         </a>
                         <button class="btn btn-xs btn-danger" title="Borrar"
                           @click="borrar('Extranjeros', proveedor, index)">
@@ -113,7 +113,7 @@
                         <a class="btn btn-xs btn-info" title="Ver" :href="'/proveedores/'+proveedor.id">
                           <i class="far fa-eye"></i>
                         </a>
-                        <a class="btn btn-xs btn-success" title="Editar" :href="'/proveedores/'+proveedor.id+'/editar'">
+                        <a class="btn btn-xs btn-success" title="Editar" :href="'/proveedores/'+proveedor.id+'/editar'" style="background: #fece58 !important;">
                           <i class="fas fa-pencil-alt"></i>
                         </a>
                         <button class="btn btn-xs btn-danger" title="Borrar" @click="borrar('Nacionales',proveedor, index)">

@@ -56,7 +56,7 @@
                               href="{{route('permisos.edit', ['rol'=>$rol->id])}}">
                               <i class="fas fa-pencil-alt"></i>
                             </a-->
-                             <a class="btn btn-xs btn-success" title="Editar Rol"
+                             <a class="btn btn-xs btn-success" style="background: #fece58 !important;" title="Editar Rol"
                               href="{{route('permisos.edit', ['rol'=>$rol->id])}}">
                               <i class="fas fa-pencil-alt"></i>
                             </a>

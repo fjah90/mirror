@@ -365,7 +365,7 @@
                             </td>
                             <td class="text-right">
                               <button class="btn btn-xs btn-success" data-toggle="tooltip" title="Editar"
-                                @click="editarContacto(contacto, index)">
+                                @click="editarContacto(contacto, index)" style="background: #fece58 !important;">
                                 <i class="fas fa-pencil-alt"></i>
                               </button>
                               <button class="btn btn-xs btn-danger" data-toggle="tooltip" title="Borrar"

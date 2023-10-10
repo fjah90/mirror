@@ -56,7 +56,7 @@
                               href="{{route('usuarios.show', ['usuario'=>$usuario->id])}}">
                               <i class="far fa-eye"></i>
                             </a>
-                            <a class="btn btn-xs btn-success" title="Editar"
+                            <a class="btn btn-xs btn-success" style="background: #fece58 !important;" title="Editar"
                               href="{{route('usuarios.edit', ['usuario'=>$usuario->id])}}">
                               <i class="fas fa-pencil-alt"></i>
                             </a>

@@ -202,7 +202,7 @@
                                         @if ($producto->ficha_tecnica)
                                             <a href="{{ $producto->ficha_tecnica }}" target="_blank"
                                                 class="btn btn-md btn-dark"
-                                                style="cursor:pointer; color:#FFCE56; background-color:#000">
+                                                style="cursor:pointer; color:#B08C62; background-color:#000">
                                                 <i class="fas fa-eye"></i>
                                             </a>
                                         @endif

@@ -59,7 +59,7 @@
                     @role('Administrador')
                     <a class="btn btn-xs btn-success" data-toggle="tooltip" title="Editar"
                       :href="'/categorias/'+categoria.id+'/editar'">
-                      <i class="fas fa-pencil-alt"></i>
+                      <i class="fas fa-pencil-alt" style="background: #fece58 !important;"></i>
                     </a>
                     <button class="btn btn-xs btn-danger" data-toggle="tooltip" title="Borrar"
                       @click="borrar(categoria, index)">

@@ -81,7 +81,7 @@
                   <div class="col-md-3">
                     <div class="row">
                       <div class="col-sm-12 text-right">
-                        <button style="margin-top:25px; color:#FFCE56; background-color:#12160F;" type="submit" class="btn btn-DARK" :disabled="cargando">
+                        <button style="margin-top:25px; color:#B08C62; background-color:#12160F;" type="submit" class="btn btn-DARK" :disabled="cargando">
                           <i class="fas fa-save"></i>
                           Actualizar Datos
                         </button>

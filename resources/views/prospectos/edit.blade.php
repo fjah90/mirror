@@ -308,7 +308,7 @@
                                                 v-model="ofrecido.nombre" @click="openCatalogo=true" readonly />
                                             <span class="input-group-btn">
                                                 <button class="btn btn-default" type="button"
-                                                    @click="openCatalogo=true">
+                                                    @click="openCatalogo=true" style="background: #fece58 !important;">
                                                     <i class="fas fa-pencil-alt"></i>
                                                 </button>
                                             </span>
@@ -317,7 +317,7 @@
 
                                     <div class="col-sm-2" style="padding-top: 25px;">
                                         <button type="button" class="btn btn-primary" @click="agregarProducto()"
-                                            style="color:#FFCE56; background-color:#12160F;">
+                                            style="color:#B08C62; background-color:#12160F;">
                                             Agregar
                                         </button>
                                     </div>
