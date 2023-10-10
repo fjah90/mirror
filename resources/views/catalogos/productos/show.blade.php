@@ -16,7 +16,7 @@
 {{-- Page content --}}
 @section('content')
     <!-- Content Header (Page header) -->
-    <section class="content-header" style="background-color:#12160F; color:#caa678;">
+    <section class="content-header" style="background-color:#12160F; color:#B68911;">
         <h1>Productos</h1>
     </section>
     <!-- Main content -->
@@ -24,7 +24,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="panel ">
-                    <div class="panel-heading" style="background-color:#12160F; color:#caa678;">
+                    <div class="panel-heading" style="background-color:#12160F; color:#B68911;">
                         <h3 class="panel-title">Ver Producto {{ $producto->nombre }}</h3>
                     </div>
                     <div class="panel-body">
@@ -77,25 +77,31 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <div class="form-group">
                                     <label class="control-label">Precio Compra</label>
                                     <span class="form-control">${{ $producto->precio_unitario }}</span>
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <div class="form-group">
                                     <label class="control-label">Precio Residencial</label>
                                     <span class="form-control">${{ $producto->precio_residencial }}</span>
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <div class="form-group">
                                     <label class="control-label">Precio Comercial</label>
                                     <span class="form-control">${{ $producto->precio_comercial }}</span>
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label class="control-label">Precio Arquitecto</label>
+                                    <span class="form-control">${{ $producto->precio_arquitecto }}</span>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
                                 <div class="form-group">
                                     <label class="control-label">Precio Distribuidor</label>
                                     <span class="form-control">${{ $producto->precio_distribuidor }}</span>
@@ -133,10 +139,10 @@
                                                                         id="Flamabilidad" style="width:50px; height:50px;">
                                                                 </td>
                                                             @elseif($descripcion->descripcionNombre->nombre == 'Abrasión')
-                                                                <td><img src="{{ asset('images/icon-physical.png') }}"
+                                                                <td><img src="{{ asset('images/icon-abrasion.jpg') }}"
                                                                         id="Abrasion" style="width:50px; height:50px;">
                                                                 </td>
-                                                            @elseif($descripcion->descripcionNombre->nombre == 'Decoloracion a la luz')
+                                                            @elseif($descripcion->descripcionNombre->nombre == 'Decoloración a la luz')
                                                                 <td><img src="{{ asset('images/icon-lightfastness.png') }}"
                                                                         id="Decoloracion_de_luz"
                                                                         style="width:50px; height:50px;"></td>
@@ -196,7 +202,7 @@
                                         @if ($producto->ficha_tecnica)
                                             <a href="{{ $producto->ficha_tecnica }}" target="_blank"
                                                 class="btn btn-md btn-dark"
-                                                style="cursor:pointer; color:#caa678; background-color:#000">
+                                                style="cursor:pointer; color:#B08C62; background-color:#000">
                                                 <i class="fas fa-eye"></i>
                                             </a>
                                         @endif

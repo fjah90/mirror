@@ -16,7 +16,7 @@
 {{-- Page content --}}
 @section('content')
   <!-- Content Header (Page header) -->
-  <section class="content-header" style="background-color:#12160F; color:#caa678;">
+  <section class="content-header" style="background-color:#12160F; color:#B68911;">
     <h1>Tipos de Clientes</h1>
   </section>
   <!-- Main content -->
@@ -24,24 +24,24 @@
     <div class="row">
       <div class="col-lg-12">
         <div class="panel ">
-          <div class="panel-heading" style="background-color:#12160F; color:#caa678;">
+          <div class="panel-heading" style="background-color:#12160F; color:#B68911;">
             <h3 class="panel-title">Nuevo Tipo de Cliente</h3>
           </div>
           <div class="panel-body">
             <form class="" @submit.prevent="guardar()">
               <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-12">
                   <div class="form-group">
                     <label class="control-label">Nombre<strong style="color: grey"> *</strong></label>
                     <input type="text" class="form-control" name="nombre" v-model="nombre" required />
                   </div>
                 </div>
-                <div class="col-md-6">
+                {{-- <div class="col-md-6">
                   <div class="form-group">
                     <label class="control-label">Factor porcentual<strong style="color: grey"> *</strong></label>
                     <input type="number" step="0.01" class="form-control" name="factor_porcentual" v-model="factor_porcentual" required />
                   </div>
-                </div>
+                </div> --}}
               </div>
               <div class="row" style="margin-top:25px;">
                 <div class="col-md-12 text-right">
@@ -71,7 +71,7 @@ const app = new Vue({
     el: '#content',
     data: {
       nombre: '',
-      factor_porcentual,
+      // factor_porcentual,
       cargando: false,
     },
     methods: {
@@ -79,10 +79,10 @@ const app = new Vue({
         this.cargando = true;
         axios.post('/tiposClientes', {
           nombre: this.nombre,
-          factor_porcentual : this.factor_porcentual,
+          // factor_porcentual : this.factor_porcentual,
         })
         .then(({data}) => {
-          this.cargando = false;
+          this.cargando = false;  
           swal({
             title: "Tipo Guardado",
             text: "",

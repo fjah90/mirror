@@ -16,7 +16,7 @@
 {{-- Page content --}}
 @section('content')
     <!-- Content Header (Page header) -->
-    <section class="content-header" style="background-color:#12160F; color:#caa678;">
+    <section class="content-header" style="background-color:#12160F; color:#B68911;">
         <h1>Clientes</h1>
     </section>
     <!-- Main content -->
@@ -24,7 +24,7 @@
         <tabs>
             <tab title="Nacionales">
                 <div class="panel">
-                    <div class="panel-heading" style="background-color:#12160F; color:#caa678;">
+                    <div class="panel-heading" style="background-color:#12160F; color:#B68911;">
                         <h3 class="panel-title">
                             <div class="p-10">
                                 Clientes Nacionales
@@ -90,7 +90,7 @@
                                             <i class="far fa-eye"></i>
                                         </a>
                                         <a class="btn btn-xs btn-success" data-toggle="tooltip" title="Editar"
-                                           :href="'/clientes/'+cliente.id+'/editar'">
+                                           :href="'/clientes/'+cliente.id+'/editar'" style="background: #fece58 !important;">
                                             <i class="fas fa-pencil-alt"></i>
                                         </a>
                                         <a class="btn btn-xs btn-primary"  title="Historial de compra"
@@ -114,7 +114,7 @@
 
             <tab title="Extranjeros">
                 <div class="panel">
-                    <div class="panel-heading" style="background-color:#12160F; color:#caa678;">
+                    <div class="panel-heading" style="background-color:#12160F; color:#B68911;">
                         <h3 class="panel-title">
                             <div class="p-10">
                                 Clientes Extranjeros
@@ -180,7 +180,7 @@
                                             <i class="far fa-eye"></i>
                                         </a>
                                         <a class="btn btn-xs btn-success" data-toggle="tooltip" title="Editar"
-                                           :href="'/clientes/'+cliente.id+'/editar'">
+                                           :href="'/clientes/'+cliente.id+'/editar'" style="background: #fece58 !important;">
                                             <i class="fas fa-pencil-alt"></i>
                                         </a>
                                         <a class="btn btn-xs btn-primary"  title="Historial de compra"

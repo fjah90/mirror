@@ -33,7 +33,7 @@
 {{-- Page content --}}
 @section('content')
     <!-- Content Header (Page header) -->
-    <section class="content-header" style="background-color:#12160F; color:#caa678;">
+    <section class="content-header" style="background-color:#12160F; color:#B68911;">
         <h1 style="font-weight: bolder;">Cotizaciones Directas</h1>
     </section>
     <!-- Main content -->
@@ -41,7 +41,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="panel">
-                    <div class="panel-heading" style="background-color:#12160F; color:#caa678;">
+                    <div class="panel-heading" style="background-color:#12160F; color:#B68911;">
                         <div class="p-10 text-right">
                             <a class="btn btn-warning btn-sm btn" href="{{ route('cotizacionesdirectas.create') }}"
                                 style="color:#000;">
@@ -110,7 +110,7 @@
                                             </a>
 
                                             <a class="btn btn-xs btn-warning" title="Editar"
-                                                :href="'/cotizacionesdirectas/' + cotizacion.id + '/edit'">
+                                                :href="'/cotizacionesdirectas/' + cotizacion.id + '/edit'" style="background: #fece58 !important;">
                                                 <i class="fas fa-pencil-alt"></i>
                                             </a>
 

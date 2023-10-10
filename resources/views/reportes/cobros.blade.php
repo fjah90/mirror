@@ -29,7 +29,7 @@ Reportes | @parent
 
 @section('content')
 <!-- Content Header (Page header) -->
-<section class="content-header" style="background-color:#12160F; color:#caa678;">
+<section class="content-header" style="background-color:#12160F; color:#B68911;">
   <h1 style="font-weight: bolder;">Reporte</h1>
 </section>
 <!-- Main content -->
@@ -37,7 +37,7 @@ Reportes | @parent
     <div class="row">
         <div class="col-sm-12">
           <div class="panel product-details">
-            <div class="panel-heading" style="background-color:#12160F; color:#caa678;">
+            <div class="panel-heading" style="background-color:#12160F; color:#B68911;">
               <h3 class="panel-title">Reporte de Cobros 
                 <button style="background-color:transparent; border:none;float: right;">
                   <i class=" fa fa-file-pdf" v-on:click="pdf" style="color:#eb1b3d;font-size: 20px;"></i>

@@ -20,7 +20,7 @@
 {{-- Page content --}}
 @section('content')
 <!-- Content Header (Page header) -->
-<section class="content-header" style="background-color:#12160F; color:#caa678;">
+<section class="content-header" style="background-color:#12160F; color:#B68911;">
   <h1>PRODUCTOS</h1>
 </section>
 <!-- Main content -->
@@ -28,16 +28,16 @@
   <div class="row">
     <div class="col-lg-12">
       <div class="panel">
-        <div class="panel-heading" style="background-color:#12160F; color:#caa678;">
+        <div class="panel-heading" style="background-color:#12160F; color:#B68911;">
           <h3 class="panel-title text-right">
             <span class="pull-left p-10">Lista de Productos</span>
 
-              <button type="submit" class="btn btn-dark" style="background-color:#caa678; color:#12160F;">
+              <button type="submit" class="btn btn-dark" style="background-color:#B08C62; color:#12160F;">
                 <a href="{{route('productos.index')}}" style="color:#000;">
                   <i class="fas fa-user-book"></i>ACTIVOS
                 </a>
               </button>
-              <button type="submit" class="btn btn-dark" style="background-color:#caa678; color:#12160F;">
+              <button type="submit" class="btn btn-dark" style="background-color:#B08C62; color:#12160F;">
                 <a href="{{route('productos.inactivo')}}" style="color:#000;">
                   <i class="fas fa-user-book"></i>INACTIVOS
                 </a>
@@ -77,7 +77,7 @@
                       <i class="fas fa-eye"></i>
                     </a>
                     <a class="btn btn-xs btn-success" data-toggle="tooltip" title="Editar"
-                      :href="'/productos/'+producto.id+'/editar'">
+                      :href="'/productos/'+producto.id+'/editar'" style="background: #fece58 !important;">
                       <i class="fas fa-pencil-alt"></i>
                     </a>
                     <a v-if="producto.status =='ACTIVO'" :href="'/productos/'+producto.id+'/desactivar'" class="btn btn-xs label-default float-left" data-toggle="tooltip" data-placement="top" title="Desactivar">

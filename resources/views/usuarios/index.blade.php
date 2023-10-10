@@ -16,7 +16,7 @@
 {{-- Page content --}}
 @section('content')
     <!-- Content Header (Page header) -->
-    <section class="content-header" style="background-color:#12160F; color:#caa678;">
+    <section class="content-header" style="background-color:#12160F; color:#B68911;">
         <h1 style="font-weight: bolder;">Usuarios</h1>
     </section>
     <!-- Main content -->
@@ -24,7 +24,7 @@
         <div class="row">
             <div class="col-lg-12">
               <div class="panel">
-                <div class="panel-heading" style="background-color:#12160F; color:#caa678;">
+                <div class="panel-heading" style="background-color:#12160F; color:#B68911;">
                   <h3 class="panel-title text-right">
                     <span class="pull-left p-10">Lista de Usuarios</span>
                     <a href="{{route('usuarios.create')}}" class="btn btn-warning" style="color: #000;">
@@ -56,7 +56,7 @@
                               href="{{route('usuarios.show', ['usuario'=>$usuario->id])}}">
                               <i class="far fa-eye"></i>
                             </a>
-                            <a class="btn btn-xs btn-success" title="Editar"
+                            <a class="btn btn-xs btn-success" style="background: #fece58 !important;" title="Editar"
                               href="{{route('usuarios.edit', ['usuario'=>$usuario->id])}}">
                               <i class="fas fa-pencil-alt"></i>
                             </a>

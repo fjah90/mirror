@@ -9,7 +9,7 @@ class TipoCliente extends Model
 {
     protected $table = 'tipos_clientes';
 
-    protected $fillable = ['nombre','factor_porcentual'];
+    protected $fillable = ['nombre'];
 
     /**
      * ---------------------------------------------------------------------------

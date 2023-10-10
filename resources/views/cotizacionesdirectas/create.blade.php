@@ -27,7 +27,7 @@
 {{-- Page content --}}
 @section('content')
     <!-- Content Header (Page header) -->
-    <section class="content-header" style="background-color:#12160F; color:#caa678;">
+    <section class="content-header" style="background-color:#12160F; color:#B68911;">
         <h1 style="font-weight: bolder;"></h1>
     </section>
     <!-- Main content -->
@@ -35,7 +35,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="panel">
-                    <div class="panel-heading" style="background-color:#12160F; color:#caa678;">
+                    <div class="panel-heading" style="background-color:#12160F; color:#B68911;">
                         <h4 class="panel-title">Nueva Cotización</h4>
                     </div>
                     <div class="panel-body">
@@ -421,7 +421,7 @@
                                     <div class="col-md-6"
                                         style="display: flex; justify-content: flex-end; align-items: flex-end; padding-top: 40px;">
                                         <button type="button" class="btn btn-dark" @click="sumaTotal()"
-                                            style="background-color:#12160F; color:#caa678;">
+                                            style="background-color:#12160F; color:#B68911;">
                                             <i v-if="!cargando" class="fas fa-calculator"></i>
                                             <i v-else class="fas fa-refresh animation-rotate"></i>
                                             Recalcular
@@ -568,7 +568,7 @@
                             <div class="row">
                                 <div class="col-md-2">
                                     <button type="button" class="btn btn-dark" @click="modalProducto=true"
-                                        style="color:#caa678; background-color:#12160F;">
+                                        style="color:#B08C62; background-color:#12160F;">
                                         Registrar producto
                                     </button>
                                 </div>
@@ -698,7 +698,7 @@
                                 <div class="col-md-12 text-right">
                                     <div class="form-group" style="margin-top:25px;">
                                         <button type="submit" class="btn btn-dark"
-                                            style="background-color:#12160F; color:#caa678;">
+                                            style="background-color:#12160F; color:#B68911;">
                                             <i class="fas fa-plus"></i>
                                             Agregar Producto
                                         </button>
@@ -763,7 +763,7 @@
                                     </a>
                                     <button type="button" class="btn btn-dark" @click="guardar()"
                                         :disabled="cargando || edicionEntradaActiva"
-                                        style="background-color:#12160F; color:#caa678;">
+                                        style="background-color:#12160F; color:#B68911;">
                                         <i v-if="!cargando" class="fas fa-save"></i>
                                         <i v-else class="fas fa-refresh animation-rotate"></i>
                                         Guardar Cotización
@@ -877,7 +877,7 @@
         </modal>
         <!-- /.Enviar Modal -->
         <!-- Aceptar Modal -->
-        <modal style="color:#caa678, background-color:#12160F;" v-model="openAceptar"
+        <modal style="color:#B08C62, background-color:#12160F;" v-model="openAceptar"
             :title="'Aceptar Cotizacion ' + aceptar.cotizacion_id" :footer="false">
             <form class="" @submit.prevent="aceptarCotizacion()">
                 <div class="form-group">
@@ -920,7 +920,7 @@
         </modal>
         <!-- /.Aceptar Modal -->
         <!-- Nuevo Producto Modal-->
-        <modal style="color:#caa678; background-color:#12160F;" v-model="modalProducto" title="Registrar Producto"
+        <modal style="color:#B08C62; background-color:#12160F;" v-model="modalProducto" title="Registrar Producto"
             :footer="false">
             <iframe id="theFrame" src="{{ url('/') }}/productos/crear?layout=iframe"
                 style="width:100%; height:700px;" frameborder="0">
@@ -1091,7 +1091,7 @@
                 },
             },
             mounted() {
-                console.log(this.cliente);
+                // console.log(this.cliente);
                 this.$refs.fechaActual = document.querySelector('#fechaActual');
                 this.actualizarFechaActual();
                 let self = this; // ámbito de vue
@@ -1329,7 +1329,7 @@
                         id
                     }) => id === id_cliente);
                     this.contactos = cliente.contactos;
-                    this.factor_porcentual = cliente.tipo.factor_porcentual;
+                    // this.factor_porcentual = cliente.tipo.factor_porcentual;
                     this.tipo_cliente = cliente.tipo.id;
                     console.log(cliente)
                     console.log(this.tipo_cliente)
@@ -1449,9 +1449,9 @@
                             accounting.formatMoney(entrada.importe, "$", 2),
                         ];
                         row.push([
-                            '<button class="btn btn-xs btn-success" title="Editar" data-index="' +
+                            '<button class="btn btn-xs btn-success" title="Editar" style="background: #fece58 !important;" data-index="' +
                             index + '">',
-                            '<i class="fas fa-pencil-alt"></i>',
+                            '<i class="fas fa-pencil-alt" ></i>',
                             '</button>',
                             '<button class="btn btn-xs btn-danger" title="Remover" data-index="' +
                             index + '">',
@@ -1605,8 +1605,12 @@
                         case 3:
                             this.entrada.precio = this.entrada.producto.precio_distribuidor;
                             break;
+                        case 5: 
+                            this.entrada.precio = this.entrada.producto.precio_arquitecto;
+                            break;
+                        
                     }
-                    
+                    console.log(this.entrada.precio)
                     this.entrada.descripciones = [];
                     prod.descripciones.forEach(function(desc) {
                         this.entrada.descripciones.push({
@@ -1726,7 +1730,7 @@
                             this.entrada.fotos.push(this.$refs['fotos'].files[i]);
                     }
                     console.log(this.cliente)
-                    console.log(this.factor_porcentual)
+                    console.log(this.entrada.precio)
 
                     // let factorPorcentual = this.factor_porcentual > 0 ? (this.entrada.precio * this
                     //         .factor_porcentual) / 100 :

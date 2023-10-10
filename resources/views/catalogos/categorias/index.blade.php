@@ -17,7 +17,7 @@
 @section('content')
 <!-- Content Header (Page header) -->
 
-<section class="content-header" style="background-color:#12160F; color:#caa678;">
+<section class="content-header" style="background-color:#12160F; color:#B68911;">
     <h1 style="font-weight: bolder;">TIPOS DE PRODUCTOS</h1>
 </section>
 <!-- Main content -->
@@ -25,7 +25,7 @@
   <div class="row">
     <div class="col-lg-12">
       <div class="panel">
-        <div class="panel-heading" style="background-color:#12160F; color:#caa678;">
+        <div class="panel-heading" style="background-color:#12160F; color:#B68911;">
           <h3 class="panel-title text-right">
             <span class="pull-left p-10">Lista de Tipos de Productos y Servicios</span>
             <span style="visibility:hidden">.</span>
@@ -59,7 +59,7 @@
                     @role('Administrador')
                     <a class="btn btn-xs btn-success" data-toggle="tooltip" title="Editar"
                       :href="'/categorias/'+categoria.id+'/editar'">
-                      <i class="fas fa-pencil-alt"></i>
+                      <i class="fas fa-pencil-alt" style="background: #fece58 !important;"></i>
                     </a>
                     <button class="btn btn-xs btn-danger" data-toggle="tooltip" title="Borrar"
                       @click="borrar(categoria, index)">

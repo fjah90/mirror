@@ -21,7 +21,7 @@
 {{-- Page content --}}
 @section('content')
 <!-- Content Header (Page header) -->
-<section class="content-header" style="background-color:#12160F; color:#caa678;">
+<section class="content-header" style="background-color:#12160F; color:#B68911;">
   <h1 style="font-weight: bolder;">Cuentas por Pagar</h1>
 </section>
 <!-- Main content -->
@@ -29,7 +29,7 @@
   <div class="row">
     <div class="col-lg-12">
       <div class="panel">
-        <div class="panel-heading" style="background-color:#12160F; color:#caa678;">
+        <div class="panel-heading" style="background-color:#12160F; color:#B68911;">
           <h3 class="panel-title">
             <span class="p-10">Lista de Cuentas</span>
             <div class="p-10">
