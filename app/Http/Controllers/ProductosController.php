@@ -278,6 +278,7 @@ class ProductosController extends Controller
                 "Minimos de venta",
                 "Multiplos de venta",
                 "Tamaño de rollo",
+                "Unidad de medida",
                 "Repeat HV",
             ];
             $descripciones_telas = [
@@ -303,7 +304,7 @@ class ProductosController extends Controller
                 $descripciones = $descripciones_telas;
             }
             else {
-                $columnas = 18;
+                $columnas = 19;
                 $descripciones = $descripciones_tapices;
             }
             for ($i = 11; $i < $columnas; $i++) {
