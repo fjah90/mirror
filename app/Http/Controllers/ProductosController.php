@@ -280,6 +280,7 @@ class ProductosController extends Controller
                 "Tamaño de rollo",
                 "Unidad de medida",
                 "Repeat HV",
+                "Ubicación",
             ];
             $descripciones_telas = [
                 "Ancho",
@@ -297,14 +298,15 @@ class ProductosController extends Controller
                 "Unidad de venta",
                 "Notas/otros",
                 "Backing",
+                "Ubicación",
             ];
 
             if (count($row) == 26) {
-                $columnas = 26;
+                $columnas = 27;
                 $descripciones = $descripciones_telas;
             }
             else {
-                $columnas = 19;
+                $columnas = 20;
                 $descripciones = $descripciones_tapices;
             }
             for ($i = 11; $i < $columnas; $i++) {
