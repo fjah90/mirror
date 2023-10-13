@@ -231,7 +231,7 @@ class ProductosController extends Controller
 
     private function storeImports($rows)
     {
-
+        // dd(count($rows));
         foreach ($rows as $key => $row) {
             $proveedor = Proveedor::where('empresa', $row[1])->first();
             $categoria = Categoria::where('nombre', $row[2])->first();
@@ -278,7 +278,7 @@ class ProductosController extends Controller
                 "Minimos de venta",
                 "Multiplos de venta",
                 "Tamaño de rollo",
-                "Rpeeat HV",
+                "Repeat HV",
             ];
             $descripciones_telas = [
                 "Ancho",
@@ -303,16 +303,16 @@ class ProductosController extends Controller
                 $descripciones = $descripciones_telas;
             }
             else {
-                $columnas = 17;
+                $columnas = 18;
                 $descripciones = $descripciones_tapices;
             }
-            for ($i = 10; $i < $columnas; $i++) {
+            for ($i = 11; $i < $columnas; $i++) {
 
                 $update = array(
                     "valor" => $row[$i]
                 );
 
-                $descripcion = CategoriaDescripcion::where('categoria_id', $categoria->id)->where('nombre', $descripciones[$i - 10])->first();
+                $descripcion = CategoriaDescripcion::where('categoria_id', $categoria->id)->where('nombre', $descripciones[$i - 11])->first();
                 if ($descripcion) {
                     $productodescripcion = ProductoDescripcion::where('producto_id', $p->id)->where('categoria_descripcion_id', $descripcion['id'])->first();
                     if ($productodescripcion) {
