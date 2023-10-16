@@ -28,8 +28,8 @@ class ProyectosAprobadosController extends Controller
       //$proyectos = auth()->user()->proyectos_aprobados()->with('cotizacion.cuentaCobrar','cliente','cotizacion.user','ordenes')->get();
 
       
-      $inicio = Carbon::parse('2022-01-01');
-      $anio = Carbon::parse('2022-12-31');
+      $inicio = Carbon::parse('2023-01-01');
+      $anio = Carbon::parse('2023-12-31');
       //$proyectos = ProyectoAprobado::whereBetween('created_at', [$inicio, $anio])->with('cotizacion','cotizacion.cuenta_cobrar','cotizacion.user','ordenes')->get();
       $user = User::with('proyectos_aprobados.cotizacion','proyectos_aprobados.cotizacion.cuenta_cobrar','proyectos_aprobados.cotizacion.user','proyectos_aprobados.ordenes')->find(auth()->user()->id);
       if (is_null($user)) $proyectos = [];

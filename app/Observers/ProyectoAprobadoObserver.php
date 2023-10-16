@@ -9,7 +9,6 @@ use App\Models\OrdenCompraEntradaDescripcion;
 
 class ProyectoAprobadoObserver
 {
-
     /*
      * Crear ordenes de compra para proveedores involucrados en el proyecto
      */
@@ -38,17 +37,14 @@ class ProyectoAprobadoObserver
             
             $orden_anterior = OrdenCompra::orderBy('numero','desc')->first();
             $orden->update(['numero' => $orden_anterior->numero + 1]);  
-            
-            
-            
+            $importe = 0;
+            $cantidad_convertida = 0;
 
             foreach ($entradas as $entrada) {
-
 
                 if ($entrada->medida_compra != $entrada->medida) {
 
                     if($entrada->medida_compra != null){
-
 
                         $unidad_medida = UnidadMedida::where('simbolo',$entrada->medida)->first();
                         $unidad_convertir = UnidadMedida::where('simbolo',$entrada->medida_compra)->first();
@@ -73,11 +69,9 @@ class ProyectoAprobadoObserver
                                 $cantidad_convertida = null;
                                 $importe = $entrada->importe;
                             }
-
-                            
+                           
                         }
-                    }
-                    
+                    }                    
                 }
                 else{
 
@@ -90,7 +84,6 @@ class ProyectoAprobadoObserver
                         $importe = $entrada->importe;
                     }
                 }
-
 
                 $ent = OrdenCompraEntrada::create([
                     'orden_id'    => $orden->id,
@@ -125,7 +118,5 @@ class ProyectoAprobadoObserver
             $orden->total = bcadd($orden->subtotal, $orden->iva, 2);
             $orden->save();
         } //foreach proveedores
-
     }
-
 }

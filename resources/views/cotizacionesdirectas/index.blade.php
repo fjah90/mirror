@@ -71,7 +71,7 @@
                                         <td>
                                             <template v-for="(entrada, index) in cotizacion.entradas">
                                                 {{-- <span>@{{ index + 1 }}.- @{{ entrada.producto.nombre }} - --}}
-                                                    @{{ entrada.producto.proveedor.empresa }}</span><br />
+                                                @{{ entrada.producto.proveedor.empresa }}</span><br />
                                             </template>
                                         </td>
                                         <td>
@@ -103,14 +103,28 @@
 
                                         </td>
                                         <td class="text-right">
-                                            <a class="btn btn-xs btn-success" title="PDF" :href="'storage/'+cotizacion.archivo"
-                                                :download="'C ' + cotizacion.numero + ' Robinson' +' '+ cotizacion.cliente.nombre
-                                                     + ' ' + cotizacion.nombre_proyecto + '.pdf'">
+                                            {{-- <button class="btn btn-xs btn-default" title="Notas"
+                                                @click="notas.cotizacion_id=cotizacion.id;notas.mensaje=cotizacion.notas2;openNotas=true;">
+                                                <i class="far fa-sticky-note"></i>
+                                            </button> --}}
+                                            {{-- <button class="btn btn-xs btn-primary" title="Aceptar"
+                                                        @click="aceptar.cotizacion_id=cotizacion.id; openAceptar=true;">
+                                                        <i class="fas fa-user-check"></i>
+                                                    </button> --}}
+                                            {{-- <button class="btn btn-xs btn-info" title="Enviar"
+                                                @click="enviar.cotizacion_id=cotizacion.id; enviar.numero=cotizacion.numero; openEnviar=true;">
+                                                <i class="far fa-envelope"></i>
+                                            </button> --}}
+                                            <a class="btn btn-xs btn-success" title="PDF"
+                                                :href="'storage/' + cotizacion.archivo"
+                                                :download="'C ' + cotizacion.numero + ' Robinson' + ' ' + cotizacion.cliente
+                                                    .nombre +
+                                                    ' ' + cotizacion.nombre_proyecto + '.pdf'">
                                                 <i class="far fa-file-pdf"></i>
                                             </a>
-
                                             <a class="btn btn-xs btn-warning" title="Editar"
-                                                :href="'/cotizacionesdirectas/' + cotizacion.id + '/edit'" style="background: #fece58 !important;">
+                                                :href="'/cotizacionesdirectas/' + cotizacion.id + '/edit'"
+                                                style="background: #fece58 !important;">
                                                 <i class="fas fa-pencil-alt"></i>
                                             </a>
 

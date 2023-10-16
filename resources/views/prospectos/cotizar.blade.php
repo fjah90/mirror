@@ -132,15 +132,27 @@
                                                     </label>
                                                 </td>
                                                 <td class="text-right">
+                                                    <button class="btn btn-xs btn-default" title="Notas"
+                                                        @click="notas.cotizacion_id=cotizacion.id;notas.mensaje=cotizacion.notas2;openNotas=true;">
+                                                        <i class="far fa-sticky-note"></i>
+                                                    </button>
+                                                    {{-- <button class="btn btn-xs btn-primary" title="Aceptar"
+                                                        @click="aceptar.cotizacion_id=cotizacion.id; openAceptar=true;">
+                                                        <i class="fas fa-user-check"></i>
+                                                    </button> --}}
+                                                    <button class="btn btn-xs btn-info" title="Enviar"
+                                                        @click="enviar.cotizacion_id=cotizacion.id; enviar.numero=cotizacion.numero; openEnviar=true;">
+                                                        <i class="far fa-envelope"></i>
+                                                    </button>
                                                     <a class="btn btn-xs btn-success" title="PDF"
                                                         :href="cotizacion.archivo"
                                                         :download="'C ' + cotizacion.numero + ' Robinson' + prospecto.cliente
                                                             .nombre + ' ' + prospecto.nombre + '.pdf'">
                                                         <i class="far fa-file-pdf"></i>
                                                     </a>
-
                                                     <button class="btn btn-xs btn-warning" title="Editar"
-                                                        @click="editar(index, cotizacion)" style="background: #fece58 !important;">
+                                                        @click="editar(index, cotizacion)"
+                                                        style="background: #fece58 !important;">
                                                         <i class="fas fa-pencil-alt"></i>
                                                     </button>
                                                     @role('Administrador')
@@ -1698,7 +1710,7 @@
                 seleccionarProduco(prod) {
                     console.log(prod)
                     this.entrada.producto = prod;
-                    
+
                     switch (this.tipo_cliente.id) {
                         case 1:
                             this.entrada.precio = this.entrada.producto.precio_residencial;
@@ -1709,7 +1721,7 @@
                         case 3:
                             this.entrada.precio = this.entrada.producto.precio_distribuidor;
                             break;
-                        case 5: 
+                        case 5:
                             this.entrada.precio = this.entrada.producto.precio_arquitecto;
                             break;
                     }
@@ -2115,7 +2127,7 @@
 
                     this.sumaTotal();
                     this.condicionCambiada();
-                    
+
                     //re-seleccionar observaciones
                     var observaciones = cotizacion.observaciones.match(/<li>([^<]+)+<\/li>+/g);
                     if (observaciones == null) observaciones = [];
@@ -2569,11 +2581,11 @@
                     //
                     var id_description = 0;
                     this.entrada.producto.descripciones.forEach(function(desc) {
-                        
-                        if( desc.descripcion_nombre.nombre == descripcion.nombre ){
+
+                        if (desc.descripcion_nombre.nombre == descripcion.nombre) {
                             id_description = desc.id;
                         }
-                        
+
                     });
 
                     console.log(id_description);
@@ -2586,7 +2598,7 @@
                     });
 
                     this.cargando = true;
-                    axios.post('/productos/'+id_description+'/updateVisibilidad', formData, {
+                    axios.post('/productos/' + id_description + '/updateVisibilidad', formData, {
                             headers: {
                                 'Content-Type': 'multipart/form-data'
                             }
