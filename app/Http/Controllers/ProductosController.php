@@ -231,85 +231,86 @@ class ProductosController extends Controller
 
     private function storeImports($rows)
     {
-        try {
-            // dd(count($rows));
-            foreach ($rows as $key => $row) {
-                $proveedor = Proveedor::where('empresa', $row[1])->first();
-                $categoria = Categoria::where('nombre', $row[2])->first();
+        // dd(count($rows));
+        foreach ($rows as $key => $row) {
+            $proveedor = Proveedor::where('empresa', $row[1])->first();
+            $categoria = Categoria::where('nombre', $row[2])->first();
 
-                if ($row[3] == null || $row[3] == "") {
+            if ($row[3] == null || $row[3] == "") {
+                $subcategoria = null;
+            }
+            else {
+                $sub = Subcategoria::where('nombre', $row[3])->first();
+                if ($sub) {
+                    $subcategoria = $sub->id;
+                }
+                else {
                     $subcategoria = null;
                 }
-                else {
-                    $sub = Subcategoria::where('nombre', $row[3])->first();
-                    if ($sub) {
-                        $subcategoria = $sub->id;
-                    }
-                    else {
-                        $subcategoria = null;
-                    }
-                }
-                $producto = [
-                    "proveedor_id"        => $proveedor->id,
-                    "categoria_id"        => $categoria->id,
-                    "nombre"              => $row[0],
-                    "subcategoria_id"     => $subcategoria,
-                    "precio_unitario"     => $row[4],
-                    "precio_residencial"  => $row[5],
-                    "precio_comercial"    => $row[6],
-                    "precio_arquitecto"   => $row[7],
-                    "precio_distribuidor" => $row[8],
-                    "nombre_material"     => $row[9],
-                    "color"               => $row[10],
-                ];
+            }
+            $producto = [
+                "proveedor_id"        => $proveedor->id,
+                "categoria_id"        => $categoria->id,
+                "nombre"              => $row[0],
+                "subcategoria_id"     => $subcategoria,
+                "precio_unitario"     => $row[4],
+                "precio_residencial"  => $row[5],
+                "precio_comercial"    => $row[6],
+                "precio_arquitecto"   => $row[7],
+                "precio_distribuidor" => $row[8],
+                "nombre_material"     => $row[9],
+                "color"               => $row[10],
+            ];
 
-                $p = Producto::where('nombre', $row[0])->first();
-                if ($p) {
-                    $p->update($producto);
-                }
-                else {
-                    $p = Producto::create($producto);
-                }
+            $p = Producto::where('nombre', $row[0])->first();
+            if ($p) {
+                $p->update($producto);
+            }
+            else {
+                $p = Producto::create($producto);
+            }
 
-                //descripciones en el orden del archvo
-                $descripciones_tapices = [
-                    "Ancho",
-                    "Composición",
-                    "Flamabilidad",
-                    "Minimos de venta",
-                    "Multiplos de venta",
-                    "Tamaño de rollo",
-                    "Unidad de medida",
-                    "Repeat HV",
-                    "Ubicación",
-                ];
-                $descripciones_telas = [
-                    "Ancho",
-                    "Composición",
-                    "Flamabilidad",
-                    "Abrasión",
-                    "Decoloración a la luz",
-                    "Traspaso de color",
-                    "Peeling",
-                    "Aplicación",
-                    "Acabado",
-                    "Procedencia",
-                    "Código de lavado",
-                    "Repeat HV",
-                    "Unidad de venta",
-                    "Notas/otros",
-                    "Backing",
-                    "Ubicación",
-                ];
+            //descripciones en el orden del archvo
+            $descripciones_tapices = [
+                "Ancho",
+                "Composición",
+                "Flamabilidad",
+                "Minimos de venta",
+                "Multiplos de venta",
+                "Tamaño de rollo",
+                "Unidad de medida",
+                "Repeat HV",
+                "Ubicación",
+            ];
+            $descripciones_telas = [
+                "Ancho",
+                "Composición",
+                "Flamabilidad",
+                "Abrasión",
+                "Decoloración a la luz",
+                "Traspaso de color",
+                "Peeling",
+                "Aplicación",
+                "Acabado",
+                "Procedencia",
+                "Código de lavado",
+                "Repeat HV",
+                "Unidad de venta",
+                "Notas/otros",
+                "Backing",
+                "Ubicación",
+            ];
 
-                if (count($row) == 26) {
-                    $columnas = 27;
-                    $descripciones = $descripciones_telas;
-                }
-                else {
-                    $columnas = 20;
-                    $descripciones = $descripciones_tapices;
-                }
+            if (count($row) == 26) {
+                $columnas = 27;
+                $descripciones = $descripciones_telas;
+            }
+            else {
+                $columnas = 20;
+                $descripciones = $descripciones_tapices;
+            }
+            try {
+
                 for ($i = 11; $i < $columnas; $i++) {
 
                     $update = array(
@@ -334,13 +335,13 @@ class ProductosController extends Controller
                 }
 
             }
-        }
-        catch (\Exception $e) {
-            return response()->json([
-                "success" => false,
-                "error"   => true,
-                "message" => $e->getMessage(),
-            ], 422);
+            catch (\Exception $e) {
+                return response()->json([
+                    "success" => false,
+                    "error"   => true,
+                    "message" => $e->getMessage(),
+                ], 422);
+            }
         }
     }
 
