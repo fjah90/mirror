@@ -309,38 +309,29 @@ class ProductosController extends Controller
                 $columnas = 20;
                 $descripciones = $descripciones_tapices;
             }
-            try {
 
-                for ($i = 11; $i < $columnas; $i++) {
 
-                    $update = array(
-                        "valor" => $row[$i]
-                    );
+            for ($i = 11; $i < $columnas; $i++) {
 
-                    $descripcion = CategoriaDescripcion::where('categoria_id', $categoria->id)->where('nombre', $descripciones[$i - 11])->first();
-                    if ($descripcion) {
-                        $productodescripcion = ProductoDescripcion::where('producto_id', $p->id)->where('categoria_descripcion_id', $descripcion['id'])->first();
-                        if ($productodescripcion) {
-                            $productodescripcion->update($update);
-                        }
-                        else {
-                            $create = array(
-                                "producto_id"              => $p->id,
-                                "categoria_descripcion_id" => $descripcion['id'],
-                                "valor"                    => $row[$i]
-                            );
-                            ProductoDescripcion::create($create);
-                        }
+                $update = array(
+                    "valor" => $row[$i]
+                );
+
+                $descripcion = CategoriaDescripcion::where('categoria_id', $categoria->id)->where('nombre', $descripciones[$i - 11])->first();
+                if ($descripcion) {
+                    $productodescripcion = ProductoDescripcion::where('producto_id', $p->id)->where('categoria_descripcion_id', $descripcion['id'])->first();
+                    if ($productodescripcion) {
+                        $productodescripcion->update($update);
+                    }
+                    else {
+                        $create = array(
+                            "producto_id"              => $p->id,
+                            "categoria_descripcion_id" => $descripcion['id'],
+                            "valor"                    => $row[$i]
+                        );
+                        ProductoDescripcion::create($create);
                     }
                 }
-
-            }
-            catch (\Exception $e) {
-                return response()->json([
-                    "success" => false,
-                    "error"   => true,
-                    "message" => $e->getMessage(),
-                ], 422);
             }
         }
     }
