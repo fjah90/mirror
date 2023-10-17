@@ -302,7 +302,7 @@ class ProductosController extends Controller
             ];
 
             if (count($row) == 26) {
-                $columnas = 27;
+                $columnas = 26;
                 $descripciones = $descripciones_telas;
             }
             else {
