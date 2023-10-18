@@ -231,7 +231,6 @@ class ProductosController extends Controller
 
     private function storeImports($rows)
     {
-        // dd(count($rows));
         foreach ($rows as $key => $row) {
             $proveedor = Proveedor::where('empresa', $row[1])->first();
             $categoria = Categoria::where('nombre', $row[2])->first();
@@ -300,16 +299,15 @@ class ProductosController extends Controller
                 "Backing",
                 "Ubicación",
             ];
-
-            if (count($row) == 26) {
-                $columnas = 26;
+            // dd(count($row));
+            if (count($row) == 27) {
+                $columnas = 27;
                 $descripciones = $descripciones_telas;
             }
             else {
                 $columnas = 20;
                 $descripciones = $descripciones_tapices;
             }
-
 
             for ($i = 11; $i < $columnas; $i++) {
 
