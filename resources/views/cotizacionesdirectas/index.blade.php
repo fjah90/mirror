@@ -111,10 +111,10 @@
                                                         @click="aceptar.cotizacion_id=cotizacion.id; openAceptar=true;">
                                                         <i class="fas fa-user-check"></i>
                                                     </button> --}}
-                                            {{-- <button class="btn btn-xs btn-info" title="Enviar"
+                                            <button class="btn btn-xs btn-info" title="Enviar"
                                                 @click="enviar.cotizacion_id=cotizacion.id; enviar.numero=cotizacion.numero; openEnviar=true;">
                                                 <i class="far fa-envelope"></i>
-                                            </button> --}}
+                                            </button> 
                                             <a class="btn btn-xs btn-success" title="PDF"
                                                 :href="'storage/' + cotizacion.archivo"
                                                 :download="'C ' + cotizacion.numero + ' Robinson' + ' ' + cotizacion.cliente

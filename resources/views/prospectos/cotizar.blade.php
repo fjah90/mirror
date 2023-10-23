@@ -136,10 +136,10 @@
                                                         @click="notas.cotizacion_id=cotizacion.id;notas.mensaje=cotizacion.notas2;openNotas=true;">
                                                         <i class="far fa-sticky-note"></i>
                                                     </button>
-                                                    {{-- <button class="btn btn-xs btn-primary" title="Aceptar"
+                                                    <button class="btn btn-xs btn-primary" title="Aceptar"
                                                         @click="aceptar.cotizacion_id=cotizacion.id; openAceptar=true;">
                                                         <i class="fas fa-user-check"></i>
-                                                    </button> --}}
+                                                    </button>
                                                     <button class="btn btn-xs btn-info" title="Enviar"
                                                         @click="enviar.cotizacion_id=cotizacion.id; enviar.numero=cotizacion.numero; openEnviar=true;">
                                                         <i class="far fa-envelope"></i>
