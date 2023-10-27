@@ -73,10 +73,12 @@
               <thead>
                 <tr style="background-color:#12160F">
                   <th class="hide">#</th>
-                  <th class="color_text">Usuario</th>
+                  <th class="color_text">Diseñador</th>
                   <th class="color_text">Cliente</th>
                   <th class="color_text">Nombre de Proyecto</th>
-                  <th class="color_text">Número de cotización</th>
+                  <th class="color_text">Número de Cotización</th>
+                  <th class="color_text">Fecha de Aprobación</th>
+                  <th class="color_text">proveedores</th>
                   <th class="color_text">Total</th>
                   <th style="min-width:105px;"></th>
                 </tr>
